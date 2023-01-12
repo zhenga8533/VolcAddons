@@ -1,0 +1,25 @@
+{
+    "whitelist": [
+        "boppeler21",
+        "halogenidas",
+        "bananathebot",
+        "astryll",
+        "mandn3253"
+    ],
+    "inParty": false,
+    "isLeader": false,
+    "vanqWarp": {
+        "vanqCoords": [
+            -338,
+            81,
+            -757,
+            " ⏣ Magma Cha🐍mber"
+        ],
+        "vanqSpawned": false,
+        "notInParty": 0
+    },
+    "kuudraRP": {
+        "waitingOnJoin": false,
+        "needToReparty": false
+    }
+}

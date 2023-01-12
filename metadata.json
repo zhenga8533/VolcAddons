@@ -1,0 +1,11 @@
+{
+  "name": "Moditee",
+  "creator": "Volcaronitee",
+  "description": "joe.",
+  "entry": "index.js",
+  "version": "0.0.1",
+  "requires": [
+    "Vigilance",
+    "PogObject"
+  ]
+}

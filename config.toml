@@ -1,0 +1,20 @@
+
+[general]
+	enable_whitelist_rejoin = true
+	party_chat_command = true
+	remove_selfie_mode = true
+
+[crimson_isles]
+
+	[crimson_isles.kuudra]
+		kuudra_alerts = true
+		kuudra_reparty = "bananathebot"
+		"kuudra_alerts_(cannonear_ign)" = "astryll"
+		"kuudra_alerts_(stunner_ign)" = "BananaTheBot"
+
+	[crimson_isles.combat]
+		broken_hyperion = true
+		vanquisher_auto-warp = ""
+		vanquisher_alert = true
+		"vanquisher_alert_(all_chat_toggle)" = false
+
