@@ -1,86 +1,94 @@
 import settings from "../settings"
-import {data} from "../variables"
+import { getInParty } from "../variables"
+
+let vanqCoords = [0, 0, 0, "None"];
+let vanqSpawned = false;
+let notInParty = 0;
 
 register("chat", () => {
-    if (settings.vanqParty.length > 0 && !data.vanqWarp.vanqSpawned) {
-        data.vanqWarp.vanqSpawned = true;
-        data.vanqWarp.notInParty = 0;
+    if (settings.vanqParty.length == 0 || vanqSpawned) return;
 
-        // PLAYER POSITION
-        data.vanqWarp.vanqCoords[0] = Math.round(Player.getX())
-        data.vanqWarp.vanqCoords[1] = Math.round(Player.getY())
-        data.vanqWarp.vanqCoords[2] = Math.round(Player.getZ())
+    vanqSpawned = true;
+    notInParty = 0;
+
+    // PLAYER POSITION
+    vanqCoords[0] = Math.round(Player.getX())
+    vanqCoords[1] = Math.round(Player.getY())
+    vanqCoords[2] = Math.round(Player.getZ())
     
-        // AREA PLAYER IS IN
-        let area = "N/A"
-        Scoreboard.getLines().forEach(item => {
-            if (item.getName().includes("⏣")) {
-                data.vanqWarp.vanqCoords[3] = item.getName().removeFormatting();
-                return;
-            }
-        });
+    // AREA PLAYER IS IN
+    let area = "N/A"
+    Scoreboard.getLines().forEach(item => {
+        if (item.getName().includes("⏣")) {
+            vanqCoords[3] = item.getName().removeFormatting();
+            return;
+        }
+    });
 
-        // INVITE PARTY
-        setTimeout(function () { if (data.inParty) ChatLib.command("p leave") }, 250);
+    // INVITE PARTY
+    setTimeout(function () { if (getInParty()) ChatLib.command("p leave") }, 500);
 
-        let timeout = 250
-        setTimeout(function () {
-            settings.vanqParty.split(", ").forEach(ign => {
-                data.vanqWarp.notInParty++;
-                setTimeout(function () { ChatLib.command(`p ${ign}`); }, timeout);
-                timeout += 250;
-            })
-        }, 500);
-
-        data.save()
-    }
+    let timeout = 500
+    setTimeout(function () {
+        settings.vanqParty.split(", ").forEach(ign => {
+            notInParty++;
+            setTimeout(function () { ChatLib.command(`p ${ign}`); }, timeout);
+            timeout += 500;
+        })
+    }, 500);
 }).setCriteria("A Vanquisher is spawning nearby!");
 
+function warpParty() {
+    if (!vanqSpawned) return;
+
+    notInParty--;
+
+    if (notInParty <= 0 && getInParty()) {
+        vanqSpawned = false;
+        notInParty = 0;
+
+        setTimeout(function () { ChatLib.command('p warp'); }, 500); 
+        setTimeout(function () { ChatLib.command(`pc x: ${vanqCoords[0]}, y: ${vanqCoords[1]}, z: ${vanqCoords[2]} | Vanquisher Spawned at [${vanqCoords[3]} ]!`); }, 1000);
+        setTimeout(function () { ChatLib.command("p disband"); }, 1500);
+    }
+}
+
+// Checks if all players are in lobby
+register("chat", () => {
+    setTimeout(warpParty(), 500);
+}).setCriteria("${player} joined the party.");
+
+// If player doesnt accept
+register("chat", () => {
+    setTimeout(warpParty(), 500);
+}).setCriteria("The party invite to ${player} has expired");
+
+// Safety net
+register("chat", () => {
+    vanqSpawned = false;
+    notInParty = 0;
+}).setCriteria("You have joined ${player} party!");
 
 register("chat", () => {
-    setTimeout(() => {
-        if (data.vanqWarp.vanqSpawned) {
-            data.vanqWarp.notInParty--;
-            data.save();
+    vanqSpawned = false;
+    notInParty = 0;
+}).setCriteria("RARE DROP! Nether Star");
 
-            if (data.vanqWarp.notInParty <= 0) {
-                data.vanqWarp.vanqSpawned = false;
-                data.vanqWarp.notInParty = 0;
+function noInvite() {
+    if (!vanqSpawned) return;
 
-                const x = data.vanqWarp.vanqCoords[0];
-                const y = data.vanqWarp.vanqCoords[1];
-                const z = data.vanqWarp.vanqCoords[2];
-                const area = data.vanqWarp.vanqCoords[3];
-
-                setTimeout(function () { ChatLib.command('p warp'); }, 500);
-                setTimeout(function () { ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | Vanquisher Spawned at [${area} ]!`); }, 1000);
-                setTimeout(function () { ChatLib.command("p disband"); }, 1500);
-            }
-
-            data.save();
-        }
-    }, 500);
-}).setCriteria("${rank} ${name} joined the party.");
+    notInParty--;
+    if (notInParty <= 0) {
+        notInParty = 0;
+        vanqSpawned = false;
+    }
+}
 
 // Make sure players exists / are online
 register("chat", () => {
-    if (data.vanqWarp.vanqSpawned) {
-        data.vanqWarp.notInParty--;
-        if (data.vanqWarp.notInParty <= 0) {
-            data.vanqWarp.notInParty = 0;
-            data.vanqWarp.vanqSpawned = false;
-        }
-        data.save();
-    }
+    setTimeout(noInvite(), 500);
 }).setCriteria("Couldn't find a player with that name!");
 
 register("chat", () => {
-    if (data.vanqWarp.vanqSpawned) {
-        data.vanqWarp.notInParty--;
-        if (data.vanqWarp.notInParty <= 0) {
-            data.vanqWarp.notInParty = 0;
-            data.vanqWarp.vanqSpawned = false;
-        }
-        data.save();
-    }
+    setTimeout(noInvite(), 500);
 }).setCriteria("You cannot invite that player since they're not online.");

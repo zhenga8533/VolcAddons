@@ -1,11 +1,16 @@
 {
-  "name": "Moditee",
+  "name": "VolcAddons",
+  "author": "Volcaronitee",
   "creator": "Volcaronitee",
   "description": "joe.",
   "entry": "index.js",
-  "version": "0.0.1",
+  "version": "2.2.2",
   "requires": [
-    "Vigilance",
-    "PogObject"
+  "Vigilance",
+    "PogData",
+    "RenderLib",
+    "BeaconBeam",
+    "axios",
+    "requestV2"
   ]
 }

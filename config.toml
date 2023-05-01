@@ -1,20 +1,72 @@
 
 [general]
-	enable_whitelist_rejoin = true
-	party_chat_command = true
-	remove_selfie_mode = true
+
+	[general.general]
+		draw_waypoint = true
+		low_health_alert = 0.2
+		abiphone_blocker = true
+		remove_selfie_mode = true
+
+	[general.party]
+		enable_whitelist_rejoin = true
+		party_chat_command = true
+		leader_chat_command = true
+		auto_join_reparty = true
 
 [crimson_isles]
 
-	[crimson_isles.kuudra]
-		kuudra_alerts = true
-		kuudra_reparty = "bananathebot"
-		"kuudra_alerts_(cannonear_ign)" = "astryll"
-		"kuudra_alerts_(stunner_ign)" = "BananaTheBot"
+	[crimson_isles.crimson_isles]
+		golden_fish_timer = false
+		golden_fish_alert = true
+		broken_hyperion = true
+		ragnarok_detection = true
 
 	[crimson_isles.combat]
 		broken_hyperion = true
+		ragnarok_detection = true
+
+	[crimson_isles.vanquisher_alert]
 		vanquisher_auto-warp = ""
-		vanquisher_alert = true
+		vanquisher_detection = false
+		vanquisher_alert = false
 		"vanquisher_alert_(all_chat_toggle)" = false
+
+	[crimson_isles.vanquisher_counter]
+		vanquisher_counter = false
+
+[hub]
+
+	[hub.inquisitor]
+		announce_inquisitor = false
+		"announce_inquisitor_(all_chat_toggle)" = false
+		detect_inquisitor = false
+
+	[hub.diana]
+		diana_warp = false
+		diana_waypoint = false
+
+	[hub.griffin_burrow]
+		burrow_chat_alert = false
+		burrow_amogus_alert = false
+		burrow_detection = false
+
+[kuudra]
+
+	[kuudra.kuudra]
+		kuudra_hp_display = true
+		kuudra_reparty = "bananathebot"
+		"show_supply/fuel_waypoints" = false
+
+	[kuudra.kuudra_alert]
+		kuudra_alerts = true
+		"kuudra_alerts_(cannonear_ign)" = ""
+		"kuudra_alerts_(stunner_ign)" = ""
+
+	[kuudra.kuudra_splits]
+		kuudra_splits = true
+
+[garden]
+
+	[garden.garden]
+		garden_tab_display = true
 

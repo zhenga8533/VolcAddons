@@ -1,25 +1,68 @@
 {
+    "newUser": false,
     "whitelist": [
-        "boppeler21",
-        "halogenidas",
-        "bananathebot",
-        "astryll",
-        "mandn3253"
+        "bananathebot"
     ],
-    "inParty": false,
-    "isLeader": false,
-    "vanqWarp": {
-        "vanqCoords": [
-            -338,
-            81,
-            -757,
-            " ⏣ Magma Cha🐍mber"
+    "blocklist": [
+        "kaus",
+        "aranya",
+        "rollim",
+        "pablo"
+    ],
+    "warplist": [
+        "hub",
+        "da",
+        "castle",
+        "museum"
+    ],
+    "moblist": [
+        "inquisitor",
+        "vanquisher"
+    ],
+    "files": [
+        "splits.txt",
+        "bananathebot-dtspookyy-epoa-volcaronitee.txt",
+        "bananathebot-epoa-volcaronitee-waitwut_.txt",
+        "astryll-bananathebot-mandn1up-volcaronitee.txt"
+    ],
+    "splits": {
+        "last": [
+            37.01,
+            23.76,
+            12.77,
+            30.71,
+            104.25
         ],
-        "vanqSpawned": false,
-        "notInParty": 0
+        "best": [
+            34.01,
+            15.94,
+            12.68,
+            22.24,
+            100.34
+        ]
     },
-    "kuudraRP": {
-        "waitingOnJoin": false,
-        "needToReparty": false
-    }
+    "vanqSession": {
+        "vanqs": 130,
+        "kills": 53722,
+        "last": 2,
+        "average": 413
+    },
+    "dianaKey": 33,
+    "apexPrice": "1.5e9",
+    "SL": [
+        10,
+        169
+    ],
+    "CL": [
+        10,
+        169
+    ],
+    "VL": [
+        10,
+        169
+    ],
+    "TL": [
+        10,
+        219
+    ]
 }

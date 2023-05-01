@@ -1,26 +1,30 @@
 import settings from "../settings"
-import {COLORS} from "../constants"
-import {FORMATS} from "../constants"
+import { BOLD, DARK_RED } from "../constants"
 
-var tracker_kills = 0
-var tracker_xp = 0
+const WITHER_BLADES = ["HYPERION", "ASTRAEA", "SCYLLA", "VALKYRIE", "NECRON_BLADE_UNREFINED"];
+let heldItem = undefined;
 
-register("tick", () => {
-    if(settings.brokenHyp && Player.getHeldItem() != null) {
-        const heldItem = Player.getHeldItem().getName();
-        if(heldItem.includes("Hyperion") || heldItem.includes("Astraea") || heldItem.includes("Scylla") || heldItem.includes("Valkyrie") || heldItem.includes("Sussy Baka")) {
-            new_kills = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getInteger("stats_book");
-            new_xp = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getDouble("champion_combat_xp");
-            kill_difference = new_kills - tracker_kills;
+let trackerKills = 0;
+let trackerXP = 0;
+let newKills = 0;
+let newXP = 0;
 
-            if(tracker_kills != new_kills) {
-                if(tracker_xp == new_xp) {
-                    Client.Companion.showTitle(`${FORMATS.BOLD}${COLORS.DARK_RED}HYPE BROKEN!`, "", 10, 50, 10)
-                }
+register("tick", () => { // (boppeler21 cutie)
+    if (!settings.brokenHyp || Player.getHeldItem() == null) return;
 
-                tracker_kills = new_kills
-                tracker_xp = new_xp
-            }
+    // Update held item
+    heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
+
+    // IF Wither Blade is held THEN track kills and xp
+    if (WITHER_BLADES.includes(heldItem.getString("id"))) {
+        newKills = heldItem.getInteger("stats_book");
+        newXP = heldItem.getDouble("champion_combat_xp");
+
+        if (trackerKills != newKills) {
+            if (trackerXP == newXP) Client.Companion.showTitle(`${DARK_RED}${BOLD}HYPE BROKEN!`, "", 5, 25, 5);
+
+            trackerKills = newKills;
+            trackerXP = newXP;
         }
     }
-})
+});
