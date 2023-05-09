@@ -4,6 +4,7 @@ import { AQUA, BOLD, GOLD, GRAY, GREEN, RED, RESET, WHITE } from "./constants";
 // --- PERSISTANT DATA ---
 export let data = new PogObject("VolcAddons", {
     "newUser": true,
+    "version": "2.3.1",
     "whitelist": [],
     "blocklist": [],
     "warplist": ["hub", "da", "castle", "museum"],

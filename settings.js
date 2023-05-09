@@ -2,6 +2,7 @@ import { BOLD, GOLD, ITALIC, WHITE } from "./constants";
 import {
     @TextProperty,
 	@PercentSliderProperty,
+	@SliderProperty,
 	@SwitchProperty,
     @ButtonProperty,
     @Vigilant,
@@ -58,6 +59,24 @@ ${ITALIC}PSA does support nons.
         subcategory: "General"
     })
     healthAlert = 0.0;
+
+    @TextProperty({
+        name: "Reminder Text",
+        description: "What will appear on screen when timer runs out.",
+        category: "General",
+        subcategory: "Timer"
+    })
+    reminderText = "";
+
+    @SliderProperty({
+        name: "Reminder Time",
+        description: "Alerts the player every 'X' minutes. Set as 0 to turn off.",
+        category: "General",
+        subcategory: "Timer",
+        min: 0,
+        max: 120
+    })
+    reminderTime = 0;
 
     @SwitchProperty({
         name: "Leader Chat Command",
@@ -224,6 +243,14 @@ ${ITALIC}PSA does support nons.
     vanqDetect = false;
 
     @SwitchProperty({
+        name: "Vanquisher Detection Sound",
+        description: "Plays a sound whenever a vanquisher gets detected.",
+        category: "Crimson Isles",
+        subcategory: "Vanquisher Alert"
+    })
+    vanqSound = false;
+
+    @SwitchProperty({
         name: "Vanquisher Counter",
         description: "Counts kills until Vanquisher spawns. (Bascially only tracks Book of Stats, coding hard)",
         category: "Crimson Isles",
@@ -270,11 +297,19 @@ ${ITALIC}PSA does support nons.
     
     @SwitchProperty({
         name: "Show Supply/Fuel Waypoints",
-        description: "Creates waypoints for the supplies/fuels near you (kinda shit).",
+        description: "Creates waypoints for the supplies/fuels near you (actually works now).",
         category: "Kuudra",
         subcategory: "Kuudra"
     })
     kuudraCrates = false;
+
+    @SwitchProperty({
+        name: "Show Supply Piles",
+        description: "Creates waypoints for the supplies that are not fully built.",
+        category: "Kuudra",
+        subcategory: "Kuudra"
+    })
+    kuudraBuild = false;
 
     @SwitchProperty({
         name: "Kuudra Alerts",
@@ -336,6 +371,14 @@ ${ITALIC}PSA does support nons.
     moveVisitors() {
         ChatLib.command("moveVisitors", true);
     }
+
+    @SwitchProperty({
+        name: "Composter Alert",
+        description: "Displays an alert when the composter becomes inactive.",
+        category: "Garden",
+        subcategory: "Garden"
+    })
+    gardenCompost = false;
 }
 
 export default new Settings    

@@ -3,7 +3,7 @@ import RenderLib from "../../RenderLib/index.js";
 import renderBeaconBeam from "../../BeaconBeam";
 import { AQUA, GREEN } from "../constants";
 
-import { getCrates } from "./KuudraCrates";
+import { getBuilds, getCrates } from "./KuudraCrates";
 import { getVanquishers } from "./AnnouceMob";
 import { getBurrow, getTheory } from "./DianaWaypoint";
 import { getInquisitors } from "./AnnouceMob";
@@ -16,6 +16,7 @@ register("renderWorld", () => {
     renderWaypoint(waypoints, 0, 1, 1); // Cyan Waypoint
     renderWaypoint(userWaypoints, 0, 1, 0); // Lime user
     renderWaypoint(getCrates(), 1, 1, 1); // White crates
+    renderWaypoint(getBuilds(), 1, 0, 0); // Red Builds
     renderWaypoint(getTheory(), 1, 1, 0); // Yellow theory burrow
     renderWaypoint(getBurrow(), 0, 0.5, 0); // Green burrows
     renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq

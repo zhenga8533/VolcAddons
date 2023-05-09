@@ -6,7 +6,7 @@ const EntityMagmaCube = Java.type('net.minecraft.entity.monster.EntityMagmaCube'
 let cubes = World.getAllEntitiesOfType(EntityMagmaCube.class);
 
 // HP Displays
-let percentHP = new Text(`Ligma Balls`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`Ligma Balls`) / 2, 10);
+let percentHP = new Text(`One Cycleable`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2, 10);
 let HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
 
 register("tick", () => {

@@ -1,13 +1,14 @@
 // Import outer scope variables
 import settings from "./settings"
 import { data, getWorld, updateList } from "./variables"
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE } from "./constants"
+import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./constants"
 
 // General
 import "./features/PartyCommands"
 import "./features/RemoveSelfie"
 import "./features/JoinWhitelist"
 import "./features/DrawWaypoint"
+import "./features/ReminderTimer"
 import { createWaypoint } from "./features/DrawWaypoint"
 import "./features/JoinReparty"
 import "./features/HealthAlert"
@@ -53,6 +54,16 @@ if (data.newUser) {
     ChatLib.chat("");
 
     data.newUser = false;
+}
+
+// NEW UPDATE
+if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
+    data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
+    ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
+    ChatLib.chat("-Added this update notifer");
+    ChatLib.chat("-Reduced lag caused by supply pile detection");
+    ChatLib.chat("-Fixed bz calculator (changed api link)");
+    Chatlib.chat("-Added /va calc gabagool to bz calculator");
 }
 
 // HELP

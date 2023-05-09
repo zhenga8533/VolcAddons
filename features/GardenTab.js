@@ -1,21 +1,27 @@
 import settings from "../settings";
 import { data, getWorld } from "../variables";
-import { AQUA, BOLD, GREEN, ITALIC, RESET, WHITE } from "../constants";
+import { AQUA, BOLD, DARK_RED, GREEN, ITALIC, RESET, WHITE } from "../constants";
 
 // Visitor Tablist Variables
-let tablist = TabList.getNames();
+let tablist = null;
 let visitorsHUD = [];
 let visitors = 0;
 
 // HUD GUI
 const moveVisitors = new Gui();
 
-// Tracks Vanqs
-register("tick", () => {
-    if (getWorld() != "garden" || !settings.gardenTab) return;
+// Check Tab
+register("step", () => {
+    // Get Composter
+    if (getWorld() == "garden" && settings.gardenCompost) {
+        tablist = TabList.getNames();
+        composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);
+        if (composter != -1)
+            Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
+    }
 
+    if (getWorld() != "garden" || !settings.gardenTab) return;
     // Get tab and clear old data
-    tablist = TabList.getNames();
     visitorsHUD = [];
 
     // Get Visitors
@@ -31,7 +37,7 @@ register("tick", () => {
 
     // Set Next Visitor
     visitorsHUD.push(tablist.find((tab) => tab.indexOf("Next Visitor:") != -1));
-});
+}).setFps(1);
 
 // Move and Draw Counter HUD
 register("renderOverlay", () => {

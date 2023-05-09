@@ -2,7 +2,7 @@ import axios from "../../axios";
 import settings from "../settings"
 import { getIsLeader, getPlayerName } from "../variables"
 import { request } from "../../requestV2";
-import { AQUA, DARK_AQUA, DARK_GREEN, GREEN, WHITE } from "../constants";
+import { AQUA, DARK_AQUA, DARK_GREEN, WHITE } from "../constants";
 
 // Variables for different commands
 let onCD = false;
@@ -13,7 +13,7 @@ function upload(image) {
         url: "https://api.imgur.com/3/image",
         method: "POST",
         headers: {
-            Authorization: `Client-ID 753009b038bd28d`
+            Authorization: `Client-ID d30c6dc9941b52b`,
         },
         body: {
             image
@@ -29,6 +29,7 @@ function setWaifu() {
     axios.get("https://api.waifu.im/search").then((link) => {
         waifu = link.data.images[0].url;
     })
+
     setTimeout(() => {
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
@@ -138,7 +139,7 @@ export function executeCommand(name, args, toParty) {
                 break;
             case "waifu":
             case "w":
-                ChatLib.chat(`${DARK_GREEN}Uploading ${GREEN}${waifu} ${DARK_GREEN}to Imgur!`);
+                ChatLib.chat(`${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${imgur}`) }, 500);
                 else

@@ -241,7 +241,7 @@ export function getSplits(args){
                     for (let i = 0; i < average.length; i++) average[i] = average[i] / runsWanted;
 
                     formatSplits(average, GREEN, runsWanted);
-                } else ChatLib.chat(`${RED}File [${fileName}] not found!`);
+                } else ChatLib.chat(`${RED}File [${fileName}${RED}] not found!`);
                 break;
             case "clear":
                 // Clears every split

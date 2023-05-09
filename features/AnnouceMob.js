@@ -1,4 +1,4 @@
-import { BOLD, DARK_PURPLE, GOLD, WHITE } from "../constants";
+import { AMOGUS, BOLD, DARK_PURPLE, GOLD, WHITE } from "../constants";
 import settings from "../settings"
 import { data, getInParty, getWorld } from "../variables"
 
@@ -23,6 +23,7 @@ function annoucePosition(toAll, mob, x, y ,z) {
 const EntityWither = Java.type('net.minecraft.entity.boss.EntityWither');
 let entities = [];
 let vanquishers = [];
+let soundCD = true;
 
 register("chat", () => {
     if (!settings.vanqAlert || settings.vanqParty.length > 0) return;
@@ -39,8 +40,14 @@ register("tick", () => {
 
     if (vanqs.length > 0) {
         Client.Companion.showTitle(`${DARK_PURPLE}${BOLD}VANQUISHER ${WHITE}DETECTED!`, "", 0, 25, 5);
-        if (data.moblist.includes("vanquisher"))
+        if (data.moblist.includes("vanquisher")) {
             vanqs.forEach(vanq => { vanquishers.push(vanq) });
+            if (soundCD && settings.vanqSound) {
+                soundCD = false;
+                AMOGUS.play();
+                setTimeout(() => { soundCD = true }, 10000);
+            }
+        }
     }
 });
 

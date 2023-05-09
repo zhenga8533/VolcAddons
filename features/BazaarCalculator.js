@@ -1,4 +1,4 @@
-import  axios  from '../../axios';
+import axios from "../../axios";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../constants';
 import { data } from '../variables';
 
@@ -9,14 +9,17 @@ let items = {
     "ENCHANTED_SULPHUR": [0, 0],
     "CRUDE_GABAGOOL": [0, 0],
     "HYPERGOLIC_GABAGOOL": [0, 0],
+    "HEAVY_GABAGOOL": [0, 0],
+    "FUEL_GABAGOOL": [0, 0],
     "CRUDE_GABAGOOL_DISTILLATE": [0, 0],
+    "INFERNO_FUEL_BLOCK": [0, 0],
     // Inferno Minion Loot
     "CHILI_PEPPER": [0, 0],
     "INFERNO_VERTEX": [0, 0],
     "REAPER_PEPPER": [0, 0]
 }
 let products = {};
-const BZ_API = 'https://api.hypixel.net/skyblock/bazaar';
+const BZ_API = 'https://api.slothpixel.me/api/skyblock/bazaar/' + Object.keys(items).join(",");
 
 // Inferno Minion Action Speed Upgrade per Minion Tier
 const INFERNO_ACTION_UPGRADE = 34.5;
@@ -24,8 +27,8 @@ const INFERNO_ACTION_BASE = 1102 + INFERNO_ACTION_UPGRADE;
 
 // Gets BZ Pricing for "items"
 function getPricing() {
-    axios.get(BZ_API).then((bazaar) => {
-        products = bazaar.data.products
+    axios.get(BZ_API).then(response => {
+        products = response.data;
 
         Object.keys(items).forEach((itemID) => {
             const instaPrice = products[itemID].quick_status.sellPrice;
@@ -60,6 +63,11 @@ export function calculate(args) {
     // Update Pricing
     getPricing();
 
+    // Universal variables
+    const minions = isNaN(args[2]) ? 31 : args[2];
+    const tier = isNaN(args[3]) ? 3 : args[3];
+    let actionSpeed = (INFERNO_ACTION_BASE - (tier * INFERNO_ACTION_UPGRADE)) / 3.41;
+
     switch (args[1]) {
         case "hypergolic":
         case "hg":
@@ -88,10 +96,8 @@ export function calculate(args) {
             base / 71.61 for MAX UPGRADES
         */
         case "inferno": // INFERNO MINION PROFIT
-            const minions = isNaN(args[2]) ? 31 : args[2];
-            const tier = isNaN(args[3]) ? 3 : args[3];
-            const actionSpeed = (INFERNO_ACTION_BASE - (tier * INFERNO_ACTION_UPGRADE)) / 71.61;
             const eyedrop = 1.3;
+            actionSpeed /= 21;
 
             // Drops
             const actions = minions * 86400 / (2 * actionSpeed);
@@ -111,7 +117,7 @@ export function calculate(args) {
             };
 
             // Fuel + Net Gain (Hydra Heads hard coded for now, I'll update once I get around to it :skull:)
-            const fuel = minions * (items.HYPERGOLIC_GABAGOOL[0] + 6 * items.CRUDE_GABAGOOL_DISTILLATE[0] + 800000);
+            const fuel = minions * (items.HYPERGOLIC_GABAGOOL[0] + 6 * items.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * items.INFERNO_FUEL_BLOCK[0] + 800000);
             const net = Object.values(profit).reduce((a, c) => a + c, 0) - fuel;
 
             // ChatLib the values
@@ -123,6 +129,28 @@ export function calculate(args) {
             ChatLib.chat(`${AQUA}${BOLD}Reaper Pepper ${GRAY}${BOLD}[${drops.REAPER}]${AQUA}: ${RESET}${formatInt(profit.REAPER)}\n`);
             ChatLib.chat(`${RED}${BOLD}Fuel Price: ${RESET}${formatInt(fuel)}`);
             ChatLib.chat(`${GREEN}${BOLD}Total Profit: ${RESET}${formatInt(net)}\n`);
+            break;
+        case "gabagool": // GABAGOOL!!!
+            // Heavy 15x
+            actionSpeed /= 16;
+            const heavyGabagool = minions * 86400 / (2 * actionSpeed) * items.CRUDE_GABAGOOL[1];
+            const heavyPrice = minions * (items.HEAVY_GABAGOOL[0] + 6 * items.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * items.INFERNO_FUEL_BLOCK[0]);
+            const heavyProfit = heavyGabagool - heavyPrice;
+
+            // Fuel 10x
+            actionSpeed *= 1.6;
+            const fuelGabgool = minions * 86400 / (2 * actionSpeed) * items.CRUDE_GABAGOOL[1];
+            const fuelPrice = minions * (items.FUEL_GABAGOOL[0] + 6 * items.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * items.INFERNO_FUEL_BLOCK[0]);
+            const fuelProfit = fuelGabgool - fuelPrice;
+
+            // Format ChatLib.chat
+            ChatLib.chat(`\n${GOLD}${BOLD}Average Profit for ${minions} Inferno Minion(s) t${tier}`);
+            ChatLib.chat(`${AQUA}${BOLD}Heavy Gabagool Drops: ${RESET}${formatInt(heavyGabagool)}`);
+            ChatLib.chat(`${RED}${BOLD}Heavy Gabagool Cost: ${RESET}${formatInt(heavyPrice)}`);
+            ChatLib.chat(`${GREEN}${BOLD}Heavy Gabagool Profit: ${RESET}${formatInt(heavyProfit)}\n`);
+            ChatLib.chat(`${AQUA}${BOLD}Fuel Gabagool Drops: ${RESET}${formatInt(fuelGabgool)}`);
+            ChatLib.chat(`${RED}${BOLD}Fuel Gabagool Cost: ${RESET}${formatInt(fuelPrice)}`);
+            ChatLib.chat(`${GREEN}${BOLD}Fuel Gabagool Profit: ${RESET}${formatInt(fuelProfit)}\n`);
             break;
         default:
             ChatLib.chat(`${AQUA}Please enter as /va calculate <hypergolic, inferno ${ITALIC}<minions> <tier>${RESET}${AQUA}>`);
