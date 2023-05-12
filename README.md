@@ -1,6 +1,9 @@
 # [VolcAddons](https://www.chattriggers.com/modules/v/VolcAddons)
 ChatTriggers module originally created for Koodar. Now I'm just adding random QOL stuff :)
 
+## Setup + Commands
+
+
 ## Features
 - GENERAL FEATURES
   - Draw waypoint /va waypoint
