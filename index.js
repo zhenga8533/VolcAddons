@@ -57,14 +57,18 @@ if (data.newUser) {
 }
 
 // NEW UPDATE
-if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
-    data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
-    ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-    ChatLib.chat("-Added this update notifer");
-    ChatLib.chat("-Reduced lag caused by supply pile detection");
-    ChatLib.chat("-Fixed bz calculator (changed api link)");
-    Chatlib.chat("-Added /va calc gabagool to bz calculator");
-}
+register("chat", () => {
+    setTimeout(() => {
+        if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
+            data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
+            ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
+            ChatLib.chat("-Fixed waypoints not rendering correctly if render distance is < 4");
+            ChatLib.chat("-Fixed some more Koodar lag caused by dropship warning");
+            ChatLib.chat("-Added Kuudra spawn alert");
+            ChatLib.chat("-Added Kuudra token alert\n");
+        }
+    }, 1000);
+}).setCriteria("Welcome to Hypixel SkyBlock!");
 
 // HELP
 function getHelp() {

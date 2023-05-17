@@ -294,6 +294,14 @@ ${ITALIC}PSA does support nons.
         subcategory: "Kuudra"
     })
     kuudraHP = false;
+
+    @SwitchProperty({
+        name: "Kuudra Spawn",
+        description: "Tells you where Kuudra is going to spawn in p4 (use at own risk). Requires animation skip, so don't fail @BananaTheBot.",
+        category: "Kuudra",
+        subcategory: "Kuudra"
+    })
+    kuudraSpawn = false;
     
     @SwitchProperty({
         name: "Show Supply/Fuel Waypoints",
@@ -318,6 +326,16 @@ ${ITALIC}PSA does support nons.
         subcategory: "Kuudra Alert"
     })
     kuudraAlerts = false;
+
+    @SliderProperty({
+        name: "Token Alert",
+        description: "Alerts the player once they reach 'X' tokens. Set as 0 to turn off. (Only alerts once per run)",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert",
+        min: 0,
+        max: 1000
+    })
+    tokenAlert = 0;
 
     @TextProperty({
         name: "Kuudra Alerts (Cannonear IGN)",
