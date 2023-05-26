@@ -50,5 +50,5 @@ register("dragged", (dx, dy, x, y) => {
 });
 
 register("command", () => {
-    moveTimer.open()
+    moveTimer.open();
 }).setName("moveTimer");

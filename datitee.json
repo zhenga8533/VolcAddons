@@ -1,7 +1,16 @@
 {
     "newUser": false,
+    "version": "2.4.1",
     "whitelist": [
-        "bananathebot"
+        "bananathebot",
+        "dogerocket",
+        "domiinix",
+        "xqf",
+        "ztraox",
+        "boppeler21",
+        "mandn1up",
+        "lhxseven",
+        "death_ashaman"
     ],
     "blocklist": [
         "kaus",
@@ -17,38 +26,55 @@
     ],
     "moblist": [
         "inquisitor",
-        "vanquisher"
+        "vanquisher",
+        "kuudra"
     ],
     "files": [
         "splits.txt",
-        "bananathebot-dtspookyy-epoa-volcaronitee.txt",
-        "bananathebot-epoa-volcaronitee-waitwut_.txt",
-        "astryll-bananathebot-mandn1up-volcaronitee.txt"
+        "astryll-domiinix-glade-volcaronitee.txt",
+        "domiinix-glade-justruptic-volcaronitee.txt",
+        "astryll-justruptic-pegasdaddy-volcaronitee.txt",
+        "astryll-czupakabra_-justruptic-volcaronitee.txt",
+        "astryll-bananathebot-mandn1up-volcaronitee.txt",
+        "astryll-goodguykev-volcaronitee-xqf.txt",
+        "astryll-goodguykev-volcaronitee-ztraox.txt",
+        "astryll-domiinix-volcaronitee-ztraox.txt",
+        "astryll-boppeler21-volcaronitee-ztraox.txt",
+        "boppeler21-domiinix-volcaronitee-ztraox.txt",
+        "domiinix-dtertan-glade-volcaronitee.txt",
+        "bananathebot-domiinix-mandn1up-volcaronitee.txt",
+        "domiinix-lhxseven-mandn1up-volcaronitee.txt",
+        "lhxseven-lucdj-mandn1up-volcaronitee.txt",
+        "domiinix-glade-janpowerii_-volcaronitee.txt"
     ],
     "splits": {
         "last": [
-            37.01,
-            23.76,
-            12.77,
-            30.71,
-            104.25
+            44.59,
+            25.03,
+            13.56,
+            35.45,
+            118.63
         ],
         "best": [
-            34.01,
-            15.94,
-            12.68,
-            22.24,
-            100.34
+            33.05,
+            14,
+            9.14,
+            16.25,
+            87.99
         ]
     },
     "vanqSession": {
-        "vanqs": 130,
-        "kills": 53722,
-        "last": 2,
-        "average": 413
+        "vanqs": 382,
+        "kills": 148529,
+        "last": 21,
+        "average": 389
     },
     "dianaKey": 33,
-    "apexPrice": "1.5e9",
+    "apexPrice": "2000000000",
+    "GL": [
+        10,
+        220
+    ],
     "SL": [
         10,
         169

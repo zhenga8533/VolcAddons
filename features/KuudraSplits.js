@@ -1,5 +1,5 @@
 import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, RED, RESET } from "../constants";
-import { getTime } from "../functions";
+import { getTime, isValidDate } from "../functions";
 import settings from "../settings";
 import { data, getPlayerName, getWorld } from "../variables";
 
@@ -74,19 +74,28 @@ register("chat", () => {
     // Record Total
     data.splits.last[4] = parseFloat((data.splits.last[0] + data.splits.last[1] + data.splits.last[2] + data.splits.last[3]).toFixed(2));
     
-    // Record splits and check if best
+    // Record splits
     let splitFormat = "";
     if (getWorld() == "kuudra t5") {
         // Check if new best split / run
         for (let i = 0; i < data.splits.last.length; i++) {
             if (!broken)
                 splitFormat += `${data.splits.last[i]}, `;
+            // Record best splits
             if (data.splits.last[i] < data.splits.best[i] && data.splits.last[i] != 0)
                 data.splits.best[i] = data.splits.last[i];
         }
+        // Tracks when timer not infinite
         if (!broken) {
-            // Tracks all splits
-            splitFormat = splitFormat.replace(/,\s*$/, '') + '\n';
+            // Gets date
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            let mm = now.getMonth() + 1;
+            let dd = now.getDate();
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            splitFormat = splitFormat + dd+'/'+mm+'/'+yyyy + '\n';
             FileLib.append("./VolcAddons/data", "splits.txt", splitFormat);
             if (!data.files.includes("splits.txt")) 
                 data.files.push("splits.txt");
@@ -223,10 +232,12 @@ export function getSplits(args){
                 const fileSplits = FileLib.read("./VolcAddons/data", fileName);
 
                 // Get runs from file
-                if (fileSplits != undefined) {
-                    const runs = fileSplits.split("\n");
+                if (fileSplits) {
+                    let runs = fileSplits.split("\n");
                     runs.pop();
 
+                    if (isValidDate(args[2]))
+                        runs = runs.filter((run) => run.split(", ")[5] == args[2]);
                     // Get # of runs to average
                     let runsWanted = runs.length;
                     if (!isNaN(args[2])) if (args[2] < runsWanted) runsWanted = args[2];

@@ -6,6 +6,7 @@ import {
 	@SwitchProperty,
     @ButtonProperty,
     @Vigilant,
+    @CheckboxProperty
 } from '../Vigilance/index';
 
 @Vigilant("VolcAddons", "VolcAddons", {
@@ -23,10 +24,15 @@ ${BOLD}${GOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json"
 
 ${WHITE}Made By Volcaronitee
 ${ITALIC}PSA does support nons.
-`
-        )
+`)
+        this.addDependency("Move Timer HUD", "Golden Fish Timer");
+        this.addDependency("Move Counter HUD", "Vanquisher Counter");
+        this.addDependency("Clear Session", "Vanquisher Counter");
+        this.addDependency("Move Gyro Timer HUD", "Cells Alignment Timer");
+        this.addDependency("Move Splits HUD", "Kuudra Splits");
+        this.addDependency("Move Visitors HUD", "Garden Tab Display");
     }
-
+    
     // GENERAL
     @SwitchProperty({
         name: "Draw Waypoint",
@@ -318,6 +324,24 @@ ${ITALIC}PSA does support nons.
         subcategory: "Kuudra"
     })
     kuudraBuild = false;
+
+    @SwitchProperty({
+        name: "Cells Alignment Timer",
+        description: "Displays the time left before Cells Alignment ends.",
+        category: "Kuudra",
+        subcategory: "Kuudra"
+    })
+    gyroTimer = false;
+
+    @ButtonProperty({
+        name: "Move Gyro Timer HUD",
+        description: "Move the location of the Cells Alignement Timer.",
+        category: "Kuudra",
+        subcategory: "Kuudra"
+    })
+    moveGyroTimer() {
+        ChatLib.command("moveAlignTimer", true);
+    }
 
     @SwitchProperty({
         name: "Kuudra Alerts",

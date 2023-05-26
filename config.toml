@@ -3,36 +3,39 @@
 
 	[general.general]
 		draw_waypoint = true
-		low_health_alert = 0.2
-		abiphone_blocker = true
+		low_health_alert = 0.19615385
+		abiphone_blocker = false
 		remove_selfie_mode = true
+
+	[general.timer]
+		reminder_text = ""
+		reminder_time = 0
+
+	[general.stats]
+		show_speed = true
 
 	[general.party]
 		enable_whitelist_rejoin = true
 		party_chat_command = true
 		leader_chat_command = true
-		auto_join_reparty = true
+		auto_join_reparty = false
 
 [crimson_isles]
 
 	[crimson_isles.crimson_isles]
 		golden_fish_timer = false
-		golden_fish_alert = true
-		broken_hyperion = true
-		ragnarok_detection = true
-
-	[crimson_isles.combat]
 		broken_hyperion = true
 		ragnarok_detection = true
 
 	[crimson_isles.vanquisher_alert]
+		vanquisher_detection_sound = false
 		vanquisher_auto-warp = ""
-		vanquisher_detection = false
-		vanquisher_alert = false
+		vanquisher_detection = true
+		vanquisher_alert = true
 		"vanquisher_alert_(all_chat_toggle)" = false
 
 	[crimson_isles.vanquisher_counter]
-		vanquisher_counter = false
+		vanquisher_counter = true
 
 [hub]
 
@@ -54,11 +57,15 @@
 
 	[kuudra.kuudra]
 		kuudra_hp_display = true
-		kuudra_reparty = "bananathebot"
-		"show_supply/fuel_waypoints" = false
+		kuudra_reparty = ""
+		show_supply_piles = true
+		"show_supply/fuel_waypoints" = true
+		cells_alignment_timer = true
+		kuudra_spawn = true
 
 	[kuudra.kuudra_alert]
 		kuudra_alerts = true
+		token_alert = 238
 		"kuudra_alerts_(cannonear_ign)" = ""
 		"kuudra_alerts_(stunner_ign)" = ""
 
@@ -69,4 +76,5 @@
 
 	[garden.garden]
 		garden_tab_display = true
+		composter_alert = true
 

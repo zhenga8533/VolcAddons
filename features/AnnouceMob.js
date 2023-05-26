@@ -13,9 +13,10 @@ function annoucePosition(toAll, mob, x, y ,z) {
     if (area != undefined)
         area = area.getName().removeFormatting();
 
-    if (toAll)
-        ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!`);
-    else if (getInParty())
+    if (toAll) {
+        const id = (Math.random() + 1).toString(36).substring(7);
+        ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]! @${id}`);
+    } else if (getInParty())
         ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!`);
 }
 

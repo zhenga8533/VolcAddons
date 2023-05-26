@@ -1,5 +1,5 @@
 import settings from "../settings"
-import {AQUA, BOLD, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../constants"
+import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../constants"
 import { getWorld } from "../variables";
 
 // NO KEY ALERT
@@ -98,17 +98,36 @@ register("chat", (player) => { // Kuudra stunned alert
     Client.Companion.showTitle(`${GREEN}${BOLD}KUUDRA STUNNED!`, "", 10, 100, 10);
 }).setCriteria("{player} destroyed one of Kuudra's pods!");
 
-// DROPSHIP WARNING
 const EntityGhast = Java.type('net.minecraft.entity.monster.EntityGhast');
-register("renderEntity", () => {
-    if ((getWorld() != "kuudra t5" && getWorld() != "kuudra f4") || !settings.kuudraAlerts) return;
+let alerted = false
+register("step", () => {
+    if ((getWorld() != "kuudra t5" && getWorld() != "kuudra f4")) return;
 
-    let ghasts = World.getAllEntitiesOfType(EntityGhast.class);
+    // DROPSHIP WARNING
+    if (settings.kuudraAlerts) {
+        let ghasts = World.getAllEntitiesOfType(EntityGhast.class);
+        const dropships = ghasts.filter((ghast) => {
+            distance = Math.sqrt(Math.pow(ghast.getX() + 101, 2) + Math.pow(ghast.getZ() + 105, 2));
+            return distance < 20 && distance > 10;
+        })
 
-    ghasts.forEach((ghast) => {
-        let distance = Math.sqrt(Math.pow(ghast.getX() + 101, 2) + Math.pow(ghast.getZ() + 105, 2));
-
-        if (distance < 20 && distance > 10)
+        if (dropships.length)
             Client.Companion.showTitle(`${RED}${BOLD}DROPSHIP INCOMING!`, "", 0, 50, 5);
-    })
+    }
+
+    // TOKEN ALERT
+    if (settings.tokenAlert && !alerted) {
+        tokens = Scoreboard.getLines().find((line) => line.getName().includes("Tokens"));
+        if (tokens) {
+            tokens = tokens.getName().removeFormatting().replace(/\D/g,'');
+            if (tokens >= Math.round(settings.tokenAlert / 10) * 10) {
+                Client.Companion.showTitle(`${BOLD}${tokens} ${DARK_PURPLE}${BOLD}TOKENS GATHERED!`, "", 0, 50, 5);
+                alerted = true
+            }
+        }
+    }
+}).setFps(5);
+
+register("worldLoad", () => {
+    alerted = false
 });

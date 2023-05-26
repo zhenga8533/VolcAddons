@@ -1,46 +1,47 @@
 // Import outer scope variables
-import settings from "./settings"
-import { data, getWorld, updateList } from "./variables"
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./constants"
+import settings from "./settings";
+import { data, getWorld, updateList } from "./variables";
+import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./constants";
 
 // General
-import "./features/PartyCommands"
-import "./features/RemoveSelfie"
-import "./features/JoinWhitelist"
-import "./features/DrawWaypoint"
-import "./features/ReminderTimer"
-import { createWaypoint } from "./features/DrawWaypoint"
-import "./features/JoinReparty"
-import "./features/HealthAlert"
+import "./features/PartyCommands";
+import "./features/RemoveSelfie";
+import "./features/JoinWhitelist";
+import "./features/DrawWaypoint";
+import "./features/GyroTimer";
+import "./features/ReminderTimer";
+import { createWaypoint } from "./features/DrawWaypoint";
+import "./features/JoinReparty";
+import "./features/HealthAlert";
 
 // Hub
-import "./features/DianaWaypoint"
-import { setWarps } from "./features/DianaWaypoint"
-import "./features/AnnouceMob"
+import "./features/DianaWaypoint";
+import { setWarps } from "./features/DianaWaypoint";
+import "./features/AnnouceMob";
 
 // Private Island
-import "./features/BazaarCalculator"
-import { calculate, setApex } from "./features/BazaarCalculator"
+import "./features/BazaarCalculator";
+import { calculate, setApex } from "./features/BazaarCalculator";
 
 // Crimson Isles
-import "./features/BrokenHyp"
-import "./features/GoldenFishAlert"
-import "./features/VanqWarp"
-import "./features/VanqCounter"
-import "./features/AbiphoneBlocker"
+import "./features/BrokenHyp";
+import "./features/GoldenFishAlert";
+import "./features/VanqWarp";
+import "./features/VanqCounter";
+import "./features/AbiphoneBlocker";
 
 // Kuudra
-import "./features/KuudraAlerts"
-import "./features/KuudraReparty"
-import "./features/KuudraCrates"
-import "./features/KuudraHP"
-import "./features/KuudraSplits"
-import { getSplits } from "./features/KuudraSplits"
-import "./features/RagDetect"
+import "./features/KuudraAlerts";
+import "./features/KuudraReparty";
+import "./features/KuudraCrates";
+import "./features/KuudraHP";
+import "./features/KuudraSplits";
+import { getSplits } from "./features/KuudraSplits";
+import "./features/RagDetect";
 
 // Garden
-import "./features/GardenTab"
-import { executeCommand } from "./features/PartyCommands"
+import "./features/GardenTab";
+import { executeCommand } from "./features/PartyCommands";
 
 // TURN ON PERSISTANT DATA AUTOSAVE (POGOBJECT)
 data.autosave();
@@ -62,10 +63,11 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Fixed waypoints not rendering correctly if render distance is < 4");
-            ChatLib.chat("-Fixed some more Koodar lag caused by dropship warning");
-            ChatLib.chat("-Added Kuudra spawn alert");
-            ChatLib.chat("-Added Kuudra token alert\n");
+            ChatLib.chat("-Added Gyro timer");
+            ChatLib.chat("-Added time stamps in /va splits")
+            ChatLib.chat("-Added randomized letters to end of coords in all chat (don't get muted :])")
+            ChatLib.chat("-Added /va coords with ^, same format as patcher");
+            ChatLib.chat("-Fixed error in fetching sell price in /va calc\n");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
@@ -115,6 +117,11 @@ register ("command", (...args) => {
             settings.kuudraCannonear = "";
             settings.kuudraStunner = "";
             ChatLib.chat(`${GREEN}Successfully cleared all text property settings!`);
+            break;
+        case "coords": // sendcoords
+        case "sendcoords":
+            const id = (Math.random() + 1).toString(36).substring(7);
+            ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} @${id}`);
             break;
         case "whitelist": // ADD / REMOVE USER FROM WHITELIST
         case "white":

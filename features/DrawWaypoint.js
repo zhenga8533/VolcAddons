@@ -41,9 +41,9 @@ function renderWaypoint(waypoints, r, g, b) {
 
         // Makes it so waypoint always renders
         if (distance >= 200) {
-            x = Player.getX() + (x - Player.getX()) * (200 / distance);
-            y = Player.getY() + (y - Player.getY()) * (200 / distance);
-            z = Player.getZ() + (z - Player.getZ()) * (200 / distance);
+            x = Player.getX() + (x - Player.getX()) * (100 / distance);
+            y = Player.getY() + (y - Player.getY()) * (100 / distance);
+            z = Player.getZ() + (z - Player.getZ()) * (100 / distance);
         }
 
         // Formats and realins everything

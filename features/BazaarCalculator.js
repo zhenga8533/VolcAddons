@@ -31,8 +31,8 @@ function getPricing() {
         products = response.data;
 
         Object.keys(items).forEach((itemID) => {
-            const instaPrice = products[itemID].quick_status.sellPrice;
-            const orderPrice = products[itemID].quick_status.buyPrice;
+            const instaPrice = products[itemID].sell_summary[0].pricePerUnit;
+            const orderPrice = products[itemID].buy_summary[0].pricePerUnit;
 
             items[itemID] = [instaPrice, orderPrice];
         })
@@ -102,11 +102,11 @@ export function calculate(args) {
             // Drops
             const actions = minions * 86400 / (2 * actionSpeed);
             const drops = {
-                "GABAGOOL": actions.toFixed(2),
-                "CHILI": (eyedrop * actions / 156).toFixed(2),
-                "VERTEX": (eyedrop * actions / 16364).toFixed(2),
-                "APEX": (eyedrop * actions / 1570909).toFixed(2),
-                "REAPER": (eyedrop * actions / 458182).toFixed(2)
+                "GABAGOOL": actions.toFixed(4),
+                "CHILI": (eyedrop * actions / 156).toFixed(4),
+                "VERTEX": (eyedrop * actions / 16364).toFixed(4),
+                "APEX": (eyedrop * actions / 1570909).toFixed(4),
+                "REAPER": (eyedrop * actions / 458182).toFixed(4)
             }
             const profit = {
                 "GABAGOOL": drops.GABAGOOL * items.CRUDE_GABAGOOL[1],
