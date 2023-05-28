@@ -2,6 +2,7 @@
 import settings from "./settings";
 import { data, getWorld, updateList } from "./variables";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./constants";
+data.autosave();
 
 // General
 import "./features/PartyCommands";
@@ -43,16 +44,11 @@ import "./features/RagDetect";
 import "./features/GardenTab";
 import { executeCommand } from "./features/PartyCommands";
 
-// TURN ON PERSISTANT DATA AUTOSAVE (POGOBJECT)
-data.autosave();
-
 // FIRST RUN
 if (data.newUser) {
-    ChatLib.chat("");
-    ChatLib.chat(`${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
+    ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
     ChatLib.chat("Ya got any grapes? (P.S. do /volcaddons, /volc, /va, /itee)");
-    ChatLib.chat("Instruction manual (i think) => /va help");
-    ChatLib.chat("");
+    ChatLib.chat("Instruction manual (i think) => /va help\n");
 
     data.newUser = false;
 }
@@ -67,7 +63,8 @@ register("chat", () => {
             ChatLib.chat("-Added time stamps in /va splits")
             ChatLib.chat("-Added randomized letters to end of coords in all chat (don't get muted :])")
             ChatLib.chat("-Added /va coords with ^, same format as patcher");
-            ChatLib.chat("-Fixed error in fetching sell price in /va calc\n");
+            ChatLib.chat("-Fixed error in fetching sell price in /va calc");
+            ChatLib.chat("-/va settings adjustments (mainly ability to customize kuudra alerts)\n");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
@@ -120,6 +117,7 @@ register ("command", (...args) => {
             break;
         case "coords": // sendcoords
         case "sendcoords":
+        case "xyz":
             const id = (Math.random() + 1).toString(36).substring(7);
             ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} @${id}`);
             break;

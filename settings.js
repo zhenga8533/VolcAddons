@@ -31,6 +31,24 @@ ${ITALIC}PSA does support nons.
         this.addDependency("Move Gyro Timer HUD", "Cells Alignment Timer");
         this.addDependency("Move Splits HUD", "Kuudra Splits");
         this.addDependency("Move Visitors HUD", "Garden Tab Display");
+
+        this.addDependency("Announce Inquisitor [ACT]", "Announce Inquisitor");
+        this.addDependency("Announce Vanquisher [ACT]", "Announce Vanquisher");
+        
+        this.addDependency("No Key Alert", "Kuudra Alert Options");
+        this.addDependency("Unready Alert", "Kuudra Alert Options");
+        this.addDependency("Choose Route Alert", "Kuudra Alert Options");
+        this.addDependency("Pickup Supply Alert", "Kuudra Alert Options");
+        this.addDependency("Building Alert", "Kuudra Alert Options");
+        this.addDependency("Fresh Tools Alert", "Kuudra Alert Options");
+        this.addDependency("Fuel Percent Alert", "Kuudra Alert Options");
+        this.addDependency("Stunner Eaten Alert", "Kuudra Alert Options");
+        this.addDependency("Stunner IGN", "Kuudra Alerts");
+        this.addDependency("Mount Ballista Alert", "Kuudra Alert Options");
+        this.addDependency("Cannonear IGN", "Kuudra Alerts");
+        this.addDependency("Stun Alert", "Kuudra Alert Options");
+        this.addDependency("Dropship Alert", "Kuudra Alert Options");
+        this.addDependency("Token Alert", "Kuudra Alerts");
     }
     
     // GENERAL
@@ -119,7 +137,7 @@ ${ITALIC}PSA does support nons.
     // HUB
     @SwitchProperty({
         name: "Diana Waypoint",
-        description: "Estimates Diana burrows from particles and pitch of Ancestral Spade (particles => ON, /togglemusic => OFF) [Budget Version]",
+        description: "Estimates Diana burrows from particles and pitch of Ancestral Spade (particles => ON, /togglemusic => OFF) [POV Soopy servers are down]",
         category: "Hub",
         subcategory: "Diana"
     })
@@ -174,7 +192,7 @@ ${ITALIC}PSA does support nons.
     dianaAlert = false;
 
     @SwitchProperty({
-        name: "Announce Inquisitor (All Chat Toggle)",
+        name: "Announce Inquisitor [ACT]",
         description: "Sends coords in all chat instead of party chat.",
         category: "Hub",
         subcategory: "Inquisitor"
@@ -217,7 +235,7 @@ ${ITALIC}PSA does support nons.
     }
 
     @SwitchProperty({
-        name: "Vanquisher Alert",
+        name: "Announce Vanquisher",
         description: "Sends coords of Vanquisher in patcher format. (Only works if Vanquisher Auto-Warp is empty!)",
         category: "Crimson Isles",
         subcategory: "Vanquisher Alert"
@@ -225,7 +243,7 @@ ${ITALIC}PSA does support nons.
     vanqAlert = false;
 
     @SwitchProperty({
-        name: "Vanquisher Alert (All Chat Toggle)",
+        name: "Announce Vanquisher [ACT]",
         description: "Sends coords in all chat instead of party chat.",
         category: "Crimson Isles",
         subcategory: "Vanquisher Alert"
@@ -351,6 +369,100 @@ ${ITALIC}PSA does support nons.
     })
     kuudraAlerts = false;
 
+    @SwitchProperty({
+        name: "Kuudra Alert Options",
+        description: "Toggle to show what alert to show/hide.",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    alertsToggle = false;
+
+    @CheckboxProperty({
+        name: "No Key Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    keyAlert = true;
+    @CheckboxProperty({
+        name: "Unready Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    unreadyAlert = true;
+    @CheckboxProperty({
+        name: "Choose Route Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    routeAlert = true;
+    @CheckboxProperty({
+        name: "Pickup Supply Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    supplyAlert = true;
+    @CheckboxProperty({
+        name: "Building Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    buildingAlert = true;
+    @CheckboxProperty({
+        name: "Fresh Tools Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    freshAlert = true;
+    @CheckboxProperty({
+        name: "Fuel Percent Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    fuelAlert = true;
+    @CheckboxProperty({
+        name: "Fresh Tools Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    freshAlert = true;
+    @CheckboxProperty({
+        name: "Stunner Eaten Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    eatenAlert = true;
+    @TextProperty({
+        name: "Stunner IGN",
+        description: "Tracks who is stunning Kuudra for <Kuudra Alerts> to work. (leave empty if you want to track anyone who gets eaten)",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    kuudraStunner = "";
+    @CheckboxProperty({
+        name: "Mount Ballista Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    ballistaAlert = true;
+    @TextProperty({
+        name: "Cannonear IGN",
+        description: "Tracks who is shooting the ballista for <Kuudra Alerts> to work. (leave empty if you want to track anyone who mounts cannon)",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    kuudraCannonear = "";
+    @CheckboxProperty({
+        name: "Stun Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    stunAlert = true;
+    @CheckboxProperty({
+        name: "Dropship Alert",
+        category: "Kuudra",
+        subcategory: "Kuudra Alert"
+    })
+    dropshipAlert = true;
     @SliderProperty({
         name: "Token Alert",
         description: "Alerts the player once they reach 'X' tokens. Set as 0 to turn off. (Only alerts once per run)",
@@ -360,22 +472,6 @@ ${ITALIC}PSA does support nons.
         max: 1000
     })
     tokenAlert = 0;
-
-    @TextProperty({
-        name: "Kuudra Alerts (Cannonear IGN)",
-        description: "Tracks who is shooting the ballista for <Kuudra Alerts> to work. (leave empty if you want to track anyone who mounts cannon)",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    kuudraCannonear = "";
-
-    @TextProperty({
-        name: "Kuudra Alerts (Stunner IGN)",
-        description: "Tracks who is stunning Kuudra for <Kuudra Alerts> to work. (leave empty if you want to track anyone who gets eaten)",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    kuudraStunner = "";
 
     @SwitchProperty({
         name: "Kuudra Splits",
@@ -397,6 +493,14 @@ ${ITALIC}PSA does support nons.
     
     // GARDEN
     @SwitchProperty({
+        name: "Composter Alert",
+        description: "Displays an alert when the composter becomes inactive.",
+        category: "Garden",
+        subcategory: "Garden"
+    })
+    gardenCompost = false;
+
+    @SwitchProperty({
         name: "Garden Tab Display",
         description: "Displays the garden visitors outside of tab menu.",
         category: "Garden",
@@ -413,14 +517,6 @@ ${ITALIC}PSA does support nons.
     moveVisitors() {
         ChatLib.command("moveVisitors", true);
     }
-
-    @SwitchProperty({
-        name: "Composter Alert",
-        description: "Displays an alert when the composter becomes inactive.",
-        category: "Garden",
-        subcategory: "Garden"
-    })
-    gardenCompost = false;
 }
 
 export default new Settings    

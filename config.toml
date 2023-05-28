@@ -18,7 +18,7 @@
 		enable_whitelist_rejoin = true
 		party_chat_command = true
 		leader_chat_command = true
-		auto_join_reparty = false
+		auto_join_reparty = true
 
 [crimson_isles]
 
@@ -31,6 +31,8 @@
 		vanquisher_detection_sound = false
 		vanquisher_auto-warp = ""
 		vanquisher_detection = true
+		announce_vanquisher = false
+		"announce_vanquisher_[act]" = false
 		vanquisher_alert = true
 		"vanquisher_alert_(all_chat_toggle)" = false
 
@@ -43,6 +45,7 @@
 		announce_inquisitor = false
 		"announce_inquisitor_(all_chat_toggle)" = false
 		detect_inquisitor = false
+		"announce_inquisitor_[act]" = false
 
 	[hub.diana]
 		diana_warp = false
@@ -57,16 +60,30 @@
 
 	[kuudra.kuudra]
 		kuudra_hp_display = true
-		kuudra_reparty = ""
+		kuudra_reparty = "bananathebot"
 		show_supply_piles = true
 		"show_supply/fuel_waypoints" = true
 		cells_alignment_timer = true
 		kuudra_spawn = true
 
 	[kuudra.kuudra_alert]
+		mount_ballista_alert = true
+		cannonear_ign = ""
 		kuudra_alerts = true
+		unready_alert = true
+		kuudra_alert_options = false
+		stun_alert = true
 		token_alert = 238
+		fresh_tools_alert = true
+		no_key_alert = true
+		choose_route_alert = true
+		fuel_percent_alert = true
+		stunner_ign = ""
+		pickup_supply_alert = true
 		"kuudra_alerts_(cannonear_ign)" = ""
+		stunner_eaten_alert = true
+		building_alert = true
+		dropship_alert = true
 		"kuudra_alerts_(stunner_ign)" = ""
 
 	[kuudra.kuudra_splits]

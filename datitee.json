@@ -1,6 +1,6 @@
 {
     "newUser": false,
-    "version": "2.4.1",
+    "version": "2.4.2",
     "whitelist": [
         "bananathebot",
         "dogerocket",
@@ -10,7 +10,8 @@
         "boppeler21",
         "mandn1up",
         "lhxseven",
-        "death_ashaman"
+        "death_ashaman",
+        "astryll"
     ],
     "blocklist": [
         "kaus",
@@ -65,8 +66,8 @@
     },
     "vanqSession": {
         "vanqs": 382,
-        "kills": 148529,
-        "last": 21,
+        "kills": 148541,
+        "last": 33,
         "average": 389
     },
     "dianaKey": 33,
