@@ -1,8 +1,8 @@
 import axios from "../../axios";
 import settings from "../settings"
-import { getIsLeader, getPlayerName } from "../variables"
+import { getIsLeader, getPlayerName } from "../utils/variables"
 import { request } from "../../requestV2";
-import { AQUA, DARK_AQUA, DARK_GREEN, WHITE } from "../constants";
+import { AQUA, DARK_AQUA, DARK_GREEN, WHITE } from "../utils/constants";
 
 // Variables for different commands
 let onCD = false;

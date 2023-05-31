@@ -1,13 +1,21 @@
-import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, RED, RESET } from "../constants";
-import { getTime, isValidDate } from "../functions";
+import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, RED, RESET } from "../utils/constants";
+import { getTime, isValidDate } from "../utils/functions";
 import settings from "../settings";
-import { data, getPlayerName, getWorld } from "../variables";
+import { data, getPlayerName, getWorld } from "../utils/variables";
 
 // Start times for each phase
 let kuudraSplit = [0, 0, 0, 0, 0];
 let times = ['0s', '0s', '0s', '0s'];
 let phase = 0;
 let party = [];
+
+// Date
+const now = new Date();
+const yyyy = now.getFullYear();
+let mm = now.getMonth() + 1;
+let dd = now.getDate();
+if (dd < 10) dd = '0' + dd;
+if (mm < 10) mm = '0' + mm;
 
 // Splits HUD
 const moveSplits = new Gui();
@@ -84,18 +92,13 @@ register("chat", () => {
             // Record best splits
             if (data.splits.last[i] < data.splits.best[i] && data.splits.last[i] != 0)
                 data.splits.best[i] = data.splits.last[i];
+            // Record worst splits
+            if (data.splits.last[i] > data.splits.worst[i] && data.splits.last[i] < 999)
+                data.splits.worst[i] = data.splits.last[i];
         }
         // Tracks when timer not infinite
         if (!broken) {
-            // Gets date
-            const now = new Date();
-            const yyyy = now.getFullYear();
-            let mm = now.getMonth() + 1;
-            let dd = now.getDate();
-            if (dd < 10) dd = '0' + dd;
-            if (mm < 10) mm = '0' + mm;
-
-            splitFormat = splitFormat + dd+'/'+mm+'/'+yyyy + '\n';
+            splitFormat = splitFormat + mm+'/'+dd+'/'+yyyy + '\n';
             FileLib.append("./VolcAddons/data", "splits.txt", splitFormat);
             if (!data.files.includes("splits.txt")) 
                 data.files.push("splits.txt");
@@ -212,6 +215,10 @@ function formatSplits(splits, color, runs) {
         const theory = (data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3]).toFixed(2);
         ChatLib.chat(`${color}${BOLD}Theoretical Best: ${RESET}${getTime(theory)}`);
     }
+    if (color == RED) {
+        const conjecture = (data.splits.worst[0] + data.splits.worst[1] + data.splits.worst[2] + data.splits.worst[3]).toFixed(2);
+        ChatLib.chat(`${color}${BOLD}Theoretical Worst: ${RESET}${getTime(conjecture)}`);
+    }
 }
 
 export function getSplits(args){
@@ -223,6 +230,11 @@ export function getSplits(args){
             case "best":
                 formatSplits(data.splits.best, GOLD, 0);
                 break;
+            case "worst":
+                formatSplits(data.splits.worst, RED, 0);
+                break;
+            case "today":
+                const today = mm+"/"+dd+"/"+yyyy;
             case "average":
                 // Gets file name
                 let fileName = "splits.txt";
@@ -236,8 +248,12 @@ export function getSplits(args){
                     let runs = fileSplits.split("\n");
                     runs.pop();
 
+                    // Filter by date
                     if (isValidDate(args[2]))
                         runs = runs.filter((run) => run.split(", ")[5] == args[2]);
+                    if (today)
+                        runs = runs.filter((run) => run.split(", ")[5] == today);
+                    
                     // Get # of runs to average
                     let runsWanted = runs.length;
                     if (!isNaN(args[2])) if (args[2] < runsWanted) runsWanted = args[2];
@@ -264,8 +280,8 @@ export function getSplits(args){
                 ChatLib.chat(`${GREEN}Succesfully cleared splits!`)
                 break;
             default:
-                ChatLib.chat(`${AQUA}Please enter as /va splits <last, best, average ${ITALIC}<# of runs, player members>${RESET}${AQUA}, clear>!`);
+                ChatLib.chat(`${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<# of runs, player members, mm/dd/yyyy>${RESET}${AQUA}, clear>!`);
                 break;
         }
-    } else ChatLib.chat(`${AQUA}Please enter as /va splits <last, best, average ${ITALIC}<# of runs, player members>${RESET}${AQUA}, clear>!`);
+    } else ChatLib.chat(`${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<# of runs, player members, mm/dd/yyyy>${RESET}${AQUA}, clear>!`);
 }

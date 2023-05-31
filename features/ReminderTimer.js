@@ -1,4 +1,4 @@
-import { AMOGUS, BOLD, GOLD } from "../constants";
+import { AMOGUS, BOLD, GOLD } from "../utils/constants";
 import settings from "../settings";
 
 let minutes = 0;

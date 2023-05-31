@@ -1,6 +1,6 @@
 import settings from "../settings";
-import { data, getWorld } from "../variables";
-import { AQUA, BOLD, DARK_RED, GREEN, ITALIC, RESET, WHITE } from "../constants";
+import { data, getWorld } from "../utils/variables";
+import { AQUA, BOLD, DARK_RED, GREEN, ITALIC, RESET, WHITE } from "../utils/constants";
 
 // Visitor Tablist Variables
 let tablist = null;

@@ -1,5 +1,5 @@
 import settings from "../settings"
-import { getInParty } from "../variables"
+import { getInParty } from "../utils/variables"
 
 let vanqCoords = [0, 0, 0, "None"];
 let vanqSpawned = false;

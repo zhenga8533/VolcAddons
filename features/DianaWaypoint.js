@@ -1,6 +1,7 @@
-import { AMOGUS, GOLD, GRAY, WHITE } from "../constants";
+import { AMOGUS, GOLD, GRAY, WHITE } from "../utils/constants";
 import settings from "../settings";
-import { data, getWorld } from "../variables";
+import { data, getWorld } from "../utils/variables";
+import { distanceFormula, getClosest } from "../utils/functions";
 
 // Burow detection Stuff
 let heldItem = undefined;
@@ -17,27 +18,6 @@ let burrows = [];
 // Vector Formula
 function getCoord(start, end) {
     return Math.round(start + (end - start) * distance);
-}
-
-function distanceFormula(x1, y1, z1, x2, y2, z2) {
-    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2));
-}
-
-// Find closest coord to the origin
-function findClosest(origin, positions) {
-    let closestPosition = positions.length > 0 ? positions[0] : [0, 0, 0];
-    let closestDistance = 999;
-    let distance = 999;
-
-    positions.forEach(position => {
-        distance = distanceFormula(origin[1], origin[2], origin[3], position[1], position[2], position[3]);
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            closestPosition = position;
-        }
-    });
-
-    return [closestPosition, closestDistance];
 }
 
 // Particle Tracking
@@ -62,7 +42,7 @@ register("spawnParticle", (particle, type, event) => {
             if (settings.dianaBurrow && !dig && World.getBlockAt(xyz[0], xyz[1], xyz[2]).type.getName()) {
                 xyz.unshift("Treasure");
 
-                closest = findClosest(xyz, burrows);
+                closest = getClosest(xyz, burrows);
                 if (closest[1] > 3) {
                     burrows.push(xyz);
                     // Burrow Alerts
@@ -76,13 +56,13 @@ register("spawnParticle", (particle, type, event) => {
         // Determine burrow type
         case ("CRIT_MAGIC"):
             xyz.unshift("Start");
-            closest = findClosest(xyz, burrows);
+            closest = getClosest(xyz, burrows);
             if (closest[1] < 3)
                 closest[0][0] = "Start";
             break;
         case ("CRIT"):
             xyz.unshift("Mob");
-            closest = findClosest(xyz, burrows);
+            closest = getClosest(xyz, burrows);
             if (closest[1] < 3)
                 closest[0][0] = "Mob";
             break;
@@ -154,7 +134,7 @@ register("tick", () => {
     theory = ["warp player", getCoord(start[0], end[0]), getCoord(start[1], end[1]), getCoord(start[2], end[2])];
     
     // Set theory burrow
-    theory[0] = "warp " + findClosest(theory, warps)[0][0];
+    theory[0] = "warp " + getClosest(theory, warps)[0][0];
     theoryBurrow = [theory];
 });
 
@@ -179,7 +159,7 @@ register("chat", () => {
     setTimeout(() => { dig = false }, 200);
 
     // Delete closest burrow from list
-    const closest = findClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
+    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
     if (closest != undefined);
         burrows.splice(burrows.indexOf(closest[0]), 1);
 }).setCriteria("${before}urrow${after}")

@@ -1,6 +1,6 @@
 import settings from "../settings";
-import { data, getWorld } from "../variables";
-import { BOLD, ITALIC, RED, RESET } from "../constants";
+import { data, getWorld } from "../utils/variables";
+import { BOLD, ITALIC, RED, RESET } from "../utils/constants";
 
 let items = {}
 

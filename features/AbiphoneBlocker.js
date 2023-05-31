@@ -1,6 +1,6 @@
 import settings from "../settings"
-import { data } from "../variables"
-import { GOLD, GRAY, WHITE } from "../constants";
+import { data } from "../utils/variables"
+import { GOLD, GRAY, WHITE } from "../utils/constants";
 
 let blockRings = false;
 

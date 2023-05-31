@@ -1,6 +1,6 @@
 import settings from "../settings"
-import { getIsLeader } from "../variables"
-import { AQUA, BOLD, GOLD, OBFUSCATED, RESET } from "../constants"
+import { getIsLeader } from "../utils/variables"
+import { AQUA, BOLD, GOLD, OBFUSCATED, RESET } from "../utils/constants"
 
 let notInParty = 0;
 let onCD = false;

@@ -1,4 +1,4 @@
-import { BOLD, GOLD } from "../constants";
+import { BOLD, GOLD } from "../utils/constants";
 import settings from "../settings";
 
 let heldItem = undefined;

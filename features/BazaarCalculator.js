@@ -1,6 +1,6 @@
 import axios from "../../axios";
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../constants';
-import { data } from '../variables';
+import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../utils/constants';
+import { data } from '../utils/variables';
 
 // ID : [INSTA BUY, SELL OFFER]
 let items = {

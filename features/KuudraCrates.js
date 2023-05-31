@@ -1,5 +1,5 @@
 import settings from "../settings";
-import { getWorld } from "../variables";
+import { getWorld } from "../utils/variables";
 
 const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const EntityGiantZombie = Java.type("net.minecraft.entity.monster.EntityGiantZombie");
@@ -24,6 +24,7 @@ register("chat", () => {
     phase = 4;
 }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!");
 
+// Supplies
 register("tick", () => {
     if ((getWorld() != "kuudra t5" && getWorld() != "kuudra f4") || !settings.kuudraCrates || (phase != 1 && phase != 3)) return;
     
@@ -33,6 +34,7 @@ register("tick", () => {
     supplies.forEach((supply) => { crates.push(['Crate', supply.getX(), supply.getY() + 10, supply.getZ()]) });
 });
 
+// Build
 register("step", () => {
     if ((getWorld() != "kuudra t5" && getWorld() != "kuudra f4") || !settings.kuudraBuild || phase != 2) return;
 
@@ -44,6 +46,7 @@ register("step", () => {
 
 register("worldUnload", () => {
     crates = [];
+    builds = [];
 });
 
 export function getCrates() {

@@ -1,6 +1,6 @@
-import { data, getWorld } from "../variables";
+import { data, getWorld } from "../utils/variables";
 import settings from "../settings"
-import { BOLD, GREEN, ITALIC, RED, RESET } from "../constants";
+import { BOLD, GREEN, ITALIC, RED, RESET } from "../utils/constants";
 
 const moveTimer = new Gui();
 let align = 0;

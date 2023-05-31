@@ -1,6 +1,6 @@
-import { AMOGUS, BOLD, DARK_PURPLE, GOLD, WHITE } from "../constants";
+import { AMOGUS, BOLD, DARK_PURPLE, GOLD, WHITE } from "../utils/constants";
 import settings from "../settings"
-import { data, getInParty, getWorld } from "../variables"
+import { data, getInParty, getWorld } from "../utils/variables"
 
 // GENERAL FUNCTIONS
 function annoucePosition(toAll, mob, x, y ,z) {
@@ -31,6 +31,15 @@ register("chat", () => {
 
     annoucePosition(settings.vanqAlertAll, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("A Vanquisher is spawning nearby!");
+
+// Detect others with sound
+register("chat", () => {
+    if (soundCD && settings.vanqSound) {
+        soundCD = false;
+        AMOGUS.play();
+        setTimeout(() => { soundCD = true }, 10000);
+    }
+}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!");
 
 register("tick", () => {
     vanquishers = [];

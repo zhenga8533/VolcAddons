@@ -1,6 +1,6 @@
 import settings from "../settings"
-import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../constants"
-import { getWorld } from "../variables";
+import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../utils/constants"
+import { getWorld } from "../utils/variables";
 
 // NO KEY ALERT
 register("chat", () => {

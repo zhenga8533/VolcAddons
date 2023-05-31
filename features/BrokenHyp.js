@@ -1,5 +1,5 @@
 import settings from "../settings"
-import { BOLD, DARK_RED } from "../constants"
+import { BOLD, DARK_RED } from "../utils/constants"
 
 const WITHER_BLADES = ["HYPERION", "ASTRAEA", "SCYLLA", "VALKYRIE", "NECRON_BLADE_UNREFINED"];
 let heldItem = undefined;

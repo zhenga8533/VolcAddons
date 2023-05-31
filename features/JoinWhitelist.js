@@ -1,5 +1,5 @@
 import settings from "../settings"
-import { data, getPlayerName } from "../variables"
+import { data, getPlayerName } from "../utils/variables"
 
 register("chat", (player) => {
     // Get player name no rank

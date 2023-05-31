@@ -1,7 +1,7 @@
-import { data, getWorld } from "../variables";
+import { data, getWorld } from "../utils/variables";
 import settings from "../settings"
-import { BOLD, DARK_RED, GOLD, ITALIC, RESET, WHITE } from "../constants";
-import { getTime } from "../functions";
+import { BOLD, DARK_RED, GOLD, ITALIC, RESET, WHITE } from "../utils/constants";
+import { getTime } from "../utils/functions";
 
 const moveTimer = new Gui();
 let lastCast = Date.now();

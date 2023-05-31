@@ -1,7 +1,7 @@
 // Import outer scope variables
 import settings from "./settings";
-import { data, getWorld, updateList } from "./variables";
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./constants";
+import { data, getWorld, getZone, updateList } from "./utils/variables";
+import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 data.autosave();
 
 // General
@@ -11,7 +11,7 @@ import "./features/JoinWhitelist";
 import "./features/DrawWaypoint";
 import "./features/GyroTimer";
 import "./features/ReminderTimer";
-import { createWaypoint } from "./features/DrawWaypoint";
+import { createWaypoint, enigmaEdit } from "./features/DrawWaypoint";
 import "./features/JoinReparty";
 import "./features/HealthAlert";
 
@@ -59,12 +59,13 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added Gyro timer");
-            ChatLib.chat("-Added time stamps in /va splits")
-            ChatLib.chat("-Added randomized letters to end of coords in all chat (don't get muted :])")
-            ChatLib.chat("-Added /va coords with ^, same format as patcher");
-            ChatLib.chat("-Fixed error in fetching sell price in /va calc");
-            ChatLib.chat("-/va settings adjustments (mainly ability to customize kuudra alerts)\n");
+            ChatLib.chat("-Fixed /va splits mm/dd/yyyy not working");
+            ChatLib.chat("-Fixed build waypoints still showing after run");
+            ChatLib.chat("-Improved command descriptions and generalized them in /va help");
+            ChatLib.chat("-Added /va splits worst/today");
+            ChatLib.chat("-Added Vanquisher sound to coord detection too");
+            ChatLib.chat("-Added non tested Enigma souls");
+            data.splits.worst = [0, 0, 0, 0 ,0];
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
@@ -76,21 +77,19 @@ function getHelp() {
     // General Commands
     ChatLib.chat(`${AQUA}${BOLD}GENERAL COMMANDS:${RESET}`);
     ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, clear ${ITALIC}(resets text settings)${RESET}>`);
-    ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va waypoint <name> <x> <y> <z>`);
-    ChatLib.chat(`${GRAY}${BOLD}User Lists: ${RESET}/va <wl, bl, warp> <add, remove> <ign> | clear | view`);
-    ChatLib.chat(`${GRAY}${BOLD}Splits: ${RESET}/va <splits, average <#, party>, best, clear>`);
-    ChatLib.chat(`${RED}${BOLD}Inferno Minions:${RESET}`);
-    ChatLib.chat(`/va calculate <hypergolic, inferno ${ITALIC}<minions> <tier>${RESET}>`);
-    ChatLib.chat(`/va apex <price>\n`);
+    ChatLib.chat(`${GRAY}${BOLD}General: ${RESET}/va <waypoint, whitelist, blacklist, warplist>`);
+    ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
+    ChatLib.chat(`${RED}${BOLD}Inferno Minions:${RESET}/va <calc, apex>\n`);
 
     // General Features
     ChatLib.chat(`${AQUA}${BOLD}GENERAL FEATURES:${RESET}`);
     ChatLib.chat(`${GRAY}${BOLD}Party Commands: ${RESET}?<warp, transfer, promote, demote, allinv>`);
-    ChatLib.chat(`${GRAY}${BOLD}Other Commands: ${RESET}?<cringe, gay, dice, flip, 8ball>\n`);
+    ChatLib.chat(`${GRAY}${BOLD}Other Commands: ${RESET}?<cringe, gay, racist, dice, flip, 8ball, rps, w>\n`);
     
     // Crimson Isle Features
     ChatLib.chat(`${AQUA}${BOLD}OTHER FEATURES:${RESET}`);
     ChatLib.chat(`Should be self explanatory, DM Volcaronitee#0233 on discord if any questions...`);
+    ChatLib.chat(`That one is termed for the moment, please contact #0051 instead :skull:`);
 }
 
 // GENERAL FUNCTION COMMANDS
@@ -154,10 +153,16 @@ register ("command", (...args) => {
         case "world":
             ChatLib.chat(getWorld());
             break;
+        case "zone":
+            ChatLib.chat(getZone());
+            break;
         case "moblist":
         case "mob":
         case "ml":
             updateList(args, data.moblist, "mob-list");
+            break;
+        case "enigma":
+            enigmaEdit(args);
             break;
         default: // ELSE CASE -> SETTINGS
             if (PARTY_COMMANDS.includes(command))

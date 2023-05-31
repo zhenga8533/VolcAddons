@@ -1,4 +1,4 @@
-import { AMOGUS, BOLD, DARK_RED, RESET } from "../constants";
+import { AMOGUS, BOLD, DARK_RED, RESET } from "../utils/constants";
 import settings from "../settings";
 
 let player = undefined;

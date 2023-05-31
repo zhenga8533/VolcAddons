@@ -1,15 +1,19 @@
 import settings from "../settings";
 import RenderLib from "../../RenderLib/index.js";
 import renderBeaconBeam from "../../BeaconBeam";
-import { AQUA, GREEN } from "../constants";
+import { AQUA, ENIGMA_SOULS, GREEN } from "../utils/constants";
 
 import { getBuilds, getCrates } from "./KuudraCrates";
 import { getVanquishers } from "./AnnouceMob";
 import { getBurrow, getTheory } from "./DianaWaypoint";
 import { getInquisitors } from "./AnnouceMob";
+import { data, getWorld } from "../utils/variables";
+import { distance2D, getClosest } from "../utils/functions";
+import { distanceFormula } from "../utils/functions";
 
 let waypoints = [];
 let userWaypoints = [];
+let enigmaClose = data.enigmaSouls;
 
 // What actually does the waypoint rendering
 register("renderWorld", () => {
@@ -21,13 +25,24 @@ register("renderWorld", () => {
     renderWaypoint(getBurrow(), 0, 0.5, 0); // Green burrows
     renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
     renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
+    if (settings.enigmaWaypoint && getWorld() == "rift")
+        renderSimple(enigmaClose, 0.5, 0, 0.5); // Purple enigma
 })
+
+function renderSimple(waypoints, r, g, b) {
+    waypoints.forEach((waypoint) => {
+        x = waypoint[1];
+        y = waypoint[2];
+        z = waypoint[3];
+    
+        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true)
+        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, true);
+        renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
+    })
+}
 
 function renderWaypoint(waypoints, r, g, b) {
     if (waypoints.length < 1) return;
-    let x = 0;
-    let y = 0;
-    let z = 0;
     let xSign = 0;
     let zSign = 0;
     let distance = 0;
@@ -60,16 +75,13 @@ function renderWaypoint(waypoints, r, g, b) {
         if (xSign == 1) xSign = 0;
         if (zSign == 1) zSign = 0;
 
-        renderBeaconBeam(x + xSign, y - 1, z + zSign, r, g, b, 0.5, true);
+        renderBeaconBeam(x + xSign, y - 1, z + zSign, r, g, b, 0.5, false);
     }) 
 }
 
 function renderEntities(entities, title, r, g, b) {
     if (entities.length == 0) return;
 
-    let x = 0;
-    let y = 0;
-    let z = 0;
     let width = 0;
     let height = 0;
     let distance = 0;
@@ -118,6 +130,38 @@ export function createWaypoint(args) {
         userWaypoints.push([args[1], args[2], args[3], args[4]]);
         ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
     } else ChatLib.chat(`${AQUA}Please enter as /va waypoint <name> <x> <y> <z> | /va waypoint clear!`);
+}
+
+// Enigma Soul Stuff
+register("chat", () => {
+    // Delete closest soul
+    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
+    if (closest != undefined);
+        data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
+}).setCriteria("SOUL! You unlocked an Enigma Soul!");
+
+register("step", () => {
+    if (!settings.enigmaWaypoint || getWorld() != "rift") return;
+
+    // Filters to closest souls
+    x = Player.getX();
+    z = Player.getZ();
+
+    enigmaClose = data.enigmaSouls.filter((enigma) => distance2D(x, z, enigma[1], enigma[3]) < settings.enigmaWaypoint);
+}).setDelay(5);
+
+export function enigmaEdit(args) {
+    switch (args[1]) {
+        case "reset":
+            data.enigmaSouls = ENIGMA_SOULS;
+            break;
+        case "clear":
+            data.enigmaSouls = [];
+            break;
+        default:
+            ChatLib.chat(`${AQUA}Please enter as /va enigma <reset, clear>!`);
+            break;
+    }
 }
 
 // Deletes user waypoints on world exit

@@ -1,4 +1,4 @@
-import { BOLD, GOLD, ITALIC, WHITE } from "./constants";
+import { BOLD, GOLD, ITALIC, WHITE } from "./utils/constants";
 import {
     @TextProperty,
 	@PercentSliderProperty,
@@ -11,7 +11,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Hub", "Crimson Isles", "Kuudra", "Garden"];
+        const categories = ["General", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -25,6 +25,8 @@ ${BOLD}${GOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json"
 ${WHITE}Made By Volcaronitee
 ${ITALIC}PSA does support nons.
 `)
+        this.setCategoryDescription("Rift", "NONE OF THIS IS TESTED YET!");
+
         this.addDependency("Move Timer HUD", "Golden Fish Timer");
         this.addDependency("Move Counter HUD", "Vanquisher Counter");
         this.addDependency("Clear Session", "Vanquisher Counter");
@@ -517,6 +519,17 @@ ${ITALIC}PSA does support nons.
     moveVisitors() {
         ChatLib.command("moveVisitors", true);
     }
+
+    // RIFT
+    @SliderProperty({
+        name: "Enigma Soul Waypoints",
+        description: "Display the distance at which soul waypoints will render. (Set as 0 to turn off)",
+        category: "Rift",
+        subcategory: "Rift",
+        min: 0,
+        max: 1000
+    })
+    enigmaWaypoint = 0;
 }
 
 export default new Settings    

@@ -1,6 +1,6 @@
-import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../constants";
+import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../utils/constants";
 import settings from "../settings";
-import { getWorld } from "../variables";
+import { getWorld } from "../utils/variables";
 
 // Magma Cube Variables
 const EntityMagmaCube = Java.type('net.minecraft.entity.monster.EntityMagmaCube');
