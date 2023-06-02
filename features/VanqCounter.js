@@ -1,6 +1,7 @@
 import settings from "../settings";
 import { data, getWorld } from "../utils/variables";
-import { BOLD, ITALIC, RED, RESET } from "../utils/constants";
+import { BOLD, GUI_INSTRUCT, ITALIC, RED, RESET } from "../utils/constants";
+import { renderScale } from "../utils/functions";
 
 let items = {}
 
@@ -34,20 +35,34 @@ register("chat", () => {
 }).setCriteria("A Vanquisher is spawning nearby!");
 
 // Move and Draw Counter HUD
+let renderX = data.CL[0]/data.CL[2];
+let renderY = data.CL[1]/data.CL[2];
+
 register("renderOverlay", () => {
     // Adjusts split location
     if (moveCounter.isOpen()) {
-        Renderer.drawStringWithShadow(`${ITALIC}x: ${Math.round(data.CL[0])}, y: ${Math.round(data.CL[1])}`, data.CL[0], data.CL[1] - 10);
-        Renderer.drawString(`${RED}${BOLD}Total Vanqs: ${RESET}Wo`, data.CL[0], data.CL[1]);
-        Renderer.drawString(`${RED}${BOLD}Total Kills: ${RESET}Cao`, data.CL[0], data.CL[1] + 10);
-        Renderer.drawString(`${RED}${BOLD}Kills Since: ${RESET}Ni`, data.CL[0], data.CL[1] + 20);
-        Renderer.drawString(`${RED}${BOLD}Average Kills: ${RESET}Ma`, data.CL[0], data.CL[1] + 30);
+        renderScale(
+            data.CL[2], `${ITALIC}x: ${Math.round(data.CL[0])}, y: ${Math.round(data.CL[1])}, s: ${data.CL[2].toFixed(2)}`,
+            renderX, renderY - 10
+        );
+
+        renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}Wo`, renderX, renderY);
+        renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}Cao`, renderX, renderY + 10);
+        renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}Ni`, renderX, renderY + 20);
+        renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}Ma`, renderX, renderY + 30);
+
+        // GUI Instructions
+        renderScale(
+            1.2, GUI_INSTRUCT,
+            Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+            Renderer.screen.getHeight() / 2.4,
+        );
     } else {
         if (getWorld() != "crimson isle" || !settings.vanqCounter) return;
-        Renderer.drawString(`${RED}${BOLD}Total Vanqs: ${RESET}${data.vanqSession.vanqs}`, data.CL[0], data.CL[1]);
-        Renderer.drawString(`${RED}${BOLD}Total Kills: ${RESET}${data.vanqSession.kills}`, data.CL[0], data.CL[1] + 10);
-        Renderer.drawString(`${RED}${BOLD}Kills Since: ${RESET}${data.vanqSession.last}`, data.CL[0], data.CL[1] + 20);
-        Renderer.drawString(`${RED}${BOLD}Average Kills: ${RESET}${data.vanqSession.average}`, data.CL[0], data.CL[1] + 30);
+        renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}${data.vanqSession.vanqs}`, renderX, renderY);
+        renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}${data.vanqSession.kills}`, renderX, renderY + 10);
+        renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}${data.vanqSession.last}`, renderX, renderY + 20);
+        renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}${data.vanqSession.average}`, renderX, renderY + 30);
     }
 })
 
@@ -56,6 +71,27 @@ register("dragged", (dx, dy, x, y) => {
 
     data.CL[0] = parseInt(x);
     data.CL[1] = parseInt(y);
+    renderX = data.CL[0]/data.CL[2];
+    renderY = data.CL[1]/data.CL[2];
+});
+
+register("guiKey", (char, keyCode, gui, event) => {
+    if (!moveCounter.isOpen()) return;
+    
+    // Set or reset scale of text and repositions x/y to match
+    if (keyCode == 13) {
+        data.CL[2] += 0.05;
+        renderX = data.CL[0]/data.CL[2];
+        renderY = data.CL[1]/data.CL[2];
+    } else if (keyCode == 12) {
+        data.CL[2] -= 0.05;
+        renderX = data.CL[0]/data.CL[2];
+        renderY = data.CL[1]/data.CL[2];
+    } else if (keyCode == 19) {
+        data.CL[2] = 1;
+        renderX = data.CL[0];
+        renderY = data.CL[1];
+    }
 });
 
 register("command", () => {

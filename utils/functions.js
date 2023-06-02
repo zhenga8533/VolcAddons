@@ -8,10 +8,22 @@ export function getTime(time) {
         seconds = 0;
     }
 
-    if (minutes > 0) return `${minutes}m${Math.round(seconds)}s`;
+    if (minutes > 0) {
+        if (seconds < 9.5)
+            return `${minutes}m0${Math.round(seconds)}s`;
+        else
+            return `${minutes}m${Math.round(seconds)}s`;
+    }
     else return `${seconds}s`;
 };
 
+// GUI Stuff
+export function renderScale(scale, text, x, y) {
+    Renderer.scale(scale);
+    Renderer.drawString(text, x, y);
+}
+
+// Variable control
 export function distanceFormula(x1, y1, z1, x2, y2, z2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2));
 };

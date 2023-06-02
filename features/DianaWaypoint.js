@@ -1,4 +1,4 @@
-import { AMOGUS, GOLD, GRAY, WHITE } from "../utils/constants";
+import { AMOGUS, GRAY, LOGO, WHITE } from "../utils/constants";
 import settings from "../settings";
 import { data, getWorld } from "../utils/variables";
 import { distanceFormula, getClosest } from "../utils/functions";
@@ -47,7 +47,7 @@ register("spawnParticle", (particle, type, event) => {
                     burrows.push(xyz);
                     // Burrow Alerts
                     if (settings.dianaChat)
-                        ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}Burrow Detected at ${GRAY}x: ${xyz[1]}, y: ${xyz[2]}, z: ${xyz[3]}!`);
+                        ChatLib.chat(`${LOGO} ${WHITE}Burrow Detected at ${GRAY}x: ${xyz[1]}, y: ${xyz[2]}, z: ${xyz[3]}!`);
                     if (settings.dianaAmogus)
                         AMOGUS.play();
                 }

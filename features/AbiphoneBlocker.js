@@ -1,6 +1,6 @@
 import settings from "../settings"
 import { data } from "../utils/variables"
-import { GOLD, GRAY, WHITE } from "../utils/constants";
+import { LOGO, WHITE } from "../utils/constants";
 
 let blockRings = false;
 
@@ -9,7 +9,7 @@ register("chat", (npc, event) => {
     if (!settings.abiphoneBlocker) return;
 
     if (data.blocklist.includes(npc.toLowerCase())) {
-        ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}Blocked call from ${npc}!`);
+        ChatLib.chat(`${LOGO} ${WHITE}Blocked call from ${npc}!`);
 
         // Set Value to Block Sounds / Ring a Ding Dings
         blockRings = true;

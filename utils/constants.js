@@ -44,4 +44,8 @@ export const ENIGMA_SOULS = [
     ["Horsing Around", 40, 70, 27], ["Behind a Living Wall", 38, 63, -198], ["Flowery Message", 3, 68, -204], ["Full Circle", -161, 98, -72],
     ["Standing there", 255, 74, 160], ["Between Towers", 262, 118, 94], ["Castle Fleespook", 182, 92, 124], ["Castle Flower Pot", 266, 60, 145],
     ["Castle Balloons", 232, 94, 168], ["Fairylosopher", 256, 130, 75]
-]
+];
+
+export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}]`;
+
+export const GUI_INSTRUCT = "Use +/- to change scale or press R to reset";

@@ -1,6 +1,7 @@
 import { data, getWorld } from "../utils/variables";
 import settings from "../settings"
-import { BOLD, GREEN, ITALIC, RED, RESET } from "../utils/constants";
+import { BOLD, GREEN, GUI_INSTRUCT, ITALIC, RED, RESET } from "../utils/constants";
+import { renderScale } from "../utils/functions";
 
 const moveTimer = new Gui();
 let align = 0;
@@ -20,17 +21,30 @@ register("tick", () => {
 })
 
 // Move and Draw Timer HUD
+let renderX = data.GL[0]/data.GL[2];
+let renderY = data.GL[1]/data.GL[2];
+
 register("renderOverlay", () => {
     if (moveTimer.isOpen()) {
-        Renderer.drawStringWithShadow(`${ITALIC}x: ${Math.round(data.GL[0])}, y: ${Math.round(data.GL[1])}`, data.GL[0], data.GL[1] - 10);
-        Renderer.drawString(`${GREEN}${BOLD}Align Timer: ${RESET}LEAK?!`, data.GL[0], data.GL[1]);
+        renderScale(
+            data.GL[2], `${ITALIC}x: ${Math.round(data.GL[0])}, y: ${Math.round(data.GL[1])}, s: ${data.VL[2].toFixed(2)}`,
+            renderX, renderY - 10
+        );
+        renderScale(data.GL[2], `${GREEN}${BOLD}Align Timer: ${RESET}LEAK?!`, renderX, renderY);
+        
+        // GUI Instructions
+        renderScale(
+            1.2, GUI_INSTRUCT,
+            Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+            Renderer.screen.getHeight() / 2.4,
+        );
     } else if (getWorld() == "kuudra t5") {
         if (!settings.gyroTimer) return;
         
         if (align)
-            Renderer.drawString(`${GREEN}${BOLD}Align Timer: ${RESET}${align}s`, data.GL[0], data.GL[1]);
+            renderScale(data.GL[2], `${GREEN}${BOLD}Align Timer: ${RESET}${align}s`, renderX, renderY);
         else
-            Renderer.drawString(`${GREEN}${BOLD}Align Timer: ${RED}NO ALIGN`, data.GL[0], data.GL[1]);
+            renderScale(data.GL[2], `${GREEN}${BOLD}Align Timer: ${RED}NO ALIGN`, renderX, renderY);
     }
 })
 
@@ -39,6 +53,27 @@ register("dragged", (dx, dy, x, y) => {
 
     data.GL[0] = parseInt(x);
     data.GL[1] = parseInt(y);
+    renderX = data.GL[0]/data.GL[2];
+    renderY = data.GL[1]/data.GL[2];
+});
+
+register("guiKey", (char, keyCode, gui, event) => {
+    if (!moveTimer.isOpen()) return;
+    
+    // Set or reset scale of text and repositions x/y to match
+    if (keyCode == 13) {
+        data.GL[2] += 0.05;
+        renderX = data.GL[0]/data.GL[2];
+        renderY = data.GL[1]/data.GL[2];
+    } else if (keyCode == 12) {
+        data.GL[2] -= 0.05;
+        renderX = data.GL[0]/data.GL[2];
+        renderY = data.GL[1]/data.GL[2];
+    } else if (keyCode == 19) {
+        data.GL[2] = 1;
+        renderX = data.GL[0];
+        renderY = data.GL[1];
+    }
 });
 
 register("command", () => {

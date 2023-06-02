@@ -6,7 +6,8 @@ import {
 	@SwitchProperty,
     @ButtonProperty,
     @Vigilant,
-    @CheckboxProperty
+    @CheckboxProperty,
+    @SelectorProperty,
 } from '../Vigilance/index';
 
 @Vigilant("VolcAddons", "VolcAddons", {
@@ -25,7 +26,7 @@ ${BOLD}${GOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json"
 ${WHITE}Made By Volcaronitee
 ${ITALIC}PSA does support nons.
 `)
-        this.setCategoryDescription("Rift", "NONE OF THIS IS TESTED YET!");
+        this.setCategoryDescription("Rift", "NONE OF THIS IS TESTED YET!"); 
 
         this.addDependency("Move Timer HUD", "Golden Fish Timer");
         this.addDependency("Move Counter HUD", "Vanquisher Counter");
@@ -33,9 +34,6 @@ ${ITALIC}PSA does support nons.
         this.addDependency("Move Gyro Timer HUD", "Cells Alignment Timer");
         this.addDependency("Move Splits HUD", "Kuudra Splits");
         this.addDependency("Move Visitors HUD", "Garden Tab Display");
-
-        this.addDependency("Announce Inquisitor [ACT]", "Announce Inquisitor");
-        this.addDependency("Announce Vanquisher [ACT]", "Announce Vanquisher");
         
         this.addDependency("No Key Alert", "Kuudra Alert Options");
         this.addDependency("Unready Alert", "Kuudra Alert Options");
@@ -185,21 +183,14 @@ ${ITALIC}PSA does support nons.
     })
     detectInq = false;
 
-    @SwitchProperty({
-        name: "Announce Inquisitor",
+    @SelectorProperty({
+        name: "Announce Inquisitor Chat",
         description: "Sends coords of any inquisitors that you spawn to party chat.",
         category: "Hub",
-        subcategory: "Inquisitor"
+        subcategory: "Inquisitor",
+        options: ["OFF", "All Chat", "Party Chat"]
     })
-    dianaAlert = false;
-
-    @SwitchProperty({
-        name: "Announce Inquisitor [ACT]",
-        description: "Sends coords in all chat instead of party chat.",
-        category: "Hub",
-        subcategory: "Inquisitor"
-    })
-    dianaAlertAll = false;
+    dianaAlert = 0;
     
     // CRIMSON ISLES
     @SwitchProperty({
@@ -236,21 +227,14 @@ ${ITALIC}PSA does support nons.
         ChatLib.command("moveTimer", true);
     }
 
-    @SwitchProperty({
-        name: "Announce Vanquisher",
+    @SelectorProperty({
+        name: "Announce Vanquisher Chat",
         description: "Sends coords of Vanquisher in patcher format. (Only works if Vanquisher Auto-Warp is empty!)",
         category: "Crimson Isles",
-        subcategory: "Vanquisher Alert"
+        subcategory: "Vanquisher Alert",
+        options: ["OFF", "All Chat", "Party Chat"]
     })
-    vanqAlert = false;
-
-    @SwitchProperty({
-        name: "Announce Vanquisher [ACT]",
-        description: "Sends coords in all chat instead of party chat.",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher Alert"
-    })
-    vanqAlertAll = false;
+    vanqAlert = 0;
 
     @TextProperty({
         name: "Vanquisher Auto-Warp",

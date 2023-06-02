@@ -1,5 +1,5 @@
 import axios from "../../axios";
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../utils/constants';
+import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET } from '../utils/constants';
 import { data } from '../utils/variables';
 
 // ID : [INSTA BUY, SELL OFFER]
@@ -153,7 +153,7 @@ export function calculate(args) {
             ChatLib.chat(`${GREEN}${BOLD}Fuel Gabagool Profit: ${RESET}${formatInt(fuelProfit)}\n`);
             break;
         default:
-            ChatLib.chat(`${AQUA}Please enter as /va calculate <hypergolic, inferno ${ITALIC}<minions> <tier>${RESET}${AQUA}>`);
+            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calculate <hypergolic, inferno ${ITALIC}[minions] [tier]${RESET}${AQUA}>`);
             break;
     }
 };

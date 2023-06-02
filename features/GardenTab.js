@@ -1,6 +1,7 @@
 import settings from "../settings";
 import { data, getWorld } from "../utils/variables";
-import { AQUA, BOLD, DARK_RED, GREEN, ITALIC, RESET, WHITE } from "../utils/constants";
+import { AQUA, BOLD, DARK_RED, GREEN, GUI_INSTRUCT, ITALIC, RESET, WHITE } from "../utils/constants";
+import { renderScale } from "../utils/functions";
 
 // Visitor Tablist Variables
 let tablist = null;
@@ -12,15 +13,18 @@ const moveVisitors = new Gui();
 
 // Check Tab
 register("step", () => {
+    if (getWorld() != "garden") return;
+
+    tablist = TabList.getNames();
+
     // Get Composter
-    if (getWorld() == "garden" && settings.gardenCompost) {
-        tablist = TabList.getNames();
+    if (settings.gardenCompost) {
         composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);
         if (composter != -1)
             Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
     }
 
-    if (getWorld() != "garden" || !settings.gardenTab) return;
+    if (!settings.gardenTab) return;
     // Get tab and clear old data
     visitorsHUD = [];
 
@@ -40,24 +44,42 @@ register("step", () => {
 }).setFps(1);
 
 // Move and Draw Counter HUD
+const example = ["Never", "Gonna", "Give", "You", "Up"];
+let renderX = data.VL[0]/data.VL[2];
+let renderY = data.VL[1]/data.VL[2];
+
 register("renderOverlay", () => {
     // Adjusts split location
     if (moveVisitors.isOpen()) {
-        Renderer.drawStringWithShadow(`${ITALIC}x: ${Math.round(data.VL[0])}, y: ${Math.round(data.VL[1])}`, data.VL[0], data.VL[1] - 10);
+        // Coords and scale
+        renderScale(
+            data.VL[2],
+            `${ITALIC}x: ${Math.round(data.VL[0])}, y: ${Math.round(data.VL[1])}, s: ${data.VL[2].toFixed(2)}`,
+            renderX, renderY - 10
+        );
         
-        Renderer.drawString(`${AQUA}${BOLD}Visitors ${WHITE}(5):`, data.VL[0], data.VL[1]);
-        Renderer.drawString(`${GREEN}${BOLD} Never`, data.VL[0], data.VL[1] + 10);
-        Renderer.drawString(`${GREEN}${BOLD} Gonna`, data.VL[0], data.VL[1] + 20);
-        Renderer.drawString(`${GREEN}${BOLD} Give`, data.VL[0], data.VL[1] + 30);
-        Renderer.drawString(`${GREEN}${BOLD} You`, data.VL[0], data.VL[1] + 40);
-        Renderer.drawString(`${GREEN}${BOLD} Up`, data.VL[0], data.VL[1] + 50);
+        // Draw example text
+        renderScale(data.VL[2], `${AQUA}${BOLD}Visitors ${WHITE}(5):`, renderX, renderY);
+        
+        yDiff = 10;
+        example.forEach(str => {
+            renderScale(data.VL[2], `${GREEN}${BOLD} ${str}`, renderX, renderY + yDiff);
+            yDiff += 10;
+        });
+        
+        // GUI Instructions
+        renderScale(
+            1.2, GUI_INSTRUCT,
+            Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+            Renderer.screen.getHeight() / 2.4,
+        );
     } else {
         if (getWorld() != "garden" || !settings.gardenTab) return;
 
         // Draws Visitors on Screen
         yDiff = 0;
         visitorsHUD.forEach((visitor) => {
-            Renderer.drawString(visitor, data.VL[0], data.VL[1] + yDiff);
+            renderScale(data.VL[2], visitor, renderX, renderY + yDiff);
             yDiff += 10;
         });
     }
@@ -67,8 +89,30 @@ register("renderOverlay", () => {
 register("dragged", (dx, dy, x, y) => {
     if (!moveVisitors.isOpen()) return;
 
+    // Changes location of text
     data.VL[0] = parseInt(x);
     data.VL[1] = parseInt(y);
+    renderX = data.VL[0]/data.VL[2];
+    renderY = data.VL[1]/data.VL[2];
+});
+
+register("guiKey", (char, keyCode, gui, event) => {
+    if (!moveVisitors.isOpen()) return;
+    
+    // Set or reset scale of text and repositions x/y to match
+    if (keyCode == 13) {
+        data.VL[2] += 0.05;
+        renderX = data.VL[0]/data.VL[2];
+        renderY = data.VL[1]/data.VL[2];
+    } else if (keyCode == 12) {
+        data.VL[2] -= 0.05;
+        renderX = data.VL[0]/data.VL[2];
+        renderY = data.VL[1]/data.VL[2];
+    } else if (keyCode == 19) {
+        data.VL[2] = 1;
+        renderX = data.VL[0];
+        renderY = data.VL[1];
+    }
 });
 
 register("command", () => {

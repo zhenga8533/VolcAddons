@@ -1,8 +1,17 @@
 // Import outer scope variables
 import settings from "./settings";
 import { data, getWorld, getZone, updateList } from "./utils/variables";
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 data.autosave();
+
+// Update data
+if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
+    data.GL = [data.GL[0], data.GL[1], 1];
+    data.SL = [data.SL[0], data.SL[1], 1];
+    data.CL = [data.CL[0], data.CL[1], 1];
+    data.VL = [data.VL[0], data.VL[1], 1];
+    data.TL = [data.TL[0], data.TL[1], 1];
+}
 
 // General
 import "./features/PartyCommands";
@@ -58,14 +67,11 @@ register("chat", () => {
     setTimeout(() => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
-            ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Fixed /va splits mm/dd/yyyy not working");
-            ChatLib.chat("-Fixed build waypoints still showing after run");
-            ChatLib.chat("-Improved command descriptions and generalized them in /va help");
-            ChatLib.chat("-Added /va splits worst/today");
-            ChatLib.chat("-Added Vanquisher sound to coord detection too");
-            ChatLib.chat("-Added non tested Enigma souls");
-            data.splits.worst = [0, 0, 0, 0 ,0];
+            ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
+            ChatLib.chat("-Changed some setting options");
+            ChatLib.chat("-Added ability to incraese size of render displays");
+            ChatLib.chat("-Reworked golden fish alert to be like gyro timer");
+            ChatLib.chat("-Fixed typo in time display formatting");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");

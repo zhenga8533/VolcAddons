@@ -29,7 +29,7 @@ let soundCD = true;
 register("chat", () => {
     if (!settings.vanqAlert || settings.vanqParty.length > 0) return;
 
-    annoucePosition(settings.vanqAlertAll, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
+    annoucePosition(settings.vanqAlert == 1, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("A Vanquisher is spawning nearby!");
 
 // Detect others with sound
@@ -77,7 +77,7 @@ register("chat", () => {
     inquisitor = entities.find((entity) => entity.getName().equals("Minos Inquisitor"));
 
     if (inquisitor != undefined)
-        annoucePosition(settings.dianaAlertAll, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
+        annoucePosition(settings.dianaAlert == 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
 }).setCriteria("${wow}! You dug out a Minos Champion!");
 
 // Tracks all nearby Inquisitors

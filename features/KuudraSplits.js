@@ -1,5 +1,5 @@
-import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, RED, RESET } from "../utils/constants";
-import { getTime, isValidDate } from "../utils/functions";
+import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, LOGO, RED, RESET } from "../utils/constants";
+import { getTime, isValidDate, renderScale } from "../utils/functions";
 import settings from "../settings";
 import { data, getPlayerName, getWorld } from "../utils/variables";
 
@@ -125,15 +125,21 @@ register("chat", () => {
 }).setCriteria("${before}DEFEAT${after}");
 
 // OVERLAY
+let renderX = data.SL[0]/data.SL[2];
+let renderY = data.SL[1]/data.SL[2];
+
 register("renderOverlay", () => {
     // Adjusts split location
     if (moveSplits.isOpen()) {
-        Renderer.drawStringWithShadow(`${ITALIC}x: ${Math.round(data.SL[0])}, y: ${Math.round(data.SL[1])}`, data.SL[0], data.SL[1] - 10);
+        renderScale(
+            data.SL[2], `${ITALIC}x: ${Math.round(data.SL[0])}, y: ${Math.round(data.SL[1])}, s: ${data.SL[2].toFixed(2)}`,
+            renderX, renderY - 10
+        );
         
-        Renderer.drawString(`${AQUA}${BOLD}Supplies: ${RESET}Ni`, data.SL[0], data.SL[1]);
-        Renderer.drawString(`${AQUA}${BOLD}Build: ${RESET}Ma`, data.SL[0], data.SL[1] + 10);
-        Renderer.drawString(`${AQUA}${BOLD}Fuel/Stun: ${RESET}Si`, data.SL[0], data.SL[1] + 20);
-        Renderer.drawString(`${AQUA}${BOLD}Kuudra: ${RESET}Le`, data.SL[0], data.SL[1] + 30);
+        renderScale(data.SL[2], `${AQUA}${BOLD}Supplies: ${RESET}Ni`, renderX, renderY);
+        renderScale(data.SL[2], `${AQUA}${BOLD}Build: ${RESET}Ma`, renderX, renderY + 10);
+        renderScale(data.SL[2], `${AQUA}${BOLD}Fuel/Stun: ${RESET}Si`, renderX, renderY + 20);
+        renderScale(data.SL[2], `${AQUA}${BOLD}Kuudra: ${RESET}Le`, renderX, renderY + 30);
     }
     
     if ((getWorld() != "kuudra t5" && getWorld() != "kuudra f4") || !settings.kuudraSplits) return;
@@ -160,10 +166,10 @@ register("renderOverlay", () => {
     }
 
     // Draw Splits
-    Renderer.drawString(`${AQUA}${BOLD}Supplies: ${RESET}${times[0]}`, data.SL[0], data.SL[1]);
-    Renderer.drawString(`${AQUA}${BOLD}Build: ${RESET}${times[1]}`, data.SL[0], data.SL[1] + 10);
-    Renderer.drawString(`${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}`, data.SL[0], data.SL[1] + 20);
-    Renderer.drawString(`${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}`, data.SL[0], data.SL[1] + 30);
+    renderScale(data.SL[2], `${AQUA}${BOLD}Supplies: ${RESET}${times[0]}`, renderX, renderY);
+    renderScale(data.SL[2], `${AQUA}${BOLD}Build: ${RESET}${times[1]}`, renderX, renderY + 10);
+    renderScale(data.SL[2], `${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}`, renderX, renderY + 20);
+    renderScale(data.SL[2], `${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}`, renderX, renderY + 30);
 });
 
 // Move Splits HUD
@@ -171,6 +177,27 @@ register("dragged", (dx, dy, x, y) => {
     if (!moveSplits.isOpen()) return
     data.SL[0] = parseInt(x);
     data.SL[1] = parseInt(y);
+    renderX = data.SL[0]/data.SL[2];
+    renderY = data.SL[1]/data.SL[2];
+});
+
+register("guiKey", (char, keyCode, gui, event) => {
+    if (!moveSplits.isOpen()) return;
+    
+    // Set or reset scale of text and repositions x/y to match
+    if (keyCode == 13) {
+        data.SL[2] += 0.05;
+        renderX = data.SL[0]/data.SL[2];
+        renderY = data.SL[1]/data.SL[2];
+    } else if (keyCode == 12) {
+        data.SL[2] -= 0.05;
+        renderX = data.SL[0]/data.SL[2];
+        renderY = data.SL[1]/data.SL[2];
+    } else if (keyCode == 19) {
+        data.SL[2] = 1;
+        renderX = data.SL[0];
+        renderY = data.SL[1];
+    }
 });
 
 register("command", () => {
@@ -234,7 +261,7 @@ export function getSplits(args){
                 formatSplits(data.splits.worst, RED, 0);
                 break;
             case "today":
-                const today = mm+"/"+dd+"/"+yyyy;
+                const today = true;
             case "average":
                 // Gets file name
                 let fileName = "splits.txt";
@@ -251,8 +278,8 @@ export function getSplits(args){
                     // Filter by date
                     if (isValidDate(args[2]))
                         runs = runs.filter((run) => run.split(", ")[5] == args[2]);
-                    if (today)
-                        runs = runs.filter((run) => run.split(", ")[5] == today);
+                    if (today || args[2] == "today")
+                        runs = runs.filter((run) => run.split(", ")[5] == (mm+"/"+dd+"/"+yyyy));
                     
                     // Get # of runs to average
                     let runsWanted = runs.length;
@@ -280,8 +307,8 @@ export function getSplits(args){
                 ChatLib.chat(`${GREEN}Succesfully cleared splits!`)
                 break;
             default:
-                ChatLib.chat(`${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<# of runs, player members, mm/dd/yyyy>${RESET}${AQUA}, clear>!`);
+                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET}${AQUA}, clear>!`);
                 break;
         }
-    } else ChatLib.chat(`${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<# of runs, player members, mm/dd/yyyy>${RESET}${AQUA}, clear>!`);
+    } else ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET}${AQUA}, clear>!`);
 }

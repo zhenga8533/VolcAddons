@@ -1,5 +1,5 @@
 import PogObject from "../../PogData"
-import { AQUA, BOLD, ENIGMA_SOULS, GOLD, GRAY, GREEN, RED, RESET, WHITE } from "./constants";
+import { AQUA, BOLD, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 
 // --- PERSISTANT DATA ---
 export let data = new PogObject("VolcAddons", {
@@ -23,11 +23,11 @@ export let data = new PogObject("VolcAddons", {
     },
     "dianaKey": 33,
     "apexPrice": 1e9,
-    "GL": [15, 200], // Gyro Location
-    "SL": [15, 250], // Splits Location
-    "CL": [15, 250], // Counter Location
-    "VL": [15, 250], // Visitors Location
-    "TL": [15, 300], // Golden Fish Timer Location
+    "GL": [15, 200, 1], // Gyro Location
+    "SL": [15, 250, 1], // Splits Location
+    "CL": [15, 250, 1], // Counter Location
+    "VL": [15, 250, 1], // Visitors Location
+    "TL": [15, 300, 1], // Golden Fish Timer Location
     "enigmaSouls": ENIGMA_SOULS
 }, "datitee.json");
 
@@ -59,7 +59,7 @@ export function updateList(args, list, listName) {
             list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
             break;
         default:
-            ChatLib.chat(`${AQUA}Please enter as /va ${listName} <add, remove> <ign> | view | clear!`);
+            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <add, remove> [ign] | view | clear!`);
             break;
     }
     return list;
@@ -177,11 +177,11 @@ register("chat", () => { // Tracks player kick
 
 // ---  CONTROL FOR GAME/CT RS ---
 register("gameLoad", () => {
-    ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}Checking for party!`);
+    ChatLib.chat(`${LOGO} ${WHITE}Checking for party!`);
     setTimeout(() => { ChatLib.command("p list"); }, 500);
 });
 register("chat", () => {
-    ChatLib.chat(`${GOLD}VolcAddons ${GRAY}> ${WHITE}Checking for party!`);
+    ChatLib.chat(`${LOGO} ${WHITE}Checking for party!`);
     setTimeout(() => { ChatLib.command("p list"); }, 500);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
 

@@ -1,7 +1,7 @@
 import settings from "../settings";
 import RenderLib from "../../RenderLib/index.js";
 import renderBeaconBeam from "../../BeaconBeam";
-import { AQUA, ENIGMA_SOULS, GREEN } from "../utils/constants";
+import { AQUA, ENIGMA_SOULS, GREEN, LOGO } from "../utils/constants";
 
 import { getBuilds, getCrates } from "./KuudraCrates";
 import { getVanquishers } from "./AnnouceMob";
@@ -9,7 +9,6 @@ import { getBurrow, getTheory } from "./DianaWaypoint";
 import { getInquisitors } from "./AnnouceMob";
 import { data, getWorld } from "../utils/variables";
 import { distance2D, getClosest } from "../utils/functions";
-import { distanceFormula } from "../utils/functions";
 
 let waypoints = [];
 let userWaypoints = [];
@@ -129,7 +128,7 @@ export function createWaypoint(args) {
     } else if (!isNaN(args[2]) && !isNaN(args[3]) && !isNaN(args[4])) {
         userWaypoints.push([args[1], args[2], args[3], args[4]]);
         ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
-    } else ChatLib.chat(`${AQUA}Please enter as /va waypoint <name> <x> <y> <z> | /va waypoint clear!`);
+    } else ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va waypoint [name] [x] [y] [z] | /va waypoint clear!`);
 }
 
 // Enigma Soul Stuff
@@ -159,7 +158,7 @@ export function enigmaEdit(args) {
             data.enigmaSouls = [];
             break;
         default:
-            ChatLib.chat(`${AQUA}Please enter as /va enigma <reset, clear>!`);
+            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va enigma <reset, clear>!`);
             break;
     }
 }
