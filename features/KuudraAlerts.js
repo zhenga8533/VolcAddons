@@ -116,7 +116,7 @@ register("step", () => {
         })
 
         if (dropships.length)
-            Client.Companion.showTitle(`${RED}${BOLD}DROPSHIP INCOMING!`, "", 0, 50, 5);
+            Client.Companion.showTitle(`${RED}${BOLD}ART IS AN EXPLOSION!`, "", 0, 50, 5);
     }
 
     // TOKEN ALERT

@@ -153,7 +153,7 @@ export function calculate(args) {
             ChatLib.chat(`${GREEN}${BOLD}Fuel Gabagool Profit: ${RESET}${formatInt(fuelProfit)}\n`);
             break;
         default:
-            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calculate <hypergolic, inferno ${ITALIC}[minions] [tier]${RESET}${AQUA}>`);
+            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, <inferno, gabagool> ${ITALIC}[minions] [tier]${RESET}${AQUA}>`);
             break;
     }
 };
@@ -161,5 +161,5 @@ export function calculate(args) {
 // Set Apex Price
 export function setApex(args) {
     data.apexPrice = isNaN(args[1]) ? data.apexPrice : args[1];
-    ChatLib.chat(`${GREEN}Successfully changed Apex price to ${formatInt(data.apexPrice)}!`);
+    ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatInt(data.apexPrice)}!`);
 }

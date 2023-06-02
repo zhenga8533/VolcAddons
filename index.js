@@ -20,7 +20,7 @@ import "./features/JoinWhitelist";
 import "./features/DrawWaypoint";
 import "./features/GyroTimer";
 import "./features/ReminderTimer";
-import { createWaypoint, enigmaEdit } from "./features/DrawWaypoint";
+import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/DrawWaypoint";
 import "./features/JoinReparty";
 import "./features/HealthAlert";
 
@@ -68,10 +68,14 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Changed some setting options");
             ChatLib.chat("-Added ability to incraese size of render displays");
-            ChatLib.chat("-Reworked golden fish alert to be like gyro timer");
+            ChatLib.chat("-Added Rift npc and zone waypoints to /va <npc/zone>");
+            ChatLib.chat("-Added /va blacklist to leader/party chat commands");
             ChatLib.chat("-Fixed typo in time display formatting");
+            ChatLib.chat("-Fixed visitor waypoint relying on composter alert");
+            ChatLib.chat("-Reworked golden fish alert to be like gyro timer");
+            ChatLib.chat("-Completed settings overhaul");
+            ChatLib.chat("-Quality insurance");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
@@ -83,7 +87,8 @@ function getHelp() {
     // General Commands
     ChatLib.chat(`${AQUA}${BOLD}GENERAL COMMANDS:${RESET}`);
     ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, clear ${ITALIC}(resets text settings)${RESET}>`);
-    ChatLib.chat(`${GRAY}${BOLD}General: ${RESET}/va <waypoint, whitelist, blacklist, warplist>`);
+    ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, enigma, npc, zone>`);
+    ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <whitelist, blocklist, warplist>`);
     ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
     ChatLib.chat(`${RED}${BOLD}Inferno Minions:${RESET}/va <calc, apex>\n`);
 
@@ -118,7 +123,8 @@ register ("command", (...args) => {
             settings.kuudraRP = "";
             settings.kuudraCannonear = "";
             settings.kuudraStunner = "";
-            ChatLib.chat(`${GREEN}Successfully cleared all text property settings!`);
+            settings.reminderText = "";
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
             break;
         case "coords": // sendcoords
         case "sendcoords":
@@ -131,9 +137,13 @@ register ("command", (...args) => {
         case "wl":
             updateList(args, data.whitelist, "white-list");
             break;
+        case "blacklist": // ADD / REMOVE USER FROM WHITELIST
+        case "black":
+        case "bl":
+            updateList(args, data.blacklist, "black-list");
+            break;
         case "blocklist":
         case "block":
-        case "bl":
             updateList(args, data.blocklist, "block-list");
             break;
         case "warplist":
@@ -156,12 +166,6 @@ register ("command", (...args) => {
         case "apex":
             setApex(args);
             break;
-        case "world":
-            ChatLib.chat(getWorld());
-            break;
-        case "zone":
-            ChatLib.chat(getZone());
-            break;
         case "moblist":
         case "mob":
         case "ml":
@@ -169,6 +173,12 @@ register ("command", (...args) => {
             break;
         case "enigma":
             enigmaEdit(args);
+            break;
+        case "npc":
+            NPCEdit(args);
+            break;
+        case "zone":
+            zoneEdit(args);
             break;
         default: // ELSE CASE -> SETTINGS
             if (PARTY_COMMANDS.includes(command))

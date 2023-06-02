@@ -1,4 +1,4 @@
-import { BOLD, GOLD, ITALIC, WHITE } from "./utils/constants";
+import { BOLD, GOLD, HEADER, ITALIC, UNDERLINE, WHITE } from "./utils/constants";
 import {
     @TextProperty,
 	@PercentSliderProperty,
@@ -20,13 +20,24 @@ class Settings {
     constructor() {
         this.initialize(this)
         this.setCategoryDescription("General", 
-`
-${BOLD}${GOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
+`${HEADER}
+${BOLD}DM Volcaronitee#0051 on Discord if you have any questions!
 
-${WHITE}Made By Volcaronitee
-${ITALIC}PSA does support nons.
-`)
-        this.setCategoryDescription("Rift", "NONE OF THIS IS TESTED YET!"); 
+${ITALIC}Related Commands: /va <help, settings, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
+        this.setCategoryDescription("Hub",
+`${HEADER}
+${ITALIC}Related Commands: /va warplist`);
+        this.setCategoryDescription("Crimson Isles",
+`${HEADER}
+${ITALIC}Related Commands: /va <calc, apex>`);
+        this.setCategoryDescription("Kuudra",
+`${HEADER}
+${ITALIC}Related Commands: /va splits`);
+        this.setCategoryDescription("Garden",
+`${HEADER}`);
+        this.setCategoryDescription("Rift",
+`${HEADER}
+${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         this.addDependency("Move Timer HUD", "Golden Fish Timer");
         this.addDependency("Move Counter HUD", "Vanquisher Counter");
@@ -35,6 +46,24 @@ ${ITALIC}PSA does support nons.
         this.addDependency("Move Splits HUD", "Kuudra Splits");
         this.addDependency("Move Visitors HUD", "Garden Tab Display");
         
+        this.addDependency("Leader Command Options", "Leader Chat Commands");
+        this.addDependency("Warp Command (?warp)", "Leader Command Options");
+        this.addDependency("Transfer Command (?transfer)", "Leader Command Options");
+        this.addDependency("Promote Command (?promote)", "Leader Command Options");
+        this.addDependency("Demote Command (?demote)", "Leader Command Options");
+        this.addDependency("Allinvite Command (?<allinvite, allinv>)", "Leader Command Options");
+        this.addDependency("Stream Command (?<streamopen, stream> [num])", "Leader Command Options");
+
+        this.addDependency("Party Command Options", "Party Chat Commands");
+        this.addDependency("Slander Command (?<racist, gay, cringe>)", "Party Command Options");
+        this.addDependency("Dice Command (?<dice, roll>)", "Party Command Options");
+        this.addDependency("Coinflip Command (?<coin, flip, coinflip, cf>)", "Party Command Options");
+        this.addDependency("8ball Command (?8ball)", "Party Command Options");
+        this.addDependency("RPS Command (?rps)", "Party Command Options");
+        this.addDependency("Women Command (?<w, waifu, women>)", "Party Command Options");
+        this.addDependency("Help Command (?help)", "Party Command Options");
+        
+        this.addDependency("Kuudra Alert Options", "Kuudra Alerts");
         this.addDependency("No Key Alert", "Kuudra Alert Options");
         this.addDependency("Unready Alert", "Kuudra Alert Options");
         this.addDependency("Choose Route Alert", "Kuudra Alert Options");
@@ -54,7 +83,7 @@ ${ITALIC}PSA does support nons.
     // GENERAL
     @SwitchProperty({
         name: "Draw Waypoint",
-        description: "Creates waypoints out of /patcher sendcoords and the other features here.",
+        description: "Creates waypoints out of patcher formatted coords and other features here.",
         category: "General",
         subcategory: "General"
     })
@@ -103,24 +132,116 @@ ${ITALIC}PSA does support nons.
     reminderTime = 0;
 
     @SwitchProperty({
-        name: "Leader Chat Command",
-        description: "Allows everyone to use leader commands.",
+        name: "Leader Chat Commands",
+        description: "Allows everyone besides /va blacklist to use leader commands.",
         category: "General",
         subcategory: "Party"
     })
     leaderCommands = false;
+    @SwitchProperty({
+        name: "Leader Command Options",
+        description: "Toggle to show what commands to show/hide.",
+        category: "General",
+        subcategory: "Party"
+    })
+    leaderOptions = false;
+    @CheckboxProperty({
+        name: "Warp Command (?warp)",
+        category: "General",
+        subcategory: "Party"
+    })
+    warpCommand = true;
+    @CheckboxProperty({
+        name: "Transfer Command (?transfer)",
+        category: "General",
+        subcategory: "Party"
+    })
+    transferCommand = true;
+    @CheckboxProperty({
+        name: "Promote Command (?promote)",
+        category: "General",
+        subcategory: "Party"
+    })
+    promoteCommand = true;
+    @CheckboxProperty({
+        name: "Demote Command (?demote)",
+        category: "General",
+        subcategory: "Party"
+    })
+    demoteCommand = true;
+    @CheckboxProperty({
+        name: "Allinvite Command (?<allinvite, allinv>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    allinvCommand = true;
+    @CheckboxProperty({
+        name: "Stream Command (?<streamopen, stream> [num])",
+        category: "General",
+        subcategory: "Party"
+    })
+    streamCommand = true;
 
     @SwitchProperty({
-        name: "Party Chat Command",
-        description: "Allows everyone to use the party commands.",
+        name: "Party Chat Commands",
+        description: "Allows everyone besides /va blacklist to use the party commands.",
         category: "General",
         subcategory: "Party"
     })
     partyCommands = false;
+    @SwitchProperty({
+        name: "Party Command Options",
+        description: "Toggle to show what commands to show/hide.",
+        category: "General",
+        subcategory: "Party"
+    })
+    partyOptions = false;
+    @CheckboxProperty({
+        name: "Slander Command (?<racist, gay, cringe>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    slanderCommand = true;
+    @CheckboxProperty({
+        name: "Dice Command (?<dice, roll>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    diceCommand = true;
+    @CheckboxProperty({
+        name: "Coinflip Command (?<coin, flip, coinflip, cf>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    coinCommand = true;
+    @CheckboxProperty({
+        name: "8ball Command (?8ball)",
+        category: "General",
+        subcategory: "Party"
+    })
+    ballCommand = true;
+    @CheckboxProperty({
+        name: "RPS Command (?rps)",
+        category: "General",
+        subcategory: "Party"
+    })
+    rpsCommand = true;
+    @CheckboxProperty({
+        name: "Women Command (?<w, waifu, women>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    womenCommand = true;
+    @CheckboxProperty({
+        name: "Help Command (?help)",
+        category: "General",
+        subcategory: "Party"
+    })
+    helpCommand = true;
 
     @SwitchProperty({
         name: "Enable Whitelist Rejoin",
-        description: "Automatically rejoin invites from players on the whitelist (/itee whitelist <add/remove> <ign>).",
+        description: "Automatically rejoin invites from players on the whitelist (/va whitelist <add/remove> [ign]).",
         category: "General",
         subcategory: "Party"
     })
@@ -195,7 +316,7 @@ ${ITALIC}PSA does support nons.
     // CRIMSON ISLES
     @SwitchProperty({
         name: "Broken Hyperion",
-        description: "Uses <Book of Stats> and <Champion> to track when Wither Impact breaks.",
+        description: "Uses 'Book of Stats' and 'Champion' to track when Wither Impact breaks.",
         category: "Crimson Isles",
         subcategory: "Crimson Isles"
     })
@@ -238,7 +359,7 @@ ${ITALIC}PSA does support nons.
 
     @TextProperty({
         name: "Vanquisher Auto-Warp",
-        description: "Automatically invites your party to your lobby when you spawn a vanquisher. Enable by entering party as <name, name, ...>",
+        description: "Automatically invites your party to your lobby when you spawn a vanquisher. Enable by entering party as [name, name, ...]",
         category: "Crimson Isles",
         subcategory: "Vanquisher Alert"
     })
@@ -291,7 +412,7 @@ ${ITALIC}PSA does support nons.
     // KUUDRA
     @TextProperty({
         name: "Kuudra Reparty",
-        description: "Enter IGNs to reparty, if 3/1: <ign> | if 2/2 <leader ign, ign, partner ign> (may break first run シ)",
+        description: "Enter IGNs to reparty, if 3/1: [ign] | if 2/2 <[leader ign], [ign], [partner ign]>",
         category: "Kuudra",
         subcategory: "Kuudra"
     })
@@ -307,7 +428,7 @@ ${ITALIC}PSA does support nons.
 
     @SwitchProperty({
         name: "Kuudra Spawn",
-        description: "Tells you where Kuudra is going to spawn in p4 (use at own risk). Requires animation skip, so don't fail @BananaTheBot.",
+        description: "Tells you where Kuudra is going to spawn in p4. Requires animation skip, so don't fail @BananaTheBot.",
         category: "Kuudra",
         subcategory: "Kuudra"
     })
@@ -315,7 +436,7 @@ ${ITALIC}PSA does support nons.
     
     @SwitchProperty({
         name: "Show Supply/Fuel Waypoints",
-        description: "Creates waypoints for the supplies/fuels near you (actually works now).",
+        description: "Creates waypoints for the supplies/fuels near you.",
         category: "Kuudra",
         subcategory: "Kuudra"
     })
@@ -419,7 +540,7 @@ ${ITALIC}PSA does support nons.
     eatenAlert = true;
     @TextProperty({
         name: "Stunner IGN",
-        description: "Tracks who is stunning Kuudra for <Kuudra Alerts> to work. (leave empty if you want to track anyone who gets eaten)",
+        description: "Tracks who is stunning Kuudra for 'Kuudra Alerts'. (leave empty if you want to track anyone who gets eaten)",
         category: "Kuudra",
         subcategory: "Kuudra Alert"
     })
@@ -432,7 +553,7 @@ ${ITALIC}PSA does support nons.
     ballistaAlert = true;
     @TextProperty({
         name: "Cannonear IGN",
-        description: "Tracks who is shooting the ballista for <Kuudra Alerts> to work. (leave empty if you want to track anyone who mounts cannon)",
+        description: "Tracks who is shooting the ballista for 'Kuudra Alerts'. (leave empty if you want to track anyone who mounts cannon)",
         category: "Kuudra",
         subcategory: "Kuudra Alert"
     })
@@ -461,7 +582,7 @@ ${ITALIC}PSA does support nons.
 
     @SwitchProperty({
         name: "Kuudra Splits",
-        description: "Displays Kuudra splits and records best splits in t5 (<?splits/best> in party chat or </va splits> to show)",
+        description: "Displays Kuudra splits and records best splits in t5 (?<splits/best> in party chat or /va splits to show)",
         category: "Kuudra",
         subcategory: "Kuudra Splits"
     })
@@ -496,12 +617,30 @@ ${ITALIC}PSA does support nons.
 
     @ButtonProperty({
         name: "Move Visitors HUD",
-        description: "Move the location of the garden visitors.",
+        description: "Move the location of the garden visitors display.",
         category: "Garden",
         subcategory: "Garden"
     })
     moveVisitors() {
         ChatLib.command("moveVisitors", true);
+    }
+
+    @SwitchProperty({
+        name: "Next Visitor Display",
+        description: "Displays the time until a visitor will visit.",
+        category: "Garden",
+        subcategory: "Garden"
+    })
+    nextVisitor = false;
+
+    @ButtonProperty({
+        name: "Move Next Visitor HUD",
+        description: "Move the location of the next visitor display.",
+        category: "Garden",
+        subcategory: "Garden"
+    })
+    moveNext() {
+        ChatLib.command("moveNext", true);
     }
 
     // RIFT

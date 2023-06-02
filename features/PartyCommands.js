@@ -1,8 +1,8 @@
 import axios from "../../axios";
 import settings from "../settings"
-import { getIsLeader, getPlayerName } from "../utils/variables"
+import { data, getIsLeader, getPlayerName } from "../utils/variables"
 import { request } from "../../requestV2";
-import { AQUA, DARK_AQUA, DARK_GREEN, WHITE } from "../utils/constants";
+import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, RED, WHITE } from "../utils/constants";
 
 // Variables for different commands
 let onCD = false;
@@ -63,11 +63,13 @@ const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
 
 export function executeCommand(name, args, toParty) {
-    if (settings.partyCommands) { // PARTY COMMANDS
+    if (settings.partyCommands && !data.blacklist.includes(name.toLowerCase())) { // PARTY COMMANDS
         switch (args[0]) {
             case "cringe": // Cringe gay
             case "gay":
             case "racist":
+                if (!settings.slanderCommand) return;
+
                 const percentage = Math.floor(Math.random() * 100) + 1;
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${name} is ${percentage}% ${args[0]}!`) }, 500);
@@ -76,6 +78,8 @@ export function executeCommand(name, args, toParty) {
                 break;
             case "dice": // Dice roll
             case "roll":
+                if (!settings.diceCommand) return;
+
                 const roll = Math.floor(Math.random() * 6) + 1;
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${name} rolled a ${roll}!`) }, 500);
@@ -86,6 +90,8 @@ export function executeCommand(name, args, toParty) {
             case "flip":
             case "coinflip":
             case "cf":
+                if (!settings.coinCommand) return;
+
                 const flip = Math.floor(Math.random() * 2);
                 if (toParty) {
                     if (flip)
@@ -100,12 +106,16 @@ export function executeCommand(name, args, toParty) {
                 }
                 break;
             case "8ball": // 8ball
+                if (!settings.ballCommand) return;
+
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`) }, 500);
                 else
                     ChatLib.chat(`${DARK_AQUA}${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
                 break;
             case "rps": // Rock Paper Siccors
+                if (!settings.rpsCommand) return;
+
                 const player = args[1] == undefined ? -1 : RPS.indexOf(args[1].toLowerCase());
                 let reply = player == -1 ? `Wtf is a(n) ${args[1]}? Are you from the jungle?` : "zzz...";
                 // Plays game out if user inputs a correct symbol
@@ -138,7 +148,13 @@ export function executeCommand(name, args, toParty) {
                     setTimeout(() => { ChatLib.chat(`${DARK_AQUA}${reply}`) }, 500);
                 break;
             case "waifu":
+            case "women":
             case "w":
+                if (!settings.womenCommand) {
+                    ChatLib.chat(`${LOGO} ${RED}You cannot turn this feature off, don't ever try this shit again.`);
+                    settings.womenCommand = true;
+                }
+
                 ChatLib.chat(`${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${imgur}`) }, 500);
@@ -148,10 +164,12 @@ export function executeCommand(name, args, toParty) {
                 setWaifu();
                 break;
             case "help":
+                if (!settings.helpCommand) return;
+
                 if (toParty) {
-                    setTimeout(() => { ChatLib.command(`pc Party Commands: ?<cringe, gay, racist, dice, coin, 8ball, rps, w, help>`) }, 300);
+                    setTimeout(() => { ChatLib.command(`pc Party Commands: ?<cringe, gay, racist, dice, coin, 8ball, rps, w, help>`) }, 500);
                     if (getIsLeader() && settings.leaderCommands)
-                        setTimeout(() => { ChatLib.command(`pc Leader Commands: ?<warp, transfer, promote, demote, allinv, stream #>`) }, 700);
+                        setTimeout(() => { ChatLib.command(`pc Leader Commands: ?<warp, transfer, promote, demote, allinv, stream #>`) }, 1000);
                 }
                 break;
         }
@@ -161,23 +179,35 @@ export function executeCommand(name, args, toParty) {
         setTimeout(() => {
             switch (args[0]) {
                 case "warp":
+                    if (!settings.warpCommand) return;
+    
                     ChatLib.command("p warp");
                     break;
                 case "transfer":
+                    if (!settings.transferCommand) return;
+    
                     ChatLib.command("p transfer " + name);
                     break;
                 case "promote":
+                    if (!settings.promoteCommand) return;
+    
                     ChatLib.command("p promote " + name);
                     break;
                 case "demote":
+                    if (!settings.demoteCommand) return;
+    
                     ChatLib.command("p demote " + name);
                     break;
                 case "allinvite":
                 case "allinv":
+                    if (!settings.allinvCommand) return;
+    
                     ChatLib.command("p settings allinvite");
                     break;
                 case "streamopen":
                 case "stream":
+                    if (!settings.streamCommand) return;
+    
                     num = isNaN(args[1]) ? 10 : args[1];
                     ChatLib.command(`stream open ${args[1]}`);
                     break;

@@ -1,11 +1,12 @@
 import PogObject from "../../PogData"
-import { AQUA, BOLD, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
+import { AQUA, BOLD, ENIGMA_SOULS, GOLD, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 
 // --- PERSISTANT DATA ---
 export let data = new PogObject("VolcAddons", {
     "newUser": true,
     "version": "2.3.1",
     "whitelist": [],
+    "blacklist": [],
     "blocklist": [],
     "warplist": ["hub", "da", "castle", "museum"],
     "moblist": [],
@@ -27,6 +28,7 @@ export let data = new PogObject("VolcAddons", {
     "SL": [15, 250, 1], // Splits Location
     "CL": [15, 250, 1], // Counter Location
     "VL": [15, 250, 1], // Visitors Location
+    "NL": [15, 350, 1], // Next Visitors Location
     "TL": [15, 300, 1], // Golden Fish Timer Location
     "enigmaSouls": ENIGMA_SOULS
 }, "datitee.json");
@@ -38,7 +40,7 @@ export function updateList(args, list, listName) {
         case ("add"): // ADD TO LIST
             if (!list.includes(username)) {
                 list.push(username);
-                ChatLib.chat(`${GREEN}Successfully added [${username}] to the ${listName}!`);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${username}] to the ${listName}!`);
             } else ChatLib.chat(`${RED}Player [${username}] is already in the ${listName}!`);
             break;
         case ("remove"): // REMOVE FROM LIST
@@ -46,12 +48,12 @@ export function updateList(args, list, listName) {
 
             if (index > -1) {
                 list.splice(index, 1);
-                ChatLib.chat(`${GREEN}Successfully removed [${username}] from the ${listName}!`);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${username}] from the ${listName}!`);
             } else ChatLib.chat(`${RED}Player [${username}] is not in the ${listName}!`);
             break;
         case ("clear"): // CLEAR LIST
             list = list.splice(0, list.length);
-            ChatLib.chat(`${GREEN}Successfully cleared cleared the ${listName}!`);
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared cleared the ${listName}!`);
             break;
         case ("view"): // DISPLAY LIST
         case ("list"):

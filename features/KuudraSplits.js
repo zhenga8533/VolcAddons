@@ -304,7 +304,7 @@ export function getSplits(args){
                 });
                 data.files = [];
                 
-                ChatLib.chat(`${GREEN}Succesfully cleared splits!`)
+                ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared splits!`)
                 break;
             default:
                 ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET}${AQUA}, clear>!`);

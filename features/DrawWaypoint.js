@@ -1,7 +1,7 @@
 import settings from "../settings";
 import RenderLib from "../../RenderLib/index.js";
 import renderBeaconBeam from "../../BeaconBeam";
-import { AQUA, ENIGMA_SOULS, GREEN, LOGO } from "../utils/constants";
+import { AQUA, ENIGMA_SOULS, GREEN, LOGO, RED, RIFT_NPCS, ZONES } from "../utils/constants";
 
 import { getBuilds, getCrates } from "./KuudraCrates";
 import { getVanquishers } from "./AnnouceMob";
@@ -13,6 +13,8 @@ import { distance2D, getClosest } from "../utils/functions";
 let waypoints = [];
 let userWaypoints = [];
 let enigmaClose = data.enigmaSouls;
+let NPCs = [];
+let zones = [];
 
 // What actually does the waypoint rendering
 register("renderWorld", () => {
@@ -22,6 +24,8 @@ register("renderWorld", () => {
     renderWaypoint(getBuilds(), 1, 0, 0); // Red Builds
     renderWaypoint(getTheory(), 1, 1, 0); // Yellow theory burrow
     renderWaypoint(getBurrow(), 0, 0.5, 0); // Green burrows
+    renderWaypoint(NPCs, 0, 0.2, 0.4); // Navy NPC
+    renderWaypoint(zones, 0, 0.5, 0.5); // Teal zone
     renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
     renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
     if (settings.enigmaWaypoint && getWorld() == "rift")
@@ -124,7 +128,9 @@ register("chat", (player, spacing, x, y, z) => {
 export function createWaypoint(args) {
     if (args[1] == "clear") {
         userWaypoints = [];
-        ChatLib.chat(`${GREEN}Successfully cleared waypoints!`);
+        NPCs = [];
+        zones = [];
+        ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared waypoints!`);
     } else if (!isNaN(args[2]) && !isNaN(args[3]) && !isNaN(args[4])) {
         userWaypoints.push([args[1], args[2], args[3], args[4]]);
         ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
@@ -160,6 +166,47 @@ export function enigmaEdit(args) {
         default:
             ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va enigma <reset, clear>!`);
             break;
+    }
+}
+
+export function NPCEdit(args) {
+    if (args[1] == "clear") {
+        NPCs = [];
+        ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared NPC waypoint!`);
+        return;
+    }
+
+    args.shift()
+    const name = args.join(' ').toLowerCase();
+    
+    if (name in RIFT_NPCS) {
+        if (!(RIFT_NPCS[name][0] instanceof String))
+            RIFT_NPCS[name].forEach(coords => { NPCs.push(coords) });
+        else
+            NPCs.push(RIFT_NPCS[name]);
+        ChatLib.chat(`${LOGO} ${GREEN}Succesfully loaded [${name}] waypoint!`);
+    } else {
+        ChatLib.chat(`${LOGO} ${RED}NPC [${name}] not found!`);
+        ChatLib.chat(`${LOGO} ${AQUA}Remember to enter as /va npc [name] | /va npc clear`);
+    }
+}
+
+export function zoneEdit(args) {
+    if (args[1] == "clear") {
+        zones = [];
+        ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared zone waypoint!`);
+        return;
+    }
+
+    args.shift()
+    const name = args.join(' ').toLowerCase();
+
+    if (name in ZONES) {
+        zones.push(ZONES[name]);
+        ChatLib.chat(`${LOGO} ${GREEN}Succesfully loaded [${name}] waypoint!`);
+    } else {
+        ChatLib.chat(`${LOGO} ${RED}Zone [${name}] not found!`);
+        ChatLib.chat(`${LOGO} ${AQUA}Remember to enter as /va zone [name] | /va zone clear`);
     }
 }
 
