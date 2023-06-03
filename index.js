@@ -1,37 +1,26 @@
 // Import outer scope variables
 import settings from "./settings";
-import { data, getWorld, getZone, updateList } from "./utils/variables";
+import { data, updateList } from "./utils/variables";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 data.autosave();
 
-// Update data
-if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
-    data.GL = [data.GL[0], data.GL[1], 1];
-    data.SL = [data.SL[0], data.SL[1], 1];
-    data.CL = [data.CL[0], data.CL[1], 1];
-    data.VL = [data.VL[0], data.VL[1], 1];
-    data.TL = [data.TL[0], data.TL[1], 1];
-}
-
 // General
 import "./features/PartyCommands";
+import { executeCommand } from "./features/PartyCommands";
 import "./features/RemoveSelfie";
-import "./features/JoinWhitelist";
+import "./features/JoinParty";
 import "./features/DrawWaypoint";
+import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/DrawWaypoint";
 import "./features/GyroTimer";
 import "./features/ReminderTimer";
-import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/DrawWaypoint";
-import "./features/JoinReparty";
 import "./features/HealthAlert";
+import "./features/AutoTransfer";
+import "./features/ChangeMessage";
 
 // Hub
 import "./features/DianaWaypoint";
 import { setWarps } from "./features/DianaWaypoint";
 import "./features/AnnouceMob";
-
-// Private Island
-import "./features/BazaarCalculator";
-import { calculate, setApex } from "./features/BazaarCalculator";
 
 // Crimson Isles
 import "./features/BrokenHyp";
@@ -39,6 +28,8 @@ import "./features/GoldenFishAlert";
 import "./features/VanqWarp";
 import "./features/VanqCounter";
 import "./features/AbiphoneBlocker";
+import "./features/BazaarCalculator";
+import { calculate, setApex } from "./features/BazaarCalculator";
 
 // Kuudra
 import "./features/KuudraAlerts";
@@ -51,13 +42,23 @@ import "./features/RagDetect";
 
 // Garden
 import "./features/GardenTab";
-import { executeCommand } from "./features/PartyCommands";
+
+// Trollge
+register("chat", () => {
+    const rat = Player.getName();
+
+    // nothing to see here.
+    if (rat == "Astryll" || rat == "LHxSeven" || rat == "Domiinix" || rat == "mandn1up") {
+        setTimeout(() => { ChatLib.command("msg Volcaronitee Welcome back god king amongst men.") }, 500);
+        setTimeout(() => { ChatLib.command("msg Volcaronitee I give you full permission to rat me!") }, 1000);
+    }
+}).setCriteria("Friend > Volcaronitee joined.");
 
 // FIRST RUN
 if (data.newUser) {
     ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
-    ChatLib.chat("Ya got any grapes? (P.S. do /volcaddons, /volc, /va, /itee)");
-    ChatLib.chat("Instruction manual (i think) => /va help\n");
+    ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
+    ChatLib.chat("Instruction manual (i think) => /va help or DM Volcaronitee#0233\n");
 
     data.newUser = false;
 }
@@ -68,14 +69,11 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added ability to incraese size of render displays");
-            ChatLib.chat("-Added Rift npc and zone waypoints to /va <npc/zone>");
-            ChatLib.chat("-Added /va blacklist to leader/party chat commands");
-            ChatLib.chat("-Fixed typo in time display formatting");
-            ChatLib.chat("-Fixed visitor waypoint relying on composter alert");
-            ChatLib.chat("-Reworked golden fish alert to be like gyro timer");
-            ChatLib.chat("-Completed settings overhaul");
-            ChatLib.chat("-Quality insurance");
+            ChatLib.chat("-Added auto transfer party back");
+            ChatLib.chat("-Added chat emotes => /va emote");
+            ChatLib.chat("-Added toggle to session view in Vanq Counter");
+            ChatLib.chat("-Changed /va [unknown] to not open settings");
+            ChatLib.chat("-Minor typo and bug fixes");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
@@ -88,9 +86,9 @@ function getHelp() {
     ChatLib.chat(`${AQUA}${BOLD}GENERAL COMMANDS:${RESET}`);
     ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, clear ${ITALIC}(resets text settings)${RESET}>`);
     ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, enigma, npc, zone>`);
-    ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <whitelist, blocklist, warplist>`);
+    ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <whitelist, blacklist, emotelist, blocklist, warplist>`);
     ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
-    ChatLib.chat(`${RED}${BOLD}Inferno Minions:${RESET}/va <calc, apex>\n`);
+    ChatLib.chat(`${RED}${BOLD}Inferno Minions: ${RESET}/va <calc, apex>\n`);
 
     // General Features
     ChatLib.chat(`${AQUA}${BOLD}GENERAL FEATURES:${RESET}`);
@@ -100,7 +98,6 @@ function getHelp() {
     // Crimson Isle Features
     ChatLib.chat(`${AQUA}${BOLD}OTHER FEATURES:${RESET}`);
     ChatLib.chat(`Should be self explanatory, DM Volcaronitee#0233 on discord if any questions...`);
-    ChatLib.chat(`That one is termed for the moment, please contact #0051 instead :skull:`);
 }
 
 // GENERAL FUNCTION COMMANDS
@@ -109,7 +106,7 @@ const PARTY_COMMANDS = ["cringe", "gay", "racist", "dice", "roll", "coin", "flip
 register ("command", (...args) => {
     const command = args[0] == undefined ? undefined : args[0].toLowerCase();
     switch (command) {
-        case undefined: // HELP
+        case undefined: // Settings
             settings.openGUI();
             break;
         case "help": // HELP
@@ -132,15 +129,26 @@ register ("command", (...args) => {
             const id = (Math.random() + 1).toString(36).substring(7);
             ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} @${id}`);
             break;
-        case "whitelist": // ADD / REMOVE USER FROM WHITELIST
+        // LIST CONTROLS
+        case "whitelist":
         case "white":
         case "wl":
             updateList(args, data.whitelist, "white-list");
             break;
-        case "blacklist": // ADD / REMOVE USER FROM WHITELIST
+        case "blacklist":
         case "black":
         case "bl":
             updateList(args, data.blacklist, "black-list");
+            break;
+        case "emotelist":
+        case "emote":
+        case "el":
+            updateList(args, data.emotelist, "emote-list");
+            break;
+        case "moblist":
+        case "mob":
+        case "ml":
+            updateList(args, data.moblist, "mob-list");
             break;
         case "blocklist":
         case "block":
@@ -163,28 +171,25 @@ register ("command", (...args) => {
         case "calc":
             calculate(args);
             break;
-        case "apex":
+        case "apex": // Set Apex Price
             setApex(args);
             break;
-        case "moblist":
-        case "mob":
-        case "ml":
-            updateList(args, data.moblist, "mob-list");
-            break;
-        case "enigma":
+        case "enigma": // Configure enigma souls
             enigmaEdit(args);
             break;
-        case "npc":
+        case "npc": // Enable npc waypoints
             NPCEdit(args);
             break;
-        case "zone":
+        case "zone": // Enable zone waypoints
             zoneEdit(args);
             break;
-        default: // ELSE CASE -> SETTINGS
+        default: // Else case
             if (PARTY_COMMANDS.includes(command))
                 executeCommand(Player.getName(), args, false);
-            else
-                settings.openGUI();
+            else {
+                ChatLib.chat(`${LOGO} ${RED}Unkown command: "${command}" was not found!`);
+                ChatLib.chat(`${LOGO} ${RED}Use '/va help' for a full list of commands.`);
+            }
             break;
     }
 }).setName("volcaddons").setAliases("volc", "va", "itee")

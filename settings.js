@@ -40,11 +40,10 @@ ${ITALIC}Related Commands: /va splits`);
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         this.addDependency("Move Timer HUD", "Golden Fish Timer");
-        this.addDependency("Move Counter HUD", "Vanquisher Counter");
-        this.addDependency("Clear Session", "Vanquisher Counter");
         this.addDependency("Move Gyro Timer HUD", "Cells Alignment Timer");
         this.addDependency("Move Splits HUD", "Kuudra Splits");
         this.addDependency("Move Visitors HUD", "Garden Tab Display");
+        this.addDependency("Move Next Visitor HUD", "Next Visitor Display");
         
         this.addDependency("Leader Command Options", "Leader Chat Commands");
         this.addDependency("Warp Command (?warp)", "Leader Command Options");
@@ -112,6 +111,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     healthAlert = 0.0;
+    
+    @SwitchProperty({
+        name: "Enable Custom Emotes",
+        description: "Replaces chat messages containing emotes in '/emotes list' and => /va emote <add, remove> [trigger] [emote]",
+        category: "General",
+        subcategory: "General"
+    })
+    enableEmotes = false;
 
     @TextProperty({
         name: "Reminder Text",
@@ -254,6 +261,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Party"
     })
     joinRP = false;
+    
+    @SwitchProperty({
+        name: "Auto Transfer Back",
+        description: "Automatically transfers party back if someone transfer to you.",
+        category: "General",
+        subcategory: "Party"
+    })
+    autoTransfer = false;
 
     // HUB
     @SwitchProperty({
@@ -381,13 +396,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     vanqSound = false;
 
-    @SwitchProperty({
+    @SelectorProperty({
         name: "Vanquisher Counter",
-        description: "Counts kills until Vanquisher spawns. (Bascially only tracks Book of Stats, coding hard)",
+        description: "Counts kills until Vanquisher spawns. (Uses Book of Stats)",
         category: "Crimson Isles",
-        subcategory: "Vanquisher Counter"
+        subcategory: "Vanquisher Counter",
+        options: ["OFF", "Overall View", "Session View"]
     })
-    vanqCounter = false;
+    vanqCounter = 0;
 
     @ButtonProperty({
         name: "Move Counter HUD",

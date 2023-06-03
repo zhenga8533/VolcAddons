@@ -3,9 +3,16 @@ import { data, getWorld } from "../utils/variables";
 import { BOLD, GUI_INSTRUCT, ITALIC, RED, RESET } from "../utils/constants";
 import { renderScale } from "../utils/functions";
 
-let items = {}
+let items = {};
+const session = {
+    "vanqs": 0,
+    "kills": 0,
+    "last": 0,
+    "average": 0,
+};
 
 const moveCounter = new Gui();
+
 
 // Tracks Kills
 register ("entityDeath", () => {
@@ -19,9 +26,15 @@ register ("entityDeath", () => {
 
         if (killsDiff > 10) items[heldItem] = newKills; // In order for mobs in other islands to not count
         else {
+            // Overall
             data.vanqSession.kills += killsDiff;
             data.vanqSession.last += killsDiff;
             if (data.vanqSession.vanqs) data.vanqSession.average = Math.round(data.vanqSession.kills / data.vanqSession.vanqs);
+
+            // Session
+            session.kills += killsDiff;
+            session.last += killsDiff;
+            if (session.vanqs) session.average = Math.round(session.kills / session.vanqs);
             items[heldItem] = newKills;
         }
     } else items[heldItem] = newKills;
@@ -29,9 +42,15 @@ register ("entityDeath", () => {
 
 // Tracks Vanqs
 register("chat", () => {
+    // Overall
     data.vanqSession.vanqs++;
     data.vanqSession.average = (data.vanqSession.kills / data.vanqSession.vanqs);
     data.vanqSession.last = 0;
+    
+    // Session
+    session.vanqs++;
+    session.average = (session.kills / session.vanqs);
+    session.last = 0;
 }).setCriteria("A Vanquisher is spawning nearby!");
 
 // Move and Draw Counter HUD
@@ -59,10 +78,18 @@ register("renderOverlay", () => {
         );
     } else {
         if (getWorld() != "crimson isle" || !settings.vanqCounter) return;
-        renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}${data.vanqSession.vanqs}`, renderX, renderY);
-        renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}${data.vanqSession.kills}`, renderX, renderY + 10);
-        renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}${data.vanqSession.last}`, renderX, renderY + 20);
-        renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}${data.vanqSession.average}`, renderX, renderY + 30);
+
+        if (settings.vanqCounter == 1) {
+            renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}${data.vanqSession.vanqs}`, renderX, renderY);
+            renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}${data.vanqSession.kills}`, renderX, renderY + 10);
+            renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}${data.vanqSession.last}`, renderX, renderY + 20);
+            renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}${data.vanqSession.average}`, renderX, renderY + 30);
+        } else {
+            renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}${session.vanqs}`, renderX, renderY);
+            renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}${session.kills}`, renderX, renderY + 10);
+            renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}${session.last}`, renderX, renderY + 20);
+            renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}${session.average}`, renderX, renderY + 30);
+        }
     }
 })
 

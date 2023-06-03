@@ -74,7 +74,7 @@ export function executeCommand(name, args, toParty) {
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${name} is ${percentage}% ${args[0]}!`) }, 500);
                 else
-                    ChatLib.chat(`${DARK_AQUA}You are ${WHITE}${percentage}% ${DARK_AQUA}${args[0]}!`);
+                    ChatLib.chat(`${LOGO} ${DARK_AQUA}You are ${WHITE}${percentage}% ${DARK_AQUA}${args[0]}!`);
                 break;
             case "dice": // Dice roll
             case "roll":
@@ -84,7 +84,7 @@ export function executeCommand(name, args, toParty) {
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${name} rolled a ${roll}!`) }, 500);
                 else
-                    ChatLib.chat(`${DARK_AQUA}You rolled a ${WHITE}${roll}${DARK_AQUA}!`);
+                    ChatLib.chat(`${LOGO} ${DARK_AQUA}You rolled a ${WHITE}${roll}${DARK_AQUA}!`);
                 break;
             case "coin": // Coin flip
             case "flip":
@@ -100,9 +100,9 @@ export function executeCommand(name, args, toParty) {
                         setTimeout(() => { ChatLib.command(`pc ${name} flipped tails!`) }, 500);
                 } else {
                     if (flip)
-                        ChatLib.chat(`${DARK_AQUA}You flipped ${WHITE}heads${DARK_AQUA}!`);
+                        ChatLib.chat(`${LOGO} ${DARK_AQUA}You flipped ${WHITE}heads${DARK_AQUA}!`);
                     else
-                        ChatLib.chat(`${DARK_AQUA}You flipped ${WHITE}tails${DARK_AQUA}!`);
+                        ChatLib.chat(`${LOGO} ${DARK_AQUA}You flipped ${WHITE}tails${DARK_AQUA}!`);
                 }
                 break;
             case "8ball": // 8ball
@@ -111,7 +111,7 @@ export function executeCommand(name, args, toParty) {
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`) }, 500);
                 else
-                    ChatLib.chat(`${DARK_AQUA}${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
+                    ChatLib.chat(`${LOGO} ${DARK_AQUA}${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
                 break;
             case "rps": // Rock Paper Siccors
                 if (!settings.rpsCommand) return;
@@ -124,7 +124,7 @@ export function executeCommand(name, args, toParty) {
                     if (toParty)
                         setTimeout(() => { ChatLib.command(`pc I choose ${RPS[choice]}!`) }, 500);
                     else
-                        ChatLib.chat(`${DARK_AQUA}I choose ${WHITE}${RPS[choice]}${DARK_AQUA}!`);
+                        ChatLib.chat(`${LOGO} ${DARK_AQUA}I choose ${WHITE}${RPS[choice]}${DARK_AQUA}!`);
                     const outcome = (player - choice);
 
                     // Determine outcome of the game
@@ -145,7 +145,7 @@ export function executeCommand(name, args, toParty) {
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${reply}`) }, 1000);
                 else
-                    setTimeout(() => { ChatLib.chat(`${DARK_AQUA}${reply}`) }, 500);
+                    setTimeout(() => { ChatLib.chat(`${LOGO} ${DARK_AQUA}${reply}`) }, 500);
                 break;
             case "waifu":
             case "women":
@@ -155,7 +155,7 @@ export function executeCommand(name, args, toParty) {
                     settings.womenCommand = true;
                 }
 
-                ChatLib.chat(`${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
+                ChatLib.chat(`${LOGO} ${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
                 if (toParty)
                     setTimeout(() => { ChatLib.command(`pc ${imgur}`) }, 500);
                 else

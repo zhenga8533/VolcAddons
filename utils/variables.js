@@ -10,6 +10,7 @@ export let data = new PogObject("VolcAddons", {
     "blocklist": [],
     "warplist": ["hub", "da", "castle", "museum"],
     "moblist": [],
+    "emotelist": {},
     "files": [],
     "splits": {
         "last": [0, 0, 0, 0, 0],
@@ -35,33 +36,51 @@ export let data = new PogObject("VolcAddons", {
 
 // --- LIST CONTROL ---
 export function updateList(args, list, listName) {
-    const username = args[2] == undefined ? undefined : args[2].toLowerCase();
+    const item = args[2] == undefined ? undefined : args[2].toLowerCase();
+    const isArr = Array.isArray(list);
+
+    // Array lists
     switch (args[1]) {
         case ("add"): // ADD TO LIST
-            if (!list.includes(username)) {
-                list.push(username);
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${username}] to the ${listName}!`);
-            } else ChatLib.chat(`${RED}Player [${username}] is already in the ${listName}!`);
+            if (isArr && !list.includes(item)) {
+                list.push(item);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${WHITE}${args[2]}${GREEN}] to the ${listName}!`);
+            } else if (!(item in list)) {
+                list[item] = args[3];
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully linked [${WHITE}${args[2]}${GREEN}] to [${WHITE}${args[3]}${GREEN}]!`);
+            } else ChatLib.chat(`${LOGO} ${RED}[${WHITE}${args[2]}${RED}] is already in the ${listName}!`);
             break;
         case ("remove"): // REMOVE FROM LIST
-            const index = list.indexOf(username);
-
-            if (index > -1) {
-                list.splice(index, 1);
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${username}] from the ${listName}!`);
-            } else ChatLib.chat(`${RED}Player [${username}] is not in the ${listName}!`);
+            if (isArr && list.indexOf(item) > -1) {
+                list.splice(list.indexOf(item), 1);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${args[2]}${GREEN}] from the ${listName}!`);
+            } else if (!isArr && item in list) {
+                delete list[item];
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${args[2]}${GREEN}] from the ${listName}!`);
+            } else ChatLib.chat(`${LOGO} ${RED}[${WHITE}${args[2]}${RED}] is not in the ${listName}!`);
             break;
         case ("clear"): // CLEAR LIST
-            list = list.splice(0, list.length);
-            ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared cleared the ${listName}!`);
+            if (isArr)
+                list = [];
+            else
+                list = {};
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared the ${listName}!`);
             break;
         case ("view"): // DISPLAY LIST
         case ("list"):
-            ChatLib.chat(`${GOLD}${BOLD}${list.length} Users in ${listName}:${RESET}`);
-            list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
+            if (isArr) {
+                ChatLib.chat(`${GOLD}${BOLD}${list.length} Items in ${listName}:${RESET}`);
+                list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
+            } else {
+                ChatLib.chat(`${GOLD}${BOLD}${Object.keys(list).length} Items in ${listName}:${RESET}`);
+                Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key} => ${list[key]}`) });
+            }
             break;
         default:
-            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <add, remove> [ign] | view | clear!`);
+            if (isArr)
+                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <add, remove> [item] | view | clear!`);
+            else
+                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <add, remove> [key] [value] | view | clear!`);
             break;
     }
     return list;
@@ -82,6 +101,15 @@ export function getWorld() { return world; }
 
 let zone = "none";
 export function getZone() { return zone; }
+
+// Get if MVP++ (for emotes)
+let isMVP = false;
+export function getMVP() { return rank; }
+
+register("chat", (player) => {
+    if (player == Player.getName())
+        isMVP = true;
+}).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<")
 
 // Function to remove rank from player name
 export function getPlayerName(player) {
