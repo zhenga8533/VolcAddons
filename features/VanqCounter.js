@@ -65,10 +65,10 @@ register("renderOverlay", () => {
             renderX, renderY - 10
         );
 
-        renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}Wo`, renderX, renderY);
-        renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}Cao`, renderX, renderY + 10);
-        renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}Ni`, renderX, renderY + 20);
-        renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}Ma`, renderX, renderY + 30);
+        renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}Smile`, renderX, renderY);
+        renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}Sweet`, renderX, renderY + 10);
+        renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}Sister`, renderX, renderY + 20);
+        renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}Sadistic`, renderX, renderY + 30);
 
         // GUI Instructions
         renderScale(

@@ -78,9 +78,9 @@ export function updateList(args, list, listName) {
             break;
         default:
             if (isArr)
-                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <add, remove> [item] | view | clear!`);
+                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
             else
-                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <add, remove> [key] [value] | view | clear!`);
+                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
             break;
     }
     return list;

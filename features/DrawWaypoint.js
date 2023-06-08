@@ -58,7 +58,7 @@ function renderWaypoint(waypoints, r, g, b) {
         distance = Math.sqrt(Math.pow(Player.getX() - x, 2) + Math.pow(Player.getY() - y, 2) + Math.pow(Player.getZ() - z, 2));
 
         // Makes it so waypoint always renders
-        if (distance >= 200) {
+        if (distance >= 100) {
             x = Player.getX() + (x - Player.getX()) * (100 / distance);
             y = Player.getY() + (y - Player.getY()) * (100 / distance);
             z = Player.getZ() + (z - Player.getZ()) * (100 / distance);

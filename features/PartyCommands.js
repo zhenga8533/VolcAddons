@@ -175,7 +175,7 @@ export function executeCommand(name, args, toParty) {
         }
     }
     
-    if (getIsLeader() && settings.leaderCommands) { // LEADER COMMANDS
+    if (getIsLeader() && settings.leaderCommands && !data.blacklist.includes(name.toLowerCase())) { // LEADER COMMANDS
         setTimeout(() => {
             switch (args[0]) {
                 case "warp":

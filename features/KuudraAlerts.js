@@ -105,7 +105,7 @@ register("chat", (player) => { // Kuudra stunned alert
 const EntityGhast = Java.type('net.minecraft.entity.monster.EntityGhast');
 let alerted = false
 register("step", () => {
-    if ((getWorld() != "kuudra t5" && getWorld() != "kuudra f4")) return;
+    if (getWorld() != "kuudra t5" && getWorld() != "kuudra f4") return;
 
     // DROPSHIP WARNING
     if (settings.kuudraAlerts && settings.dropshipAlert) {

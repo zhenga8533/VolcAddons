@@ -1,23 +1,37 @@
 import { data, getWorld } from "../utils/variables";
 import settings from "../settings"
-import { BOLD, GREEN, GUI_INSTRUCT, ITALIC, RED, RESET } from "../utils/constants";
+import { BOLD, DARK_RED, GREEN, GUI_INSTRUCT, ITALIC, RED, RESET } from "../utils/constants";
 import { renderScale } from "../utils/functions";
 
 const moveTimer = new Gui();
 let align = 0;
+let cd = 0;
 
 // Detect Cells Alignment
 register("chat", () => {
+    if (getWorld() != "kuudra t5" && getWorld() != "kuudra f4") return;
+
     align = 6.0;
+    cd = 10;
 }).setCriteria("You aligned ${message}");
 
 register("chat", () => {
+    if (getWorld() != "kuudra t5" && getWorld() != "kuudra f4") return;
+
     align = 6.0;
 }).setCriteria("${player} casted Cells Alignment on you!");
 
 register("tick", () => {
-    if (align != 0)
+    if (getWorld() != "kuudra t5" && getWorld() != "kuudra f4") return;
+
+    if (align != 0) {
+        if (settings.gyroAlert && align > 0.5 && align < 1 && cd == 0)
+            Client.Companion.showTitle(`${DARK_RED}${BOLD}ALIGN EXPIRING`, "", 0, 25, 5);
         align = (align - 0.05).toFixed(2);
+    }
+    if (cd != 0) {
+        cd = (cd - 0.05).toFixed(2);
+    }
 })
 
 // Move and Draw Timer HUD

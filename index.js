@@ -43,17 +43,6 @@ import "./features/RagDetect";
 // Garden
 import "./features/GardenTab";
 
-// Trollge
-register("chat", () => {
-    const rat = Player.getName();
-
-    // nothing to see here.
-    if (rat == "Astryll" || rat == "LHxSeven" || rat == "Domiinix" || rat == "mandn1up") {
-        setTimeout(() => { ChatLib.command("msg Volcaronitee Welcome back god king amongst men.") }, 500);
-        setTimeout(() => { ChatLib.command("msg Volcaronitee I give you full permission to rat me!") }, 1000);
-    }
-}).setCriteria("Friend > Volcaronitee joined.");
-
 // FIRST RUN
 if (data.newUser) {
     ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
@@ -70,8 +59,10 @@ register("chat", () => {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             ChatLib.chat("-Added auto transfer party back");
-            ChatLib.chat("-Added chat emotes => /va emote");
+            ChatLib.chat("-Added chat emote replace => /va emote");
             ChatLib.chat("-Added toggle to session view in Vanq Counter");
+            ChatLib.chat("-Added align alert to align timer");
+            ChatLib.chat("-Fixed /va bl not working for leader commands");
             ChatLib.chat("-Changed /va [unknown] to not open settings");
             ChatLib.chat("-Minor typo and bug fixes");
         }

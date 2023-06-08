@@ -467,18 +467,24 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     kuudraBuild = false;
 
     @SwitchProperty({
+        name: "Cells Alignment Alert",
+        description: "Alerts the player when gyro is about to run out.",
+        category: "Kuudra",
+        subcategory: "Gyrokinetic Wand"
+    })
+    gyroAlert = false;
+    @SwitchProperty({
         name: "Cells Alignment Timer",
         description: "Displays the time left before Cells Alignment ends.",
         category: "Kuudra",
-        subcategory: "Kuudra"
+        subcategory: "Gyrokinetic Wand"
     })
     gyroTimer = false;
-
     @ButtonProperty({
         name: "Move Gyro Timer HUD",
         description: "Move the location of the Cells Alignement Timer.",
         category: "Kuudra",
-        subcategory: "Kuudra"
+        subcategory: "Gyrokinetic Wand"
     })
     moveGyroTimer() {
         ChatLib.command("moveAlignTimer", true);
