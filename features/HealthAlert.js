@@ -13,4 +13,5 @@ register("tick", () => {
 
 register("worldLoad", () => {
     setTimeout(() => { player = Player.asPlayerMP().getEntity() }, 6900);
+    currentHP = 40;
 })

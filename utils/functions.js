@@ -17,6 +17,10 @@ export function getTime(time) {
     else return `${seconds}s`;
 };
 
+export function commafy(num) {
+    return num.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 // GUI Stuff
 export function renderScale(scale, text, x, y) {
     Renderer.scale(scale);

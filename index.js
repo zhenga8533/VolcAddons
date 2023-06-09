@@ -16,6 +16,7 @@ import "./features/ReminderTimer";
 import "./features/HealthAlert";
 import "./features/AutoTransfer";
 import "./features/ChangeMessage";
+import "./features/SkillTracker";
 
 // Hub
 import "./features/DianaWaypoint";
@@ -24,7 +25,7 @@ import "./features/AnnouceMob";
 
 // Crimson Isles
 import "./features/BrokenHyp";
-import "./features/GoldenFishAlert";
+import "./features/GoldenFishTimer";
 import "./features/VanqWarp";
 import "./features/VanqCounter";
 import "./features/AbiphoneBlocker";
@@ -58,13 +59,9 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added auto transfer party back");
-            ChatLib.chat("-Added chat emote replace => /va emote");
-            ChatLib.chat("-Added toggle to session view in Vanq Counter");
-            ChatLib.chat("-Added align alert to align timer");
-            ChatLib.chat("-Fixed /va bl not working for leader commands");
-            ChatLib.chat("-Changed /va [unknown] to not open settings");
-            ChatLib.chat("-Minor typo and bug fixes");
+            ChatLib.chat("-Added skill xp tracker");
+            ChatLib.chat("-Fixed golden fish timer to 4.5 mins (ty @jasperazzi)");
+            ChatLib.chat("-Organized some code (-500 lines)");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");

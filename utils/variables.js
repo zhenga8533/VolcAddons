@@ -31,6 +31,7 @@ export let data = new PogObject("VolcAddons", {
     "VL": [15, 250, 1], // Visitors Location
     "NL": [15, 350, 1], // Next Visitors Location
     "TL": [15, 300, 1], // Golden Fish Timer Location
+    "AL": [15, 300, 1], // Skill Tracker Location
     "enigmaSouls": ENIGMA_SOULS
 }, "datitee.json");
 
@@ -240,8 +241,6 @@ register("chat", (members) => {
 }).setCriteria("Party Members: ${members} ● ");
 
 // --- GETS WORLD NAME ---
-let scoreboard = Scoreboard.getLines();
-
 const LOCATIONS = {
     "hub": [
         "AuctionHouse", "Bank", "BazaarAlley", "Blacksmith", "BuildersHouse", "CanvasRoom", "CatacombsEntrance", "Colosseum", "ColosseumArena",

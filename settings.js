@@ -269,6 +269,34 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Party"
     })
     autoTransfer = false;
+    
+    @SliderProperty({
+        name: "Skill Tracker",
+        description: "Displays rate of xp gain for skills. Set minutes until tracker pauses or as 0 to turn off. (allergic to wither impact)",
+        category: "General",
+        subcategory: "Skills",
+        min: 0,
+        max: 10
+    })
+    trackSkills = 0;
+    @ButtonProperty({
+        name: "Move Skills HUD",
+        description: "Move the location of the Skill Tracker. Runs => /moveSkills",
+        category: "General",
+        subcategory: "Skills"
+    })
+    moveSkills() {
+        ChatLib.command("moveSkills", true);
+    }
+    @ButtonProperty({
+        name: "Reset Skills Tracker",
+        description: "Resets tracking for every skill. Runs => /resetSkills",
+        category: "General",
+        subcategory: "Skills"
+    })
+    resetSkills() {
+        ChatLib.command("resetSkills", true);
+    }
 
     // HUB
     @SwitchProperty({
@@ -355,7 +383,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @ButtonProperty({
         name: "Move Timer HUD",
-        description: "Move the location of the Golden Fish Timer.",
+        description: "Move the location of the Golden Fish Timer. Runs => /moveTimer",
         category: "Crimson Isles",
         subcategory: "Crimson Isles"
     })
@@ -407,7 +435,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @ButtonProperty({
         name: "Move Counter HUD",
-        description: "Move the location of the Vanquisher Counter.",
+        description: "Move the location of the Vanquisher Counter. Runs => /moveCounter",
         category: "Crimson Isles",
         subcategory: "Vanquisher Counter"
     })
@@ -417,12 +445,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @ButtonProperty({
         name: "Clear Session",
-        description: "Resets all Vanquisher counter stats.",
+        description: "Resets all Vanquisher counter stats. Runs => /resetCounter",
         category: "Crimson Isles",
         subcategory: "Vanquisher Counter"
     })
-    clearCounter() {
-        ChatLib.command("clearCounter", true);
+    resetCounter() {
+        ChatLib.command("resetCounter", true);
     }
 
     // KUUDRA
@@ -482,7 +510,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     gyroTimer = false;
     @ButtonProperty({
         name: "Move Gyro Timer HUD",
-        description: "Move the location of the Cells Alignement Timer.",
+        description: "Move the location of the Cells Alignement Timer. Runs => /moveAlignTimer",
         category: "Kuudra",
         subcategory: "Gyrokinetic Wand"
     })
@@ -612,7 +640,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @ButtonProperty({
         name: "Move Splits HUD",
-        description: "Move the location of the Kuudra Splits.",
+        description: "Move the location of the Kuudra Splits. Runs => /moveSplits",
         category: "Kuudra",
         subcategory: "Kuudra Splits"
     })
@@ -639,7 +667,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @ButtonProperty({
         name: "Move Visitors HUD",
-        description: "Move the location of the garden visitors display.",
+        description: "Move the location of the garden visitors display. Runs => /moveVisitors",
         category: "Garden",
         subcategory: "Garden"
     })
@@ -657,7 +685,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @ButtonProperty({
         name: "Move Next Visitor HUD",
-        description: "Move the location of the next visitor display.",
+        description: "Move the location of the next visitor display. Runs => /moveNext",
         category: "Garden",
         subcategory: "Garden"
     })

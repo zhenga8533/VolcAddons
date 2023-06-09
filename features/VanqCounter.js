@@ -1,7 +1,7 @@
 import settings from "../settings";
 import { data, getWorld } from "../utils/variables";
-import { BOLD, GUI_INSTRUCT, ITALIC, RED, RESET } from "../utils/constants";
-import { renderScale } from "../utils/functions";
+import { BOLD, RED, RESET } from "../utils/constants";
+import { Overlay } from "../utils/overlay";
 
 let items = {};
 const session = {
@@ -11,11 +11,16 @@ const session = {
     "average": 0,
 };
 
-const moveCounter = new Gui();
+const counterExample =
+`${RED}${BOLD}Total Vanqs: ${RESET}Xue
+${RED}${BOLD}Total Kills: ${RESET}Hua
+${RED}${BOLD}Kills Since: ${RESET}Piao
+${RED}${BOLD}Average Kills: ${RESET}Piao`
 
+const counterOverlay = new Overlay("vanqCounter", ["crimson isle"], data.CL, "moveCounter", counterExample);
 
 // Tracks Kills
-register ("entityDeath", () => {
+register("entityDeath", () => {
     if (getWorld() != "crimson isle" || !settings.vanqCounter || Player.getHeldItem() == null) return;
 
     heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
@@ -36,6 +41,18 @@ register ("entityDeath", () => {
             session.last += killsDiff;
             if (session.vanqs) session.average = Math.round(session.kills / session.vanqs);
             items[heldItem] = newKills;
+
+            // Update HUD
+            counterOverlay.message = settings.vanqCounter == 1 ?
+`${RED}${BOLD}Total Vanqs: ${RESET}${data.vanqSession.vanqs}
+${RED}${BOLD}Total Kills: ${RESET}${data.vanqSession.kills}
+${RED}${BOLD}Kills Since: ${RESET}${data.vanqSession.last}
+${RED}${BOLD}Average Kills: ${RESET}${data.vanqSession.average}`
+:
+`${RED}${BOLD}Total Vanqs: ${RESET}${session.vanqs}
+${RED}${BOLD}Total Kills: ${RESET}${session.kills}
+${RED}${BOLD}Kills Since: ${RESET}${session.last}
+${RED}${BOLD}Average Kills: ${RESET}${session.average}`;
         }
     } else items[heldItem] = newKills;
 });
@@ -53,78 +70,6 @@ register("chat", () => {
     session.last = 0;
 }).setCriteria("A Vanquisher is spawning nearby!");
 
-// Move and Draw Counter HUD
-let renderX = data.CL[0]/data.CL[2];
-let renderY = data.CL[1]/data.CL[2];
-
-register("renderOverlay", () => {
-    // Adjusts split location
-    if (moveCounter.isOpen()) {
-        renderScale(
-            data.CL[2], `${ITALIC}x: ${Math.round(data.CL[0])}, y: ${Math.round(data.CL[1])}, s: ${data.CL[2].toFixed(2)}`,
-            renderX, renderY - 10
-        );
-
-        renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}Smile`, renderX, renderY);
-        renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}Sweet`, renderX, renderY + 10);
-        renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}Sister`, renderX, renderY + 20);
-        renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}Sadistic`, renderX, renderY + 30);
-
-        // GUI Instructions
-        renderScale(
-            1.2, GUI_INSTRUCT,
-            Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
-            Renderer.screen.getHeight() / 2.4,
-        );
-    } else {
-        if (getWorld() != "crimson isle" || !settings.vanqCounter) return;
-
-        if (settings.vanqCounter == 1) {
-            renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}${data.vanqSession.vanqs}`, renderX, renderY);
-            renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}${data.vanqSession.kills}`, renderX, renderY + 10);
-            renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}${data.vanqSession.last}`, renderX, renderY + 20);
-            renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}${data.vanqSession.average}`, renderX, renderY + 30);
-        } else {
-            renderScale(data.CL[2], `${RED}${BOLD}Total Vanqs: ${RESET}${session.vanqs}`, renderX, renderY);
-            renderScale(data.CL[2], `${RED}${BOLD}Total Kills: ${RESET}${session.kills}`, renderX, renderY + 10);
-            renderScale(data.CL[2], `${RED}${BOLD}Kills Since: ${RESET}${session.last}`, renderX, renderY + 20);
-            renderScale(data.CL[2], `${RED}${BOLD}Average Kills: ${RESET}${session.average}`, renderX, renderY + 30);
-        }
-    }
-})
-
-register("dragged", (dx, dy, x, y) => {
-    if (!moveCounter.isOpen()) return;
-
-    data.CL[0] = parseInt(x);
-    data.CL[1] = parseInt(y);
-    renderX = data.CL[0]/data.CL[2];
-    renderY = data.CL[1]/data.CL[2];
-});
-
-register("guiKey", (char, keyCode, gui, event) => {
-    if (!moveCounter.isOpen()) return;
-    
-    // Set or reset scale of text and repositions x/y to match
-    if (keyCode == 13) {
-        data.CL[2] += 0.05;
-        renderX = data.CL[0]/data.CL[2];
-        renderY = data.CL[1]/data.CL[2];
-    } else if (keyCode == 12) {
-        data.CL[2] -= 0.05;
-        renderX = data.CL[0]/data.CL[2];
-        renderY = data.CL[1]/data.CL[2];
-    } else if (keyCode == 19) {
-        data.CL[2] = 1;
-        renderX = data.CL[0];
-        renderY = data.CL[1];
-    }
-});
-
-register("command", () => {
-    moveCounter.open()
-}).setName("moveCounter");
-
 // Clear Counter
 register("command", () => {
     data.vanqSession = {
@@ -133,4 +78,4 @@ register("command", () => {
         "last": 0,
         "average": 0,
     };
-}).setName("clearCounter");
+}).setName("resetCounter");

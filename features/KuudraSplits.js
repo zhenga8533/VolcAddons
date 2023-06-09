@@ -2,6 +2,7 @@ import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, LOGO, RED, RESET } from ".
 import { getTime, isValidDate, renderScale } from "../utils/functions";
 import settings from "../settings";
 import { data, getPlayerName, getWorld } from "../utils/variables";
+import { Overlay } from "../utils/overlay";
 
 // Start times for each phase
 let kuudraSplit = [0, 0, 0, 0, 0];
@@ -17,8 +18,45 @@ let dd = now.getDate();
 if (dd < 10) dd = '0' + dd;
 if (mm < 10) mm = '0' + mm;
 
-// Splits HUD
-const moveSplits = new Gui();
+// OVERLAY
+const splitsExample =
+`${AQUA}${BOLD}Supplies: ${RESET}Bei
+${AQUA}${BOLD}Build: ${RESET}Feng
+${AQUA}${BOLD}Fuel/Stun: ${RESET}Xiao
+${AQUA}${BOLD}Kuudra: ${RESET}Xiao`;
+
+const splitsOverlay = new Overlay("kuudraSplits", ["kuudra t5", "kuudra f4"], data.SL, "moveSplits", splitsExample);
+
+register("tick", () => {
+    switch (phase) {
+        case 1:
+            times[0] = getTime(Date.now() / 1000 - kuudraSplit[0]);
+            break;
+        case 2:
+            times[0] = getTime(kuudraSplit[1] - kuudraSplit[0]);
+            times[1] = getTime(Date.now() / 1000 - kuudraSplit[1]);
+            break;
+        case 3:
+            times[1] = getTime(kuudraSplit[2] - kuudraSplit[1]);
+            times[2] = getTime(Date.now() / 1000 - kuudraSplit[2]);
+            break;
+        case 4:
+            times[2] = getTime(kuudraSplit[3] - kuudraSplit[2]);
+            times[3] = getTime(Date.now() / 1000 - kuudraSplit[3]);
+            break;
+        case 5:
+            times[3] = getTime(kuudraSplit[4] - kuudraSplit[3]);
+            break;
+    }
+    
+    // Draw Splits
+    splitsOverlay.message =
+`${AQUA}${BOLD}Supplies: ${RESET}${times[0]}
+${AQUA}${BOLD}Build: ${RESET}${times[1]}
+${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
+${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}`
+    
+})
 
 // RESET
 register("chat", () => {
@@ -123,86 +161,6 @@ register("chat", () => {
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
 }).setCriteria("${before}DEFEAT${after}");
-
-// OVERLAY
-let renderX = data.SL[0]/data.SL[2];
-let renderY = data.SL[1]/data.SL[2];
-
-register("renderOverlay", () => {
-    // Adjusts split location
-    if (moveSplits.isOpen()) {
-        renderScale(
-            data.SL[2], `${ITALIC}x: ${Math.round(data.SL[0])}, y: ${Math.round(data.SL[1])}, s: ${data.SL[2].toFixed(2)}`,
-            renderX, renderY - 10
-        );
-        
-        renderScale(data.SL[2], `${AQUA}${BOLD}Supplies: ${RESET}Ni`, renderX, renderY);
-        renderScale(data.SL[2], `${AQUA}${BOLD}Build: ${RESET}Ma`, renderX, renderY + 10);
-        renderScale(data.SL[2], `${AQUA}${BOLD}Fuel/Stun: ${RESET}Si`, renderX, renderY + 20);
-        renderScale(data.SL[2], `${AQUA}${BOLD}Kuudra: ${RESET}Le`, renderX, renderY + 30);
-    }
-    
-    if ((getWorld() != "kuudra t5" && getWorld() != "kuudra f4") || !settings.kuudraSplits) return;
-
-    switch (phase) {
-        case 1:
-            times[0] = getTime(Date.now() / 1000 - kuudraSplit[0]);
-            break;
-        case 2:
-            times[0] = getTime(kuudraSplit[1] - kuudraSplit[0]);
-            times[1] = getTime(Date.now() / 1000 - kuudraSplit[1]);
-            break;
-        case 3:
-            times[1] = getTime(kuudraSplit[2] - kuudraSplit[1]);
-            times[2] = getTime(Date.now() / 1000 - kuudraSplit[2]);
-            break;
-        case 4:
-            times[2] = getTime(kuudraSplit[3] - kuudraSplit[2]);
-            times[3] = getTime(Date.now() / 1000 - kuudraSplit[3]);
-            break;
-        case 5:
-            times[3] = getTime(kuudraSplit[4] - kuudraSplit[3]);
-            break;
-    }
-
-    // Draw Splits
-    renderScale(data.SL[2], `${AQUA}${BOLD}Supplies: ${RESET}${times[0]}`, renderX, renderY);
-    renderScale(data.SL[2], `${AQUA}${BOLD}Build: ${RESET}${times[1]}`, renderX, renderY + 10);
-    renderScale(data.SL[2], `${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}`, renderX, renderY + 20);
-    renderScale(data.SL[2], `${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}`, renderX, renderY + 30);
-});
-
-// Move Splits HUD
-register("dragged", (dx, dy, x, y) => {
-    if (!moveSplits.isOpen()) return
-    data.SL[0] = parseInt(x);
-    data.SL[1] = parseInt(y);
-    renderX = data.SL[0]/data.SL[2];
-    renderY = data.SL[1]/data.SL[2];
-});
-
-register("guiKey", (char, keyCode, gui, event) => {
-    if (!moveSplits.isOpen()) return;
-    
-    // Set or reset scale of text and repositions x/y to match
-    if (keyCode == 13) {
-        data.SL[2] += 0.05;
-        renderX = data.SL[0]/data.SL[2];
-        renderY = data.SL[1]/data.SL[2];
-    } else if (keyCode == 12) {
-        data.SL[2] -= 0.05;
-        renderX = data.SL[0]/data.SL[2];
-        renderY = data.SL[1]/data.SL[2];
-    } else if (keyCode == 19) {
-        data.SL[2] = 1;
-        renderX = data.SL[0];
-        renderY = data.SL[1];
-    }
-});
-
-register("command", () => {
-    moveSplits.open()
-}).setName("moveSplits");
 
 // PARTY CHAT COMMAND => RETURNS SPLITS TO /PC
 let onCD = false;
