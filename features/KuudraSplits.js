@@ -3,6 +3,7 @@ import { getTime, isValidDate, renderScale } from "../utils/functions";
 import settings from "../settings";
 import { data, getPlayerName, getWorld } from "../utils/variables";
 import { Overlay } from "../utils/overlay";
+import { getKuudraHP } from "./KuudraDetect";
 
 // Start times for each phase
 let kuudraSplit = [0, 0, 0, 0, 0];
@@ -26,37 +27,6 @@ ${AQUA}${BOLD}Fuel/Stun: ${RESET}Xiao
 ${AQUA}${BOLD}Kuudra: ${RESET}Xiao`;
 
 const splitsOverlay = new Overlay("kuudraSplits", ["kuudra t5", "kuudra f4"], data.SL, "moveSplits", splitsExample);
-
-register("tick", () => {
-    switch (phase) {
-        case 1:
-            times[0] = getTime(Date.now() / 1000 - kuudraSplit[0]);
-            break;
-        case 2:
-            times[0] = getTime(kuudraSplit[1] - kuudraSplit[0]);
-            times[1] = getTime(Date.now() / 1000 - kuudraSplit[1]);
-            break;
-        case 3:
-            times[1] = getTime(kuudraSplit[2] - kuudraSplit[1]);
-            times[2] = getTime(Date.now() / 1000 - kuudraSplit[2]);
-            break;
-        case 4:
-            times[2] = getTime(kuudraSplit[3] - kuudraSplit[2]);
-            times[3] = getTime(Date.now() / 1000 - kuudraSplit[3]);
-            break;
-        case 5:
-            times[3] = getTime(kuudraSplit[4] - kuudraSplit[3]);
-            break;
-    }
-    
-    // Draw Splits
-    splitsOverlay.message =
-`${AQUA}${BOLD}Supplies: ${RESET}${times[0]}
-${AQUA}${BOLD}Build: ${RESET}${times[1]}
-${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
-${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}`
-    
-})
 
 // RESET
 register("chat", () => {
@@ -161,6 +131,44 @@ register("chat", () => {
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
 }).setCriteria("${before}DEFEAT${after}");
+
+register("tick", () => {
+    if (getWorld() != "kuudra t5" && getWorld() != "kuudra f4") return;
+
+    // Phase 4 fail safe
+    if (phase == 3 && getKuudraHP() < 25000 && getWorld() == "kuudra t5") {
+        kuudraSplit[3] = Date.now() / 1000;
+        phase = 4;
+    }
+
+    switch (phase) {
+        case 1:
+            times[0] = getTime(Date.now() / 1000 - kuudraSplit[0]);
+            break;
+        case 2:
+            times[0] = getTime(kuudraSplit[1] - kuudraSplit[0]);
+            times[1] = getTime(Date.now() / 1000 - kuudraSplit[1]);
+            break;
+        case 3:
+            times[1] = getTime(kuudraSplit[2] - kuudraSplit[1]);
+            times[2] = getTime(Date.now() / 1000 - kuudraSplit[2]);
+            break;
+        case 4:
+            times[2] = getTime(kuudraSplit[3] - kuudraSplit[2]);
+            times[3] = getTime(Date.now() / 1000 - kuudraSplit[3]);
+            break;
+        case 5:
+            times[3] = getTime(kuudraSplit[4] - kuudraSplit[3]);
+            break;
+    }
+    
+    // Draw Splits
+    splitsOverlay.message =
+`${AQUA}${BOLD}Supplies: ${RESET}${times[0]}
+${AQUA}${BOLD}Build: ${RESET}${times[1]}
+${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
+${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
+});
 
 // PARTY CHAT COMMAND => RETURNS SPLITS TO /PC
 let onCD = false;

@@ -1,7 +1,5 @@
 import settings from "../settings";
-import { DARK_AQUA, RED } from "../utils/constants";
-import { WHITE } from "../utils/constants";
-import { BOLD, GRAY } from "../utils/constants";
+import { BOLD, DARK_AQUA, RED, WHITE } from "../utils/constants";
 import { commafy, getTime } from "../utils/functions";
 import { Overlay } from "../utils/overlay";
 import { data } from "../utils/variables";
@@ -53,13 +51,16 @@ register("actionBar", (before, msg, after) => {
 
     // Update info
     const data = msg.replace('/', ' ').split(' ');
-    current = data[1]
+    current = data[1];
     const skill = skills[current];
     const amount = data[2].replace(/\D/g,'');
 
+    // Fail safe
+    if (skill == undefined) return;
+    
     // Reset skill tracking
     if (skill.start == 0)
-        skill.start = amount - data[0];
+        skill.start = amount - data[0].replace(/,/g, '');
     
     // Calc skill gain
     skill.now = amount;

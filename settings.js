@@ -12,7 +12,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
+        const categories = ["General", "Combat", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -24,6 +24,8 @@ class Settings {
 ${BOLD}DM Volcaronitee#0051 on Discord if you have any questions!
 
 ${ITALIC}Related Commands: /va <help, settings, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
+        this.setCategoryDescription("Combat",
+`${HEADER}`);
         this.setCategoryDescription("Hub",
 `${HEADER}
 ${ITALIC}Related Commands: /va warplist`);
@@ -80,13 +82,15 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     }
     
     // GENERAL
-    @SwitchProperty({
+    @SliderProperty({
         name: "Draw Waypoint",
-        description: "Creates waypoints out of patcher formatted coords and other features here.",
+        description: "Creates waypoints out of coords in chat. Set how many seconds until waypoints expire (Mob waypoints last 1/3 as long).",
         category: "General",
-        subcategory: "General"
+        subcategory: "General",
+        min: 0,
+        max: 120
     })
-    drawWaypoint = false;
+    drawWaypoint = 0;
 
     @SwitchProperty({
         name: "Remove Selfie Mode",
@@ -103,22 +107,24 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     abiphoneBlocker = false;
-
-    @PercentSliderProperty({
-        name: "Low Health Alert",
-        description: "Alerts the player if their health drops lower than the percent input (set 0% to toggle off).",
-        category: "General",
-        subcategory: "General"
-    })
-    healthAlert = 0.0;
     
     @SwitchProperty({
-        name: "Enable Custom Emotes",
+        name: "Custom Emotes",
         description: "Replaces chat messages containing emotes in '/emotes list' and => /va emote <add, remove> [trigger] [emote]",
         category: "General",
         subcategory: "General"
     })
     enableEmotes = false;
+
+    @SliderProperty({
+        name: "Recent Server Alert",
+        description: "Alerts player when they join a server they have joined in the past 'X' minutes. Set as 0 to turn off.",
+        category: "General",
+        subcategory: "General",
+        min: 0,
+        max: 30
+    })
+    serverAlert = 0;
 
     @TextProperty({
         name: "Reminder Text",
@@ -247,7 +253,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     helpCommand = true;
 
     @SwitchProperty({
-        name: "Enable Whitelist Rejoin",
+        name: "Whitelist Rejoin",
         description: "Automatically rejoin invites from players on the whitelist (/va whitelist <add/remove> [ign]).",
         category: "General",
         subcategory: "Party"
@@ -272,7 +278,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     @SliderProperty({
         name: "Skill Tracker",
-        description: "Displays rate of xp gain for skills. Set minutes until tracker pauses or as 0 to turn off. (allergic to wither impact)",
+        description: "Displays rate of xp gain for skills. Set minutes until tracker pauses or as 0 to turn off. (Use larger numbers when using wither impact)",
         category: "General",
         subcategory: "Skills",
         min: 0,
@@ -297,6 +303,72 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     resetSkills() {
         ChatLib.command("resetSkills", true);
     }
+
+    // COMBAT
+    @PercentSliderProperty({
+        name: "Low Health Alert",
+        description: "Alerts the player if their health drops lower than the percent input (set 0% to toggle off).",
+        category: "Combat",
+        subcategory: "Combat"
+    })
+    healthAlert = 0.0;
+    
+    @SwitchProperty({
+        name: "Broken Hyperion",
+        description: "Uses 'Book of Stats' and 'Champion' to track when Wither Impact breaks.",
+        category: "Combat",
+        subcategory: "Combat"
+    })
+    brokenHyp = false;
+
+    @SwitchProperty({
+        name: "Ragnarok Detection",
+        description: "Detects when Ragnarok Ability finishes casting (sounds must be on).",
+        category: "Combat",
+        subcategory: "Combat"
+    })
+    ragDetect = false;
+
+    @SwitchProperty({
+        name: "Cells Alignment Alert",
+        description: "Alerts the player when gyro is about to run out.",
+        category: "Combat",
+        subcategory: "Gyrokinetic Wand"
+    })
+    gyroAlert = false;
+    @SwitchProperty({
+        name: "Cells Alignment Timer",
+        description: "Displays the time left before Cells Alignment ends.",
+        category: "Combat",
+        subcategory: "Gyrokinetic Wand"
+    })
+    gyroTimer = false;
+    @ButtonProperty({
+        name: "Move Gyro Timer HUD",
+        description: "Move the location of the Cells Alignement Timer. Runs => /moveAlignTimer",
+        category: "Combat",
+        subcategory: "Gyrokinetic Wand"
+    })
+    moveGyroTimer() {
+        ChatLib.command("moveAlignTimer", true);
+    }
+
+    @SelectorProperty({
+        name: "Announce Boss Chat",
+        description: "Sends coords of any slayer bosses that you spawn to chat.",
+        category: "Combat",
+        subcategory: "Slayer",
+        options: ["OFF", "All Chat", "Party Chat"]
+    })
+    bossAlert = 0;
+    @SelectorProperty({
+        name: "Announce Miniboss Chat",
+        description: "Sends coords of any slayer minibosses that you spawn to chat. (sounds must be on)",
+        category: "Combat",
+        subcategory: "Slayer",
+        options: ["OFF", "All Chat", "Party Chat"]
+    })
+    miniAlert = 0;
 
     // HUB
     @SwitchProperty({
@@ -349,7 +421,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SelectorProperty({
         name: "Announce Inquisitor Chat",
-        description: "Sends coords of any inquisitors that you spawn to party chat.",
+        description: "Sends coords of any Inquisitors that you spawn to chat.",
         category: "Hub",
         subcategory: "Inquisitor",
         options: ["OFF", "All Chat", "Party Chat"]
@@ -357,22 +429,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     dianaAlert = 0;
     
     // CRIMSON ISLES
-    @SwitchProperty({
-        name: "Broken Hyperion",
-        description: "Uses 'Book of Stats' and 'Champion' to track when Wither Impact breaks.",
-        category: "Crimson Isles",
-        subcategory: "Crimson Isles"
-    })
-    brokenHyp = false;
-
-    @SwitchProperty({
-        name: "Ragnarok Detection",
-        description: "Detects when Ragnarok Ability finishes casting (sounds must be on).",
-        category: "Crimson Isles",
-        subcategory: "Crimson Isles"
-    })
-    ragDetect = false;
-
     @SwitchProperty({
         name: "Golden Fish Timer",
         description: "Sets the 3 minute timer between each rod cast for a golden fish spawn.",
@@ -393,7 +449,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SelectorProperty({
         name: "Announce Vanquisher Chat",
-        description: "Sends coords of Vanquisher in patcher format. (Only works if Vanquisher Auto-Warp is empty!)",
+        description: "Sends coords of any Vanquishers that you spawn to chat. (Only works if Vanquisher Auto-Warp is empty!)",
         category: "Crimson Isles",
         subcategory: "Vanquisher Alert",
         options: ["OFF", "All Chat", "Party Chat"]
@@ -493,30 +549,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Kuudra"
     })
     kuudraBuild = false;
-
-    @SwitchProperty({
-        name: "Cells Alignment Alert",
-        description: "Alerts the player when gyro is about to run out.",
-        category: "Kuudra",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroAlert = false;
-    @SwitchProperty({
-        name: "Cells Alignment Timer",
-        description: "Displays the time left before Cells Alignment ends.",
-        category: "Kuudra",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroTimer = false;
-    @ButtonProperty({
-        name: "Move Gyro Timer HUD",
-        description: "Move the location of the Cells Alignement Timer. Runs => /moveAlignTimer",
-        category: "Kuudra",
-        subcategory: "Gyrokinetic Wand"
-    })
-    moveGyroTimer() {
-        ChatLib.command("moveAlignTimer", true);
-    }
 
     @SwitchProperty({
         name: "Kuudra Alerts",

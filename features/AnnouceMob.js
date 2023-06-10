@@ -14,7 +14,7 @@ function annoucePosition(toAll, mob, x, y ,z) {
         area = area.getName().removeFormatting();
 
     if (toAll) {
-        const id = (Math.random() + 1).toString(36).substring(7);
+        const id = (Math.random() + 1).toString(36).substring(6);
         ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]! @${id}`);
     } else if (getInParty())
         ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!`);
@@ -65,6 +65,7 @@ export function getVanquishers() {
     return vanquishers;
 }
 
+
 // --- Inquisitor Alert ---
 const EntityPlayerMP = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP");
 let inquisitor = undefined;
@@ -97,7 +98,37 @@ register("tick", () => {
     }
 });
 
-// To draw waypoint
 export function getInquisitors() {
     return inquisitors;
 }
+
+
+// --- Slayer Alert ---
+let miniCD = false;
+let bossCD = false;
+
+// Get Miniboss Spawn
+register("soundPlay", (pos, name, vol, pitch, category, event) => {
+    if (!settings.miniAlert || miniCD || name != "random.explode" || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
+
+    annoucePosition(settings.miniAlert == 1, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
+
+    miniCD = true;
+    setTimeout(() => { miniCD = false }, 3000);
+});
+
+// Boss Spawn
+register("step", () => {
+    if (!settings.miniAlert || bossCD) return;
+
+    const bossLine = Scoreboard.getLines().find((line) => line.getName().includes("Slay the boss!"));
+    if (bossLine != undefined) {
+        annoucePosition(settings.bossAlert == 1, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
+
+        bossCD = true;
+    }
+}).setFps(10);
+
+register("chat", () => {
+    bossCD = false;
+}).setCriteria("  SLAYER QUEST COMPLETE!");

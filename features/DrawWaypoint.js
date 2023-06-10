@@ -115,13 +115,16 @@ register("chat", (player, spacing, x, y, z) => {
 
     // Remove anything after z coords
     const spaceIndex = z.indexOf(' ')
-    if (spaceIndex != -1)
+    let time = 1000;
+    if (spaceIndex != -1) {
         z = z.substring(0, spaceIndex);
+        time /= 3;
+    }
 
     waypoints.push([player, x, y, z]);
 
-    // Delete waypoint after 60s
-    setTimeout(() => {if (waypoints[0][0].equals(player)) waypoints.shift() }, 60000);
+    // Delete waypoint after 'X' seconds
+    setTimeout(() => {if (waypoints[0][0].equals(player)) waypoints.shift() }, settings.drawWaypoint * time);
 }).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r");
 
 // Lets user create waypoint

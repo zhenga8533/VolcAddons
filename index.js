@@ -1,5 +1,9 @@
 // Import outer scope variables
 import settings from "./settings";
+// Settings change REMOVE NEXT UPDATE
+if (settings.drawWaypoint === false || settings.drawWaypoint === true) {
+    settings.drawWaypoint = 0;
+}
 import { data, updateList } from "./utils/variables";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 data.autosave();
@@ -17,6 +21,7 @@ import "./features/HealthAlert";
 import "./features/AutoTransfer";
 import "./features/ChangeMessage";
 import "./features/SkillTracker";
+import "./features/ServerAlert";
 
 // Hub
 import "./features/DianaWaypoint";
@@ -36,7 +41,7 @@ import { calculate, setApex } from "./features/BazaarCalculator";
 import "./features/KuudraAlerts";
 import "./features/KuudraReparty";
 import "./features/KuudraCrates";
-import "./features/KuudraHP";
+import "./features/KuudraDetect";
 import "./features/KuudraSplits";
 import { getSplits } from "./features/KuudraSplits";
 import "./features/RagDetect";
@@ -60,7 +65,11 @@ register("chat", () => {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             ChatLib.chat("-Added skill xp tracker");
+            ChatLib.chat("-Added slayer spawn waypoints");
+            ChatLib.chat("-Added recent server alert");
+            ChatLib.chat("-Changed kuudra splits to be more reliable");
             ChatLib.chat("-Fixed golden fish timer to 4.5 mins (ty @jasperazzi)");
+            ChatLib.chat("-Configured some settings (you may need to re-enable some)");
             ChatLib.chat("-Organized some code (-500 lines)");
         }
     }, 1000);

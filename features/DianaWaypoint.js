@@ -85,7 +85,7 @@ register("soundPlay", (pos, name, vol, pitch, category, event) => {
 
     if (pitch > 0)
         distance = 4 / Math.pow(pitch, 6) + 0.2 / Math.pow(pitch, 5) - correct;
-})
+});
 
 // Track spade ability to clear current particle list
 register("clicked", (x, y, button, state) => {
