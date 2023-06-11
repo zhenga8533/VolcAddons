@@ -87,6 +87,29 @@ export function updateList(args, list, listName) {
     return list;
 }
 
+// --- TRIGGER CONTROL ---
+const registers = []
+export function registerWhen(trigger, dependency) {
+    registers.push([trigger.unregister(), dependency, false])
+}
+
+// Updates on world or gui change
+function setRegisters() {
+    registers.forEach(trigger => {
+        if (trigger[1]() && !trigger[2]) {
+            trigger[0].register();
+            trigger[2] = true;
+        } else if (!trigger[1]() && trigger[2]) {
+            trigger[0].unregister();
+            trigger[2] = false;
+        }
+    });
+}
+
+register("guiKey", (char, keyCode, gui, event) => {
+    if (keyCode == 1) setRegisters();
+});
+
 // --- VARIABLES ---
 let inParty = false;
 export function getInParty() { return inParty; }
@@ -97,8 +120,9 @@ export function getIsLeader() { return isLeader; }
 let partyMembers = [];
 
 let world = "none";
-let lastWorld = "none";
+let tier = 0;
 export function getWorld() { return world; }
+export function getTier() { return tier; }
 
 let zone = "none";
 export function getZone() { return zone; }
@@ -262,10 +286,8 @@ const LOCATIONS = {
         "InfestedHouse", "Mirrorverse", "Dreadfarm", "GreatBeanstalk", "VillagePlaza", "Taylors", "LonelyTerrace", "MurderHouse", "BookinaBook",
         "HalfEatenCave", "BarterBankShow", "BarryCenter", "BarryHQ", "DéjàVuAlley", "LivingCave", "LivingStillness", "Colosseum", "BarrierStreet",
         "PhotonPathway", "StillgoreChâteau", "Oubliette", "FairylosopherTower"],
-    "kuudra t5": [
-        "KuudrasHollowT5"],
-    "kuudra f4": [
-        "KuudrasHollowT1", "KuudrasHollowT2", "KuudrasHollowT3", "KuudrasHollowT4"]
+    "kuudra": [
+        "KuudrasHollowT1", "KuudrasHollowT2", "KuudrasHollowT3", "KuudrasHollowT4", "KuudrasHollowT5"]
 }
 
 let noFind = 0;
@@ -286,10 +308,13 @@ function findWorld() {
             for (let location in LOCATIONS) {
                 if (LOCATIONS[location].includes(worldLine)) {
                     world = location;
+                    if (world == "kuudra") tier = parseInt(worldLine.slice(-1));
+
                     break;
                 }
             }
         }
+        setRegisters();
     }, 1000);
 }
 

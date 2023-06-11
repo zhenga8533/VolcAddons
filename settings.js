@@ -41,12 +41,14 @@ ${ITALIC}Related Commands: /va splits`);
 `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
+        // HUDs
         this.addDependency("Move Timer HUD", "Golden Fish Timer");
         this.addDependency("Move Gyro Timer HUD", "Cells Alignment Timer");
         this.addDependency("Move Splits HUD", "Kuudra Splits");
         this.addDependency("Move Visitors HUD", "Garden Tab Display");
         this.addDependency("Move Next Visitor HUD", "Next Visitor Display");
         
+        // Leader / Party Commands
         this.addDependency("Leader Command Options", "Leader Chat Commands");
         this.addDependency("Warp Command (?warp)", "Leader Command Options");
         this.addDependency("Transfer Command (?transfer)", "Leader Command Options");
@@ -64,6 +66,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Women Command (?<w, waifu, women>)", "Party Command Options");
         this.addDependency("Help Command (?help)", "Party Command Options");
         
+        // Kuudra Alerts
         this.addDependency("Kuudra Alert Options", "Kuudra Alerts");
         this.addDependency("No Key Alert", "Kuudra Alert Options");
         this.addDependency("Unready Alert", "Kuudra Alert Options");
@@ -81,7 +84,10 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Token Alert", "Kuudra Alerts");
     }
     
-    // GENERAL
+
+    // GENERAL FEATURES
+
+    // General
     @SliderProperty({
         name: "Draw Waypoint",
         description: "Creates waypoints out of coords in chat. Set how many seconds until waypoints expire (Mob waypoints last 1/3 as long).",
@@ -126,6 +132,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     serverAlert = 0;
 
+    // Timer
     @TextProperty({
         name: "Reminder Text",
         description: "What will appear on screen when timer runs out.",
@@ -133,7 +140,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Timer"
     })
     reminderText = "";
-
     @SliderProperty({
         name: "Reminder Time",
         description: "Alerts the player every 'X' minutes. Set as 0 to turn off.",
@@ -144,6 +150,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     reminderTime = 0;
 
+    // Party
     @SwitchProperty({
         name: "Leader Chat Commands",
         description: "Allows everyone besides /va blacklist to use leader commands.",
@@ -276,6 +283,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     autoTransfer = false;
     
+    // Skills
     @SliderProperty({
         name: "Skill Tracker",
         description: "Displays rate of xp gain for skills. Set minutes until tracker pauses or as 0 to turn off. (Use larger numbers when using wither impact)",
@@ -304,7 +312,10 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         ChatLib.command("resetSkills", true);
     }
 
+
     // COMBAT
+
+    // Combat
     @PercentSliderProperty({
         name: "Low Health Alert",
         description: "Alerts the player if their health drops lower than the percent input (set 0% to toggle off).",
@@ -329,6 +340,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     ragDetect = false;
 
+    // Gyrokinetic Wand
     @SwitchProperty({
         name: "Cells Alignment Alert",
         description: "Alerts the player when gyro is about to run out.",
@@ -353,6 +365,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         ChatLib.command("moveAlignTimer", true);
     }
 
+    // Slayer
     @SelectorProperty({
         name: "Announce Boss Chat",
         description: "Sends coords of any slayer bosses that you spawn to chat.",
@@ -370,7 +383,10 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     miniAlert = 0;
 
+
     // HUB
+
+    // Diana
     @SwitchProperty({
         name: "Diana Waypoint",
         description: "Estimates Diana burrows from particles and pitch of Ancestral Spade (particles => ON, /togglemusic => OFF) [POV Soopy servers are down]",
@@ -378,7 +394,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Diana"
     })
     dianaWaypoint = false;
-
     @SwitchProperty({
         name: "Diana Warp",
         description: "Press F (change button in controls) to warp to closest location to guess. Do /va warplist to set warps.",
@@ -394,7 +409,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Griffin Burrow"
     })
     dianaBurrow = false;
-
     @SwitchProperty({
         name: "Burrow Amogus Alert",
         description: "Calls an emergency meeting if a burrow gets detected.",
@@ -402,7 +416,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Griffin Burrow"
     })
     dianaAmogus = false;
-
     @SwitchProperty({
         name: "Burrow Chat Alert",
         description: "Shows a message in chat if a burrow gets detected.",
@@ -418,7 +431,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Inquisitor"
     })
     detectInq = false;
-
     @SelectorProperty({
         name: "Announce Inquisitor Chat",
         description: "Sends coords of any Inquisitors that you spawn to chat.",
@@ -428,25 +440,28 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     dianaAlert = 0;
     
+
     // CRIMSON ISLES
+
+    // Fishing
     @SwitchProperty({
         name: "Golden Fish Timer",
         description: "Sets the 3 minute timer between each rod cast for a golden fish spawn.",
         category: "Crimson Isles",
-        subcategory: "Crimson Isles"
+        subcategory: "Fishing"
     })
     goldenFishAlert = false;
-
     @ButtonProperty({
         name: "Move Timer HUD",
         description: "Move the location of the Golden Fish Timer. Runs => /moveTimer",
         category: "Crimson Isles",
-        subcategory: "Crimson Isles"
+        subcategory: "Fishing"
     })
     moveTimer() {
         ChatLib.command("moveTimer", true);
     }
 
+    // Vanquisher
     @SelectorProperty({
         name: "Announce Vanquisher Chat",
         description: "Sends coords of any Vanquishers that you spawn to chat. (Only works if Vanquisher Auto-Warp is empty!)",
@@ -471,7 +486,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Vanquisher Alert"
     })
     vanqDetect = false;
-
     @SwitchProperty({
         name: "Vanquisher Detection Sound",
         description: "Plays a sound whenever a vanquisher gets detected.",
@@ -488,7 +502,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         options: ["OFF", "Overall View", "Session View"]
     })
     vanqCounter = 0;
-
     @ButtonProperty({
         name: "Move Counter HUD",
         description: "Move the location of the Vanquisher Counter. Runs => /moveCounter",
@@ -498,7 +511,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     moveCounter() {
         ChatLib.command("moveCounter", true);
     }
-
     @ButtonProperty({
         name: "Clear Session",
         description: "Resets all Vanquisher counter stats. Runs => /resetCounter",
@@ -509,7 +521,10 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         ChatLib.command("resetCounter", true);
     }
 
+
     // KUUDRA
+
+    // Kuudra
     @TextProperty({
         name: "Kuudra Reparty",
         description: "Enter IGNs to reparty, if 3/1: [ign] | if 2/2 <[leader ign], [ign], [partner ign]>",
@@ -550,6 +565,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     kuudraBuild = false;
 
+    // Kuudra Alert
     @SwitchProperty({
         name: "Kuudra Alerts",
         description: "Alerts the player of events in Kuudra instance.",
@@ -557,7 +573,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Kuudra Alert"
     })
     kuudraAlerts = false;
-
     @SwitchProperty({
         name: "Kuudra Alert Options",
         description: "Toggle to show what alert to show/hide.",
@@ -565,7 +580,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Kuudra Alert"
     })
     alertsToggle = false;
-
     @CheckboxProperty({
         name: "No Key Alert",
         category: "Kuudra",
@@ -662,6 +676,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     tokenAlert = 0;
 
+    // Kuudra Splits
     @SwitchProperty({
         name: "Kuudra Splits",
         description: "Displays Kuudra splits and records best splits in t5 (?<splits/best> in party chat or /va splits to show)",
@@ -669,7 +684,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Kuudra Splits"
     })
     kuudraSplits = false;
-
     @ButtonProperty({
         name: "Move Splits HUD",
         description: "Move the location of the Kuudra Splits. Runs => /moveSplits",
@@ -680,7 +694,10 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         ChatLib.command("moveSplits", true);
     }
     
+
     // GARDEN
+
+    // Garden
     @SwitchProperty({
         name: "Composter Alert",
         description: "Displays an alert when the composter becomes inactive.",
@@ -696,7 +713,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Garden"
     })
     gardenTab = false;
-
     @ButtonProperty({
         name: "Move Visitors HUD",
         description: "Move the location of the garden visitors display. Runs => /moveVisitors",
@@ -714,7 +730,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Garden"
     })
     nextVisitor = false;
-
     @ButtonProperty({
         name: "Move Next Visitor HUD",
         description: "Move the location of the next visitor display. Runs => /moveNext",
@@ -725,7 +740,10 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         ChatLib.command("moveNext", true);
     }
 
+
     // RIFT
+    
+    // Rift
     @SliderProperty({
         name: "Enigma Soul Waypoints",
         description: "Display the distance at which soul waypoints will render. (Set as 0 to turn off)",

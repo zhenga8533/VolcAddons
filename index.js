@@ -4,56 +4,63 @@ import settings from "./settings";
 if (settings.drawWaypoint === false || settings.drawWaypoint === true) {
     settings.drawWaypoint = 0;
 }
-import { data, updateList } from "./utils/variables";
+if (settings.vanqCounter === false || settings.vanqCounter === true) {
+    settings.vanqCounter = 0;
+}
+import { data, getTier, getWorld, updateList } from "./utils/variables";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 data.autosave();
 
 // General
-import "./features/PartyCommands";
-import { executeCommand } from "./features/PartyCommands";
-import "./features/RemoveSelfie";
-import "./features/JoinParty";
-import "./features/DrawWaypoint";
-import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/DrawWaypoint";
-import "./features/GyroTimer";
-import "./features/ReminderTimer";
-import "./features/HealthAlert";
-import "./features/AutoTransfer";
-import "./features/ChangeMessage";
-import "./features/SkillTracker";
-import "./features/ServerAlert";
+import "./features/general/AbiphoneBlocker";
+import "./features/general/AutoTransfer";
+import "./features/general/ChangeMessage";
+import "./features/general/DrawWaypoint";
+import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/general/DrawWaypoint";
+import "./features/general/JoinParty";
+import "./features/general/PartyCommands";
+import { executeCommand } from "./features/general/PartyCommands";
+import "./features/general/ReminderTimer";
+import "./features/general/RemoveSelfie";
+import "./features/general/ServerAlert";
+import "./features/general/SkillTracker";
+
+// Combat
+import "./features/combat/BrokenHyp";
+import "./features/combat/GyroTimer";
+import "./features/combat/HealthAlert";
+import "./features/combat/RagDetect";
 
 // Hub
-import "./features/DianaWaypoint";
-import { setWarps } from "./features/DianaWaypoint";
-import "./features/AnnouceMob";
+import "./features/hub/DianaWaypoint";
+import { setWarps } from "./features/hub/DianaWaypoint";
 
 // Crimson Isles
-import "./features/BrokenHyp";
-import "./features/GoldenFishTimer";
-import "./features/VanqWarp";
-import "./features/VanqCounter";
-import "./features/AbiphoneBlocker";
-import "./features/BazaarCalculator";
-import { calculate, setApex } from "./features/BazaarCalculator";
+import "./features/crimsonIsles/GoldenFishTimer";
+import "./features/crimsonIsles/VanqWarp";
+import "./features/crimsonIsles/VanqCounter";
 
 // Kuudra
-import "./features/KuudraAlerts";
-import "./features/KuudraReparty";
-import "./features/KuudraCrates";
-import "./features/KuudraDetect";
-import "./features/KuudraSplits";
-import { getSplits } from "./features/KuudraSplits";
-import "./features/RagDetect";
+import "./features/kuudra/KuudraAlerts";
+import "./features/kuudra/KuudraCrates";
+import "./features/kuudra/KuudraDetect";
+import "./features/kuudra/KuudraReparty";
+import "./features/kuudra/KuudraSplits";
+import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden
-import "./features/GardenTab";
+import "./features/garden/GardenTab";
+
+// Etc
+import "./features/etc/AnnouceMob";
+import "./features/etc/BazaarCalculator";
+import { calculate, setApex } from "./features/etc/BazaarCalculator";
 
 // FIRST RUN
 if (data.newUser) {
     ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
     ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
-    ChatLib.chat("Instruction manual (i think) => /va help or DM Volcaronitee#0233\n");
+    ChatLib.chat("Instruction manual (i think) => /va help or DM .graped\n");
 
     data.newUser = false;
 }
@@ -68,9 +75,10 @@ register("chat", () => {
             ChatLib.chat("-Added slayer spawn waypoints");
             ChatLib.chat("-Added recent server alert");
             ChatLib.chat("-Changed kuudra splits to be more reliable");
-            ChatLib.chat("-Fixed golden fish timer to 4.5 mins (ty @jasperazzi)");
+            ChatLib.chat("-Changed cells alignment tracker to be global");
             ChatLib.chat("-Configured some settings (you may need to re-enable some)");
-            ChatLib.chat("-Organized some code (-500 lines)");
+            ChatLib.chat("-Organized some code (-500 lines w)");
+            ChatLib.chat("-Optimized all features");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
@@ -94,7 +102,7 @@ function getHelp() {
     
     // Crimson Isle Features
     ChatLib.chat(`${AQUA}${BOLD}OTHER FEATURES:${RESET}`);
-    ChatLib.chat(`Should be self explanatory, DM Volcaronitee#0233 on discord if any questions...`);
+    ChatLib.chat(`Should be self explanatory, DM .graped on discord if any questions...`);
 }
 
 // GENERAL FUNCTION COMMANDS
@@ -180,6 +188,10 @@ register ("command", (...args) => {
         case "zone": // Enable zone waypoints
             zoneEdit(args);
             break;
+        case "test": // Enable zone waypoints
+            print(getWorld());
+            print(getTier());
+            break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))
                 executeCommand(Player.getName(), args, false);
@@ -189,4 +201,4 @@ register ("command", (...args) => {
             }
             break;
     }
-}).setName("volcaddons").setAliases("volc", "va", "itee")
+}).setName("volcaddons").setAliases("volc", "va", "itee");

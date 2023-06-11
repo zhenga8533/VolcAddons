@@ -4,7 +4,7 @@
   "creator": "Volcaronitee",
   "description": "joe.",
   "entry": "index.js",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "requires": [
   "Vigilance",
     "PogData",
