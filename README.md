@@ -1,7 +1,13 @@
 # [VolcAddons](https://www.chattriggers.com/modules/v/VolcAddons)
-ChatTriggers module originally created for Koodar. Now I'm just adding random QOL stuff :)
+ChatTriggers module originally created for Koodar. Now I'm just adding random stuff :)
 
-## Setup + Commands
+## Setup
+- Have [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html) Installed!
+- Have [ChatTriggers](https://www.chattriggers.com) Installed!
+- Run /ct import VolcAddons through an in-game command.
+  - Follow [this page](https://github.com/ChatTriggers/ChatTriggers/wiki/Fixing-broken-imports) if module fails to import.
+
+## Commands
 - GENERAL COMMANDS:
   - Settings: /va <help, settings, clear (resets text settings)>
   - Waypoints: /va <coords, waypoint, enigma, npc, zone>
@@ -9,7 +15,7 @@ ChatTriggers module originally created for Koodar. Now I'm just adding random QO
   - Kuudra: /va splits
   - Inferno Minions: /va <calc, apex>
 
-- GENERAL FEATURES:
+- PARTY CHAT COMMANDS:
   - Party Commands: ?<warp, transfer, promote, demote, allinv>
   - Other Commands: ?<cringe, gay, racist, dice, flip, 8ball, rps, w>
 
