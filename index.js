@@ -1,5 +1,4 @@
 // Import outer scope variables
-<meta name="google-site-verification" content="uMcLIeqWlLjBtUWGV3SRdsnKmMoPIITnE2QeEVrNcqo" />
 import settings from "./settings";
 // Settings change REMOVE NEXT UPDATE
 if (settings.drawWaypoint === false || settings.drawWaypoint === true) {
