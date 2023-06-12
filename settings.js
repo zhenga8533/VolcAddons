@@ -82,6 +82,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Stun Alert", "Kuudra Alert Options");
         this.addDependency("Dropship Alert", "Kuudra Alert Options");
         this.addDependency("Token Alert", "Kuudra Alerts");
+
+        // Etc
+        this.addDependency("Burrow Amogus Alert", "Burrow Detection");
+        this.addDependency("Burrow Chat Alert", "Burrow Detection");
+        this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
     }
     
 

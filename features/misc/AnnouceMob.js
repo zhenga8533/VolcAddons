@@ -56,7 +56,7 @@ registerWhen(register("tick", () => {
             }
         }
     }
-}), () => getWorld() == "crimson isle" && settings.vanqSound);
+}), () => getWorld() == "crimson isle" && settings.vanqDetect);
 
 export function getVanquishers() {
     return vanquishers;

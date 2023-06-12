@@ -1,7 +1,7 @@
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import settings from "../../settings";
 import { data, getWorld, registerWhen } from "../../utils/variables";
-import { distanceFormula, getClosest } from "../../utils/functions";
+import { getClosest } from "../../utils/functions";
 
 // Burow detection Stuff
 let heldItem = undefined;
@@ -25,8 +25,9 @@ let closest = undefined;
 registerWhen(register("spawnParticle", (particle, type, event) => {
     if (getWorld() != "hub") return;
 
-    let xyz = particle.getPos();
-    xyz = [xyz.getX(), xyz.getY(), xyz.getZ()];
+    const particlePos = particle.getPos();
+    const xyz = [particlePos.getX(), particlePos.getY(), particlePos.getZ()];
+    const [x, y, z] = [xyz[0], xyz[1], xyz[2]];
     switch (type.toString()) {
         case ("FIREWORKS_SPARK"): // Loads spade ability particles
             // Uses player location as last particle if first cast
@@ -35,11 +36,11 @@ registerWhen(register("spawnParticle", (particle, type, event) => {
             
             // Avoids stray fireworks sparks i.e. frozen scythe / crystals
             const lastParticle = particles[particles.length - 1];
-            if (distanceFormula(lastParticle[0], lastParticle[1], lastParticle[2], xyz[0], xyz[1], xyz[2]) < 5)
-                particles.push([xyz[0], xyz[1], xyz[2]]);
+            if (Math.hypot(lastParticle[0] - x, lastParticle[1] - y, lastParticle[2] - z) < 5)
+                particles.push([x, y, z]);
             break;
         case ("FOOTSTEP"): // Loads burrow waypoints by footstep
-            if (settings.dianaBurrow && !dig && World.getBlockAt(xyz[0], xyz[1], xyz[2]).type.getName()) {
+            if (settings.dianaBurrow && !dig && World.getBlockAt(x, y, x).type.getName()) {
                 xyz.unshift("Treasure");
 
                 closest = getClosest(xyz, burrows);
@@ -47,7 +48,7 @@ registerWhen(register("spawnParticle", (particle, type, event) => {
                     burrows.push(xyz);
                     // Burrow Alerts
                     if (settings.dianaChat)
-                        ChatLib.chat(`${LOGO} ${WHITE}Burrow Detected at ${GRAY}x: ${xyz[1]}, y: ${xyz[2]}, z: ${xyz[3]}!`);
+                        ChatLib.chat(`${LOGO} ${WHITE}Burrow Detected at ${GRAY}x: ${x}, y: ${y}, z: ${z}!`);
                     if (settings.dianaAmogus)
                         AMOGUS.play();
                 }
@@ -67,7 +68,7 @@ registerWhen(register("spawnParticle", (particle, type, event) => {
                 closest[0][0] = "Mob";
             break;
     }
-}), () => getWorld() == "hub" && settings.dianaWaypoint);
+}), () => getWorld() == "hub" && (settings.dianaWaypoint || settings.dianaBurrow));
 
 // Tracks Distance Using Sound
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {

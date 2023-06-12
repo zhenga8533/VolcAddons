@@ -21,21 +21,7 @@ export function commafy(num) {
     return num.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-// GUI Stuff
-export function renderScale(scale, text, x, y) {
-    Renderer.scale(scale);
-    Renderer.drawString(text, x, y);
-}
-
 // Variable control
-export function distanceFormula(x1, y1, z1, x2, y2, z2) {
-    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2));
-};
-
-export function distance2D(x1, z1, x2, z2) {
-    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(z1 - z2, 2));
-}
-
 export function getClosest(origin, positions) {
     let closestPosition = positions.length > 0 ? positions[0] : [0, 0, 0];
     let closestDistance = 999;

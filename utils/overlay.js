@@ -1,6 +1,6 @@
 import settings from "../settings";
 import { GUI_INSTRUCT, ITALIC } from "./constants";
-import { getWorld } from "./variables";
+import { getWorld, registerWhen } from "./variables";
 
 function renderScale(scale, text, x, y) {
     Renderer.scale(scale);
@@ -17,12 +17,12 @@ export class Overlay {
         this.Y = this.loc[1]/this.loc[2];
         this.gui = new Gui();
         register("command", () => {
-            this.gui.open()
+            this.gui.open();
         }).setName(command);
         
         this.example = example;
         this.message = example;
-        register("renderOverlay", () => {
+        registerWhen(register("renderOverlay", () => {
             // Adjusts split location
             if (this.gui.isOpen()) {
                 // Coords and scale
@@ -42,12 +42,12 @@ export class Overlay {
                     Renderer.screen.getHeight() / 2.4,
                 );
             } else {
-                if ((this.worlds.includes(getWorld()) || this.worlds.includes("all")) && settings[this.setting]) {
+                if (this.worlds.includes(getWorld()) || this.worlds.includes("all")) {
                     // Draw HUD
                     renderScale(this.loc[2], this.message, this.X, this.Y);
                 }
             }
-        })
+        }), () => settings[this.setting]);
 
         // Move HUD
         register("dragged", (dx, dy, x, y) => {

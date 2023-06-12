@@ -4,11 +4,11 @@ import renderBeaconBeam from "../../../BeaconBeam";
 import { AQUA, ENIGMA_SOULS, GREEN, LOGO, RED, RIFT_NPCS, ZONES } from "../../utils/constants";
 
 import { getBuilds, getCrates } from "../kuudra/KuudraCrates";
-import { getVanquishers } from "../etc/AnnouceMob";
+import { getVanquishers } from "../misc/AnnouceMob";
 import { getBurrow, getTheory } from "../hub/DianaWaypoint";
-import { getInquisitors } from "../etc/AnnouceMob";
+import { getInquisitors } from "../misc/AnnouceMob";
 import { data, getWorld, registerWhen } from "../../utils/variables";
-import { distance2D, getClosest } from "../../utils/functions";
+import { getClosest } from "../../utils/functions";
 
 // General Waypoints
 let chatWaypoints = [];
@@ -39,7 +39,7 @@ function formatWaypoints(waypoints, r, g, b) {
         x = Math.round(waypoint[1]);
         y = Math.round(waypoint[2]);
         z = Math.round(waypoint[3]);
-        distance = Math.sqrt(Math.pow(Player.getX() - x, 2) + Math.pow(Player.getY() - y, 2) + Math.pow(Player.getZ() - z, 2));
+        distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z);
 
         // Makes it so waypoint always renders
         if (distance >= 100) {
@@ -112,10 +112,6 @@ function renderWaypoint(waypoints) {
 function renderEntities(entities, title, r, g, b) {
     if (!entities.length) return;
 
-    let width = 0;
-    let height = 0;
-    let distance = 0;
-
     entities.forEach(entity => {
         x = entity.getX();
         y = entity.getY();
@@ -123,7 +119,7 @@ function renderEntities(entities, title, r, g, b) {
         width = entity.getWidth();
         height = entity.getHeight();
 
-        distance = Math.round(Math.sqrt(Math.pow(Player.getX() - x, 2) + Math.pow(Player.getY() - y, 2) + Math.pow(Player.getZ() - z, 2))) + "m";
+        distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z) + "m";
         Tessellator.drawString(`${title} §b[${distance}]`, x, y + height + 0.5, z, 0xffffff, true);
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, true);
     });
@@ -150,7 +146,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     chatWaypoints.push([player, x, y, z]);
 
     // Delete waypoint after 'X' seconds
-    setTimeout(() => {if (waypoints[0][0].equals(player)) chatWaypoints.shift() }, settings.drawWaypoint * time);
+    setTimeout(() => {if (chatWaypoints[0][0].equals(player)) chatWaypoints.shift() }, settings.drawWaypoint * time);
 }).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint);
 
 // Lets user create waypoint
@@ -178,10 +174,7 @@ registerWhen(register("step", () => {
     if (getWorld() != "rift") return;
 
     // Filters to closest souls
-    x = Player.getX();
-    z = Player.getZ();
-
-    enigmaClose = data.enigmaSouls.filter((enigma) => distance2D(x, z, enigma[1], enigma[3]) < settings.enigmaWaypoint);
+    enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[1], Player.getZ() - enigma[3]) < settings.enigmaWaypoint);
 }).setFps(1), () => getWorld() == "rift" && settings.enigmaWaypoint);
 
 export function enigmaEdit(args) {

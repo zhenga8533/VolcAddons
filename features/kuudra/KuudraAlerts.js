@@ -94,7 +94,7 @@ registerWhen(register("step", () => {
     if (settings.kuudraAlerts && settings.dropshipAlert) {
         let ghasts = World.getAllEntitiesOfType(EntityGhast.class);
         const dropships = ghasts.filter((ghast) => {
-            distance = Math.sqrt(Math.pow(ghast.getX() + 101, 2) + Math.pow(ghast.getZ() + 105, 2));
+            distance = Math.hypot(ghast.getX() + 101, ghast.getZ() + 105);
             return distance < 20 && distance > 10;
         })
 

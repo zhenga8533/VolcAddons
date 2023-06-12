@@ -51,10 +51,10 @@ import { getSplits } from "./features/kuudra/KuudraSplits";
 // Garden
 import "./features/garden/GardenTab";
 
-// Etc
-import "./features/etc/AnnouceMob";
-import "./features/etc/BazaarCalculator";
-import { calculate, setApex } from "./features/etc/BazaarCalculator";
+// Misc
+import "./features/misc/AnnouceMob";
+import "./features/misc/BazaarCalculator";
+import { calculate, setApex } from "./features/misc/BazaarCalculator";
 
 // FIRST RUN
 if (data.newUser) {
@@ -74,7 +74,7 @@ register("chat", () => {
             ChatLib.chat("-Added skill xp tracker");
             ChatLib.chat("-Added slayer spawn waypoints");
             ChatLib.chat("-Added recent server alert");
-            ChatLib.chat("-Changed kuudra splits to be more reliable");
+            ChatLib.chat("-Changed kuudra p4 splits to be more reliable");
             ChatLib.chat("-Changed cells alignment tracker to be global");
             ChatLib.chat("-Configured some settings (you may need to re-enable some)");
             ChatLib.chat("-Organized some code (-500 lines w)");
@@ -189,8 +189,10 @@ register ("command", (...args) => {
             zoneEdit(args);
             break;
         case "test": // Enable zone waypoints
-            print(getWorld());
-            print(getTier());
+            let xyz = Player.asPlayerMP();
+            xyz = [xyz.getX(), xyz.getY(), xyz.getZ()];
+            const [x, y, z] = [xyz[0], xyz[1], xyz[2]];
+            ChatLib.chat(x + y + z)
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))
