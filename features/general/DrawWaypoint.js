@@ -119,7 +119,7 @@ function renderEntities(entities, title, r, g, b) {
         width = entity.getWidth();
         height = entity.getHeight();
 
-        distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z) + "m";
+        distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
         Tessellator.drawString(`${title} §b[${distance}]`, x, y + height + 0.5, z, 0xffffff, true);
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, true);
     });

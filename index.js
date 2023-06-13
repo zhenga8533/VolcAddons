@@ -7,7 +7,7 @@ if (settings.drawWaypoint === false || settings.drawWaypoint === true) {
 if (settings.vanqCounter === false || settings.vanqCounter === true) {
     settings.vanqCounter = 0;
 }
-import { data, getTier, getWorld, updateList } from "./utils/variables";
+import { data, updateList } from "./utils/variables";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 data.autosave();
 

@@ -5,12 +5,13 @@ import { registerWhen } from "../../utils/variables";
 const WITHER_BLADES = ["HYPERION", "ASTRAEA", "SCYLLA", "VALKYRIE", "NECRON_BLADE_UNREFINED"];
 let heldItem = undefined;
 
+let broken = false;
 let trackerKills = 0;
 let trackerXP = 0;
 let newKills = 0;
 let newXP = 0;
 
-registerWhen(register("step", () => { // (boppeler21 cutie)
+registerWhen(register("entityDeath", () => { // (boppeler21 cutie)
     if (Player.getHeldItem() == null) return;
 
     // Update held item
@@ -22,10 +23,14 @@ registerWhen(register("step", () => { // (boppeler21 cutie)
         newXP = heldItem.getDouble("champion_combat_xp");
 
         if (trackerKills != newKills) {
-            if (trackerXP == newXP) Client.Companion.showTitle(`${DARK_RED}${BOLD}HYPE BROKEN!`, "", 5, 25, 5);
+            if (broken) broken = false;
+            else if (trackerXP == newXP) {
+                Client.Companion.showTitle(`${DARK_RED}${BOLD}HYPE BROKEN!`, "", 5, 25, 5);
+                broken = true;
+            }
 
             trackerKills = newKills;
             trackerXP = newXP;
         }
     }
-}).setFps(5), () => settings.brokenHyp);
+}), () => settings.brokenHyp);

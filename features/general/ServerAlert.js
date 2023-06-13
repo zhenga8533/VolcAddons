@@ -8,8 +8,13 @@ registerWhen(register("chat", (server, event) => {
     if (servers.includes(server)) {
         cancel(event);
         ChatLib.chat(`${DARK_RED}${BOLD}Recent Server: ${WHITE}${server}${DARK_RED}${BOLD}!`);
-    } else {
-        servers.push(server)
-        setTimeout(() => { servers.shift() }, settings.serverAlert * 60 * 1000);
-    }
+    } else
+        servers.push(server);
 }).setCriteria("Sending to server ${server}..."), () => settings.serverAlert);
+
+registerWhen(register("worldUnload", () => {
+    setTimeout(() => {
+        if (servers.length)
+            servers.shift();
+    }, settings.serverAlert * 60 * 1000);
+}), () => settings.serverAlert);
