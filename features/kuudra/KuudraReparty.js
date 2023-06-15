@@ -1,6 +1,8 @@
 import settings from "../../settings"
-import { getIsLeader, getWorld, registerWhen } from "../../utils/variables"
+import { data, registerWhen } from "../../utils/variables"
 import { AQUA, BOLD, GOLD, OBFUSCATED, RESET } from "../../utils/constants"
+import { getIsLeader } from "../../utils/party";
+import { delay } from "../../utils/thread";
 
 let notInParty = 0;
 let onCD = false;
@@ -14,7 +16,7 @@ registerWhen(register("chat", () => {
 
     settings.kuudraRP.split(", ").forEach(ign => {
         if (notInParty < 2) {
-            setTimeout(() => { ChatLib.command(`p ${ign}`); }, timeout);
+            delay(() => ChatLib.command(`p ${ign}`), timeout);
             notInParty++;
             timeout += 500;
         }
@@ -22,20 +24,17 @@ registerWhen(register("chat", () => {
 }).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraRP);
 
 // TRACKS TRANSFER (prevents bug when transfering too fast)
-registerWhen(register("chat", () => {
-    onCD = true;
-    setTimeout(() => { onCD = false }, 6900);
-}).setCriteria("The party was transferred to ${player1} by ${player2}"), () => settings.kuudraRP);
-
-registerWhen(register("chat", () => {
-    onCD = true;
-    setTimeout(() => { onCD = false }, 6900);
-}).setCriteria("The party was transferred to ${player1} because ${player2} left"), () => settings.kuudraRP);
-
-registerWhen(register("chat", () => {
-    onCD = true;
-    setTimeout(() => { onCD = false }, 6900);
-}).setCriteria("${player1} has promoted ${player2} to Party Leader"), () => settings.kuudraRP);
+const TRANSFER = [
+    "The party was transferred to ${player1} by ${player2}",
+    "The party was transferred to ${player1} because ${player2} left",
+    "${player1} has promoted ${player2} to Party Leader",
+];
+TRANSFER.forEach(msg => {
+    registerWhen(register("chat", () => {
+        onCD = true;
+        delay(() => onCD = false, 6900);
+    }).setCriteria(msg), () => settings.kuudraRP);
+});
 
 // TRADER JOINS PARTY
 registerWhen(register("chat", () => {
@@ -49,16 +48,16 @@ registerWhen(register("chat", () => {
         let players = [];
         settings.kuudraRP.split(", ").forEach((player) => { players.push(player) });
 
-        setTimeout(() => {ChatLib.command("p warp")}, 500);
-        if (players.length == 3) setTimeout(() => { ChatLib.command(`p kick ${players[2]}`)  }, 1000);
-        setTimeout(() => { ChatLib.command(`p transfer ${players[0]}`) }, 1500);
-        setTimeout(() => {ChatLib.command("p leave")}, 2000);
+        delay(() => ChatLib.command("p warp"), 500);
+        if (players.length == 3) delay(() => ChatLib.command(`p kick ${players[2]}`), 1000);
+        delay(() => ChatLib.command(`p transfer ${players[0]}`), 1500);
+        delay(() => ChatLib.command("p leave"), 2000);
     }
 }).setCriteria("${player} joined the party."), () => settings.kuudraRP);
 
 // REMIND LEADER
 registerWhen(register("chat", () => {
-    setTimeout(function () {
+    delay(() => {
         if (getIsLeader()) {
             ChatLib.chat(`\n${OBFUSCATED}1 2 3 4 5 6 5 4 3 2 1  ${RESET}${BOLD}${GOLD}<LEADER REMINDER>${RESET}${OBFUSCATED}  1 2 3 4 5 6 5 4 3 2 1\n`);
             Client.Companion.showTitle(`${GOLD}${BOLD}LEADER REMINDER!`, "", 10, 50, 10);
@@ -67,7 +66,7 @@ registerWhen(register("chat", () => {
             Client.Companion.showTitle(`${AQUA}${BOLD}BING CHILLING!`, "", 10, 50, 10);
         }
     }, 1000);
-}).setCriteria("${before}Tokens Earned:${after}"), () => getWorld() == "kuudra" && settings.kuudraRP);
+}).setCriteria("${before}Tokens Earned:${after}"), () => data.world == "kuudra" && settings.kuudraRP);
 
 // RESETS IN CASE YOU GO OUT OF RUN
 register("worldUnload", () => {

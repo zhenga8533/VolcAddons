@@ -12,7 +12,6 @@ registerWhen(register("step", () => {
     }
 }).setFps(2), () => settings.healthAlert);
 
-register("worldLoad", () => {
-    setTimeout(() => { player = Player.asPlayerMP().getEntity() }, 6900);
-    currentHP = 40;
-})
+register("chat", () => {
+    player = Player.asPlayerMP().getEntity();
+}).setCriteria("{${data}}");

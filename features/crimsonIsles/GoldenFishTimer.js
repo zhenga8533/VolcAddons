@@ -1,4 +1,4 @@
-import { data, getWorld, registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 import settings from "../../settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
@@ -11,7 +11,7 @@ const fishExample =
 `${GOLD}${BOLD}Last Cast: ${RESET}Yee
 ${GOLD}${BOLD}Last Fish: ${RESET}Haw`;
 
-const fishOverlay = new Overlay("goldenFishAlert", ["crimson isle"], data.TL, "moveTimer", fishExample);
+const fishOverlay = new Overlay("goldenFishAlert", ["crimson_isle"], data.TL, "moveTimer", fishExample);
 
 registerWhen(register("step", () => {
     lastCast += 1;
@@ -22,15 +22,15 @@ registerWhen(register("step", () => {
     fishOverlay.message = 
 `${GOLD}${BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE}${getTime(lastCast)}
 ${GOLD}${BOLD}Last Fish: ${RESET}${getTime(lastCast > 270 ? 0 : lastFish)}`
-}).setFps(1), () => getWorld() == "crimson isle" && settings.goldenFishAlert);
+}).setFps(1), () => data.world == "crimson_isle" && settings.goldenFishAlert);
 
 registerWhen(register("clicked", (x, y, button, state) => {
     if (!button || !state || Player.getHeldItem() == null) return;
 
     if (Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id").includes("ROD"))
         lastCast = 0;
-}), () => getWorld() == "crimson isle" && settings.goldenFishAlert);
+}), () => data.world == "crimson_isle" && settings.goldenFishAlert);
 
 registerWhen(register("chat", () => {
     lastFish = 0;
-}).setCriteria("You spot a Golden Fish surface from beneath the lava!"), () => getWorld() == "crimson isle" && settings.goldenFishAlert);
+}).setCriteria("You spot a Golden Fish surface from beneath the lava!"), () => data.world == "crimson_isle" && settings.goldenFishAlert);

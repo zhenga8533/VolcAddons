@@ -4,13 +4,13 @@
   "creator": "Volcaronitee",
   "description": "joe.",
   "entry": "index.js",
-  "version": "2.5.5",
+  "version": "2.5.6",
   "requires": [
-  "Vigilance",
+    "axios",
+    "BeaconBeam",
     "PogData",
     "RenderLib",
-    "BeaconBeam",
-    "axios",
-    "requestV2"
+    "requestV2",
+    "Vigilance"
   ]
 }

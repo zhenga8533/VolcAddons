@@ -1,14 +1,9 @@
-// Import outer scope variables
+// Util
 import settings from "./settings";
-// Settings change REMOVE NEXT UPDATE
-if (settings.drawWaypoint === false || settings.drawWaypoint === true) {
-    settings.drawWaypoint = 0;
-}
-if (settings.vanqCounter === false || settings.vanqCounter === true) {
-    settings.vanqCounter = 0;
-}
-import { data, updateList } from "./utils/variables";
+import { data, opened, updateList } from "./utils/variables";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
+import "./utils/worlds";
+import { delay } from "./utils/thread";
 data.autosave();
 
 // General
@@ -60,28 +55,33 @@ import { calculate, setApex } from "./features/misc/BazaarCalculator";
 if (data.newUser) {
     ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
     ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
-    ChatLib.chat("Instruction manual (i think) => /va help or DM .graped\n");
+    ChatLib.chat("Instruction manual (i think) => /va help or DM 'grapefruited' on Discord!\n");
 
     data.newUser = false;
 }
 
 // NEW UPDATE
 register("chat", () => {
-    setTimeout(() => {
+    delay(() => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             ChatLib.chat("-Added skill xp tracker");
             ChatLib.chat("-Added slayer spawn waypoints");
             ChatLib.chat("-Added recent server alert");
+            ChatLib.chat("-Added /va calc vampire");
+            ChatLib.chat("-Added messaging players to party commands");
+            ChatLib.chat("-Added ?invite to ^ (user must be in whitelist)");
             ChatLib.chat("-Changed kuudra p4 splits to be more reliable");
             ChatLib.chat("-Changed cells alignment tracker to be global");
             ChatLib.chat("-Configured some settings (you may need to re-enable some)");
+            ChatLib.chat("-Reworked world detection");
+            ChatLib.chat("-Fixed delay threading breaking");
             ChatLib.chat("-Organized some code (-500 lines w)");
-            ChatLib.chat("-Optimized all features");
+            ChatLib.chat("-More optimized (i think)");
         }
     }, 1000);
-}).setCriteria("Welcome to Hypixel SkyBlock!");
+}).setCriteria("Welcome to Hypixel SkyBlock${after}");
 
 // HELP
 function getHelp() {
@@ -102,23 +102,27 @@ function getHelp() {
     
     // Crimson Isle Features
     ChatLib.chat(`${AQUA}${BOLD}OTHER FEATURES:${RESET}`);
-    ChatLib.chat(`Should be self explanatory, DM .graped on discord if any questions...`);
+    ChatLib.chat(`Should be self explanatory, DM 'grapefruited' on discord if any questions...`);
 }
 
 // GENERAL FUNCTION COMMANDS
 const PARTY_COMMANDS = ["cringe", "gay", "racist", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"];
 
 register ("command", (...args) => {
+    if (args == undefined) {
+        settings.openGUI();
+        return;
+    }
+
     const command = args[0] == undefined ? undefined : args[0].toLowerCase();
     switch (command) {
         case undefined: // Settings
+        case "settings":
             settings.openGUI();
+            opened();
             break;
         case "help": // HELP
             getHelp();
-            break;
-        case "settings": // SETTINGS
-            settings.openGUI();
             break;
         case "clear": // CLEAR ALL TEXT PROPERTIES IN SETTINGS
             settings.vanqParty = "";
@@ -188,11 +192,9 @@ register ("command", (...args) => {
         case "zone": // Enable zone waypoints
             zoneEdit(args);
             break;
-        case "test": // Enable zone waypoints
-            let xyz = Player.asPlayerMP();
-            xyz = [xyz.getX(), xyz.getY(), xyz.getZ()];
-            const [x, y, z] = [xyz[0], xyz[1], xyz[2]];
-            ChatLib.chat(x + y + z)
+        case "test": // Testing (please work)
+            delay(() => ChatLib.chat("Hello"), 5000)
+            delay(() => ChatLib.chat("World"), 10000)
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))

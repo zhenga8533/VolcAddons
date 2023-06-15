@@ -21,7 +21,7 @@ class Settings {
         this.initialize(this)
         this.setCategoryDescription("General", 
 `${HEADER}
-${BOLD}DM Volcaronitee#0051 on Discord if you have any questions!
+${BOLD}DM .graped on Discord if you have any questions!
 
 ${ITALIC}Related Commands: /va <help, settings, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
         this.setCategoryDescription("Combat",
@@ -64,6 +64,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("8ball Command (?8ball)", "Party Command Options");
         this.addDependency("RPS Command (?rps)", "Party Command Options");
         this.addDependency("Women Command (?<w, waifu, women>)", "Party Command Options");
+        this.addDependency("Invite Command (?invite)", "Party Command Options");
         this.addDependency("Help Command (?help)", "Party Command Options");
         
         // Kuudra Alerts
@@ -257,6 +258,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Party"
     })
     womenCommand = true;
+    @CheckboxProperty({
+        name: "Invite Command (?invite)",
+        category: "General",
+        subcategory: "Party"
+    })
+    inviteCommand = true;
     @CheckboxProperty({
         name: "Help Command (?help)",
         category: "General",

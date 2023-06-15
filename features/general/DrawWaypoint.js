@@ -7,8 +7,9 @@ import { getBuilds, getCrates } from "../kuudra/KuudraCrates";
 import { getVanquishers } from "../misc/AnnouceMob";
 import { getBurrow, getTheory } from "../hub/DianaWaypoint";
 import { getInquisitors } from "../misc/AnnouceMob";
-import { data, getWorld, registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 import { getClosest } from "../../utils/functions";
+import { delay } from "../../utils/thread";
 
 // General Waypoints
 let chatWaypoints = [];
@@ -26,7 +27,7 @@ register("renderWorld", () => {
 
     renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
     renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
-    if (settings.enigmaWaypoint && getWorld() == "rift")
+    if (settings.enigmaWaypoint && data.world == "rift")
         renderSimple(enigmaClose, 0.5, 0, 0.5); // Purple enigma
 });
 
@@ -146,7 +147,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     chatWaypoints.push([player, x, y, z]);
 
     // Delete waypoint after 'X' seconds
-    setTimeout(() => {if (chatWaypoints[0][0].equals(player)) chatWaypoints.shift() }, settings.drawWaypoint * time);
+    delay(() => { if (chatWaypoints[0][0].equals(player)) chatWaypoints.shift() }, settings.drawWaypoint * time);
 }).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint);
 
 // Lets user create waypoint
@@ -168,14 +169,14 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
     if (closest != undefined);
         data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
-}).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => getWorld() == "rift");
+}).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => data.world == "rift");
 
 registerWhen(register("step", () => {
-    if (getWorld() != "rift") return;
+    if (data.world != "rift") return;
 
     // Filters to closest souls
     enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[1], Player.getZ() - enigma[3]) < settings.enigmaWaypoint);
-}).setFps(1), () => getWorld() == "rift" && settings.enigmaWaypoint);
+}).setFps(1), () => data.world == "rift" && settings.enigmaWaypoint);
 
 export function enigmaEdit(args) {
     switch (args[1]) {

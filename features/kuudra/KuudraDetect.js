@@ -1,6 +1,6 @@
 import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../../utils/constants";
 import settings from "../../settings";
-import { getTier, getWorld, registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 // Magma Cube Variables
 const EntityMagmaCube = Java.type('net.minecraft.entity.monster.EntityMagmaCube');
@@ -30,7 +30,7 @@ registerWhen(register("tick", () => {
         }
 
         // KUUDRA SPAWN DETECT
-        if (settings.kuudraSpawn && getTier() == 5 && currentHP <= 25000 && currentHP > 24900) {
+        if (settings.kuudraSpawn && data.tier == 5 && currentHP <= 25000 && currentHP > 24900) {
             x = kuudra.getX();
             z = kuudra.getZ();
 
@@ -45,17 +45,17 @@ registerWhen(register("tick", () => {
         }
     } else
         HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
-}), () => getWorld() == "kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
+}), () => data.world == "kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
 
 // Render Percent HP
 registerWhen(register('renderOverlay', () => {
     percentHP.draw();
-}), () => getWorld() == "kuudra" && settings.kuudraHP);
+}), () => data.world == "kuudra" && settings.kuudraHP);
 
 // Render Tesselator HP
 registerWhen(register('renderWorld', () => {
     if (HPDisplay[1]) Tessellator.drawString(HPDisplay[0], HPDisplay[1], HPDisplay[2] + 10, HPDisplay[3], 0xA7171A, true, 0.25, false);
-}), () => getWorld() == "kuudra" && settings.kuudraHP);
+}), () => data.world == "kuudra" && settings.kuudraHP);
 
 // Reset Kuudra UUID
 register('worldUnload', () => {

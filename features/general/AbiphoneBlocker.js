@@ -1,6 +1,7 @@
 import settings from "../../settings"
 import { data, registerWhen } from "../../utils/variables"
 import { LOGO, WHITE } from "../../utils/constants";
+import { delay } from "../../utils/thread";
 
 let blockRings = false;
 
@@ -11,7 +12,7 @@ registerWhen(register("chat", (npc, event) => {
 
         // Set Value to Block Sounds / Ring a Ding Dings
         blockRings = true;
-        setTimeout(function () { blockRings = false }, 5000);
+        delay(() => blockRings = false, 5000);
 
         // Cancel Text
         cancel(event);

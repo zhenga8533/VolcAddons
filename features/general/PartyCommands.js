@@ -1,8 +1,10 @@
 import axios from "../../../axios";
 import settings from "../../settings"
-import { data, getIsLeader, getPlayerName } from "../../utils/variables"
+import { data, getPlayerName } from "../../utils/variables"
 import { request } from "../../../requestV2";
 import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { getIsLeader } from "../../utils/party";
+import { delay } from "../../utils/thread";
 
 // Variables for different commands
 let onCD = false;
@@ -30,7 +32,7 @@ function setWaifu() {
         waifu = link.data.images[0].url;
     })
 
-    setTimeout(() => {
+    delay(() => {
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
         })
@@ -62,29 +64,29 @@ const RESPONSES = ["As I see it, yes",
 const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
 
-export function executeCommand(name, args, toParty) {
-    if (settings.partyCommands && !data.blacklist.includes(name.toLowerCase())) { // PARTY COMMANDS
-        switch (args[0]) {
+export function executeCommand(name, args, sendTo) {
+    if (data.blacklist.includes(name.toLowerCase())) return;
+
+    if (settings.partyCommands) { // PARTY COMMANDS
+        const randID = '@' + (Math.random() + 1).toString(36).substring(5);
+
+        delay(() => { switch (args[0]) {
             case "cringe": // Cringe gay
             case "gay":
             case "racist":
                 if (!settings.slanderCommand) return;
 
                 const percentage = Math.floor(Math.random() * 100) + 1;
-                if (toParty)
-                    setTimeout(() => { ChatLib.command(`pc ${name} is ${percentage}% ${args[0]}!`) }, 500);
-                else
-                    ChatLib.chat(`${LOGO} ${DARK_AQUA}You are ${WHITE}${percentage}% ${DARK_AQUA}${args[0]}!`);
+                if (sendTo) ChatLib.command(`${sendTo} ${name} is ${percentage}% ${args[0]}! ${randID}`);
+                else ChatLib.chat(`${LOGO} ${DARK_AQUA}You are ${WHITE}${percentage}% ${DARK_AQUA}${args[0]}!`);
                 break;
             case "dice": // Dice roll
             case "roll":
                 if (!settings.diceCommand) return;
 
                 const roll = Math.floor(Math.random() * 6) + 1;
-                if (toParty)
-                    setTimeout(() => { ChatLib.command(`pc ${name} rolled a ${roll}!`) }, 500);
-                else
-                    ChatLib.chat(`${LOGO} ${DARK_AQUA}You rolled a ${WHITE}${roll}${DARK_AQUA}!`);
+                if (sendTo) ChatLib.command(`${sendTo} ${name} rolled a ${roll}! ${randID}`);
+                else ChatLib.chat(`${LOGO} ${DARK_AQUA}You rolled a ${WHITE}${roll}${DARK_AQUA}!`);
                 break;
             case "coin": // Coin flip
             case "flip":
@@ -92,26 +94,15 @@ export function executeCommand(name, args, toParty) {
             case "cf":
                 if (!settings.coinCommand) return;
 
-                const flip = Math.floor(Math.random() * 2);
-                if (toParty) {
-                    if (flip)
-                        setTimeout(() => { ChatLib.command(`pc ${name} flipped heads!`) }, 500);
-                    else
-                        setTimeout(() => { ChatLib.command(`pc ${name} flipped tails!`) }, 500);
-                } else {
-                    if (flip)
-                        ChatLib.chat(`${LOGO} ${DARK_AQUA}You flipped ${WHITE}heads${DARK_AQUA}!`);
-                    else
-                        ChatLib.chat(`${LOGO} ${DARK_AQUA}You flipped ${WHITE}tails${DARK_AQUA}!`);
-                }
+                const flip = Math.floor(Math.random() * 2) ? "heads" : "tails";
+                if (sendTo) ChatLib.command(`${sendTo} ${name} flipped ${flip}! ${randID}`);
+                else ChatLib.chat(`${LOGO} ${DARK_AQUA}You flipped ${WHITE}${flip}${DARK_AQUA}!`);
                 break;
             case "8ball": // 8ball
                 if (!settings.ballCommand) return;
 
-                if (toParty)
-                    setTimeout(() => { ChatLib.command(`pc ${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`) }, 500);
-                else
-                    ChatLib.chat(`${LOGO} ${DARK_AQUA}${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
+                if (sendTo) ChatLib.command(`${sendTo} ${RESPONSES[Math.floor(Math.random() * 20) + 1]}. ${randID}`);
+                else ChatLib.chat(`${LOGO} ${DARK_AQUA}${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
                 break;
             case "rps": // Rock Paper Siccors
                 if (!settings.rpsCommand) return;
@@ -121,10 +112,8 @@ export function executeCommand(name, args, toParty) {
                 // Plays game out if user inputs a correct symbol
                 if (player != -1) {
                     const choice = Math.floor(Math.random() * 3);
-                    if (toParty)
-                        setTimeout(() => { ChatLib.command(`pc I choose ${RPS[choice]}!`) }, 500);
-                    else
-                        ChatLib.chat(`${LOGO} ${DARK_AQUA}I choose ${WHITE}${RPS[choice]}${DARK_AQUA}!`);
+                    if (sendTo) ChatLib.command(`${sendTo} I choose ${RPS[choice]}! ${randID}`);
+                    else ChatLib.chat(`${LOGO} ${DARK_AQUA}I choose ${WHITE}${RPS[choice]}${DARK_AQUA}!`);
                     const outcome = (player - choice);
 
                     // Determine outcome of the game
@@ -142,10 +131,8 @@ export function executeCommand(name, args, toParty) {
                 }
                 
                 // Output reponse depending if use wants party message or user message
-                if (toParty)
-                    setTimeout(() => { ChatLib.command(`pc ${reply}`) }, 1000);
-                else
-                    setTimeout(() => { ChatLib.chat(`${LOGO} ${DARK_AQUA}${reply}`) }, 500);
+                if (sendTo) delay(() => ChatLib.command(`${sendTo} ${reply} ${randID}`), 690);
+                else ChatLib.chat(`${LOGO} ${DARK_AQUA}${reply}`);
                 break;
             case "waifu":
             case "women":
@@ -156,27 +143,30 @@ export function executeCommand(name, args, toParty) {
                 }
 
                 ChatLib.chat(`${LOGO} ${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
-                if (toParty)
-                    setTimeout(() => { ChatLib.command(`pc ${imgur}`) }, 500);
-                else
-                    ChatLib.command(`msg ${Player.getName()} ${imgur} ${(Math.random() + 1).toString(36).substring(8)}`);
+                if (sendTo) ChatLib.command(`${sendTo} ${imgur} ${randID}`);
+                else ChatLib.command(`msg ${Player.getName()} ${imgur} @${(Math.random() + 1).toString(36).substring(6)}`);
                 // Randomize end to avoid duplicate message ^
                 setWaifu();
                 break;
-            case "help":
-                if (!settings.helpCommand) return;
+            case "invite":
+            case "inv":
+                if (!settings.inviteCommand || sendTo != "r") return;
 
-                if (toParty) {
-                    setTimeout(() => { ChatLib.command(`pc Party Commands: ?<cringe, gay, racist, dice, coin, 8ball, rps, w, help>`) }, 500);
-                    if (getIsLeader() && settings.leaderCommands)
-                        setTimeout(() => { ChatLib.command(`pc Leader Commands: ?<warp, transfer, promote, demote, allinv, stream #>`) }, 1000);
-                }
+                if (data.whitelist.includes(name.toLowerCase())) ChatLib.command(`p ${name}`);
+                else ChatLib.command(`r You are not in the whitelist! ${randID}`);
                 break;
-        }
+            case "help":
+                if (!settings.helpCommand || !sendTo) return;
+
+                ChatLib.command(`${sendTo} Party Commands: ?<cringe, gay, racist, dice, coin, 8ball, rps, w, help> ${randID}`);
+                if (getIsLeader() && settings.leaderCommands)
+                    delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream #> ${randID}`), 690);
+                break;
+        } }, 690);
     }
     
-    if (getIsLeader() && settings.leaderCommands && !data.blacklist.includes(name.toLowerCase())) { // LEADER COMMANDS
-        setTimeout(() => {
+    if (getIsLeader() && settings.leaderCommands) { // LEADER COMMANDS
+        delay(() => {
             switch (args[0]) {
                 case "warp":
                     if (!settings.warpCommand) return;
@@ -216,12 +206,19 @@ export function executeCommand(name, args, toParty) {
     }
 
     onCD = true;
-    setTimeout(() => { onCD = false }, 1000);
+    delay(() => onCD = false, 1000);
 }
 
 // PARTY COMMANDS
 register("chat", (player, message) => {
     if (onCD) return;
 
-    executeCommand(getPlayerName(player), message.split(" "), true);
+    executeCommand(getPlayerName(player), message.split(" "), "pc");
 }).setCriteria("Party > ${player}: ?${message}");
+
+// MESSAGE COMMANDS
+register("chat", (player, message) => {
+    if (onCD) return;
+
+    executeCommand(getPlayerName(player), message.split(" "), "r");
+}).setCriteria("From ${player}: ?${message}");

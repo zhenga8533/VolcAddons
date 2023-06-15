@@ -1,6 +1,8 @@
 import { AMOGUS, BOLD, DARK_PURPLE, GOLD, WHITE } from "../../utils/constants";
 import settings from "../../settings"
-import { data, getInParty, getWorld, registerWhen } from "../../utils/variables"
+import { data, registerWhen } from "../../utils/variables"
+import { getInParty } from "../../utils/party";
+import { delay } from "../../utils/thread";
 
 // GENERAL FUNCTIONS
 function annoucePosition(toAll, mob, x, y ,z) {
@@ -28,16 +30,16 @@ let soundCD = true;
 
 registerWhen(register("chat", () => {
     annoucePosition(settings.vanqAlert == 1, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
-}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "crimson isle" && settings.vanqAlert);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => data.world == "crimson_isle" && settings.vanqAlert);
 
 // Detect others with sound
 registerWhen(register("chat", () => {
     if (!soundCD) return;
 
-    soundCD = false;
     AMOGUS.play();
-    setTimeout(() => { soundCD = true }, 10000);
-}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => getWorld() == "crimson isle" && settings.vanqSound);
+    soundCD = false;
+    delay(() => soundCD = true, 10000);
+}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => data.world == "crimson_isle" && settings.vanqSound);
 
 registerWhen(register("tick", () => {
     vanquishers = [];
@@ -50,13 +52,13 @@ registerWhen(register("tick", () => {
         if (data.moblist.includes("vanquisher")) {
             vanqs.forEach(vanq => { vanquishers.push(vanq) });
             if (soundCD && settings.vanqSound) {
-                soundCD = false;
                 AMOGUS.play();
-                setTimeout(() => { soundCD = true }, 10000);
+                soundCD = false;
+                delay(() => soundCD = true, 10000);
             }
         }
     }
-}), () => getWorld() == "crimson isle" && settings.vanqDetect);
+}), () => data.world == "crimson_isle" && settings.vanqDetect);
 
 export function getVanquishers() {
     return vanquishers;
@@ -74,7 +76,7 @@ registerWhen(register("chat", () => {
 
     if (inquisitor != undefined)
         annoucePosition(settings.dianaAlert == 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
-}).setCriteria("${wow}! You dug out a Minos Champion!"), () => getWorld() == "hub" && settings.dianaAlert);
+}).setCriteria("${wow}! You dug out a Minos Champion!"), () => data.world == "hub" && settings.dianaAlert);
 
 // Tracks all nearby Inquisitors
 let inquisitors = [];
@@ -90,7 +92,7 @@ registerWhen(register("tick", () => {
         if (data.moblist.includes("inquisitor"))
             inqs.forEach(inq => { inquisitors.push(inq) });
     }
-}), () => getWorld() == "hub" && settings.detectInq);
+}), () => data.world == "hub" && settings.detectInq);
 
 export function getInquisitors() {
     return inquisitors;
@@ -108,7 +110,7 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
     annoucePosition(settings.miniAlert == 1, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
-    setTimeout(() => { miniCD = false }, 3000);
+    delay(() => miniCD = false, 3000);
 }), () => settings.miniAlert);
 
 // Boss Spawn

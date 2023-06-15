@@ -1,7 +1,8 @@
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import settings from "../../settings";
-import { data, getWorld, registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 import { getClosest } from "../../utils/functions";
+import { delay } from "../../utils/thread";
 
 // Burow detection Stuff
 let heldItem = undefined;
@@ -23,8 +24,6 @@ function getCoord(start, end) {
 // Particle Tracking
 let closest = undefined;
 registerWhen(register("spawnParticle", (particle, type, event) => {
-    if (getWorld() != "hub") return;
-
     const particlePos = particle.getPos();
     const xyz = [particlePos.getX(), particlePos.getY(), particlePos.getZ()];
     const [x, y, z] = [xyz[0], xyz[1], xyz[2]];
@@ -68,11 +67,11 @@ registerWhen(register("spawnParticle", (particle, type, event) => {
                 closest[0][0] = "Mob";
             break;
     }
-}), () => getWorld() == "hub" && (settings.dianaWaypoint || settings.dianaBurrow));
+}), () => data.world == "hub" && (settings.dianaWaypoint || settings.dianaBurrow));
 
 // Tracks Distance Using Sound
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
-    if (getWorld() != "hub" || !cast || !name.equals("note.harp")) return;
+    if (!cast || !name.equals("note.harp")) return;
 
     // Uhh so it was a little hard to figure out an equation so this may be a little brute force hardcoded :skull:
     if (pitch > 1.05)
@@ -86,21 +85,21 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
 
     if (pitch > 0)
         distance = 4 / Math.pow(pitch, 6) + 0.2 / Math.pow(pitch, 5) - correct;
-}), () => getWorld() == "hub" && settings.dianaWaypoint);
+}), () => data.world == "hub" && settings.dianaWaypoint);
 
 // Track spade ability to clear current particle list
 registerWhen(register("clicked", (x, y, button, state) => {
-    if (getWorld() != "hub" || Player.getHeldItem() == null || !button || !state || cd) return;
+    if (Player.getHeldItem() == null || !button || !state || cd) return;
 
     heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
     if (heldItem.equals("ANCESTRAL_SPADE")) {
         particles = [];
         cast = true;
         cd = true;
-        setTimeout(function () { cast = false }, 2000);
-        setTimeout(function () { cd = false }, 3000);
+        delay(() => { cast = false }, 2000);
+        delay(() => { cd = false }, 3000);
     }
-}), () => getWorld() == "hub" && settings.dianaWaypoint);
+}), () => data.world == "hub" && settings.dianaWaypoint);
 
 // Calculate theoretical burrow and closest warp
 const WARPS = {
@@ -127,7 +126,7 @@ export function setWarps() {
 setWarps();
 
 registerWhen(register("tick", () => {
-    if (getWorld() != "hub" || particles.length == 0 || !cast) return;
+    if (particles.length == 0 || !cast) return;
 
     start = particles.length > 12 ? particles[3] : particles[particles.length - 1];
     end = particles[particles.length - 1];
@@ -137,7 +136,7 @@ registerWhen(register("tick", () => {
     // Set theory burrow
     theory[0] = "warp " + getClosest(theory, warps)[0][0];
     theoryBurrow = [theory];
-}), () => getWorld() == "hub" && settings.dianaWaypoint);
+}), () => data.world == "hub" && settings.dianaWaypoint);
 
 // Warp to closest location
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "VolcAddons");
@@ -155,13 +154,13 @@ register("gameUnload", () => {
 registerWhen(register("chat", () => {
     // Sets a timeout on particle loading
     dig = true;
-    setTimeout(() => { dig = false }, 200);
+    delay(() => dig = false, 200);
 
     // Delete closest burrow from list
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
     if (closest != undefined);
         burrows.splice(burrows.indexOf(closest[0]), 1);
-}).setCriteria("${before}urrow${after}"), () => getWorld() == "hub" && settings.dianaWaypoint);
+}).setCriteria("${before}urrow${after}"), () => data.world == "hub" && settings.dianaWaypoint);
 
 // => Draw Waypoint
 export function getTheory() {
@@ -180,4 +179,4 @@ register("worldUnload", () => {
 
 registerWhen(register("chat", () => {
     burrows = [];
-}).setCriteria(" ☠ You ${died}."), () => getWorld() == "hub" && settings.dianaWaypoint);
+}).setCriteria(" ☠ You ${died}."), () => data.world == "hub" && settings.dianaWaypoint);

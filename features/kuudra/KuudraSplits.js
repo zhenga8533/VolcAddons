@@ -1,9 +1,10 @@
 import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, LOGO, RED, RESET } from "../../utils/constants";
 import { getTime, isValidDate } from "../../utils/functions";
 import settings from "../../settings";
-import { data, getPlayerName, getTier, getWorld, registerWhen } from "../../utils/variables";
+import { data, getPlayerName, registerWhen } from "../../utils/variables";
 import { Overlay } from "../../utils/overlay";
 import { getKuudraHP } from "./KuudraDetect";
+import { delay } from "../../utils/thread";
 
 // Start times for each phase
 let kuudraSplit = [0, 0, 0, 0, 0];
@@ -46,7 +47,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[0] = Date.now() / 1000;
     phase = 1;
 }).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"),
-() => getWorld() == "kuudra" && settings.kuudraSplits);
+() => data.world == "kuudra" && settings.kuudraSplits);
 
 // SECOND SPLIT
 registerWhen(register("chat", () => {
@@ -55,7 +56,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[1] = Date.now() / 1000;
     phase = 2;
 }).setCriteria("[NPC] Elle: OMG! Great work collecting my supplies!"),
-() => getWorld() == "kuudra" && settings.kuudraSplits);
+() => data.world == "kuudra" && settings.kuudraSplits);
 
 // THIRD SPLIT
 registerWhen(register("chat", () => {
@@ -64,7 +65,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[2] = Date.now() / 1000;
     phase = 3;
 }).setCriteria("[NPC] Elle: Phew! The Ballista is finally ready! It should be strong enough to tank Kuudra's blows now!"),
-() => getWorld() == "kuudra" && settings.kuudraSplits);
+() => data.world == "kuudra" && settings.kuudraSplits);
 
 // FOURTH SPLIT
 registerWhen(register("chat", () => {
@@ -73,7 +74,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[3] = Date.now() / 1000;
     phase = 4;
 }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"),
-() => getWorld() == "kuudra" && settings.kuudraSplits);
+() => data.world == "kuudra" && settings.kuudraSplits);
 
 // END
 registerWhen(register("chat", () => {
@@ -94,7 +95,7 @@ registerWhen(register("chat", () => {
     
     // Record splits
     let splitFormat = "";
-    if (getTier() == 5) {
+    if (data.tier == 5) {
         // Check if new best split / run
         for (let i = 0; i < data.splits.last.length; i++) {
             if (!broken)
@@ -125,20 +126,24 @@ registerWhen(register("chat", () => {
 
     // Resets party tracker
     party = [];
-}).setCriteria("${before}KUUDRA DOWN${after}"), () => getWorld() == "kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}KUUDRA DOWN${after}"), () => data.world == "kuudra" && settings.kuudraSplits);
 
 registerWhen(register("chat", () => {
     if (!settings.kuudraSplits) return;
     
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
-}).setCriteria("${before}DEFEAT${after}"), () => getWorld() == "kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}DEFEAT${after}"), () => data.world == "kuudra" && settings.kuudraSplits);
 
 registerWhen(register("tick", () => {
     // Phase 4 fail safe
-    if (phase == 3 && getKuudraHP() < 25000 && getTier() == 5) {
+    if (phase == 3 && getKuudraHP() < 25000 && data.tier == 5) {
         kuudraSplit[3] = Date.now() / 1000;
         phase = 4;
+    }
+    if (phase == 4 && getKuudraHP() < 10) {
+        kuudraSplit[4] = Date.now() / 1000;
+        phase = 5;
     }
 
     switch (phase) {
@@ -168,7 +173,7 @@ registerWhen(register("tick", () => {
 ${AQUA}${BOLD}Build: ${RESET}${times[1]}
 ${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
 ${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
-}), () => getWorld() == "kuudra" && settings.kuudraSplits);
+}), () => data.world == "kuudra" && settings.kuudraSplits);
 
 // PARTY CHAT COMMAND => RETURNS SPLITS TO /PC
 let onCD = false;
@@ -182,18 +187,30 @@ registerWhen(register("chat", (player, message) => {
         case "splits":
         case "split":
         case "last":
-            last = [getTime(data.splits.last[0]), getTime(data.splits.last[1]), getTime(data.splits.last[2]), getTime(data.splits.last[3]), getTime(data.splits.last[4])];
-            setTimeout(() => { ChatLib.command(`pc Supplies: ${last[0]} | Build: ${last[1]} | Fuel/Stun: ${last[2]} | Kuudra: ${last[3]} | Total: ${last[4]}`) }, 500);
+            last = [
+                getTime(data.splits.last[0]),
+                getTime(data.splits.last[1]),
+                getTime(data.splits.last[2]),
+                getTime(data.splits.last[3]),
+                getTime(data.splits.last[4])
+            ];
+            delay(() => ChatLib.command(`pc Supplies: ${last[0]} | Build: ${last[1]} | Fuel/Stun: ${last[2]} | Kuudra: ${last[3]} | Total: ${last[4]}`), 500);
             break;
         case "best":
-            best = [getTime(data.splits.best[0]), getTime(data.splits.best[1]), getTime(data.splits.best[2]), getTime(data.splits.best[3]), getTime(data.splits.best[4])];
+            best = [
+                getTime(data.splits.best[0]),
+                getTime(data.splits.best[1]),
+                getTime(data.splits.best[2]),
+                getTime(data.splits.best[3]),
+                getTime(data.splits.best[4])
+            ];
             theory = getTime(data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3]);
-            setTimeout(() => { ChatLib.command(`pc Supplies: ${best[0]} | Build: ${best[1]} | Fuel/Stun: ${best[2]} | Kuudra: ${best[3]} | Total: ${best[4]} | Theoretical Best: ${theory}`) }, 500);
+            delay(() => ChatLib.command(`pc Supplies: ${best[0]} | Build: ${best[1]} | Fuel/Stun: ${best[2]} | Kuudra: ${best[3]} | Total: ${best[4]} | Theoretical Best: ${theory}`), 500);
             break;
     }
 
     onCD = true;
-    setTimeout(() => { onCD = false }, 500);
+    delay(() => onCD = false, 500);
 }).setCriteria("Party > ${player}: ?${message}"), () => settings.kuudraSplits);
 
 // MOD COMMAND

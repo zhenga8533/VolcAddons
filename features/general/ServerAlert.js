@@ -1,5 +1,6 @@
 import settings from "../../settings";
 import { BOLD, DARK_RED, WHITE } from "../../utils/constants";
+import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables"
 
 let servers = [];
@@ -13,7 +14,7 @@ registerWhen(register("chat", (server, event) => {
 }).setCriteria("Sending to server ${server}..."), () => settings.serverAlert);
 
 registerWhen(register("worldUnload", () => {
-    setTimeout(() => {
+    delay(() => {
         if (servers.length)
             servers.shift();
     }, settings.serverAlert * 60 * 1000);

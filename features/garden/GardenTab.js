@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { data, getWorld, registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 import { AQUA, BOLD, DARK_RED, GREEN, RED, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
@@ -25,20 +25,8 @@ const nextOverlay = new Overlay("nextVisitor", ["all"], data.NL, "moveNext", nex
 
 // Check Tab
 registerWhen(register("step", () => {
-    // Update Next Visitor Message
-    if (next > 0) {
-        next -= 1;
-        nextOverlay.message = `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)}`;
-    } else {
-        nextOverlay.message = `${AQUA}${BOLD}Next Visitor: ${RED}Shipment Received`;
-    }
-
-    if (getWorld() != "garden") return;
-
     try {
         tablist = TabList.getNames();
-
-        // Get tab and clear old data
         gardenOverlay.message = "";
 
         // Get Visitors
@@ -49,12 +37,28 @@ registerWhen(register("step", () => {
             for (count; count >= 0; count--)
                 gardenOverlay.message = tablist[visitors + count] + "\n" + gardenOverlay.message;
         } else {
-            gardenOverlay.message += `${AQUA}${BOLD}Visitors: ${RESET}(0)\n\n`;
+            gardenOverlay.message += `${AQUA}${BOLD}Visitors: ${RESET}(0)`;
         }
+    } catch(err) {
+        console.log(`GardenTab.js: ${err}`);
+    }
+}).setFps(1), () => data.world == "garden" && settings.gardenTab);
+
+// Check Tab
+registerWhen(register("step", () => {
+    // Update Next Visitor Message
+    if (next > 0)
+        next -= 1;
+    nextOverlay.message = next > 0 ?
+        `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)}`:
+        `${AQUA}${BOLD}Next Visitor: ${RED}Shipment Received`;
+
+    try {
+        if (data.world != "garden") return;
+        tablist = TabList.getNames();
 
         // Set Next Visitor
         nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") != -1);
-        gardenOverlay.message += nextVisit
 
         if (!nextVisit.includes("Full")) {
             nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
@@ -66,7 +70,7 @@ registerWhen(register("step", () => {
     } catch(err) {
         console.log(err);
     }
-}).setFps(1), () => settings.nextVisitor || settings.gardenTab);
+}).setFps(1), () => settings.nextVisitor);
 
 registerWhen(register("step", () => {
     // Get Composter
@@ -77,4 +81,4 @@ registerWhen(register("step", () => {
     } catch(err) {
         console.log(err);
     }
-}).setFps(1), () => getWorld() == "garden" && settings.gardenCompost);
+}).setFps(1), () => data.world == "garden" && settings.gardenCompost);
