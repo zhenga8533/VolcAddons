@@ -16,7 +16,7 @@ ChatTriggers module originally created for Koodar. Now I'm just adding random st
   - Inferno Minions: /va <calc, apex>
 
 - PARTY CHAT COMMANDS:
-  - Party Commands: ?<warp, transfer, promote, demote, allinv>
+  - Party Commands: ?<warp, transfer, promote, demote, allinv, invite>
   - Other Commands: ?<cringe, gay, racist, dice, flip, 8ball, rps, w>
 
 ## Features
