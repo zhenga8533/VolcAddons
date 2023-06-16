@@ -66,6 +66,8 @@ register("chat", () => {
             ChatLib.chat("-Added party commands to /gc");
             ChatLib.chat("-Fixed features not working until world swap");
             ChatLib.chat("-Fixed leader commands not working");
+            ChatLib.chat("-Fixed vanquisher warp/waypoints not working");
+            ChatLib.chat("-Fixed all list commands not working");
             ChatLib.chat("-Reworked crate waypoints to lock onto closest chest");
             ChatLib.chat("-Organized and optimized even more code (i believe)");
         }
@@ -100,6 +102,7 @@ const PARTY_COMMANDS = ["cringe", "gay", "racist", "dice", "roll", "coin", "flip
 register ("command", (...args) => {
     if (args == undefined) {
         settings.openGUI();
+        opened();
         return;
     }
 

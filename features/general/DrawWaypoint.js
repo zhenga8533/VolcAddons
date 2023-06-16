@@ -139,13 +139,13 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
 
     // Remove anything after z coords
     const spaceIndex = z.indexOf(' ');
-    let time = 1000;
+    let time = 999;
     if (spaceIndex != -1) {
         if (z.includes('|'))
             time /= 3;
         z = z.substring(0, spaceIndex);
     }
-
+    
     chatWaypoints.push([player, x, y, z]);
 
     // Delete waypoint after 'X' seconds

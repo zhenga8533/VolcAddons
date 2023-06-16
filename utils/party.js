@@ -49,7 +49,9 @@ register("chat", (player1, player2) => { // Tracks transfers by promotion
 
 register("chat", (player1, player2) => { // Tracks first invite
     isLeader = ign.equals(getPlayerName(player1)) ? true : false;
+    inParty = true;
 }).setCriteria("${player1} invited ${player2} to the party! They have 60 seconds to accept.")
+
 
 // --- TRACK PARTY INTERACTIONS ---
 register("chat", (player) => { // Tracks first join
