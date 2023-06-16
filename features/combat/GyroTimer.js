@@ -1,7 +1,7 @@
-import { data, registerWhen } from "../../utils/variables";
 import settings from "../../settings";
 import { BOLD, DARK_RED, GREEN, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
+import { data, registerWhen } from "../../utils/variables";
 
 let align = 0;
 let cd = 0;

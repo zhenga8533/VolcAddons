@@ -1,19 +1,18 @@
 // Util
 import settings from "./settings";
-import { data, opened, updateList } from "./utils/variables";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
-import "./utils/worlds";
+import { data, opened, updateList } from "./utils/variables";
 import { delay } from "./utils/thread";
+import "./utils/worlds";
 data.autosave();
 
 // General
 import "./features/general/AbiphoneBlocker";
+import "./features/general/AntiLimbo";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
-import "./features/general/DrawWaypoint";
 import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/general/DrawWaypoint";
 import "./features/general/JoinParty";
-import "./features/general/PartyCommands";
 import { executeCommand } from "./features/general/PartyCommands";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
@@ -27,7 +26,6 @@ import "./features/combat/HealthAlert";
 import "./features/combat/RagDetect";
 
 // Hub
-import "./features/hub/DianaWaypoint";
 import { setWarps } from "./features/hub/DianaWaypoint";
 
 // Crimson Isles
@@ -40,7 +38,6 @@ import "./features/kuudra/KuudraAlerts";
 import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
 import "./features/kuudra/KuudraReparty";
-import "./features/kuudra/KuudraSplits";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden
@@ -48,7 +45,6 @@ import "./features/garden/GardenTab";
 
 // Misc
 import "./features/misc/AnnouceMob";
-import "./features/misc/BazaarCalculator";
 import { calculate, setApex } from "./features/misc/BazaarCalculator";
 
 // FIRST RUN
@@ -66,19 +62,12 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added skill xp tracker");
-            ChatLib.chat("-Added slayer spawn waypoints");
-            ChatLib.chat("-Added recent server alert");
-            ChatLib.chat("-Added /va calc vampire");
-            ChatLib.chat("-Added messaging players to party commands");
-            ChatLib.chat("-Added ?invite to ^ (user must be in whitelist)");
-            ChatLib.chat("-Changed kuudra p4 splits to be more reliable");
-            ChatLib.chat("-Changed cells alignment tracker to be global");
-            ChatLib.chat("-Configured some settings (you may need to re-enable some)");
-            ChatLib.chat("-Reworked world detection");
-            ChatLib.chat("-Fixed delay threading breaking");
-            ChatLib.chat("-Organized some code (-500 lines w)");
-            ChatLib.chat("-More optimized (i think)");
+            ChatLib.chat("-Added anti limbo");
+            ChatLib.chat("-Added party commands to /gc");
+            ChatLib.chat("-Fixed features not working until world swap");
+            ChatLib.chat("-Fixed leader commands not working");
+            ChatLib.chat("-Reworked crate waypoints to lock onto closest chest");
+            ChatLib.chat("-Organized and optimized even more code (i believe)");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");
@@ -193,8 +182,7 @@ register ("command", (...args) => {
             zoneEdit(args);
             break;
         case "test": // Testing (please work)
-            delay(() => ChatLib.chat("Hello"), 5000)
-            delay(() => ChatLib.chat("World"), 10000)
+            ChatLib.chat(data.world)
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))

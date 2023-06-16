@@ -1,10 +1,12 @@
-import axios from "../../../axios";
-import settings from "../../settings"
-import { data, getPlayerName } from "../../utils/variables"
-import { request } from "../../../requestV2";
+import settings from "../../settings";
 import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
+import { data } from "../../utils/variables";
+
+import axios from "../../../axios";
+import { request } from "../../../requestV2";
 
 // Variables for different commands
 let onCD = false;
@@ -155,6 +157,13 @@ export function executeCommand(name, args, sendTo) {
                 if (data.whitelist.includes(name.toLowerCase())) ChatLib.command(`p ${name}`);
                 else ChatLib.command(`r You are not in the whitelist! ${randID}`);
                 break;
+            case "limbo":
+            case "lobby":
+            case "l":
+                if (!settings.limboCommand) return;
+
+                ChatLib.command("l");
+                break;
             case "help":
                 if (!settings.helpCommand || !sendTo) return;
 
@@ -215,6 +224,12 @@ register("chat", (player, message) => {
 
     executeCommand(getPlayerName(player), message.split(" "), "pc");
 }).setCriteria("Party > ${player}: ?${message}");
+
+register("chat", (player, message) => {
+    if (onCD) return;
+
+    executeCommand(getGuildName(player), message.split(" "), "gc");
+}).setCriteria("Guild > ${player}: ${msg}");
 
 // MESSAGE COMMANDS
 register("chat", (player, message) => {

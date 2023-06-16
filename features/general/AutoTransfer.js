@@ -1,6 +1,7 @@
 import settings from "../../settings";
+import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";
-import { getPlayerName, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/variables";
 
 registerWhen(register("chat", (player1, player2) => {
     const name1 = getPlayerName(player1).toLowerCase();

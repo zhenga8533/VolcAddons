@@ -1,8 +1,8 @@
 import settings from "../../settings";
-import { data, registerWhen } from "../../utils/variables";
 import { AQUA, BOLD, DARK_RED, GREEN, RED, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
+import { data, registerWhen } from "../../utils/variables";
 
 // Visitor Tablist Variables
 let tablist = null;

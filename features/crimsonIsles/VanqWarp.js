@@ -1,7 +1,7 @@
 import settings from "../../settings";
 import { getInParty } from "../../utils/party";
-import { data, registerWhen } from "../../utils/variables";
 import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
 
 let vanqCoords = [0, 0, 0, "None"];
 let vanqSpawned = false;

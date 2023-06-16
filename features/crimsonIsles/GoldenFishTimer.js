@@ -1,8 +1,8 @@
-import { data, registerWhen } from "../../utils/variables";
 import settings from "../../settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
+import { data, registerWhen } from "../../utils/variables";
 
 let lastCast = 0;
 let lastFish = 0;

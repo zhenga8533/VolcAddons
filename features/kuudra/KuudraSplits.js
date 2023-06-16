@@ -1,10 +1,10 @@
-import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, LOGO, RED, RESET } from "../../utils/constants";
-import { getTime, isValidDate } from "../../utils/functions";
 import settings from "../../settings";
-import { data, getPlayerName, registerWhen } from "../../utils/variables";
-import { Overlay } from "../../utils/overlay";
+import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, LOGO, RED, RESET } from "../../utils/constants";
+import { getPlayerName, getTime, isValidDate } from "../../utils/functions";
 import { getKuudraHP } from "./KuudraDetect";
+import { Overlay } from "../../utils/overlay";
 import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
 
 // Start times for each phase
 let kuudraSplit = [0, 0, 0, 0, 0];

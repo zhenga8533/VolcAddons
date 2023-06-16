@@ -1,6 +1,7 @@
 import settings from "../../settings";
+import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";
-import { data, getPlayerName, registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 let invites = [];
 

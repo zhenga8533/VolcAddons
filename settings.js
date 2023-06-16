@@ -1,4 +1,4 @@
-import { BOLD, GOLD, HEADER, ITALIC, UNDERLINE, WHITE } from "./utils/constants";
+import { BOLD, DARK_RED, GOLD, HEADER, ITALIC, RED, UNDERLINE, WHITE } from "./utils/constants";
 import {
     @TextProperty,
 	@PercentSliderProperty,
@@ -21,7 +21,7 @@ class Settings {
         this.initialize(this)
         this.setCategoryDescription("General", 
 `${HEADER}
-${BOLD}DM .graped on Discord if you have any questions!
+${BOLD}DM 'grapefruited' on Discord if you have any questions!
 
 ${ITALIC}Related Commands: /va <help, settings, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
         this.setCategoryDescription("Combat",
@@ -94,24 +94,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // GENERAL FEATURES
 
     // General
-    @SliderProperty({
-        name: "Draw Waypoint",
-        description: "Creates waypoints out of coords in chat. Set how many seconds until waypoints expire (Mob waypoints last 1/3 as long).",
-        category: "General",
-        subcategory: "General",
-        min: 0,
-        max: 120
-    })
-    drawWaypoint = 0;
-
-    @SwitchProperty({
-        name: "Remove Selfie Mode",
-        description: "Removes the selfie mode from f5.",
-        category: "General",
-        subcategory: "General"
-    })
-    removeSelfie = false;
-
     @SwitchProperty({
         name: "Abiphone Blocker",
         description: "Blocks abiphone callers in /va blocklist.",
@@ -119,6 +101,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     abiphoneBlocker = false;
+    
+    @SwitchProperty({
+        name: "Anti Limbo",
+        description: `Automatically puts you in SkyBlock if you get limboed.`,
+        category: "General",
+        subcategory: "General"
+    })
+    antiLimbo = false;
     
     @SwitchProperty({
         name: "Custom Emotes",
@@ -129,6 +119,16 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     enableEmotes = false;
 
     @SliderProperty({
+        name: "Draw Waypoint",
+        description: "Creates waypoints out of coords in chat. Set how many seconds until waypoints expire (Mob waypoints last 1/3 as long).",
+        category: "General",
+        subcategory: "General",
+        min: 0,
+        max: 120
+    })
+    drawWaypoint = 0;
+    
+    @SliderProperty({
         name: "Recent Server Alert",
         description: "Alerts player when they join a server they have joined in the past 'X' minutes. Set as 0 to turn off.",
         category: "General",
@@ -137,6 +137,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         max: 30
     })
     serverAlert = 0;
+
+    @SwitchProperty({
+        name: "Remove Selfie Mode",
+        description: "Removes the selfie mode from f5.",
+        category: "General",
+        subcategory: "General"
+    })
+    removeSelfie = false;
 
     // Timer
     @TextProperty({
@@ -158,6 +166,22 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // Party
     @SwitchProperty({
+        name: "Auto Join Reparty",
+        description: "Automatically rejoin reparty invites within 60 seconds.",
+        category: "General",
+        subcategory: "Party"
+    })
+    joinRP = false;
+    
+    @SwitchProperty({
+        name: "Auto Transfer Back",
+        description: "Automatically transfers party back if someone transfer to you.",
+        category: "General",
+        subcategory: "Party"
+    })
+    autoTransfer = false;
+
+    @SwitchProperty({
         name: "Leader Chat Commands",
         description: "Allows everyone besides /va blacklist to use leader commands.",
         category: "General",
@@ -172,23 +196,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     leaderOptions = false;
     @CheckboxProperty({
-        name: "Warp Command (?warp)",
+        name: "Allinvite Command (?<allinvite, allinv>)",
         category: "General",
         subcategory: "Party"
     })
-    warpCommand = true;
-    @CheckboxProperty({
-        name: "Transfer Command (?transfer)",
-        category: "General",
-        subcategory: "Party"
-    })
-    transferCommand = true;
-    @CheckboxProperty({
-        name: "Promote Command (?promote)",
-        category: "General",
-        subcategory: "Party"
-    })
-    promoteCommand = true;
+    allinvCommand = true;
     @CheckboxProperty({
         name: "Demote Command (?demote)",
         category: "General",
@@ -196,17 +208,35 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     demoteCommand = true;
     @CheckboxProperty({
-        name: "Allinvite Command (?<allinvite, allinv>)",
+        name: "Limbo Command (?<limbo, lobby, l>)",
         category: "General",
         subcategory: "Party"
     })
-    allinvCommand = true;
+    limboCommand = true;
+    @CheckboxProperty({
+        name: "Promote Command (?promote)",
+        category: "General",
+        subcategory: "Party"
+    })
+    promoteCommand = true;
     @CheckboxProperty({
         name: "Stream Command (?<streamopen, stream> [num])",
         category: "General",
         subcategory: "Party"
     })
     streamCommand = true;
+    @CheckboxProperty({
+        name: "Transfer Command (?transfer)",
+        category: "General",
+        subcategory: "Party"
+    })
+    transferCommand = true;
+    @CheckboxProperty({
+        name: "Warp Command (?warp)",
+        category: "General",
+        subcategory: "Party"
+    })
+    warpCommand = true;
 
     @SwitchProperty({
         name: "Party Chat Commands",
@@ -223,17 +253,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     partyOptions = false;
     @CheckboxProperty({
-        name: "Slander Command (?<racist, gay, cringe>)",
+        name: "8ball Command (?8ball)",
         category: "General",
         subcategory: "Party"
     })
-    slanderCommand = true;
-    @CheckboxProperty({
-        name: "Dice Command (?<dice, roll>)",
-        category: "General",
-        subcategory: "Party"
-    })
-    diceCommand = true;
+    ballCommand = true;
     @CheckboxProperty({
         name: "Coinflip Command (?<coin, flip, coinflip, cf>)",
         category: "General",
@@ -241,23 +265,17 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     coinCommand = true;
     @CheckboxProperty({
-        name: "8ball Command (?8ball)",
+        name: "Dice Command (?<dice, roll>)",
         category: "General",
         subcategory: "Party"
     })
-    ballCommand = true;
+    diceCommand = true;
     @CheckboxProperty({
-        name: "RPS Command (?rps)",
+        name: "Help Command (?help)",
         category: "General",
         subcategory: "Party"
     })
-    rpsCommand = true;
-    @CheckboxProperty({
-        name: "Women Command (?<w, waifu, women>)",
-        category: "General",
-        subcategory: "Party"
-    })
-    womenCommand = true;
+    helpCommand = true;
     @CheckboxProperty({
         name: "Invite Command (?invite)",
         category: "General",
@@ -265,11 +283,23 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     inviteCommand = true;
     @CheckboxProperty({
-        name: "Help Command (?help)",
+        name: "RPS Command (?rps)",
         category: "General",
         subcategory: "Party"
     })
-    helpCommand = true;
+    rpsCommand = true;
+    @CheckboxProperty({
+        name: "Slander Command (?<racist, gay, cringe>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    slanderCommand = true;
+    @CheckboxProperty({
+        name: "Women Command (?<w, waifu, women>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    womenCommand = true;
 
     @SwitchProperty({
         name: "Whitelist Rejoin",
@@ -278,22 +308,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Party"
     })
     joinWhitelist = false;
-
-    @SwitchProperty({
-        name: "Auto Join Reparty",
-        description: "Automatically rejoin reparty invites within 60 seconds.",
-        category: "General",
-        subcategory: "Party"
-    })
-    joinRP = false;
-    
-    @SwitchProperty({
-        name: "Auto Transfer Back",
-        description: "Automatically transfers party back if someone transfer to you.",
-        category: "General",
-        subcategory: "Party"
-    })
-    autoTransfer = false;
     
     // Skills
     @SliderProperty({
@@ -328,14 +342,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // COMBAT
 
     // Combat
-    @PercentSliderProperty({
-        name: "Low Health Alert",
-        description: "Alerts the player if their health drops lower than the percent input (set 0% to toggle off).",
-        category: "Combat",
-        subcategory: "Combat"
-    })
-    healthAlert = 0.0;
-    
     @SwitchProperty({
         name: "Broken Hyperion",
         description: "Uses 'Book of Stats' and 'Champion' to track when Wither Impact breaks.",
@@ -343,6 +349,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Combat"
     })
     brokenHyp = false;
+    
+    @PercentSliderProperty({
+        name: "Low Health Alert",
+        description: "Alerts the player if their health drops lower than the percent input (set 0% to toggle off).",
+        category: "Combat",
+        subcategory: "Combat"
+    })
+    healthAlert = 0.0;
 
     @SwitchProperty({
         name: "Ragnarok Detection",

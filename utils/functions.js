@@ -1,3 +1,4 @@
+// Modify number/strings
 export function getTime(time) {
     let minutes = Math.floor(parseFloat(time) / 60);
     let seconds = (parseFloat(time) % 60).toFixed(2);
@@ -21,7 +22,30 @@ export function commafy(num) {
     return num.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-// Variable control
+export function getPlayerName(player) {
+    // Remove rank from player name
+    let name = player;
+    let nameIndex = name.indexOf(']');
+
+    while (nameIndex != -1) {
+        name = name.substring(nameIndex + 2);
+        nameIndex = name.indexOf(']');
+    }
+
+    return name;
+}
+export function getGuildName(player) {
+    let name = player;
+    let rankIndex = name.indexOf('] ');
+    if (rankIndex != -1)
+        name = name.substring(name.indexOf('] ') + 2);
+    name = name.substring(0, name.indexOf('[') - 1);
+
+    return name;
+}
+
+
+// Variable checking
 export function getClosest(origin, positions) {
     let closestPosition = positions.length > 0 ? positions[0] : [0, 0, 0];
     let closestDistance = 999;

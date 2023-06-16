@@ -1,6 +1,6 @@
 import { LOGO, WHITE } from "./constants";
+import { getPlayerName } from "./functions";
 import { delay } from "./thread";
-import { getPlayerName } from "./variables";
 
 // --- VARIABLES ---
 ign = "limga";
@@ -66,7 +66,9 @@ register("chat", () => { // Tracks player kick
 register("gameLoad", () => {
     ChatLib.chat(`${LOGO} ${WHITE}Checking for party!`);
     delay(() => { ChatLib.command("p list"); }, 500);
+    ign = Player.getName();
 });
+
 register("chat", () => {
     ign = Player.getName();
     ChatLib.chat(`${LOGO} ${WHITE}Checking for party!`);

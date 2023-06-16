@@ -32,8 +32,28 @@ registerWhen(register("tick", () => {
     
     crates = [];
     const gzs = World.getAllEntitiesOfType(EntityGiantZombie.class);
-    const supplies = gzs.filter(gz => gz.getY() < 70)
-    supplies.forEach((supply) => { crates.push(['Crate', supply.getX(), supply.getY() + 10, supply.getZ()]) });
+    const supplies = gzs.filter(gz => gz.getY() < 67)
+    supplies.forEach((supply) => {
+        let stands = supply.getChunk().getAllEntitiesOfType(EntityArmorStand.class);
+        let active = stands.filter(stand => stand.getName().includes('SUPPLIES') || stand.getName().includes('FUEL CELL'));
+
+        if (active.length)
+            active.forEach(crate => { crates.push([crate.getX(), crate.getY(), crate.getZ(), 0, 1, 0]) });
+        else {
+            // Try to detect if just too far or in different chunk
+            x = supply.getX()%16 < 8 ? supply.getX() - 8 : supply.getX() + 8;
+            z = supply.getZ()%16 < 8 ? supply.getZ() - 8 : supply.getZ() + 8;
+            active.push(...World.getChunk(x, 69, supply.getZ()).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(supply.getX(), 69, z).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x, 69, z).getAllEntitiesOfType(EntityArmorStand.class));
+            active = active.filter(stand => stand.getName().includes('SUPPLIES') || stand.getName().includes('FUEL CELL'));
+
+            if (active.length)
+                active.forEach(crate => { crates.push([crate.getX(), crate.getY(), crate.getZ(), 0, 1, 0]) });
+            else
+                crates.push([supply.getX(), supply.getY(), supply.getZ(), 1, 1, 1]);
+        }
+    });
 }), () => data.world == "kuudra" && settings.kuudraCrates);
 
 // Build
@@ -42,8 +62,8 @@ registerWhen(register("step", () => {
 
     builds = [];
     const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
-    const piles = stands.filter(stand => stand.getName().includes('PUNCH'))
-    piles.forEach((pile) => { builds.push(['LF Bob', pile.getX(), pile.getY(), pile.getZ()]) });
+    const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
+    piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
 }).setFps(2), () => data.world == "kuudra" && settings.kuudraBuild);
 
 register("worldUnload", () => {

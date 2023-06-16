@@ -1,8 +1,8 @@
-import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import settings from "../../settings";
-import { data, registerWhen } from "../../utils/variables";
+import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions";
 import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
 
 // Burow detection Stuff
 let heldItem = undefined;

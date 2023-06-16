@@ -1,7 +1,7 @@
-import settings from "../../settings"
-import { data, registerWhen } from "../../utils/variables"
+import settings from "../../settings";
 import { LOGO, WHITE } from "../../utils/constants";
 import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
 
 let blockRings = false;
 

@@ -1,8 +1,8 @@
+import settings from "../../settings";
 import { AMOGUS, BOLD, DARK_PURPLE, GOLD, WHITE } from "../../utils/constants";
-import settings from "../../settings"
-import { data, registerWhen } from "../../utils/variables"
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
 
 // GENERAL FUNCTIONS
 function annoucePosition(toAll, mob, x, y ,z) {

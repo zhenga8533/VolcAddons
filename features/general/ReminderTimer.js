@@ -1,6 +1,6 @@
-import { AMOGUS, BOLD, GOLD } from "../../utils/constants";
 import settings from "../../settings";
-import { registerWhen } from "../../utils/variables"
+import { AMOGUS, BOLD, GOLD } from "../../utils/constants";
+import { registerWhen } from "../../utils/variables";
 
 let minutes = 0;
 

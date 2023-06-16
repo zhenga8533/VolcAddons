@@ -1,4 +1,4 @@
-import settings from "../../settings"
+import settings from "../../settings";
 import { registerWhen } from "../../utils/variables";
 
 // REMOVE SELFIE MODE (boppeler21 cutie)

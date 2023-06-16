@@ -1,5 +1,5 @@
-import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../../utils/constants";
 import settings from "../../settings";
+import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
 
 // Magma Cube Variables

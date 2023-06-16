@@ -1,7 +1,7 @@
 import settings from "../../settings";
-import { data, registerWhen } from "../../utils/variables";
 import { BOLD, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
+import { data, registerWhen } from "../../utils/variables";
 
 let items = {};
 const session = {

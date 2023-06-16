@@ -1,5 +1,5 @@
-import { BOLD, DARK_RED, RESET } from "../../utils/constants";
 import settings from "../../settings";
+import { BOLD, DARK_RED, RESET } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
 let player = undefined;

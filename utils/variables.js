@@ -1,5 +1,7 @@
-import PogObject from "../../PogData"
 import { AQUA, BOLD, ENIGMA_SOULS, GOLD, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
+import { delay } from "./thread";
+
+import PogObject from "../../PogData";
 
 // --- PERSISTANT DATA ---
 export let data = new PogObject("VolcAddons", {
@@ -40,7 +42,7 @@ export let data = new PogObject("VolcAddons", {
 // --- LIST CONTROL ---
 export function updateList(args, list, listName) {
     const item = args[2] == undefined ? undefined : args[2].toLowerCase();
-    const isArray = Array.isArrayay(list);
+    const isArray = Array.isArray(list);
 
     // Array lists
     switch (args[1]) {
@@ -83,6 +85,7 @@ export function updateList(args, list, listName) {
     return list;
 }
 
+
 // --- TRIGGER CONTROL ---
 let registers = [];
 let openVA = false;
@@ -102,11 +105,9 @@ export function setRegisters() {
         }
     });
 }
+delay(() => setRegisters(), 1000);
 
-export function opened() {
-    openVA = true;
-}
-
+export function opened() { openVA = true; }
 register("guiKey", (char, keyCode, gui, event) => {
     if (openVA && keyCode == 1) {
         setRegisters();
@@ -114,27 +115,15 @@ register("guiKey", (char, keyCode, gui, event) => {
     }
 });
 
-// Function to remove rank from player name
-export function getPlayerName(player) {
-    let name = player;
-    let nameIndex = name.indexOf(']');
 
-    while (nameIndex != -1) {
-        name = name.substring(nameIndex + 2);
-        nameIndex = name.indexOf(']');
-    }
-
-    return name;
-}
-
-// Get if MVP++ (for emotes)
 let isMVP = false;
-export function getMVP() { return rank; }
+export function getMVP() { return isMVP }
 
 register("chat", (player) => {
     if (player == Player.getName())
         isMVP = true;
-}).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<")
+}).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<");
+
 
 // Backup Data
 register("gameUnload", () => {

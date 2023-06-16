@@ -1,5 +1,5 @@
-import settings from "../../settings"
-import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../../utils/constants"
+import settings from "../../settings";
+import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
 
 // NO KEY ALERT

@@ -1,6 +1,6 @@
-import { BOLD, GOLD } from "../../utils/constants";
 import settings from "../../settings";
-import { registerWhen } from "../../utils/variables"
+import { BOLD, GOLD } from "../../utils/constants";
+import { registerWhen } from "../../utils/variables";
 
 let heldItem = undefined;
 

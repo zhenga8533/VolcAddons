@@ -1,8 +1,8 @@
-import settings from "../../settings"
-import { data, registerWhen } from "../../utils/variables"
-import { AQUA, BOLD, GOLD, OBFUSCATED, RESET } from "../../utils/constants"
+import settings from "../../settings";
+import { AQUA, BOLD, GOLD, OBFUSCATED, RESET } from "../../utils/constants";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
 
 let notInParty = 0;
 let onCD = false;

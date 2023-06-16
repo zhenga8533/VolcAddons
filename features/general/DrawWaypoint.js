@@ -1,15 +1,14 @@
 import settings from "../../settings";
-import RenderLib from "../../../RenderLib/index.js";
-import renderBeaconBeam from "../../../BeaconBeam";
 import { AQUA, ENIGMA_SOULS, GREEN, LOGO, RED, RIFT_NPCS, ZONES } from "../../utils/constants";
-
-import { getBuilds, getCrates } from "../kuudra/KuudraCrates";
-import { getVanquishers } from "../misc/AnnouceMob";
+import { getInquisitors, getVanquishers } from "../misc/AnnouceMob";
 import { getBurrow, getTheory } from "../hub/DianaWaypoint";
-import { getInquisitors } from "../misc/AnnouceMob";
-import { data, registerWhen } from "../../utils/variables";
 import { getClosest } from "../../utils/functions";
+import { getBuilds, getCrates } from "../kuudra/KuudraCrates";
 import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
+
+import renderBeaconBeam from "../../../BeaconBeam";
+import RenderLib from "../../../RenderLib/index.js";
 
 // General Waypoints
 let chatWaypoints = [];
@@ -22,15 +21,6 @@ let NPCs = [];
 let zones = [];
 
 // What actually does the waypoint rendering
-register("renderWorld", () => {
-    renderWaypoint(formatted);
-
-    renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
-    renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
-    if (settings.enigmaWaypoint && data.world == "rift")
-        renderSimple(enigmaClose, 0.5, 0, 0.5); // Purple enigma
-});
-
 function formatWaypoints(waypoints, r, g, b) {
     if (!waypoints.length) return;
     let x, y, z, distance, xSign, zSign = 0;
@@ -68,19 +58,27 @@ function formatWaypoints(waypoints, r, g, b) {
         formatted.push(wp);
     });
 }
-
 register("step", () => {
     formatted = [];
     formatWaypoints(chatWaypoints, 0, 1, 1); // Cyan Waypoint
     formatWaypoints(userWaypoints, 0, 1, 0); // Lime user
-    formatWaypoints(getCrates(), 1, 1, 1); // White crates
-    formatWaypoints(getBuilds(), 1, 0, 0); // Red Builds
     formatWaypoints(getTheory(), 1, 1, 0); // Yellow theory burrow
     formatWaypoints(getBurrow(), 0, 0.5, 0); // Green burrows
     formatWaypoints(NPCs, 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(zones, 0, 0.5, 0.5); // Teal zone
-}).setFps(5);
+}).setFps(4);
+register("renderWorld", () => {
+    renderWaypoint(formatted);
+    renderBeam(getCrates()); // White Crates
+    renderBeam(getBuilds()); // Red Builds
+    renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
+    renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
+    if (settings.enigmaWaypoint && data.world == "rift")
+        renderSimple(enigmaClose, 0.5, 0, 0.5); // Purple enigma
+});
 
+
+// Different types of rendering
 function renderSimple(waypoints, r, g, b) {
     if (!waypoints.length) return;
 
@@ -94,7 +92,6 @@ function renderSimple(waypoints, r, g, b) {
         renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
     })
 }
-
 function renderWaypoint(waypoints) {
     if (!waypoints.length) return;
 
@@ -109,7 +106,11 @@ function renderWaypoint(waypoints) {
         renderBeaconBeam(beam[0], beam[1], beam[2], rgb[0], rgb[1], rgb[2], 0.5, false);
     });
 }
+function renderBeam(waypoints) {
+    if (!waypoints.length) return;
 
+    waypoints.forEach((waypoint) =>renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
+}
 function renderEntities(entities, title, r, g, b) {
     if (!entities.length) return;
 
@@ -125,6 +126,7 @@ function renderEntities(entities, title, r, g, b) {
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, true);
     });
 }
+
 
 // Detects coords
 registerWhen(register("chat", (player, spacing, x, y, z) => {
