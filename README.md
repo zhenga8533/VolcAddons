@@ -1,6 +1,8 @@
 # [VolcAddons](https://www.chattriggers.com/modules/v/VolcAddons)
 ChatTriggers module originally created for Koodar. Now I'm just adding random stuff :)
 
+KNOWN BUGS: Vanquisher warp not warping, ALL lists causing errors
+
 ## Setup
 - Have [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html) Installed!
 - Have [ChatTriggers](https://www.chattriggers.com) Installed!
