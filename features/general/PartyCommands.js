@@ -229,7 +229,7 @@ register("chat", (player, message) => {
     if (onCD) return;
 
     executeCommand(getGuildName(player), message.split(" "), "gc");
-}).setCriteria("Guild > ${player}: ${msg}");
+}).setCriteria("Guild > ${player}: ?${msg}");
 
 // MESSAGE COMMANDS
 register("chat", (player, message) => {

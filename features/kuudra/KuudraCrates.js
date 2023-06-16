@@ -41,13 +41,19 @@ registerWhen(register("tick", () => {
             active.forEach(crate => { crates.push([crate.getX(), crate.getY(), crate.getZ(), 0, 1, 0]) });
         else {
             // Try to detect if just too far or in different chunk
-            x = supply.getX()%16 < 8 ? supply.getX() - 8 : supply.getX() + 8;
-            z = supply.getZ()%16 < 8 ? supply.getZ() - 8 : supply.getZ() + 8;
-            active.push(...World.getChunk(x, 69, supply.getZ()).getAllEntitiesOfType(EntityArmorStand.class));
-            active.push(...World.getChunk(supply.getX(), 69, z).getAllEntitiesOfType(EntityArmorStand.class));
-            active.push(...World.getChunk(x, 69, z).getAllEntitiesOfType(EntityArmorStand.class));
-            active = active.filter(stand => stand.getName().includes('SUPPLIES') || stand.getName().includes('FUEL CELL'));
+            x = supply.getX();
+            z = supply.getZ();
+            // Get 3x3 chunks surrounding crate
+            active.push(...World.getChunk(x + 8, 69, z + 8).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x + 8, 69, z - 8).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x - 8, 69, z + 8).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x - 8, 69, z - 8).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x + 8, 69, z).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x - 8, 69, z).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x, 69, z + 8).getAllEntitiesOfType(EntityArmorStand.class));
+            active.push(...World.getChunk(x, 69, z - 8).getAllEntitiesOfType(EntityArmorStand.class));
 
+            active = active.filter(stand => stand.getName().includes('SUPPLIES') || stand.getName().includes('FUEL CELL'));
             if (active.length)
                 active.forEach(crate => { crates.push([crate.getX(), crate.getY(), crate.getZ(), 0, 1, 0]) });
             else

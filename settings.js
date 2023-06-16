@@ -22,6 +22,7 @@ class Settings {
         this.setCategoryDescription("General", 
 `${HEADER}
 ${BOLD}DM 'grapefruited' on Discord if you have any questions!
+${DARK_RED}${BOLD}CAUTION: Some features are technically chat macros, so use at own risk!
 
 ${ITALIC}Related Commands: /va <help, settings, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
         this.setCategoryDescription("Combat",

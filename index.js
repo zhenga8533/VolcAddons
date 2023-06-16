@@ -62,14 +62,9 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added anti limbo");
-            ChatLib.chat("-Added party commands to /gc");
-            ChatLib.chat("-Fixed features not working until world swap");
-            ChatLib.chat("-Fixed leader commands not working");
-            ChatLib.chat("-Fixed vanquisher warp/waypoints not working");
-            ChatLib.chat("-Fixed all list commands not working");
-            ChatLib.chat("-Reworked crate waypoints to lock onto closest chest");
-            ChatLib.chat("-Organized and optimized even more code (i believe)");
+            ChatLib.chat("-Added a PSA to settings");
+            ChatLib.chat("-Fixed closest crate lock-on more reliable");
+            ChatLib.chat("-Fixed party commands not working in gc");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");
@@ -185,7 +180,8 @@ register ("command", (...args) => {
             zoneEdit(args);
             break;
         case "test": // Testing (please work)
-            ChatLib.chat(data.world)
+            ChatLib.chat("World: " + data.world)
+            ChatLib.chat("Tier: " + data.tier)
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))
