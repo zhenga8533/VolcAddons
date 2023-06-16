@@ -16,7 +16,7 @@ ChatTriggers module originally created for Koodar. Now I'm just adding random st
   - Inferno Minions: /va <calc, apex>
 
 - PARTY CHAT COMMANDS:
-  - Party Commands: ?<warp, transfer, promote, demote, allinv>
+  - Party Commands: ?<warp, transfer, promote, demote, allinv, invite>
   - Other Commands: ?<cringe, gay, racist, dice, flip, 8ball, rps, w>
 
 ## Features
@@ -24,10 +24,19 @@ ChatTriggers module originally created for Koodar. Now I'm just adding random st
   - Draw Waypoint => /va waypoint
   - Remove Selfie Mode
   - Abiphone Blocker => /va bl
-  - Low Health Alert
+  - Custom Emotes
   - Leader/Party Chat Commands
   - Party Auto Join => /va wl
+  - Auto Transfer Party
+  - Skill Tracker
   - Reminder Timer
+ 
+- COMBAT FEATURES
+  - Low Health Alert
+  - Broken Wither Impact
+  - Ragnarok Detection
+  - Cells Alignment Timer
+  - Announce Slayer Spawn
 
 - HUB FEATURES (basically just Diana)
   - Burrow Estimator
@@ -35,12 +44,9 @@ ChatTriggers module originally created for Koodar. Now I'm just adding random st
   - Burrow/Inquisitor Alert
 
 - CRIMSON ISLE FEATURES
-  - Broken Wither Impact
-  - Ragnarok Detection
   - Golden Fish Timer
   - Vanquisher Alert
   - Vanquisher Counter
-  - Inferno Minion Calculator => /va calc
 
 - KUUDRA FEATURES
   - Kuudra Reparty
@@ -48,7 +54,6 @@ ChatTriggers module originally created for Koodar. Now I'm just adding random st
   - Kuudra Spawn Alert
   - Supply/Fuel Waypoints
   - Supply Pile Waypoints
-  - Cells Alignment Timer
   - Kuudra Instance Alerts
   - Kuudra Splits => /va splits
 
@@ -59,5 +64,8 @@ ChatTriggers module originally created for Koodar. Now I'm just adding random st
 
 - RIFT FEATURES
   - Enigma Soul Waypoints
-  - NPC waypoints => /va npc
-  - Zone waypoints => /va zone
+  - NPC Waypoints => /va npc
+  - Zone Waypoints => /va zone
+ 
+- MISC FEATURES
+  - Minion Calculator => /va calc
