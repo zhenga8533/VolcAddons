@@ -28,6 +28,9 @@ import "./features/combat/RagDetect";
 // Hub
 import { setWarps } from "./features/hub/DianaWaypoint";
 
+// Dungeons
+import "./features/dungeons/DungeonRejoin";
+
 // Crimson Isles
 import "./features/crimsonIsles/GoldenFishTimer";
 import "./features/crimsonIsles/VanqWarp";
@@ -63,7 +66,9 @@ register("chat", () => {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             ChatLib.chat("-Added a PSA to settings");
-            ChatLib.chat("-Fixed closest crate lock-on more reliable");
+            ChatLib.chat("-Added auto rejoin dungeons");
+            ChatLib.chat("-Changed vanq detection display");
+            ChatLib.chat("-Fixed closest crate lock-on to be more reliable");
             ChatLib.chat("-Fixed party commands not working in gc");
         }
     }, 1000);

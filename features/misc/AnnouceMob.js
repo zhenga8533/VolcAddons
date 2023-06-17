@@ -1,5 +1,6 @@
 import settings from "../../settings";
-import { AMOGUS, BOLD, DARK_PURPLE, GOLD, WHITE } from "../../utils/constants";
+import { AMOGUS, BOLD, DARK_PURPLE, DARK_RED, GOLD, WHITE } from "../../utils/constants";
+import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
@@ -41,14 +42,15 @@ registerWhen(register("chat", () => {
     delay(() => soundCD = true, 10000);
 }).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => data.world == "crimson_isle" && settings.vanqSound);
 
+const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher: ${WHITE}YAP YAP YAP`;
+const vanqOverlay = new Overlay("vanqDetect", ["crimson_isle"], data.QL, "moveVanq", vanqExample);
 registerWhen(register("tick", () => {
     vanquishers = [];
-    
     entities = World.getAllEntitiesOfType(EntityWither.class);
     vanqs = entities.filter((entity) => entity.getEntity().func_110138_aP() == 1024);
 
     if (vanqs.length > 0) {
-        Client.Companion.showTitle(`${DARK_PURPLE}${BOLD}VANQUISHER ${WHITE}DETECTED!`, "", 0, 25, 5);
+        vanqOverlay.message = `${DARK_PURPLE}${BOLD}Vanquisher: ${DARK_RED}NEARBY`;
         if (data.moblist.includes("vanquisher")) {
             vanqs.forEach(vanq => { vanquishers.push(vanq) });
             if (soundCD && settings.vanqSound) {
@@ -57,7 +59,7 @@ registerWhen(register("tick", () => {
                 delay(() => soundCD = true, 10000);
             }
         }
-    }
+    } else vanqOverlay.message = `${DARK_PURPLE}${BOLD}Vanquisher: ${WHITE}None`;
 }), () => data.world == "crimson_isle" && settings.vanqDetect);
 
 export function getVanquishers() {

@@ -12,7 +12,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Combat", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
+        const categories = ["General", "Combat", "Hub", "Dungeon", "Crimson Isles", "Kuudra", "Garden", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -67,6 +67,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Women Command (?<w, waifu, women>)", "Party Command Options");
         this.addDependency("Invite Command (?invite)", "Party Command Options");
         this.addDependency("Help Command (?help)", "Party Command Options");
+        this.addDependency("Limbo Command (?<limbo, lobby, l>)", "Party Command Options");
         
         // Kuudra Alerts
         this.addDependency("Kuudra Alert Options", "Kuudra Alerts");
@@ -209,12 +210,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     demoteCommand = true;
     @CheckboxProperty({
-        name: "Limbo Command (?<limbo, lobby, l>)",
-        category: "General",
-        subcategory: "Party"
-    })
-    limboCommand = true;
-    @CheckboxProperty({
         name: "Promote Command (?promote)",
         category: "General",
         subcategory: "Party"
@@ -283,6 +278,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Party"
     })
     inviteCommand = true;
+    @CheckboxProperty({
+        name: "Limbo Command (?<limbo, lobby, l>)",
+        category: "General",
+        subcategory: "Party"
+    })
+    limboCommand = false;
     @CheckboxProperty({
         name: "RPS Command (?rps)",
         category: "General",
@@ -547,6 +548,17 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     resetCounter() {
         ChatLib.command("resetCounter", true);
     }
+
+
+    // DUNGEONS
+    
+    @SwitchProperty({
+        name: "Dungeon Rejoin",
+        description: "Automatically farms social xp and rejoins last completed dungeon when 4 players join your party. (does not reparty)",
+        category: "Dungeon",
+        subcategory: "Dungeon"
+    })
+    dungeonRejoin = false;
 
 
     // KUUDRA

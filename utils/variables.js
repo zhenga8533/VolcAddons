@@ -29,6 +29,7 @@ export let data = new PogObject("VolcAddons", {
     },
     "dianaKey": 33,
     "apexPrice": 1e9,
+    "QL": [15, 200, 1], // Vanquisher Location
     "GL": [15, 200, 1], // Gyro Location
     "SL": [15, 250, 1], // Splits Location
     "CL": [15, 250, 1], // Counter Location

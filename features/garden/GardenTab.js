@@ -60,7 +60,7 @@ registerWhen(register("step", () => {
         // Set Next Visitor
         nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") != -1);
 
-        if (!nextVisit.includes("Full")) {
+        if (nextVisit != undefined && !nextVisit.includes("Full")) {
             nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
 
             next = nextVisit[0]
@@ -68,17 +68,15 @@ registerWhen(register("step", () => {
                 next = next * 60 + parseInt(nextVisit[1]);
         }
     } catch(err) {
-        console.log(err);
+        console.log(`GardenTab.js: ${err}`);
     }
 }).setFps(1), () => settings.nextVisitor);
 
 registerWhen(register("step", () => {
     // Get Composter
-    try {
-        composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);
-        if (composter != -1)
-            Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
-    } catch(err) {
-        console.log(err);
-    }
+    if (!tablist) return;
+
+    composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);
+    if (composter != -1)
+        Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
 }).setFps(1), () => data.world == "garden" && settings.gardenCompost);
