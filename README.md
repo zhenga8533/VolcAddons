@@ -1,7 +1,7 @@
 # [VolcAddons](https://www.chattriggers.com/modules/v/VolcAddons)
 ChatTriggers module originally created for Koodar. Now I'm just adding random stuff :)
 
-KNOWN BUGS: Bugs fixed here (still exists on CT website), however there still exists some mod conflicts!
+KNOWN BUGS: None (I hope)
 
 ## Setup
 - Have [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html) Installed!
