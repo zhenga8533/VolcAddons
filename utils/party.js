@@ -66,9 +66,9 @@ register("chat", () => { // Tracks player kick
 
 // ---  CONTROL FOR GAME/CT RS ---
 register("gameLoad", () => {
+    ign = Player.getName();
     ChatLib.chat(`${LOGO} ${WHITE}Checking for party!`);
     delay(() => { ChatLib.command("p list"); }, 500);
-    ign = Player.getName();
 });
 
 register("chat", () => {

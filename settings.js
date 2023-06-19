@@ -1,4 +1,4 @@
-import { BOLD, DARK_RED, GOLD, HEADER, ITALIC, RED, UNDERLINE, WHITE } from "./utils/constants";
+import { BOLD, DARK_RED, HEADER, ITALIC } from "./utils/constants";
 import {
     @TextProperty,
 	@PercentSliderProperty,
@@ -58,6 +58,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Allinvite Command (?<allinvite, allinv>)", "Leader Command Options");
         this.addDependency("Stream Command (?<streamopen, stream> [num])", "Leader Command Options");
 
+        this.addDependency("Party Command Chat", "Party Chat Commands");
         this.addDependency("Party Command Options", "Party Chat Commands");
         this.addDependency("Slander Command (?<racist, gay, cringe>)", "Party Command Options");
         this.addDependency("Dice Command (?<dice, roll>)", "Party Command Options");
@@ -68,6 +69,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Invite Command (?invite)", "Party Command Options");
         this.addDependency("Help Command (?help)", "Party Command Options");
         this.addDependency("Limbo Command (?<limbo, lobby, l>)", "Party Command Options");
+        this.addDependency("Leave Command (?leave)", "Party Command Options");
         
         // Kuudra Alerts
         this.addDependency("Kuudra Alert Options", "Kuudra Alerts");
@@ -103,14 +105,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     abiphoneBlocker = false;
-    
-    @SwitchProperty({
-        name: "Anti Limbo",
-        description: `Automatically puts you in SkyBlock if you get limboed.`,
-        category: "General",
-        subcategory: "General"
-    })
-    antiLimbo = false;
     
     @SwitchProperty({
         name: "Custom Emotes",
@@ -184,53 +178,62 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     autoTransfer = false;
 
     @SwitchProperty({
+        name: "Whitelist Rejoin",
+        description: "Automatically rejoin invites from players on the whitelist (/va whitelist <add/remove> [ign]).",
+        category: "General",
+        subcategory: "Party"
+    })
+    joinWhitelist = false;
+
+    // Party Commands
+    @SwitchProperty({
         name: "Leader Chat Commands",
         description: "Allows everyone besides /va blacklist to use leader commands.",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     leaderCommands = false;
     @SwitchProperty({
         name: "Leader Command Options",
         description: "Toggle to show what commands to show/hide.",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     leaderOptions = false;
     @CheckboxProperty({
         name: "Allinvite Command (?<allinvite, allinv>)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     allinvCommand = true;
     @CheckboxProperty({
         name: "Demote Command (?demote)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     demoteCommand = true;
     @CheckboxProperty({
         name: "Promote Command (?promote)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     promoteCommand = true;
     @CheckboxProperty({
         name: "Stream Command (?<streamopen, stream> [num])",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     streamCommand = true;
     @CheckboxProperty({
         name: "Transfer Command (?transfer)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     transferCommand = true;
     @CheckboxProperty({
         name: "Warp Command (?warp)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     warpCommand = true;
 
@@ -238,78 +241,84 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         name: "Party Chat Commands",
         description: "Allows everyone besides /va blacklist to use the party commands.",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     partyCommands = false;
+    @SelectorProperty({
+        name: "Party Command Chat",
+        description: "Select which chat party commands can be detected in.",
+        category: "General",
+        subcategory: "Party Commands",
+        options: ["All", "Party", "Guild", "DM"]
+    })
+    partyChat = 0;
     @SwitchProperty({
         name: "Party Command Options",
         description: "Toggle to show what commands to show/hide.",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     partyOptions = false;
     @CheckboxProperty({
         name: "8ball Command (?8ball)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     ballCommand = true;
     @CheckboxProperty({
         name: "Coinflip Command (?<coin, flip, coinflip, cf>)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     coinCommand = true;
     @CheckboxProperty({
         name: "Dice Command (?<dice, roll>)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     diceCommand = true;
     @CheckboxProperty({
         name: "Help Command (?help)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     helpCommand = true;
     @CheckboxProperty({
         name: "Invite Command (?invite)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     inviteCommand = true;
     @CheckboxProperty({
         name: "Limbo Command (?<limbo, lobby, l>)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     limboCommand = false;
     @CheckboxProperty({
+        name: "Leave Command (?leave)",
+        category: "General",
+        subcategory: "Party Commands"
+    })
+    leaveCommand = false;
+    @CheckboxProperty({
         name: "RPS Command (?rps)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     rpsCommand = true;
     @CheckboxProperty({
         name: "Slander Command (?<racist, gay, cringe>)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     slanderCommand = true;
     @CheckboxProperty({
         name: "Women Command (?<w, waifu, women>)",
         category: "General",
-        subcategory: "Party"
+        subcategory: "Party Commands"
     })
     womenCommand = true;
-
-    @SwitchProperty({
-        name: "Whitelist Rejoin",
-        description: "Automatically rejoin invites from players on the whitelist (/va whitelist <add/remove> [ign]).",
-        category: "General",
-        subcategory: "Party"
-    })
-    joinWhitelist = false;
     
     // Skills
     @SliderProperty({

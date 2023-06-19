@@ -8,7 +8,6 @@ data.autosave();
 
 // General
 import "./features/general/AbiphoneBlocker";
-import "./features/general/AntiLimbo";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
 import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/general/DrawWaypoint";
@@ -49,6 +48,7 @@ import "./features/garden/GardenTab";
 // Misc
 import "./features/misc/AnnouceMob";
 import { calculate, setApex } from "./features/misc/BazaarCalculator";
+import { getInParty, getIsLeader } from "./utils/party";
 
 // FIRST RUN
 if (data.newUser) {
@@ -67,7 +67,9 @@ register("chat", () => {
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             ChatLib.chat("-Added a PSA to settings");
             ChatLib.chat("-Added auto rejoin dungeons");
+            ChatLib.chat("-Added option to choose chat for party commands");
             ChatLib.chat("-Changed vanq detection display");
+            ChatLib.chat("-Fixed null pointer exception in garden features");
             ChatLib.chat("-Fixed closest crate lock-on to be more reliable");
             ChatLib.chat("-Fixed party commands not working in gc");
         }
@@ -185,8 +187,10 @@ register ("command", (...args) => {
             zoneEdit(args);
             break;
         case "test": // Testing (please work)
-            ChatLib.chat("World: " + data.world)
-            ChatLib.chat("Tier: " + data.tier)
+            ChatLib.chat("World: " + data.world);
+            ChatLib.chat("Tier: " + data.tier);
+            ChatLib.chat("Leader: " + getIsLeader());
+            ChatLib.chat("Party: " + getInParty());
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))

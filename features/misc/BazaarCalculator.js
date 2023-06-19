@@ -89,7 +89,7 @@ export function calculate(args) {
     const minions = isNaN(args[2]) ? 31 : args[2];
     const tier = isNaN(args[3]) || args[3] > 11 ? 3 : args[3];
     let infernoAction = (INFERNO_ACTION_BASE - (tier * INFERNO_ACTION_UPGRADE)) / MAX_INFERNO;
-    const vampAction = DAY_SECONDS / (VAMPIRE_ACTIONS[Math.ceil(tier/2) - 1]/MAX_CATALYST) * minions;
+    const vampAction = DAY_SECONDS / (VAMPIRE_ACTIONS[Math.ceil(tier/2) - 1]*2/MAX_CATALYST) * minions;
 
     switch (args[1]) {
         case "hypergolic":
@@ -123,14 +123,14 @@ export function calculate(args) {
             infernoAction /= 21;
 
             // Drops
-            const actions = minions * 86400 / (2 * infernoAction);
+            const actions = minions * DAY_SECONDS / (2 * infernoAction);
 
             const drops = {
                 "GABAGOOL": actions.toFixed(4),
-                "CHILI": (eyedrop * actions / 156).toFixed(4),
-                "VERTEX": (eyedrop * actions / 16364).toFixed(4),
-                "APEX": (eyedrop * actions / 1570909).toFixed(4),
-                "REAPER": (eyedrop * actions / 458182).toFixed(4)
+                "CHILI": (actions / (156 / eyedrop)).toFixed(4),
+                "VERTEX": (actions / (16364 / eyedrop)).toFixed(4),
+                "APEX": (actions / (1570909 / eyedrop)).toFixed(4),
+                "REAPER": (actions / (458182 / eyedrop)).toFixed(4)
             }
             const profit = {
                 "GABAGOOL": drops.GABAGOOL * items.CRUDE_GABAGOOL[1],

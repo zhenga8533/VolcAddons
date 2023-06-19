@@ -42,7 +42,7 @@ registerWhen(register("chat", () => {
     delay(() => soundCD = true, 10000);
 }).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => data.world == "crimson_isle" && settings.vanqSound);
 
-const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher: ${WHITE}YAP YAP YAP`;
+const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher ${WHITE}Detected`;
 const vanqOverlay = new Overlay("vanqDetect", ["crimson_isle"], data.QL, "moveVanq", vanqExample);
 registerWhen(register("tick", () => {
     vanquishers = [];
@@ -50,7 +50,7 @@ registerWhen(register("tick", () => {
     vanqs = entities.filter((entity) => entity.getEntity().func_110138_aP() == 1024);
 
     if (vanqs.length > 0) {
-        vanqOverlay.message = `${DARK_PURPLE}${BOLD}Vanquisher: ${DARK_RED}NEARBY`;
+        vanqOverlay.message = vanqExample;
         if (data.moblist.includes("vanquisher")) {
             vanqs.forEach(vanq => { vanquishers.push(vanq) });
             if (soundCD && settings.vanqSound) {
@@ -59,7 +59,7 @@ registerWhen(register("tick", () => {
                 delay(() => soundCD = true, 10000);
             }
         }
-    } else vanqOverlay.message = `${DARK_PURPLE}${BOLD}Vanquisher: ${WHITE}None`;
+    } else vanqOverlay.message = "";
 }), () => data.world == "crimson_isle" && settings.vanqDetect);
 
 export function getVanquishers() {

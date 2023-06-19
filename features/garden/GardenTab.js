@@ -25,22 +25,20 @@ const nextOverlay = new Overlay("nextVisitor", ["all"], data.NL, "moveNext", nex
 
 // Check Tab
 registerWhen(register("step", () => {
-    try {
-        tablist = TabList.getNames();
-        gardenOverlay.message = "";
+    tablist = TabList.getNames();
+    if (tablist == null) return;
 
-        // Get Visitors
-        visitors = tablist.findIndex((tab) => tab.indexOf("Visitors:") != -1);
+    // Get Visitors
+    gardenOverlay.message = "";
+    visitors = tablist.findIndex((tab) => tab.indexOf("Visitors:") != -1);
+    if (!visitors) return;
 
-        if (visitors != -1) {
-            count = parseInt(tablist[visitors].removeFormatting().substring(11, 12)) + 1;
-            for (count; count >= 0; count--)
-                gardenOverlay.message = tablist[visitors + count] + "\n" + gardenOverlay.message;
-        } else {
-            gardenOverlay.message += `${AQUA}${BOLD}Visitors: ${RESET}(0)`;
-        }
-    } catch(err) {
-        console.log(`GardenTab.js: ${err}`);
+    if (visitors != -1) {
+        count = parseInt(tablist[visitors].removeFormatting().substring(11, 12)) + 1;
+        for (count; count >= 0; count--)
+            gardenOverlay.message = tablist[visitors + count] + "\n" + gardenOverlay.message;
+    } else {
+        gardenOverlay.message += `${AQUA}${BOLD}Visitors: ${RESET}(0)`;
     }
 }).setFps(1), () => data.world == "garden" && settings.gardenTab);
 
@@ -53,22 +51,18 @@ registerWhen(register("step", () => {
         `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)}`:
         `${AQUA}${BOLD}Next Visitor: ${RED}Shipment Received`;
 
-    try {
-        if (data.world != "garden") return;
-        tablist = TabList.getNames();
+    if (data.world != "garden" || tablist == null) return;
 
-        // Set Next Visitor
-        nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") != -1);
+    // Set Next Visitor
+    nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") != -1);
+    if (!nextVisit) return;
 
-        if (nextVisit != undefined && !nextVisit.includes("Full")) {
-            nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
+    if (nextVisit != undefined && !nextVisit.includes("Full")) {
+        nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
 
-            next = nextVisit[0]
-            if (nextVisit.length == 2)
-                next = next * 60 + parseInt(nextVisit[1]);
-        }
-    } catch(err) {
-        console.log(`GardenTab.js: ${err}`);
+        next = nextVisit[0]
+        if (nextVisit.length == 2)
+            next = next * 60 + parseInt(nextVisit[1]);
     }
 }).setFps(1), () => settings.nextVisitor);
 

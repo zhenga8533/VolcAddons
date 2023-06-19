@@ -3,7 +3,7 @@ import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, RED, WHITE } from "../../utils/const
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
-import { data } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
@@ -160,14 +160,19 @@ export function executeCommand(name, args, sendTo) {
             case "limbo":
             case "lobby":
             case "l":
-                if (!settings.limboCommand) return;
+                if (!settings.limboCommand || getIsLeader()) return;
 
                 ChatLib.command("l");
+                break;
+            case "leave":
+                if (!settings.limboCommand || getIsLeader()) return;
+
+                ChatLib.command("p leave");
                 break;
             case "help":
                 if (!settings.helpCommand || !sendTo) return;
 
-                ChatLib.command(`${sendTo} Party Commands: ?<cringe, gay, racist, dice, coin, 8ball, rps, w, help> ${randID}`);
+                ChatLib.command(`${sendTo} Party Commands: ?<cringe, gay, racist, dice, coin, 8ball, rps, w, lobby, leave, help> ${randID}`);
                 if (getIsLeader() && settings.leaderCommands)
                     delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream #> ${randID}`), 690);
                 break;
@@ -219,21 +224,21 @@ export function executeCommand(name, args, sendTo) {
 }
 
 // PARTY COMMANDS
-register("chat", (player, message) => {
+registerWhen(register("chat", (player, message) => {
     if (onCD) return;
 
     executeCommand(getPlayerName(player), message.split(" "), "pc");
-}).setCriteria("Party > ${player}: ?${message}");
+}).setCriteria("Party > ${player}: ?${message}"), () => settings.partyChat == 0 || settings.partyChat == 1);
 
-register("chat", (player, message) => {
+registerWhen(register("chat", (player, message) => {
     if (onCD) return;
 
     executeCommand(getGuildName(player), message.split(" "), "gc");
-}).setCriteria("Guild > ${player}: ?${msg}");
+}).setCriteria("Guild > ${player}: ?${message}"), () => settings.partyChat == 0 || settings.partyChat == 2);
 
 // MESSAGE COMMANDS
-register("chat", (player, message) => {
+registerWhen(register("chat", (player, message) => {
     if (onCD) return;
 
     executeCommand(getPlayerName(player), message.split(" "), "r");
-}).setCriteria("From ${player}: ?${message}");
+}).setCriteria("From ${player}: ?${message}"), () => settings.partyChat == 0 || settings.partyChat == 3);
