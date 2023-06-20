@@ -72,6 +72,7 @@ register("chat", () => {
             ChatLib.chat("-Fixed null pointer exception in garden features");
             ChatLib.chat("-Fixed closest crate lock-on to be more reliable");
             ChatLib.chat("-Fixed party commands not working in gc");
+            ChatLib.chat("-Fixed Kuudra p5 spawn not working");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");

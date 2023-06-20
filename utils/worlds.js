@@ -34,10 +34,10 @@ function setWorld(world) {
         worldLine = worldLine == undefined ? "None" : worldLine.getName().removeFormatting().replace(/\W/g, '');
 
         if (worldLine.includes("Kuudra")) {
-            world = "kuudra"
+            world = "kuudra";
             data.tier = parseInt(worldLine.slice(-1));
         }
-    } else data.tier = 0;
+    }
 
     data.world = world;
     setRegisters();

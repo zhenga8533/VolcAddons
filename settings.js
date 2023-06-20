@@ -523,6 +523,15 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Vanquisher Alert"
     })
     vanqDetect = false;
+    @ButtonProperty({
+        name: "Move Vanquisher HUD",
+        description: "Move the location of the Vanquisher Detection. Runs => /moveVanq",
+        category: "Crimson Isles",
+        subcategory: "Vanquisher Alert"
+    })
+    moveVanq() {
+        ChatLib.command("moveVanq", true);
+    }
     @SwitchProperty({
         name: "Vanquisher Detection Sound",
         description: "Plays a sound whenever a vanquisher gets detected.",
