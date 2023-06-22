@@ -69,6 +69,7 @@ register("chat", () => {
             ChatLib.chat("-Added auto rejoin dungeons");
             ChatLib.chat("-Added option to choose chat for party commands");
             ChatLib.chat("-Changed vanq detection display");
+            ChatLib.chat("-Fixed world not registering on /ct reload");
             ChatLib.chat("-Fixed null pointer exception in garden features");
             ChatLib.chat("-Fixed closest crate lock-on to be more reliable");
             ChatLib.chat("-Fixed party commands not working in gc");

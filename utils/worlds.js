@@ -68,7 +68,6 @@ function findWorld() {
 
 // World trigger
 register("worldLoad", () => { // IF DULKIR
-    data.world = "none";
     noFind = 0;
     findWorld();
 });

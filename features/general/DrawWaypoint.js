@@ -169,9 +169,18 @@ export function createWaypoint(args) {
 registerWhen(register("chat", () => {
     // Delete closest soul
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
-    if (closest != undefined);
+    if (closest != undefined)
         data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
 }).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => data.world == "rift");
+
+registerWhen(register("chat", () => {
+    if (!data.enigmaSouls.length) return;
+
+    // Delete duplicate soul
+    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
+    if (closest[1] < 5)
+        data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
+}).setCriteria("You have already found that Enigma Soul!"), () => data.world == "rift");
 
 registerWhen(register("step", () => {
     if (data.world != "rift") return;
@@ -188,8 +197,13 @@ export function enigmaEdit(args) {
         case "clear":
             data.enigmaSouls = [];
             break;
+        case "pop":
+            const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
+            if (closest != undefined)
+                data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
+            break;
         default:
-            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va enigma <reset, clear>!`);
+            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va enigma <reset, clear, pop>!`);
             break;
     }
 }

@@ -52,7 +52,7 @@ export function getClosest(origin, positions) {
     let distance = 999;
 
     positions.forEach(position => {
-        distance = distanceFormula(origin[1], origin[2], origin[3], position[1], position[2], position[3]);
+        distance = Math.hypot(origin[1] - position[1], origin[2] - position[2], origin[3] - position[3]);
         if (distance < closestDistance) {
             closestDistance = distance;
             closestPosition = position;
