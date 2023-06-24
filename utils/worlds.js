@@ -27,11 +27,16 @@ const LOCATIONS = {
 }
 let noFind = 0;
 
+export function findZone() {
+    let zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
+    // Rift different symbol zzz
+    if (zoneLine == undefined) zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("ф"));
+    return zoneLine == undefined ? "None" : zoneLine.getName().removeFormatting()
+}
 function setWorld(world) {
     // Check for Kuudra (shows as instanced)
     if (world == "instanced") {
-        worldLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
-        worldLine = worldLine == undefined ? "None" : worldLine.getName().removeFormatting().replace(/\W/g, '');
+        worldLine = findZone().replace(/\W/g, '');;
 
         if (worldLine.includes("Kuudra")) {
             world = "kuudra";
@@ -49,8 +54,7 @@ function findWorld() {
     if (noFind == 20) return;
 
     // Get scoreboard line with world name
-    worldLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
-    worldLine = worldLine == undefined ? "None" : worldLine.getName().removeFormatting().replace(/\W/g, '');
+    worldLine = findZone().replace(/\W/g, '');
 
     delay(() => {
         if (worldLine.includes("None"))
@@ -82,10 +86,3 @@ register("chat", (data) => { // WORKS IF NO DULKIR
         print(err);
     }
 }).setCriteria("{${data}}");
-
-
-// Zone (NOT IN USE)
-/*register("step", () => {
-    zone = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
-    zone = zone == undefined ? "none" : zone.getName().removeFormatting().replace(/[^\w\s!?]/g,'').trim();
-}).setDelay(1);*/

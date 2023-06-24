@@ -37,6 +37,7 @@ export let data = new PogObject("VolcAddons", {
     "NL": [15, 350, 1], // Next Visitors Location
     "TL": [15, 300, 1], // Golden Fish Timer Location
     "AL": [15, 300, 1], // Skill Tracker Location
+    "BL": [15, 400, 1], // Vampire Location
     "enigmaSouls": ENIGMA_SOULS
 }, "datitee.json");
 

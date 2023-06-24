@@ -2,6 +2,7 @@ import settings from "../../settings";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
+import { findZone } from "../../utils/worlds";
 
 let vanqCoords = [0, 0, 0, "None"];
 let vanqSpawned = false;
@@ -14,18 +15,10 @@ registerWhen(register("chat", () => {
     notInParty = 0;
 
     // PLAYER POSITION
-    vanqCoords[0] = Math.round(Player.getX())
-    vanqCoords[1] = Math.round(Player.getY())
-    vanqCoords[2] = Math.round(Player.getZ())
-    
-    // AREA PLAYER IS IN
-    let area = "N/A"
-    Scoreboard.getLines().forEach(item => {
-        if (item.getName().includes("⏣")) {
-            vanqCoords[3] = item.getName().removeFormatting();
-            return;
-        }
-    });
+    vanqCoords[0] = Math.round(Player.getX());
+    vanqCoords[1] = Math.round(Player.getY());
+    vanqCoords[2] = Math.round(Player.getZ());
+    vanqCoords[3] = findZone();
 
     // INVITE PARTY
     delay(() => { if (getInParty()) ChatLib.command("p leave") }, 500);

@@ -4,6 +4,7 @@ import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
+import { findZone } from "../../utils/worlds";
 
 // GENERAL FUNCTIONS
 function annoucePosition(toAll, mob, x, y ,z) {
@@ -12,9 +13,7 @@ function annoucePosition(toAll, mob, x, y ,z) {
     z = Math.round(z);
 
     // AREA PLAYER IS IN
-    let area = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
-    if (area != undefined)
-        area = area.getName().removeFormatting();
+    let area = findZone();
 
     if (toAll) {
         const id = (Math.random() + 1).toString(36).substring(6);
@@ -104,6 +103,11 @@ export function getInquisitors() {
 // --- Slayer Alert ---
 let miniCD = false;
 let bossCD = false;
+let questStart = true;
+
+export function getSlayerBoss() {
+    return bossCD;
+}
 
 // Get Miniboss Spawn
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
@@ -116,17 +120,23 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
 }), () => settings.miniAlert);
 
 // Boss Spawn
-registerWhen(register("step", () => {
+register("step", () => {
     if (bossCD) return;
 
     const bossLine = Scoreboard.getLines().find((line) => line.getName().includes("Slay the boss!"));
-    if (bossLine != undefined) {
-        annoucePosition(settings.bossAlert == 1, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
-
+    if (questStart && bossLine != undefined) {
         bossCD = true;
+        questStart = false;
+        if (settings.bossAlert)
+            annoucePosition(settings.bossAlert == 1, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
     }
-}).setFps(10), () => settings.bossAlert);
-
-registerWhen(register("chat", () => {
+}).setFps(5);
+register("chat", () => {
+    questStart = true;
+}).setCriteria("  SLAYER QUEST STARTED!");
+register("chat", () => {
     bossCD = false;
-}).setCriteria("  SLAYER QUEST COMPLETE!"), () => settings.bossAlert);
+}).setCriteria("  SLAYER QUEST COMPLETE!");
+register("chat", () => {
+    bossCD = false;
+}).setCriteria("  SLAYER QUEST FAILED!");

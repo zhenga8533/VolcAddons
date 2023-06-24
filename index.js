@@ -1,6 +1,7 @@
 // Util
 import settings from "./settings";
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
+import { getInParty, getIsLeader } from "./utils/party";
 import { data, opened, updateList } from "./utils/variables";
 import { delay } from "./utils/thread";
 import "./utils/worlds";
@@ -10,7 +11,7 @@ data.autosave();
 import "./features/general/AbiphoneBlocker";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
-import { NPCEdit, createWaypoint, enigmaEdit, zoneEdit } from "./features/general/DrawWaypoint";
+import { createWaypoint } from "./features/general/DrawWaypoint";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
 import "./features/general/ReminderTimer";
@@ -45,10 +46,14 @@ import { getSplits } from "./features/kuudra/KuudraSplits";
 // Garden
 import "./features/garden/GardenTab";
 
+// Rift
+import "./features/rift/VampireSlayer";
+import "./features/rift/DDR";
+
 // Misc
 import "./features/misc/AnnouceMob";
 import { calculate, setApex } from "./features/misc/BazaarCalculator";
-import { getInParty, getIsLeader } from "./utils/party";
+import { NPCEdit, enigmaEdit, zoneEdit } from "./features/rift/RiftWaypoints";
 
 // FIRST RUN
 if (data.newUser) {
@@ -65,15 +70,13 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added a PSA to settings");
-            ChatLib.chat("-Added auto rejoin dungeons");
-            ChatLib.chat("-Added option to choose chat for party commands");
-            ChatLib.chat("-Changed vanq detection display");
-            ChatLib.chat("-Fixed world not registering on /ct reload");
-            ChatLib.chat("-Fixed null pointer exception in garden features");
-            ChatLib.chat("-Fixed closest crate lock-on to be more reliable");
-            ChatLib.chat("-Fixed party commands not working in gc");
-            ChatLib.chat("-Fixed Kuudra p5 spawn not working");
+            ChatLib.chat("-Added vampire slayer features (WIP)");
+            ChatLib.chat("  -Added Attack Tracker");
+            ChatLib.chat("  -Added Impel Enlarger");
+            ChatLib.chat("  -Added Mania Phase Announcer");
+            ChatLib.chat("-Added DDR Helper");
+            ChatLib.chat("-Fixed rift world not registering sometimes");
+            ChatLib.chat("-Organized some code");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");
@@ -193,6 +196,7 @@ register ("command", (...args) => {
             ChatLib.chat("Tier: " + data.tier);
             ChatLib.chat("Leader: " + getIsLeader());
             ChatLib.chat("Party: " + getInParty());
+            Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))

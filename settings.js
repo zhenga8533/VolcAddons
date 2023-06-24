@@ -48,6 +48,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Move Splits HUD", "Kuudra Splits");
         this.addDependency("Move Visitors HUD", "Garden Tab Display");
         this.addDependency("Move Next Visitor HUD", "Next Visitor Display");
+        this.addDependency("Move Vampire HUD", "Vampire Attack Display");
         
         // Leader / Party Commands
         this.addDependency("Leader Command Options", "Leader Chat Commands");
@@ -331,7 +332,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     trackSkills = 0;
     @ButtonProperty({
-        name: "Move Skills HUD",
+        name: "Move Skills Display",
         description: "Move the location of the Skill Tracker. Runs => /moveSkills",
         category: "General",
         subcategory: "Skills"
@@ -810,6 +811,50 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         max: 1000
     })
     enigmaWaypoint = 0;
+
+    @SwitchProperty({
+        name: "DDR Helper",
+        description: "Replaces Dance Room titles with custom ones.",
+        category: "Rift",
+        subcategory: "Rift",
+    })
+    ddrHelper = false;
+
+    // Vampire
+    @SelectorProperty({
+        name: "Announce Mania Phase",
+        description: "Sends coords when vampire goes into mania.",
+        category: "Rift",
+        subcategory: "Vampire",
+        options: ["OFF", "All Chat", "Party Chat"]
+    })
+    announceMania = 0;
+
+    @SwitchProperty({
+        name: "Enlarge Impel Message",
+        description: "Converts impel to be disturbingly noticable.",
+        category: "Rift",
+        subcategory: "Vampire",
+    })
+    vampireImpel = false;
+    
+    @SwitchProperty({
+        name: "Vampire Attack Display",
+        description: "Tracks the Mania, Twinclaws, and Ichor directly on user screen.",
+        category: "Rift",
+        subcategory: "Vampire",
+    })
+    vampireAttack = false;
+    
+    @ButtonProperty({
+        name: "Move Vampire HUD",
+        description: "Move the location of the Vampire Attack Timer. Runs => /moveVamp",
+        category: "Rift",
+        subcategory: "Vampire",
+    })
+    moveVamp() {
+        ChatLib.command("moveVamp", true);
+    }
 }
 
 export default new Settings    
