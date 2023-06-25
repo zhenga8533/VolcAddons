@@ -132,7 +132,7 @@ register("step", () => {
     }
 }).setFps(5);
 register("chat", () => {
-    questStart = true;
+    delay(() => questStart = true, 500);
 }).setCriteria("  SLAYER QUEST STARTED!");
 register("chat", () => {
     bossCD = false;

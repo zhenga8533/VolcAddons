@@ -1,6 +1,6 @@
 // Util
 import settings from "./settings";
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
 import { data, opened, updateList } from "./utils/variables";
 import { delay } from "./utils/thread";
@@ -45,15 +45,17 @@ import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden
 import "./features/garden/GardenTab";
+import "./features/garden/GardenWarp";
 
 // Rift
-import "./features/rift/VampireSlayer";
 import "./features/rift/DDR";
+import "./features/rift/TubaTimer";
+import "./features/rift/VampireSlayer";
 
 // Misc
 import "./features/misc/AnnouceMob";
 import { calculate, setApex } from "./features/misc/BazaarCalculator";
-import { NPCEdit, enigmaEdit, zoneEdit } from "./features/rift/RiftWaypoints";
+import { NPCEdit, soulEdit, zoneEdit } from "./features/rift/RiftWaypoints";
 
 // FIRST RUN
 if (data.newUser) {
@@ -70,13 +72,17 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added vampire slayer features (WIP)");
-            ChatLib.chat("  -Added Attack Tracker");
-            ChatLib.chat("  -Added Impel Enlarger");
-            ChatLib.chat("  -Added Mania Phase Announcer");
-            ChatLib.chat("-Added DDR Helper");
-            ChatLib.chat("-Fixed rift world not registering sometimes");
-            ChatLib.chat("-Organized some code");
+            ChatLib.chat("-Added cat soul waypoints");
+            ChatLib.chat("-Added missing effigy waypoints");
+            ChatLib.chat("-Added garden warp override");
+            ChatLib.chat("-Added lines when moving gui");
+            ChatLib.chat("-Fixed user waypoints being permanent if spammed");
+            ChatLib.chat("-Fixed enigma waypoints not deleting (forgor mention)");
+            ChatLib.chat("-Fixed rift world detection for Dulkir users (i think)");
+            ChatLib.chat("-Fixed being able to pop too many souls");
+            ChatLib.chat("-Fixed some npc waypoints not being finished");
+            ChatLib.chat("-Changed ?w to be toggleable (please don't hurt me)");
+            ChatLib.chat("-Finalized rift stuff (:pray:)");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");
@@ -183,7 +189,12 @@ register ("command", (...args) => {
             setApex(args);
             break;
         case "enigma": // Configure enigma souls
-            enigmaEdit(args);
+            soulEdit(args, "enigma", "enigmaSouls", ENIGMA_SOULS);
+            break;
+        case "montezuma": // Configure enigma souls
+        case "mont":
+        case "cat":
+            soulEdit(args, "cat", "catSouls", CAT_SOULS);
             break;
         case "npc": // Enable npc waypoints
             NPCEdit(args);

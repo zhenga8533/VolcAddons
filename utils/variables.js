@@ -1,4 +1,4 @@
-import { AQUA, BOLD, ENIGMA_SOULS, GOLD, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
+import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 import { delay } from "./thread";
 
 import PogObject from "../../PogData";
@@ -38,7 +38,9 @@ export let data = new PogObject("VolcAddons", {
     "TL": [15, 300, 1], // Golden Fish Timer Location
     "AL": [15, 300, 1], // Skill Tracker Location
     "BL": [15, 400, 1], // Vampire Location
-    "enigmaSouls": ENIGMA_SOULS
+    "UL": [15, 450, 1], // Tuba Location
+    "enigmaSouls": ENIGMA_SOULS,
+    "catSouls": CAT_SOULS
 }, "datitee.json");
 
 // --- LIST CONTROL ---

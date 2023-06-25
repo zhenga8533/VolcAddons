@@ -10,6 +10,7 @@ let visitors = 0;
 
 // Next Visitor Display
 let next = 0;
+export function getNextVisitor() { return next };
 
 const gardenExample =
 `${AQUA}${BOLD}Visitors ${WHITE}(5):

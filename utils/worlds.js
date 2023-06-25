@@ -18,11 +18,11 @@ const LOCATIONS = {
         "ScarletonAuctionHouse", "ScarletonBazaar", "ScarletonBank", "ScarletonBlacksmith", "IgrupansHouse", "IgrupansChickenCoop", "Cathedral",
         "Courtyard", "TheWasteland", "RuinsofAshfang", "ForgottenSkull", "SmolderingTomb"],
     "rift": [
-        "WyldWoods", "EnigmasCrib", "BrokenCage", "ShiftedTavern", "Pumpgrotto", "TheBastion", "Otherside", "BlackLagoon", "LagoonCave",
-        "LagoonHut", "LeechesLair", "AroundColosseum", "RiftGallaryEntrance", "RiftGallary", "WestVillage", "DolpinTrainer", "CakeHouse",
-        "InfestedHouse", "Mirrorverse", "Dreadfarm", "GreatBeanstalk", "VillagePlaza", "Taylors", "LonelyTerrace", "MurderHouse", "BookinaBook",
-        "HalfEatenCave", "BarterBankShow", "BarryCenter", "BarryHQ", "DéjàVuAlley", "LivingCave", "LivingStillness", "Colosseum", "BarrierStreet",
-        "PhotonPathway", "StillgoreChâteau", "Oubliette", "FairylosopherTower"],
+        "WizardTower", "WyldWoods", "EnigmasCrib", "BrokenCage", "ShiftedTavern", "Pumpgrotto", "TheBastion", "Otherside", "BlackLagoon",
+        "LagoonCave", "LagoonHut", "LeechesLair", "AroundColosseum", "RiftGallaryEntrance", "RiftGallary", "WestVillage", "DolpinTrainer",
+        "CakeHouse", "InfestedHouse", "Mirrorverse", "Dreadfarm", "GreatBeanstalk", "VillagePlaza", "Taylors", "LonelyTerrace", "MurderHouse",
+        "BookinaBook", "HalfEatenCave", "BarterBankShow", "BarryCenter", "BarryHQ", "DéjàVuAlley", "LivingCave", "LivingStillness", "Colosseum",
+        "BarrierStreet", "PhotonPathway", "StillgoreChâteau", "Oubliette", "FairylosopherTower"],
     "kuudra": ["KuudrasHollowT5", "KuudrasHollowT1", "KuudrasHollowT2", "KuudrasHollowT3", "KuudrasHollowT4"]
 }
 let noFind = 0;
@@ -43,29 +43,31 @@ function setWorld(world) {
             data.tier = parseInt(worldLine.slice(-1));
         }
     }
-
+    
     data.world = world;
     setRegisters();
 }
 function findWorld() {
-    const title = Scoreboard.getTitle();
-    // In case not in SB (no infinite loop)
-    if (!title.length || !title.removeFormatting().includes("SKYBLOCK")) noFind++;
+    // Infinite loop prevention
     if (noFind == 20) return;
+    noFind++;
 
     // Get scoreboard line with world name
     worldLine = findZone().replace(/\W/g, '');
 
     delay(() => {
-        if (worldLine.includes("None"))
+        if (worldLine.includes("None")) {
             findWorld();
-        else {
+        } else {
+            let found = false;
             for (let location in LOCATIONS) {
                 if (LOCATIONS[location].includes(worldLine)) {
                     setWorld(location);
+                    found = true;
                     break;
                 }
             }
+            if (!found) findWorld();
         }
     }, 1000);
 }
@@ -80,9 +82,9 @@ register("chat", (data) => { // WORKS IF NO DULKIR
     try {
         data = JSON.parse(`{${data}}`);
         if (data.gametype != "SKYBLOCK") return;
-
+        
         setWorld(data.mode);
     } catch (err) {
-        print(err);
+        print(`VolcAddons [worlds.js]: ${err}`);
     }
 }).setCriteria("{${data}}");

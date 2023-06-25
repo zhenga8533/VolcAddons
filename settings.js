@@ -49,6 +49,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Move Visitors HUD", "Garden Tab Display");
         this.addDependency("Move Next Visitor HUD", "Next Visitor Display");
         this.addDependency("Move Vampire HUD", "Vampire Attack Display");
+        this.addDependency("Move Tuba HUD", "Weird Tuba Timer");
         
         // Leader / Party Commands
         this.addDependency("Leader Command Options", "Leader Chat Commands");
@@ -765,6 +766,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     gardenCompost = false;
 
     @SwitchProperty({
+        name: "Garden Warper",
+        description: "Overrides any warp command with a garden warp if theres a visitor.",
+        category: "Garden",
+        subcategory: "Garden"
+    })
+    warpGarden = false;
+
+    @SwitchProperty({
         name: "Garden Tab Display",
         description: "Displays the garden visitors outside of tab menu.",
         category: "Garden",
@@ -802,6 +811,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // RIFT
     
     // Rift
+    @SwitchProperty({
+        name: "DDR Helper",
+        description: "Replaces Dance Room titles with custom ones.",
+        category: "Rift",
+        subcategory: "Rift",
+    })
+    ddrHelper = false;
+
     @SliderProperty({
         name: "Enigma Soul Waypoints",
         description: "Display the distance at which soul waypoints will render. (Set as 0 to turn off)",
@@ -811,14 +828,38 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         max: 1000
     })
     enigmaWaypoint = 0;
-
+    
     @SwitchProperty({
-        name: "DDR Helper",
-        description: "Replaces Dance Room titles with custom ones.",
+        name: "Montezuma Soul Waypoints",
+        description: "Displays waypoints for nearby discord kittens.",
         category: "Rift",
         subcategory: "Rift",
     })
-    ddrHelper = false;
+    catWaypoint = false;
+    
+    @SwitchProperty({
+        name: "Weird Tuba Timer",
+        description: "Display the time remaining on weird(er) tuba buff.",
+        category: "Rift",
+        subcategory: "Rift",
+    })
+    tubaTimer = false;
+    @ButtonProperty({
+        name: "Move Tuba HUD",
+        description: "Move the location of the Weird Tuba Timer. Runs => /moveTubaTimer",
+        category: "Rift",
+        subcategory: "Rift",
+    })
+    moveTubaTimer() {
+        ChatLib.command("moveTubaTimer", true);
+    }
+    @SwitchProperty({
+        name: "Weird Tuba Alert",
+        description: "Alerts you when Weird Tuba is off cooldown.",
+        category: "Rift",
+        subcategory: "Rift",
+    })
+    tubaAlert = false;
 
     // Vampire
     @SelectorProperty({
@@ -829,6 +870,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         options: ["OFF", "All Chat", "Party Chat"]
     })
     announceMania = 0;
+    
+    @SwitchProperty({
+        name: "Effigy Waypoint",
+        description: "Spawns a waypoint on inactive effigies.",
+        category: "Rift",
+        subcategory: "Vampire",
+    })
+    effigyWaypoint = false;
 
     @SwitchProperty({
         name: "Enlarge Impel Message",

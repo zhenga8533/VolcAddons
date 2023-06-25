@@ -8,7 +8,7 @@ import { data, registerWhen } from "../../utils/variables";
 
 import renderBeaconBeam from "../../../BeaconBeam";
 import RenderLib from "../../../RenderLib/index.js";
-import { getEnigma, getNPCs, getZones } from "../rift/RiftWaypoints";
+import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../rift/RiftWaypoints";
 
 // General Waypoints
 let chatWaypoints = [];
@@ -61,6 +61,7 @@ register("step", () => {
     formatWaypoints(getBurrow(), 0, 0.5, 0); // Green burrows
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
+    formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
 }).setFps(4);
 register("renderWorld", () => {
     renderWaypoint(formatted);
@@ -68,8 +69,8 @@ register("renderWorld", () => {
     renderBeam(getBuilds()); // Red Builds
     renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
     renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
-    if (settings.enigmaWaypoint && data.world == "rift")
-        renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple enigma
+    renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple enigma
+    renderSimple(getCat(), 0, 0, 1); // Blue enigma
 });
 
 
@@ -144,7 +145,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     chatWaypoints.push([player, x, y, z]);
 
     // Delete waypoint after 'X' seconds
-    delay(() => { if (chatWaypoints[0][0].equals(player)) chatWaypoints.shift() }, settings.drawWaypoint * time);
+    delay(() => { if (chatWaypoints.length) chatWaypoints.shift() }, settings.drawWaypoint * time);
 }).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint);
 
 // Lets user create waypoint

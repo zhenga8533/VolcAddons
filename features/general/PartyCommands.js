@@ -139,10 +139,7 @@ export function executeCommand(name, args, sendTo) {
             case "waifu":
             case "women":
             case "w":
-                if (!settings.womenCommand) {
-                    ChatLib.chat(`${LOGO} ${RED}You cannot turn this feature off, don't ever try this shit again.`);
-                    settings.womenCommand = true;
-                }
+                if (!settings.womenCommand) return;
 
                 ChatLib.chat(`${LOGO} ${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
                 if (sendTo) ChatLib.command(`${sendTo} ${imgur} ${randID}`);
