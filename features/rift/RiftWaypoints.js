@@ -127,7 +127,8 @@ export function zoneEdit(args) {
 
 // Effigy Waypoints
 const EFFIGIES = [
-    ["1", 150, 73, 95], ["2", 193, 87, 119], ["3", 235, 103, 147], ["4", 293, 90, 134], ["5", 262, 93, 94], ["6", 240, 123, 118]
+    ["1st Effigy", 150, 73, 95], ["2nd Effigy", 193, 87, 119], ["3rd Effigy", 235, 103, 147],
+    ["4th Effigy", 293, 90, 134], ["5th Effigy", 262, 93, 94], ["6th Effigy", 240, 123, 118]
 ];
 let missingEffigies = [];
 export function getEffigies() { return missingEffigies };

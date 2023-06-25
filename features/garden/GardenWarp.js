@@ -14,9 +14,12 @@ registerWhen(register("messageSent", (message, event) => {
     }
 }), () => settings.warpGarden);
 
-registerWhen(register("worldLoad", () => {
+function tryWarp() {
     delay(() => {
-        ChatLib.say(warpTo);
-        warpTo = "";
-    }, 1000);
-}), () => settings.warpGarden);
+        if (getNextVisitor()) {
+            ChatLib.say(warpTo);
+            warpTo = "";
+        } else tryWarp();
+    }, 1000)
+}
+registerWhen(register("worldLoad", () => { tryWarp() }), () => settings.warpGarden);
