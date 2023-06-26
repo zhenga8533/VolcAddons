@@ -65,9 +65,14 @@ KNOWN BUGS: None (I hope)
   - Next Visitor Display
 
 - RIFT FEATURES
+  - DDR Helper
   - Enigma Soul Waypoints
   - NPC Waypoints => /va npc
   - Zone Waypoints => /va zone
+  - Montezuma Waypoints
+  - Effigy Waypoints
+  - Weird Tuba Tracker
+  - Vampire Slayer Features
  
 - MISC FEATURES
   - Minion Calculator => /va calc
