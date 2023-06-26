@@ -4,7 +4,7 @@ import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
-import { findZone } from "../../utils/worlds";
+import { findZone, getWorld } from "../../utils/worlds";
 
 // GENERAL FUNCTIONS
 function annoucePosition(toAll, mob, x, y ,z) {
@@ -30,7 +30,7 @@ let soundCD = true;
 
 registerWhen(register("chat", () => {
     annoucePosition(settings.vanqAlert == 1, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
-}).setCriteria("A Vanquisher is spawning nearby!"), () => data.world == "crimson_isle" && settings.vanqAlert);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqAlert);
 
 // Detect others with sound
 registerWhen(register("chat", () => {
@@ -39,10 +39,10 @@ registerWhen(register("chat", () => {
     AMOGUS.play();
     soundCD = false;
     delay(() => soundCD = true, 10000);
-}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => data.world == "crimson_isle" && settings.vanqSound);
+}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => getWorld() == "Crimson Isle" && settings.vanqSound);
 
 const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher ${WHITE}Detected`;
-const vanqOverlay = new Overlay("vanqDetect", ["crimson_isle"], data.QL, "moveVanq", vanqExample);
+const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], data.QL, "moveVanq", vanqExample);
 registerWhen(register("tick", () => {
     vanquishers = [];
     entities = World.getAllEntitiesOfType(EntityWither.class);
@@ -59,7 +59,7 @@ registerWhen(register("tick", () => {
             }
         }
     } else vanqOverlay.message = "";
-}), () => data.world == "crimson_isle" && settings.vanqDetect);
+}), () => getWorld() == "Crimson Isle" && settings.vanqDetect);
 
 export function getVanquishers() {
     return vanquishers;
@@ -77,7 +77,7 @@ registerWhen(register("chat", () => {
 
     if (inquisitor != undefined)
         annoucePosition(settings.dianaAlert == 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
-}).setCriteria("${wow}! You dug out a Minos Champion!"), () => data.world == "hub" && settings.dianaAlert);
+}).setCriteria("${wow}! You dug out a Minos Champion!"), () => getWorld() == "Hub" && settings.dianaAlert);
 
 // Tracks all nearby Inquisitors
 let inquisitors = [];
@@ -93,7 +93,7 @@ registerWhen(register("tick", () => {
         if (data.moblist.includes("inquisitor"))
             inqs.forEach(inq => { inquisitors.push(inq) });
     }
-}), () => data.world == "hub" && settings.detectInq);
+}), () => getWorld() == "Hub" && settings.detectInq);
 
 export function getInquisitors() {
     return inquisitors;

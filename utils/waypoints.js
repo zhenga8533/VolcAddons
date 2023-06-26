@@ -1,18 +1,13 @@
-import settings from "../../settings";
-import { AQUA, GREEN, LOGO } from "../../utils/constants";
-import { getInquisitors, getVanquishers } from "../misc/AnnouceMob";
-import { getBurrow, getTheory } from "../hub/DianaWaypoint";
-import { getBuilds, getCrates } from "../kuudra/KuudraCrates";
-import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import { getBurrow, getTheory } from "../features/hub/DianaWaypoint";
+import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
+import { getInquisitors, getVanquishers } from "../features/misc/AnnouceMob";
+import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
+import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 
-import renderBeaconBeam from "../../../BeaconBeam";
-import RenderLib from "../../../RenderLib/index.js";
-import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../rift/RiftWaypoints";
+import renderBeaconBeam from "../../BeaconBeam";
+import RenderLib from "../../RenderLib/index.js";
 
 // General Waypoints
-let chatWaypoints = [];
-let userWaypoints = [];
 let formatted = [];
 
 // What actually does the waypoint rendering
@@ -55,9 +50,9 @@ function formatWaypoints(waypoints, r, g, b) {
 }
 register("step", () => {
     formatted = [];
-    formatWaypoints(chatWaypoints, 0, 1, 1); // Cyan Waypoint
-    formatWaypoints(userWaypoints, 0, 1, 0); // Lime user
-    formatWaypoints(getTheory(), 1, 1, 0); // Yellow theory burrow
+    formatWaypoints(getChatWaypoints(), 0, 1, 1); // Cyan Waypoint
+    formatWaypoints(getUserWaypoints(), 0, 1, 0); // Lime user
+    formatWaypoints(getTheory(), 1, 1, 0); // Yellow diana theory burrow
     formatWaypoints(getBurrow(), 0, 0.5, 0); // Green burrows
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
@@ -74,7 +69,7 @@ register("renderWorld", () => {
 });
 
 
-// Different types of rendering
+// Rendering functions
 function renderSimple(waypoints, r, g, b) {
     if (!waypoints.length) return;
 
@@ -105,7 +100,7 @@ function renderWaypoint(waypoints) {
 function renderBeam(waypoints) {
     if (!waypoints.length) return;
 
-    waypoints.forEach((waypoint) =>renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
+    waypoints.forEach((waypoint) => renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
 }
 function renderEntities(entities, title, r, g, b) {
     if (!entities.length) return;
@@ -122,46 +117,3 @@ function renderEntities(entities, title, r, g, b) {
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, true);
     });
 }
-
-
-// Detects coords
-registerWhen(register("chat", (player, spacing, x, y, z) => {
-    // Gets colors and titles in name
-    const bracketIndex = player.indexOf('[') - 2;
-    if (bracketIndex >= 0)
-        player = player.replaceAll('&', '§').substring(bracketIndex, player.length);
-    else
-        player = player.replaceAll('&', '§');
-
-    // Remove anything after z coords
-    const spaceIndex = z.indexOf(' ');
-    let time = 999;
-    if (spaceIndex != -1) {
-        if (z.includes('|'))
-            time /= 3;
-        z = z.substring(0, spaceIndex);
-    }
-    
-    chatWaypoints.push([player, x, y, z]);
-
-    // Delete waypoint after 'X' seconds
-    delay(() => { if (chatWaypoints.length) chatWaypoints.shift() }, settings.drawWaypoint * time);
-}).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint);
-
-// Lets user create waypoint
-export function createWaypoint(args) {
-    if (args[1] == "clear") {
-        userWaypoints = [];
-        NPCs = [];
-        zones = [];
-        ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared waypoints!`);
-    } else if (!isNaN(args[2]) && !isNaN(args[3]) && !isNaN(args[4])) {
-        userWaypoints.push([args[1], args[2], args[3], args[4]]);
-        ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
-    } else ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va waypoint [name] [x] [y] [z] | /va waypoint clear!`);
-}
-
-// Deletes user waypoints on world exit
-register("worldUnload", () => {
-    userWaypoints = [];
-});

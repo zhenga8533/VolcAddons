@@ -1,5 +1,6 @@
 import settings from "../../settings";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 last = "";
 const DANCES = [
@@ -80,8 +81,8 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
     last = subtitle;
     print(subtitle);
     cancel(event);
-}), () => data.world == "rift" && settings.ddrHelper);
+}), () => getWorld() == "The Rift" && settings.ddrHelper);
 
-registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You were${failure}!"), () => data.world == "rift");
-registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You d${failure}!"), () => data.world == "rift");
-registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You're ${failure}!"), () => data.world == "rift");
+registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You were${failure}!"), () => getWorld() == "The Rift" && settings.ddrHelper);
+registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You d${failure}!"), () => getWorld() == "The Rift" && settings.ddrHelper);
+registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You're ${failure}!"), () => getWorld() == "The Rift" && settings.ddrHelper);

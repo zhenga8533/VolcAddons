@@ -3,6 +3,7 @@ import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 // Burow detection Stuff
 let heldItem = undefined;
@@ -67,7 +68,7 @@ registerWhen(register("spawnParticle", (particle, type, event) => {
                 closest[0][0] = "Mob";
             break;
     }
-}), () => data.world == "hub" && (settings.dianaWaypoint || settings.dianaBurrow));
+}), () => getWorld() == "Hub" && (settings.dianaWaypoint || settings.dianaBurrow));
 
 // Tracks Distance Using Sound
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
@@ -85,7 +86,7 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
 
     if (pitch > 0)
         distance = 4 / Math.pow(pitch, 6) + 0.2 / Math.pow(pitch, 5) - correct;
-}), () => data.world == "hub" && settings.dianaWaypoint);
+}), () => getWorld() == "Hub" && settings.dianaWaypoint);
 
 // Track spade ability to clear current particle list
 registerWhen(register("clicked", (x, y, button, state) => {
@@ -99,7 +100,7 @@ registerWhen(register("clicked", (x, y, button, state) => {
         delay(() => { cast = false }, 2000);
         delay(() => { cd = false }, 3000);
     }
-}), () => data.world == "hub" && settings.dianaWaypoint);
+}), () => getWorld() == "Hub" && settings.dianaWaypoint);
 
 // Calculate theoretical burrow and closest warp
 const WARPS = {
@@ -136,7 +137,7 @@ registerWhen(register("tick", () => {
     // Set theory burrow
     theory[0] = "warp " + getClosest(theory, warps)[0][0];
     theoryBurrow = [theory];
-}), () => data.world == "hub" && settings.dianaWaypoint);
+}), () => getWorld() == "Hub" && settings.dianaWaypoint);
 
 // Warp to closest location
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "VolcAddons");
@@ -160,7 +161,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
     if (closest != undefined);
         burrows.splice(burrows.indexOf(closest[0]), 1);
-}).setCriteria("${before}urrow${after}"), () => data.world == "hub" && settings.dianaWaypoint);
+}).setCriteria("${before}urrow${after}"), () => getWorld() == "Hub" && settings.dianaWaypoint);
 
 // => Draw Waypoint
 export function getTheory() {
@@ -179,4 +180,4 @@ register("worldUnload", () => {
 
 registerWhen(register("chat", () => {
     burrows = [];
-}).setCriteria(" ☠ You ${died}."), () => data.world == "hub" && settings.dianaWaypoint);
+}).setCriteria(" ☠ You ${died}."), () => getWorld() == "Hub" && settings.dianaWaypoint);

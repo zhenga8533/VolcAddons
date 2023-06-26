@@ -2,7 +2,8 @@ import settings from "../../settings";
 import { AQUA, BOLD, GOLD, OBFUSCATED, RESET } from "../../utils/constants";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 let notInParty = 0;
 let onCD = false;
@@ -66,7 +67,7 @@ registerWhen(register("chat", () => {
             Client.Companion.showTitle(`${AQUA}${BOLD}BING CHILLING!`, "", 10, 50, 10);
         }
     }, 1000);
-}).setCriteria("${before}Tokens Earned:${after}"), () => data.world == "kuudra" && settings.kuudraRP);
+}).setCriteria("${before}Tokens Earned:${after}"), () => getWorld() == "Kuudra" && settings.kuudraRP);
 
 // RESETS IN CASE YOU GO OUT OF RUN
 register("worldUnload", () => {

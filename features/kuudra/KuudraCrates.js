@@ -1,5 +1,6 @@
 import settings from "../../settings";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const EntityGiantZombie = Java.type("net.minecraft.entity.monster.EntityGiantZombie");
@@ -10,21 +11,21 @@ let phase = 1;
 // Tracks phase
 registerWhen(register("chat", () => {
     phase = 1;
-}).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"), () => data.world == "kuudra");
+}).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"), () => getWorld() == "Kuudra");
 
 registerWhen(register("chat", () => {
     phase = 2;
-}).setCriteria("[NPC] Elle: OMG! Great work collecting my supplies!"), () => data.world == "kuudra");
+}).setCriteria("[NPC] Elle: OMG! Great work collecting my supplies!"), () => getWorld() == "Kuudra");
 
 registerWhen(register("chat", () => {
     phase = 3;
 }).setCriteria("[NPC] Elle: Phew! The Ballista is finally ready! It should be strong enough to tank Kuudra's blows now!"),
-() => data.world == "kuudra");
+() => getWorld() == "Kuudra");
 
 registerWhen(register("chat", () => {
     phase = 4;
 }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"),
-() => data.world == "kuudra");
+() => getWorld() == "Kuudra");
 
 // Supplies
 registerWhen(register("tick", () => {
@@ -60,7 +61,7 @@ registerWhen(register("tick", () => {
                 crates.push([supply.getX(), supply.getY(), supply.getZ(), 1, 1, 1]);
         }
     });
-}), () => data.world == "kuudra" && settings.kuudraCrates);
+}), () => getWorld() == "Kuudra" && settings.kuudraCrates);
 
 // Build
 registerWhen(register("step", () => {
@@ -70,7 +71,7 @@ registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
-}).setFps(2), () => data.world == "kuudra" && settings.kuudraBuild);
+}).setFps(2), () => getWorld() == "Kuudra" && settings.kuudraBuild);
 
 register("worldUnload", () => {
     crates = [];

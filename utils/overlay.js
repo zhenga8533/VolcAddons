@@ -1,6 +1,7 @@
 import settings from "../settings";
 import { GUI_INSTRUCT, ITALIC } from "./constants";
 import { data, registerWhen } from "./variables";
+import { getWorld } from "./worlds";
 
 function renderScale(scale, text, x, y) {
     Renderer.scale(scale);
@@ -44,7 +45,7 @@ export class Overlay {
                     Renderer.screen.getHeight() / 2.4,
                 );
             } else {
-                if (this.worlds.includes(data.world) || this.worlds.includes("all")) {
+                if (this.worlds.includes(getWorld()) || this.worlds.includes("all")) {
                     // Draw HUD
                     renderScale(this.loc[2], this.message, this.X, this.Y);
                 }

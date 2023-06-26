@@ -2,6 +2,7 @@ import settings from "../../settings";
 import { BOLD, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 let items = {};
 const session = {
@@ -16,7 +17,7 @@ const counterExample =
 ${RED}${BOLD}Total Kills: ${RESET}Hua
 ${RED}${BOLD}Kills Since: ${RESET}Piao
 ${RED}${BOLD}Average Kills: ${RESET}Piao`
-const counterOverlay = new Overlay("vanqCounter", ["crimson_isle"], data.CL, "moveCounter", counterExample);
+const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], data.CL, "moveCounter", counterExample);
 
 // Tracks Kills
 registerWhen(register("entityDeath", () => {
@@ -54,7 +55,7 @@ ${RED}${BOLD}Kills Since: ${RESET}${session.last}
 ${RED}${BOLD}Average Kills: ${RESET}${session.average}`;
         }
     } else items[heldItem] = newKills;
-}), () => data.world == "crimson_isle" && settings.vanqCounter);
+}), () => getWorld() == "Crimson Isle" && settings.vanqCounter);
 
 // Tracks Vanqs
 registerWhen(register("chat", () => {
@@ -67,7 +68,7 @@ registerWhen(register("chat", () => {
     session.vanqs++;
     session.average = (session.kills / session.vanqs);
     session.last = 0;
-}).setCriteria("A Vanquisher is spawning nearby!"), () => data.world == "crimson_isle" && settings.vanqCounter);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqCounter);
 
 // Clear Counter
 register("command", () => {

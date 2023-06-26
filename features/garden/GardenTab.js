@@ -3,6 +3,7 @@ import { AQUA, BOLD, DARK_RED, GREEN, RED, RESET, WHITE } from "../../utils/cons
 import { getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 // Visitor Tablist Variables
 let tablist = null;
@@ -19,7 +20,7 @@ ${GREEN}${BOLD} Gonna
 ${GREEN}${BOLD} Give
 ${GREEN}${BOLD} You
 ${GREEN}${BOLD} Up`;
-const gardenOverlay = new Overlay("gardenTab", ["garden"], data.VL, "moveVisitors", gardenExample);
+const gardenOverlay = new Overlay("gardenTab", ["Garden"], data.VL, "moveVisitors", gardenExample);
 
 const nextExample = `${AQUA}${BOLD}Next Visitor: ${WHITE}REVERT GARDEN`
 const nextOverlay = new Overlay("nextVisitor", ["all"], data.NL, "moveNext", nextExample);
@@ -41,7 +42,7 @@ registerWhen(register("step", () => {
     } else {
         gardenOverlay.message += `${AQUA}${BOLD}Visitors: ${RESET}(0)`;
     }
-}).setFps(1), () => data.world == "garden" && settings.gardenTab);
+}).setFps(1), () => getWorld() == "Garden" && settings.gardenTab);
 
 // Check Tab
 registerWhen(register("step", () => {
@@ -52,7 +53,7 @@ registerWhen(register("step", () => {
         `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)}`:
         `${AQUA}${BOLD}Next Visitor: ${RED}Shipment Received`;
 
-    if (data.world != "garden" || tablist == null) return;
+    if (getWorld() != "Garden" || tablist == null) return;
 
     // Set Next Visitor
     nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") != -1);
@@ -65,7 +66,7 @@ registerWhen(register("step", () => {
         if (nextVisit.length == 2)
             next = next * 60 + parseInt(nextVisit[1]);
     }
-}).setFps(1), () => settings.nextVisitor);
+}).setFps(1), () => (settings.nextVisitor || settings.warpGarden));
 
 registerWhen(register("step", () => {
     // Get Composter
@@ -74,4 +75,4 @@ registerWhen(register("step", () => {
     composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);
     if (composter != -1)
         Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
-}).setFps(1), () => data.world == "garden" && settings.gardenCompost);
+}).setFps(1), () => getWorld() == "Garden" && settings.gardenCompost);

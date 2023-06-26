@@ -1,8 +1,8 @@
 import settings from "../../settings";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
-import { findZone } from "../../utils/worlds";
+import { registerWhen } from "../../utils/variables";
+import { findZone, getWorld } from "../../utils/worlds";
 
 let vanqCoords = [0, 0, 0, "None"];
 let vanqSpawned = false;
@@ -29,7 +29,7 @@ registerWhen(register("chat", () => {
         notInParty++;
         timeout += 500;
     });
-}).setCriteria("A Vanquisher is spawning nearby!"), () => data.world == "crimson_isle" && settings.vanqParty);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
 
 function warpParty() {
     if (!vanqSpawned) return;
@@ -48,23 +48,23 @@ function warpParty() {
 // Checks if all players are in lobby
 registerWhen(register("chat", () => {
     delay(warpParty(), 500);
-}).setCriteria("${player} joined the party."), () => data.world == "crimson_isle" && settings.vanqParty);
+}).setCriteria("${player} joined the party."), () => getWorld() == "Crimson Isle" && settings.vanqParty);
 
 // If player doesnt accept
 registerWhen(register("chat", () => {
     delay(warpParty(), 500);
-}).setCriteria("The party invite to ${player} has expired"), () => data.world == "crimson_isle" && settings.vanqParty);
+}).setCriteria("The party invite to ${player} has expired"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
 
 // Safety net
 registerWhen(register("chat", () => {
     vanqSpawned = false;
     notInParty = 0;
-}).setCriteria("You have joined ${player} party!"), () => data.world == "crimson_isle" && settings.vanqParty);
+}).setCriteria("You have joined ${player} party!"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
 
 registerWhen(register("chat", () => {
     vanqSpawned = false;
     notInParty = 0;
-}).setCriteria("RARE DROP! Nether Star"), () => data.world == "crimson_isle" && settings.vanqParty);
+}).setCriteria("RARE DROP! Nether Star"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
 
 function noInvite() {
     if (!vanqSpawned) return;
@@ -79,8 +79,8 @@ function noInvite() {
 // Make sure players exists / are online
 registerWhen(register("chat", () => {
     delay(noInvite(), 500);
-}).setCriteria("Couldn't find a player with that name!"), () => data.world == "crimson_isle" && settings.vanqParty);
+}).setCriteria("Couldn't find a player with that name!"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
 
 registerWhen(register("chat", () => {
     delay(noInvite(), 500);
-}).setCriteria("You cannot invite that player since they're not online."), () => data.world == "crimson_isle" && settings.vanqParty);
+}).setCriteria("You cannot invite that player since they're not online."), () => getWorld() == "Crimson Isle" && settings.vanqParty);

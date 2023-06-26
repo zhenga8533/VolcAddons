@@ -2,11 +2,12 @@ import settings from "../../settings";
 import { AQUA, GREEN, LOGO, RED, RIFT_NPCS, ZONES } from "../../utils/constants";
 import { getClosest } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 // Rift Waypoint
 let enigmaClose = data.enigmaSouls;
-export function getEnigma() { return settings.enigmaWaypoint && data.world == "rift" ? enigmaClose : [] };
-export function getCat() { return settings.catWaypoint && data.world == "rift" ? data.catSouls : [] };
+export function getEnigma() { return settings.enigmaWaypoint && getWorld() == "The Rift" ? enigmaClose : [] };
+export function getCat() { return settings.catWaypoint && getWorld() == "The Rift" ? data.catSouls : [] };
 let NPCs = [];
 export function getNPCs() { return NPCs };
 let zones = [];
@@ -18,7 +19,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
     if (closest != undefined)
         data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
-}).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => data.world == "rift");
+}).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => getWorld() == "The Rift");
 
 registerWhen(register("chat", () => {
     if (!data.enigmaSouls.length) return;
@@ -27,12 +28,12 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
     if (closest[1] < 5)
         data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
-}).setCriteria("You have already found that Enigma Soul!"), () => data.world == "rift");
+}).setCriteria("You have already found that Enigma Soul!"), () => getWorld() == "The Rift");
 
 registerWhen(register("step", () => {
     // Filters to closest souls
     enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[1], Player.getZ() - enigma[3]) < settings.enigmaWaypoint);
-}).setFps(1), () => data.world == "rift" && settings.enigmaWaypoint);
+}).setFps(1), () => getWorld() == "The Rift" && settings.enigmaWaypoint);
 
 
 // Montezuma Soul Stuff
@@ -41,7 +42,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
     if (closest != undefined)
         data.catSouls.splice(data.catSouls.indexOf(closest[0]), 1);
-}).setCriteria("You found a piece of Montezuma's soul!"), () => data.world == "rift");
+}).setCriteria("You found a piece of Montezuma's soul!"), () => getWorld() == "The Rift");
 
 registerWhen(register("chat", () => {
     if (!data.catSouls.length) return;
@@ -50,7 +51,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
     if (closest[1] < 5)
         data.catSouls.splice(data.catSouls.indexOf(closest[0]), 1);
-}).setCriteria("You have already found this Montezuma soul piece!"), () => data.world == "rift");
+}).setCriteria("You have already found this Montezuma soul piece!"), () => getWorld() == "The Rift");
 
 
 // Edit for Enigma + Cat
@@ -141,4 +142,4 @@ registerWhen(register("step", () => {
     effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
     effigies.shift();
     effigies.forEach((effigy, i) => { if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]) });
-}).setFps(1), () => data.world == "rift" && settings.effigyWaypoint);
+}).setFps(1), () => getWorld() == "The Rift" && settings.effigyWaypoint);

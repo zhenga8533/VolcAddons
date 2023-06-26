@@ -1,13 +1,13 @@
-import { LOGO, WHITE } from "./constants";
 import { getPlayerName } from "./functions";
 import { delay } from "./thread";
+import { registerWhen } from "./variables";
 
 // --- VARIABLES ---
+let detecting = false;
 ign = "limga";
 
 let inParty = false;
 export function getInParty() { return inParty; }
-
 let isLeader = false;
 export function getIsLeader() { return isLeader; }
 
@@ -67,17 +67,24 @@ register("chat", () => { // Tracks player kick
 // ---  CONTROL FOR GAME/CT RS ---
 register("gameLoad", () => {
     ign = Player.getName();
-    ChatLib.chat(`${LOGO} ${WHITE}Checking for party!`);
-    delay(() => { ChatLib.command("p list"); }, 500);
+    detecting = true;
+    delay(() => { ChatLib.command("p list") }, 500);
+    delay(() => { detecting = false }, 1000);
 });
 
 register("chat", () => {
     ign = Player.getName();
-    ChatLib.chat(`${LOGO} ${WHITE}Checking for party!`);
-    delay(() => { ChatLib.command("p list"); }, 500);
+    detecting = true;
+    delay(() => { ChatLib.command("p list") }, 500);
+    delay(() => { detecting = false }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
 
+// Remove message on restart
 register("chat", (leader) => {
     isLeader = ign.equals(getPlayerName(leader)) ? true : false;
     inParty = true;
 }).setCriteria("Party Leader: ${leader} ●");
+register("chat", (event) => {
+    if (detecting)
+        cancel(event);
+});

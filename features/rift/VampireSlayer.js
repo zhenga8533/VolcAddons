@@ -1,8 +1,9 @@
 import settings from "../../settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, GOLD, LIGHT_PURPLE, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, GOLD } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../misc/AnnouceMob";
 
 const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
@@ -13,14 +14,14 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
         cancel(event);
         Client.Companion.showTitle(subtitle, "", 0, 20, 0);
     }
-}), () => data.world == "rift" && settings.vampireImpel);
+}), () => getWorld() == "The Rift" && settings.vampireImpel);
 
 // Other Shit
 const vampireExample =
 `${DARK_PURPLE}${BOLD}MANIA: ${AQUA}Dracule
 ${GOLD}${BOLD}TWINCLAWS: ${AQUA}Mihawk
 ${DARK_AQUA}${BOLD}ICHOR: ${AQUA}3,590,000,000`;
-const vampireOverlay = new Overlay("vampireAttack", ["rift"], data.BL, "moveVamp", vampireExample);
+const vampireOverlay = new Overlay("vampireAttack", ["The Rift"], data.BL, "moveVamp", vampireExample);
 let bossUUID = 0;
 let ichorUUID = 0;
 let ichorSpawn = false;
@@ -103,8 +104,4 @@ registerWhen(register("step", () => {
             ichorUUID = ichor.getUUID();
         }
     }
-}).setFps(2), () => data.world == "rift" && settings.vampireImpel);
-
-registerWhen(register("chat", () => {
-    bossCD = false;
-}).setCriteria("  SLAYER QUEST COMPLETE!"), () => settings.vampireImpel);
+}).setFps(5), () => getWorld() == "The Rift" && (settings.vampireAttack || settings.announceMania));

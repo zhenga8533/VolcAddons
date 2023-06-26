@@ -4,6 +4,7 @@ import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, R
 import { getInParty, getIsLeader } from "./utils/party";
 import { data, opened, updateList } from "./utils/variables";
 import { delay } from "./utils/thread";
+import "./utils/waypoints";
 import "./utils/worlds";
 data.autosave();
 
@@ -11,7 +12,7 @@ data.autosave();
 import "./features/general/AbiphoneBlocker";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
-import { createWaypoint } from "./features/general/DrawWaypoint";
+import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
 import "./features/general/ReminderTimer";
@@ -56,6 +57,7 @@ import "./features/rift/VampireSlayer";
 import "./features/misc/AnnouceMob";
 import { calculate, setApex } from "./features/misc/BazaarCalculator";
 import { NPCEdit, soulEdit, zoneEdit } from "./features/rift/RiftWaypoints";
+import { getTier, getWorld } from "./utils/worlds";
 
 // FIRST RUN
 if (data.newUser) {
@@ -72,17 +74,14 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added cat soul waypoints");
-            ChatLib.chat("-Added missing effigy waypoints");
-            ChatLib.chat("-Added garden warp override");
-            ChatLib.chat("-Added lines when moving gui");
-            ChatLib.chat("-Fixed user waypoints being permanent if spammed");
-            ChatLib.chat("-Fixed enigma waypoints not deleting (forgor mention)");
-            ChatLib.chat("-Fixed rift world detection for Dulkir users (i think)");
-            ChatLib.chat("-Fixed being able to pop too many souls");
-            ChatLib.chat("-Fixed some npc waypoints not being finished");
-            ChatLib.chat("-Changed ?w to be toggleable (please don't hurt me)");
-            ChatLib.chat("-Finalized rift stuff (:pray:)");
+            ChatLib.chat("-Changed vampire detection to be more frequent");
+            ChatLib.chat("-Changed party detection to not spam chat");
+            ChatLib.chat("-Changed world detection (again)");
+            ChatLib.chat("-Changed Tuba detection to be less buggy");
+            ChatLib.chat("-Fixed Garden Warp relying on Next Visitor Display");
+            ChatLib.chat("-Fixed Vampire features all relying on impel feature");
+            ChatLib.chat("-Fixed Awooga proccing off of tuba");
+            ChatLib.chat("-Reformatted some code");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");
@@ -137,7 +136,7 @@ register ("command", (...args) => {
             settings.reminderText = "";
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
             break;
-        case "coords": // sendcoords
+        case "coords": // Send Coords in Chat
         case "sendcoords":
         case "xyz":
             const id = (Math.random() + 1).toString(36).substring(7);
@@ -203,8 +202,8 @@ register ("command", (...args) => {
             zoneEdit(args);
             break;
         case "test": // Testing (please work)
-            ChatLib.chat("World: " + data.world);
-            ChatLib.chat("Tier: " + data.tier);
+            ChatLib.chat("World: " + getWorld());
+            ChatLib.chat("Tier: " + getTier());
             ChatLib.chat("Leader: " + getIsLeader());
             ChatLib.chat("Party: " + getInParty());
             Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);

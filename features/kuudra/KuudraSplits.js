@@ -5,6 +5,7 @@ import { getKuudraHP } from "./KuudraDetect";
 import { Overlay } from "../../utils/overlay";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
+import { getTier, getWorld } from "../../utils/worlds";
 
 // Start times for each phase
 let kuudraSplit = [0, 0, 0, 0, 0];
@@ -27,7 +28,7 @@ ${AQUA}${BOLD}Build: ${RESET}Feng
 ${AQUA}${BOLD}Fuel/Stun: ${RESET}Xiao
 ${AQUA}${BOLD}Kuudra: ${RESET}Xiao`;
 
-const splitsOverlay = new Overlay("kuudraSplits", ["kuudra"], data.SL, "moveSplits", splitsExample);
+const splitsOverlay = new Overlay("kuudraSplits", ["Kuudra"], data.SL, "moveSplits", splitsExample);
 
 // RESET
 registerWhen(register("chat", () => {
@@ -47,7 +48,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[0] = Date.now() / 1000;
     phase = 1;
 }).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"),
-() => data.world == "kuudra" && settings.kuudraSplits);
+() => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 // SECOND SPLIT
 registerWhen(register("chat", () => {
@@ -56,7 +57,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[1] = Date.now() / 1000;
     phase = 2;
 }).setCriteria("[NPC] Elle: OMG! Great work collecting my supplies!"),
-() => data.world == "kuudra" && settings.kuudraSplits);
+() => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 // THIRD SPLIT
 registerWhen(register("chat", () => {
@@ -65,7 +66,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[2] = Date.now() / 1000;
     phase = 3;
 }).setCriteria("[NPC] Elle: Phew! The Ballista is finally ready! It should be strong enough to tank Kuudra's blows now!"),
-() => data.world == "kuudra" && settings.kuudraSplits);
+() => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 // FOURTH SPLIT
 registerWhen(register("chat", () => {
@@ -74,7 +75,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[3] = Date.now() / 1000;
     phase = 4;
 }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"),
-() => data.world == "kuudra" && settings.kuudraSplits);
+() => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 // END
 registerWhen(register("chat", () => {
@@ -95,7 +96,7 @@ registerWhen(register("chat", () => {
     
     // Record splits
     let splitFormat = "";
-    if (data.tier == 5) {
+    if (getTier() == 5) {
         // Check if new best split / run
         for (let i = 0; i < data.splits.last.length; i++) {
             if (!broken)
@@ -126,18 +127,18 @@ registerWhen(register("chat", () => {
 
     // Resets party tracker
     party = [];
-}).setCriteria("${before}KUUDRA DOWN${after}"), () => data.world == "kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}KUUDRA DOWN${after}"), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 registerWhen(register("chat", () => {
     if (!settings.kuudraSplits) return;
     
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
-}).setCriteria("${before}DEFEAT${after}"), () => data.world == "kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}DEFEAT${after}"), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 registerWhen(register("tick", () => {
     // Phase 4 fail safe
-    if (phase == 3 && getKuudraHP() < 25000 && data.tier == 5) {
+    if (phase == 3 && getKuudraHP() < 25000 && getTier() == 5) {
         kuudraSplit[3] = Date.now() / 1000;
         phase = 4;
     }
@@ -173,7 +174,7 @@ registerWhen(register("tick", () => {
 ${AQUA}${BOLD}Build: ${RESET}${times[1]}
 ${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
 ${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
-}), () => data.world == "kuudra" && settings.kuudraSplits);
+}), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 // PARTY CHAT COMMAND => RETURNS SPLITS TO /PC
 let onCD = false;

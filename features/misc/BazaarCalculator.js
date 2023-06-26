@@ -35,7 +35,7 @@ const VAMPIRE_ACTIONS = [190, 175, 160, 140, 117, 95];
 // 1 (base) + 0.4 (2 flycatchers) + 0.11 (beacon) + 0.1 (mithril infusion) = 1.61
 const MAX_UPGRADES = 1.41;
 const MAX_INFERNO = 3.41;
-const MAX_CATALYST = 5.64;
+const MAX_CATALYST = 6.44;
 /*  Other potention upgrades:
     +1.8 (inferno minions)
     -0.2 (super compacter)
