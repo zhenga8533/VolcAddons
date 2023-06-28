@@ -63,14 +63,12 @@ KNOWN BUGS: None (I hope)
   - Visitor Tab Display
   - Composter Alert
   - Next Visitor Display
+  - Garden Warp Override
 
 - RIFT FEATURES
   - DDR Helper
   - Enigma Soul Waypoints
-  - NPC Waypoints => /va npc
-  - Zone Waypoints => /va zone
-  - Montezuma Waypoints
-  - Effigy Waypoints
+  - Enigma, NPC, Zone, Montezuma, and Effigy Waypoints
   - Weird Tuba Tracker
   - Vampire Slayer Features
  
