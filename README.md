@@ -7,7 +7,7 @@ KNOWN BUGS: None (I hope)
 - Have [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html) Installed!
 - Have [ChatTriggers](https://www.chattriggers.com) Installed!
 - Run /ct import VolcAddons through an in-game command.
-  - Follow [this page](https://github.com/ChatTriggers/ChatTriggers/wiki/Fixing-broken-imports) if module fails to import.
+- OR download manually through [this page](https://www.chattriggers.com/modules/v/VolcAddons)
 
 ## Commands
 - GENERAL COMMANDS:
