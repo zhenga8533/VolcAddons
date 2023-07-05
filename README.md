@@ -7,7 +7,7 @@ KNOWN BUGS: None (I hope)
 - Have [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html) Installed!
 - Have [ChatTriggers](https://www.chattriggers.com) Installed!
 - Run /ct import VolcAddons through an in-game command.
-  - Follow [this page](https://github.com/ChatTriggers/ChatTriggers/wiki/Fixing-broken-imports) if module fails to import.
+- OR download manually through [this page](https://www.chattriggers.com/modules/v/VolcAddons)
 
 ## Commands
 - GENERAL COMMANDS:
@@ -63,11 +63,14 @@ KNOWN BUGS: None (I hope)
   - Visitor Tab Display
   - Composter Alert
   - Next Visitor Display
+  - Garden Warp Override
 
 - RIFT FEATURES
+  - DDR Helper
   - Enigma Soul Waypoints
-  - NPC Waypoints => /va npc
-  - Zone Waypoints => /va zone
+  - Enigma, NPC, Zone, Montezuma, and Effigy Waypoints
+  - Weird Tuba Tracker
+  - Vampire Slayer Features
  
 - MISC FEATURES
   - Minion Calculator => /va calc
