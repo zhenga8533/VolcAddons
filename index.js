@@ -74,14 +74,9 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Changed vampire detection to be more frequent");
-            ChatLib.chat("-Changed party detection to not spam chat");
-            ChatLib.chat("-Changed world detection (again)");
-            ChatLib.chat("-Changed Tuba detection to be less buggy");
-            ChatLib.chat("-Fixed Garden Warp relying on Next Visitor Display");
-            ChatLib.chat("-Fixed Vampire features all relying on impel feature");
-            ChatLib.chat("-Fixed Awooga proccing off of tuba");
-            ChatLib.chat("-Reformatted some code");
+            ChatLib.chat("-Added vampire boss hitbox (def not late release)");
+            ChatLib.chat("-Fixed y-coord on waypoints being buggy when distance > 100m");
+            ChatLib.chat("-Moved some settings around (you may need to reactivate)");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");

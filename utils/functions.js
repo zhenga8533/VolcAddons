@@ -46,6 +46,25 @@ export function getGuildName(player) {
 
 
 // Variable checking
+const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
+export function get3x3Stands() {
+    const x = Player.getX();
+    const y = Player.getY();
+    const z = Player.getZ();
+    
+    const stands = [...World.getChunk(x, y, z).getAllEntitiesOfType(StandClass)];
+    stands.push(...World.getChunk(x + 16, y, z + 16).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x + 16, y, z - 16).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x - 16, y, z + 16).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x - 16, y, z - 16).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x + 16, y, z).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x - 16, y, z).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x, y, z + 16).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x, y, z - 16).getAllEntitiesOfType(StandClass));
+
+    return stands;
+}
+
 export function getClosest(origin, positions) {
     let closestPosition = positions.length > 0 ? positions[0] : [0, 0, 0];
     let closestDistance = 999;

@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { AMOGUS, BOLD, DARK_PURPLE, DARK_RED, GOLD, WHITE } from "../../utils/constants";
+import { AMOGUS, BOLD, DARK_PURPLE, GOLD, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";

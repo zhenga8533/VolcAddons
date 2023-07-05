@@ -1,6 +1,6 @@
 import settings from "../settings";
 import { GUI_INSTRUCT, ITALIC } from "./constants";
-import { data, registerWhen } from "./variables";
+import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";
 
 function renderScale(scale, text, x, y) {
@@ -44,11 +44,9 @@ export class Overlay {
                     Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
                     Renderer.screen.getHeight() / 2.4,
                 );
-            } else {
-                if (this.worlds.includes(getWorld()) || this.worlds.includes("all")) {
-                    // Draw HUD
-                    renderScale(this.loc[2], this.message, this.X, this.Y);
-                }
+            } else if (this.worlds.includes(getWorld()) || this.worlds.includes("all")) {
+                // Draw HUD
+                renderScale(this.loc[2], this.message, this.X, this.Y);
             }
         }), () => settings[this.setting]);
 
@@ -66,15 +64,15 @@ export class Overlay {
         // Scale HUD
         register("guiKey", (char, keyCode, gui, event) => {
             if (this.gui.isOpen()) {
-                if (keyCode == 13) {
+                if (keyCode == 13) {  // Increase Scale (+ key)
                     this.loc[2] += 0.05;
                     this.X = this.loc[0]/this.loc[2];
                     this.Y = this.loc[1]/this.loc[2];
-                } else if (keyCode == 12) {
+                } else if (keyCode == 12) {  // Decrease Scale (- key)
                     this.loc[2] -= 0.05;
                     this.X = this.loc[0]/this.loc[2];
                     this.Y = this.loc[1]/this.loc[2];
-                } else if (keyCode == 19) {
+                } else if (keyCode == 19) {  // Reset Scale (r key)
                     this.loc[2] = 1;
                     this.X = this.loc[0];
                     this.Y = this.loc[1];

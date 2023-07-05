@@ -6,6 +6,7 @@ import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWayp
 
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index.js";
+import { getVamps } from "../features/rift/VampireSlayer";
 
 // General Waypoints
 let formatted = [];
@@ -25,7 +26,6 @@ function formatWaypoints(waypoints, r, g, b) {
         // Makes it so waypoint always renders
         if (distance >= 100) {
             x = Player.getX() + (x - Player.getX()) * (100 / distance);
-            y = Player.getY() + (y - Player.getY()) * (100 / distance);
             z = Player.getZ() + (z - Player.getZ()) * (100 / distance);
         }
 
@@ -64,6 +64,7 @@ register("renderWorld", () => {
     renderBeam(getBuilds()); // Red Builds
     renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
     renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
+    renderStands(getVamps(), "Medium Rare", 1, 0, 0); // Red Vamps
     renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple enigma
     renderSimple(getCat(), 0, 0, 1); // Blue enigma
 });
@@ -106,14 +107,29 @@ function renderEntities(entities, title, r, g, b) {
     if (!entities.length) return;
 
     entities.forEach(entity => {
-        x = entity.getX();
-        y = entity.getY();
-        z = entity.getZ();
-        width = entity.getWidth();
-        height = entity.getHeight();
+        let x = entity.getX();
+        let y = entity.getY();
+        let z = entity.getZ();
+        let width = entity.getWidth();
+        let height = entity.getHeight();
 
         distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
         Tessellator.drawString(`${title} §b[${distance}]`, x, y + height + 0.5, z, 0xffffff, true);
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, true);
+        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.25, true);
+    });
+}
+function renderStands(stands, title, r, g, b) {
+    if (!stands.length) return;
+
+    stands.forEach(stand => {
+        let x = stand.getX();
+        let y = stand.getY() - 2;
+        let z = stand.getZ();
+
+        distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
+        Tessellator.drawString(`${title} §b[${distance}]`, x, y + 3.5, z, 0xffffff, false);
+        RenderLib.drawEspBox(x, y, z, 1, 2, r, g, b, 1, true);
+        RenderLib.drawInnerEspBox(x, y, z, 1, 2, r, g, b, 0.25, true);
     });
 }

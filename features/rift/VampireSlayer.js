@@ -1,12 +1,12 @@
+import RenderLib from "../../../RenderLib";
 import settings from "../../settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, GOLD } from "../../utils/constants";
+import { get3x3Stands } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../misc/AnnouceMob";
-
-const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
 
 // Impel
 registerWhen(register("renderTitle", (title, subtitle, event) => {
@@ -22,33 +22,23 @@ const vampireExample =
 ${GOLD}${BOLD}TWINCLAWS: ${AQUA}Mihawk
 ${DARK_AQUA}${BOLD}ICHOR: ${AQUA}3,590,000,000`;
 const vampireOverlay = new Overlay("vampireAttack", ["The Rift"], data.BL, "moveVamp", vampireExample);
+let dracula = undefined;
 let bossUUID = 0;
 let ichorUUID = 0;
 let ichorSpawn = false;
 let mania = 0;
 let inMania = false;
 
-registerWhen(register("step", () => {
+registerWhen(register("tick", () => {
     vampireOverlay.message = "";
     if (!getSlayerBoss()) {
+        dracula = undefined;
         bossUUID = 0;
         mania = 0;
         return;
     }
 
-    // Get 3x3 chunks around player
-    const x = Player.getX();
-    const y = Player.getY();
-    const z = Player.getZ();
-    const stands = [...World.getChunk(x, y, z).getAllEntitiesOfType(StandClass)];
-    stands.push(...World.getChunk(x + 16, y, z + 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + 16, y, z - 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - 16, y, z + 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - 16, y, z - 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + 16, y, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - 16, y, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, y, z + 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, y, z - 16).getAllEntitiesOfType(StandClass));
+    const stands = get3x3Stands();
 
     // Boss Nametag Shit
     if (!bossUUID) {
@@ -58,6 +48,7 @@ registerWhen(register("step", () => {
     } else {
         const boss = stands.find(stand => stand.getUUID() == bossUUID);
         if (boss == undefined) return;
+        dracula = boss;
         const name = boss.getName().split(" ");
 
         // Mania Detect
@@ -104,4 +95,20 @@ registerWhen(register("step", () => {
             ichorUUID = ichor.getUUID();
         }
     }
-}).setFps(5), () => getWorld() == "The Rift" && (settings.vampireAttack || settings.announceMania));
+}), () => getWorld() == "The Rift" && (settings.vampireAttack || settings.announceMania));
+
+// ESP (and hitbox) for the boys
+registerWhen(register("renderWorld", () => {
+    if (dracula == undefined) return;
+    RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, true);
+}), () => settings.vampireHitbox);
+
+let vamps = [];
+export function getVamps() { return vamps };
+
+registerWhen(register("tick", () => {
+    if (vamps.length) vamps = [];
+    const stands = get3x3Stands();
+    let bosses = stands.filter(stand => stand.getName().includes("Bloodfiend §e§l"));
+    vamps = bosses == undefined ? [] : bosses;
+}), () => data.moblist.includes("vampire") && getWorld() == "The Rift");

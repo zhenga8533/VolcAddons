@@ -12,7 +12,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Combat", "Hub", "Dungeon", "Crimson Isles", "Kuudra", "Garden", "Rift"];
+        const categories = ["General", "Combat", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -379,6 +379,16 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     ragDetect = false;
 
+    // Dungeon
+    
+    @SwitchProperty({
+        name: "Dungeon Rejoin",
+        description: "Automatically farms social xp and rejoins last completed dungeon when 4 players join your party. (does not reparty)",
+        category: "Combat",
+        subcategory: "Dungeon"
+    })
+    dungeonRejoin = false;
+
     // Gyrokinetic Wand
     @SwitchProperty({
         name: "Cells Alignment Alert",
@@ -568,17 +578,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     resetCounter() {
         ChatLib.command("resetCounter", true);
     }
-
-
-    // DUNGEONS
-    
-    @SwitchProperty({
-        name: "Dungeon Rejoin",
-        description: "Automatically farms social xp and rejoins last completed dungeon when 4 players join your party. (does not reparty)",
-        category: "Dungeon",
-        subcategory: "Dungeon"
-    })
-    dungeonRejoin = false;
 
 
     // KUUDRA
@@ -841,14 +840,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         name: "Weird Tuba Timer",
         description: "Display the time remaining on weird(er) tuba buff.",
         category: "Rift",
-        subcategory: "Rift",
+        subcategory: "Awooga v2",
     })
     tubaTimer = false;
     @ButtonProperty({
         name: "Move Tuba HUD",
         description: "Move the location of the Weird Tuba Timer. Runs => /moveTubaTimer",
         category: "Rift",
-        subcategory: "Rift",
+        subcategory: "Awooga v2",
     })
     moveTubaTimer() {
         ChatLib.command("moveTubaTimer", true);
@@ -857,7 +856,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         name: "Weird Tuba Alert",
         description: "Alerts you when Weird Tuba is off cooldown.",
         category: "Rift",
-        subcategory: "Rift",
+        subcategory: "Awooga v2",
     })
     tubaAlert = false;
 
@@ -886,6 +885,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Vampire",
     })
     vampireImpel = false;
+    
+    @SwitchProperty({
+        name: "Vampire Hitbox",
+        description: "Draws a small box around the vampire for the disabled.",
+        category: "Rift",
+        subcategory: "Vampire",
+    })
+    vampireHitbox = false;
     
     @SwitchProperty({
         name: "Vampire Attack Display",
