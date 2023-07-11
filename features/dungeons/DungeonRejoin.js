@@ -1,4 +1,5 @@
 import settings from "../../settings";
+import { AMOGUS } from "../../utils/constants";
 import { romanToNum } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
@@ -32,3 +33,7 @@ registerWhen(register("chat", () => {
             delay(() => ChatLib.command(`joindungeon catacombs ${dungeon[1]}`), 8000);
     }
 }).setCriteria("${player} joined the party."), () => settings.dungeonRejoin);
+
+registerWhen(register("chat", () => {
+    AMOGUS.play();
+}).setCriteria("[BOSS] The Watcher: You have proven yourself. You may pass."), () => true);

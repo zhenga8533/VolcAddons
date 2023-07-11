@@ -74,9 +74,7 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Added vampire boss hitbox (def not late release)");
-            ChatLib.chat("-Fixed y-coord on waypoints being buggy when distance > 100m");
-            ChatLib.chat("-Moved some settings around (you may need to reactivate)");
+            ChatLib.chat("-Fixed leader commands working in gc");
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");

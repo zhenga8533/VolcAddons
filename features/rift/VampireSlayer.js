@@ -100,7 +100,7 @@ registerWhen(register("tick", () => {
 // ESP (and hitbox) for the boys
 registerWhen(register("renderWorld", () => {
     if (dracula == undefined) return;
-    RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, true);
+    RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, false);
 }), () => settings.vampireHitbox);
 
 let vamps = [];

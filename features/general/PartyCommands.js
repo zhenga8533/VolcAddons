@@ -177,6 +177,8 @@ export function executeCommand(name, args, sendTo) {
     }
     
     if (getIsLeader() && settings.leaderCommands) { // LEADER COMMANDS
+        if (sendTo != "pc") return;
+        
         delay(() => {
             switch (args[0]) {
                 case "warp":
