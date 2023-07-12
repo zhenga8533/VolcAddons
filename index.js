@@ -1,5 +1,6 @@
 // Util
 import settings from "./settings";
+if (settings.dungeonRejoin === true || settings.dungeonRejoin === false) settings.dungeonRejoin = 0;
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
 import { data, opened, updateList } from "./utils/variables";
@@ -31,6 +32,7 @@ import { setWarps } from "./features/hub/DianaWaypoint";
 
 // Dungeons
 import "./features/dungeons/DungeonRejoin";
+import "./features/dungeons/WatcherAlert";
 
 // Crimson Isles
 import "./features/crimsonIsles/GoldenFishTimer";
@@ -74,7 +76,9 @@ register("chat", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            ChatLib.chat("-Fixed leader commands working in gc");
+            JSON.parse(FileLib.read("VolcAddons", "updates.json")).forEach(update => {
+                ChatLib.chat(update);
+            });
         }
     }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock${after}");
@@ -210,4 +214,4 @@ register ("command", (...args) => {
             }
             break;
     }
-}).setName("volcaddons").setAliases("volc", "va", "itee");
+}).setName("volcaddons").setAliases("va", "volc", "itee");

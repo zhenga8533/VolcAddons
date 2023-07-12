@@ -1,9 +1,9 @@
 import settings from "../../settings";
-import { AMOGUS } from "../../utils/constants";
 import { romanToNum } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 let onCD = false;
 let invited = 0;
@@ -18,22 +18,40 @@ registerWhen(register("chat", (type, floor) => {
     dungeon = [type, floor];
     invited = 4;
 
-    delay(() => ChatLib.command("warp garden"), 1000);
+    if (settings.dungeonRejoin == 2 || settings.dungeonRejoin == 3)
+        delay(() => ChatLib.command("warp garden"), 1000);
+    else {
+        if (dungeon[0].includes("Master"))
+            delay(() => ChatLib.command(`joindungeon master_catacombs ${dungeon[1]}`), 1000);
+        else
+            delay(() => ChatLib.command(`joindungeon catacombs ${dungeon[1]}`), 1000);
+    }
 }).setCriteria("${type} - Floor ${floor}"), () => settings.dungeonRejoin);
+
+function tryWarp(world) {
+    if (getWorld() == world) {
+        baseDelay = 0
+        if (settings.dungeonRejoin == 2) {
+            delay(() => ChatLib.command("p warp"), 4000);
+            baseDelay += 7000
+        }
+
+        if (dungeon[0].includes("Master"))
+            delay(() => ChatLib.command(`joindungeon master_catacombs ${dungeon[1]}`), 2000 + baseDelay);
+        else
+            delay(() => ChatLib.command(`joindungeon catacombs ${dungeon[1]}`), 2000 + baseDelay);
+    } else
+        delay(() => tryWarp(world), 1000);
+}
 
 registerWhen(register("chat", () => {
     if (invited == 0) return;
     
     invited--;
     if (invited == 0) {
-        delay(() => ChatLib.command("p warp"), 4000);
-        if (dungeon[0].includes("Master"))
-            delay(() => ChatLib.command(`joindungeon master_catacombs ${dungeon[1]}`), 8000);
+        if (settings.dungeonRejoin == 2)
+            tryWarp("garden");
         else
-            delay(() => ChatLib.command(`joindungeon catacombs ${dungeon[1]}`), 8000);
+            tryWarp(undefined);
     }
-}).setCriteria("${player} joined the party."), () => settings.dungeonRejoin);
-
-registerWhen(register("chat", () => {
-    AMOGUS.play();
-}).setCriteria("[BOSS] The Watcher: You have proven yourself. You may pass."), () => true);
+}).setCriteria("${player} joined the party."), () => settings.dungeonRejoin == 2 || settings.dungeonRejoin == 3);

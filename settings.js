@@ -381,13 +381,22 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // Dungeon
     
-    @SwitchProperty({
+    @SelectorProperty({
         name: "Dungeon Rejoin",
-        description: "Automatically farms social xp and rejoins last completed dungeon when 4 players join your party. (does not reparty)",
+        description: "Automatically rejoins last completed dungeon when 4 players join your party. (does not reparty)",
+        category: "Combat",
+        subcategory: "Dungeon",
+        options: ["OFF", "No DT", "Social Farm", "Visitor Magnet"]
+    })
+    dungeonRejoin = 0;
+
+    @SwitchProperty({
+        name: "Watcher Alert",
+        description: "Calls an emergency meeting when watcher mobs are dead.",
         category: "Combat",
         subcategory: "Dungeon"
     })
-    dungeonRejoin = false;
+    watcherAlert = false;
 
     // Gyrokinetic Wand
     @SwitchProperty({
