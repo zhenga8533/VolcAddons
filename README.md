@@ -39,6 +39,8 @@ KNOWN BUGS: None (I hope)
   - Ragnarok Detection
   - Cells Alignment Timer
   - Announce Slayer Spawn
+  - Dungeon Rejoin
+  - Watcher Alert
 
 - HUB FEATURES (basically just Diana)
   - Burrow Estimator
