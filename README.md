@@ -41,6 +41,7 @@ KNOWN BUGS: None (I hope)
   - Announce Slayer Spawn
   - Dungeon Rejoin
   - Watcher Alert
+  - Damage Announcer
 
 - HUB FEATURES (basically just Diana)
   - Burrow Estimator
