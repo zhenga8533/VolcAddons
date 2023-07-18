@@ -15,7 +15,7 @@ registerWhen(register("messageSent", (message, event) => {
 }), () => settings.warpGarden);
 
 function tryWarp() {
-    if (getNextVisitor()) {
+    if (getNextVisitor() != 0) {
         ChatLib.say(warpTo);
         warpTo = "";
     } else delay(() => tryWarp(), 1000);

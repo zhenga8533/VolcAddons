@@ -1,5 +1,7 @@
 [
     "-Added watcher alert",
     "-Added options to dungeon rejoin",
-    "-Fixed leader commands working in gc"
+    "-Added damage tracker",
+    "-Fixed leader commands working in gc",
+    "-Fixed garden warp sometimes not working"
 ]

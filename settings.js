@@ -362,6 +362,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Combat"
     })
     brokenHyp = false;
+
+    @SwitchProperty({
+        name: "Damage Tracker",
+        description: "Spams in chat every damage tick that happens around you. (meant for training dummies)",
+        category: "Combat",
+        subcategory: "Combat"
+    })
+    damageTracker = false;
     
     @PercentSliderProperty({
         name: "Low Health Alert",

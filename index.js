@@ -23,6 +23,7 @@ import "./features/general/SkillTracker";
 
 // Combat
 import "./features/combat/BrokenHyp";
+import "./features/combat/DamageTracker";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/RagDetect";
@@ -47,7 +48,7 @@ import "./features/kuudra/KuudraReparty";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden
-import "./features/garden/GardenTab";
+import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 
 // Rift
@@ -203,6 +204,7 @@ register ("command", (...args) => {
             ChatLib.chat("Tier: " + getTier());
             ChatLib.chat("Leader: " + getIsLeader());
             ChatLib.chat("Party: " + getInParty());
+            ChatLib.chat("Garden: " + getNextVisitor());
             Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
             break;
         default: // Else case

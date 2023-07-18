@@ -111,13 +111,13 @@ export function getSlayerBoss() {
 
 // Get Miniboss Spawn
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
-    if (miniCD || name != "random.explode" || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
+    if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
 
     annoucePosition(settings.miniAlert == 1, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
     delay(() => miniCD = false, 3000);
-}), () => settings.miniAlert);
+}).setCriteria("random.explode"), () => settings.miniAlert);
 
 // Boss Spawn
 register("step", () => {

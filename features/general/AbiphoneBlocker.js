@@ -28,6 +28,5 @@ registerWhen(register("chat", (rings, event) => {
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
     if (!blockRings) return;
 
-    if (name.equals("note.pling"))
-        cancel(event);
-}), () => settings.abiphoneBlocker);
+    cancel(event);
+}).setCriteria("note.pling"), () => settings.abiphoneBlocker);

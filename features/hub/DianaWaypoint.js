@@ -72,7 +72,7 @@ registerWhen(register("spawnParticle", (particle, type, event) => {
 
 // Tracks Distance Using Sound
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
-    if (!cast || !name.equals("note.harp")) return;
+    if (!cast) return;
 
     // Uhh so it was a little hard to figure out an equation so this may be a little brute force hardcoded :skull:
     if (pitch > 1.05)
@@ -86,7 +86,7 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
 
     if (pitch > 0)
         distance = 4 / Math.pow(pitch, 6) + 0.2 / Math.pow(pitch, 5) - correct;
-}), () => getWorld() == "Hub" && settings.dianaWaypoint);
+}).setCriteria("note.harp"), () => getWorld() == "Hub" && settings.dianaWaypoint);
 
 // Track spade ability to clear current particle list
 registerWhen(register("clicked", (x, y, button, state) => {
