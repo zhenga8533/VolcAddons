@@ -145,11 +145,7 @@ dianaKey.registerKeyPress(() => {
     if (settings.dianaWarp && theory[0] != undefined && theory[0] != "warp player")
         ChatLib.command(theory[0])
 })
-
-// Makes keybind persistant
-register("gameUnload", () => {
-    data.dianaKey = dianaKey.getKeyCode();
-});
+register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() });
 
 // Deletes waypoint once dug out
 registerWhen(register("chat", () => {

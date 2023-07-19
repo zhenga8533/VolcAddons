@@ -143,6 +143,34 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     removeSelfie = false;
+    
+    @SliderProperty({
+        name: "Coin Tracker",
+        description: "Displays rate of coin gain in purse. Set minutes until tracker pauses or as 0 to turn off.",
+        category: "General",
+        subcategory: "Salary",
+        min: 0,
+        max: 10
+    })
+    coinTracker = 0;
+    @ButtonProperty({
+        name: "Move Coins Display",
+        description: "Move the location of the Salary Tracker. Runs => /moveCoins",
+        category: "General",
+        subcategory: "Salary"
+    })
+    moveCoins() {
+        ChatLib.command("moveCoins", true);
+    }
+    @ButtonProperty({
+        name: "Reset Coin Tracker",
+        description: "Resets tracking for every skill. Runs => /resetCoins",
+        category: "General",
+        subcategory: "Salary"
+    })
+    resetCoins() {
+        ChatLib.command("resetCoins", true);
+    }
 
     // Timer
     @TextProperty({
@@ -331,7 +359,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         min: 0,
         max: 10
     })
-    trackSkills = 0;
+    skillTracker = 0;
     @ButtonProperty({
         name: "Move Skills Display",
         description: "Move the location of the Skill Tracker. Runs => /moveSkills",

@@ -2,7 +2,7 @@ import settings from "../../settings";
 import { BOLD, DARK_AQUA, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data, getPaused, registerWhen } from "../../utils/variables";
 
 // Skill Tracking
 class Skill {
@@ -38,15 +38,16 @@ register("command", () => {
 }).setName("resetSkills");
 
 // HUD
-const skillExample = [
+const skillExample =
 `${DARK_AQUA}${BOLD}Skill: ${WHITE}FEE
-${DARK_AQUA}${BOLD}Gain: ${WHITE}FI
+${DARK_AQUA}${BOLD}XP Gained: ${WHITE}FI
 ${DARK_AQUA}${BOLD}Time Passed: ${WHITE}FO
-${DARK_AQUA}${BOLD}Rate: ${WHITE}FUM`
-];
-const skillOverlay = new Overlay("trackSkills", ["all"], data.AL, "moveSkills", skillExample);
+${DARK_AQUA}${BOLD}Rate: ${WHITE}FUM`;
+const skillOverlay = new Overlay("skillTracker", ["all"], data.AL, "moveSkills", skillExample);
 
 registerWhen(register("actionBar", (before, msg, after) => {
+    if (getPaused()) return;
+
     // Update info
     const data = msg.replace('/', ' ').split(' ');
     current = data[1];
@@ -69,23 +70,25 @@ registerWhen(register("actionBar", (before, msg, after) => {
     // Finish updating info
     skill.next = data[3];
     skill.since = 0;
-}).setCriteria("${before}+${msg})${after}"), () => settings.trackSkills);
+}).setCriteria("${before}+${msg})${after}"), () => settings.skillTracker);
 
 registerWhen(register("step", () => {
+    if (getPaused()) return;
+    
     let skill = skills[current];
     if (skill == undefined) return;
 
-    if (skill.since < settings.trackSkills * 60) {
+    if (skill.since < settings.skillTracker * 60) {
         skill.since += 1;
         skill.time += 1;
         skill.rate = skill.gain / skill.time * 3600;
     }
     
     // Set HUD
-    const timeDisplay = skills[current].since < settings.trackSkills * 60 ? getTime(skills[current].time) : `${RED}Inactive`;
+    const timeDisplay = skills[current].since < settings.skillTracker * 60 ? getTime(skills[current].time) : `${RED}Inactive`;
     skillOverlay.message = 
 `${DARK_AQUA}${BOLD}Skill: ${WHITE}${current}
-${DARK_AQUA}${BOLD}Gain: ${WHITE}${commafy(skills[current].gain)} xp
+${DARK_AQUA}${BOLD}XP Gained: ${WHITE}${commafy(skills[current].gain)} xp
 ${DARK_AQUA}${BOLD}Time Passed: ${WHITE}${timeDisplay}
 ${DARK_AQUA}${BOLD}Rate: ${WHITE}${commafy(skills[current].rate)} xp/hr`;
-}).setFps(1), () => settings.trackSkills);
+}).setFps(1), () => settings.skillTracker);

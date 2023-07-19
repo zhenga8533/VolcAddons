@@ -1,7 +1,3 @@
 [
-    "-Added watcher alert",
-    "-Added options to dungeon rejoin",
-    "-Added damage tracker",
-    "-Fixed leader commands working in gc",
-    "-Fixed garden warp sometimes not working"
+    "-Added coin tracker"
 ]

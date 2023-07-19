@@ -28,6 +28,7 @@ export let data = new PogObject("VolcAddons", {
         "average": 0,
     },
     "dianaKey": 33,
+    "pauseKey": 25,
     "apexPrice": 1e9,
     "QL": [15, 200, 1], // Vanquisher Location
     "GL": [15, 200, 1], // Gyro Location
@@ -39,6 +40,7 @@ export let data = new PogObject("VolcAddons", {
     "AL": [15, 300, 1], // Skill Tracker Location
     "BL": [15, 400, 1], // Vampire Location
     "UL": [15, 450, 1], // Tuba Location
+    "ML": [15, 500, 1], // Coins Location
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
 }, "datitee.json");
@@ -119,7 +121,18 @@ register("guiKey", (char, keyCode, gui, event) => {
     }
 });
 
+let paused =  false;
+export function getPaused() { return paused }
 
+const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "VolcAddons");
+pauseKey.registerKeyPress(() => {
+    paused = !paused;
+    ChatLib.chat(`${LOGO} ${WHITE}Tracker Pause State: ${paused}`)
+});
+register("gameUnload", () => { data.pauseKey = pauseKey.getKeyCode() });
+
+
+// Hypixel rank data
 let isMVP = false;
 export function getMVP() { return isMVP }
 

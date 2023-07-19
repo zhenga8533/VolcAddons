@@ -13,6 +13,7 @@ data.autosave();
 import "./features/general/AbiphoneBlocker";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
+import "./features/general/CoinTracker";
 import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
@@ -27,13 +28,11 @@ import "./features/combat/DamageTracker";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/RagDetect";
+import "./features/combat/DungeonRejoin";
+import "./features/combat/WatcherAlert";
 
 // Hub
 import { setWarps } from "./features/hub/DianaWaypoint";
-
-// Dungeons
-import "./features/dungeons/DungeonRejoin";
-import "./features/dungeons/WatcherAlert";
 
 // Crimson Isles
 import "./features/crimsonIsles/GoldenFishTimer";
