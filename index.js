@@ -31,6 +31,9 @@ import "./features/combat/RagDetect";
 import "./features/combat/DungeonRejoin";
 import "./features/combat/WatcherAlert";
 
+// Mining
+import "./features/mining/PowderTracker";
+
 // Hub
 import { setWarps } from "./features/hub/DianaWaypoint";
 
