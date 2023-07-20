@@ -32,7 +32,7 @@ registerWhen(register("step", () => {
 
     // Get Visitors
     gardenOverlay.message = "";
-    visitors = tablist.findIndex((tab) => tab.indexOf("Visitors:") != -1);
+    visitors = tablist.findIndex((tab) => tab.includes("Visitors:"));
     if (!visitors) return;
 
     if (visitors != -1) {

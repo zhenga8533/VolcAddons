@@ -40,7 +40,8 @@ export let data = new PogObject("VolcAddons", {
     "AL": [15, 300, 1], // Skill Tracker Location
     "BL": [15, 400, 1], // Vampire Location
     "UL": [15, 450, 1], // Tuba Location
-    "ML": [15, 500, 1], // Coins Location
+    "ML": [15, 450, 1], // Coins Location
+    "PL": [15, 500, 1], // Powder Location
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
 }, "datitee.json");
@@ -132,7 +133,7 @@ pauseKey.registerKeyPress(() => {
 register("gameUnload", () => { data.pauseKey = pauseKey.getKeyCode() });
 
 
-// Hypixel rank data
+// MVP+/++ Check
 let isMVP = false;
 export function getMVP() { return isMVP }
 
@@ -140,6 +141,23 @@ register("chat", (player) => {
     if (player == Player.getName())
         isMVP = true;
 }).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<");
+
+
+// Stats tracking
+export class Stat {
+    constructor() {
+        this.reset();
+    }
+    reset() {
+        this.start = 0.00; // Starting Amount
+        this.now = 0.00; // Current Amount
+        this.gain = 0.00; // Current - Starting Amount
+        this.next = 0.00; // Next Level
+        this.time = 0.00; // Time passed
+        this.rate = 0.00; // Amount/hr
+        this.since = 600; // Time since last Amount earn
+    }
+}
 
 
 // Backup Data

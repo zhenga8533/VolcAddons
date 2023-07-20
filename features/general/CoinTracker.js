@@ -2,25 +2,10 @@ import settings from "../../settings";
 import { BOLD, GOLD, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { Stat, data, registerWhen } from "../../utils/variables";
 
 // Coin tracking
-class Piggy {
-    constructor() {
-        this.reset();
-    }
-    reset() {
-        this.start = 0.00; // Starting $
-        this.now = 0.00; // Current $
-        this.gain = 0.00; // Current - STarting $
-        this.time = 0.00 // Time passed
-        this.rate = 0.00; // $/hr
-        this.since = 600; // Time since last $ earn
-    }
-}
-
-const piggy = new Piggy();
-
+const piggy = new Stat();
 register("command", () => { piggy.reset() }).setName("resetCoins");
 
 const coinExample = 

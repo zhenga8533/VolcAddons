@@ -2,33 +2,18 @@ import settings from "../../settings";
 import { BOLD, DARK_AQUA, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
-import { data, getPaused, registerWhen } from "../../utils/variables";
+import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 
 // Skill Tracking
-class Skill {
-    constructor() {
-        this.reset();
-    }
-    reset() {
-        this.start = 0.00; // Starting xp
-        this.now = 0.00; // Current xp
-        this.gain = 0.00; // Starting - Current xp
-        this.next = 0; // xp for level up
-        this.time = 0.00 // Time passed
-        this.rate = 0.00; // xp/hr
-        this.since = 600; // Time since last xp earn
-    }
-}
-
-let skills = {
-    "None": new Skill(),
-    "Farming": new Skill(),
-    "Mining": new Skill(),
-    "Combat": new Skill(),
-    "Foraging": new Skill(),
-    "Fishing": new Skill(),
-    "Enchanting": new Skill(),
-    "Alchemy": new Skill(),
+const skills = {
+    "None": new Stat(),
+    "Farming": new Stat(),
+    "Mining": new Stat(),
+    "Combat": new Stat(),
+    "Foraging": new Stat(),
+    "Fishing": new Stat(),
+    "Enchanting": new Stat(),
+    "Alchemy": new Stat(),
 }
 let current = "None";
 
@@ -45,6 +30,8 @@ ${DARK_AQUA}${BOLD}Time Passed: ${WHITE}FO
 ${DARK_AQUA}${BOLD}Rate: ${WHITE}FUM`;
 const skillOverlay = new Overlay("skillTracker", ["all"], data.AL, "moveSkills", skillExample);
 
+
+// Track skill gain
 registerWhen(register("actionBar", (before, msg, after) => {
     if (getPaused()) return;
 

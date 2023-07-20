@@ -12,7 +12,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Combat", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
+        const categories = ["General", "Combat", "Mining", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -146,7 +146,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     @SliderProperty({
         name: "Coin Tracker",
-        description: "Displays rate of coin gain in purse. Set minutes until tracker pauses or as 0 to turn off.",
+        description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off.",
         category: "General",
         subcategory: "Salary",
         min: 0,
@@ -155,7 +155,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     coinTracker = 0;
     @ButtonProperty({
         name: "Move Coins Display",
-        description: "Move the location of the Salary Tracker. Runs => /moveCoins",
+        description: "Move the location of the Coin Tracker. Runs => /moveCoins",
         category: "General",
         subcategory: "Salary"
     })
@@ -164,7 +164,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     }
     @ButtonProperty({
         name: "Reset Coin Tracker",
-        description: "Resets tracking for every skill. Runs => /resetCoins",
+        description: "Resets tracking for coin tracker. Runs => /resetCoins",
         category: "General",
         subcategory: "Salary"
     })
@@ -353,7 +353,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // Skills
     @SliderProperty({
         name: "Skill Tracker",
-        description: "Displays rate of xp gain for skills. Set minutes until tracker pauses or as 0 to turn off. (Use larger numbers when using wither impact)",
+        description: "Displays rate of xp gain for skills. Set minutes until tracker resets or as 0 to turn off. (Use larger numbers when using wither impact)",
         category: "General",
         subcategory: "Skills",
         min: 0,
@@ -476,6 +476,37 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         options: ["OFF", "All Chat", "Party Chat"]
     })
     miniAlert = 0;
+
+
+    // MINING
+    @SliderProperty({
+        name: "Powder Tracker",
+        description: "Displays rate of powder gain. Set minutes until tracker resets or as 0 to turn off.",
+        category: "Mining",
+        subcategory: "Powder",
+        min: 0,
+        max: 10
+    })
+    powderTracker = 0;
+    @ButtonProperty({
+        name: "Move Powder Display",
+        description: "Move the location of the Powder Tracker. Runs => /movePowder",
+        category: "Mining",
+        subcategory: "Powder"
+    })
+    movePowder() {
+        ChatLib.command("movePowder", true);
+    }
+    @ButtonProperty({
+        name: "Reset Powder Tracker",
+        description: "Resets tracking for Powder Tracker. Runs => /resetPowder",
+        category: "Mining",
+        subcategory: "Powder"
+    })
+    resetPowder() {
+        ChatLib.command("resetPowder", true);
+    }
+
 
 
     // HUB
