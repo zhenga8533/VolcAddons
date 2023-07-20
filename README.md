@@ -31,6 +31,7 @@ KNOWN BUGS: None (I hope)
   - Party Auto Join => /va wl
   - Auto Transfer Party
   - Skill Tracker
+  - Coin Tracker
   - Reminder Timer
  
 - COMBAT FEATURES
