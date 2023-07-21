@@ -50,6 +50,7 @@ import "./features/kuudra/KuudraReparty";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden
+import "./features//garden/ComposterCalc";
 import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 

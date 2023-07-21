@@ -27,9 +27,14 @@ export let data = new PogObject("VolcAddons", {
         "last": 0,
         "average": 0,
     },
+    "composterUpgrades": {
+        "Composter Speed": -1,
+        "Multi Drop": -1,
+        "Cost Reduction": -1
+    },
     "dianaKey": 33,
     "pauseKey": 25,
-    "apexPrice": 1e9,
+    "apexPrice": 2e9,
     "QL": [15, 200, 1], // Vanquisher Location
     "GL": [15, 200, 1], // Gyro Location
     "SL": [15, 250, 1], // Splits Location

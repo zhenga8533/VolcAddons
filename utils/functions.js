@@ -106,30 +106,13 @@ export function isValidDate(dateString) {
     return day > 0 && day <= monthLength[month - 1];
 };
 
-export function romanToNum(s) {
-    const sym = { 
-        'I': 1,
-        'V': 5,
-        'X': 10,
-        'L': 50,
-        'C': 100,
-        'D': 500,
-        'M': 1000
+export function romanToNum(str) {
+    const roman = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+    let num = 0.0;
+    for (let i = 0; i < str.length; i++) {
+      let curr = roman[str[i]];
+      let next = roman[str[i + 1]];
+      (curr < next) ? (num -= curr) : (num += curr);
     }
-
-    let result = 0;
-
-    for (i=0; i < s.length; i++){
-        const cur = sym[s[i]];
-        const next = sym[s[i+1]];
-
-        if (cur < next){
-            result += next - cur // IV -> 5 - 1 = 4
-            i++
-        } else {
-            result += cur
-        }
-    }
-
-    return result.toFixed(0);
+    return num;
 };

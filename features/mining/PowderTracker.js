@@ -32,7 +32,7 @@ const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Ho
 // Check for 2x
 registerWhen(register("step", () => {
     withers = World.getAllEntitiesOfType(WitherClass);
-    festivity = withers.find(wither => wither.getName().includes("2x"));
+    festivity = withers.find(wither => wither.getName().includes("2X POWDER"));
     if (festivity != undefined) doublePowder = true;
 }).setFps(1), () => getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines");
 
@@ -55,7 +55,7 @@ registerWhen(register("chat", (amount, type) => { // Chests
     if (getPaused()) return;
     
     let powder = powders[type];
-    powder.now += parseInt(amount);
+    powder.now += doublePowder ? parseInt(amount) * 2 : parseInt(amount);
     powder.gain = powder.now - powder.start;
     powder.since = 0;
 }).setCriteria("You received +${amount} ${type} Powder."),

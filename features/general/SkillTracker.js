@@ -32,21 +32,18 @@ const skillOverlay = new Overlay("skillTracker", ["all"], data.AL, "moveSkills",
 
 
 // Track skill gain
-registerWhen(register("actionBar", (before, msg, after) => {
+registerWhen(register("actionBar", (before, gain, type, amount, next, after) => {
     if (getPaused()) return;
 
     // Update info
-    const data = msg.replace('/', ' ').split(' ');
-    current = data[1];
+    amount = parseInt(amount.replace(/,/g, ''));
+    current = type;
     const skill = skills[current];
-    const amount = data[2].replace(/\D/g,'');
-
-    // Fail safe
     if (skill == undefined) return;
     
     // Reset skill tracking
     if (skill.start == 0)
-        skill.start = amount - data[0].replace(/,/g, '');
+        skill.start = amount;
     
     // Calc skill gain
     skill.now = amount;
@@ -55,9 +52,9 @@ registerWhen(register("actionBar", (before, msg, after) => {
         skill.start = skill.next - skill.start;
 
     // Finish updating info
-    skill.next = data[3];
+    skill.next = parseInt(next);
     skill.since = 0;
-}).setCriteria("${before}+${msg})${after}"), () => settings.skillTracker);
+}).setCriteria("${before}+${gain} ${type} (${amount}/${next})${after}"), () => settings.skillTracker);
 
 registerWhen(register("step", () => {
     if (getPaused()) return;

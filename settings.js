@@ -481,7 +481,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // MINING
     @SliderProperty({
         name: "Powder Tracker",
-        description: "Displays rate of powder gain. Set minutes until tracker resets or as 0 to turn off.",
+        description: "Displays rate of powder gain (only chests). Set minutes until tracker resets or as 0 to turn off.",
         category: "Mining",
         subcategory: "Powder",
         min: 0,
