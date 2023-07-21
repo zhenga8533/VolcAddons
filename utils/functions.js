@@ -1,22 +1,20 @@
 // Modify number/strings
-export function getTime(time) {
-    let minutes = Math.floor(parseFloat(time) / 60);
-    let seconds = (parseFloat(time) % 60).toFixed(2);
-
-    // Rounds like what hypixel actually does
-    if (Math.round(seconds) == 60) {
-        minutes++;
-        seconds = 0;
-    }
-
+export function getTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+  
+    let timeString = '';
+  
+    if (hours > 0)
+        timeString += `${hours}hr`;
     if (minutes > 0) {
-        if (seconds < 9.5)
-            return `${minutes}m0${Math.round(seconds)}s`;
-        else
-            return `${minutes}m${Math.round(seconds)}s`;
-    }
-    else return `${seconds}s`;
-};
+        timeString += `${minutes}m`;
+        timeString += `${remainingSeconds}s`;
+    } else timeString += `${remainingSeconds.toFixed(2)}s`;
+  
+    return timeString;
+  }
 
 export function commafy(num) {
     return num.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

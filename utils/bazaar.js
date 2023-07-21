@@ -23,6 +23,7 @@ let items = {
     // Composter
     "BOX_OF_SEEDS": [0, 0],
     "OIL_BARREL": [0, 0],
+    "VOLTA": [0, 0],
     "COMPOST": [0, 0],
 }
 export function getBazaar() { return items };

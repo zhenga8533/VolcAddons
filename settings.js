@@ -37,7 +37,8 @@ ${ITALIC}Related Commands: /va <calc, apex>`);
 `${HEADER}
 ${ITALIC}Related Commands: /va splits`);
         this.setCategoryDescription("Garden",
-`${HEADER}`);
+`${HEADER}
+${ITALIC}Related Commands: /va calc compost`);
         this.setCategoryDescription("Rift",
 `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);

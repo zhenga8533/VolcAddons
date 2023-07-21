@@ -19,8 +19,9 @@ const MAX_CATALYST = 6.44;
     *4 (hyper catalyst)
 */
 
-// Other Global Constants
+// Other Globals
 const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgrades!\n`;
+
 
 /*  HYPERGOLIC GABAGOOL:
     2404 Enchanted Coal
@@ -33,6 +34,7 @@ const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgr
 function calcHypergolic(type) {
     return 2404 * items.ENCHANTED_COAL[type] + 150.25 * items.ENCHANTED_SULPHUR[type] + 13824 * items.CRUDE_GABAGOOL[type];
 }
+
 
 export function calcMinions(args) {
     // Update Prices

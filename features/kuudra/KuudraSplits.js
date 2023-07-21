@@ -136,7 +136,7 @@ registerWhen(register("chat", () => {
     phase = 5;
 }).setCriteria("${before}DEFEAT${after}"), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
-registerWhen(register("tick", () => {
+registerWhen(register("step", () => {
     // Phase 4 fail safe
     if (phase == 3 && getKuudraHP() < 25000 && getTier() == 5) {
         kuudraSplit[3] = Date.now() / 1000;
@@ -174,7 +174,7 @@ registerWhen(register("tick", () => {
 ${AQUA}${BOLD}Build: ${RESET}${times[1]}
 ${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
 ${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
-}), () => getWorld() == "Kuudra" && settings.kuudraSplits);
+}).setFps(19), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
 // PARTY CHAT COMMAND => RETURNS SPLITS TO /PC
 let onCD = false;

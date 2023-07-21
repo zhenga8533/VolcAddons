@@ -43,7 +43,7 @@ registerWhen(register("actionBar", (before, gain, type, amount, next, after) => 
     
     // Reset skill tracking
     if (skill.start == 0)
-        skill.start = amount;
+        skill.start = amount - gain;
     
     // Calc skill gain
     skill.now = amount;
