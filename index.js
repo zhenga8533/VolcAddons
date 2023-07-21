@@ -50,7 +50,7 @@ import "./features/kuudra/KuudraReparty";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden
-import "./features//garden/ComposterCalc";
+import "./features/garden/ComposterCalc";
 import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 
@@ -64,6 +64,7 @@ import "./features/misc/AnnouceMob";
 import { calculate, setApex } from "./features/misc/BazaarCalculator";
 import { NPCEdit, soulEdit, zoneEdit } from "./features/rift/RiftWaypoints";
 import { getTier, getWorld } from "./utils/worlds";
+import { calcCompost } from "./features/garden/ComposterCalc";
 
 // FIRST RUN
 if (data.newUser) {
@@ -183,7 +184,12 @@ register ("command", (...args) => {
             break;
         case "calculate": // BAZAAR CALCULATOR
         case "calc":
-            calculate(args);
+            switch(args[1]) {
+                case "compsoter":
+                case "compost":
+                    calcCompost(args);
+                    break;
+            }
             break;
         case "apex": // Set Apex Price
             setApex(args);

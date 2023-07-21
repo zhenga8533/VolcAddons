@@ -1,6 +1,6 @@
-import axios from "../../../axios";
+import axios from "../../axios";
 
-// ID : [INSTA BUY, SELL OFFER]
+// ID : [LOWER PRICE, HIGHER PRICE]
 let items = {
     // Hypergolic Fuel Stuff
     "ENCHANTED_COAL": [0, 0],
@@ -25,10 +25,11 @@ let items = {
     "OIL_BARREL": [0, 0],
     "COMPOST": [0, 0],
 }
+export function getBazaar() { return items };
 const BZ_API = 'https://api.slothpixel.me/api/skyblock/bazaar/' + Object.keys(items).join(",");
 
 // Gets BZ Pricing for "items"
-function getPricing() {
+export function getPricing() {
     axios.get(BZ_API).then(response => {
         let products = response.data;
 
