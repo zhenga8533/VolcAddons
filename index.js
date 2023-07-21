@@ -50,7 +50,7 @@ import "./features/kuudra/KuudraReparty";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden
-import "./features/garden/ComposterCalc";
+import { calcCompost } from "./features/garden/ComposterCalc";
 import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 
@@ -61,10 +61,9 @@ import "./features/rift/VampireSlayer";
 
 // Misc
 import "./features/misc/AnnouceMob";
-import { calculate, setApex } from "./features/misc/BazaarCalculator";
 import { NPCEdit, soulEdit, zoneEdit } from "./features/rift/RiftWaypoints";
 import { getTier, getWorld } from "./utils/worlds";
-import { calcCompost } from "./features/garden/ComposterCalc";
+import { calcMinions } from "./features/misc/MinionCalc";
 
 // FIRST RUN
 if (data.newUser) {
@@ -180,19 +179,33 @@ register ("command", (...args) => {
             break;
         case "waypoints": // WAYPOINT MAKER
         case "waypoint":
+        case "wp":
             createWaypoint(args);
             break;
         case "calculate": // BAZAAR CALCULATOR
         case "calc":
             switch(args[1]) {
-                case "compsoter":
+                case "composter":
                 case "compost":
                     calcCompost(args);
+                    break;
+                case "hypergolic":
+                case "hg":
+                case "inferno":
+                case "gabagool":
+                case "gaba":
+                case "vampire":
+                case "vamp":
+                    calcMinions(args);
+                    break;
+                default:
+                    ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost>${AQUA}>`);
                     break;
             }
             break;
         case "apex": // Set Apex Price
-            setApex(args);
+            data.apexPrice = isNaN(args[1]) ? data.apexPrice : args[1];
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatInt(data.apexPrice)}!`);
             break;
         case "enigma": // Configure enigma souls
             soulEdit(args, "enigma", "enigmaSouls", ENIGMA_SOULS);

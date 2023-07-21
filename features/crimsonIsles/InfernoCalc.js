@@ -1,96 +1,4 @@
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET } from '../../utils/constants';
-import { data } from '../../utils/variables';
-
-import axios from "../../../axios";
-
-// ID : [INSTA BUY, SELL OFFER]
-let items = {
-    // Hypergolic Fuel Stuff
-    "ENCHANTED_COAL": [0, 0],
-    "ENCHANTED_SULPHUR": [0, 0],
-    "CRUDE_GABAGOOL": [0, 0],
-    "HYPERGOLIC_GABAGOOL": [0, 0],
-    "HEAVY_GABAGOOL": [0, 0],
-    "FUEL_GABAGOOL": [0, 0],
-    "CRUDE_GABAGOOL_DISTILLATE": [0, 0],
-    "INFERNO_FUEL_BLOCK": [0, 0],
-    // Inferno Minion Loot
-    "CHILI_PEPPER": [0, 0],
-    "INFERNO_VERTEX": [0, 0],
-    "REAPER_PEPPER": [0, 0],
-    // Vampire Minion Stuff
-    "HYPER_CATALYST": [0, 0],
-    "HEMOVIBE": [0, 0],
-    "HEMOGLASS": [0, 0],
-    "HEMOBOMB": [0, 0],
-}
-let products = {};
-const BZ_API = 'https://api.slothpixel.me/api/skyblock/bazaar/' + Object.keys(items).join(",");
-
-// Minion Action Speed per Minion Tier
-const INFERNO_ACTION_UPGRADE = 34.5;
-const INFERNO_ACTION_BASE = 1102 + INFERNO_ACTION_UPGRADE;
-const VAMPIRE_ACTIONS = [190, 175, 160, 140, 117, 95];
-
-// 1 (base) + 0.4 (2 flycatchers) + 0.11 (beacon) + 0.1 (mithril infusion) = 1.61
-const MAX_UPGRADES = 1.41;
-const MAX_INFERNO = 3.41;
-const MAX_CATALYST = 6.44;
-/*  Other potention upgrades:
-    +1.8 (inferno minions)
-    -0.2 (super compacter)
-    *10/15/20 (inferno fuel)
-    *4 (hyper catalyst)
-*/
-
-// Other Global Constants
-const DAY_SECONDS = 86400;
-const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgrades!\n`;
-
-// Gets BZ Pricing for "items"
-function getPricing() {
-    axios.get(BZ_API).then(response => {
-        products = response.data;
-
-        Object.keys(items).forEach((itemID) => {
-            const instaPrice = products[itemID].sell_summary[0].pricePerUnit;
-            const orderPrice = products[itemID].buy_summary[0].pricePerUnit;
-
-            items[itemID] = [instaPrice, orderPrice];
-        })
-    })
-}
-
-// Initial Setup
-getPricing();
-
-// Rounds number and adds commas
-function formatInt(num) {
-    return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-/*  HYPERGOLIC GABAGOOL:
-    2404 Enchanted Coal
-    150.25 Enchanted Sulphur
-    13824 Crude Gabagool
-
-    Type 0 = Insta Buy
-    Type 1 = Buy Order
-*/
-function calcHypergolic(type) {
-    return 2404 * items.ENCHANTED_COAL[type] + 150.25 * items.ENCHANTED_SULPHUR[type] + 13824 * items.CRUDE_GABAGOOL[type];
-}
-
-export function calculate(args) {
-    // Update Pricing
-    getPricing();
-
-    // Universal variables
-    const minions = isNaN(args[2]) ? 31 : args[2];
-    const tier = isNaN(args[3]) || args[3] > 11 ? 3 : args[3];
-    let infernoAction = (INFERNO_ACTION_BASE - (tier * INFERNO_ACTION_UPGRADE)) / MAX_INFERNO;
-    const vampAction = DAY_SECONDS / (VAMPIRE_ACTIONS[Math.ceil(tier/2) - 1]*2/MAX_CATALYST) * minions;
-
+export function calcInferno(args) {
     switch (args[1]) {
         case "hypergolic":
         case "hg":
@@ -176,29 +84,8 @@ export function calculate(args) {
             ChatLib.chat(`${RED}${BOLD}Fuel Gabagool Cost: ${RESET}${formatInt(fuelPrice)}`);
             ChatLib.chat(`${GREEN}${BOLD}Fuel Gabagool Profit: ${RESET}${formatInt(fuelProfit)}\n${PSA}`);
             break;
-        case "vampire":
-        case "vamp":
-            const hemovibe = [(vampAction).toFixed(4), vampAction*items.HEMOVIBE[1]];
-            const hemoglass = [(hemovibe[0]/160).toFixed(4), hemovibe[0]/160*items.HEMOGLASS[1]];
-            const hemobomb = [(hemoglass[0]/15).toFixed(4), hemoglass[0]/15*items.HEMOBOMB[1]];
-            const vampCost = items.HYPER_CATALYST[0] * 4 * minions;
-            const vampProfit = hemovibe[1] - vampCost;
-            
-            ChatLib.chat(`\n${GOLD}${BOLD}Drops for ${minions} Vampire Minion(s) t${tier}`);
-            ChatLib.chat(`${AQUA}${BOLD}Hemovibe ${GRAY}${BOLD}[${hemovibe[0]}]${AQUA}: ${RESET}${formatInt(hemovibe[1])}`);
-            ChatLib.chat(`${AQUA}${BOLD}Hemoglass ${GRAY}${BOLD}[${hemoglass[0]}]${AQUA}: ${RESET}${formatInt(hemoglass[1])}`);
-            ChatLib.chat(`${AQUA}${BOLD}Hemobomb ${GRAY}${BOLD}[${hemobomb[0]}]${AQUA}: ${RESET}${formatInt(hemobomb[1])}`);
-            ChatLib.chat(`${RED}${BOLD}Hyper Catalyst Cost: ${RESET}${formatInt(vampCost)}`);
-            ChatLib.chat(`${GREEN}${BOLD}Total Profit: ${RESET}${formatInt(vampProfit)}\n${PSA}`);
-            break;
         default:
             ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, <inferno, gabagool, vampire> ${ITALIC}[minions] [tier]${RESET}${AQUA}>`);
             break;
     }
-};
-
-// Set Apex Price
-export function setApex(args) {
-    data.apexPrice = isNaN(args[1]) ? data.apexPrice : args[1];
-    ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatInt(data.apexPrice)}!`);
 }
