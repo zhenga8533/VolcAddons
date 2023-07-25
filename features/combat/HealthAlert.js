@@ -4,6 +4,10 @@ import { registerWhen } from "../../utils/variables";
 
 let player = undefined;
 
+
+/**
+ * Tracks player health and alerts whenever below the chosen threshold.
+ */
 registerWhen(register("step", () => {
     if (player == undefined) return;
 
@@ -12,6 +16,9 @@ registerWhen(register("step", () => {
     }
 }).setFps(2), () => settings.healthAlert);
 
-register("chat", () => {
+/**
+ * Reload player entity on every world join.
+ */
+export function setPlayer() {
     player = Player.asPlayerMP().getEntity();
-}).setCriteria("{${data}}");
+};

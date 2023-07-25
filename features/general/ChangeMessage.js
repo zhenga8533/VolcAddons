@@ -36,6 +36,13 @@ const GIFT = {
     ":cute:": "(✿ᴖ‿ᴖ)"
 };
 
+
+/**
+ * Replaces all user messages that contains desired emotes.
+ *
+ * @param {string} message - User sent chat message.
+ * @param {Object} event - Message event.
+ */
 registerWhen(register("messageSent", (message, event) => {
     let contains = false;
 

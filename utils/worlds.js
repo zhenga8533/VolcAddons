@@ -1,3 +1,4 @@
+import { setPlayer } from "../features/combat/HealthAlert";
 import { delay } from "./thread";
 import { setRegisters } from "./variables";
 
@@ -37,6 +38,7 @@ function findWorld() {
 
         // Register/unregister features for current world
         setRegisters();
+        setPlayer();
     }
 }
 register("worldLoad", () => {

@@ -7,8 +7,16 @@ import { getWorld } from "../../utils/worlds";
 
 let onCD = false;
 let invited = 0;
-
 let dungeon = ["Master", 7];
+
+
+/**
+ * Automatically warps player out of dungeon on completion depending on their settings.
+ * Will warp self/party to garden if active and rejoin previous dungeon.
+ *
+ * @param {string} type - Type of dungeon.
+ * @param {string} floor - Roman numeral of dungeon floor.
+ */
 registerWhen(register("chat", (type, floor) => {
     if (onCD || !getIsLeader()) return;
 
@@ -28,6 +36,11 @@ registerWhen(register("chat", (type, floor) => {
     }
 }).setCriteria("${type} - Floor ${floor}"), () => settings.dungeonRejoin);
 
+/**
+ * Attempts to warp party into lobby/dunngeon once correct world is detected.
+ *
+ * @param {string} world - Desired world to be in.
+ */
 function tryWarp(world) {
     if (getWorld() == world) {
         baseDelay = 0
@@ -40,10 +53,12 @@ function tryWarp(world) {
             delay(() => ChatLib.command(`joindungeon master_catacombs ${dungeon[1]}`), 2000 + baseDelay);
         else
             delay(() => ChatLib.command(`joindungeon catacombs ${dungeon[1]}`), 2000 + baseDelay);
-    } else
-        delay(() => tryWarp(world), 1000);
+    } else delay(() => tryWarp(world), 1000);
 }
 
+/**
+ * Tracks whenever a player joins party to determine when all players have joined the party.
+ */
 registerWhen(register("chat", () => {
     if (invited == 0) return;
     

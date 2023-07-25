@@ -11,9 +11,12 @@ let lastFish = 0;
 const fishExample =
 `${GOLD}${BOLD}Last Cast: ${RESET}Yee
 ${GOLD}${BOLD}Last Fish: ${RESET}Haw`;
-
 const fishOverlay = new Overlay("goldenFishAlert", ["Crimson Isle"], data.TL, "moveTimer", fishExample);
 
+
+/**
+ * Increments time and updates Golden Fish Overlay every second.
+ */
 registerWhen(register("step", () => {
     lastCast += 1;
     lastFish += 1;
@@ -25,6 +28,14 @@ registerWhen(register("step", () => {
 ${GOLD}${BOLD}Last Fish: ${RESET}${getTime(lastCast > 270 ? 0 : lastFish)}`
 }).setFps(1), () => getWorld() == "Crimson Isle" && settings.goldenFishAlert);
 
+/**
+ * Resets "lastCast" variable whenever player right clicks with a fishing rod in hand.
+ *
+ * @param {number} x - X position of mouse click.
+ * @param {number} y - Y position of mouse click.
+ * @param {boolean} button - True for right click, False for left click.
+ * @param {boolean} state - True for key down, False for key up
+ */
 registerWhen(register("clicked", (x, y, button, state) => {
     if (!button || !state || Player.getHeldItem() == null) return;
 
@@ -32,6 +43,9 @@ registerWhen(register("clicked", (x, y, button, state) => {
         lastCast = 0;
 }), () => getWorld() == "Crimson Isle" && settings.goldenFishAlert);
 
+/**
+ * Resets "lastFish" variable whenever the Golden Fish message appears in chat.
+ */
 registerWhen(register("chat", () => {
     lastFish = 0;
 }).setCriteria("You spot a Golden Fish surface from beneath the lava!"), () => getWorld() == "Crimson Isle" && settings.goldenFishAlert);

@@ -19,12 +19,15 @@ ${RED}${BOLD}Kills Since: ${RESET}Piao
 ${RED}${BOLD}Average Kills: ${RESET}Piao`
 const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], data.CL, "moveCounter", counterExample);
 
-// Tracks Kills
+
+/**
+ * Uses the "Book of Stats" to track whenever player kills an entity and updates the Vanquisher Overlay.
+ */
 registerWhen(register("entityDeath", () => {
     if (Player.getHeldItem() == null) return;
 
-    heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
-    newKills = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getInteger("stats_book");
+    const heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
+    const newKills = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getInteger("stats_book");
 
     if (heldItem in items) {
         killsDiff = Math.abs(newKills - items[heldItem]);
@@ -57,7 +60,9 @@ ${RED}${BOLD}Average Kills: ${RESET}${session.average}`;
     } else items[heldItem] = newKills;
 }), () => getWorld() == "Crimson Isle" && settings.vanqCounter);
 
-// Tracks Vanqs
+/**
+ * Tracks whenever the player spawns a Vanquisher and updates the counter.
+ */
 registerWhen(register("chat", () => {
     // Overall
     data.vanqSession.vanqs++;
@@ -70,7 +75,9 @@ registerWhen(register("chat", () => {
     session.last = 0;
 }).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqCounter);
 
-// Clear Counter
+/**
+ * Command to reset the stats for the overall counter.
+ */
 register("command", () => {
     data.vanqSession = {
         "vanqs": 0,

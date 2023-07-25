@@ -9,7 +9,16 @@ export function getChatWaypoints() { return chatWaypoints };
 let userWaypoints = [];
 export function getUserWaypoints() { return userWaypoints };
 
-// Detects coords
+
+/**
+ * Detects any patcher formatted coords sent in chat.
+ *
+ * @param {string} player - "[rank] ign"
+ * @param {string} spacing - Useless spacing between message (needed for color).
+ * @param {string} X - X coordinate.
+ * @param {string} y - Y coordinate.
+ * @param {string} z - Z coordinate.
+ */
 registerWhen(register("chat", (player, spacing, x, y, z) => {
     // Gets colors and titles in name
     const bracketIndex = player.indexOf('[') - 2;
@@ -33,7 +42,11 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     delay(() => { if (chatWaypoints.length) chatWaypoints.shift() }, settings.drawWaypoint * time);
 }).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint);
 
-// Lets user create waypoint
+/**
+ * Allows user to create waypoints via command.
+ *
+ * @param {string[]} args - Array of user input needed for waypoint.
+ */
 export function createWaypoint(args) {
     if (args[1] == "clear") {
         userWaypoints = [];
@@ -45,8 +58,4 @@ export function createWaypoint(args) {
         ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
     } else ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va waypoint [name] [x] [y] [z] | /va waypoint clear!`);
 }
-
-// Deletes user waypoints on world exit
-register("worldUnload", () => {
-    userWaypoints = [];
-});
+register("worldUnload", () => { userWaypoints = [] });

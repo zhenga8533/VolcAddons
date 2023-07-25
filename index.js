@@ -1,6 +1,6 @@
 // Util
 import settings from "./settings";
-if (settings.dungeonRejoin === true || settings.dungeonRejoin === false) settings.dungeonRejoin = 0;
+if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
 import { data, opened, updateList } from "./utils/variables";

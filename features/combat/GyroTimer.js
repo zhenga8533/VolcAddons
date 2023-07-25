@@ -9,16 +9,21 @@ let cd = 0;
 const gyroExample = `${GREEN}${BOLD}Align Timer: ${RESET}LEAK?!`;
 const gyroOverlay = new Overlay("gyroTimer", ["all"], data.GL, "moveAlignTimer", gyroExample);
 
-// Detect Cells Alignment
+
+/**
+ * Detects whenever you get affected by "Cell's Alignment".
+ */
 register("chat", () => {
     align = 6.0;
     cd = 10;
 }).setCriteria("You aligned ${message}");
-
 register("chat", () => {
     align = 6.0;
 }).setCriteria("${player} casted Cells Alignment on you!");
 
+/**
+ * Adjustes the align timer overlay and alerts player whenever align is about to run out.
+ */
 registerWhen(register("tick", () => {
     if (align > 0) {
         if (settings.gyroAlert && align > 0.5 && align < 1 && cd == 0)
@@ -27,7 +32,5 @@ registerWhen(register("tick", () => {
         gyroOverlay.message = `${GREEN}${BOLD}Align Timer: ${RESET}${align}s`;
     } else gyroOverlay.message = `${GREEN}${BOLD}Align Timer: ${RED}NO ALIGN`;
     
-    if (cd > 0) {
-        cd = (cd - 0.05).toFixed(2);
-    }
+    if (cd > 0) cd = (cd - 0.05).toFixed(2);
 }), () => settings.gyroAlert || settings.gyroTimer);

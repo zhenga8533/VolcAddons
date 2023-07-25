@@ -4,6 +4,10 @@ import { registerWhen } from "../../utils/variables";
 
 let minutes = 0;
 
+
+/**
+ * Counts minutes until set timer to send an customizable alert.
+ */
 registerWhen(register("step", () => {
     minutes++;
     if (minutes >= settings.reminderTime) {

@@ -53,7 +53,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Move Tuba HUD", "Weird Tuba Timer");
         
         // Leader / Party Commands
-        this.addDependency("Leader Command Options", "Leader Chat Commands");
         this.addDependency("Warp Command (?warp)", "Leader Command Options");
         this.addDependency("Transfer Command (?transfer)", "Leader Command Options");
         this.addDependency("Promote Command (?promote)", "Leader Command Options");
@@ -61,8 +60,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Allinvite Command (?<allinvite, allinv>)", "Leader Command Options");
         this.addDependency("Stream Command (?<streamopen, stream> [num])", "Leader Command Options");
 
-        this.addDependency("Party Command Chat", "Party Chat Commands");
-        this.addDependency("Party Command Options", "Party Chat Commands");
         this.addDependency("Slander Command (?<racist, gay, cringe>)", "Party Command Options");
         this.addDependency("Dice Command (?<dice, roll>)", "Party Command Options");
         this.addDependency("Coinflip Command (?<coin, flip, coinflip, cf>)", "Party Command Options");
@@ -268,21 +265,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     warpCommand = true;
 
-    @SwitchProperty({
+    @SelectorProperty({
         name: "Party Chat Commands",
         description: "Allows everyone besides /va blacklist to use the party commands.",
         category: "General",
-        subcategory: "Party Commands"
-    })
-    partyCommands = false;
-    @SelectorProperty({
-        name: "Party Command Chat",
-        description: "Select which chat party commands can be detected in.",
-        category: "General",
         subcategory: "Party Commands",
-        options: ["All", "Party", "Guild", "DM"]
+        options: ["OFF", "All", "Party", "Guild", "DM"]
     })
-    partyChat = 0;
+    partyCommands = 0;
     @SwitchProperty({
         name: "Party Command Options",
         description: "Toggle to show what commands to show/hide.",

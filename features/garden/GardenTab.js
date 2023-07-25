@@ -13,6 +13,7 @@ let visitors = 0;
 let next = 0;
 export function getNextVisitor() { return next };
 
+// Overlays
 const gardenExample =
 `${AQUA}${BOLD}Visitors ${WHITE}(5):
 ${GREEN}${BOLD} Never
@@ -25,7 +26,10 @@ const gardenOverlay = new Overlay("gardenTab", ["Garden"], data.VL, "moveVisitor
 const nextExample = `${AQUA}${BOLD}Next Visitor: ${WHITE}REVERT GARDEN`
 const nextOverlay = new Overlay("nextVisitor", ["all"], data.NL, "moveNext", nextExample);
 
-// Check Tab
+
+/**
+ * Fetches the visitor data in tablist and updates the Visitors Overlay every second.
+ */
 registerWhen(register("step", () => {
     tablist = TabList.getNames();
     if (tablist == null) return;
@@ -44,7 +48,9 @@ registerWhen(register("step", () => {
     }
 }).setFps(1), () => getWorld() == "Garden" && settings.gardenTab);
 
-// Check Tab
+/**
+ * Checks tablist for the time until next visitor and updates the Next Visitor Overlay every second.
+ */
 registerWhen(register("step", () => {
     // Update Next Visitor Message
     if (next > 0)
@@ -68,8 +74,10 @@ registerWhen(register("step", () => {
     }
 }).setFps(1), () => (settings.nextVisitor || settings.warpGarden));
 
+/**
+ * Checks tablist for inactive composter and displays a title if there is.
+ */
 registerWhen(register("step", () => {
-    // Get Composter
     if (!tablist) return;
 
     composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);

@@ -1,7 +1,10 @@
 import settings from "../../settings";
 import { registerWhen } from "../../utils/variables";
 
-// REMOVE SELFIE MODE (boppeler21 cutie)
+
+/**
+ * Removes first person view in f5. (ty boppeler21 qt)
+ */
 registerWhen(register("tick", () => {
     if(Client.settings.getSettings().field_74320_O != 2) return;
     

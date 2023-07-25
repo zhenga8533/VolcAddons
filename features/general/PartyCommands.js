@@ -11,7 +11,12 @@ import { request } from "../../../requestV2";
 // Variables for different commands
 let onCD = false;
 
-// Imgur upload
+
+/**
+ * Makes a POST request to upload an image to Imgur.
+ *
+ * @param {string} image - Link of the image.
+ */
 function upload(image) {
     return request({
         url: "https://api.imgur.com/3/image",
@@ -26,7 +31,9 @@ function upload(image) {
     });
 };
 
-// Waifu stuff >.<
+/**
+ * Makes a PULL request to get a random waifu image >.<
+ */
 let waifu = "";
 let imgur = "";
 function setWaifu() {
@@ -66,6 +73,14 @@ const RESPONSES = ["As I see it, yes",
 const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
 
+
+/**
+ * Various party and leader commands.
+ *
+ * @param {string} name - IGN of player who sent the message.
+ * @param {string[]} args - Message player sent split by " ".
+ * @param {string} sendTo - Chat to send response to (/pc, /gc, /r)
+ */
 export function executeCommand(name, args, sendTo) {
     if (data.blacklist.includes(name.toLowerCase())) return;
 
@@ -222,22 +237,27 @@ export function executeCommand(name, args, sendTo) {
     delay(() => onCD = false, 1000);
 }
 
-// PARTY COMMANDS
+/**
+ * Detects when player inputs a ?command and set the chat 
+ *
+ * @param {string} player - "[rank] ign".
+ * @param {string} message - Message sent by player following a "?"
+ */
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
 
     executeCommand(getPlayerName(player), message.split(" "), "pc");
-}).setCriteria("Party > ${player}: ?${message}"), () => settings.partyChat == 0 || settings.partyChat == 1);
+}).setCriteria("Party > ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 2);
 
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
 
     executeCommand(getGuildName(player), message.split(" "), "gc");
-}).setCriteria("Guild > ${player}: ?${message}"), () => settings.partyChat == 0 || settings.partyChat == 2);
+}).setCriteria("Guild > ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 3);
 
 // MESSAGE COMMANDS
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
 
     executeCommand(getPlayerName(player), message.split(" "), "r");
-}).setCriteria("From ${player}: ?${message}"), () => settings.partyChat == 0 || settings.partyChat == 3);
+}).setCriteria("From ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 4);

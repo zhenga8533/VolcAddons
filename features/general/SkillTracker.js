@@ -31,7 +31,16 @@ ${DARK_AQUA}${BOLD}Rate: ${WHITE}FUM`;
 const skillOverlay = new Overlay("skillTracker", ["all"], data.AL, "moveSkills", skillExample);
 
 
-// Track skill gain
+/**
+ * Uses action bar to detect skill xp gains to use to update skill object data.
+ *
+ * @param {string} before - Use beginning of message.
+ * @param {string} gain - Amount of xp gained.
+ * @param {string} type - Type of skill xp gained.
+ * @param {string} amount - Current amount of skill xp.
+ * @param {string} next - Skill xp needed to level up (0 at max).
+ * @param {string} after - Useless ending of message.
+ */
 registerWhen(register("actionBar", (before, gain, type, amount, next, after) => {
     if (getPaused()) return;
 
@@ -43,7 +52,7 @@ registerWhen(register("actionBar", (before, gain, type, amount, next, after) => 
     
     // Reset skill tracking
     if (skill.start == 0)
-        skill.start = amount - gain;
+        skill.start = amount - parseInt(gain.replace(/,/g, ''));
     
     // Calc skill gain
     skill.now = amount;
@@ -56,6 +65,9 @@ registerWhen(register("actionBar", (before, gain, type, amount, next, after) => 
     skill.since = 0;
 }).setCriteria("${before}+${gain} ${type} (${amount}/${next})${after}"), () => settings.skillTracker);
 
+/**
+ * Updates skill tracker data every second.
+ */
 registerWhen(register("step", () => {
     if (getPaused()) return;
     

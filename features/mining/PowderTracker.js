@@ -31,6 +31,7 @@ const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Ho
 
 // Check for 2x
 registerWhen(register("step", () => {
+    if (doublePowder) return;
     withers = World.getAllEntitiesOfType(WitherClass);
     festivity = withers.find(wither => wither.getName().includes("2X POWDER"));
     if (festivity != undefined) doublePowder = true;

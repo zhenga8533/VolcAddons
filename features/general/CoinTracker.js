@@ -4,7 +4,6 @@ import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, registerWhen } from "../../utils/variables";
 
-// Coin tracking
 const piggy = new Stat();
 register("command", () => { piggy.reset() }).setName("resetCoins");
 
@@ -14,6 +13,10 @@ ${GOLD}${BOLD}Time Passed: ${WHITE}ME
 ${GOLD}${BOLD}Rate: ${WHITE}MONEY`;
 const coinOverlay = new Overlay("coinTracker", ["all"], data.ML, "moveCoins", coinExample);
 
+
+/**
+ * Tracks Piggybank in Scoreboard for changes in coins and updates Coins Overlay every second.
+ */
 registerWhen(register("step", () => {
     // Get cha ching from purse
     let purse = Scoreboard.getLines().find((line) => line.getName().includes("Piggy:"));
