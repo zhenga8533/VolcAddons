@@ -49,6 +49,18 @@ export function getItemName(item, category) {
 
 
 // Variable checking
+export function findWordsInString(str, arr) {
+    const wordSet = new Set(arr);
+  const words = arr.filter(word => str.includes(word));
+  return words;
+}
+
+export function findFirstRomanNumeral(str) {
+    const romanNumeralRegex = /(IX|IV|V?I{0,3})\b/g;
+    const match = str.match(romanNumeralRegex);
+    return match ? match[0] : null;
+}
+
 const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
 export function get3x3Stands() {
     const x = Player.getX();

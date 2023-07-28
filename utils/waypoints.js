@@ -48,7 +48,7 @@ function formatWaypoints(waypoints, r, g, b) {
         formatted.push(wp);
     });
 }
-register("step", () => {
+register("tick", () => {
     formatted = [];
     formatWaypoints(getChatWaypoints(), 0, 1, 1); // Cyan Waypoint
     formatWaypoints(getUserWaypoints(), 0, 1, 0); // Lime user
@@ -57,7 +57,7 @@ register("step", () => {
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
-}).setFps(4);
+});
 register("renderWorld", () => {
     renderWaypoint(formatted);
     renderBeam(getCrates()); // White Crates

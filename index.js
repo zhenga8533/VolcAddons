@@ -1,6 +1,7 @@
 // Util
 import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
+import "./utils/auctions";
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
@@ -44,6 +45,7 @@ import "./features/crimsonIsles/VanqWarp";
 import "./features/crimsonIsles/VanqCounter";
 
 // Kuudra
+import { getAttributes } from "./features/kuudra/AttributePricing";
 import "./features/kuudra/KuudraAlerts";
 import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
@@ -64,7 +66,6 @@ import "./features/rift/VampireSlayer";
 import "./features/misc/AnnouceMob";
 import { NPCEdit, soulEdit, zoneEdit } from "./features/rift/RiftWaypoints";
 import { calcMinions } from "./features/misc/MinionCalc";
-import { getAuction, updateAuction } from "./utils/auctions";
 
 // FIRST RUN
 if (data.newUser) {
@@ -137,6 +138,10 @@ register ("command", (...args) => {
             settings.kuudraStunner = "";
             settings.reminderText = "";
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
+            break;
+        case "attribute":
+        case "attributes":
+            getAttributes(args);
             break;
         case "coords": // Send Coords in Chat
         case "sendcoords":
@@ -236,10 +241,6 @@ register ("command", (...args) => {
             ChatLib.chat("Party: " + getInParty());
             ChatLib.chat("Garden: " + getNextVisitor());
             Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
-            updateAuction(0);
-            break;
-        case "test2":
-            ChatLib.chat(getAuction()["Rotten Helmet"].price);
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))
