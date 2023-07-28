@@ -7,6 +7,7 @@ import PogObject from "../../PogData";
 export let data = new PogObject("VolcAddons", {
     "newUser": true,
     "version": "2.3.1",
+    "profileId": undefined,
     "world": "none",
     "tier": 0,
     "whitelist": [],
@@ -27,6 +28,12 @@ export let data = new PogObject("VolcAddons", {
         "last": 0,
         "average": 0,
     },
+    "inqSession": {
+        "inqs": 0,
+        "burrows": 0,
+        "last": 0,
+        "average": 0,
+    },
     "composterUpgrades": {
         "Composter Speed": -1,
         "Multi Drop": -1,
@@ -38,7 +45,7 @@ export let data = new PogObject("VolcAddons", {
     "QL": [15, 200, 1], // Vanquisher Location
     "GL": [15, 200, 1], // Gyro Location
     "SL": [15, 250, 1], // Splits Location
-    "CL": [15, 250, 1], // Counter Location
+    "CL": [15, 250, 1], // Vanq Counter Location
     "VL": [15, 250, 1], // Visitors Location
     "NL": [15, 350, 1], // Next Visitors Location
     "TL": [15, 300, 1], // Golden Fish Timer Location
@@ -47,6 +54,7 @@ export let data = new PogObject("VolcAddons", {
     "UL": [15, 450, 1], // Tuba Location
     "ML": [15, 450, 1], // Coins Location
     "PL": [15, 500, 1], // Powder Location
+    "IL": [15, 250, 1], // Inq Counter Location
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
 }, "datitee.json");

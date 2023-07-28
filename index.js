@@ -3,10 +3,11 @@ import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
+import "./utils/player";
 import { data, opened, updateList } from "./utils/variables";
 import { delay } from "./utils/thread";
 import "./utils/waypoints";
-import "./utils/worlds";
+import { getTier, getWorld } from "./utils/worlds";
 data.autosave();
 
 // General
@@ -62,8 +63,8 @@ import "./features/rift/VampireSlayer";
 // Misc
 import "./features/misc/AnnouceMob";
 import { NPCEdit, soulEdit, zoneEdit } from "./features/rift/RiftWaypoints";
-import { getTier, getWorld } from "./utils/worlds";
 import { calcMinions } from "./features/misc/MinionCalc";
+import { getAuction, updateAuction } from "./utils/auctions";
 
 // FIRST RUN
 if (data.newUser) {
@@ -221,6 +222,13 @@ register ("command", (...args) => {
         case "zone": // Enable zone waypoints
             zoneEdit(args);
             break;
+        case "api":
+            if (args[1]) {
+                settings.apiKey = args[1]
+                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set API key as ${settings.apiKey}!`);
+            } else
+                ChatLib.chat(`${LOGO} ${RED}Please input as /va api [key]!`);
+            break;
         case "test": // Testing (please work)
             ChatLib.chat("World: " + getWorld());
             ChatLib.chat("Tier: " + getTier());
@@ -228,6 +236,10 @@ register ("command", (...args) => {
             ChatLib.chat("Party: " + getInParty());
             ChatLib.chat("Garden: " + getNextVisitor());
             Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
+            updateAuction(0);
+            break;
+        case "test2":
+            ChatLib.chat(getAuction()["Rotten Helmet"].price);
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))

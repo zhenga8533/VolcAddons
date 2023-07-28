@@ -1,6 +1,7 @@
 import settings from "../../settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions";
+import { getMayor, getPerks } from "../../utils/mayor";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -24,7 +25,7 @@ function getCoord(start, end) {
 
 // Particle Tracking
 let closest = undefined;
-registerWhen(register("spawnParticle", (particle, type, event) => {
+registerWhen(register("spawnParticle", (particle, type) => {
     const particlePos = particle.getPos();
     const xyz = [particlePos.getX(), particlePos.getY(), particlePos.getZ()];
     const [x, y, z] = [xyz[0], xyz[1], xyz[2]];
@@ -68,7 +69,8 @@ registerWhen(register("spawnParticle", (particle, type, event) => {
                 closest[0][0] = "Mob";
             break;
     }
-}), () => getWorld() == "Hub" && (settings.dianaWaypoint || settings.dianaBurrow));
+}), () => getWorld() == "Hub" && (settings.dianaWaypoint || settings.dianaBurrow) &&
+getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
 // Tracks Distance Using Sound
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
@@ -86,7 +88,8 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
 
     if (pitch > 0)
         distance = 4 / Math.pow(pitch, 6) + 0.2 / Math.pow(pitch, 5) - correct;
-}).setCriteria("note.harp"), () => getWorld() == "Hub" && settings.dianaWaypoint);
+}).setCriteria("note.harp"), () => getWorld() == "Hub" && settings.dianaWaypoint &&
+getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
 // Track spade ability to clear current particle list
 registerWhen(register("clicked", (x, y, button, state) => {
@@ -100,7 +103,8 @@ registerWhen(register("clicked", (x, y, button, state) => {
         delay(() => { cast = false }, 2000);
         delay(() => { cd = false }, 3000);
     }
-}), () => getWorld() == "Hub" && settings.dianaWaypoint);
+}), () => getWorld() == "Hub" && settings.dianaWaypoint &&
+getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
 // Calculate theoretical burrow and closest warp
 const WARPS = {
@@ -137,7 +141,8 @@ registerWhen(register("tick", () => {
     // Set theory burrow
     theory[0] = "warp " + getClosest(theory, warps)[0][0];
     theoryBurrow = [theory];
-}), () => getWorld() == "Hub" && settings.dianaWaypoint);
+}), () => getWorld() == "Hub" && settings.dianaWaypoint &&
+getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
 // Warp to closest location
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "VolcAddons");
@@ -157,7 +162,8 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
     if (closest != undefined);
         burrows.splice(burrows.indexOf(closest[0]), 1);
-}).setCriteria("${before}urrow${after}"), () => getWorld() == "Hub" && settings.dianaWaypoint);
+}).setCriteria("${before}urrow${after}"), () => getWorld() == "Hub" && settings.dianaWaypoint &&
+getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
 // => Draw Waypoint
 export function getTheory() {
@@ -176,4 +182,5 @@ register("worldUnload", () => {
 
 registerWhen(register("chat", () => {
     burrows = [];
-}).setCriteria(" ☠ You ${died}."), () => getWorld() == "Hub" && settings.dianaWaypoint);
+}).setCriteria(" ☠ You ${died}."), () => getWorld() == "Hub" && settings.dianaWaypoint &&
+getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));

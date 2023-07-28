@@ -98,6 +98,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // GENERAL FEATURES
 
     // General
+    @TextProperty({
+        name: "API Key",
+        description: "https://developer.hypixel.net",
+        category: "General",
+        subcategory: "General"
+    })
+    apiKey = "";
+
     @SwitchProperty({
         name: "Abiphone Blocker",
         description: "Blocks abiphone callers in /va blocklist.",
@@ -554,7 +562,30 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Inquisitor",
         options: ["OFF", "All Chat", "Party Chat"]
     })
-    dianaAlert = 0;
+    inqAlert = 0;
+
+    @SelectorProperty({
+        name: "Inquisitor Counter",
+        description: "Counts average kills until Inquisitor spawns.",
+        category: "Hub",
+        subcategory: "Inquisitor",
+        options: ["OFF", "Overall View", "Session View"]
+    })
+    inqCounter = 0;
+    @ButtonProperty({
+        name: "Move Counter HUD",
+        description: "Move the location of the Inquisitor Counter. Runs => /moveInq",
+        category: "Hub",
+        subcategory: "Inquisitor"
+    })
+    moveInq() { ChatLib.command("moveInq", true) };
+    @ButtonProperty({
+        name: "Clear Session",
+        description: "Resets all Vanquisher counter stats. Runs => /resetInq",
+        category: "Hub",
+        subcategory: "Inquisitor"
+    })
+    resetInq() { ChatLib.command("resetInq", true) };
     
 
     // CRIMSON ISLES
@@ -832,7 +863,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     gardenCompost = false;
 
     @SwitchProperty({
-        name: "Garden Warper",
+        name: "Garden Warp Override",
         description: "Overrides any warp command with a garden warp if theres a visitor.",
         category: "Garden",
         subcategory: "Garden"

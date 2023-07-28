@@ -42,6 +42,11 @@ export function getGuildName(player) {
     return name;
 }
 
+const reforges = [];
+export function getItemName(item, category) {
+
+}
+
 
 // Variable checking
 const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;

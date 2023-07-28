@@ -5,6 +5,7 @@ import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 import { findZone, getWorld } from "../../utils/worlds";
+import { updateInqCounter } from "../hub/InquisitorCounter";
 
 // GENERAL FUNCTIONS
 function annoucePosition(toAll, mob, x, y ,z) {
@@ -75,9 +76,10 @@ registerWhen(register("chat", () => {
     entities = World.getAllEntitiesOfType(EntityPlayerMP.class);
     inquisitor = entities.find((entity) => entity.getName().equals("Minos Inquisitor"));
 
-    if (inquisitor != undefined)
-        annoucePosition(settings.dianaAlert == 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
-}).setCriteria("${wow}! You dug out a Minos Champion!"), () => getWorld() == "Hub" && settings.dianaAlert);
+    updateInqCounter(inquisitor != undefined);
+    if (inquisitor != undefined && settings.inqAlert)
+        annoucePosition(settings.inqAlert == 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
+}).setCriteria("${wow}! You dug out a Minos Champion!"), () => getWorld() == "Hub" && (settings.inqAlert || settings.inqCounter));
 
 // Tracks all nearby Inquisitors
 let inquisitors = [];

@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, WHITE } from "../../utils/constants";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
