@@ -357,17 +357,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // ECONOMY
 
-    // Auction
-    @SliderProperty({
-        name: "Auction Refresh",
-        description: "Set how often action house data gets refreshed in minutes (set as 0 to turn off). Runs => /updateAuction.",
-        category: "Economy",
-        subcategory: "Auction",
-        min: 0,
-        max: 180
-    })
-    auctionRefresh = 60;
-
     // Coins
     @SliderProperty({
         name: "Coin Tracker",
@@ -396,6 +385,25 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     resetCoins() {
         ChatLib.command("resetCoins", true);
     }
+    
+    // Economy
+    @SliderProperty({
+        name: "Auction Refresh",
+        description: "Set how often action house data gets refreshed in minutes (set as 0 to turn off). Runs => /updateAuction.",
+        category: "Economy",
+        subcategory: "Economy",
+        min: 0,
+        max: 180
+    })
+    auctionRefresh = 60;
+
+    @SwitchProperty({
+        name: "Item Price",
+        description: "Displays item cost including enchants in item tooltip.",
+        category: "Economy",
+        subcategory: "Economy"
+    })
+    itemPrice = false;
 
 
     // COMBAT

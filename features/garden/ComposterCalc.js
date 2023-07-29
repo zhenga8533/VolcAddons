@@ -1,9 +1,21 @@
-import { getBazaar, getPricing } from "../../utils/bazaar";
+import { getBazaar } from "../../utils/bazaar";
 import { AQUA, BOLD, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, romanToNum } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to represent required Bazaar items.
+ * "ITEM_NAME": [Low Price, High Price]
+ */
+let items = {
+    "BOX_OF_SEEDS": [0, 0],
+    "OIL_BARREL": [0, 0],
+    "VOLTA": [0, 0],
+    "COMPOST": [0, 0],
+}
+getBazaar(items);
 
 /**
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.
@@ -30,8 +42,7 @@ registerWhen(register("guiMouseRelease", () => {
  * Fetches Bazaar data and performs calculations for single, hourly, and daily profits and prints to screen.
  */
 export function calcCompost(args) {
-    getPricing();
-    const items = getBazaar();
+    getBazaar(items);
 
     // Upgrades
     const testLevel = parseInt(args[2]);

@@ -25,6 +25,7 @@ import "./features/general/SkillTracker";
 
 // Economy
 import "./features/economy/CoinTracker";
+import "./features/economy/ItemPrice";
 
 // Combat
 import "./features/combat/BrokenHyp";

@@ -1,4 +1,4 @@
-import { getBazaar, getPricing } from '../../utils/bazaar';
+import { getBazaar } from '../../utils/bazaar';
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../../utils/constants';
 import { commafy } from "../../utils/functions";
 import { data } from '../../utils/variables';
@@ -23,6 +23,31 @@ const MAX_UPGRADES = 1.41;
 const MAX_INFERNO = 3.41;
 const MAX_CATALYST = 6.44;
 const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgrades!\n`;
+/**
+ * Variables used to represent required Bazaar items.
+ * "ITEM_NAME": [Low Price, High Price]
+ */
+const items = {
+    // Hypergolic Fuel Stuff
+    "ENCHANTED_COAL": [0, 0],
+    "ENCHANTED_SULPHUR": [0, 0],
+    "CRUDE_GABAGOOL": [0, 0],
+    "HYPERGOLIC_GABAGOOL": [0, 0],
+    "HEAVY_GABAGOOL": [0, 0],
+    "FUEL_GABAGOOL": [0, 0],
+    "CRUDE_GABAGOOL_DISTILLATE": [0, 0],
+    "INFERNO_FUEL_BLOCK": [0, 0],
+    // Inferno Minion Loot
+    "CHILI_PEPPER": [0, 0],
+    "INFERNO_VERTEX": [0, 0],
+    "REAPER_PEPPER": [0, 0],
+    // Vampire Minion Stuff
+    "HYPER_CATALYST": [0, 0],
+    "HEMOVIBE": [0, 0],
+    "HEMOGLASS": [0, 0],
+    "HEMOBOMB": [0, 0],
+}
+getBazaar(items);
 
 /**
  * Hypergolic gabagool calculation.
@@ -48,8 +73,8 @@ function calcHypergolic(type) {
  */
 export function calcMinions(args) {
     // Update Prices
-    getPricing();
-    const items = getBazaar();
+    getBazaar(items);
+    print(JSON.stringify(items));
 
     // Universal variables
     const minions = isNaN(args[2]) ? 31 : args[2];

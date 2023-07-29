@@ -88,7 +88,9 @@ export function updateAuction(page) {
         ChatLib.chat(`${LOGO} ${RED}${error.cause}`);
     });
 }
-updateAuction(0);
+
+if (settings.auctionRefresh)
+    updateAuction(0);
 
 let minutes = 0
 registerWhen(register("step", () => {
