@@ -19,6 +19,10 @@ const CATEGORIES = {
     "necklace": "Necklace",
 }
 
+const GOD_ROLL = {
+    
+}
+
 /**
  * Displays prices of attributes of shards and armor/equipment pieces sent by player.
  *
