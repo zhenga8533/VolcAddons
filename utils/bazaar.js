@@ -1,6 +1,11 @@
 import axios from "../../axios";
 
-// Gets BZ Pricing for "items"
+
+/**
+ * Makes a PULL request to get bazaar data from Slothpixel API.
+ * 
+ * @param {Object} { PRODUCT_NAME : [orderPrice, instaPrice]... }
+ */
 export function getBazaar(items) {
     axios.get('https://api.slothpixel.me/api/skyblock/bazaar/' + Object.keys(items).join(",")).then(response => {
         Object.keys(items).forEach((itemID) => {

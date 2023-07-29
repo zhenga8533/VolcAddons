@@ -1,4 +1,6 @@
-// COLORS
+/**
+ * Color codes.
+ */
 export const BLACK = '&0';
 export const DARK_BLUE = '&1';
 export const DARK_GREEN = '&2';
@@ -16,7 +18,9 @@ export const LIGHT_PURPLE = '&d';
 export const YELLOW = '&e';
 export const WHITE = '&f';
 
-// FORMAT
+/**
+ * Formatting codes.
+ */
 export const OBFUSCATED = '&k';
 export const BOLD = '&l';
 export const STRIKETHROUGH = '&m';
@@ -24,20 +28,29 @@ export const UNDERLINE = '&n';
 export const ITALIC = '&o';
 export const RESET = '&r';
 
-// SOUND
+/**
+ * Sounds.
+ */
 export const AMOGUS = new Sound({source: "amogus.ogg"});
 export const HARP = new Sound({source: "harp.ogg"});
 export const MUSIC = new Sound({source: "music.ogg"});
 export const PLING = new Sound({source: "pling.ogg"});
 export const CHIME = new Sound({source: "icechime.ogg"});
 
+/**
+ * VolcAddons setting constants.
+ */
 export const HEADER = 
 `
 ${GOLD}${BOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
 ${WHITE}Made By Volcaronitee
 `;
+export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}]`;
+export const GUI_INSTRUCT = "Use +/- to change scale or press R to reset";
 
-// ETC
+/**
+ * Rift waypoints.
+ */
 export const ENIGMA_SOULS = [
     ["Tough Bark", -15, 91, 94], ["Next to Enigma", -27, 71, 90], ["Woods Flower Pot", -6, 60, 226], ["Wither Cage", -142, 68, 174],
     ["Pressurized", -137, 51, 120], ["Two Plates", -129, 72, 77], ["Fleespook", -27, 89, 136], ["Up in the Sky", -137, 133, 156],
@@ -51,12 +64,10 @@ export const ENIGMA_SOULS = [
     ["Standing there", 255, 74, 160], ["Between Towers", 262, 118, 94], ["Castle Fleespook", 182, 92, 124], ["Castle Flower Pot", 266, 60, 145],
     ["Castle Balloons", 232, 94, 168], ["Fairylosopher", 256, 130, 75]
 ];
-
 export const CAT_SOULS = [
     ["Piece 1", -93, 69, 112], ["Piece 2", 0, 56, 63], ["Piece 3", -139, 45, 15], ["Piece 4", -62, 88, -81], ["Piece 5", -24, 72, -198],
     ["Piece 6", 38, 65, -118], ["Piece 7", 8, 72, -15], ["Piece 8", 22, 43, -220], ["Piece 9", 152, 80, -14]
 ];
-
 export const RIFT_NPCS = {
     "alabaster" : ["Alabaster", -130, 73, 167],
     "alatar" : ["Alatar", -47, 116, 71],
@@ -182,7 +193,6 @@ export const RIFT_NPCS = {
     "wizardman" : ["Wizardman", -45, 90, 70],
     "yoshua" : ["Yoshua", -69, 71, -118],
 }
-
 export const RIFT_ZONES = {
     "wizard tower" : ["Wizard Tower", -48, 122, 73],
     "wyld woods" : ["Wyld Woods", -80, 67, 132],
@@ -226,7 +236,3 @@ export const RIFT_ZONES = {
     "oubliette" : ["Oubliette", 217, 81, 128],
     "fairylosopher tower" : ["Fairylosopher Tower", 252, 106, 78],
 }
-
-export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}]`;
-
-export const GUI_INSTRUCT = "Use +/- to change scale or press R to reset";

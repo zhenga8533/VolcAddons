@@ -1,9 +1,13 @@
 import request from "../../requestV2";
 import settings from "../settings";
-import { GREEN, LOGO, RED } from "./constants";
+import { LOGO, RED } from "./constants";
 import { findFirstRomanNumeral, findWordsInString, romanToNum } from "./functions";
 import { registerWhen } from "./variables";
 
+
+/**
+ * Variables used to generate and record lbin auction pricing.
+ */
 class AuctionItem {
     constructor() {
         this.attributes = {
@@ -28,7 +32,6 @@ class AuctionItem {
         this.price = 1e10;
     }
 }
-
 const items = {
     "Attribute Shard": new AuctionItem(),
     "Helmet": new AuctionItem(),
@@ -42,9 +45,10 @@ const items = {
 }
 export function getAuction() { return items };
 
-
 /**
  * Makes a PULL request to get auction data from Hypixel API.
+ * 
+ * @param {number} page - 0-finalPage of auction API
  */
 export function updateAuction(page) {
     request({
@@ -88,10 +92,11 @@ export function updateAuction(page) {
         ChatLib.chat(`${LOGO} ${RED}${error.cause}`);
     });
 }
+if (settings.auctionRefresh) updateAuction(0);
 
-if (settings.auctionRefresh)
-    updateAuction(0);
-
+/**
+ * Calls for an auction house reloop every X minutes.
+ */
 let minutes = 0
 registerWhen(register("step", () => {
     minutes++;
@@ -101,6 +106,4 @@ registerWhen(register("step", () => {
         minutes = 0;
     }
 }).setDelay(60), () => settings.auctionRefresh);
-register("command", () => {
-    updateAuction(0);
-}).setName("updateAuction");
+register("command", () => { updateAuction(0) }).setName("updateAuction");

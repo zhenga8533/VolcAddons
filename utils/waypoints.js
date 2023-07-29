@@ -1,17 +1,20 @@
-import { getBurrow, getTheory } from "../features/hub/DianaWaypoint";
-import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
-import { getInquisitors, getVanquishers } from "../features/misc/AnnouceMob";
-import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
-import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
+// Importing functions from different files
+import { getBurrow, getTheory } from "../features/hub/DianaWaypoint"; // Importing functions for DianaWaypoint
+import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates"; // Importing functions for KuudraCrates
+import { getInquisitors, getVanquishers } from "../features/misc/AnnouceMob"; // Importing functions for AnnouceMob
+import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints"; // Importing functions for RiftWaypoints
+import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints"; // Importing functions for UserWaypoints
 
-import renderBeaconBeam from "../../BeaconBeam";
-import RenderLib from "../../RenderLib/index.js";
-import { getVamps } from "../features/rift/VampireSlayer";
+// Importing render functions from other files
+import renderBeaconBeam from "../../BeaconBeam"; // Importing function for rendering beacon beams
+import RenderLib from "../../RenderLib/index.js"; // Importing RenderLib for rendering in the world
+import { getVamps } from "../features/rift/VampireSlayer"; // Importing functions for VampireSlayer
+
 
 // General Waypoints
 let formatted = [];
 
-// What actually does the waypoint rendering
+// Function to format waypoints for rendering
 function formatWaypoints(waypoints, r, g, b) {
     if (!waypoints.length) return;
     let x, y, z, distance, xSign, zSign = 0;
@@ -29,7 +32,7 @@ function formatWaypoints(waypoints, r, g, b) {
             z = Player.getZ() + (z - Player.getZ()) * (100 / distance);
         }
 
-        // Formats and realins everything
+        // Formats and realigns everything
         distance = Math.round(distance) + "m";
         xSign = x == 0 ? 1 : Math.sign(x);
         zSign = z == 0 ? 1 : Math.sign(z);
@@ -48,6 +51,8 @@ function formatWaypoints(waypoints, r, g, b) {
         formatted.push(wp);
     });
 }
+
+// Registering tick event to update and format the waypoints
 register("tick", () => {
     formatted = [];
     formatWaypoints(getChatWaypoints(), 0, 1, 1); // Cyan Waypoint
@@ -58,6 +63,8 @@ register("tick", () => {
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
 });
+
+// Registering renderWorld event to render the waypoints and other entities
 register("renderWorld", () => {
     renderWaypoint(formatted);
     renderBeam(getCrates()); // White Crates
@@ -69,8 +76,7 @@ register("renderWorld", () => {
     renderSimple(getCat(), 0, 0, 1); // Blue enigma
 });
 
-
-// Rendering functions
+// Helper function to render simple waypoints
 function renderSimple(waypoints, r, g, b) {
     if (!waypoints.length) return;
 
@@ -79,11 +85,13 @@ function renderSimple(waypoints, r, g, b) {
         y = waypoint[2];
         z = waypoint[3];
     
-        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true)
+        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true);
         RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, true);
         renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
-    })
+    });
 }
+
+// Helper function to render waypoint with beams
 function renderWaypoint(waypoints) {
     if (!waypoints.length) return;
 
@@ -98,11 +106,15 @@ function renderWaypoint(waypoints) {
         renderBeaconBeam(beam[0], beam[1], beam[2], rgb[0], rgb[1], rgb[2], 0.5, false);
     });
 }
+
+// Helper function to render beacon beams
 function renderBeam(waypoints) {
     if (!waypoints.length) return;
 
     waypoints.forEach((waypoint) => renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
 }
+
+// Helper function to render entities (mobs)
 function renderEntities(entities, title, r, g, b) {
     if (!entities.length) return;
 
@@ -119,6 +131,8 @@ function renderEntities(entities, title, r, g, b) {
         RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.25, true);
     });
 }
+
+// Helper function to render stands (npcs)
 function renderStands(stands, title, r, g, b) {
     if (!stands.length) return;
 
