@@ -3,8 +3,11 @@ import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 
-let invites = [];
 
+/**
+ * Variables used to detect disbanded parties in past minute.
+ */
+let invites = [];
 
 /**
  * Records disbanded parties for 60 seconds for auto join reparty.

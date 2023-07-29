@@ -4,15 +4,20 @@ import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to track and display tuba timer.
+ */
 let tuba = 0;
 let type = false;
 let cd = 0;
 let alerted = false;
-
 const tubaExample = `${GRAY}${BOLD}Tuba Timer: ${RESET}Scooby Snack`;
 const tubaOverlay = new Overlay("tubaTimer", ["The Rift"], data.UL, "moveTubaTimer", tubaExample);
 
-// Detect Cells tubament
+/**
+ * Tracks action bar for Howl ability and resets tuba timer.
+ */
 registerWhen(register("actionBar", () => {
     if (cd > 0) return;
 
@@ -22,6 +27,9 @@ registerWhen(register("actionBar", () => {
     alerted = false;
 }).setCriteria("${before}-${x} Mana (Howl)${after}"), () => getWorld() == "The Rift" && (settings.tubaTimer || settings.tubaAlert));
 
+/**
+ * Updates tuba overlay every tick and alerst player when ability can be used again.
+ */
 registerWhen(register("tick", () => {
     // Check Tuba type
     if (!type && Player.getHeldItem() != null) {

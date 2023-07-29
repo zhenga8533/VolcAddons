@@ -3,12 +3,14 @@ import { AQUA, GREEN, LOGO } from "../../utils/constants";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 
-// General Waypoints
+
+/**
+ * Variables used to represent user inputted waypoints.
+ */
 let chatWaypoints = [];
 export function getChatWaypoints() { return chatWaypoints };
 let userWaypoints = [];
 export function getUserWaypoints() { return userWaypoints };
-
 
 /**
  * Detects any patcher formatted coords sent in chat.

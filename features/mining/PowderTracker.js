@@ -5,21 +5,16 @@ import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to track and display current event and powder.
+ */
 const WitherClass = Java.type('net.minecraft.entity.boss.EntityWither').class;
 let doublePowder = false;
-
-// Coin tracking
 const powders = {
     "Mithril": new Stat(),
     "Gemstone": new Stat()
 }
-
-register("command", () => {
-    for (let key in powders)
-        powders[key].reset();
-}).setName("resetPowder");
-
-// HUD
 const powderExample =
 `${DARK_GREEN}${BOLD}Mithril Powder: ${WHITE}Hello
 ${DARK_GREEN}${BOLD}Mithril Rate: ${WHITE}@
@@ -28,8 +23,17 @@ ${LIGHT_PURPLE}${BOLD}Gemstone Rate: ${WHITE}The
 ${BLUE}${BOLD}Time Passed: ${WHITE}Bot`;
 const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], data.PL, "movePowder", powderExample);
 
+/**
+ * Command to reset powder overlay.
+ */
+register("command", () => {
+    for (let key in powders)
+        powders[key].reset();
+}).setName("resetPowder");
 
-// Check for 2x
+/**
+ * Check withers in world for 2x powder.
+ */
 registerWhen(register("step", () => {
     if (doublePowder) return;
     withers = World.getAllEntitiesOfType(WitherClass);
@@ -37,12 +41,16 @@ registerWhen(register("step", () => {
     if (festivity != undefined) doublePowder = true;
 }).setFps(1), () => getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines");
 
-// Event start
+/**
+ * Checks chat for 2x powder event start message.
+ */
 registerWhen(register("chat", (festivity) => {
     if (festivity.includes("2X POWDER")) doublePowder = true;
 }).setCriteria("${festivity} STARTED!"), () => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
 
-// Event end
+/**
+ * Checks chat for 2x powder event end message.
+ */
 registerWhen(register("chat", (festivity) => {
     if (festivity.includes("2X POWDER")) doublePowder = false;
 }).setCriteria("${festivity} ENDED!"), () => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
@@ -50,8 +58,12 @@ registerWhen(register("worldUnload", () => {
     doublePowder = false
 }), () => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
 
-
-// Track gemstone powder
+/**
+ * Tracks chat for any powder gain messages.
+ *
+ * @param {string} amount - Amount of powder in "x,xxx" format.
+ * @param {string} type - Type of powder (mithril/gemstone).
+ */
 registerWhen(register("chat", (amount, type) => { // Chests
     if (getPaused()) return;
     
@@ -62,7 +74,9 @@ registerWhen(register("chat", (amount, type) => { // Chests
 }).setCriteria("You received +${amount} ${type} Powder."),
 () => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
 
-// Update powder data
+/**
+ * Updates powder overlay every second.
+ */
 registerWhen(register("step", () => {
     if (getPaused()) return;
 

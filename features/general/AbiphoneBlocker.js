@@ -3,8 +3,11 @@ import { LOGO, WHITE } from "../../utils/constants";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 
-let blockRings = false;
 
+/**
+ * Variable used to represent unwanted ringing.
+ */
+let blockRings = false;
 
 /**
  * Tracks chat for when a caller in blocklist calls and cancels it.

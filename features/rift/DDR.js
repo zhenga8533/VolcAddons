@@ -2,6 +2,10 @@ import settings from "../../settings";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to represent complete dance and current dance move.
+ */
 last = "";
 const DANCES = [
     "§bMove!§r",
@@ -72,6 +76,13 @@ const DANCES = [
 ];
 let dancing = [...DANCES];
 
+/**
+ * Replaces Hypixel dance room subtitles with larger, permanent titles.
+ *
+ * @param {string} title - Message used for the larger title.
+ * @param {string} subtitle - Message used for the smaller subtitle.
+ * @param {Object} event - Title and subtitle event.
+ */
 registerWhen(register("renderTitle", (title, subtitle, event) => {
     if (title == "§aIt's happening!§r" || title == "§aKeep it up!§r") cancel(event);
     if (!dancing.includes(subtitle) || subtitle == last) return;
@@ -83,6 +94,12 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
     cancel(event);
 }), () => getWorld() == "The Rift" && settings.ddrHelper);
 
-registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You were${failure}!"), () => getWorld() == "The Rift" && settings.ddrHelper);
-registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You d${failure}!"), () => getWorld() == "The Rift" && settings.ddrHelper);
-registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You're ${failure}!"), () => getWorld() == "The Rift" && settings.ddrHelper);
+/**
+ * Resets dance if player fails.
+ */
+registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You were${failure}!"),
+() => getWorld() == "The Rift" && settings.ddrHelper);
+registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You d${failure}!"),
+() => getWorld() == "The Rift" && settings.ddrHelper);
+registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You're ${failure}!"),
+() => getWorld() == "The Rift" && settings.ddrHelper);

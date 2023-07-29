@@ -5,10 +5,16 @@ import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to track party.
+ */
 let notInParty = 0;
 let onCD = false;
 
-// TRACK KUUDRA START
+/**
+ * Warps other player into lobby once run begins.
+ */
 registerWhen(register("chat", () => {
     if (!getIsLeader() || onCD) return; 
 
@@ -24,7 +30,9 @@ registerWhen(register("chat", () => {
     })
 }).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraRP);
 
-// TRACKS TRANSFER (prevents bug when transfering too fast)
+/**
+ * Tracks party transfers with a delay to prevent fast transfer bug.
+ */
 const TRANSFER = [
     "The party was transferred to ${player1} by ${player2}",
     "The party was transferred to ${player1} because ${player2} left",
@@ -37,7 +45,9 @@ TRANSFER.forEach(msg => {
     }).setCriteria(msg), () => settings.kuudraRP);
 });
 
-// TRADER JOINS PARTY
+/**
+ * Tracks when trader joins party to warp.
+ */
 registerWhen(register("chat", () => {
     if (!getIsLeader() || notInParty == 0) return;
 
@@ -56,7 +66,9 @@ registerWhen(register("chat", () => {
     }
 }).setCriteria("${player} joined the party."), () => settings.kuudraRP);
 
-// REMIND LEADER
+/**
+ * Alerts player if they are leader as run ends.
+ */
 registerWhen(register("chat", () => {
     delay(() => {
         if (getIsLeader()) {
@@ -69,7 +81,7 @@ registerWhen(register("chat", () => {
     }, 1000);
 }).setCriteria("${before}Tokens Earned:${after}"), () => getWorld() == "Kuudra" && settings.kuudraRP);
 
-// RESETS IN CASE YOU GO OUT OF RUN
-register("worldUnload", () => {
-    notInParty = 0;
-});
+/**
+ * Resets party if player leaves instance.
+ */
+register("worldUnload", () => { notInParty = 0 });

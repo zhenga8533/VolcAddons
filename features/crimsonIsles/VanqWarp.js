@@ -4,10 +4,13 @@ import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { findZone, getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to track party and represent vanquisher spawn data.
+ */
 let vanqCoords = [0, 0, 0, "None"];
 let vanqSpawned = false;
 let notInParty = 0;
-
 
 /**
  * Saves location data and invites every player in settings whenever player spawns a Vanquisher.

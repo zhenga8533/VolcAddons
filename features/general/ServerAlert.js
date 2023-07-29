@@ -3,11 +3,14 @@ import { BOLD, DARK_RED, WHITE } from "../../utils/constants";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 
-let servers = [];
-
 
 /**
- * Tracks server player is in and replaces joining message if player has been in server in past X minutes.
+ * Variable to track servers player has been in.
+ */
+let servers = [];
+
+/**
+ * Replaces joining message if player has been in server in past X minutes.
  *
  * @param {string} server - Hypixel server id.
  * @param {Object} event - Chat message event.
@@ -19,6 +22,10 @@ registerWhen(register("chat", (server, event) => {
     } else
         servers.push(server);
 }).setCriteria("Sending to server ${server}..."), () => settings.serverAlert);
+
+/**
+ * Saves server for X minutes when leaving it.
+ */
 registerWhen(register("worldUnload", () => {
     delay(() => {
         if (servers.length)

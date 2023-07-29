@@ -1,8 +1,10 @@
 [
+    "-Added /va attribute",
+    "-Added Kuudra coinage tracker",
     "-Added Inquisitor counter",
-    "-Added minor changes to various features",
     "-Changed some settings (you may have to reactivate)",
     "   -Party settings",
+    "   -Economy settings",
     "   -Garden settings",
     "-Spring Cleaning! (pain and suffering)"
 ]

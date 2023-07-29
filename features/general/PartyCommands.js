@@ -8,9 +8,33 @@ import { data, registerWhen } from "../../utils/variables";
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
 
-// Variables for different commands
-let onCD = false;
 
+/**
+ * Variable used to represent /pc cooldown and possible responses.
+ */
+let onCD = false;
+const RESPONSES = ["As I see it, yes",
+                    "It is certain",
+                    "It is decidedly so",
+                    "Most likely",
+                    "Outlook good",
+                    "Signs point to yes",
+                    "Without a doubt",
+                    "Yes",
+                    "Yes - definitely",
+                    "You may rely on it",
+                    "Reply hazy, try again",
+                    "Ask again later",
+                    "Better not tell you now",
+                    "Cannot predict now",
+                    "Concentrate and ask again",
+                    "Don't count on it",
+                    "My reply is no",
+                    "My sources say no",
+                    "Outlook not so good",
+                    "Very doubtful"];
+const RPS = ["rock", "paper", "scissors"];
+const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
 
 /**
  * Makes a POST request to upload an image to Imgur.
@@ -48,31 +72,6 @@ function setWaifu() {
     }, 1000);
 }
 setWaifu();
-
-// Response Variables
-const RESPONSES = ["As I see it, yes",
-                    "It is certain",
-                    "It is decidedly so",
-                    "Most likely",
-                    "Outlook good",
-                    "Signs point to yes",
-                    "Without a doubt",
-                    "Yes",
-                    "Yes - definitely",
-                    "You may rely on it",
-                    "Reply hazy, try again",
-                    "Ask again later",
-                    "Better not tell you now",
-                    "Cannot predict now",
-                    "Concentrate and ask again",
-                    "Don't count on it",
-                    "My reply is no",
-                    "My sources say no",
-                    "Outlook not so good",
-                    "Very doubtful"];
-const RPS = ["rock", "paper", "scissors"];
-const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
-
 
 /**
  * Various party and leader commands.
@@ -245,19 +244,13 @@ export function executeCommand(name, args, sendTo) {
  */
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
-
     executeCommand(getPlayerName(player), message.split(" "), "pc");
 }).setCriteria("Party > ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 2);
-
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
-
     executeCommand(getGuildName(player), message.split(" "), "gc");
 }).setCriteria("Guild > ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 3);
-
-// MESSAGE COMMANDS
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
-
     executeCommand(getPlayerName(player), message.split(" "), "r");
 }).setCriteria("From ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 4);

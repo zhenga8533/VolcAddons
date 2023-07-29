@@ -62,20 +62,16 @@ export function findFirstRomanNumeral(str) {
 }
 
 const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
-export function get3x3Stands() {
-    const x = Player.getX();
-    const y = Player.getY();
-    const z = Player.getZ();
-    
-    const stands = [...World.getChunk(x, y, z).getAllEntitiesOfType(StandClass)];
-    stands.push(...World.getChunk(x + 16, y, z + 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + 16, y, z - 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - 16, y, z + 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - 16, y, z - 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + 16, y, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - 16, y, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, y, z + 16).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, y, z - 16).getAllEntitiesOfType(StandClass));
+export function get3x3Stands(x, z, diff) {
+    const stands = [...World.getChunk(x, 69, z).getAllEntitiesOfType(StandClass)];
+    stands.push(...World.getChunk(x + diff, 69, z + diff).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x + diff, 69, z - diff).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x - diff, 69, z + diff).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x - diff, 69, z - diff).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x + diff, 69, z).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x - diff, 69, z).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x, 69, z + diff).getAllEntitiesOfType(StandClass));
+    stands.push(...World.getChunk(x, 69, z - diff).getAllEntitiesOfType(StandClass));
 
     return stands;
 }

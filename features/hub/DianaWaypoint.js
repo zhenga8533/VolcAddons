@@ -6,24 +6,37 @@ import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
-// Burow detection Stuff
-let heldItem = undefined;
 
+/**
+ * Variables used to classify and display burrow estimations.
+ */
 let particles = [];
 let distance = 0;
+let heldItem = undefined;
 let dig = false;
 let cast = false;
 let cd = false;
-
 let theoryBurrow = [];
+export function getTheory() { return theoryBurrow };
 let burrows = [];
+export function getBurrow() { return burrows };
 
-// Vector Formula
+/**
+ * Calculates a point on a vector in regards to start/end coordinates and distance.
+ *
+ * @param {string} start - Starting coordinate.
+ * @param {string} end - Ending coordinate.
+ */
 function getCoord(start, end) {
     return Math.round(start + (end - start) * distance);
 }
 
-// Particle Tracking
+/**
+ * Tracks different particle spawns around the player to use for burrow estimator and classifier.
+ *
+ * @param {Object} particle - Particle entity object.
+ * @param {Object} type - Particle name.
+ */
 let closest = undefined;
 registerWhen(register("spawnParticle", (particle, type) => {
     const particlePos = particle.getPos();
@@ -72,8 +85,16 @@ registerWhen(register("spawnParticle", (particle, type) => {
 }), () => getWorld() == "Hub" && (settings.dianaWaypoint || settings.dianaBurrow) &&
 getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
-// Tracks Distance Using Sound
-registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
+/**
+ * Uses sound pitch to determine how far away a theoretical burrow could appear.
+ *
+ * @param {number[]} pos - Array of x, y, z positions.
+ * @param {string} name - Name of sound.
+ * @param {string} vol - Volume of sound.
+ * @param {string} pitch - pitch of sound.
+ * @param {string} category - Sound category.
+ */
+registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
     if (!cast) return;
 
     // Uhh so it was a little hard to figure out an equation so this may be a little brute force hardcoded :skull:
@@ -91,7 +112,14 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category, event) => {
 }).setCriteria("note.harp"), () => getWorld() == "Hub" && settings.dianaWaypoint &&
 getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
-// Track spade ability to clear current particle list
+/**
+ * Tracks when player uses Ancestral Spade ability as to not "spam" out the estimator.
+ *
+ * @param {number} x - X position of mouse click.
+ * @param {number} y - Y position of mouse click.
+ * @param {boolean} button - True for right click, False for left click.
+ * @param {boolean} state - True for key down, False for key up
+ */
 registerWhen(register("clicked", (x, y, button, state) => {
     if (Player.getHeldItem() == null || !button || !state || cd) return;
 
@@ -106,7 +134,13 @@ registerWhen(register("clicked", (x, y, button, state) => {
 }), () => getWorld() == "Hub" && settings.dianaWaypoint &&
 getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
-// Calculate theoretical burrow and closest warp
+/**
+ * Resets "lastCast" variable whenever player right clicks with a fishing rod in hand.
+ */
+let warps = [];
+let start = 0;
+let end = 0;
+let theory = [];
 const WARPS = {
     "hub": [-2.5, 70, -69.5],
     "castle": [-250, 130, 45],
@@ -114,11 +148,6 @@ const WARPS = {
     "museum": [-75.5, 76, 80.5],
     "crypt": [-161.5, 61, -99.5]
 }
-let warps = [];
-let start = 0;
-let end = 0;
-let theory = [];
-
 export function setWarps() {
     warps = [];
     warps.push(["player", 0, 0, 0]);
@@ -130,6 +159,9 @@ export function setWarps() {
 }
 setWarps();
 
+/**
+ * Uses burrow estimator to determine which hub warp is closest to burrow.
+ */
 registerWhen(register("tick", () => {
     if (particles.length == 0 || !cast) return;
 
@@ -144,7 +176,9 @@ registerWhen(register("tick", () => {
 }), () => getWorld() == "Hub" && settings.dianaWaypoint &&
 getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
-// Warp to closest location
+/**
+ * Key press to warp player to closest burrow.
+ */
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "VolcAddons");
 dianaKey.registerKeyPress(() => {
     if (settings.dianaWarp && theory[0] != undefined && theory[0] != "warp player")
@@ -152,7 +186,9 @@ dianaKey.registerKeyPress(() => {
 })
 register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() });
 
-// Deletes waypoint once dug out
+/**
+ * Deletes burrow when one is dug out.
+ */
 registerWhen(register("chat", () => {
     // Sets a timeout on particle loading
     dig = true;
@@ -165,21 +201,13 @@ registerWhen(register("chat", () => {
 }).setCriteria("${before}urrow${after}"), () => getWorld() == "Hub" && settings.dianaWaypoint &&
 getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
 
-// => Draw Waypoint
-export function getTheory() {
-    return theoryBurrow;
-}
-
-export function getBurrow() {
-    return burrows;
-}
-
-// Deletes burrow waypoints if bad thing happens
+/**
+ * Removes all burrows if player leaves world or dies.
+ */
 register("worldUnload", () => {
     theoryBurrow = [];
     burrows = [];
 });
-
 registerWhen(register("chat", () => {
     burrows = [];
 }).setCriteria(" ☠ You ${died}."), () => getWorld() == "Hub" && settings.dianaWaypoint &&

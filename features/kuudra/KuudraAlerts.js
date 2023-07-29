@@ -3,47 +3,62 @@ import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from 
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
-// NO KEY ALERT
+
+/**
+ * No key alert.
+ */
 registerWhen(register("chat", () => {
     Client.Companion.showTitle(`${BOLD}NO KUUDRA KEY!`, "", 10, 50, 10);
 }).setCriteria("WARNING: You do not have a key for this tier in your inventory, you will not be able to claim rewards."),
 () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.keyAlert);
 
-// UNREADY ALERT
+/**
+ * Unready alert.
+ */
 registerWhen(register("chat", (player) => {
     const name = player.removeFormatting().toUpperCase();
     MUSIC.play();
     Client.Companion.showTitle(`${DARK_RED}${BOLD}${name} ${WHITE}IS NO LONGER READY!`, "", 10, 50, 10);
 }).setCriteria("${player} is no longer ready!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.unreadyAlert);
 
-// CHOOSE PERK
+/**
+ * Choose perk alert.
+ */
 registerWhen(register("chat", () => {
     MUSIC.play();
     Client.Companion.showTitle(`${AQUA}${BOLD}BUY UPGRADE ROUTE!`, "", 10, 100, 10);
 }).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"),
 () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.routeAlert);
 
-// SUPPLY ALERT
+/**
+ * Supply spawned alert.
+ */
 registerWhen(register("chat", () => {
     MUSIC.play();
     Client.Companion.showTitle(`${AQUA}${BOLD}PICKUP SUPPLY!`, "", 10, 100, 10);
 }).setCriteria("[NPC] Elle: Not again!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.supplyAlert);
 
-// BUILDING ALERT
+/**
+ * Building started alert.
+ */
 registerWhen(register("chat", () => {
     MUSIC.play();
     Client.Companion.showTitle(`${AQUA}${BOLD}START BUILDING!`, "", 10, 50, 10);
 }).setCriteria("[NPC] Elle: It's time to build the Ballista again! Cover me!"),
 () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.buildingAlert);
 
-// FRESH TOOLS ALERT
+/**
+ * Fresh tools alert.
+ */
 registerWhen(register("chat", () => {
     MUSIC.play();
     Client.Companion.showTitle(`${GREEN}${BOLD}EAT FRESH!`, "", 10, 50, 10);
 }).setCriteria("Your Fresh Tools Perk bonus doubles your building speed for the next 5 seconds!"),
 () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.freshAlert);
 
-// FUEL ALERTS
+/**
+ * Fuel spawned alert.
+ */
 registerWhen(register("chat", (player, percentage) => { // Ballista full alert
     MUSIC.play();
     switch (percentage) {
@@ -63,7 +78,10 @@ registerWhen(register("chat", (player, percentage) => { // Ballista full alert
 }).setCriteria("${player} recovered a Fuel Cell and charged the Ballista! (${percentage}%)"),
 () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.fuelAlert);
 
-registerWhen(register("chat", (player) => { // Stunner eaten alert
+/**
+ * Stunner eaten alert.
+ */
+registerWhen(register("chat", (player) => {
     const ign = player.toUpperCase();
     const stunner = settings.kuudraStunner.toUpperCase();
 
@@ -73,7 +91,10 @@ registerWhen(register("chat", (player) => { // Stunner eaten alert
     }
 }).setCriteria("${player} has been eaten by Kuudra!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.fuelAlert);
 
-registerWhen(register("chat", (player) => { // Ballista mounted alert
+/**
+ * Ballista mounted alert.
+ */
+registerWhen(register("chat", (player) => {
     const ign = player.toUpperCase();
     const cannonear = settings.kuudraCannonear.toUpperCase();
 
@@ -83,15 +104,20 @@ registerWhen(register("chat", (player) => { // Ballista mounted alert
     }
 }).setCriteria("${player} mounted a Cannon!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.ballistaAlert);
 
-registerWhen(register("chat", (player) => { // Kuudra stunned alert
+/**
+ * Kuudra stunned alert.
+ */
+registerWhen(register("chat", () => {
     MUSIC.play();
     Client.Companion.showTitle(`${GREEN}${BOLD}KUUDRA STUNNED!`, "", 10, 100, 10);
 }).setCriteria("{player} destroyed one of Kuudra's pods!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.stunAlert);
 
+/**
+ * Warns player about dropship as they get close to center.
+ */
 const EntityGhast = Java.type('net.minecraft.entity.monster.EntityGhast');
 let alerted = false
 registerWhen(register("step", () => {
-    // DROPSHIP WARNING
     if (settings.kuudraAlerts && settings.dropshipAlert) {
         let ghasts = World.getAllEntitiesOfType(EntityGhast.class);
         const dropships = ghasts.filter((ghast) => {
@@ -104,8 +130,10 @@ registerWhen(register("step", () => {
     }
 }).setFps(1), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.dropshipAlert);
 
+/**
+ * Alerts player when token gathered surpasses set threshhold.
+ */
 registerWhen(register("step", () => {
-    // TOKEN ALERT
     if (settings.kuudraAlerts && settings.tokenAlert && !alerted) {
         tokens = Scoreboard.getLines().find((line) => line.getName().includes("Tokens"));
         if (tokens) {
@@ -117,7 +145,4 @@ registerWhen(register("step", () => {
         }
     }
 }).setFps(5), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.tokenAlert);
-
-register("worldLoad", () => {
-    alerted = false;
-});
+register("worldLoad", () => { alerted = false });

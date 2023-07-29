@@ -5,13 +5,16 @@ import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to track and display Inquisitor counter.
+ */
 const session = {
     "inqs": 0,
     "burrows": 0,
     "last": 0,
     "average": 0,
 };
-
 const counterExample =
 `${GOLD}${BOLD}Total Inqs: ${RESET}Who.
 ${GOLD}${BOLD}Total Burrows: ${RESET}Let.
@@ -19,9 +22,10 @@ ${GOLD}${BOLD}Burrows Since: ${RESET}Him.
 ${GOLD}${BOLD}Average Burrows: ${RESET}Cook.`
 const counterOverlay = new Overlay("inqCounter", ["Hub"], data.IL, "moveInq", counterExample);
 
-
 /**
- * Uses the "Book of Stats" to track whenever player burrows an entity and updates the Vanquisher Overlay.
+ * Updates the inquisitor counter depending on if an inquisitor spawned.
+ *
+ * @param {boolean} inqSpawned - True if inquisitor spawned, false otherwise.
  */
 export function updateInqCounter(inqSpawned) {
     // Overall
@@ -55,6 +59,12 @@ ${GOLD}${BOLD}Burrows Since: ${RESET}${session.last}
 ${GOLD}${BOLD}Average Burrows: ${RESET}${session.average}`;
 }
 
+/**
+ * Updates inq counter if mob is not a champion or inquisitor (handled seperately).
+ *
+ * @param {string} _ - Useless random word used when digging out a burrow.
+ * @param {string} mob - Name of the mob that spawned from burrow.
+ */
 registerWhen(register("chat", (_, mob) => {
     if (mob != "Minos Champion")
         updateInqCounter(false);

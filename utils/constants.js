@@ -183,7 +183,7 @@ export const RIFT_NPCS = {
     "yoshua" : ["Yoshua", -69, 71, -118],
 }
 
-export const ZONES = {
+export const RIFT_ZONES = {
     "wizard tower" : ["Wizard Tower", -48, 122, 73],
     "wyld woods" : ["Wyld Woods", -80, 67, 132],
     "enigmas crib" : ["Enigma's Crib", -40, 71, 96],

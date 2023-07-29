@@ -3,39 +3,49 @@ import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../../utils/c
 import { commafy } from "../../utils/functions";
 import { data } from '../../utils/variables';
 
-// Minion Action Speed per Minion Tier
+
+/**
+ * Variables used to represent minion upgrades and action speeds.
+ */
 const INFERNO_ACTION_UPGRADE = 34.5;
 const INFERNO_ACTION_BASE = 1102 + INFERNO_ACTION_UPGRADE;
 const VAMPIRE_ACTIONS = [190, 175, 160, 140, 117, 95];
-
-// 1 (base) + 0.4 (2 flycatchers) + 0.11 (beacon) + 0.1 (mithril infusion) = 1.61
+/**
+ * 1 (base) + 0.4 (2 flycatchers) + 0.11 (beacon) + 0.1 (mithril infusion) = 1.61
+ * 
+ * Other potention upgrades:
+ * +1.8 (inferno minions)
+ * -0.2 (super compacter)
+ * 10/15/20 (inferno fuel)
+ * 4 (hyper catalyst)
+ */
 const MAX_UPGRADES = 1.41;
 const MAX_INFERNO = 3.41;
 const MAX_CATALYST = 6.44;
-/*  Other potention upgrades:
-    +1.8 (inferno minions)
-    -0.2 (super compacter)
-    *10/15/20 (inferno fuel)
-    *4 (hyper catalyst)
-*/
-
-// Other Globals
 const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgrades!\n`;
 
-
-/*  HYPERGOLIC GABAGOOL:
-    2404 Enchanted Coal
-    150.25 Enchanted Sulphur
-    13824 Crude Gabagool
-
-    Type 0 = Insta Buy
-    Type 1 = Buy Order
-*/
+/**
+ * Hypergolic gabagool calculation.
+ * 
+ * HYPERGOLIC GABAGOOL:
+ * 2404 Enchanted Coal
+ * 150.25 Enchanted Sulphur
+ * 13824 Crude Gabagool
+ *
+ * Type 0 = Insta Buy
+ * Type 1 = Buy Order
+ *
+ * @param {string} type - Sound category.
+ */
 function calcHypergolic(type) {
     return 2404 * items.ENCHANTED_COAL[type] + 150.25 * items.ENCHANTED_SULPHUR[type] + 13824 * items.CRUDE_GABAGOOL[type];
 }
 
-
+/**
+ * Displays different minion calculations depending on player input.
+ *
+ * @param {string[]} args - Array of player input values.
+ */
 export function calcMinions(args) {
     // Update Prices
     getPricing();

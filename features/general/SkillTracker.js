@@ -4,7 +4,10 @@ import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 
-// Skill Tracking
+
+/**
+ * Variables to track and display skill tracker overlay.
+ */
 const skills = {
     "None": new Stat(),
     "Farming": new Stat(),
@@ -16,13 +19,6 @@ const skills = {
     "Alchemy": new Stat(),
 }
 let current = "None";
-
-register("command", () => {
-    for (let key in skills)
-        skills[key].reset()
-}).setName("resetSkills");
-
-// HUD
 const skillExample =
 `${DARK_AQUA}${BOLD}Skill: ${WHITE}FEE
 ${DARK_AQUA}${BOLD}XP Gained: ${WHITE}FI
@@ -30,6 +26,13 @@ ${DARK_AQUA}${BOLD}Time Passed: ${WHITE}FO
 ${DARK_AQUA}${BOLD}Rate: ${WHITE}FUM`;
 const skillOverlay = new Overlay("skillTracker", ["all"], data.AL, "moveSkills", skillExample);
 
+/**
+ * Resets skill overlay to base state.
+ */
+register("command", () => {
+    for (let key in skills)
+        skills[key].reset()
+}).setName("resetSkills");
 
 /**
  * Uses action bar to detect skill xp gains to use to update skill object data.

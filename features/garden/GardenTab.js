@@ -5,15 +5,14 @@ import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
-// Visitor Tablist Variables
+
+/**
+ * Variables used to represent and display visitors.
+ */
 let tablist = null;
 let visitors = 0;
-
-// Next Visitor Display
 let next = 0;
 export function getNextVisitor() { return next };
-
-// Overlays
 const gardenExample =
 `${AQUA}${BOLD}Visitors ${WHITE}(5):
 ${GREEN}${BOLD} Never
@@ -22,10 +21,8 @@ ${GREEN}${BOLD} Give
 ${GREEN}${BOLD} You
 ${GREEN}${BOLD} Up`;
 const gardenOverlay = new Overlay("gardenTab", ["Garden"], data.VL, "moveVisitors", gardenExample);
-
 const nextExample = `${AQUA}${BOLD}Next Visitor: ${WHITE}REVERT GARDEN`
 const nextOverlay = new Overlay("nextVisitor", ["all"], data.NL, "moveNext", nextExample);
-
 
 /**
  * Fetches the visitor data in tablist and updates the Visitors Overlay every second.

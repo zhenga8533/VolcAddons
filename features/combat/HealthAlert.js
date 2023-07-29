@@ -2,8 +2,11 @@ import settings from "../../settings";
 import { BOLD, DARK_RED, RESET } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
-let player = undefined;
 
+/**
+ * Variable used to represent player entity.
+ */
+let player = undefined;
 
 /**
  * Tracks player health and alerts whenever below the chosen threshold.

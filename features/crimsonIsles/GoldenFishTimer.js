@@ -5,14 +5,16 @@ import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to track and display fishing timer.
+ */
 let lastCast = 0;
 let lastFish = 0;
-
 const fishExample =
 `${GOLD}${BOLD}Last Cast: ${RESET}Yee
 ${GOLD}${BOLD}Last Fish: ${RESET}Haw`;
 const fishOverlay = new Overlay("goldenFishAlert", ["Crimson Isle"], data.TL, "moveTimer", fishExample);
-
 
 /**
  * Increments time and updates Golden Fish Overlay every second.

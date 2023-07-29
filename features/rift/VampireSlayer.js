@@ -8,15 +8,10 @@ import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../misc/AnnouceMob";
 
-// Impel
-registerWhen(register("renderTitle", (title, subtitle, event) => {
-    if (subtitle.includes("Impel")) {
-        cancel(event);
-        Client.Companion.showTitle(subtitle, "", 0, 20, 0);
-    }
-}), () => getWorld() == "The Rift" && settings.vampireImpel);
 
-// Other Shit
+/**
+ * Variables used to track and display vampire boss attacks.
+ */
 const vampireExample =
 `${DARK_PURPLE}${BOLD}MANIA: ${AQUA}Dracule
 ${GOLD}${BOLD}TWINCLAWS: ${AQUA}Mihawk
@@ -29,6 +24,9 @@ let ichorSpawn = false;
 let mania = 0;
 let inMania = false;
 
+/**
+ * Tracks player boss on spawn and updates vampire attack overlay every tick.
+ */
 registerWhen(register("tick", () => {
     vampireOverlay.message = "";
     if (!getSlayerBoss()) {
@@ -97,7 +95,23 @@ registerWhen(register("tick", () => {
     }
 }), () => getWorld() == "The Rift" && (settings.vampireAttack || settings.announceMania));
 
-// ESP (and hitbox) for the boys
+/**
+ * Replaces Hypixel's impel subtitle with a flashy title.
+ *
+ * @param {string} title - Message used for larger title.
+ * @param {string} subtitle - Message used for smaller subtitle.
+ * @param {Object} event - Title render event.
+ */
+registerWhen(register("renderTitle", (title, subtitle, event) => {
+    if (subtitle.includes("Impel")) {
+        cancel(event);
+        Client.Companion.showTitle(subtitle, "", 0, 20, 0);
+    }
+}), () => getWorld() == "The Rift" && settings.vampireImpel);
+
+/**
+ * Draws an ESP box around player boss and highlights when low.
+ */
 registerWhen(register("renderWorld", () => {
     if (dracula == undefined) return;
     RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, false);
@@ -106,6 +120,9 @@ registerWhen(register("renderWorld", () => {
 let vamps = [];
 export function getVamps() { return vamps };
 
+/**
+ * Highlights vampire bosses with steakable HP.
+ */
 registerWhen(register("tick", () => {
     if (vamps.length) vamps = [];
     const stands = get3x3Stands();

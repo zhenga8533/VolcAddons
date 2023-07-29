@@ -2,12 +2,15 @@ import settings from "../../settings";
 import { BOLD, DARK_RED } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
+
+/**
+ * Variables used for broken Wither Impact tracking.
+ */
 const WITHER_BLADES = ["HYPERION", "ASTRAEA", "SCYLLA", "VALKYRIE", "NECRON_BLADE_UNREFINED"];
 let heldItem = undefined;
 let broken = false;
 let trackerKills = 0;
 let trackerXP = 0;
-
 
 /**
  * Tracks Book of Stats and Champion to detect when Wither Impact stops giving xp.

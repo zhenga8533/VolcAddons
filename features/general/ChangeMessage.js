@@ -1,6 +1,10 @@
 import settings from "../../settings";
 import { data, getMVP, registerWhen } from "../../utils/variables";
 
+
+/**
+ * Variables used to represent MVP+ and MVP++ emotes.
+ */
 const MVP = {
     "<3": "❤",
     ":star:": "✮",
@@ -35,7 +39,6 @@ const GIFT = {
     ":dj:": "ヽ(⌐■_■)ノ♬",
     ":cute:": "(✿ᴖ‿ᴖ)"
 };
-
 
 /**
  * Replaces all user messages that contains desired emotes.

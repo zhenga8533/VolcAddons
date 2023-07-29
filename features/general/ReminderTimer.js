@@ -2,8 +2,11 @@ import settings from "../../settings";
 import { AMOGUS, BOLD, GOLD } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
-let minutes = 0;
 
+/**
+ * Variable to represent minutes passed for timer.
+ */
+let minutes = 0;
 
 /**
  * Counts minutes until set timer to send an customizable alert.

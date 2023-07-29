@@ -12,7 +12,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Combat", "Mining", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
+        const categories = ["General", "Economy", "Combat", "Mining", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -25,6 +25,10 @@ ${BOLD}DM 'grapefruited' on Discord if you have any questions!
 ${DARK_RED}${BOLD}CAUTION: Some features are technically chat macros, so use at own risk!
 
 ${ITALIC}Related Commands: /va <help, settings, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
+        this.setCategoryDescription("Economy", 
+`${HEADER}
+
+${ITALIC}Related Commands: /va attribute`);
         this.setCategoryDescription("Combat",
 `${HEADER}`);
         this.setCategoryDescription("Hub",
@@ -35,7 +39,7 @@ ${ITALIC}Related Commands: /va warplist`);
 ${ITALIC}Related Commands: /va <calc, apex>`);
         this.setCategoryDescription("Kuudra",
 `${HEADER}
-${ITALIC}Related Commands: /va splits`);
+${ITALIC}Related Commands: /va <attribute, splits>`);
         this.setCategoryDescription("Garden",
 `${HEADER}
 ${ITALIC}Related Commands: /va calc compost`);
@@ -149,34 +153,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     removeSelfie = false;
-    
-    @SliderProperty({
-        name: "Coin Tracker",
-        description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off.",
-        category: "General",
-        subcategory: "Salary",
-        min: 0,
-        max: 10
-    })
-    coinTracker = 0;
-    @ButtonProperty({
-        name: "Move Coins Display",
-        description: "Move the location of the Coin Tracker. Runs => /moveCoins",
-        category: "General",
-        subcategory: "Salary"
-    })
-    moveCoins() {
-        ChatLib.command("moveCoins", true);
-    }
-    @ButtonProperty({
-        name: "Reset Coin Tracker",
-        description: "Resets tracking for coin tracker. Runs => /resetCoins",
-        category: "General",
-        subcategory: "Salary"
-    })
-    resetCoins() {
-        ChatLib.command("resetCoins", true);
-    }
 
     // Timer
     @TextProperty({
@@ -376,6 +352,49 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     resetSkills() {
         ChatLib.command("resetSkills", true);
+    }
+
+
+    // ECONOMY
+
+    // Auction
+    @SliderProperty({
+        name: "Auction Refresh",
+        description: "Set how often action house data gets refreshed in minutes (set as 0 to turn off). Runs => /updateAuction.",
+        category: "Economy",
+        subcategory: "Auction",
+        min: 0,
+        max: 180
+    })
+    auctionRefresh = 60;
+
+    // Coins
+    @SliderProperty({
+        name: "Coin Tracker",
+        description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off.",
+        category: "Economy",
+        subcategory: "Coins",
+        min: 0,
+        max: 10
+    })
+    coinTracker = 0;
+    @ButtonProperty({
+        name: "Move Coins Display",
+        description: "Move the location of the Coin Tracker. Runs => /moveCoins",
+        category: "Economy",
+        subcategory: "Coins"
+    })
+    moveCoins() {
+        ChatLib.command("moveCoins", true);
+    }
+    @ButtonProperty({
+        name: "Reset Coin Tracker",
+        description: "Resets tracking for coin tracker. Runs => /resetCoins",
+        category: "Economy",
+        subcategory: "Coins"
+    })
+    resetCoins() {
+        ChatLib.command("resetCoins", true);
     }
 
 

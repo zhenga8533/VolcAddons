@@ -1,6 +1,8 @@
 import request from "../../requestV2";
+import settings from "../settings";
 import { GREEN, LOGO, RED } from "./constants";
 import { findFirstRomanNumeral, findWordsInString, romanToNum } from "./functions";
+import { registerWhen } from "./variables";
 
 class AuctionItem {
     constructor() {
@@ -49,9 +51,10 @@ export function updateAuction(page) {
         url: `https://api.hypixel.net/skyblock/auctions?page=${page}`,
         json: true
     }).then((response)=>{
-        // Displays loop number
+        /* Not in use: Message used to count auction loop.
         ChatLib.clearChat(888);
         new Message(`${LOGO} ${RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(888).chat();
+        */
         
         response.auctions.forEach(auction => {
             // Update item data
@@ -77,10 +80,25 @@ export function updateAuction(page) {
 
         if (page + 1 < response.totalPages)
             updateAuction(page + 1);
+        /* Not in use: Message on loop completion.
         else
             ChatLib.chat(`${LOGO} ${GREEN}Auction loop complete!`);
+        */
     }).catch((error)=>{
         ChatLib.chat(`${LOGO} ${RED}${error.cause}`);
     });
 }
 updateAuction(0);
+
+let minutes = 0
+registerWhen(register("step", () => {
+    minutes++;
+
+    if (minutes >= settings.auctionRefresh) {
+        updateAuction(0);
+        minutes = 0;
+    }
+}).setDelay(60), () => settings.auctionRefresh);
+register("command", () => {
+    updateAuction(0);
+}).setName("updateAuction");

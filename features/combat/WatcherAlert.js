@@ -3,8 +3,11 @@ import { AMOGUS } from "../../utils/constants";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 
-cd = false;
 
+/**
+ * Variable used to represent cooldown between Watcher messages.
+ */
+cd = false;
 
 /**
  * Tracks chat messages from "The Watcher" to call an emergency meeting whenever he finishes spawning (meant for f11 blood camps).

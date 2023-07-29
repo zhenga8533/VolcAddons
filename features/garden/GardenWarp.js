@@ -3,8 +3,11 @@ import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getNextVisitor } from "./GardenTab";
 
-let warpTo = "";
 
+/**
+ * Variable used to represent last player warp.
+ */
+let warpTo = "";
 
 /**
  * Overwrites player warp commands with a garden warp whenever next visitor is ready.

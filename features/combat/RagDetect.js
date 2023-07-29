@@ -2,18 +2,11 @@ import settings from "../../settings";
 import { BOLD, GOLD } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
-let heldItem = undefined;
-
 
 /**
- * Uses sound name and pitch to determine whenever Ragnarok Ability goes off.
- *
- * @param {number[]} pos - Array of x, y, z positions.
- * @param {string} name - Name of sound.
- * @param {string} vol - Volume of sound.
- * @param {string} pitch - pitch of sound.
- * @param {string} category - Sound category.
+ * Variable used to represent player's held item.
  */
+let heldItem = undefined;
 
 /**
  * Tracks action bar for "CASTING" and held item to detect when Ragnarok ability goes off.

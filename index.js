@@ -1,8 +1,8 @@
 // Util
 import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
-import "./utils/auctions";
-import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
+import "./utils/auction";
+import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import { data, opened, updateList } from "./utils/variables";
@@ -15,7 +15,6 @@ data.autosave();
 import "./features/general/AbiphoneBlocker";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
-import "./features/general/CoinTracker";
 import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
@@ -23,6 +22,9 @@ import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
+
+// Economy
+import "./features/economy/CoinTracker";
 
 // Combat
 import "./features/combat/BrokenHyp";
@@ -64,7 +66,7 @@ import "./features/rift/VampireSlayer";
 
 // Misc
 import "./features/misc/AnnouceMob";
-import { NPCEdit, soulEdit, zoneEdit } from "./features/rift/RiftWaypoints";
+import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 import { calcMinions } from "./features/misc/MinionCalc";
 
 // FIRST RUN
@@ -222,10 +224,10 @@ register ("command", (...args) => {
             soulEdit(args, "cat", "catSouls", CAT_SOULS);
             break;
         case "npc": // Enable npc waypoints
-            NPCEdit(args);
+            riftWaypointEdit(args, "npc", RIFT_NPCS);
             break;
         case "zone": // Enable zone waypoints
-            zoneEdit(args);
+            riftWaypointEdit(args, "zone", RIFT_ZONES);
             break;
         case "api":
             if (args[1]) {

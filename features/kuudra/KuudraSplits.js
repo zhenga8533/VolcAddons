@@ -7,13 +7,24 @@ import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";
 
-// Start times for each phase
+
+/**
+ * Variables used to track and display Kuudra split overlay.
+ */
 let kuudraSplit = [0, 0, 0, 0, 0];
 let times = ['0s', '0s', '0s', '0s'];
 let phase = 0;
+export function getPhase() { return phase };
 let party = [];
-
-// Date
+const splitsExample =
+`${AQUA}${BOLD}Supplies: ${RESET}Bei
+${AQUA}${BOLD}Build: ${RESET}Feng
+${AQUA}${BOLD}Fuel/Stun: ${RESET}Xiao
+${AQUA}${BOLD}Kuudra: ${RESET}Xiao`;
+const splitsOverlay = new Overlay("kuudraSplits", ["Kuudra"], data.SL, "moveSplits", splitsExample);
+/**
+ * Variables used to represent current date.
+ */
 const now = new Date();
 const yyyy = now.getFullYear();
 let mm = now.getMonth() + 1;
@@ -21,36 +32,35 @@ let dd = now.getDate();
 if (dd < 10) dd = '0' + dd;
 if (mm < 10) mm = '0' + mm;
 
-// OVERLAY
-const splitsExample =
-`${AQUA}${BOLD}Supplies: ${RESET}Bei
-${AQUA}${BOLD}Build: ${RESET}Feng
-${AQUA}${BOLD}Fuel/Stun: ${RESET}Xiao
-${AQUA}${BOLD}Kuudra: ${RESET}Xiao`;
-
-const splitsOverlay = new Overlay("kuudraSplits", ["Kuudra"], data.SL, "moveSplits", splitsExample);
-
-// RESET
+/**
+ * Resets Kuudra splits on run start.
+ */
 registerWhen(register("chat", () => {
     kuudraSplit = [0, 0, 0, 0];
     times = ['0s', '0s', '0s', '0s'];
     phase = 0;
 }).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraSplits);
 
-// GET PLAYERS
+/**
+ * Tracks party on player ready.
+ */
 registerWhen(register("chat", (player) => {
     player = player.toLowerCase();
     if (!party.includes(player)) party.push(player);
 }).setCriteria("${player} is now ready!"), () => settings.kuudraSplits);
 
-// FIRST SPLIT
+/**
+ * First split.
+ */
 registerWhen(register("chat", () => {
     kuudraSplit[0] = Date.now() / 1000;
     phase = 1;
 }).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"),
 () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
-// SECOND SPLIT
+/**
+ * Second split.
+ */
 registerWhen(register("chat", () => {
     if (!settings.kuudraSplits) return;
 
@@ -59,7 +69,9 @@ registerWhen(register("chat", () => {
 }).setCriteria("[NPC] Elle: OMG! Great work collecting my supplies!"),
 () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
-// THIRD SPLIT
+/**
+ * Third split.
+ */
 registerWhen(register("chat", () => {
     if (!settings.kuudraSplits) return;
 
@@ -68,7 +80,9 @@ registerWhen(register("chat", () => {
 }).setCriteria("[NPC] Elle: Phew! The Ballista is finally ready! It should be strong enough to tank Kuudra's blows now!"),
 () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
-// FOURTH SPLIT
+/**
+ * Fourth split.
+ */
 registerWhen(register("chat", () => {
     if (!settings.kuudraSplits) return;
     
@@ -77,7 +91,10 @@ registerWhen(register("chat", () => {
 }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"),
 () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
-// END
+/**
+ * Fifth (final) split.
+ * Records split to a full and party data file.
+ */
 registerWhen(register("chat", () => {
     if (!settings.kuudraSplits) return;
     
@@ -129,6 +146,9 @@ registerWhen(register("chat", () => {
     party = [];
 }).setCriteria("${before}KUUDRA DOWN${after}"), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
+/**
+ * Fifth (final split) if you fail :skull:.
+ */
 registerWhen(register("chat", () => {
     if (!settings.kuudraSplits) return;
     
@@ -136,6 +156,9 @@ registerWhen(register("chat", () => {
     phase = 5;
 }).setCriteria("${before}DEFEAT${after}"), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
+/**
+ * Updates time splits overlay.
+ */
 registerWhen(register("step", () => {
     // Phase 4 fail safe
     if (phase == 3 && getKuudraHP() < 25000 && getTier() == 5) {
@@ -176,9 +199,10 @@ ${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
 ${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
 }).setFps(19), () => getWorld() == "Kuudra" && settings.kuudraSplits);
 
-// PARTY CHAT COMMAND => RETURNS SPLITS TO /PC
+/**
+ * Party commands for splits.
+ */
 let onCD = false;
-
 registerWhen(register("chat", (player, message) => {
     const name = getPlayerName(player);
     if ((!settings.partyCommands && !name.equals(Player.getName())) || onCD) return;
@@ -214,7 +238,13 @@ registerWhen(register("chat", (player, message) => {
     delay(() => onCD = false, 500);
 }).setCriteria("Party > ${player}: ?${message}"), () => settings.kuudraSplits);
 
-// MOD COMMAND
+/**
+ * Uses sound name and pitch to determine whenever Ragnarok Ability goes off.
+ *
+ * @param {int[]} splits - Splits category and values.
+ * @param {Color} color - Color code for message.
+ * @param {int} runs - Amount of runs to average.
+ */
 function formatSplits(splits, color, runs) {
     if (color == GREEN) ChatLib.chat(`${DARK_GREEN}${BOLD}Average for last ${runs} runs:`);
     ChatLib.chat(`${color}${BOLD}Supplies: ${RESET}${getTime(splits[0])}`);
@@ -232,6 +262,11 @@ function formatSplits(splits, color, runs) {
     }
 }
 
+/**
+ * /va command to fetch splits.
+ *
+ * @param {string[]} args - Array of player input values.
+ */
 export function getSplits(args){
     if (args[1] != undefined) {
         switch (args[1]) {
@@ -295,4 +330,4 @@ export function getSplits(args){
                 break;
         }
     } else ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET}${AQUA}, clear>!`);
-}
+};

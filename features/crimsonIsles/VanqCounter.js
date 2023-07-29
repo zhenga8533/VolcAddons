@@ -4,6 +4,10 @@ import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to track and display item and vanquisher kill counts.
+ */
 let items = {};
 const session = {
     "vanqs": 0,
@@ -11,14 +15,12 @@ const session = {
     "last": 0,
     "average": 0,
 };
-
 const counterExample =
 `${RED}${BOLD}Total Vanqs: ${RESET}Xue
 ${RED}${BOLD}Total Kills: ${RESET}Hua
 ${RED}${BOLD}Kills Since: ${RESET}Piao
 ${RED}${BOLD}Average Kills: ${RESET}Piao`
 const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], data.CL, "moveCounter", counterExample);
-
 
 /**
  * Uses the "Book of Stats" to track whenever player kills an entity and updates the Vanquisher Overlay.

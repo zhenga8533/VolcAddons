@@ -5,10 +5,13 @@ import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
+
+/**
+ * Variables used to detect party and rejoin last dungeon.
+ */
 let onCD = false;
 let invited = 0;
 let dungeon = ["Master", 7];
-
 
 /**
  * Automatically warps player out of dungeon on completion depending on their settings.

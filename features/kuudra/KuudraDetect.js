@@ -3,16 +3,20 @@ import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";
 
-// Magma Cube Variables
+
+/**
+ * Variables used to track and display Kuudra HP and entity.
+ */
 const EntityMagmaCube = Java.type('net.minecraft.entity.monster.EntityMagmaCube');
 let cubes = World.getAllEntitiesOfType(EntityMagmaCube.class);
-
-// HP Displays
 let percentHP = new Text(`One Cycleable`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2, 10);
 let HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
 let currentHP = 0;
 export function getKuudraHP() { return currentHP };
 
+/**
+ * Tracks Kuudra's HP and spawn location if entering phase 4.
+ */
 registerWhen(register("tick", () => {
     cubes = World.getAllEntitiesOfType(EntityMagmaCube.class);
 
@@ -48,17 +52,23 @@ registerWhen(register("tick", () => {
         HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
 }), () => getWorld() == "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
 
-// Render Percent HP
+/**
+ * Renders Kuudra's percent HP.
+ */
 registerWhen(register('renderOverlay', () => {
     percentHP.draw();
 }), () => getWorld() == "Kuudra" && settings.kuudraHP);
 
-// Render Tesselator HP
+/**
+ * Draws Kuudra HP onto its physical body.
+ */
 registerWhen(register('renderWorld', () => {
     if (HPDisplay[1]) Tessellator.drawString(HPDisplay[0], HPDisplay[1], HPDisplay[2] + 10, HPDisplay[3], 0xA7171A, true, 0.25, false);
 }), () => getWorld() == "Kuudra" && settings.kuudraHP);
 
-// Reset Kuudra UUID
+/**
+ * Reset Kuudra's UUID on world exit.
+ */
 register('worldUnload', () => {
     percentHP = new Text(`One Cycleable`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2, 10);
     HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
