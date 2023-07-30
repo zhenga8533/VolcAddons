@@ -58,6 +58,51 @@ export function getGuildName(player) {
     return name;
 }
 
+/**
+ * Removes any modifiers off item name.
+ * 
+ * @param {string} itemType - Item auction class.
+ * @param {string} itemString - Item with any modifiers.
+ * @returns {string} Base name of item.
+ */
+const REFORGES = {
+    "weapon": new Set([
+        "Epic", "Fair", "Fast", "Gentle", "Heroic", "Legendary", "odd", "Sharp", "Spicy", "Coldfused", "Dirty", "Fabled", "Gilded", "Suspicious",
+        "Warped", "Withered", "Bulky", "Fanged",
+        "Awkward", "Deadly", "Fine", "Grand", "Hasty", "Neat", "Rapid", "Rich", "Unreal", "Precise", "Spiritual", "Headstrong",
+        "Great", "Rugged", "Lush", "Lumberjacks", "Double-Bit", "Moil", "Toil", "Blessed", "Earthy"
+    ]),
+    "armor": new Set([
+        "Clean", "Fierce", "Heavy", "Light", "Mythic", "Pure", "Titanic", "Smart", "Wise", "Candied", "Submerged", "Perfect", "Reinforced",
+        "Renowned", "Spiked", "Hyper", "Giant", "Jaded", "Cubic", "Necrotic", "Empowered", "Ancient", "Undead", "Loving", "Ridiculous",
+        "Bustling", "Mossy", "Festive",
+        "Very", "Highly", "Extremely", "Not so", "Thicc", "Absolutely", "Even More"
+    ]),
+    "misc": new Set([
+        "Glistening", "Strengthened", "Waxed", "Fortified", "Rooted", "Blooming", "Snowy", "Blood-Soaked",
+        "Salty", "Treacherous", "Lucky", "Stiff", "Dirty", "Chomp", "Pitchin",
+        "Ambered", "Auspicious", "Fleet", "Heated", "Magnetic", "Mithraic", "Refined", "Stellar", "Fruitful",
+        "Robust", "Zooming", "Peasants", "Green Thumb", "Blessed", "Bountiful",
+        "Lvl"
+    ])
+};
+export function removeReforges(itemType, itemString) {
+    // Get the corresponding reforges Set based on the item type
+    const reforgesSet = REFORGES[itemType];
+
+    // If the item type is not valid or the reforges Set is empty, return the original item string
+    if (reforgesSet === undefined || !itemString)
+        return itemString;
+
+    // Split the item string into individual words
+    const words = itemString.replace(/[^a-zA-Z\s]/g, '').split(" ");
+
+    // Filter out the words that match any of the reforges using Set.has() for faster lookup
+    const filteredWords = words.filter(word => !reforgesSet.has(word));
+
+    return filteredWords.join(" ").trim();
+}
+
 
 /**
  * Finds words from an array that are present in a given string.

@@ -1,4 +1,4 @@
-import { getAuction } from "../../utils/auction";
+import { getAttributeItems } from "../../utils/auction";
 import { AQUA, BOLD, DARK_AQUA, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy } from "../../utils/functions";
 
@@ -19,10 +19,6 @@ const CATEGORIES = {
     "necklace": "Necklace",
 }
 
-const GOD_ROLL = {
-    
-}
-
 /**
  * Displays prices of attributes of shards and armor/equipment pieces sent by player.
  *
@@ -30,8 +26,8 @@ const GOD_ROLL = {
  */
 export function getAttributes(args) {
     if (Object.keys(CATEGORIES).includes(args[1])) {
-        const ah = getAuction();
-        const item = CATEGORIES[args[1]]
+        const ah = getAttributeItems();
+        const item = CATEGORIES[args[1]];
         const tier = args[2] != undefined && !isNaN(args[2]) ? parseInt(args[2]) : 1;
         
         ChatLib.chat(`${LOGO} ${DARK_AQUA}${BOLD}Important ${item} Prices (t${tier})`);

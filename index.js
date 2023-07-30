@@ -1,182 +1,267 @@
-/**
- * Converts seconds to XXhrXXmXXs format.
- * 
- * @param {number} seconds - Total number of seconds to convert.
- * @returns {string} Formatted time in XXhrXXmXXs format.
- */
-export function getTime(seconds) {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-  
-    let timeString = '';
-  
-    if (hours > 0)
-        timeString += `${hours}hr`;
-    if (minutes > 0) {
-        timeString += `${minutes}m`;
-        timeString += `${remainingSeconds}s`;
-    } else timeString += `${remainingSeconds.toFixed(2)}s`;
-  
-    return timeString;
-}
+// Importing settings and initializing if not present
+import settings from "./settings";
+if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
 
-/**
- * Rounds number and converts num to thousand seperator format.
- * 
- * @param {number} num - Base number to convert.
- * @returns {string} Number converted to thousand seperator format.
- */
-export function commafy(num) {
-    return num.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+// Importing various utility modules
+import "./utils/auction";
+import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { getInParty, getIsLeader } from "./utils/party";
+import "./utils/player";
+import { data, opened, updateList } from "./utils/variables";
+import { delay } from "./utils/thread";
+import "./utils/waypoints";
+import { getTier, getWorld } from "./utils/worlds";
 
-/**
- * Strips rank and tags off player name.
- * 
- * @param {string} player - Player name with rank and tags.
- * @returns {string} Base player ign.
- */
-export function getPlayerName(player) {
-    let name = player;
-    let nameIndex = name.indexOf(']');
+// Saving data automatically
+data.autosave();
 
-    while (nameIndex != -1) {
-        name = name.substring(nameIndex + 2);
-        nameIndex = name.indexOf(']');
+// Importing various feature modules
+
+// General Features
+import "./features/general/AbiphoneBlocker";
+import "./features/general/AutoTransfer";
+import "./features/general/ChangeMessage";
+import { createWaypoint } from "./features/general/UserWaypoints";
+import "./features/general/JoinParty";
+import { executeCommand } from "./features/general/PartyCommands";
+import "./features/general/ReminderTimer";
+import "./features/general/RemoveSelfie";
+import "./features/general/ServerAlert";
+import "./features/general/SkillTracker";
+
+// Economy Features
+import "./features/economy/CoinTracker";
+import "./features/economy/ItemPrice";
+
+// Combat Features
+import "./features/combat/BrokenHyp";
+import "./features/combat/DamageTracker";
+import "./features/combat/GyroTimer";
+import "./features/combat/HealthAlert";
+import "./features/combat/RagDetect";
+import "./features/combat/DungeonRejoin";
+import "./features/combat/WatcherAlert";
+
+// Mining Features
+import "./features/mining/PowderTracker";
+
+// Hub Features
+import { setWarps } from "./features/hub/DianaWaypoint";
+
+// Crimson Isles Features
+import "./features/crimsonIsles/GoldenFishTimer";
+import "./features/crimsonIsles/VanqWarp";
+import "./features/crimsonIsles/VanqCounter";
+
+// Kuudra Features
+import { getAttributes } from "./features/kuudra/AttributePricing";
+import "./features/kuudra/KuudraAlerts";
+import "./features/kuudra/KuudraCrates";
+import "./features/kuudra/KuudraDetect";
+import "./features/kuudra/KuudraReparty";
+import { getSplits } from "./features/kuudra/KuudraSplits";
+
+// Garden Features
+import { calcCompost } from "./features/garden/ComposterCalc";
+import { getNextVisitor } from "./features/garden/GardenTab";
+import "./features/garden/GardenWarp";
+
+// Rift Features
+import "./features/rift/DDR";
+import "./features/rift/TubaTimer";
+import "./features/rift/VampireSlayer";
+
+// Misc Features
+import "./features/misc/AnnouceMob";
+import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+import { calcMinions } from "./features/misc/MinionCalc";
+import { removeReforges } from "./utils/functions";
+import { getAuction } from "./utils/auction";
+
+
+register("worldLoad", () => {
+    // FIRST RUN - Display welcome message for new users
+    if (data.newUser) {
+        ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
+        ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
+        ChatLib.chat("Instruction manual (i think) => /va help or DM 'grapefruited' on Discord!\n");
+    
+        data.newUser = false; // Marking that the user is no longer new
     }
 
-    return name;
-}
-export function getGuildName(player) {
-    let name = player;
-    let rankIndex = name.indexOf('] ');
-    if (rankIndex != -1)
-        name = name.substring(name.indexOf('] ') + 2);
-    name = name.substring(0, name.indexOf('[') - 1);
-
-    return name;
-}
-
-
-/**
- * Finds words from an array that are present in a given string.
- *
- * @param {string} str - The input string to search for words.
- * @param {string[]} arr - An array of words to search for in the string.
- * @returns {string[]} - An array containing the words found in the string.
- */
-export function findWordsInString(str, arr) {
-    const wordSet = new Set(arr);
-  const words = arr.filter(word => str.includes(word));
-  return words;
-}
-
-/**
- * Finds the first occurrence of a valid Roman numeral in a given string.
- *
- * @param {string} str - The input string to search for a Roman numeral.
- * @returns {string|null} - The first valid Roman numeral found in the string,
- *                          or null if no valid Roman numerals are present.
- */
-export function findFirstRomanNumeral(str) {
-    const romanNumeralRegex = /(IX|IV|V?I{0,3})\b/g;
-    const match = str.match(romanNumeralRegex);
-    return match ? match[0] : null;
-}
-
-/**
- * Retrieves all entities of type StandClass within a 3x3 area of chunks centered around the given coordinates (x, z).
- *
- * @param {number} x - The x-coordinate of the center chunk.
- * @param {number} z - The z-coordinate of the center chunk.
- * @param {number} diff - The difference from the center chunk to extend the search (3x3 area).
- * @returns {Object[]} - An array containing all StandClass entities found within the 3x3 area.
- */
-const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
-export function get3x3Stands(x, z, diff) {
-    const stands = [...World.getChunk(x, 69, z).getAllEntitiesOfType(StandClass)];
-    stands.push(...World.getChunk(x + diff, 69, z + diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + diff, 69, z - diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - diff, 69, z + diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - diff, 69, z - diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + diff, 69, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - diff, 69, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, 69, z + diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, 69, z - diff).getAllEntitiesOfType(StandClass));
-
-    return stands;
-}
-
-/**
- * Finds the closest position from an array of positions to a given origin position.
- *
- * @param {number[]} origin - The origin position [x, y, z] to which distances are measured.
- * @param {number[][]} positions - An array containing positions to compare with the origin.
- * @returns {Array} - An array containing two elements: the closest position [x, y, z]
- *                    from the `positions` array and the distance between the origin and
- *                    the closest position.
- */
-export function getClosest(origin, positions) {
-    let closestPosition = positions.length > 0 ? positions[0] : [0, 0, 0];
-    let closestDistance = 999;
-    let distance = 999;
-
-    positions.forEach(position => {
-        distance = Math.hypot(origin[1] - position[1], origin[2] - position[2], origin[3] - position[3]);
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            closestPosition = position;
+    // NEW UPDATE - Display update message when a new version is detected
+    delay(() => {
+        if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
+            data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
+            ChatLib.chat(`\n${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
+            JSON.parse(FileLib.read("VolcAddons", "updates.json")).forEach(update => {
+                ChatLib.chat(update);
+            });
+            ChatLib.chat();
         }
-    });
+    }, 1000);
+});
 
-    return [closestPosition, closestDistance];
-};
+// HELP - Display help message for available commands
+function getHelp() {
+    ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}\n`);
+    
+    // General Commands
+    ChatLib.chat(`${AQUA}${BOLD}GENERAL COMMANDS:${RESET}`);
+    ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, clear ${ITALIC}(resets text settings)${RESET}>`);
+    ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, enigma, npc, zone>`);
+    ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <whitelist, blacklist, emotelist, blocklist, warplist>`);
+    ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
+    ChatLib.chat(`${RED}${BOLD}Inferno Minions: ${RESET}/va <calc, apex>\n`);
 
-/**
- * Checks if a given date string is a valid date in the format "MM/DD/YYYY".
- *
- * @param {string} dateString - The date string to validate in the format "MM/DD/YYYY".
- * @returns {boolean} - True if the date is valid, false otherwise.
- */
-export function isValidDate(dateString) {
-    // First check for the pattern
-    if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
-        return false;
+    // General Features
+    ChatLib.chat(`${AQUA}${BOLD}GENERAL FEATURES:${RESET}`);
+    ChatLib.chat(`${GRAY}${BOLD}Party Commands: ${RESET}?<warp, transfer, promote, demote, allinv>`);
+    ChatLib.chat(`${GRAY}${BOLD}Other Commands: ${RESET}?<cringe, gay, racist, dice, flip, 8ball, rps, w>\n`);
+    
+    // Crimson Isle Features
+    ChatLib.chat(`${AQUA}${BOLD}OTHER FEATURES:${RESET}`);
+    ChatLib.chat(`Should be self explanatory, DM 'grapefruited' on discord if any questions...`);
+}
 
-    // Parse the date parts to integers
-    var parts = dateString.split("/");
-    var day = parseInt(parts[1], 10);
-    var month = parseInt(parts[0], 10);
-    var year = parseInt(parts[2], 10);
-
-    // Check the ranges of month and year
-    if(year < 1000 || year > 3000 || month == 0 || month > 12)
-        return false;
-
-    var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-
-    // Adjust for leap years
-    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
-        monthLength[1] = 29;
-
-    // Check the range of the day
-    return day > 0 && day <= monthLength[month - 1];
-};
-
-/**
- * Converts a Roman numeral to an integer value.
- *
- * @param {string} str - The Roman numeral string to be converted.
- * @returns {number} - The integer representation of the given Roman numeral.
- */
-export function romanToNum(str) {
-    const roman = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
-    let num = 0.0;
-    for (let i = 0; i < str.length; i++) {
-      let curr = roman[str[i]];
-      let next = roman[str[i + 1]];
-      (curr < next) ? (num -= curr) : (num += curr);
+// GENERAL FUNCTION COMMANDS - Handling command inputs
+const PARTY_COMMANDS = ["cringe", "gay", "racist", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"];
+register ("command", (...args) => {
+    if (args == undefined) {
+        settings.openGUI();
+        opened();
+        return;
     }
-    return num;
-};
+
+    // Parsing command and executing appropriate actions
+    const command = args[0] == undefined ? undefined : args[0].toLowerCase();
+    switch (command) {
+        case undefined: // Settings
+        case "settings":
+            settings.openGUI();
+            opened();
+            break;
+        case "help": // Help
+            getHelp();
+            break;
+        case "clear": // Clear setting text properties
+            settings.vanqParty = "";
+            settings.kuudraRP = "";
+            settings.kuudraCannonear = "";
+            settings.kuudraStunner = "";
+            settings.reminderText = "";
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
+            break;
+        case "attribute":
+        case "attributes":
+            getAttributes(args);
+            break;
+        case "coords": // Send Coords in Chat
+        case "sendcoords":
+        case "xyz":
+            const id = (Math.random() + 1).toString(36).substring(7);
+            ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} @${id}`);
+            break;
+        // List Controls
+        case "whitelist":
+        case "white":
+        case "wl":
+            updateList(args, data.whitelist, "white-list");
+            break;
+        case "blacklist":
+        case "black":
+        case "bl":
+            updateList(args, data.blacklist, "black-list");
+            break;
+        case "emotelist":
+        case "emote":
+        case "el":
+            updateList(args, data.emotelist, "emote-list");
+            break;
+        case "moblist":
+        case "mob":
+        case "ml":
+            updateList(args, data.moblist, "mob-list");
+            break;
+        case "blocklist":
+        case "block":
+            updateList(args, data.blocklist, "block-list");
+            break;
+        case "warplist":
+        case "warp":
+            updateList(args, data.warplist, "warp-list");
+            setWarps();
+            break;
+        case "splits": // Kuudra splits
+        case "split":
+            getSplits(args);
+            break;
+        case "waypoints": // User Waypoints
+        case "waypoint":
+        case "wp":
+            createWaypoint(args);
+            break;
+        case "calculate": // Bazaar Calculations
+        case "calc":
+            switch(args[1]) {
+                case "composter":
+                case "compost":
+                    calcCompost(args);
+                    break;
+                case "hypergolic":
+                case "hg":
+                case "inferno":
+                case "gabagool":
+                case "gaba":
+                case "vampire":
+                case "vamp":
+                    calcMinions(args);
+                    break;
+                default:
+                    ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost>${AQUA}>`);
+                    break;
+            }
+            break;
+        case "apex": // Set Apex Price
+            data.apexPrice = isNaN(args[1]) ? data.apexPrice : args[1];
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatInt(data.apexPrice)}!`);
+            break;
+        case "enigma": // Configure enigma souls
+            soulEdit(args, "enigma", "enigmaSouls", ENIGMA_SOULS);
+            break;
+        case "montezuma": // Configure enigma souls
+        case "mont":
+        case "cat":
+            soulEdit(args, "cat", "catSouls", CAT_SOULS);
+            break;
+        case "npc": // Enable npc waypoints
+            riftWaypointEdit(args, "npc", RIFT_NPCS);
+            break;
+        case "zone": // Enable zone waypoints
+            riftWaypointEdit(args, "zone", RIFT_ZONES);
+            break;
+        case "api":  // Set API key
+            if (args[1]) {
+                settings.apiKey = args[1]
+                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set API key as ${settings.apiKey}!`);
+            } else
+                ChatLib.chat(`${LOGO} ${RED}Please input as /va api [key]!`);
+            break;
+        case "test": // Testing (please work)
+            ChatLib.chat("World: " + getWorld());
+            ChatLib.chat("Tier: " + getTier());
+            ChatLib.chat("Leader: " + getIsLeader());
+            ChatLib.chat("Party: " + getInParty());
+            ChatLib.chat("Garden: " + getNextVisitor());
+            Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
+            break;
+        default: // Else case
+            if (PARTY_COMMANDS.includes(command))
+                executeCommand(Player.getName(), args, false);
+            else {
+                ChatLib.chat(`${LOGO} ${RED}Unkown command: "${command}" was not found!`);
+                ChatLib.chat(`${LOGO} ${RED}Use '/va help' for a full list of commands.`);
+            }
+            break;
+    }
+}).setName("volcaddons").setAliases("va", "volc", "itee");

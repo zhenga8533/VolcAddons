@@ -1,15 +1,21 @@
 import request from "../../requestV2";
 import settings from "../settings";
-import { LOGO, RED } from "./constants";
-import { findFirstRomanNumeral, findWordsInString, romanToNum } from "./functions";
+import { GREEN, LOGO, RED } from "./constants";
+import { findFirstRomanNumeral, findWordsInString, removeReforges, romanToNum } from "./functions";
 import { registerWhen } from "./variables";
 
 
 /**
  * Variables used to generate and record lbin auction pricing.
  */
-class AuctionItem {
-    constructor() {
+const items = {};
+export function getAuction() { return items };
+/**
+ * Variables used to track important data.
+ */
+class AttributePiece {
+    constructor(godroll1, godroll2) {
+        this.godroll = new Set([godroll1, godroll2]);
         this.attributes = {
             "bElite": 1e10,
             "bMana Steal": 1e10,
@@ -24,26 +30,49 @@ class AuctionItem {
             "bMana Pool": 1e10,
             "bMana Regeneration": 1e10,
             "bVitality": 1e10,
-            // "Speed": 1e10,
+            "Speed": 1e10,
             "bVeteran": 1e10,
             "bBlazing Fortune": 1e10,
             "bFishing Experience": 1e10
         };
-        this.price = 1e10;
     }
 }
-const items = {
-    "Attribute Shard": new AuctionItem(),
-    "Helmet": new AuctionItem(),
-    "Chestplate": new AuctionItem(),
-    "Leggings": new AuctionItem(),
-    "Boots": new AuctionItem(),
-    "Belt": new AuctionItem(),
-    "Bracelet": new AuctionItem(),
-    "Cloak": new AuctionItem(),
-    "Necklace": new AuctionItem(),
+const attributeItems = {
+    "Aurora Helmet": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Aurora Chestplate": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Aurora Leggings": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Aurora Boots": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Crimson Helmet": new AttributePiece("Magic Find", "Veteran"),
+    "Crimson Chestplate": new AttributePiece("Magic Find", "Veteran"),
+    "Crimson Leggings": new AttributePiece("Magic Find", "Veteran"),
+    "Crimson Boots": new AttributePiece("Magic Find", "Veteran"),
+    "Fervor Helmet": new AttributePiece("Life Regeneration", "Vitality"),
+    "Fervor Chestplate": new AttributePiece("Life Regeneration", "Vitality"),
+    "Fervor Leggings": new AttributePiece("Life Regeneration", "Vitality"),
+    "Fervor Boots": new AttributePiece("Life Regeneration", "Vitality"),
+    "Hollow Helmet": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Hollow Chestplate": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Hollow Leggings": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Hollow Boots": new AttributePiece("Mana Pool", "Mana Regeneration"),
+    "Terror Helmet": new AttributePiece("Dominance", "Vitality"),
+    "Terror Chestplate": new AttributePiece("Dominance", "Vitality"),
+    "Terror Leggings": new AttributePiece("Dominance", "Vitality"),
+    "Terror Boots": new AttributePiece("Dominance", "Vitality"),
+    "Molten Necklace": new AttributePiece("Magic Find", "Veteran"),
+    "Molten Cloak": new AttributePiece("Magic Find", "Veteran"),
+    "Molten Belt": new AttributePiece("Magic Find", "Veteran"),
+    "Molten Gauntlet": new AttributePiece("Magic Find", "Veteran"),
+    "Attribute Shard": new AttributePiece("Place", "Holder"),
+    "Helmet": new AttributePiece("Place", "Holder"),
+    "Chestplate": new AttributePiece("Place", "Holder"),
+    "Leggings": new AttributePiece("Place", "Holder"),
+    "Boots": new AttributePiece("Place", "Holder"),
+    "Necklace": new AttributePiece("Place", "Holder"),
+    "Cloak": new AttributePiece("Place", "Holder"),
+    "Belt": new AttributePiece("Place", "Holder"),
+    "Gauntlet": new AttributePiece("Place", "Holder"),
 }
-export function getAuction() { return items };
+export function getAttributeItems() { return attributeItems };
 
 /**
  * Makes a PULL request to get auction data from Hypixel API.
@@ -55,41 +84,52 @@ export function updateAuction(page) {
         url: `https://api.hypixel.net/skyblock/auctions?page=${page}`,
         json: true
     }).then((response)=>{
-        /* Not in use: Message used to count auction loop.
-        ChatLib.clearChat(888);
-        new Message(`${LOGO} ${RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(888).chat();
-        */
+        /** Not in use
+         *  ChatLib.clearChat(888);
+         *  new Message(`${LOGO} ${RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(888).chat();
+         */
         
         response.auctions.forEach(auction => {
-            // Update item data
-            let item_name = auction.item_name;
-            let item = items[Object.keys(items).find(base => item_name.includes(base))];
-            if (auction.bin && item != undefined) {
-                item.price = Math.min(auction.starting_bid, item.price);
+            const { category, item_name, bin, item_lore, starting_bid } = auction;
+            const item = removeReforges(category, item_name);
+            if (!bin) return; // Skip non-bin auctions
+          
+            // Update lbin
+            items[item] = items[item] === undefined ? starting_bid : Math.min(starting_bid, items[item]);
+          
+            // Attribute tracking
+            const attributeItem = attributeItems[item];
+            if (attributeItem === undefined) return;
 
-                // Attribute Checking
-                let lore = auction.item_lore
-                let attributes = findWordsInString(lore, Object.keys(item.attributes));
-                attributes.forEach(attribute => {
-                    let attributeIndex = lore.indexOf(attribute) + attribute.length;
-                    let subLore = lore.substring(attributeIndex, attributeIndex + 4);
-                    let tier = findFirstRomanNumeral(subLore);
-                    if (tier) {
-                        tier = romanToNum(tier);
-                        item.attributes[attribute] = Math.min(auction.starting_bid / (2 ** (tier - 1)), item.attributes[attribute]);
-                    }
-                });
-            }
-        });
+            const attributes = findWordsInString(item_lore, Object.keys(attributeItem.attributes));
+            attributes.forEach(attribute => {
+                const attributeIndex = item_lore.indexOf(attribute) + attribute.length;
+                const subLore = item_lore.substring(attributeIndex, attributeIndex + 4);
+                const tier = findFirstRomanNumeral(subLore);
+                if (!tier) return;
+
+                const parsedTier = romanToNum(tier);
+                const attributeValue = starting_bid / (2 ** (parsedTier - 1));
+                attributeItem.attributes[attribute] = Math.min(attributeValue, attributeItem.attributes[attribute]);
+        
+                // Tracks for item class e.x. Helmet
+                const attributeClass = attributeItems[item.split(" ")[1]];
+        
+                if (attributeClass !== undefined)
+                    attributeClass.attributes[attribute] = Math.min(attributeValue, attributeClass.attributes[attribute]);
+            });
+          
+            // Godroll tracking (add relevant logic here)
+          });
 
         if (page + 1 < response.totalPages)
             updateAuction(page + 1);
-        /* Not in use: Message on loop completion.
-        else
-            ChatLib.chat(`${LOGO} ${GREEN}Auction loop complete!`);
-        */
+        /** Not in use
+         *  else
+         *      ChatLib.chat(`${LOGO} ${GREEN}Auction loop complete!`);
+         */
     }).catch((error)=>{
-        ChatLib.chat(`${LOGO} ${RED}${error.cause}`);
+        console.error(error);
     });
 }
 if (settings.auctionRefresh) updateAuction(0);
