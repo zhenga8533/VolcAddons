@@ -25,7 +25,7 @@ const CATEGORIES = {
  * @param {string[]} args - Arguments of player input values.
  */
 export function getAttributes(args) {
-    if (Object.keys(CATEGORIES).includes(args[1])) {
+    if (args[1] in CATEGORIES) {
         const ah = getAttributeItems();
         const item = CATEGORIES[args[1]];
         const tier = args[2] != undefined && !isNaN(args[2]) ? parseInt(args[2]) : 1;

@@ -30,7 +30,7 @@ class AttributePiece {
             "bMana Pool": 1e10,
             "bMana Regeneration": 1e10,
             "bVitality": 1e10,
-            "Speed": 1e10,
+            "bSpeed": 1e10,
             "bVeteran": 1e10,
             "bBlazing Fortune": 1e10,
             "bFishing Experience": 1e10

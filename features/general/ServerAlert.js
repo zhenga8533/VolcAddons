@@ -7,7 +7,7 @@ import { registerWhen } from "../../utils/variables";
 /**
  * Variable to track servers player has been in.
  */
-let servers = [];
+let servers = new Set([]);
 
 /**
  * Replaces joining message if player has been in server in past X minutes.
@@ -16,7 +16,7 @@ let servers = [];
  * @param {Object} event - Chat message event.
  */
 registerWhen(register("chat", (server, event) => {
-    if (servers.includes(server)) {
+    if (servers.has(server)) {
         cancel(event);
         ChatLib.chat(`${DARK_RED}${BOLD}Recent Server: ${WHITE}${server}${DARK_RED}${BOLD}!`);
     } else

@@ -255,6 +255,9 @@ register ("command", (...args) => {
             ChatLib.chat("Garden: " + getNextVisitor());
             Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
             break;
+        case "test2":
+            print(Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes"));
+            break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))
                 executeCommand(Player.getName(), args, false);

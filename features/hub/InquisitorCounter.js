@@ -69,7 +69,7 @@ registerWhen(register("chat", (_, mob) => {
     if (mob != "Minos Champion")
         updateInqCounter(false);
 }).setCriteria("${_}! You dug out a ${mob}!"), () => getWorld() == "Hub" &&
-getMayor() == "Diana" && getPerks().includes("Mythological Ritual"));
+getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
  * Command to reset the stats for the overall counter.

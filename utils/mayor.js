@@ -17,7 +17,7 @@ export function getMayor() {
 }
 
 // An array to store the names of the mayor's perks.
-let perks = [];
+let perks = new Set([]);
 
 /**
  * Gets the array of mayor's perks.
@@ -36,10 +36,7 @@ request({
     json: true
 }).then((response)=>{
     mayor = response.mayor.name;
-    perks = [];
-    response.mayor.perks.forEach(perk => {
-        perks.push(perk.name);
-    });
+    perks = new Set([...response.mayor.perks.map(perk => perk.name)]);
 }).catch((error)=>{
     console.error(error);
 });

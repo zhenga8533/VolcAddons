@@ -1,6 +1,7 @@
 import settings from "../../settings";
+import { getAuction } from "../../utils/auction";
 import { getBazaar } from "../../utils/bazaar";
-import { commafy } from "../../utils/functions";
+import { commafy, removeReforges } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 
 
@@ -116,14 +117,47 @@ const MAX_ENCHANTS = {
     "QUANTUM": 3,
     "ULTIMATE_THE_ONE": 4,
 };
-const ENCHANTS = Object.keys(MAX_ENCHANTS);
-const STACKING_ENCHANTS = ["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"];
-const items = Object.keys(MAX_ENCHANTS).reduce((acc, key) => {
+const ENCHANTS = new Set(Object.keys(MAX_ENCHANTS));
+const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"]);
+const modifiers = {
+    "RECOMBOBULATOR_3000": [0, 0],
+    "HOT_POTATO_BOOK": [0, 0],
+    "FUMING_POTATO_BOOK": [0, 0],
+    "ART_OF_WAR": [0, 0],
+    "WITHER_SHIELD_SCROLL": [0, 0],
+    "IMPLOSION_SCROLL": [0, 0],
+    "SHADOW_WARP_SCROLL": [0, 0],
+    "FIRST_MASTER_STAR": [0, 0],
+    "SECOND_MASTER_STAR": [0, 0],
+    "THIRD_MASTER_STAR": [0, 0],
+    "FOURTH_MASTER_STAR": [0, 0],
+    "FIFTH_MASTER_STAR": [0, 0],
+    "FLAWLESS_JADE_GEM": [0, 0],
+    "FLAWLESS_AMBER_GEM": [0, 0],
+    "FLAWLESS_TOPAZ_GEM": [0, 0],
+    "FLAWLESS_SAPPHIRE_GEM": [0, 0],
+    "FLAWLESS_AMETHYST_GEM": [0, 0],
+    "FLAWLESS_JASPER_GEM": [0, 0],
+    "FLAWLESS_RUBY_GEM": [0, 0],
+    "FLAWLESS_OPAL_GEM": [0, 0],
+    "PERFECT_JADE_GEM": [0, 0],
+    "PERFECT_AMBER_GEM": [0, 0],
+    "PERFECT_TOPAZ_GEM": [0, 0],
+    "PERFECT_SAPPHIRE_GEM": [0, 0],
+    "PERFECT_AMETHYST_GEM": [0, 0],
+    "PERFECT_JASPER_GEM": [0, 0],
+    "PERFECT_RUBY_GEM": [0, 0],
+    "PERFECT_OPAL_GEM": [0, 0]
+};
+const PLACEMENT = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
+const GEM_SLOTS = new Set(["JADE", "AMBER", "TOPAZ", "SAPPHIRE", "AMETHYST", "RUBY", "COMBAT", "JASPER"])
+const enchants = Object.keys(MAX_ENCHANTS).reduce((acc, key) => {
     acc[`ENCHANTMENT_${key}_${MAX_ENCHANTS[key]}`] = [0, 0];
     return acc;
 }, {});
-items["SIL_EX"] = [0, 0];
-getBazaar(items);
+enchants["SIL_EX"] = [0, 0];
+getBazaar(enchants);
+getBazaar(modifiers);
 let NBTTagString = Java.type("net.minecraft.nbt.NBTTagString");
 
 /**
@@ -133,24 +167,63 @@ let NBTTagString = Java.type("net.minecraft.nbt.NBTTagString");
  * @returns {number[]} - [Buy order price, Insta buy price]
  */
 function getEnchantValue(item) {
-    let orderValue = 0;
-    let instaValue = 0;
-    const heldEnchants = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getCompoundTag("enchantments").toObject();
+    const auction = getAuction();
+    const heldItem = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").toObject();
+    let value = auction[
+        removeReforges("all", item.getNBT().getCompoundTag("tag").getCompoundTag("display").getString("Name").removeFormatting())
+    ] || 0;
     
-    Object.keys(heldEnchants).forEach(enchant => {
-        // Check for enchant in dict and higher level than lowest max.
-        let enchantlvl = heldEnchants[enchant];
+    // Enchantment values
+    Object.entries(heldItem.enchantments || {}).forEach(([enchant, enchantlvl]) => {
         enchant = enchant.toUpperCase();
-        if (ENCHANTS.includes(enchant) && enchantlvl >= MAX_ENCHANTS[enchant]) {
-            let base = enchant === "EFFICIENCY" ? items[`SIL_EX`] : items[`ENCHANTMENT_${enchant}_${MAX_ENCHANTS[enchant]}`];
+        const maxEnchantLevel = MAX_ENCHANTS[enchant];
+        if (ENCHANTS.has(enchant) && enchantlvl >= maxEnchantLevel) {
+            const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
+            const base = enchants[enchantKey];
+            const isStackingEnchant = STACKING_ENCHANTS.has(enchant);
             let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
-            multiplier = STACKING_ENCHANTS.includes(enchant) ? multiplier : 2 ** (enchantlvl - MAX_ENCHANTS[enchant]);
-            orderValue += base[0] * multiplier;
-            instaValue += base[1] * multiplier;
+            multiplier = isStackingEnchant ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
+            value += base[0] * multiplier;
         }
     });
+  
 
-    return [orderValue, instaValue];
+    // Modifier values
+    const gems = heldItem.gems;
+
+    // Recomb
+    value += heldItem.rarity_upgrades === undefined ? 0 : modifiers["RECOMBOBULATOR_3000"][0];
+
+    // Rune
+    if (heldItem.runes !== undefined) {
+        const [rune, _] = Object.entries(heldItem.runes);
+        const runeCost = auction[`${rune[0].charAt(0).toUpperCase() + rune[0].slice(1).toLowerCase()} Rune ${['I', 'II', 'III'][rune[1] - 1]}`];
+        value += runeCost === undefined ? 0 : runeCost;
+    }
+  
+    // Potato Books
+    const hotPotatoCount = heldItem.hot_potato_count;
+    value += (hotPotatoCount === undefined ? 0 : Math.min(hotPotatoCount, 10) * modifiers["HOT_POTATO_BOOK"][0]) +
+        (hotPotatoCount === undefined ? 0 : Math.max(hotPotatoCount - 10, 0) * modifiers["FUMING_POTATO_BOOK"][0]);
+    
+    // Art of War
+    value += heldItem.art_of_war_count === undefined ? 0 : modifiers["ART_OF_WAR"][0];
+  
+    // Master Stars
+    const upgradeLevel = heldItem.upgrade_level;
+    const stars = upgradeLevel === undefined ? 0 : Math.max(upgradeLevel - 5, 0);
+    for (let i = 0; i < stars; i++) {
+        value += modifiers[`${PLACEMENT[i]}_MASTER_STAR`][0];
+    }
+  
+    // Wither Impact Scrolls
+    (heldItem.ability_scroll || []).forEach(scroll => {
+        value += modifiers[scroll][0];
+    });
+
+    // Gems
+  
+    return value;
 }
 
 /**
@@ -165,14 +238,10 @@ registerWhen(register("itemTooltip", (lore, item) => {
     if (loreTag === null) return;
     const list = new NBTTagList(loreTag);
     for (let i = 0; i < list.getTagCount(); i++) {
-        if (list.getStringTagAt(i).includes("Buy Order Enchants:")) return;
+        if (list.getStringTagAt(i).includes("Item Value:")) return;
     }
 
     // Add to item lore.
-    const values = getEnchantValue(item);
-    if (values[0] == 0) return;
-    const orderText = `§5§lBuy Order Enchants: §6${commafy(values[0])}`;
-    const instaText = `§5§lInsta Buy Enchants: §6${commafy(values[1])}`;
-    list.appendTag(new NBTTagString(orderText));
-    list.appendTag(new NBTTagString(instaText));
+    const value = getEnchantValue(item);
+    list.appendTag(new NBTTagString(`§5§lItem Value: §6${commafy(value)}`));
 }), () => settings.itemPrice);

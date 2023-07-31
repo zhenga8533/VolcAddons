@@ -6,7 +6,7 @@ import { registerWhen } from "../../utils/variables";
 /**
  * Variables used for broken Wither Impact tracking.
  */
-const WITHER_BLADES = ["HYPERION", "ASTRAEA", "SCYLLA", "VALKYRIE", "NECRON_BLADE_UNREFINED"];
+const WITHER_BLADES = new Set(["HYPERION", "ASTRAEA", "SCYLLA", "VALKYRIE", "NECRON_BLADE_UNREFINED"]);
 let heldItem = undefined;
 let broken = false;
 let trackerKills = 0;
@@ -23,7 +23,7 @@ registerWhen(register("entityDeath", () => { // (boppeler21 cutie)
     heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
 
     // IF Wither Blade is held THEN track kills and xp
-    if (WITHER_BLADES.includes(heldItem.getString("id"))) {
+    if (WITHER_BLADES.has(heldItem.getString("id"))) {
         const newKills = heldItem.getInteger("stats_book");
         const newXP = heldItem.getDouble("champion_combat_xp");
 

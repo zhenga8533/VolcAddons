@@ -59,6 +59,20 @@ export function getGuildName(player) {
 }
 
 /**
+ * Converts a string with underscores to title case format.
+ * 
+ * @param {string} input - Input string with underscores.
+ * @returns {string} String in title case format.
+ */
+export function convertToTitleCase(input) {
+    return input
+      .toLowerCase()
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+/**
  * Removes any modifiers off item name.
  * 
  * @param {string} itemType - Item auction class.
@@ -88,7 +102,11 @@ const REFORGES = {
 };
 export function removeReforges(itemType, itemString) {
     // Get the corresponding reforges Set based on the item type
-    const reforgesSet = REFORGES[itemType];
+    const reforgesSet = itemType === "all" ? new Set([
+        ...REFORGES.weapon,
+        ...REFORGES.armor,
+        ...REFORGES.misc
+    ]) : REFORGES[itemType];
 
     // If the item type is not valid or the reforges Set is empty, return the original item string
     if (reforgesSet === undefined || !itemString)
@@ -113,8 +131,8 @@ export function removeReforges(itemType, itemString) {
  */
 export function findWordsInString(str, arr) {
     const wordSet = new Set(arr);
-  const words = arr.filter(word => str.includes(word));
-  return words;
+    const words = arr.filter(word => str.includes(word));
+    return words;
 }
 
 /**
