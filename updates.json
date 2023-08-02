@@ -1,6 +1,15 @@
 [
+    "-Added /va attribute",
+    "-Added Inquisitor counter",
+    "-Added enchantment lore",
     "-Added Kuudra coinage tracker",
     "-Added godrolls to /va attribute",
     "-Added container prices",
-    "-Improved Auction tracker"
+    "-Changed some settings (you may have to reactivate)",
+    "   -Party settings",
+    "   -Economy settings",
+    "   -Garden settings",
+    "-Improved Auction tracker",
+    "-Performed some optimizing",
+    "-Spring Cleaning! (pain and suffering)"
 ]

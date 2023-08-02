@@ -1,7 +1,7 @@
 import settings from "../../settings";
-import { getAuction } from "../../utils/auction";
+import { getAttributeItems, getAuction } from "../../utils/auction";
 import { getBazaar } from "../../utils/bazaar";
-import { commafy, removeReforges } from "../../utils/functions";
+import { commafy, convertToTitleCase, removeReforges } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 
 
@@ -67,12 +67,12 @@ getBazaar(modifiers);
  * @param {Object} item - Item Object.
  * @returns {number} - Total value of item.
  */
-function getItemValue(item) {
+export function getItemValue(item) {
+    if (item === null) return 0;
     const auction = getAuction();
     const heldItem = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").toObject();
-    let value = auction[
-        removeReforges("all", item.getNBT().getCompoundTag("tag").getCompoundTag("display").getString("Name").removeFormatting())
-    ] || 0;
+    const itemName = removeReforges("all", item.getNBT().getCompoundTag("tag").getCompoundTag("display").getString("Name").removeFormatting());
+    let value = auction[itemName] || 0;
     
     // Enchantment values
     Object.entries(heldItem.enchantments || {}).forEach(([enchant, enchantlvl]) => {
@@ -133,8 +133,22 @@ function getItemValue(item) {
             gemstoneValue = modifiers[`${gemstoneTier}_${gemstoneType[0]}_GEM`]?.[0] || 0;
         else if (MULTIUSE_SLOTS.has(gemstoneType[0]) && gemstoneType[gemstoneType.length - 1] !== "gem")
             gemstoneValue = modifiers[`${gemstoneTier}_${heldItem.gems[gemstone + "_gem"]}_GEM`]?.[0] || 0;
-        value += gemstoneValue
+        value += gemstoneValue;
     });
+
+    // Attributes
+    const attributes = Object.keys(heldItem.attributes || {});
+    const attributeItems = getAttributeItems();
+    let attributeValue = 0;
+    attributes.forEach((attribute) => {
+        const attributeTier = heldItem.attributes[attribute];
+        attribute = attribute === "mending" ? "bVitality" : `b${convertToTitleCase(attribute)}`;
+        attributeValue = Math.max(attributeValue,
+            (attributeItems[itemName.split(' ')[1]]?.attributes?.[attribute] || 
+            attributeItems["Attribute Shard"]?.attributes?.[attribute] || 0)
+        * (2 ** (attributeTier - 1)));
+    })
+    value += attributeValue;
   
     return value;
 }

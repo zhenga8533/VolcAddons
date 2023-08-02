@@ -4,11 +4,12 @@ import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates"; // Impor
 import { getInquisitors, getVanquishers } from "../features/misc/AnnouceMob"; // Importing functions for AnnouceMob
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints"; // Importing functions for RiftWaypoints
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints"; // Importing functions for UserWaypoints
+import { getVamps } from "../features/rift/VampireSlayer"; // Importing functions for VampireSlayer
 
 // Importing render functions from other files
 import renderBeaconBeam from "../../BeaconBeam"; // Importing function for rendering beacon beams
 import RenderLib from "../../RenderLib/index.js"; // Importing RenderLib for rendering in the world
-import { getVamps } from "../features/rift/VampireSlayer"; // Importing functions for VampireSlayer
+import { getLavaCreatures } from "../features/crimsonIsles/FishingESP";
 
 
 // General Waypoints
@@ -71,6 +72,7 @@ register("renderWorld", () => {
     renderBeam(getBuilds()); // Red Builds
     renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
     renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
+    renderEntities(getLavaCreatures(), "Mythic Lava SC", 1, 0, 0) // Red lava scc
     renderStands(getVamps(), "Medium Rare", 1, 0, 0); // Red Vamps
     renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple enigma
     renderSimple(getCat(), 0, 0, 1); // Blue enigma

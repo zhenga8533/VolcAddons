@@ -1,6 +1,5 @@
 import request from "../../requestV2";
 import settings from "../settings";
-import { GREEN, LOGO, RED } from "./constants";
 import { findFirstRomanNumeral, findWordsInString, removeReforges, romanToNum } from "./functions";
 import { registerWhen } from "./variables";
 
@@ -17,23 +16,10 @@ class AttributePiece {
     constructor(godroll1, godroll2) {
         this.godroll = new Set([godroll1, godroll2]);
         this.attributes = {
-            "bElite": 1e10,
-            "bMana Steal": 1e10,
-            "bWarrior": 1e10,
-            "bDeadeye": 1e10,
-            "bBreeze": 1e10,
-            "bDominance": 1e10,
-            "bFortitude": 1e10,
-            "bLife Regeneration": 1e10,
-            "bLifeline": 1e10,
-            "bMagic Find": 1e10,
-            "bMana Pool": 1e10,
-            "bMana Regeneration": 1e10,
-            "bVitality": 1e10,
-            "bSpeed": 1e10,
-            "bVeteran": 1e10,
-            "bBlazing Fortune": 1e10,
-            "bFishing Experience": 1e10
+            "bElite": 0, "bMana Steal": 0, "bWarrior": 0, "bDeadeye": 0, "bBreeze": 0, "bDominance": 0, "bFortitude": 0,
+            "bLife Regeneration": 0, "bLifeline": 0, "bMagic Find": 0, "bMana Pool": 0, "bMana Regeneration": 0, "bVitality": 0,
+            "bSpeed": 0, "bVeteran": 0, "bBlazing Fortune": 0, "bFishing Experience": 0, "bFishing Speed": 0, "bTrophy Hunter": 0,
+            "bDouble Hook": 0
         };
     }
 }
@@ -110,13 +96,12 @@ export function updateAuction(page) {
 
                 const parsedTier = romanToNum(tier);
                 const attributeValue = starting_bid / (2 ** (parsedTier - 1));
-                attributeItem.attributes[attribute] = Math.min(attributeValue, attributeItem.attributes[attribute]);
+                attributeItem.attributes[attribute] = Math.min(attributeItem.attributes[attribute] || attributeValue, attributeValue);
         
                 // Tracks for item class e.x. Helmet
                 const attributeClass = attributeItems[item.split(" ")[1]];
-        
                 if (attributeClass !== undefined)
-                    attributeClass.attributes[attribute] = Math.min(attributeValue, attributeClass.attributes[attribute]);
+                    attributeClass.attributes[attribute] = Math.min(attributeClass.attributes[attribute] || attributeValue, attributeValue);
             });
           
             // Godroll tracking (add relevant logic here)

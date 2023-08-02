@@ -731,6 +731,32 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // KUUDRA
 
     // Kuudra
+    @SwitchProperty({
+        name: "Kuudra Profit",
+        description: "Displays Kuudra chest profit.",
+        category: "Kuudra",
+        subcategory: "Kuudra Profit"
+    })
+    kuudraProfit = false;
+    @ButtonProperty({
+        name: "Move Profit HUD",
+        description: "Move the location of the Kuudra profit. Runs => /moveKP",
+        category: "Kuudra",
+        subcategory: "Kuudra Profit"
+    })
+    moveKP() {
+        ChatLib.command("moveKP", true);
+    }
+
+    @SwitchProperty({
+        name: "Tabasco Farmers",
+        description: "Turn off if you are a cringer without max chili collection.",
+        category: "Kuudra",
+        subcategory: "Kuudra Profit"
+    })
+    maxChili = true;
+
+
     @TextProperty({
         name: "Kuudra Reparty",
         description: "Enter IGNs to reparty, if 3/1: [ign] | if 2/2 <[leader ign], [ign], [partner ign]>",

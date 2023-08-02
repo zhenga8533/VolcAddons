@@ -32,9 +32,9 @@ export function getAttributes(args) {
         
         ChatLib.chat(`${LOGO} ${DARK_AQUA}${BOLD}Important ${item} Prices (t${tier})`);
         Object.keys(ah[item].attributes).forEach(attributeName => {
-            let attribute = ah[item].attributes[attributeName] * (2 ** (tier - 1));
-            if (attribute % 1e10 != 0)
-                ChatLib.chat(`-${AQUA}${attributeName.slice(1)}: ${WHITE}${commafy(attribute)}`);
+            const attributeValue = ah[item].attributes[attributeName] * (2 ** (tier - 1));
+            if (attributeValue !== 0)
+                ChatLib.chat(`-${AQUA}${attributeName.slice(1)}: ${WHITE}${commafy(attributeValue)}`);
         });
     } else
         ChatLib.chat(`${LOGO} ${RED}Please input as /va attribute <shard, [armor piece], [equipment piece]> [tier]`);

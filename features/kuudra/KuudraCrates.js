@@ -14,7 +14,6 @@ let crates = [];
 export function getCrates() { return crates };
 let builds = [];
 export function getBuilds() { return builds };
-const re = /SUPPLIES|FUEL CELL/;
 
 /**
  * Tracks crates near player and colors them depending on how close they are.
@@ -27,7 +26,7 @@ registerWhen(register("tick", () => {
     const supplies = gzs.filter(gz => gz.getY() < 67)
     supplies.forEach((supply) => {
         let stands = supply.getChunk().getAllEntitiesOfType(EntityArmorStand.class);
-        let active = stands.filter(stand => re.test(stand.getName()));
+        let active = stands.filter(stand => stand.getName().includes('SUPPLIES') || stand.getName().includes('FUEL CELL'));
 
         if (active.length)
             active.forEach(crate => { crates.push([crate.getX(), crate.getY(), crate.getZ(), 0, 1, 0]) });
@@ -37,7 +36,7 @@ registerWhen(register("tick", () => {
             z = supply.getZ();
             active.push(...get3x3Stands(x, z, 8));
 
-            const active = active.filter(stand => re.test(stand.getName()));
+            active = active.filter(stand => stand.getName().includes('SUPPLIES') || stand.getName().includes('FUEL CELL'));
             if (active.length)
                 active.forEach(crate => { crates.push([crate.getX(), crate.getY(), crate.getZ(), 0, 1, 0]) });
             else
@@ -54,7 +53,7 @@ registerWhen(register("step", () => {
 
     builds = [];
     const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
-    const piles = stands.filter(stand => /PUNCH/.test(stand.getName()));
+    const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
 }).setFps(2), () => getWorld() == "Kuudra" && settings.kuudraBuild);
 

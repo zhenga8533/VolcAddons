@@ -52,6 +52,7 @@ import { setWarps } from "./features/hub/DianaWaypoint";
 import "./features/crimsonIsles/GoldenFishTimer";
 import "./features/crimsonIsles/VanqWarp";
 import "./features/crimsonIsles/VanqCounter";
+import "./features/crimsonIsles/FishingESP";
 
 // Kuudra Features
 import { getAttributes } from "./features/kuudra/AttributePricing";
@@ -60,6 +61,7 @@ import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
 import "./features/kuudra/KuudraReparty";
 import { getSplits } from "./features/kuudra/KuudraSplits";
+import "./features/kuudra/KuudraTracker";
 
 // Garden Features
 import { calcCompost } from "./features/garden/ComposterCalc";
@@ -75,8 +77,6 @@ import "./features/rift/VampireSlayer";
 import "./features/misc/AnnouceMob";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 import { calcMinions } from "./features/misc/MinionCalc";
-import { removeReforges } from "./utils/functions";
-import { getAuction } from "./utils/auction";
 
 
 register("worldLoad", () => {
@@ -254,9 +254,6 @@ register ("command", (...args) => {
             ChatLib.chat("Party: " + getInParty());
             ChatLib.chat("Garden: " + getNextVisitor());
             Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
-            break;
-        case "test2":
-            print(Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes"));
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))

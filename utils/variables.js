@@ -56,6 +56,18 @@ export let data = new PogObject("VolcAddons", {
     "apexPrice": 2e9,
     "QL": [15, 200, 1], // Vanquisher Location
     "GL": [15, 200, 1], // Gyro Location
+    "SL": [15, 250, 1], // Splits Location
+    "CL": [15, 250, 1], // Counter Location
+    "VL": [15, 250, 1], // Visitors Location
+    "NL": [15, 350, 1], // Next Visitors Location
+    "TL": [15, 300, 1], // Golden Fish Timer Location
+    "AL": [15, 300, 1], // Skill Tracker Location
+    "BL": [15, 400, 1], // Vampire Location
+    "UL": [15, 450, 1], // Tuba Location
+    "ML": [15, 450, 1], // Coins Location
+    "PL": [15, 500, 1], // Powder Location
+    "IL": [15, 500, 1], // Inq Location
+    "KL": [100, 350, 1], // Kuudra Profit Location
     // ... (Other location properties)
     // Properties related to enigma and cat souls
     "enigmaSouls": ENIGMA_SOULS,

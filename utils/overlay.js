@@ -44,9 +44,10 @@ export class Overlay {
         }).setName(command);
 
         // Register a render function to display the overlay and GUI instructions.
-        // The overlay is shown when the GUI is open or in worlds specified in 'worlds' array.
+        // The overlay is shown when the GUI is open or in worlds specified in 'worlds' array.'
+
         registerWhen(
-            register("renderOverlay", () => {
+            register(this.worlds.includes("Paid Chest") ? "postGuiRender" : "renderOverlay", () => {
                 if (this.gui.isOpen()) {
                     // Coords and scale
                     renderScale(
@@ -67,11 +68,13 @@ export class Overlay {
                         Renderer.screen.getHeight() / 2.4,
                     );
                 } else if (this.worlds.includes(getWorld()) || this.worlds.includes("all")) {
-                    // Draw HUD
-                    renderScale(this.loc[2], this.message, this.X, this.Y);
+                    if (this.worlds.includes("Paid Chest")) {
+                        if (Player.getContainer().getName() !== "Paid Chest") return;
+                        renderScale(this.loc[2], this.message, this.X, this.Y);
+                    } else  // Draw HUD
+                        renderScale(this.loc[2], this.message, this.X, this.Y);
                 }
-            }),
-            () => settings[this.setting]
+            }), () => settings[this.setting]
         );
 
         // Register event for dragging the HUD.

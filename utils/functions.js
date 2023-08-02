@@ -15,7 +15,7 @@ export function getTime(seconds) {
         timeString += `${hours}hr`;
     if (minutes > 0) {
         timeString += `${minutes}m`;
-        timeString += `${remainingSeconds}s`;
+        timeString += `${remainingSeconds.toFixed(0)}s`;
     } else timeString += `${remainingSeconds.toFixed(2)}s`;
   
     return timeString;
@@ -66,10 +66,10 @@ export function getGuildName(player) {
  */
 export function convertToTitleCase(input) {
     return input
-      .toLowerCase()
-      .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+        .toLowerCase()
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
   }
 
 /**

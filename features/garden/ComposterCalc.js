@@ -9,7 +9,7 @@ import { getWorld } from "../../utils/worlds";
  * Variables used to represent required Bazaar items.
  * "ITEM_NAME": [Low Price, High Price]
  */
-let items = {
+const items = {
     "BOX_OF_SEEDS": [0, 0],
     "OIL_BARREL": [0, 0],
     "VOLTA": [0, 0],
@@ -21,16 +21,16 @@ getBazaar(items);
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.
  */
 registerWhen(register("guiMouseRelease", () => {
-    // Get compsoter upgrades container
-    let container = Player.getContainer();
-    if (container.getName() != "Composter Upgrades") return;
-
-    // Get composter levels
-    // Composter Speed => Sugar ID: 353
-    // Multi Drop => Diamond Hoe ID: 293
-    // Cost Reduction => Gold Ingot ID: 266
-    const items = container.getItems();
     try {
+        // Get compsoter upgrades container
+        let container = Player.getContainer();
+        if (container.getName() != "Composter Upgrades") return;
+        
+        // Get composter levels
+        // Composter Speed => Sugar ID: 353
+        // Multi Drop => Diamond Hoe ID: 293
+        // Cost Reduction => Gold Ingot ID: 266
+        const items = container.getItems();
         data.composterUpgrades["Composter Speed"] = romanToNum(items[container.indexOf(353)].getName().removeFormatting().split(" ").pop());
         data.composterUpgrades["Multi Drop"] = romanToNum(items[container.indexOf(293)].getName().removeFormatting().split(" ").pop());
         data.composterUpgrades["Cost Reduction"] = romanToNum(items[container.indexOf(266)].getName().removeFormatting().split(" ").pop());

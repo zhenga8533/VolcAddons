@@ -20,7 +20,7 @@ registerWhen(register("chat", (server, event) => {
         cancel(event);
         ChatLib.chat(`${DARK_RED}${BOLD}Recent Server: ${WHITE}${server}${DARK_RED}${BOLD}!`);
     } else
-        servers.push(server);
+        servers.add(server);
 }).setCriteria("Sending to server ${server}..."), () => settings.serverAlert);
 
 /**
