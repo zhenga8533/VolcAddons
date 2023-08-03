@@ -56,7 +56,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[0] = Date.now() / 1000;
     phase = 1;
 }).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"),
-() => getWorld() == "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Second split.
@@ -67,7 +67,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[1] = Date.now() / 1000;
     phase = 2;
 }).setCriteria("[NPC] Elle: OMG! Great work collecting my supplies!"),
-() => getWorld() == "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Third split.
@@ -78,7 +78,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[2] = Date.now() / 1000;
     phase = 3;
 }).setCriteria("[NPC] Elle: Phew! The Ballista is finally ready! It should be strong enough to tank Kuudra's blows now!"),
-() => getWorld() == "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Fourth split.
@@ -89,7 +89,7 @@ registerWhen(register("chat", () => {
     kuudraSplit[3] = Date.now() / 1000;
     phase = 4;
 }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"),
-() => getWorld() == "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Fifth (final) split.
@@ -144,7 +144,7 @@ registerWhen(register("chat", () => {
 
     // Resets party tracker
     party = [];
-}).setCriteria("${before}KUUDRA DOWN${after}"), () => getWorld() == "Kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}KUUDRA DOWN${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Fifth (final split) if you fail :skull:.
@@ -154,7 +154,7 @@ registerWhen(register("chat", () => {
     
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
-}).setCriteria("${before}DEFEAT${after}"), () => getWorld() == "Kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}DEFEAT${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Updates time splits overlay.
@@ -197,7 +197,7 @@ registerWhen(register("step", () => {
 ${AQUA}${BOLD}Build: ${RESET}${times[1]}
 ${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
 ${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
-}).setFps(19), () => getWorld() == "Kuudra" && settings.kuudraSplits);
+}).setFps(19), () => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Party commands for splits.
@@ -246,17 +246,17 @@ registerWhen(register("chat", (player, message) => {
  * @param {int} runs - Amount of runs to average.
  */
 function formatSplits(splits, color, runs) {
-    if (color == GREEN) ChatLib.chat(`${DARK_GREEN}${BOLD}Average for last ${runs} runs:`);
+    if (color === GREEN) ChatLib.chat(`${DARK_GREEN}${BOLD}Average for last ${runs} runs:`);
     ChatLib.chat(`${color}${BOLD}Supplies: ${RESET}${getTime(splits[0])}`);
     ChatLib.chat(`${color}${BOLD}Build: ${RESET}${getTime(splits[1])}`);
     ChatLib.chat(`${color}${BOLD}Fuel/Stun: ${RESET}${getTime(splits[2])}`);
     ChatLib.chat(`${color}${BOLD}Kuudra: ${RESET}${getTime(splits[3])}`);
     ChatLib.chat(`${color}${BOLD}Overall Run: ${RESET}${getTime(splits[4])}`);
-    if (color == GOLD) {
+    if (color === GOLD) {
         const theory = (data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3]).toFixed(2);
         ChatLib.chat(`${color}${BOLD}Theoretical Best: ${RESET}${getTime(theory)}`);
     }
-    if (color == RED) {
+    if (color === RED) {
         const conjecture = (data.splits.worst[0] + data.splits.worst[1] + data.splits.worst[2] + data.splits.worst[3]).toFixed(2);
         ChatLib.chat(`${color}${BOLD}Theoretical Worst: ${RESET}${getTime(conjecture)}`);
     }
@@ -297,7 +297,7 @@ export function getSplits(args){
                     // Filter by date
                     if (isValidDate(args[2]))
                         runs = runs.filter((run) => run.split(", ")[5] == args[2]);
-                    if (today || args[2] == "today")
+                    if (today || args[2] === "today")
                         runs = runs.filter((run) => run.split(", ")[5] == (mm+"/"+dd+"/"+yyyy));
                     
                     // Get # of runs to average

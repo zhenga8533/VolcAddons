@@ -21,11 +21,11 @@ const tubaOverlay = new Overlay("tubaTimer", ["The Rift"], data.UL, "moveTubaTim
 registerWhen(register("actionBar", () => {
     if (cd > 0) return;
 
-    if (type == "WEIRD_TUBA") tuba = 19.8;
-    else if (type == "WEIRDER_TUBA") tuba = 29.8;
+    if (type === "WEIRD_TUBA") tuba = 19.8;
+    else if (type === "WEIRDER_TUBA") tuba = 29.8;
     cd = 19.8;
     alerted = false;
-}).setCriteria("${before}-${x} Mana (Howl)${after}"), () => getWorld() == "The Rift" && (settings.tubaTimer || settings.tubaAlert));
+}).setCriteria("${before}-${x} Mana (Howl)${after}"), () => getWorld() === "The Rift" && (settings.tubaTimer || settings.tubaAlert));
 
 /**
  * Updates tuba overlay every tick and alerst player when ability can be used again.
@@ -47,4 +47,4 @@ registerWhen(register("tick", () => {
         tuba = (tuba - 0.05).toFixed(2);
         tubaOverlay.message = `${GRAY}${BOLD}Tuba Timer: ${RESET}${tuba}s`;
     } else tubaOverlay.message = `${GRAY}${BOLD}Tuba Timer: ${RED}NO TUBA`;
-}), () => getWorld() == "The Rift" && (settings.tubaTimer || settings.tubaAlert));
+}), () => getWorld() === "The Rift" && (settings.tubaTimer || settings.tubaAlert));

@@ -1,5 +1,6 @@
 import settings from "../../settings";
 import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../../utils/constants";
+import { playSound } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
@@ -10,57 +11,57 @@ import { getWorld } from "../../utils/worlds";
 registerWhen(register("chat", () => {
     Client.Companion.showTitle(`${BOLD}NO KUUDRA KEY!`, "", 10, 50, 10);
 }).setCriteria("WARNING: You do not have a key for this tier in your inventory, you will not be able to claim rewards."),
-() => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.keyAlert);
+() => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.keyAlert);
 
 /**
  * Unready alert.
  */
 registerWhen(register("chat", (player) => {
     const name = player.removeFormatting().toUpperCase();
-    MUSIC.play();
+    playSound(MUSIC, 1000);
     Client.Companion.showTitle(`${DARK_RED}${BOLD}${name} ${WHITE}IS NO LONGER READY!`, "", 10, 50, 10);
-}).setCriteria("${player} is no longer ready!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.unreadyAlert);
+}).setCriteria("${player} is no longer ready!"), () => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.unreadyAlert);
 
 /**
  * Choose perk alert.
  */
 registerWhen(register("chat", () => {
-    MUSIC.play();
+    playSound(MUSIC, 1000);
     Client.Companion.showTitle(`${AQUA}${BOLD}BUY UPGRADE ROUTE!`, "", 10, 100, 10);
 }).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"),
-() => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.routeAlert);
+() => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.routeAlert);
 
 /**
  * Supply spawned alert.
  */
 registerWhen(register("chat", () => {
-    MUSIC.play();
+    playSound(MUSIC, 1000);
     Client.Companion.showTitle(`${AQUA}${BOLD}PICKUP SUPPLY!`, "", 10, 100, 10);
-}).setCriteria("[NPC] Elle: Not again!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.supplyAlert);
+}).setCriteria("[NPC] Elle: Not again!"), () => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.supplyAlert);
 
 /**
  * Building started alert.
  */
 registerWhen(register("chat", () => {
-    MUSIC.play();
+    playSound(MUSIC, 1000);
     Client.Companion.showTitle(`${AQUA}${BOLD}START BUILDING!`, "", 10, 50, 10);
 }).setCriteria("[NPC] Elle: It's time to build the Ballista again! Cover me!"),
-() => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.buildingAlert);
+() => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.buildingAlert);
 
 /**
  * Fresh tools alert.
  */
 registerWhen(register("chat", () => {
-    MUSIC.play();
+    playSound(MUSIC, 1000);
     Client.Companion.showTitle(`${GREEN}${BOLD}EAT FRESH!`, "", 10, 50, 10);
 }).setCriteria("Your Fresh Tools Perk bonus doubles your building speed for the next 5 seconds!"),
-() => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.freshAlert);
+() => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.freshAlert);
 
 /**
  * Fuel spawned alert.
  */
 registerWhen(register("chat", (player, percentage) => { // Ballista full alert
-    MUSIC.play();
+    playSound(MUSIC, 1000);
     switch (percentage) {
         case "100":
             Client.Companion.showTitle(`${AQUA}${BOLD}100% ${GRAY}[${GREEN}||||${GRAY}]`, "", 10, 100, 10);
@@ -76,7 +77,7 @@ registerWhen(register("chat", (player, percentage) => { // Ballista full alert
             break;
     }
 }).setCriteria("${player} recovered a Fuel Cell and charged the Ballista! (${percentage}%)"),
-() => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.fuelAlert);
+() => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.fuelAlert);
 
 /**
  * Stunner eaten alert.
@@ -86,10 +87,10 @@ registerWhen(register("chat", (player) => {
     const stunner = settings.kuudraStunner.toUpperCase();
 
     if (!ign.equals("ELLE") && (stunner.length == 0 || ign.equals(stunner))) {
-        MUSIC.play();
+        playSound(MUSIC, 1000);
         Client.Companion.showTitle(`${GREEN}${BOLD}${ign} WAS EATEN!`, "", 10, 100, 10);
     }
-}).setCriteria("${player} has been eaten by Kuudra!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.fuelAlert);
+}).setCriteria("${player} has been eaten by Kuudra!"), () => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.fuelAlert);
 
 /**
  * Ballista mounted alert.
@@ -99,18 +100,18 @@ registerWhen(register("chat", (player) => {
     const cannonear = settings.kuudraCannonear.toUpperCase();
 
     if (settings.kuudraCannonear.length == 0 || ign.equals(cannonear)) {
-        MUSIC.play();
+        playSound(MUSIC, 1000);
         Client.Companion.showTitle(`${AQUA}${BOLD}${ign} ASSUMED THE POSITION!`, "", 10, 100, 10);
     }
-}).setCriteria("${player} mounted a Cannon!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.ballistaAlert);
+}).setCriteria("${player} mounted a Cannon!"), () => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.ballistaAlert);
 
 /**
  * Kuudra stunned alert.
  */
 registerWhen(register("chat", () => {
-    MUSIC.play();
+    playSound(MUSIC, 1000);
     Client.Companion.showTitle(`${GREEN}${BOLD}KUUDRA STUNNED!`, "", 10, 100, 10);
-}).setCriteria("{player} destroyed one of Kuudra's pods!"), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.stunAlert);
+}).setCriteria("{player} destroyed one of Kuudra's pods!"), () => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.stunAlert);
 
 /**
  * Warns player about dropship as they get close to center.
@@ -128,7 +129,7 @@ registerWhen(register("step", () => {
         if (dropships.length)
             Client.Companion.showTitle(`${RED}${BOLD}ART IS AN EXPLOSION!`, "", 0, 50, 5);
     }
-}).setFps(1), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.dropshipAlert);
+}).setFps(1), () => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.dropshipAlert);
 
 /**
  * Alerts player when token gathered surpasses set threshhold.
@@ -144,5 +145,5 @@ registerWhen(register("step", () => {
             }
         }
     }
-}).setFps(5), () => getWorld() == "Kuudra" && settings.kuudraAlerts && settings.tokenAlert);
+}).setFps(5), () => getWorld() === "Kuudra" && settings.kuudraAlerts && settings.tokenAlert);
 register("worldLoad", () => { alerted = false });

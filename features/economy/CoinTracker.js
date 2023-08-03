@@ -22,7 +22,7 @@ const coinOverlay = new Overlay("coinTracker", ["all"], data.ML, "moveCoins", co
 registerWhen(register("step", () => {
     // Get cha ching from purse
     let purse = Scoreboard.getLines().find((line) => line.getName().includes("Piggy:"));
-    if (purse == undefined) return;
+    if (purse === undefined) return;
     purse = parseInt(purse.getName().removeFormatting().split(" ")[1].replace(/\D/g,''));
 
     // Get starting balance

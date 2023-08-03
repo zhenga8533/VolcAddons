@@ -69,15 +69,6 @@ ${ITALIC}Related Commands: /va calc compost`);
         `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
-        // HUDs
-        this.addDependency("Move Timer HUD", "Golden Fish Timer");
-        this.addDependency("Move Gyro Timer HUD", "Cells Alignment Timer");
-        this.addDependency("Move Splits HUD", "Kuudra Splits");
-        this.addDependency("Move Visitors HUD", "Garden Tab Display");
-        this.addDependency("Move Next Visitor HUD", "Next Visitor Display");
-        this.addDependency("Move Vampire HUD", "Vampire Attack Display");
-        this.addDependency("Move Tuba HUD", "Weird Tuba Timer");
-
         // Leader / Party Commands
         this.addDependency("Warp Command (?warp)", "Leader Command Options");
         this.addDependency("Transfer Command (?transfer)", "Leader Command Options");
@@ -351,22 +342,13 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // Skills
     @SliderProperty({
         name: "Skill Tracker",
-        description: "Displays rate of xp gain for skills. Set minutes until tracker resets or as 0 to turn off. (Use larger numbers when using wither impact)",
+        description: "Displays rate of xp gain for skills. Set minutes until tracker resets or as 0 to turn off (Use larger numbers when using wither impact). /moveSkills to move.",
         category: "General",
         subcategory: "Skills",
         min: 0,
         max: 10
     })
     skillTracker = 0;
-    @ButtonProperty({
-        name: "Move Skills Display",
-        description: "Move the location of the Skill Tracker. Runs => /moveSkills",
-        category: "General",
-        subcategory: "Skills"
-    })
-    moveSkills() {
-        ChatLib.command("moveSkills", true);
-    }
     @ButtonProperty({
         name: "Reset Skills Tracker",
         description: "Resets tracking for every skill. Runs => /resetSkills",
@@ -383,22 +365,13 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // Coins
     @SliderProperty({
         name: "Coin Tracker",
-        description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off.",
+        description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off. /moveCoins to move.",
         category: "Economy",
         subcategory: "Coins",
         min: 0,
         max: 10
     })
     coinTracker = 0;
-    @ButtonProperty({
-        name: "Move Coins Display",
-        description: "Move the location of the Coin Tracker. Runs => /moveCoins",
-        category: "Economy",
-        subcategory: "Coins"
-    })
-    moveCoins() {
-        ChatLib.command("moveCoins", true);
-    }
     @ButtonProperty({
         name: "Reset Coin Tracker",
         description: "Resets tracking for coin tracker. Runs => /resetCoins",
@@ -418,7 +391,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         min: 0,
         max: 180
     })
-    auctionRefresh = 60;
+    auctionRefresh = 180;
 
     @SwitchProperty({
         name: "Item Price",
@@ -493,20 +466,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     gyroAlert = false;
     @SwitchProperty({
         name: "Cells Alignment Timer",
-        description: "Displays the time left before Cells Alignment ends.",
+        description: "Displays the time left before Cells Alignment ends. /moveAlignTimer to move.",
         category: "Combat",
         subcategory: "Gyrokinetic Wand"
     })
     gyroTimer = false;
-    @ButtonProperty({
-        name: "Move Gyro Timer HUD",
-        description: "Move the location of the Cells Alignement Timer. Runs => /moveAlignTimer",
-        category: "Combat",
-        subcategory: "Gyrokinetic Wand"
-    })
-    moveGyroTimer() {
-        ChatLib.command("moveAlignTimer", true);
-    }
 
     // Slayer
     @SelectorProperty({
@@ -530,22 +494,13 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // MINING
     @SliderProperty({
         name: "Powder Tracker",
-        description: "Displays rate of powder gain (only chests). Set minutes until tracker resets or as 0 to turn off.",
+        description: "Displays rate of powder gain (only chests). Set minutes until tracker resets or as 0 to turn off. /movePowder",
         category: "Mining",
         subcategory: "Powder",
         min: 0,
         max: 10
     })
     powderTracker = 0;
-    @ButtonProperty({
-        name: "Move Powder Display",
-        description: "Move the location of the Powder Tracker. Runs => /movePowder",
-        category: "Mining",
-        subcategory: "Powder"
-    })
-    movePowder() {
-        ChatLib.command("movePowder", true);
-    }
     @ButtonProperty({
         name: "Reset Powder Tracker",
         description: "Resets tracking for Powder Tracker. Runs => /resetPowder",
@@ -616,19 +571,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SelectorProperty({
         name: "Inquisitor Counter",
-        description: "Counts average kills until Inquisitor spawns.",
+        description: "Counts average kills until Inquisitor spawns. /moveInq to move.",
         category: "Hub",
         subcategory: "Inquisitor",
         options: ["OFF", "Overall View", "Session View"]
     })
     inqCounter = 0;
-    @ButtonProperty({
-        name: "Move Counter HUD",
-        description: "Move the location of the Inquisitor Counter. Runs => /moveInq",
-        category: "Hub",
-        subcategory: "Inquisitor"
-    })
-    moveInq() { ChatLib.command("moveInq", true) };
     @ButtonProperty({
         name: "Clear Session",
         description: "Resets all Vanquisher counter stats. Runs => /resetInq",
@@ -642,21 +590,20 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // Fishing
     @SwitchProperty({
+        name: "Mythic Lava Creature Detect",
+        description: "Detects when you get near a Jawbus or Thunder.",
+        category: "Crimson Isles",
+        subcategory: "Fishing"
+    })
+    mythicLavaDetect = false;
+
+    @SwitchProperty({
         name: "Golden Fish Timer",
-        description: "Sets the 3 minute timer between each rod cast for a golden fish spawn.",
+        description: "Sets the 3 minute timer between each rod cast for a golden fish spawn. /moveTimer to move.",
         category: "Crimson Isles",
         subcategory: "Fishing"
     })
     goldenFishAlert = false;
-    @ButtonProperty({
-        name: "Move Timer HUD",
-        description: "Move the location of the Golden Fish Timer. Runs => /moveTimer",
-        category: "Crimson Isles",
-        subcategory: "Fishing"
-    })
-    moveTimer() {
-        ChatLib.command("moveTimer", true);
-    }
 
     // Vanquisher
     @SelectorProperty({
@@ -678,20 +625,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SwitchProperty({
         name: "Vanquisher Detection",
-        description: "Alerts player of a vanquisher if they get near one.",
+        description: "Alerts player of a vanquisher if they get near one. /moveVanq to move.",
         category: "Crimson Isles",
         subcategory: "Vanquisher Alert"
     })
     vanqDetect = false;
-    @ButtonProperty({
-        name: "Move Vanquisher HUD",
-        description: "Move the location of the Vanquisher Detection. Runs => /moveVanq",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher Alert"
-    })
-    moveVanq() {
-        ChatLib.command("moveVanq", true);
-    }
     @SwitchProperty({
         name: "Vanquisher Detection Sound",
         description: "Plays a sound whenever a vanquisher gets detected.",
@@ -702,21 +640,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SelectorProperty({
         name: "Vanquisher Counter",
-        description: "Counts kills until Vanquisher spawns. (Uses Book of Stats)",
+        description: "Counts kills until Vanquisher spawns (Uses Book of Stats). /moveCounter to move.",
         category: "Crimson Isles",
         subcategory: "Vanquisher Counter",
         options: ["OFF", "Overall View", "Session View"]
     })
     vanqCounter = 0;
-    @ButtonProperty({
-        name: "Move Counter HUD",
-        description: "Move the location of the Vanquisher Counter. Runs => /moveCounter",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher Counter"
-    })
-    moveCounter() {
-        ChatLib.command("moveCounter", true);
-    }
     @ButtonProperty({
         name: "Clear Session",
         description: "Resets all Vanquisher counter stats. Runs => /resetCounter",
@@ -733,19 +662,27 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // Kuudra
     @SwitchProperty({
         name: "Kuudra Profit",
-        description: "Displays Kuudra chest profit.",
+        description: "Displays Kuudra chest profit. /moveKP to move.",
         category: "Kuudra",
         subcategory: "Kuudra Profit"
     })
     kuudraProfit = false;
+    @SelectorProperty({
+        name: "Kuudra Profit Tracker",
+        description: "Renders an overlay for Kuudra money per hour. /moveKPT to move.",
+        category: "Kuudra",
+        subcategory: "Kuudra Profit",
+        options: ["OFF", "Overall View", "Session View"]
+    })
+    kuudraProfitTracker = 0;
     @ButtonProperty({
-        name: "Move Profit HUD",
-        description: "Move the location of the Kuudra profit. Runs => /moveKP",
+        name: "Reset Kuudra Profit Tracker",
+        description: "Resets tracking for every skill. Runs => /resetKPT",
         category: "Kuudra",
         subcategory: "Kuudra Profit"
     })
-    moveKP() {
-        ChatLib.command("moveKP", true);
+    resetKPT() {
+        ChatLib.command("resetKPT", true);
     }
 
     @SwitchProperty({
@@ -911,20 +848,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // Kuudra Splits
     @SwitchProperty({
         name: "Kuudra Splits",
-        description: "Displays Kuudra splits and records best splits in t5 (?<splits/best> in party chat or /va splits to show)",
+        description: "Displays Kuudra splits and records best splits in t5 (/va splits). /moveSplits to move.",
         category: "Kuudra",
         subcategory: "Kuudra Splits"
     })
     kuudraSplits = false;
-    @ButtonProperty({
-        name: "Move Splits HUD",
-        description: "Move the location of the Kuudra Splits. Runs => /moveSplits",
-        category: "Kuudra",
-        subcategory: "Kuudra Splits"
-    })
-    moveSplits() {
-        ChatLib.command("moveSplits", true);
-    }
     
 
     // GARDEN
@@ -948,37 +876,19 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SwitchProperty({
         name: "Garden Tab Display",
-        description: "Displays the garden visitors outside of tab menu.",
+        description: "Displays the garden visitors outside of tab menu. /moveVisitors to move.",
         category: "Garden",
         subcategory: "Garden"
     })
     gardenTab = false;
-    @ButtonProperty({
-        name: "Move Visitors HUD",
-        description: "Move the location of the garden visitors display. Runs => /moveVisitors",
-        category: "Garden",
-        subcategory: "Garden"
-    })
-    moveVisitors() {
-        ChatLib.command("moveVisitors", true);
-    }
 
     @SwitchProperty({
         name: "Next Visitor Display",
-        description: "Displays the time until a visitor will visit.",
+        description: "Displays the time until a visitor will visit. /moveNext to move.",
         category: "Garden",
         subcategory: "Garden"
     })
     nextVisitor = false;
-    @ButtonProperty({
-        name: "Move Next Visitor HUD",
-        description: "Move the location of the next visitor display. Runs => /moveNext",
-        category: "Garden",
-        subcategory: "Garden"
-    })
-    moveNext() {
-        ChatLib.command("moveNext", true);
-    }
 
 
     // RIFT
@@ -1012,20 +922,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     @SwitchProperty({
         name: "Weird Tuba Timer",
-        description: "Display the time remaining on weird(er) tuba buff.",
+        description: "Display the time remaining on weird(er) tuba buff. /moveTubaTimer to move.",
         category: "Rift",
         subcategory: "Awooga v2",
     })
     tubaTimer = false;
-    @ButtonProperty({
-        name: "Move Tuba HUD",
-        description: "Move the location of the Weird Tuba Timer. Runs => /moveTubaTimer",
-        category: "Rift",
-        subcategory: "Awooga v2",
-    })
-    moveTubaTimer() {
-        ChatLib.command("moveTubaTimer", true);
-    }
     @SwitchProperty({
         name: "Weird Tuba Alert",
         description: "Alerts you when Weird Tuba is off cooldown.",
@@ -1070,21 +971,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     @SwitchProperty({
         name: "Vampire Attack Display",
-        description: "Tracks the Mania, Twinclaws, and Ichor directly on user screen.",
+        description: "Tracks the Mania, Twinclaws, and Ichor directly on user screen. /moveVamp to move.",
         category: "Rift",
         subcategory: "Vampire",
     })
     vampireAttack = false;
-    
-    @ButtonProperty({
-        name: "Move Vampire HUD",
-        description: "Move the location of the Vampire Attack Timer. Runs => /moveVamp",
-        category: "Rift",
-        subcategory: "Vampire",
-    })
-    moveVamp() {
-        ChatLib.command("moveVamp", true);
-    }
 }
 
 export default new Settings    

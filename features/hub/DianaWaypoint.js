@@ -1,6 +1,6 @@
 import settings from "../../settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
-import { getClosest } from "../../utils/functions";
+import { getClosest, playSound } from "../../utils/functions";
 import { getMayor, getPerks } from "../../utils/mayor";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
@@ -64,7 +64,7 @@ registerWhen(register("spawnParticle", (particle, type) => {
                     if (settings.dianaChat)
                         ChatLib.chat(`${LOGO} ${WHITE}Burrow Detected at ${GRAY}x: ${x}, y: ${y}, z: ${z}!`);
                     if (settings.dianaAmogus)
-                        AMOGUS.play();
+                        playSound(AMOGUS, 100);
                 }
             }
             break;
@@ -82,8 +82,8 @@ registerWhen(register("spawnParticle", (particle, type) => {
                 closest[0][0] = "Mob";
             break;
     }
-}), () => getWorld() == "Hub" && (settings.dianaWaypoint || settings.dianaBurrow) &&
-getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
+}), () => getWorld() === "Hub" && (settings.dianaWaypoint || settings.dianaBurrow) &&
+getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
  * Uses sound pitch to determine how far away a theoretical burrow could appear.
@@ -109,8 +109,8 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
 
     if (pitch > 0)
         distance = 4 / Math.pow(pitch, 6) + 0.2 / Math.pow(pitch, 5) - correct;
-}).setCriteria("note.harp"), () => getWorld() == "Hub" && settings.dianaWaypoint &&
-getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
+}).setCriteria("note.harp"), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
  * Tracks when player uses Ancestral Spade ability as to not "spam" out the estimator.
@@ -121,7 +121,7 @@ getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
  * @param {boolean} state - True for key down, False for key up
  */
 registerWhen(register("clicked", (x, y, button, state) => {
-    if (Player.getHeldItem() == null || !button || !state || cd) return;
+    if (Player.getHeldItem() === null || !button || !state || cd) return;
 
     heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
     if (heldItem.equals("ANCESTRAL_SPADE")) {
@@ -131,8 +131,8 @@ registerWhen(register("clicked", (x, y, button, state) => {
         delay(() => { cast = false }, 2000);
         delay(() => { cd = false }, 3000);
     }
-}), () => getWorld() == "Hub" && settings.dianaWaypoint &&
-getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
+}), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
  * Resets "lastCast" variable whenever player right clicks with a fishing rod in hand.
@@ -173,8 +173,8 @@ registerWhen(register("tick", () => {
     // Set theory burrow
     theory[0] = "warp " + getClosest(theory, warps)[0][0];
     theoryBurrow = [theory];
-}), () => getWorld() == "Hub" && settings.dianaWaypoint &&
-getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
+}), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
  * Key press to warp player to closest burrow.
@@ -198,8 +198,8 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
     if (closest != undefined);
         burrows.splice(burrows.indexOf(closest[0]), 1);
-}).setCriteria("${before}urrow${after}"), () => getWorld() == "Hub" && settings.dianaWaypoint &&
-getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
+}).setCriteria("${before}urrow${after}"), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
  * Removes all burrows if player leaves world or dies.
@@ -211,4 +211,4 @@ register("worldUnload", () => {
 registerWhen(register("chat", () => {
     burrows = [];
 }).setCriteria(" ☠ You ${died}."), () => getWorld() == "Hub" && settings.dianaWaypoint &&
-getMayor() == "Diana" && getPerks().has("Mythological Ritual"));
+getMayor() === "Diana" && getPerks().has("Mythological Ritual"));

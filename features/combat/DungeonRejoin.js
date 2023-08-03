@@ -45,7 +45,7 @@ registerWhen(register("chat", (type, floor) => {
  * @param {string} world - Desired world to be in.
  */
 function tryWarp(world) {
-    if (getWorld() == world) {
+    if (getWorld() === world) {
         baseDelay = 0
         if (settings.dungeonRejoin == 2) {
             delay(() => ChatLib.command("p warp"), 4000);

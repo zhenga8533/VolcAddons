@@ -1,15 +1,16 @@
 // Importing functions from different files
 import { getBurrow, getTheory } from "../features/hub/DianaWaypoint"; // Importing functions for DianaWaypoint
-import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates"; // Importing functions for KuudraCrates
-import { getInquisitors, getVanquishers } from "../features/misc/AnnouceMob"; // Importing functions for AnnouceMob
+import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates"; // Importing functions for KuudraCrates\
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints"; // Importing functions for RiftWaypoints
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints"; // Importing functions for UserWaypoints
 import { getVamps } from "../features/rift/VampireSlayer"; // Importing functions for VampireSlayer
+import { getLavaCreatures } from "../features/crimsonIsles/FishingESP";
+import { getVanquishers } from "../features/crimsonIsles/VanqAnnounce";
+import { getInquisitors } from "../features/hub/InquisitorAnnounce";
 
 // Importing render functions from other files
 import renderBeaconBeam from "../../BeaconBeam"; // Importing function for rendering beacon beams
 import RenderLib from "../../RenderLib/index.js"; // Importing RenderLib for rendering in the world
-import { getLavaCreatures } from "../features/crimsonIsles/FishingESP";
 
 
 // General Waypoints

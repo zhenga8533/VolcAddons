@@ -6,7 +6,7 @@ import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { getSlayerBoss } from "../misc/AnnouceMob";
+import { getSlayerBoss } from "../combat/SlayerDetect";
 
 
 /**
@@ -41,11 +41,11 @@ registerWhen(register("tick", () => {
     // Boss Nametag Shit
     if (!bossUUID) {
         const spawn = stands.find(stand => stand.getName().includes('03:59'));
-        if (spawn == undefined) return;
+        if (spawn === undefined) return;
         bossUUID = spawn.getUUID();
     } else {
-        const boss = stands.find(stand => stand.getUUID() == bossUUID);
-        if (boss == undefined) return;
+        const boss = stands.find(stand => stand.getUUID() === bossUUID);
+        if (boss === undefined) return;
         dracula = boss;
         const name = boss.getName().split(" ");
 
@@ -80,8 +80,8 @@ registerWhen(register("tick", () => {
     // Ichor Nametag Shit
     if (ichorSpawn) {
         if (ichorUUID) {
-            const ichor = stands.find(stand => stand.getUUID() == ichorUUID);
-            if (ichor == undefined) {
+            const ichor = stands.find(stand => stand.getUUID() === ichorUUID);
+            if (ichor === undefined) {
                 ichorSpawn = false;
                 ichorUUID = 0;
                 return;
@@ -89,11 +89,11 @@ registerWhen(register("tick", () => {
             vampireOverlay.message += `${DARK_AQUA}${BOLD}ICHOR: ${ichor.getName()}\n`;
         } else {
             const ichor = stands.find(stand => stand.getName().includes('24.'));
-            if (ichor == undefined) return;
+            if (ichor === undefined) return;
             ichorUUID = ichor.getUUID();
         }
     }
-}), () => getWorld() == "The Rift" && (settings.vampireAttack || settings.announceMania));
+}), () => getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania));
 
 /**
  * Replaces Hypixel's impel subtitle with a flashy title.
@@ -107,13 +107,13 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
         cancel(event);
         Client.Companion.showTitle(subtitle, "", 0, 20, 0);
     }
-}), () => getWorld() == "The Rift" && settings.vampireImpel);
+}), () => getWorld() === "The Rift" && settings.vampireImpel);
 
 /**
  * Draws an ESP box around player boss and highlights when low.
  */
 registerWhen(register("renderWorld", () => {
-    if (dracula == undefined) return;
+    if (dracula === undefined) return;
     RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, false);
 }), () => settings.vampireHitbox);
 
@@ -127,5 +127,5 @@ registerWhen(register("tick", () => {
     if (vamps.length) vamps = [];
     const stands = get3x3Stands();
     let bosses = stands.filter(stand => stand.getName().includes("Bloodfiend §e§l"));
-    vamps = bosses == undefined ? [] : bosses;
-}), () => data.moblist.includes("vampire") && getWorld() == "The Rift");
+    vamps = bosses === undefined ? [] : bosses;
+}), () => data.moblist.includes("vampire") && getWorld() === "The Rift");

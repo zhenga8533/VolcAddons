@@ -19,7 +19,7 @@ let warpTo = "";
 registerWhen(register("messageSent", (message, event) => {
     if (getNextVisitor() || warpTo) return;
 
-    if ((message.includes("/warp") && !message.includes("garden")) || message == "/hub" || message == "/is") {
+    if ((message.includes("/warp") && !message.includes("garden")) || message === "/hub" || message === "/is") {
         cancel(event);
         ChatLib.command("warp garden");
         warpTo = message;

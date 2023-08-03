@@ -43,7 +43,7 @@ registerWhen(register("tick", () => {
                 crates.push([supply.getX(), supply.getY(), supply.getZ(), 1, 1, 1]);
         }
     });
-}), () => getWorld() == "Kuudra" && settings.kuudraCrates);
+}), () => getWorld() === "Kuudra" && settings.kuudraCrates);
 
 /**
  * Marks build piles that are not completed.
@@ -55,7 +55,7 @@ registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
-}).setFps(2), () => getWorld() == "Kuudra" && settings.kuudraBuild);
+}).setFps(2), () => getWorld() === "Kuudra" && settings.kuudraBuild);
 
 /**
  * Marks build piles that are not completed.

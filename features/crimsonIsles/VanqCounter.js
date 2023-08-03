@@ -9,7 +9,7 @@ import { getWorld } from "../../utils/worlds";
  * Variables used to track and display item and vanquisher kill counts.
  */
 let items = {};
-const session = {
+let session = {
     "vanqs": 0,
     "kills": 0,
     "last": 0,
@@ -60,7 +60,7 @@ ${RED}${BOLD}Kills Since: ${RESET}${session.last}
 ${RED}${BOLD}Average Kills: ${RESET}${session.average}`;
         }
     } else items[heldItem] = newKills;
-}), () => getWorld() == "Crimson Isle" && settings.vanqCounter);
+}), () => getWorld() === "Crimson Isle" && settings.vanqCounter);
 
 /**
  * Tracks whenever the player spawns a Vanquisher and updates the counter.
@@ -75,12 +75,18 @@ registerWhen(register("chat", () => {
     session.vanqs++;
     session.average = (session.kills / session.vanqs);
     session.last = 0;
-}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqCounter);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqCounter);
 
 /**
  * Command to reset the stats for the overall counter.
  */
 register("command", () => {
+    session = {
+        "vanqs": 0,
+        "kills": 0,
+        "last": 0,
+        "average": 0,
+    };
     data.vanqSession = {
         "vanqs": 0,
         "kills": 0,

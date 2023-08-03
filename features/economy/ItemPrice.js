@@ -1,6 +1,6 @@
 import settings from "../../settings";
-import { getAttributeItems, getAuction } from "../../utils/auction";
-import { getBazaar } from "../../utils/bazaar";
+import { getAttributeItems, getAuction } from "./Auction";
+import { getBazaar } from "./Bazaar";
 import { commafy, convertToTitleCase, removeReforges } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 

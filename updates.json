@@ -1,15 +1,15 @@
 [
     "-Added /va attribute",
     "-Added Inquisitor counter",
-    "-Added enchantment lore",
+    "-Added item price in lore",
     "-Added Kuudra coinage tracker",
-    "-Added godrolls to /va attribute",
     "-Added container prices",
+    "-Added Auction tracker",
     "-Changed some settings (you may have to reactivate)",
     "   -Party settings",
     "   -Economy settings",
     "   -Garden settings",
-    "-Improved Auction tracker",
+    "Changed GUI so you can move all at same time => /va gui",
     "-Performed some optimizing",
     "-Spring Cleaning! (pain and suffering)"
 ]

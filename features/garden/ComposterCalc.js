@@ -1,4 +1,4 @@
-import { getBazaar } from "../../utils/bazaar";
+import { getBazaar } from "../economy/Bazaar";
 import { AQUA, BOLD, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, romanToNum } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
@@ -35,7 +35,7 @@ registerWhen(register("guiMouseRelease", () => {
         data.composterUpgrades["Multi Drop"] = romanToNum(items[container.indexOf(293)].getName().removeFormatting().split(" ").pop());
         data.composterUpgrades["Cost Reduction"] = romanToNum(items[container.indexOf(266)].getName().removeFormatting().split(" ").pop());
     } catch(err) {}
-}), () => getWorld() == "Garden");
+}), () => getWorld() === "Garden");
 
 
 /**

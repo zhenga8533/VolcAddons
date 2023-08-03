@@ -50,7 +50,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
  * @param {string[]} args - Array of user input needed for waypoint.
  */
 export function createWaypoint(args) {
-    if (args[1] == "clear") {
+    if (args[1] === "clear") {
         userWaypoints = [];
         NPCs = [];
         zones = [];

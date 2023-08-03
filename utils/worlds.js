@@ -13,19 +13,19 @@ let noFind = 0; // Counter to prevent infinite loops when trying to find the wor
 export function findZone() {
     let zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
     // Rift has a different symbol
-    if (zoneLine == undefined) zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("ф"));
-    return zoneLine == undefined ? "None" : zoneLine.getName().removeFormatting();
+    if (zoneLine === undefined) zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("ф"));
+    return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
 }
 
 // Function to find the current world and register/unregister features based on the world
 function findWorld() {
     // Infinite loop prevention
-    if (noFind == 10) return;
+    if (noFind === 10) return;
     noFind++;
 
     // Get world from tab list
     world = TabList.getNames().find(tab => tab.includes("Area"));
-    if (world == undefined) {
+    if (world === undefined) {
         // If the world is not found, try again after a delay
         delay(() => findWorld(), 1000);
     } else {
@@ -34,10 +34,12 @@ function findWorld() {
         world = world.substring(world.indexOf(': ') + 2);
 
         // Get tier (for Kuudra and Dungeons)
-        if (world == "Instanced") {
+        if (world === "Instanced") {
             world = "Kuudra";
-            const zone = findZone();
-            tier = zone.charAt(zone.length - 2);
+            delay(() => {
+                const zone = findZone();
+                tier = parseInt(zone.charAt(zone.length - 2));
+            }, 1000);
         }
 
         // Register/unregister features for the current world

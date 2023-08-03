@@ -9,8 +9,8 @@ import { getWorld } from "../../utils/worlds";
  * Variables used to represent soul waypoints.
  */
 let enigmaClose = data.enigmaSouls;
-export function getEnigma() { return settings.enigmaWaypoint && getWorld() == "The Rift" ? enigmaClose : [] };
-export function getCat() { return settings.catWaypoint && getWorld() == "The Rift" ? data.catSouls : [] };
+export function getEnigma() { return settings.enigmaWaypoint && getWorld() === "The Rift" ? enigmaClose : [] };
+export function getCat() { return settings.catWaypoint && getWorld() === "The Rift" ? data.catSouls : [] };
 
 /**
  * Removes closest enigma soul to player once one is unlocked.
@@ -20,7 +20,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
     if (closest != undefined)
         data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
-}).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => getWorld() == "The Rift");
+}).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => getWorld() === "The Rift");
 
 /**
  * Fail safe enigma soul remove in case player clicks on an unregistered soul.
@@ -32,7 +32,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
     if (closest[1] < 5)
         data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
-}).setCriteria("You have already found that Enigma Soul!"), () => getWorld() == "The Rift");
+}).setCriteria("You have already found that Enigma Soul!"), () => getWorld() === "The Rift");
 
 /**
  * Updates enigma soul array closer than set threshold to player.
@@ -40,7 +40,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("step", () => {
     // Filters to closest souls
     enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[1], Player.getZ() - enigma[3]) < settings.enigmaWaypoint);
-}).setFps(1), () => getWorld() == "The Rift" && settings.enigmaWaypoint);
+}).setFps(1), () => getWorld() === "The Rift" && settings.enigmaWaypoint);
 
 /**
  * Removes closest Montezuma soul piece when player finds one.
@@ -50,7 +50,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
     if (closest != undefined)
         data.catSouls.splice(data.catSouls.indexOf(closest[0]), 1);
-}).setCriteria("You found a piece of Montezuma's soul!"), () => getWorld() == "The Rift");
+}).setCriteria("You found a piece of Montezuma's soul!"), () => getWorld() === "The Rift");
 
 /**
  * Fail safe Montzuma soul piece remove in case player clicks on an unregistered soul.
@@ -62,7 +62,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
     if (closest[1] < 5)
         data.catSouls.splice(data.catSouls.indexOf(closest[0]), 1);
-}).setCriteria("You have already found this Montezuma soul piece!"), () => getWorld() == "The Rift");
+}).setCriteria("You have already found this Montezuma soul piece!"), () => getWorld() === "The Rift");
 
 
 /**
@@ -116,10 +116,10 @@ export function soulEdit(args, type, soul, base) {
  * @param {Array[]} base - Original array with all waypoints.
  */
 export function riftWaypointEdit(args, type, base) {
-    const waypoint = type == "npc" ? NPCs : zones;
+    const waypoint = type === "npc" ? NPCs : zones;
 
-    if (args[1] == "clear") {
-        if (type == "npc") NPCs = [];
+    if (args[1] === "clear") {
+        if (type === "npc") NPCs = [];
         else zones = [];
         ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared ${type} waypoint!`);
         return;
@@ -157,9 +157,9 @@ export function getEffigies() { return missingEffigies };
 registerWhen(register("step", () => {
     missingEffigies = [];
     let effigies = Scoreboard.getLines().find((line) => line.getName().includes("Effigies"));
-    if (effigies == undefined) return;
+    if (effigies === undefined) return;
 
     effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
     effigies.shift();
     effigies.forEach((effigy, i) => { if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]) });
-}).setFps(1), () => getWorld() == "The Rift" && settings.effigyWaypoint);
+}).setFps(1), () => getWorld() === "The Rift" && settings.effigyWaypoint);

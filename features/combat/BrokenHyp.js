@@ -17,7 +17,7 @@ let trackerXP = 0;
  * Announces a title whenever it does fail.
  */
 registerWhen(register("entityDeath", () => { // (boppeler21 cutie)
-    if (Player.getHeldItem() == null) return;
+    if (Player.getHeldItem() === null) return;
 
     // Update held item
     heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");

@@ -3,16 +3,13 @@ import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
 
 // Importing various utility modules
-import "./utils/auction";
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
-import { data, opened, updateList } from "./utils/variables";
 import { delay } from "./utils/thread";
+import { data, opened, updateList } from "./utils/variables";
 import "./utils/waypoints";
 import { getTier, getWorld } from "./utils/worlds";
-
-// Saving data automatically
 data.autosave();
 
 // Importing various feature modules
@@ -21,25 +18,28 @@ data.autosave();
 import "./features/general/AbiphoneBlocker";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
-import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
+import { createWaypoint } from "./features/general/UserWaypoints";
 
 // Economy Features
+import "./features/economy/Auction";
 import "./features/economy/CoinTracker";
 import "./features/economy/ItemPrice";
+import { calcMinions } from "./features/economy/MinionCalc";
 
 // Combat Features
 import "./features/combat/BrokenHyp";
 import "./features/combat/DamageTracker";
+import "./features/combat/DungeonRejoin";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/RagDetect";
-import "./features/combat/DungeonRejoin";
+import "./features/combat/SlayerDetect";
 import "./features/combat/WatcherAlert";
 
 // Mining Features
@@ -47,21 +47,24 @@ import "./features/mining/PowderTracker";
 
 // Hub Features
 import { setWarps } from "./features/hub/DianaWaypoint";
+import "./features/hub/InquisitorAnnounce";
+import "./features/hub/InquisitorCounter";
 
 // Crimson Isles Features
+import "./features/crimsonIsles/FishingESP";
 import "./features/crimsonIsles/GoldenFishTimer";
+import "./features/crimsonIsles/VanqAnnounce";
 import "./features/crimsonIsles/VanqWarp";
 import "./features/crimsonIsles/VanqCounter";
-import "./features/crimsonIsles/FishingESP";
 
 // Kuudra Features
 import { getAttributes } from "./features/kuudra/AttributePricing";
 import "./features/kuudra/KuudraAlerts";
 import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
+import "./features/kuudra/KuudraProfit";
 import "./features/kuudra/KuudraReparty";
 import { getSplits } from "./features/kuudra/KuudraSplits";
-import "./features/kuudra/KuudraTracker";
 
 // Garden Features
 import { calcCompost } from "./features/garden/ComposterCalc";
@@ -72,11 +75,8 @@ import "./features/garden/GardenWarp";
 import "./features/rift/DDR";
 import "./features/rift/TubaTimer";
 import "./features/rift/VampireSlayer";
-
-// Misc Features
-import "./features/misc/AnnouceMob";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
-import { calcMinions } from "./features/misc/MinionCalc";
+import { openGUI } from "./utils/overlay";
 
 
 register("worldLoad", () => {
@@ -127,19 +127,22 @@ function getHelp() {
 // GENERAL FUNCTION COMMANDS - Handling command inputs
 const PARTY_COMMANDS = ["cringe", "gay", "racist", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"];
 register ("command", (...args) => {
-    if (args == undefined) {
+    if (args === undefined) {
         settings.openGUI();
         opened();
         return;
     }
 
     // Parsing command and executing appropriate actions
-    const command = args[0] == undefined ? undefined : args[0].toLowerCase();
+    const command = args[0] === undefined ? undefined : args[0].toLowerCase();
     switch (command) {
         case undefined: // Settings
         case "settings":
             settings.openGUI();
             opened();
+            break;
+        case "gui":
+            openGUI();
             break;
         case "help": // Help
             getHelp();

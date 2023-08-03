@@ -51,7 +51,7 @@ registerWhen(register("actionBar", (before, gain, type, amount, next, after) => 
     amount = parseInt(amount.replace(/,/g, ''));
     current = type;
     const skill = skills[current];
-    if (skill == undefined) return;
+    if (skill === undefined) return;
     
     // Reset skill tracking
     if (skill.start == 0)
@@ -75,7 +75,7 @@ registerWhen(register("step", () => {
     if (getPaused()) return;
     
     let skill = skills[current];
-    if (skill == undefined) return;
+    if (skill === undefined) return;
 
     if (skill.since < settings.skillTracker * 60) {
         skill.since += 1;

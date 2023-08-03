@@ -1,4 +1,4 @@
-import { getAttributeItems } from "../../utils/auction";
+import { getAttributeItems } from "../economy/Auction";
 import { AQUA, BOLD, DARK_AQUA, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy } from "../../utils/functions";
 

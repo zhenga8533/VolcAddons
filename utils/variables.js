@@ -44,6 +44,13 @@ export let data = new PogObject("VolcAddons", {
         "last": 0,
         "average": 0,
     },
+    "kuudraSession": {
+        "profit": 0,
+        "chests": 0,
+        "average": 0,
+        "time": 0,
+        "rate": 0
+    },
     // Properties representing upgrades for the composter
     "composterUpgrades": {
         "Composter Speed": -1,
@@ -68,6 +75,7 @@ export let data = new PogObject("VolcAddons", {
     "PL": [15, 500, 1], // Powder Location
     "IL": [15, 500, 1], // Inq Location
     "KL": [100, 350, 1], // Kuudra Profit Location
+    "ZL": [100, 450, 1], // Kuudra Profit Tracker Location
     // ... (Other location properties)
     // Properties related to enigma and cat souls
     "enigmaSouls": ENIGMA_SOULS,
@@ -87,7 +95,7 @@ export let data = new PogObject("VolcAddons", {
  */
 export function updateList(args, list, listName) {
     // Extracting the item and determining if the list is an array
-    const item = args[2] == undefined ? undefined : args[2].toLowerCase();
+    const item = args[2] === undefined ? undefined : args[2].toLowerCase();
     const isArray = Array.isArray(list);
 
     // Switch statement to handle different list update commands

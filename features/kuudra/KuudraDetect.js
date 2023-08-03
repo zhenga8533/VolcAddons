@@ -50,21 +50,21 @@ registerWhen(register("tick", () => {
         }
     } else
         HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
-}), () => getWorld() == "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
+}), () => getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
 
 /**
  * Renders Kuudra's percent HP.
  */
 registerWhen(register('renderOverlay', () => {
     percentHP.draw();
-}), () => getWorld() == "Kuudra" && settings.kuudraHP);
+}), () => getWorld() === "Kuudra" && settings.kuudraHP);
 
 /**
  * Draws Kuudra HP onto its physical body.
  */
 registerWhen(register('renderWorld', () => {
     if (HPDisplay[1]) Tessellator.drawString(HPDisplay[0], HPDisplay[1], HPDisplay[2] + 10, HPDisplay[3], 0xA7171A, true, 0.25, false);
-}), () => getWorld() == "Kuudra" && settings.kuudraHP);
+}), () => getWorld() === "Kuudra" && settings.kuudraHP);
 
 /**
  * Reset Kuudra's UUID on world exit.

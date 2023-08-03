@@ -29,7 +29,7 @@ const nextOverlay = new Overlay("nextVisitor", ["all"], data.NL, "moveNext", nex
  */
 registerWhen(register("step", () => {
     tablist = TabList.getNames();
-    if (tablist == null) return;
+    if (tablist === null) return;
 
     // Get Visitors
     gardenOverlay.message = "";
@@ -43,7 +43,7 @@ registerWhen(register("step", () => {
     } else {
         gardenOverlay.message += `${AQUA}${BOLD}Visitors: ${RESET}(0)`;
     }
-}).setFps(1), () => getWorld() == "Garden" && settings.gardenTab);
+}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);
 
 /**
  * Checks tablist for the time until next visitor and updates the Next Visitor Overlay every second.
@@ -56,7 +56,7 @@ registerWhen(register("step", () => {
         `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)}`:
         `${AQUA}${BOLD}Next Visitor: ${RED}Shipment Received`;
 
-    if (getWorld() != "Garden" || tablist == null) return;
+    if (getWorld() != "Garden" || tablist === null) return;
 
     // Set Next Visitor
     nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") != -1);
@@ -71,6 +71,10 @@ registerWhen(register("step", () => {
     }
 }).setFps(1), () => (settings.nextVisitor || settings.warpGarden));
 
+registerWhen(register("chat", () => {
+    next = 720;
+}).setCriteria("Tarwen has arrived on your Garden!"), () => (settings.nextVisitor || settings.warpGarden));
+
 /**
  * Checks tablist for inactive composter and displays a title if there is.
  */
@@ -80,4 +84,4 @@ registerWhen(register("step", () => {
     composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);
     if (composter != -1)
         Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
-}).setFps(1), () => getWorld() == "Garden" && settings.gardenCompost);
+}).setFps(1), () => getWorld() === "Garden" && settings.gardenCompost);

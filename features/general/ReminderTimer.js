@@ -1,5 +1,6 @@
 import settings from "../../settings";
 import { AMOGUS, BOLD, GOLD } from "../../utils/constants";
+import { playSound } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 
 
@@ -15,7 +16,7 @@ registerWhen(register("step", () => {
     minutes++;
     if (minutes >= settings.reminderTime) {
         Client.Companion.showTitle(`${GOLD}${BOLD}${settings.reminderText}`, "", 10, 50, 10);
-        AMOGUS.play();
+        playSound(AMOGUS, 1000);
         minutes = 0;
     }
 }).setDelay(60), () => settings.reminderTime);

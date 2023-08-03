@@ -1,3 +1,30 @@
+import { delay } from "./thread";
+
+
+/**
+ * Tracks chat for any powder gain messages.
+ *
+ * @param {boolean} toAll - /ac if true, /pc if false.
+ * @param {string} mob - Name of the mob.
+ * @param {number} x - X coordinate.
+ * @param {number} y - Y coordinate.
+ * @param {number} z - Z coordinate.
+ */
+export function announceMob(toAll, mob, x, y ,z) {
+    x = Math.round(x);
+    y = Math.round(y);
+    z = Math.round(z);
+
+    // AREA PLAYER IS IN
+    let area = findZone();
+
+    if (toAll) {
+        const id = (Math.random() + 1).toString(36).substring(6);
+        ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]! @${id}`);
+    } else if (getInParty())
+        ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!`);
+}
+
 /**
  * Converts seconds to XXhrXXmXXs format.
  * 
@@ -243,3 +270,19 @@ export function romanToNum(str) {
     }
     return num;
 };
+
+
+/**
+ * Plays a sound and sets cooldown
+ * 
+ * @param {Sound} sound - A sound ogg file from constants.js 
+ * @param {Number} cd - Cooldown caused by sound play.
+ */
+let soundCD = false;
+export function playSound(sound, cd) {
+    if (soundCD === true) return;
+
+    sound.play();
+    soundCD = true;
+    delay(() => soundCD = false, cd);
+}

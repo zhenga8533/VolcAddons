@@ -39,24 +39,24 @@ registerWhen(register("step", () => {
     withers = World.getAllEntitiesOfType(WitherClass);
     festivity = withers.find(wither => wither.getName().includes("2X POWDER"));
     if (festivity != undefined) doublePowder = true;
-}).setFps(1), () => getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines");
+}).setFps(1), () => getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines");
 
 /**
  * Checks chat for 2x powder event start message.
  */
 registerWhen(register("chat", (festivity) => {
     if (festivity.includes("2X POWDER")) doublePowder = true;
-}).setCriteria("${festivity} STARTED!"), () => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
+}).setCriteria("${festivity} STARTED!"), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker);
 
 /**
  * Checks chat for 2x powder event end message.
  */
 registerWhen(register("chat", (festivity) => {
     if (festivity.includes("2X POWDER")) doublePowder = false;
-}).setCriteria("${festivity} ENDED!"), () => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
+}).setCriteria("${festivity} ENDED!"), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker);
 registerWhen(register("worldUnload", () => {
     doublePowder = false
-}), () => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
+}), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker);
 
 /**
  * Tracks chat for any powder gain messages.
@@ -72,7 +72,7 @@ registerWhen(register("chat", (amount, type) => { // Chests
     powder.gain = powder.now - powder.start;
     powder.since = 0;
 }).setCriteria("You received +${amount} ${type} Powder."),
-() => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
+() => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker);
 
 /**
  * Updates powder overlay every second.
@@ -99,4 +99,4 @@ ${LIGHT_PURPLE}${BOLD}Gemstone Powder: ${WHITE}${commafy(powders.Gemstone.gain)}
 ${LIGHT_PURPLE}${BOLD}Gemstone Rate: ${WHITE}${commafy(powders.Gemstone.rate)} ᠅/hr
 ${BLUE}${BOLD}Time Passed: ${WHITE}${timeDisplay}`;
 }).setFps(1),
-() => (getWorld() == "Crystal Hollows" || getWorld() == "Dwarven Mines") && settings.powderTracker);
+() => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker);

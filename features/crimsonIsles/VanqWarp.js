@@ -36,7 +36,7 @@ registerWhen(register("chat", () => {
         notInParty++;
         timeout += 500;
     });
-}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqParty);
 
 /**
  * Tracks whenever a player joins/fails to join the party and warps party to lobby whenever all players have joined.
@@ -56,10 +56,10 @@ function warpParty() {
 }
 registerWhen(register("chat", () => {
     delay(warpParty(), 500);
-}).setCriteria("${player} joined the party."), () => getWorld() == "Crimson Isle" && settings.vanqParty);
+}).setCriteria("${player} joined the party."), () => getWorld() === "Crimson Isle" && settings.vanqParty);
 registerWhen(register("chat", () => {
     delay(warpParty(), 500);
-}).setCriteria("The party invite to ${player} has expired"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
+}).setCriteria("The party invite to ${player} has expired"), () => getWorld() === "Crimson Isle" && settings.vanqParty);
 
 /**
  * Fail safe for whenever a player goes offline or player inputs invalid username.
@@ -75,10 +75,10 @@ function noInvite() {
 }
 registerWhen(register("chat", () => {
     delay(noInvite(), 500);
-}).setCriteria("Couldn't find a player with that name!"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
+}).setCriteria("Couldn't find a player with that name!"), () => getWorld() === "Crimson Isle" && settings.vanqParty);
 registerWhen(register("chat", () => {
     delay(noInvite(), 500);
-}).setCriteria("You cannot invite that player since they're not online."), () => getWorld() == "Crimson Isle" && settings.vanqParty);
+}).setCriteria("You cannot invite that player since they're not online."), () => getWorld() === "Crimson Isle" && settings.vanqParty);
 
 /**
  * Fail safe in the event that two players spawn at same time or the Vanquisher you spawn dies before warp.
@@ -86,8 +86,8 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     vanqSpawned = false;
     notInParty = 0;
-}).setCriteria("You have joined ${player} party!"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
+}).setCriteria("You have joined ${player} party!"), () => getWorld() === "Crimson Isle" && settings.vanqParty);
 registerWhen(register("chat", () => {
     vanqSpawned = false;
     notInParty = 0;
-}).setCriteria("RARE DROP! Nether Star"), () => getWorld() == "Crimson Isle" && settings.vanqParty);
+}).setCriteria("RARE DROP! Nether Star"), () => getWorld() === "Crimson Isle" && settings.vanqParty);

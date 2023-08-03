@@ -123,7 +123,7 @@ export function executeCommand(name, args, sendTo) {
             case "rps": // Rock Paper Siccors
                 if (!settings.rpsCommand) return;
 
-                const player = args[1] == undefined ? -1 : RPS.indexOf(args[1].toLowerCase());
+                const player = args[1] === undefined ? -1 : RPS.indexOf(args[1].toLowerCase());
                 let reply = player == -1 ? `Wtf is a(n) ${args[1]}? Are you from the jungle?` : "zzz...";
                 // Plays game out if user inputs a correct symbol
                 if (player != -1) {

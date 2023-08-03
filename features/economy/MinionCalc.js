@@ -1,4 +1,4 @@
-import { getBazaar } from '../../utils/bazaar';
+import { getBazaar } from './Bazaar';
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../../utils/constants';
 import { commafy } from "../../utils/functions";
 import { data } from '../../utils/variables';

@@ -32,10 +32,7 @@ export const RESET = '&r';
  * Sounds.
  */
 export const AMOGUS = new Sound({source: "amogus.ogg"});
-export const HARP = new Sound({source: "harp.ogg"});
 export const MUSIC = new Sound({source: "music.ogg"});
-export const PLING = new Sound({source: "pling.ogg"});
-export const CHIME = new Sound({source: "icechime.ogg"});
 
 /**
  * VolcAddons setting constants.

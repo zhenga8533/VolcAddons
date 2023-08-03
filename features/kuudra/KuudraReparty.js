@@ -79,7 +79,7 @@ registerWhen(register("chat", () => {
             Client.Companion.showTitle(`${AQUA}${BOLD}BING CHILLING!`, "", 10, 50, 10);
         }
     }, 1000);
-}).setCriteria("${before}Tokens Earned:${after}"), () => getWorld() == "Kuudra" && settings.kuudraRP);
+}).setCriteria("${before}Tokens Earned:${after}"), () => getWorld() === "Kuudra" && settings.kuudraRP);
 
 /**
  * Resets party if player leaves instance.
