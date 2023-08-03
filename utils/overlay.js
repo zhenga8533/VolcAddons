@@ -67,6 +67,7 @@ register("guiKey", (char, keyCode, gui, event) => {
         currentOverlay.X = currentOverlay.loc[0];
         currentOverlay.Y = currentOverlay.loc[1];
     }
+    currentOverlay.setSize();
 });
 
 /**
@@ -100,16 +101,10 @@ export class Overlay {
         this.loc = loc;
         this.X = this.loc[0] / this.loc[2];
         this.Y = this.loc[1] / this.loc[2];
-        this.width = 0;
-        this.height = 0;
         this.example = example;
         this.message = example;
         this.gui = new Gui();
-
-        this.example.split("\n").forEach(line => {
-            this.width = Math.max(Renderer.getStringWidth(line) * this.loc[2], this.width);
-            this.height += line.includes(BOLD) ? 10 * this.loc[2] : 5 * this.loc[2];
-        });
+        this.setSize();
 
         // Register a command to open the GUI when executed.
         register("command", () => {
@@ -173,6 +168,15 @@ export class Overlay {
                     this.Y = this.loc[1];
                 }
             }
+        });
+    }
+
+    setSize() {
+        this.width = 0;
+        this.height = 0;
+        this.example.split("\n").forEach(line => {
+            this.width = Math.max(Renderer.getStringWidth(line) * this.loc[2], this.width);
+            this.height += line.includes(BOLD) ? 10 * this.loc[2] : 5 * this.loc[2];
         });
     }
 }

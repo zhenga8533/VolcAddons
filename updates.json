@@ -5,11 +5,15 @@
     "-Added Kuudra coinage tracker",
     "-Added container prices",
     "-Added Auction tracker",
+    "-Added mythic lava creature stuff",
     "-Changed some settings (you may have to reactivate)",
     "   -Party settings",
     "   -Economy settings",
     "   -Garden settings",
-    "Changed GUI so you can move all at same time => /va gui",
+    "-Changed GUI so you can move all at same time => /va gui",
+    "-Changed remove selfie to not render an ugly frame",
+    "-Removed Kuudra reparty :(",
+    "-Fixed being unable to clear lists",
     "-Performed some optimizing",
     "-Spring Cleaning! (pain and suffering)"
 ]

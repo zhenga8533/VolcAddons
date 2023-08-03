@@ -109,6 +109,7 @@ ${DARK_RED}${BOLD}Rate: ${WHITE}${profitView.rate.toFixed(0)}¢/hr`
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     if (Player.getContainer().getName() !== "Paid Chest" || gui?.getSlotUnderMouse()?.field_75222_d != 31 || chestOpened) return;
     updateProfitTracker(true);
+    chestOpened = true;
 }), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker);
 registerWhen(register("step", () => {
     downtime++;

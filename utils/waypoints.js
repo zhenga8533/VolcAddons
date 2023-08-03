@@ -4,19 +4,25 @@ import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates"; // Impor
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints"; // Importing functions for RiftWaypoints
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints"; // Importing functions for UserWaypoints
 import { getVamps } from "../features/rift/VampireSlayer"; // Importing functions for VampireSlayer
-import { getLavaCreatures } from "../features/crimsonIsles/FishingESP";
-import { getVanquishers } from "../features/crimsonIsles/VanqAnnounce";
+import { getLavaCreatures } from "../features/crimsonIsle/MythicDetect";
+import { getVanquishers } from "../features/crimsonIsle/VanqDetect";
 import { getInquisitors } from "../features/hub/InquisitorAnnounce";
+import { getEntities } from "../features/combat/EntityDetect";
 
 // Importing render functions from other files
 import renderBeaconBeam from "../../BeaconBeam"; // Importing function for rendering beacon beams
 import RenderLib from "../../RenderLib/index.js"; // Importing RenderLib for rendering in the world
 
 
-// General Waypoints
-let formatted = [];
+/**
+ * Variables used to organize and render waypoints.
+ */
+let formattedWaypoints = [];
+let formattedEntities = [];
 
-// Function to format waypoints for rendering
+/**
+ * Functions to format waypoints into the above variables to reduce renderOverlay load.
+ */
 function formatWaypoints(waypoints, r, g, b) {
     if (!waypoints.length) return;
     let x, y, z, distance, xSign, zSign = 0;
@@ -50,13 +56,22 @@ function formatWaypoints(waypoints, r, g, b) {
            [beacon x, y, z]
            [r, g, b]
         */
-        formatted.push(wp);
+        formattedWaypoints.push(wp);
     });
 }
+function formatEntityWaypoints(entities, r, g, b) {
+    if (!entities.length) return;
 
-// Registering tick event to update and format the waypoints
+    entities.forEach(entity => {
+        formattedEntities.push({
+            "x": entity.getX(), "y": entity.getY(), "z": entity.getZ(),
+            "width": entity.getWidth(), "height": entity.getHeight(),
+            "r": r, "g": g, "b": b
+        });
+    });
+}
 register("tick", () => {
-    formatted = [];
+    formattedWaypoints = [];
     formatWaypoints(getChatWaypoints(), 0, 1, 1); // Cyan Waypoint
     formatWaypoints(getUserWaypoints(), 0, 1, 0); // Lime user
     formatWaypoints(getTheory(), 1, 1, 0); // Yellow diana theory burrow
@@ -64,22 +79,17 @@ register("tick", () => {
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
+
+    formattedEntities = [];
+    formatEntityWaypoints(getVanquishers(), 0.5, 0, 0.5); // Purple vanq
+    formatEntityWaypoints(getInquisitors(), 1, 0.84, 0) // Gold inq
+    formatEntityWaypoints(getLavaCreatures(), 1, 0, 0) // Red lava scc
+    formatEntityWaypoints(getEntities(), 0, 1, 0) // Green moblist
 });
 
-// Registering renderWorld event to render the waypoints and other entities
-register("renderWorld", () => {
-    renderWaypoint(formatted);
-    renderBeam(getCrates()); // White Crates
-    renderBeam(getBuilds()); // Red Builds
-    renderEntities(getVanquishers(), "Vanquisher", 0.5, 0, 0.5); // Purple vanq
-    renderEntities(getInquisitors(), "Minos Inquisitor", 1, 0.84, 0) // Gold inq
-    renderEntities(getLavaCreatures(), "Mythic Lava SC", 1, 0, 0) // Red lava scc
-    renderStands(getVamps(), "Medium Rare", 1, 0, 0); // Red Vamps
-    renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple enigma
-    renderSimple(getCat(), 0, 0, 1); // Blue enigma
-});
-
-// Helper function to render simple waypoints
+/**
+ * Various render functions for different types of waypoints (i.e. entities or blocks).
+ */
 function renderSimple(waypoints, r, g, b) {
     if (!waypoints.length) return;
 
@@ -93,8 +103,6 @@ function renderSimple(waypoints, r, g, b) {
         renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
     });
 }
-
-// Helper function to render waypoint with beams
 function renderWaypoint(waypoints) {
     if (!waypoints.length) return;
 
@@ -109,33 +117,19 @@ function renderWaypoint(waypoints) {
         renderBeaconBeam(beam[0], beam[1], beam[2], rgb[0], rgb[1], rgb[2], 0.5, false);
     });
 }
-
-// Helper function to render beacon beams
 function renderBeam(waypoints) {
     if (!waypoints.length) return;
 
     waypoints.forEach((waypoint) => renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
 }
-
-// Helper function to render entities (mobs)
-function renderEntities(entities, title, r, g, b) {
+function renderEntities(entities) {
     if (!entities.length) return;
 
-    entities.forEach(entity => {
-        let x = entity.getX();
-        let y = entity.getY();
-        let z = entity.getZ();
-        let width = entity.getWidth();
-        let height = entity.getHeight();
-
-        distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
-        Tessellator.drawString(`${title} §b[${distance}]`, x, y + height + 0.5, z, 0xffffff, true);
-        RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, true);
-        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.25, true);
+    entities.forEach(e => {
+        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, true);
+        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, true);
     });
 }
-
-// Helper function to render stands (npcs)
 function renderStands(stands, title, r, g, b) {
     if (!stands.length) return;
 
@@ -150,3 +144,14 @@ function renderStands(stands, title, r, g, b) {
         RenderLib.drawInnerEspBox(x, y, z, 1, 2, r, g, b, 0.25, true);
     });
 }
+
+// Registering renderWorld event to render the waypoints and other entities
+register("renderWorld", () => {
+    renderWaypoint(formattedWaypoints);
+    renderEntities(formattedEntities);
+    renderBeam(getCrates()); // White Crates
+    renderBeam(getBuilds()); // Red Builds
+    renderStands(getVamps(), "Medium Rare", 1, 0, 0); // Red Vamps
+    renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple enigma
+    renderSimple(getCat(), 0, 0, 1); // Blue enigma
+});

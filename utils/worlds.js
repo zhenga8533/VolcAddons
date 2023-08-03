@@ -34,8 +34,7 @@ function findWorld() {
         world = world.substring(world.indexOf(': ') + 2);
 
         // Get tier (for Kuudra and Dungeons)
-        if (world === "Instanced") {
-            world = "Kuudra";
+        if (world === "Kuudra") {
             delay(() => {
                 const zone = findZone();
                 tier = parseInt(zone.charAt(zone.length - 2));

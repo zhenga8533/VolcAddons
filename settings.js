@@ -22,50 +22,49 @@ import {
 })
 class Settings {
     constructor() {
-        // Initialize the settings object
-    this.initialize(this);
+        this.initialize(this);
 
-    // Set category descriptions for different groups of settings
+        // Set category descriptions for different groups of settings
 
-    // General Category
-    this.setCategoryDescription("General",
+        // General Category
+        this.setCategoryDescription("General",
         `${HEADER}
 ${BOLD}DM 'grapefruited' on Discord if you have any questions!
 ${DARK_RED}${BOLD}CAUTION: Some features are technically chat macros, so use at own risk!
 
-${ITALIC}Related Commands: /va <help, settings, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
+${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, whitelist, blacklist, blocklist>`);
 
-    // Economy Category
-    this.setCategoryDescription("Economy",
+        // Economy Category
+        this.setCategoryDescription("Economy",
         `${HEADER}
-${ITALIC}Related Commands: /va attribute`);
+${ITALIC}Related Commands: /va <attribute, calc>`);
 
-    // Combat Category
-    this.setCategoryDescription("Combat",
+        // Combat Category
+        this.setCategoryDescription("Combat",
         `${HEADER}`);
 
-    // Hub Category
-    this.setCategoryDescription("Hub",
+        // Hub Category
+        this.setCategoryDescription("Hub",
         `${HEADER}
 ${ITALIC}Related Commands: /va warplist`);
 
-    // Crimson Isles Category
-    this.setCategoryDescription("Crimson Isles",
+        // Crimson Isles Category
+        this.setCategoryDescription("Crimson Isles",
         `${HEADER}
 ${ITALIC}Related Commands: /va <calc, apex>`);
 
-    // Kuudra Category
-    this.setCategoryDescription("Kuudra",
+        // Kuudra Category
+        this.setCategoryDescription("Kuudra",
         `${HEADER}
 ${ITALIC}Related Commands: /va <attribute, splits>`);
 
-    // Garden Category
-    this.setCategoryDescription("Garden",
+        // Garden Category
+        this.setCategoryDescription("Garden",
         `${HEADER}
 ${ITALIC}Related Commands: /va calc compost`);
 
-    // Rift Category
-    this.setCategoryDescription("Rift",
+        // Rift Category
+        this.setCategoryDescription("Rift",
         `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
@@ -118,11 +117,22 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // General
     @TextProperty({
         name: "API Key",
-        description: "https://developer.hypixel.net",
+        description: "https://developer.hypixel.net, not really being used at the moment.",
         category: "General",
-        subcategory: "General"
+        subcategory: "Essential"
     })
     apiKey = "";
+    @ButtonProperty({
+        name: "Discord",
+        description: "Just posting releases here, don't expect too much :).",
+        category: "General",
+        subcategory: "Essential",
+        placeholder: "Yamete Kudasai"
+    })
+    discordLink() {
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/ftxB4kG2tw"));
+    }
+
 
     @SwitchProperty({
         name: "Abiphone Blocker",
@@ -589,6 +599,15 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // CRIMSON ISLES
 
     // Fishing
+    @SelectorProperty({
+        name: "Announce Mythic Creature Spawn",
+        description: "Sends coords of any mythic lava creature that you spawn to chat.",
+        category: "Crimson Isles",
+        subcategory: "Fishing",
+        options: ["OFF", "All Chat", "Party Chat"]
+    })
+    mythicLavaAnnounce = 0;
+
     @SwitchProperty({
         name: "Mythic Lava Creature Detect",
         description: "Detects when you get near a Jawbus or Thunder.",
@@ -693,14 +712,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     maxChili = true;
 
-
-    @TextProperty({
-        name: "Kuudra Reparty",
-        description: "Enter IGNs to reparty, if 3/1: [ign] | if 2/2 <[leader ign], [ign], [partner ign]>",
-        category: "Kuudra",
-        subcategory: "Kuudra"
-    })
-    kuudraRP = "";
     
     @SwitchProperty({
         name: "Kuudra HP Display",

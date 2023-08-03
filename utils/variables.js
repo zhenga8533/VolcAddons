@@ -95,7 +95,7 @@ export let data = new PogObject("VolcAddons", {
  */
 export function updateList(args, list, listName) {
     // Extracting the item and determining if the list is an array
-    const item = args[2] === undefined ? undefined : args[2].toLowerCase();
+    const item = args.slice(2).join(" ").toLowerCase();
     const isArray = Array.isArray(list);
 
     // Switch statement to handle different list update commands
@@ -104,33 +104,36 @@ export function updateList(args, list, listName) {
             if (isArray && !list.includes(item)) {
                 // Adding item to the array list
                 list.push(item);
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${WHITE}${args[2]}${GREEN}] to the ${listName}!`);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${WHITE}${item}${GREEN}] to the ${listName}!`);
             } else if (!(item in list)) {
                 // Linking an item to a value in the object list
                 list[item] = args[3];
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully linked [${WHITE}${args[2]}${GREEN}] to [${WHITE}${args[3]}${GREEN}]!`);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully linked [${WHITE}${item}${GREEN}] to [${WHITE}${args[3]}${GREEN}]!`);
             } else {
                 // Item already exists in the list
-                ChatLib.chat(`${LOGO} ${RED}[${WHITE}${args[2]}${RED}] is already in the ${listName}!`);
+                ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is already in the ${listName}!`);
             }
             break;
         case ("remove"): // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
                 // Removing item from the array list
                 list.splice(list.indexOf(item), 1);
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${args[2]}${GREEN}] from the ${listName}!`);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${item}${GREEN}] from the ${listName}!`);
             } else if (!isArray && item in list) {
                 // Removing item from the object list
                 delete list[item];
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${args[2]}${GREEN}] from the ${listName}!`);
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${item}${GREEN}] from the ${listName}!`);
             } else {
                 // Item doesn't exist in the list
-                ChatLib.chat(`${LOGO} ${RED}[${WHITE}${args[2]}${RED}] is not in the ${listName}!`);
+                ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is not in the ${listName}!`);
             }
             break;
         case ("clear"): // CLEAR LIST
             // Clearing the list (array or object)
-            list = isArray ? [] : {};
+            if (isArray)
+                list.length = 0;
+            else
+                Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared the ${listName}!`);
             break;
         case ("view"): // DISPLAY LIST

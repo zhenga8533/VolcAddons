@@ -9,7 +9,7 @@ import "./utils/player";
 import { delay } from "./utils/thread";
 import { data, opened, updateList } from "./utils/variables";
 import "./utils/waypoints";
-import { getTier, getWorld } from "./utils/worlds";
+import { findZone, getTier, getWorld } from "./utils/worlds";
 data.autosave();
 
 // Importing various feature modules
@@ -36,6 +36,7 @@ import { calcMinions } from "./features/economy/MinionCalc";
 import "./features/combat/BrokenHyp";
 import "./features/combat/DamageTracker";
 import "./features/combat/DungeonRejoin";
+import "./features/combat/EntityDetect";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/RagDetect";
@@ -50,12 +51,12 @@ import { setWarps } from "./features/hub/DianaWaypoint";
 import "./features/hub/InquisitorAnnounce";
 import "./features/hub/InquisitorCounter";
 
-// Crimson Isles Features
-import "./features/crimsonIsles/FishingESP";
-import "./features/crimsonIsles/GoldenFishTimer";
-import "./features/crimsonIsles/VanqAnnounce";
-import "./features/crimsonIsles/VanqWarp";
-import "./features/crimsonIsles/VanqCounter";
+// Crimson Isle Features
+import "./features/crimsonIsle/GoldenFishTimer";
+import "./features/crimsonIsle/MythicDetect";
+import "./features/crimsonIsle/VanqCounter";
+import "./features/crimsonIsle/VanqDetect";
+import "./features/crimsonIsle/VanqWarp";
 
 // Kuudra Features
 import { getAttributes } from "./features/kuudra/AttributePricing";
@@ -63,7 +64,6 @@ import "./features/kuudra/KuudraAlerts";
 import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
 import "./features/kuudra/KuudraProfit";
-import "./features/kuudra/KuudraReparty";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 
 // Garden Features
@@ -108,7 +108,7 @@ function getHelp() {
     
     // General Commands
     ChatLib.chat(`${AQUA}${BOLD}GENERAL COMMANDS:${RESET}`);
-    ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, clear ${ITALIC}(resets text settings)${RESET}>`);
+    ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, gui, clear ${ITALIC}(resets text settings)${RESET}>`);
     ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, enigma, npc, zone>`);
     ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <whitelist, blacklist, emotelist, blocklist, warplist>`);
     ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
@@ -252,11 +252,11 @@ register ("command", (...args) => {
             break;
         case "test": // Testing (please work)
             ChatLib.chat("World: " + getWorld());
+            ChatLib.chat("Zone: " + findZone());
             ChatLib.chat("Tier: " + getTier());
             ChatLib.chat("Leader: " + getIsLeader());
             ChatLib.chat("Party: " + getInParty());
             ChatLib.chat("Garden: " + getNextVisitor());
-            Client.Companion.showTitle("", `§6↑, ↑, ↓, ↓, ←, →, ←, →, B, A§r`, 0, 50, 0);
             break;
         default: // Else case
             if (PARTY_COMMANDS.includes(command))

@@ -14,15 +14,10 @@ export function announceMob(toAll, mob, x, y ,z) {
     x = Math.round(x);
     y = Math.round(y);
     z = Math.round(z);
-
-    // AREA PLAYER IS IN
     let area = findZone();
-
-    if (toAll) {
-        const id = (Math.random() + 1).toString(36).substring(6);
-        ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]! @${id}`);
-    } else if (getInParty())
-        ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!`);
+    
+    const id = toAll ? ` @${(Math.random() + 1).toString(36).substring(6)}` : "";
+    ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!${id}`);
 }
 
 /**
@@ -97,7 +92,19 @@ export function convertToTitleCase(input) {
         .split('_')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
-  }
+}
+/**
+ * Converts a string of words to pascal case format.
+ * 
+ * @param {string} input - Input string with underscores.
+ * @returns {string} String in pascal case format.
+ */
+export function convertToPascalCase(input) {
+    return input
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("");
+}
 
 /**
  * Removes any modifiers off item name.
