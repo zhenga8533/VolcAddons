@@ -11,7 +11,7 @@ KNOWN BUGS: None (I hope)
 
 ## Commands
 - GENERAL COMMANDS:
-  - Settings: /va <help, settings, clear (resets text settings)>
+  - Settings: /va <help, settings, gui, clear>
   - Waypoints: /va <coords, waypoint, enigma, npc, zone>
   - Lists: /va <whitelist, blocklist, warplist>
   - Kuudra: /va splits
@@ -48,6 +48,7 @@ KNOWN BUGS: None (I hope)
   - Burrow Estimator
   - Burrow Warp Closest /va warplist
   - Burrow/Inquisitor Alert
+  - Inquisiter Counter
 
 - CRIMSON ISLE FEATURES
   - Golden Fish Timer
