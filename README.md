@@ -14,8 +14,8 @@ KNOWN BUGS: None (I hope)
   - Settings: /va <help, settings, gui, clear>
   - Waypoints: /va <coords, waypoint, enigma, npc, zone>
   - Lists: /va <whitelist, blocklist, warplist>
-  - Kuudra: /va splits
   - Inferno Minions: /va <calc, apex>
+  - Misc: /va <splits, be>
 
 - PARTY CHAT COMMANDS:
   - Party Commands: ?<warp, transfer, promote, demote, allinv, invite>
@@ -23,16 +23,20 @@ KNOWN BUGS: None (I hope)
 
 ## Features
 - GENERAL FEATURES
-  - Draw Waypoint => /va waypoint
-  - Remove Selfie Mode
-  - Abiphone Blocker => /va bl
-  - Custom Emotes
-  - Leader/Party Chat Commands
-  - Party Auto Join => /va wl
-  - Auto Transfer Party
-  - Skill Tracker
-  - Coin Tracker
-  - Reminder Timer
+  - General
+    - Abiphone Blocker => /va bl
+    - Custom Emotes => /va emote
+    - Draw Waypoints
+    - Recent Server Alert
+    - Remove Selfie Mode
+    - Skill Tracker
+    - Alert Timer
+  - Party
+    - Auto Join Reparty
+    - Auto Transfer Party
+    - Auto Join Whitelist
+    - Leader Chat Commands
+    - Party Chat Commands
  
 - COMBAT FEATURES
   - Low Health Alert
