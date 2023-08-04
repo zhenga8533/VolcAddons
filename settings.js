@@ -41,7 +41,8 @@ ${ITALIC}Related Commands: /va <attribute, calc>`);
 
         // Combat Category
         this.setCategoryDescription("Combat",
-        `${HEADER}`);
+        `${HEADER}
+    ${ITALIC}Related Commands: /va be`);
 
         // Hub Category
         this.setCategoryDescription("Hub",
@@ -112,7 +113,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // --- Essential ---
     @TextProperty({
         name: "API Key",
-        description: "https://developer.hypixel.net, not really being used at the moment.",
+        description: "https://developer.hypixel.net",
         category: "General",
         subcategory: "Essential"
     })
