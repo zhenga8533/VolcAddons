@@ -161,6 +161,12 @@ export function executeCommand(name, args, sendTo) {
                 // Randomize end to avoid duplicate message ^
                 setWaifu();
                 break;
+            case "coords":
+                if (!settings.coordsCommand) return;
+
+                if (sendTo) ChatLib.command(`${sendTo} x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
+                else ChatLib.chat(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
+                break;
             case "invite":
             case "inv":
                 if (!settings.inviteCommand || sendTo != "r") return;

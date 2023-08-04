@@ -77,6 +77,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency("Stream Command (?<streamopen, stream> [num])", "Leader Command Options");
 
         // Party Commands
+        this.addDependency("Coords Command (?coords)", "Party Command Options");
         this.addDependency("Slander Command (?<racist, gay, cringe>)", "Party Command Options");
         this.addDependency("Dice Command (?<dice, roll>)", "Party Command Options");
         this.addDependency("Coinflip Command (?<coin, flip, coinflip, cf>)", "Party Command Options");
@@ -90,20 +91,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         // Kuudra Alerts
         this.addDependency("Kuudra Alert Options", "Kuudra Alerts");
-        this.addDependency("No Key Alert", "Kuudra Alert Options");
-        this.addDependency("Unready Alert", "Kuudra Alert Options");
-        this.addDependency("Choose Route Alert", "Kuudra Alert Options");
-        this.addDependency("Pickup Supply Alert", "Kuudra Alert Options");
-        this.addDependency("Building Alert", "Kuudra Alert Options");
-        this.addDependency("Fresh Tools Alert", "Kuudra Alert Options");
-        this.addDependency("Fuel Percent Alert", "Kuudra Alert Options");
-        this.addDependency("Stunner Eaten Alert", "Kuudra Alert Options");
-        this.addDependency("Stunner IGN", "Kuudra Alerts");
-        this.addDependency("Mount Ballista Alert", "Kuudra Alert Options");
-        this.addDependency("Cannonear IGN", "Kuudra Alerts");
-        this.addDependency("Stun Alert", "Kuudra Alert Options");
-        this.addDependency("Dropship Alert", "Kuudra Alert Options");
-        this.addDependency("Token Alert", "Kuudra Alerts");
+        const kuudraAlerts = [
+            "No Key", "Unready", "Choose Route", "Pickup Supply", "Building", "Fresh Tools", "Fuel Percent", "Stunner Eaten", "Stunner",
+            "Mount Ballista", "Cannonear", "Stun", "Dropship", "Token"
+        ];
+        kuudraAlerts.forEach(alert => {
+            this.addDependency(`${alert} Alert`, "Kuudra Alerts");
+            this.addDependency(`${alert} Alert`, "Kuudra Alert Options");
+        });
 
         // Etc
         this.addDependency("Burrow Amogus Alert", "Burrow Detection");
@@ -112,9 +107,9 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     }
     
 
-    // GENERAL FEATURES
+    // ████████████████████████████████████████████████████ GENERAL FEATURES ████████████████████████████████████████████████████
 
-    // General
+    // --- Essential ---
     @TextProperty({
         name: "API Key",
         description: "https://developer.hypixel.net, not really being used at the moment.",
@@ -122,6 +117,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Essential"
     })
     apiKey = "";
+
     @ButtonProperty({
         name: "Discord",
         description: "Just posting releases here, don't expect too much :).",
@@ -133,7 +129,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/ftxB4kG2tw"));
     }
 
-
+    // --- General ---
     @SwitchProperty({
         name: "Abiphone Blocker",
         description: "Blocks abiphone callers in /va blocklist.",
@@ -178,25 +174,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     removeSelfie = false;
 
-    // Timer
-    @TextProperty({
-        name: "Reminder Text",
-        description: "What will appear on screen when timer runs out.",
-        category: "General",
-        subcategory: "Timer"
-    })
-    reminderText = "";
-    @SliderProperty({
-        name: "Reminder Time",
-        description: "Alerts the player every 'X' minutes. Set as 0 to turn off.",
-        category: "General",
-        subcategory: "Timer",
-        min: 0,
-        max: 120
-    })
-    reminderTime = 0;
-
-    // Party
+    // --- Party ---
     @SwitchProperty({
         name: "Auto Join Reparty",
         description: "Automatically rejoin reparty invites within 60 seconds.",
@@ -221,7 +199,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     joinWhitelist = false;
 
-    // Party Commands
+    // --- Party Commands ---
     @SwitchProperty({
         name: "Leader Chat Commands",
         description: "Allows everyone besides /va blacklist to use leader commands.",
@@ -289,6 +267,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     partyOptions = false;
     @CheckboxProperty({
+        name: "Coords Command (?coords)",
+        category: "General",
+        subcategory: "Party Commands"
+    })
+    coordsCommand = true;
+    @CheckboxProperty({
         name: "8ball Command (?8ball)",
         category: "General",
         subcategory: "Party Commands"
@@ -349,7 +333,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     womenCommand = true;
     
-    // Skills
+    // --- Skills ---
     @SliderProperty({
         name: "Skill Tracker",
         description: "Displays rate of xp gain for skills. Set minutes until tracker resets or as 0 to turn off (Use larger numbers when using wither impact). /moveSkills to move.",
@@ -369,10 +353,28 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         ChatLib.command("resetSkills", true);
     }
 
+    // --- Timer ---
+    @TextProperty({
+        name: "Reminder Text",
+        description: "What will appear on screen when timer runs out.",
+        category: "General",
+        subcategory: "Timer"
+    })
+    reminderText = "";
+    @SliderProperty({
+        name: "Reminder Time",
+        description: "Alerts the player every 'X' minutes. Set as 0 to turn off.",
+        category: "General",
+        subcategory: "Timer",
+        min: 0,
+        max: 120
+    })
+    reminderTime = 0;
 
-    // ECONOMY
 
-    // Coins
+    // ████████████████████████████████████████████████████ ECONOMY ████████████████████████████████████████████████████
+
+    // --- Coins ---
     @SliderProperty({
         name: "Coin Tracker",
         description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off. /moveCoins to move.",
@@ -392,7 +394,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         ChatLib.command("resetCoins", true);
     }
     
-    // Economy
+    // --- Economy ---
     @SliderProperty({
         name: "Auction Refresh",
         description: "Set how often action house data gets refreshed in minutes (set as 0 to turn off). Runs => /updateAuction.",
@@ -412,9 +414,9 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     itemPrice = false;
 
 
-    // COMBAT
+    // ████████████████████████████████████████████████████ COMBAT ████████████████████████████████████████████████████
 
-    // Combat
+    // --- Combat ---
     @SwitchProperty({
         name: "Broken Hyperion",
         description: "Uses 'Book of Stats' and 'Champion' to track when Wither Impact breaks.",
@@ -447,8 +449,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     ragDetect = false;
 
-    // Dungeon
-    
+    // --- Dungeon ---
     @SelectorProperty({
         name: "Dungeon Rejoin",
         description: "Automatically rejoins last completed dungeon when 4 players join your party. (does not reparty)",
@@ -466,7 +467,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     watcherAlert = false;
 
-    // Gyrokinetic Wand
+    // --- Gyrokinetic Wand ---
     @SwitchProperty({
         name: "Cells Alignment Alert",
         description: "Alerts the player when gyro is about to run out.",
@@ -482,7 +483,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     gyroTimer = false;
 
-    // Slayer
+    // --- Slayer ---
     @SelectorProperty({
         name: "Announce Boss Chat",
         description: "Sends coords of any slayer bosses that you spawn to chat.",
@@ -501,7 +502,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     miniAlert = 0;
 
 
-    // MINING
+    // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
     @SliderProperty({
         name: "Powder Tracker",
         description: "Displays rate of powder gain (only chests). Set minutes until tracker resets or as 0 to turn off. /movePowder",
@@ -523,9 +524,9 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
 
 
-    // HUB
+    // ████████████████████████████████████████████████████ HUB ████████████████████████████████████████████████████
 
-    // Diana
+    // --- Diana ---
     @SwitchProperty({
         name: "Diana Waypoint",
         description: "Estimates Diana burrows from particles and pitch of Ancestral Spade (particles => ON, /togglemusic => OFF) [POV Soopy servers are down]",
@@ -541,6 +542,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     dianaWarp = false;
 
+    // --- Griffin Burrow ---
     @SwitchProperty({
         name: "Burrow Detection",
         description: "Detects and creates waypoints to the burrow particles around you.",
@@ -563,6 +565,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     dianaChat = false;
 
+    // --- Inquisitor ---
     @SwitchProperty({
         name: "Detect Inquisitor",
         description: "Alerts player of a Inquisitor if they get near one.",
@@ -596,9 +599,9 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     resetInq() { ChatLib.command("resetInq", true) };
     
 
-    // CRIMSON ISLES
+    // ████████████████████████████████████████████████████ CRIMSON ISLES ████████████████████████████████████████████████████
 
-    // Fishing
+    // --- Fishing ---
     @SelectorProperty({
         name: "Announce Mythic Creature Spawn",
         description: "Sends coords of any mythic lava creature that you spawn to chat.",
@@ -624,7 +627,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     goldenFishAlert = false;
 
-    // Vanquisher
+    // --- Vanquisher Alert ---
     @SelectorProperty({
         name: "Announce Vanquisher Chat",
         description: "Sends coords of any Vanquishers that you spawn to chat. (Only works if Vanquisher Auto-Warp is empty!)",
@@ -657,6 +660,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     vanqSound = false;
 
+    // --- Vanquisher Counter ---
     @SelectorProperty({
         name: "Vanquisher Counter",
         description: "Counts kills until Vanquisher spawns (Uses Book of Stats). /moveCounter to move.",
@@ -676,43 +680,9 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     }
 
 
-    // KUUDRA
+    // ████████████████████████████████████████████████████ KUUDRA ████████████████████████████████████████████████████
 
-    // Kuudra
-    @SwitchProperty({
-        name: "Kuudra Profit",
-        description: "Displays Kuudra chest profit. /moveKP to move.",
-        category: "Kuudra",
-        subcategory: "Kuudra Profit"
-    })
-    kuudraProfit = false;
-    @SelectorProperty({
-        name: "Kuudra Profit Tracker",
-        description: "Renders an overlay for Kuudra money per hour. /moveKPT to move.",
-        category: "Kuudra",
-        subcategory: "Kuudra Profit",
-        options: ["OFF", "Overall View", "Session View"]
-    })
-    kuudraProfitTracker = 0;
-    @ButtonProperty({
-        name: "Reset Kuudra Profit Tracker",
-        description: "Resets tracking for every skill. Runs => /resetKPT",
-        category: "Kuudra",
-        subcategory: "Kuudra Profit"
-    })
-    resetKPT() {
-        ChatLib.command("resetKPT", true);
-    }
-
-    @SwitchProperty({
-        name: "Tabasco Farmers",
-        description: "Turn off if you are a cringer without max chili collection.",
-        category: "Kuudra",
-        subcategory: "Kuudra Profit"
-    })
-    maxChili = true;
-
-    
+    // --- Kuudra ---
     @SwitchProperty({
         name: "Kuudra HP Display",
         description: "Displays Kuudra's HP as a percent and renders it on the boss.",
@@ -728,7 +698,15 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Kuudra"
     })
     kuudraSpawn = false;
-    
+
+    @SwitchProperty({
+        name: "Kuudra Splits",
+        description: "Displays Kuudra splits and records best splits in t5 (/va splits). /moveSplits to move.",
+        category: "Kuudra",
+        subcategory: "Kuudra"
+    })
+    kuudraSplits = false;
+
     @SwitchProperty({
         name: "Show Supply/Fuel Waypoints",
         description: "Creates waypoints for the supplies/fuels near you.",
@@ -745,7 +723,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     kuudraBuild = false;
 
-    // Kuudra Alert
+    // --- Kuudra Alert ---
     @SwitchProperty({
         name: "Kuudra Alerts",
         description: "Alerts the player of events in Kuudra instance.",
@@ -815,7 +793,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     eatenAlert = true;
     @TextProperty({
-        name: "Stunner IGN",
+        name: "Stunner Alert",
         description: "Tracks who is stunning Kuudra for 'Kuudra Alerts'. (leave empty if you want to track anyone who gets eaten)",
         category: "Kuudra",
         subcategory: "Kuudra Alert"
@@ -828,7 +806,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     ballistaAlert = true;
     @TextProperty({
-        name: "Cannonear IGN",
+        name: "Cannonear Alert",
         description: "Tracks who is shooting the ballista for 'Kuudra Alerts'. (leave empty if you want to track anyone who mounts cannon)",
         category: "Kuudra",
         subcategory: "Kuudra Alert"
@@ -855,20 +833,11 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         max: 1000
     })
     tokenAlert = 0;
-
-    // Kuudra Splits
-    @SwitchProperty({
-        name: "Kuudra Splits",
-        description: "Displays Kuudra splits and records best splits in t5 (/va splits). /moveSplits to move.",
-        category: "Kuudra",
-        subcategory: "Kuudra Splits"
-    })
-    kuudraSplits = false;
     
 
-    // GARDEN
+    // ████████████████████████████████████████████████████ GARDEN ████████████████████████████████████████████████████
 
-    // Garden
+    // --- Garden ---
     @SwitchProperty({
         name: "Composter Alert",
         description: "Displays an alert when the composter becomes inactive.",
@@ -902,9 +871,25 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     nextVisitor = false;
 
 
-    // RIFT
+    // ████████████████████████████████████████████████████ RIFT ████████████████████████████████████████████████████
     
-    // Rift
+    // --- Awooga v2 ---
+    @SwitchProperty({
+        name: "Weird Tuba Timer",
+        description: "Display the time remaining on weird(er) tuba buff. /moveTubaTimer to move.",
+        category: "Rift",
+        subcategory: "Awooga v2",
+    })
+    tubaTimer = false;
+    @SwitchProperty({
+        name: "Weird Tuba Alert",
+        description: "Alerts you when Weird Tuba is off cooldown.",
+        category: "Rift",
+        subcategory: "Awooga v2",
+    })
+    tubaAlert = false;
+    
+    // --- Rift ---
     @SwitchProperty({
         name: "DDR Helper",
         description: "Replaces Dance Room titles with custom ones.",
@@ -930,23 +915,8 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Rift",
     })
     catWaypoint = false;
-    
-    @SwitchProperty({
-        name: "Weird Tuba Timer",
-        description: "Display the time remaining on weird(er) tuba buff. /moveTubaTimer to move.",
-        category: "Rift",
-        subcategory: "Awooga v2",
-    })
-    tubaTimer = false;
-    @SwitchProperty({
-        name: "Weird Tuba Alert",
-        description: "Alerts you when Weird Tuba is off cooldown.",
-        category: "Rift",
-        subcategory: "Awooga v2",
-    })
-    tubaAlert = false;
 
-    // Vampire
+    // --- Vampire ---
     @SelectorProperty({
         name: "Announce Mania Phase",
         description: "Sends coords when vampire goes into mania.",

@@ -84,6 +84,7 @@ export let data = new PogObject("VolcAddons", {
 
 
 // --- LIST CONTROL ---
+import { updateEntityList } from "../features/combat/EntityDetect";
 
 /**
  * Updates a list based on the provided arguments.
@@ -153,8 +154,9 @@ export function updateList(args, list, listName) {
             ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
             break;
     }
-    // Returning the updated list
-    return list;
+    
+    if (args[0] == "ml" || args[0] == "mob" || args[0] == "moblist")
+        updateEntityList();
 }
 
 

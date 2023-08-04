@@ -3,7 +3,7 @@ import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
 
 // Importing various utility modules
-import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AMOGUS, AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import { delay } from "./utils/thread";
@@ -268,3 +268,7 @@ register ("command", (...args) => {
             break;
     }
 }).setName("volcaddons").setAliases("va", "volc", "itee");
+
+register("chat", () => {
+    AMOGUS.play();
+}).setCriteria("Party > [MVP+] nwjn: 5");
