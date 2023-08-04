@@ -1,5 +1,6 @@
 # [VolcAddons](https://www.chattriggers.com/modules/v/VolcAddons)
 ChatTriggers module originally created for Koodar. Now I'm just adding random stuff :)
+Join the [Discord](https://discord.gg/ftxB4kG2tw)!
 
 KNOWN BUGS: None (I hope)
 
@@ -26,53 +27,67 @@ KNOWN BUGS: None (I hope)
   - General
     - Abiphone Blocker => /va bl
     - Custom Emotes => /va emote
-    - Draw Waypoints
+    - Draw Waypoints => /va wp
     - Recent Server Alert
     - Remove Selfie Mode
-    - Skill Tracker
+    - Skill Tracker => /va moveSkills
     - Alert Timer
   - Party
     - Auto Join Reparty
     - Auto Transfer Party
-    - Auto Join Whitelist
+    - Auto Join Whitelist => /va wl
     - Leader Chat Commands
     - Party Chat Commands
+
+- ECONOMY FEATURES
+  - Coin Tracker => /moveCoins
+  - Item Price Lore
  
 - COMBAT FEATURES
-  - Low Health Alert
-  - Broken Wither Impact
-  - Ragnarok Detection
-  - Cells Alignment Timer
-  - Announce Slayer Spawn
-  - Dungeon Rejoin
-  - Watcher Alert
-  - Damage Announcer
+  - Combat
+    - Bestiary Tracker
+    - Broken Wither Impact
+    - Cells Alignment Timer => /moveAlignTimer
+    - Damage Tracker
+    - Low Health Alert
+    - Ragnarok Detection
+  - Dungeon & Slayer
+    - Dungeon Rejoin
+    - Watcher Alert
+    - Announce Slayer Mini/Boss Spawn
 
-- HUB FEATURES (basically just Diana)
+- MINING FEATURES
+  - Powder Tracker => /movePowder
+
+- HUB FEATURES
   - Burrow Estimator
-  - Burrow Warp Closest /va warplist
-  - Burrow/Inquisitor Alert
+  - Burrow Warp Closest => /va wl
+  - Burrow Detection & Alert
+  - Inquisitor Detection & Alert
   - Inquisiter Counter
 
 - CRIMSON ISLE FEATURES
-  - Golden Fish Timer
-  - Vanquisher Alert
-  - Vanquisher Counter
+  - Fishing
+    - Mythic Lava Creature Detection & Alert
+    - Golden Fish Timer => /moveTimer
+  - Vanquisher
+    - Vanquisher Auto Warp
+    - Vanquisher Detection & Alert
+    - Vanquisher Counter => /moveCounter
 
 - KUUDRA FEATURES
-  - Kuudra Reparty
-  - Kuudra Health Display
-  - Kuudra Spawn Alert
+  - Kuudra HP Display
+  - Kuudra Spawn Detection
+  - Kuudra Splits => /moveSplits
   - Supply/Fuel Waypoints
-  - Supply Pile Waypoints
-  - Kuudra Instance Alerts
-  - Kuudra Splits => /va splits
+  - Empty Supply Pile Detection
+  - Kuudra Alerts
 
 - GARDEN FEATURES
-  - Visitor Tab Display
   - Composter Alert
-  - Next Visitor Display
   - Garden Warp Override
+  - Garden Tab Display => /moveVisitors
+  - Garden Next Visitor Display => /moveNext
 
 - RIFT FEATURES
   - DDR Helper
@@ -80,6 +95,3 @@ KNOWN BUGS: None (I hope)
   - Enigma, NPC, Zone, Montezuma, and Effigy Waypoints
   - Weird Tuba Tracker
   - Vampire Slayer Features
- 
-- MISC FEATURES
-  - Minion Calculator => /va calc
