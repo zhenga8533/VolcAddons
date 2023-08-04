@@ -51,6 +51,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
  */
 export function createWaypoint(args) {
     if (args[1] === "clear") {
+        chatWaypoints = [];
         userWaypoints = [];
         NPCs = [];
         zones = [];

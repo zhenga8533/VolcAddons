@@ -3,7 +3,8 @@ import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
 
 // Importing various utility modules
-import { AMOGUS, AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import { delay } from "./utils/thread";
@@ -33,6 +34,7 @@ import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
 
 // Combat Features
+import { getBestiary } from "./features/combat/Bestiary";
 import "./features/combat/BrokenHyp";
 import "./features/combat/DamageTracker";
 import "./features/combat/DungeonRejoin";
@@ -76,7 +78,6 @@ import "./features/rift/DDR";
 import "./features/rift/TubaTimer";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
-import { openGUI } from "./utils/overlay";
 
 
 register("worldLoad", () => {
@@ -125,7 +126,7 @@ function getHelp() {
 }
 
 // GENERAL FUNCTION COMMANDS - Handling command inputs
-const PARTY_COMMANDS = ["cringe", "gay", "racist", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"];
+const PARTY_COMMANDS = new Set(["cringe", "gay", "racist", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"]);
 register ("command", (...args) => {
     if (args === undefined) {
         settings.openGUI();
@@ -154,6 +155,10 @@ register ("command", (...args) => {
             settings.kuudraStunner = "";
             settings.reminderText = "";
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
+            break;
+        case "be":
+        case "bestiary":
+            getBestiary(args);
             break;
         case "attribute":
         case "attributes":
@@ -259,7 +264,7 @@ register ("command", (...args) => {
             ChatLib.chat("Garden: " + getNextVisitor());
             break;
         default: // Else case
-            if (PARTY_COMMANDS.includes(command))
+            if (PARTY_COMMANDS.has(command))
                 executeCommand(Player.getName(), args, false);
             else {
                 ChatLib.chat(`${LOGO} ${RED}Unkown command: "${command}" was not found!`);
@@ -268,7 +273,3 @@ register ("command", (...args) => {
             break;
     }
 }).setName("volcaddons").setAliases("va", "volc", "itee");
-
-register("chat", () => {
-    AMOGUS.play();
-}).setCriteria("Party > [MVP+] nwjn: 5");
