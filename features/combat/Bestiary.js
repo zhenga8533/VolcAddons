@@ -301,33 +301,39 @@ register("worldLoad", () => {
 });
 
 function sortBestiary(val, amount) {
-    const sortedTime = Object.entries(bestiary);
-    const filteredTime = sortedTime.filter(([key, value]) => value.next !== 0);
-    filteredTime.sort((a, b) => b[1][val] - a[1][val]);
-
-    const sortedBestiary = filteredTime.slice(-amount).reduce((acc, [key, value]) => {
-        acc[key] = value;
+    const filteredBestiary = Object.entries(bestiary).filter(([key, value]) =>
+        val === "bracket" ? value.bracket === killBrackets[amount - 1] && value.next !== 0 : value.next !== 0
+    );
+  
+    const sortedBestiary = filteredBestiary.sort((a, b) =>
+        b[1][val === "bracket" ? "next" : val] - a[1][val === "bracket" ? "next" : val]
+    ).slice(val === "bracket" ? -10 : -amount).reduce((acc, [key, value]) => {
+        if (value.next !== 0)
+            acc[key] = value;
         return acc;
     }, {});
-
+  
     ChatLib.chat(`\n${LOGO} ${WHITE}${BOLD}Leftover Bestiary: `);
-    const bestiaryKeys = Object.keys(sortedBestiary);
-    bestiaryKeys.forEach((key) => {
-        if (sortedBestiary[key].next !== 0)
-            ChatLib.chat(`${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${sortedBestiary[key].next} ${GREEN}kills! (${RED}${getTime(sortedBestiary[key].nextTime)}${GREEN})`);
+    Object.keys(sortedBestiary).forEach((key) => {
+        ChatLib.chat(`${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${sortedBestiary[key].next} ${GREEN}kills! (${RED}${getTime(sortedBestiary[key].nextTime)}${GREEN})`);
     });
 }
+  
 export function getBestiary(args) {
     switch(args[1]) {
         case "kills":
         case "kill":
-
             sortBestiary("next", args[2] || 10);
             break;
         case "time":
             sortBestiary("nextTime", args[2] || 10);
             break;
+        case "bracket" :
+            if (!isNaN(args[2]) && args[2] >= 1 && args[2] <= 7) {
+                sortBestiary("bracket", args[2]);
+                break;
+            }
         default:
-            ChatLib.chat(`${LOGO} ${RED}Please input as /va be <kill, time> [amount]!`)
+            ChatLib.chat(`${LOGO} ${RED}Please input as /va be <bracket [1-7] OR <kill, time> [amount]>!`)
     }
 }
