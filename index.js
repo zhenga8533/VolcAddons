@@ -79,7 +79,7 @@ import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 
 
-register("worldLoad", () => {
+const once = register("worldLoad", () => {
     // FIRST RUN - Display welcome message for new users
     if (data.newUser) {
         ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
@@ -100,6 +100,7 @@ register("worldLoad", () => {
             ChatLib.chat();
         }
     }, 1000);
+    once.unregister();
 });
 
 // HELP - Display help message for available commands
@@ -136,18 +137,22 @@ register ("command", (...args) => {
     // Parsing command and executing appropriate actions
     const command = args[0] === undefined ? undefined : args[0].toLowerCase();
     switch (command) {
-        case undefined: // Settings
+        // Settings
+        case undefined:
         case "settings":
             settings.openGUI();
             opened();
             break;
+        // Help
+        case "help":
+            getHelp();
+            break;
+        // Move GUI
         case "gui":
             openGUI();
             break;
-        case "help": // Help
-            getHelp();
-            break;
-        case "clear": // Clear setting text properties
+        // Clear setting text properties
+        case "clear":
             settings.vanqParty = "";
             settings.kuudraRP = "";
             settings.kuudraCannonear = "";
@@ -155,19 +160,39 @@ register ("command", (...args) => {
             settings.reminderText = "";
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
             break;
-        case "be":
-        case "bestiary":
-            getBestiary(args);
+        // Set API key
+        case "api": 
+            if (args[1]) {
+                settings.apiKey = args[1]
+                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set API key as ${settings.apiKey}!`);
+            } else
+                ChatLib.chat(`${LOGO} ${RED}Please input as /va api [key]!`);
             break;
-        case "attribute":
-        case "attributes":
-            getAttributes(args);
+        // Testing (please work)
+        case "test":
+            ChatLib.chat("World: " + getWorld());
+            ChatLib.chat("Zone: " + findZone());
+            ChatLib.chat("Tier: " + getTier());
+            ChatLib.chat("Leader: " + getIsLeader());
+            ChatLib.chat("Party: " + getInParty());
+            ChatLib.chat("Garden: " + getNextVisitor());
             break;
-        case "coords": // Send Coords in Chat
+        // Send Coords in Chat
+        case "coords":
         case "sendcoords":
         case "xyz":
             const id = (Math.random() + 1).toString(36).substring(7);
             ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} @${id}`);
+            break;
+        // Bestiary Stuff
+        case "be":
+        case "bestiary":
+            getBestiary(args);
+            break;
+        // Attribute Pricing
+        case "attribute":
+        case "attributes":
+            getAttributes(args);
             break;
         // List Controls
         case "whitelist":
@@ -199,16 +224,19 @@ register ("command", (...args) => {
             updateList(args, data.warplist, "warp-list");
             setWarps();
             break;
+        // Kuudra Splits
         case "splits": // Kuudra splits
         case "split":
             getSplits(args);
             break;
-        case "waypoints": // User Waypoints
+        // User Waypoints
+        case "waypoints":
         case "waypoint":
         case "wp":
             createWaypoint(args);
             break;
-        case "calculate": // Bazaar Calculations
+        // Bazaar Calculations
+        case "calculate":
         case "calc":
             switch(args[1]) {
                 case "composter":
@@ -229,40 +257,31 @@ register ("command", (...args) => {
                     break;
             }
             break;
-        case "apex": // Set Apex Price
+        // Set Apex Price
+        case "apex":
             data.apexPrice = isNaN(args[1]) ? data.apexPrice : args[1];
             ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatInt(data.apexPrice)}!`);
             break;
-        case "enigma": // Configure enigma souls
+        // Configure enigma souls
+        case "enigma":
             soulEdit(args, "enigma", "enigmaSouls", ENIGMA_SOULS);
             break;
-        case "montezuma": // Configure enigma souls
+        // Configure enigma souls
+        case "montezuma":
         case "mont":
         case "cat":
             soulEdit(args, "cat", "catSouls", CAT_SOULS);
             break;
-        case "npc": // Enable npc waypoints
+        // Configure npc waypoints
+        case "npc":
             riftWaypointEdit(args, "npc", RIFT_NPCS);
             break;
-        case "zone": // Enable zone waypoints
+        // Configure zone waypoints
+        case "zone":
             riftWaypointEdit(args, "zone", RIFT_ZONES);
             break;
-        case "api":  // Set API key
-            if (args[1]) {
-                settings.apiKey = args[1]
-                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set API key as ${settings.apiKey}!`);
-            } else
-                ChatLib.chat(`${LOGO} ${RED}Please input as /va api [key]!`);
-            break;
-        case "test": // Testing (please work)
-            ChatLib.chat("World: " + getWorld());
-            ChatLib.chat("Zone: " + findZone());
-            ChatLib.chat("Tier: " + getTier());
-            ChatLib.chat("Leader: " + getIsLeader());
-            ChatLib.chat("Party: " + getInParty());
-            ChatLib.chat("Garden: " + getNextVisitor());
-            break;
-        default: // Else case
+        // Party Commands and Else Case
+        default:
             if (PARTY_COMMANDS.has(command))
                 executeCommand(Player.getName(), args, false);
             else {

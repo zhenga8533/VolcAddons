@@ -1,5 +1,6 @@
 import settings from "../settings";
 import { BOLD, GUI_INSTRUCT, ITALIC } from "./constants";
+import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";
 
 
@@ -113,7 +114,7 @@ export class Overlay {
 
         // Register a render function to display the overlay and GUI instructions.
         // The overlay is shown when the GUI is open or in requires specified in 'requires' array.'
-        register(this.requires.has("misc") ? "postGuiRender" : "renderOverlay", () => {
+        registerWhen(register(this.requires.has("misc") ? "postGuiRender" : "renderOverlay", () => {
             if (this.gui.isOpen()) {
                 // Coords and scale
                 renderScale(
@@ -140,7 +141,7 @@ export class Overlay {
                 } else  // Draw HUD
                     renderScale(this.loc[2], this.message, this.X, this.Y);
             }
-        });
+        }), () => true);
 
         register("dragged", (dx, dy, x, y) => {
             if (this.gui.isOpen()) {

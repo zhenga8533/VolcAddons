@@ -179,17 +179,15 @@ export function registerWhen(trigger, dependency) {
 // Updates trigger registrations based on world or GUI changes
 export function setRegisters() {
     registers.forEach(trigger => {
-        if (trigger[1]() && !trigger[2]) {
-            trigger[0].register();
-            trigger[2] = true;
-        } else if (!trigger[1]() && trigger[2]) {
+        if ((!trigger[1]() && trigger[2]) || !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")) {
             trigger[0].unregister();
             trigger[2] = false;
+        } else if (trigger[1]() && !trigger[2]) {
+            trigger[0].register();
+            trigger[2] = true;
         }
     });
 }
-
-// Delaying the initial setRegisters call by 1000ms
 delay(() => setRegisters(), 1000);
 
 /**
