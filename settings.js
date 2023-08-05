@@ -115,7 +115,8 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         name: "API Key",
         description: "https://developer.hypixel.net",
         category: "General",
-        subcategory: "Essential"
+        subcategory: "Essential",
+        protected: true
     })
     apiKey = "";
 

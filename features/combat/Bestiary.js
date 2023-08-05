@@ -2,7 +2,7 @@
 import request from "../../../requestV2";
 import settings from "../../settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { getTime } from "../../utils/functions";
+import { convertToTitleCase, getTime } from "../../utils/functions";
 import { getPlayerUUID } from "../../utils/player";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/variables";
@@ -25,8 +25,9 @@ export function updateBestiary() {
         bestiaryApi = response.profile.members[getPlayerUUID()].bestiary.kills;
     }).catch((error) => {
         // If there is an error, display the error message in the Minecraft chat.
-        print(`[VolcAddons] ${error}`);
-        delay(updateBestiary, 1000);
+        print(`[VolcAddons] ${error.cause}`);
+        if (error.cause != "Invalid API key")
+            delay(updateBestiary, 3000);
     });
 }
 updateBestiary();
@@ -334,6 +335,11 @@ export function getBestiary(args) {
                 break;
             }
         default:
-            ChatLib.chat(`${LOGO} ${RED}Please input as /va be <bracket [1-7] OR <kill, time> [amount]>!`)
+            const key = args.slice(1).map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
+            const mob = bestiary[key];
+            if (mob === undefined)
+                ChatLib.chat(`${LOGO} ${RED}Please input as /va be <mobName OR bracket [1-7] OR <kill, time> [amount]>!`);
+            else
+                ChatLib.chat(`${LOGO} ${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${mob.next} ${GREEN}kills! (${RED}${getTime(mob.nextTime)}${GREEN})`)
     }
 }

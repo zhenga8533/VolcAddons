@@ -31,14 +31,11 @@ export function getTime(seconds) {
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
   
-    let timeString = '';
-  
-    if (hours > 0)
-        timeString += `${hours}hr`;
-    if (minutes > 0) {
-        timeString += `${minutes}m`;
-        timeString += `${remainingSeconds.toFixed(0)}s`;
-    } else timeString += `${remainingSeconds.toFixed(2)}s`;
+    const timeString = [
+        hours > 0 ? `${hours}hr` : '',
+        minutes > 0 ? `${minutes}m` : '',
+        `${remainingSeconds.toFixed(hours > 0 || minutes > 0 ? 0 : 2)}s`
+    ].join('');
   
     return timeString;
 }

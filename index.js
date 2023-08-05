@@ -8,12 +8,11 @@ import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import { delay } from "./utils/thread";
+import "./utils/updates";
 import { data, opened, updateList } from "./utils/variables";
 import "./utils/waypoints";
 import { findZone, getTier, getWorld } from "./utils/worlds";
 data.autosave();
-
-// Importing various feature modules
 
 // General Features
 import "./features/general/AbiphoneBlocker";
@@ -95,8 +94,8 @@ register("worldLoad", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`\n${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            JSON.parse(FileLib.read("VolcAddons", "updates.json")).forEach(update => {
-                ChatLib.chat(update);
+            JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => {
+                ChatLib.chat(change);
             });
             ChatLib.chat();
         }
