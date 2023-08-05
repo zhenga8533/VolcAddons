@@ -1,6 +1,7 @@
 [
     "-No longer updating module on ChatTriggers after this release.",
-    "   => FYI: Updates will be open source on GitHub but no longer \"verified\"",
+    "   - FYI: Updates will be open source on GitHub but no longer \"verified\"",
+    "   - The updates will not be automatic and you will have to download via GitHub/Discord.",
     "-Added /va bestiary",
     "-Added /va attribute",
     "-Added /va calc compost",
@@ -8,7 +9,6 @@
     "-Added Inquisitor counter",
     "-Added item price in lore",
     "-Added Kuudra coinage tracker",
-    "-Added container prices",
     "-Added Auction tracker",
     "-Added mythic lava creature stuff",
     "-Added powder tracker",
