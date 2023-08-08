@@ -32,6 +32,24 @@ const MAX_ENCHANTS = {
 const ENCHANTS = new Set(Object.keys(MAX_ENCHANTS));
 const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"]);
 
+function getEnchantmentValue(enchantments, bazaar) {
+    value = 0;
+    Object.entries(enchantments || {}).forEach(([enchant, enchantlvl]) => {
+        enchant = enchant.toUpperCase();
+        const maxEnchantLevel = MAX_ENCHANTS[enchant];
+        
+        if (ENCHANTS.has(enchant) && enchantlvl >= maxEnchantLevel) {
+            const enchantName = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${enchantlvl}`;
+            const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
+            const base = bazaar?.[enchantKey];
+            let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
+            multiplier = STACKING_ENCHANTS.has(enchant) ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
+            value += Math.max(base?.[0] * multiplier, bazaar?.[enchantName]?.[0]);
+        }
+    });
+    return value;
+}
+
 /**
  * Variables used to represent item modifier data.
  */
@@ -59,26 +77,16 @@ export function getItemValue(item) {
     if (value === 0) {
         if (itemID === "PET") {
             const petInfo = JSON.parse(itemData.petInfo);
-            return auction[`${petInfo.tier}_${petInfo.type}`]?.lbin || 0;
-        } else
-            value = bazaar[itemID]?.[0] || 0;
+            value = auction[`${petInfo.tier}_${petInfo.type}`]?.lbin || 0;
+        } else if (itemID === "ENCHANTED_BOOK") {
+            print(item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes"));
+            value = getEnchantmentValue(itemData.enchantments, bazaar);
+        } else value = bazaar?.[itemID]?.[0] || 0;
         return value;
     }
     
     // Enchantment Values
-    Object.entries(itemData.enchantments || {}).forEach(([enchant, enchantlvl]) => {
-        enchant = enchant.toUpperCase();
-        const maxEnchantLevel = MAX_ENCHANTS[enchant];
-        
-        if (ENCHANTS.has(enchant) && enchantlvl >= maxEnchantLevel) {
-            const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
-            const base = bazaar[enchantKey];
-            const isStackingEnchant = STACKING_ENCHANTS.has(enchant);
-            let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
-            multiplier = isStackingEnchant ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
-            value += base[0] * multiplier;
-        }
-    });
+    value += getEnchantmentValue(itemData.enchantments, bazaar);
 
     // Recomb Value
     value += itemData.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];
@@ -133,7 +141,6 @@ export function getItemValue(item) {
         attributeValue += (auctionItem?.attributes?.[attribute] || 0) * attributeCount;
     });
     attributeValue = Math.max(attributeValue, auctionItem?.attribute_combos?.[attributes.join(" ")] || 0);
-    print(attributes.join(" "));
     value += attributeValue;
   
     return value;

@@ -1,11 +1,6 @@
 [
-    "- Added TPS/FPS/Ping Display",
-    "- Reworked item pricing",
-    "   - Accounts for godrolls",
-    "   - Accurately tracks all items (ah/bz)",
-    "   - Fixed Pet Tracking (no levels yet)",
-    "- Fixed mob alert not working",
-    "- Fixed bestiary not updating on world change",
-    "- Fixed Kuudra features not working sometimes (i think)",
-    "- Fixed compatibility issues with other modules"
+    "- Changed remove selfie mode to not override keybind",
+    "- Fixed some Kuudra bugs (i think)",
+    "- Fixed enchanted book prices not showing",
+    "- Removed debugging messages (oops)"
 ]

@@ -101,7 +101,7 @@ function getHelp() {
     // General Commands
     ChatLib.chat(`${AQUA}${BOLD}GENERAL COMMANDS:${RESET}`);
     ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, gui, clear ${ITALIC}(resets text settings)${RESET}>`);
-    ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, enigma, npc, zone>`);
+    ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, clear, enigma, npc, zone>`);
     ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <whitelist, blacklist, emotelist, blocklist, warplist>`);
     ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
     ChatLib.chat(`${RED}${BOLD}Inferno Minions: ${RESET}/va <calc, apex>\n`);
