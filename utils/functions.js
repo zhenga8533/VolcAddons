@@ -14,7 +14,9 @@ export function announceMob(toAll, mob, x, y ,z) {
     x = Math.round(x);
     y = Math.round(y);
     z = Math.round(z);
-    let area = findZone();
+    let zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
+    if (zoneLine === undefined) zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("ф"));
+    const area = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
     
     const id = toAll ? ` @${(Math.random() + 1).toString(36).substring(6)}` : "";
     ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!${id}`);

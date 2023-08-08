@@ -24,20 +24,20 @@ export let data = new PogObject("VolcAddons", {
     "moblist": [],
     "emotelist": {},
     "files": [],
+    "y": 0,
     // Properties related to timing and split data
     "splits": {
         "last": [0, 0, 0, 0, 0],
         "best": [999, 999, 999, 999, 9999],
         "worst": [0, 0, 0, 0, 0],
     },
-    // Properties related to vanquisher session data
+    // Properties related to tracker session data
     "vanqSession": {
         "vanqs": 0,
         "kills": 0,
         "last": 0,
         "average": 0,
     },
-    // Properties related to inquisitor session data
     "inqSession": {
         "inqs": 0,
         "burrows": 0,
@@ -58,8 +58,6 @@ export let data = new PogObject("VolcAddons", {
         "Cost Reduction": -1
     },
     // Various location properties used for displaying HUD elements
-    "dianaKey": 33,
-    "pauseKey": 25,
     "apexPrice": 2e9,
     "QL": [15, 200, 1], // Vanquisher Location
     "GL": [15, 200, 1], // Gyro Location
@@ -76,8 +74,8 @@ export let data = new PogObject("VolcAddons", {
     "IL": [15, 500, 1], // Inq Location
     "KL": [100, 350, 1], // Kuudra Profit Location
     "ZL": [100, 450, 1], // Kuudra Profit Tracker Location
-    // ... (Other location properties)
-    // Properties related to enigma and cat souls
+    "LL": [50, 350, 1], // Server Status Location
+    // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
 }, "datitee.json");
@@ -95,42 +93,31 @@ import { updateEntityList } from "../features/combat/EntityDetect";
  * @returns {Array|string} - The updated list.
  */
 export function updateList(args, list, listName) {
-    // Extracting the item and determining if the list is an array
-    const item = args.slice(2).join(" ").toLowerCase();
+    const item = listName === "mob-list" ? args.slice(2).join(" ") : args.slice(2).join(" ").toLowerCase();
     const isArray = Array.isArray(list);
 
-    // Switch statement to handle different list update commands
     switch (args[1]) {
         case ("add"): // ADD TO LIST
             if (isArray && !list.includes(item)) {
-                // Adding item to the array list
                 list.push(item);
                 ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${WHITE}${item}${GREEN}] to the ${listName}!`);
             } else if (!(item in list)) {
-                // Linking an item to a value in the object list
                 list[item] = args[3];
                 ChatLib.chat(`${LOGO} ${GREEN}Successfully linked [${WHITE}${item}${GREEN}] to [${WHITE}${args[3]}${GREEN}]!`);
-            } else {
-                // Item already exists in the list
+            } else
                 ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is already in the ${listName}!`);
-            }
             break;
         case ("remove"): // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
-                // Removing item from the array list
                 list.splice(list.indexOf(item), 1);
                 ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${item}${GREEN}] from the ${listName}!`);
             } else if (!isArray && item in list) {
-                // Removing item from the object list
                 delete list[item];
                 ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${item}${GREEN}] from the ${listName}!`);
-            } else {
-                // Item doesn't exist in the list
+            } else 
                 ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is not in the ${listName}!`);
-            }
             break;
         case ("clear"): // CLEAR LIST
-            // Clearing the list (array or object)
             if (isArray)
                 list.length = 0;
             else
@@ -140,17 +127,14 @@ export function updateList(args, list, listName) {
         case ("view"): // DISPLAY LIST
         case ("list"):
             if (isArray) {
-                // Displaying array list elements
                 ChatLib.chat(`${GOLD}${BOLD}${list.length} Items in ${listName}:${RESET}`);
                 list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
             } else {
-                // Displaying object list elements
                 ChatLib.chat(`${GOLD}${BOLD}${Object.keys(list).length} Items in ${listName}:${RESET}`);
                 Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key} => ${list[key]}`) });
             }
             break;
         default:
-            // Invalid list update command
             ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
             break;
     }
@@ -197,12 +181,10 @@ export function opened() {
     openVA = true;
 }
 
-// Event handler for GUI key press to update trigger registrations
-register("guiKey", (char, keyCode, gui, event) => {
-    if (openVA && keyCode == 1) {
-        setRegisters();
-        openVA = false;
-    }
+// Event handler for GUI settings close.
+register("guiClosed", (event) => {
+    if (event.toString().includes("vigilance"))
+        setRegisters()
 });
 
 // Variable to store the pause state
@@ -218,15 +200,11 @@ export function getPaused() {
 }
 
 // Key binding for pausing or unpausing trackers
-const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "VolcAddons");
+const pauseKey = new KeyBind("Pause Trackers", 25, "VolcAddons");
 pauseKey.registerKeyPress(() => {
     paused = !paused;
-    ChatLib.chat(`${LOGO} ${WHITE}Tracker Pause State: ${paused}`);
-});
-
-// Saving the pauseKey key code to persistent data upon game unload
-register("gameUnload", () => {
-    data.pauseKey = pauseKey.getKeyCode();
+    const message = paused ? `${RED}Paused` : `${GREEN}Resumed`;
+    ChatLib.chat(`${LOGO} ${GOLD}Tracker ${message}!`);
 });
 
 // MVP+/++ Check

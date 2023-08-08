@@ -2,21 +2,19 @@
 import request from "../../../requestV2";
 import settings from "../../settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { convertToTitleCase, getTime } from "../../utils/functions";
+import { getTime } from "../../utils/functions";
 import { getPlayerUUID } from "../../utils/player";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/variables";
 
 
-// Variable to store the player's bestiary data, initially set to undefined.
-let bestiaryApi = undefined;
-
 /**
  * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
  */
+let bestiaryApi = undefined;
+let valid = true;
 export function updateBestiary() {
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
-    // dbf3c137-8778-4cce-8ad1-1b0193a5d3eb
     request({
         url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${data.profileId}`,
         json: true
@@ -25,13 +23,21 @@ export function updateBestiary() {
         bestiaryApi = response.profile.members[getPlayerUUID()].bestiary.kills;
     }).catch((error) => {
         // If there is an error, display the error message in the Minecraft chat.
-        print(`[VolcAddons] ${error.cause}`);
         if (error.cause != "Invalid API key")
             delay(updateBestiary, 3000);
+        else if (settings.apiKey && valid) {
+            delay(() => ChatLib.chat(`${LOGO} ${RED}${error.cause}!`), 1000);
+            valid = false;
+        }
     });
 }
-updateBestiary();
+register("worldLoad", () => {
+    updateBestiary();
+});
 
+/**
+ * Variable and class to track mob bestiary data.
+ */
 const killBrackets = [
     [20, 40, 60, 100, 200, 400, 800, 1400, 2000, 3000, 6000, 12000, 20000, 30000, 40000, 50000, 60000, 72000, 86000, 100000, 200000, 400000, 600000, 800000, 1000000],
     [5, 10, 15, 25, 50, 100, 200, 350, 500, 750, 1500, 3000, 5000, 7500, 10000, 12500, 15000, 18000, 21500, 25000, 50000, 100000, 150000, 200000, 250000],
@@ -42,6 +48,16 @@ const killBrackets = [
     [1, 2, 3, 5, 7, 9, 11, 14, 17, 20, 30, 40, 55, 75, 100, 150, 200, 275, 375, 500, 1000, 1500, 2000, 2500, 3000]
 ];
 
+/**
+ * Represents a Mob with multiple names and levels, used for tracking kills and progression.
+ *
+ * @class Mob
+ * @param {Array} names - An array of names for the mob.
+ * @param {Array} levels - An array of levels for the mob.
+ * @param {number} bracket - The bracket number of the mob.
+ * @param {number} maxLevel - The maximum level of the mob.
+ * @param {number} time - The time required to kill the mob.
+ */
 class Mob {
     constructor(names, levels, bracket, maxLevel, time) {
         this.names = names;
@@ -54,7 +70,13 @@ class Mob {
         this.time = time;
     }
 
+    /**
+     * Updates the number of kills, current level, and time needed for the next kill.
+     *
+     * @memberof Mob
+     */
     updateKills() {
+        // Calculate total kills by iterating through all the names and levels
         this.names.forEach(name => {
             this.levels.forEach(level => {
                 let kills = bestiaryApi[`${name}_${level}`] || 0;
@@ -62,12 +84,15 @@ class Mob {
             });
         });
 
+        // Determine the current level based on the kill count and bracket
         for (let i = this.bracket.length - 1; i >= 0; i--) {
             if (this.kills > this.bracket[i]) {
                 this.level = i;
                 break;
             }
         }
+
+        // Calculate the number of kills needed for the next level and the time required for it
         this.next = Math.max(this.bracket[Math.min(this.level + 1, this.maxLevel - 1)] - this.kills, 0);
         this.nextTime = this.next * this.time;
     }
@@ -96,10 +121,10 @@ const bestiary = {
     // The Farming Islands
     "Chicken": new Mob(["farming_chicken"], [1], 1, 5, 0.5),
     "Cow": new Mob(["farming_cow"], [1], 1, 5, 0.5),
-    "Mushroom Cow": new Mob(["mushroom_cow"], [1], 1, 5, 0.5),
+    "Mushroom Cow": new Mob(["mushroom_cow"], [1], 1, 5, 3),
     "Pig": new Mob(["farming_pig"], [1], 1, 5, 0.5),
-    "Rabbit": new Mob(["farming_rabbit"], [1], 1, 5, 1),
-    "Sheep": new Mob(["farming_sheep"], [1], 1, 5, 1),
+    "Rabbit": new Mob(["farming_rabbit"], [1], 1, 5, 3),
+    "Sheep": new Mob(["farming_sheep"], [1], 1, 5, 3),
     // Spider's Den
     "Arachne": new Mob(["arachne"], [300, 500], 7, 20, 30),
     "Arachne's Brood": new Mob(["arachne_brood"], [100, 200], 4, 15, 3),
@@ -171,7 +196,7 @@ const bestiary = {
     "Yog": new Mob(["yog"], [100], 3, 15, 15),
     // The Park
     "Howling Spirit": new Mob(["howling_spirit"], [35], 2, 15, 2),
-    "Pack Spirit": new Mob(["pack_spirit"], [35], 2, 15, 2),
+    "Pack Spirit": new Mob(["pack_spirit"], [30], 2, 15, 2),
     "Soul of the Alpha": new Mob(["soul_of_the_alpha"], [55], 4, 15, 6),
     // Spooky Festival
     "Crazy Witch": new Mob(["batty_witch"], [60], 2, 10, 10),
@@ -301,25 +326,40 @@ register("worldLoad", () => {
     }, 1000);
 });
 
+/**
+ * Sorts and filters the bestiary based on the provided criteria and amount.
+ *
+ * @param {String} val - The criteria to sort and filter the bestiary. Possible values: "bracket" or any valid property name in the bestiary object.
+ * @param {number} amount - The number of entries to include in the final sorted bestiary.
+ */
 function sortBestiary(val, amount) {
+    // Filtering the bestiary based on the provided criteria and amount
     const filteredBestiary = Object.entries(bestiary).filter(([key, value]) =>
-        val === "bracket" ? value.bracket === killBrackets[amount - 1] && value.next !== 0 : value.next !== 0
+        val === "bracket"
+            ? value.bracket === killBrackets[amount - 1] && value.next !== 0
+            : value.next !== 0
     );
-  
+
+    // Sorting the filtered bestiary in descending order based on the provided criteria
     const sortedBestiary = filteredBestiary.sort((a, b) =>
         b[1][val === "bracket" ? "next" : val] - a[1][val === "bracket" ? "next" : val]
     ).slice(val === "bracket" ? -10 : -amount).reduce((acc, [key, value]) => {
-        if (value.next !== 0)
-            acc[key] = value;
+        acc[key] = value;
         return acc;
     }, {});
-  
+
+    // Displaying the sorted bestiary information in chat
     ChatLib.chat(`\n${LOGO} ${WHITE}${BOLD}Leftover Bestiary: `);
     Object.keys(sortedBestiary).forEach((key) => {
         ChatLib.chat(`${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${sortedBestiary[key].next} ${GREEN}kills! (${RED}${getTime(sortedBestiary[key].nextTime)}${GREEN})`);
     });
 }
   
+/**
+ * Gets the bestiary information based on the provided arguments and displays the result in chat.
+ *
+ * @param {Array} args - An array of arguments containing information about the bestiary query.
+ */
 export function getBestiary(args) {
     switch(args[1]) {
         case "kills":
@@ -340,6 +380,7 @@ export function getBestiary(args) {
             if (mob === undefined)
                 ChatLib.chat(`${LOGO} ${RED}Please input as /va be <mobName OR bracket [1-7] OR <kill, time> [amount]>!`);
             else
-                ChatLib.chat(`${LOGO} ${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${mob.next} ${GREEN}kills! (${RED}${getTime(mob.nextTime)}${GREEN})`)
+                ChatLib.chat(`${LOGO} ${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${mob.next} ${GREEN}kills! (${RED}${getTime(mob.nextTime)}${GREEN})`);
+            break;
     }
 }

@@ -113,7 +113,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // --- Essential ---
     @TextProperty({
         name: "API Key",
-        description: "https://developer.hypixel.net",
+        description: "https://developer.hypixel.net, you may need to /ct load after you set this!",
         category: "General",
         subcategory: "Essential",
         protected: true
@@ -334,6 +334,15 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Party Commands"
     })
     womenCommand = true;
+
+    // --- Server ---
+    @SwitchProperty({
+        name: "Server Status",
+        description: "Displays user ping/TPS/FPS as a HUD. /moveStatus to move.",
+        category: "General",
+        subcategory: "Server"
+    })
+    serverStatus = false;
     
     // --- Skills ---
     @SliderProperty({
@@ -360,7 +369,8 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         name: "Reminder Text",
         description: "What will appear on screen when timer runs out.",
         category: "General",
-        subcategory: "Timer"
+        subcategory: "Timer",
+        placeholder: "konnichiwa."
     })
     reminderText = "";
     @SliderProperty({
@@ -398,14 +408,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     // --- Economy ---
     @SliderProperty({
-        name: "Auction Refresh",
-        description: "Set how often action house data gets refreshed in minutes (set as 0 to turn off). Runs => /updateAuction.",
+        name: "Economy Refresh",
+        description: "Set how often Hypixel economy trackets reloads. Runs => /updateEconomy.",
         category: "Economy",
         subcategory: "Economy",
         min: 0,
         max: 180
     })
-    auctionRefresh = 180;
+    economyRefresh = 60;
 
     @SwitchProperty({
         name: "Item Price",

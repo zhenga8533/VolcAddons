@@ -1,7 +1,7 @@
-import { getBazaar } from './Bazaar';
 import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../../utils/constants';
 import { commafy } from "../../utils/functions";
 import { data } from '../../utils/variables';
+import { getBazaar } from './Economy';
 
 
 /**
@@ -23,31 +23,6 @@ const MAX_UPGRADES = 1.41;
 const MAX_INFERNO = 3.41;
 const MAX_CATALYST = 6.44;
 const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgrades!\n`;
-/**
- * Variables used to represent required Bazaar items.
- * "ITEM_NAME": [Low Price, High Price]
- */
-const items = {
-    // Hypergolic Fuel Stuff
-    "ENCHANTED_COAL": [0, 0],
-    "ENCHANTED_SULPHUR": [0, 0],
-    "CRUDE_GABAGOOL": [0, 0],
-    "HYPERGOLIC_GABAGOOL": [0, 0],
-    "HEAVY_GABAGOOL": [0, 0],
-    "FUEL_GABAGOOL": [0, 0],
-    "CRUDE_GABAGOOL_DISTILLATE": [0, 0],
-    "INFERNO_FUEL_BLOCK": [0, 0],
-    // Inferno Minion Loot
-    "CHILI_PEPPER": [0, 0],
-    "INFERNO_VERTEX": [0, 0],
-    "REAPER_PEPPER": [0, 0],
-    // Vampire Minion Stuff
-    "HYPER_CATALYST": [0, 0],
-    "HEMOVIBE": [0, 0],
-    "HEMOGLASS": [0, 0],
-    "HEMOBOMB": [0, 0],
-}
-getBazaar(items);
 
 /**
  * Hypergolic gabagool calculation.
@@ -62,8 +37,8 @@ getBazaar(items);
  *
  * @param {string} type - Sound category.
  */
-function calcHypergolic(type) {
-    return 2404 * items.ENCHANTED_COAL[type] + 150.25 * items.ENCHANTED_SULPHUR[type] + 13824 * items.CRUDE_GABAGOOL[type];
+function calcHypergolic(bazaar, type) {
+    return 2404 * bazaar.ENCHANTED_COAL[type] + 150.25 * bazaar.ENCHANTED_SULPHUR[type] + 13824 * bazaar.CRUDE_GABAGOOL[type];
 }
 
 /**
@@ -73,8 +48,7 @@ function calcHypergolic(type) {
  */
 export function calcMinions(args) {
     // Update Prices
-    getBazaar(items);
-    print(JSON.stringify(items));
+    const bazaar = getBazaar();
 
     // Universal variables
     const minions = isNaN(args[2]) ? 31 : args[2];
@@ -88,10 +62,10 @@ export function calcMinions(args) {
         case "hg":
             const instaHypergolic = calcHypergolic(1);
             const orderHypergolic = calcHypergolic(0);
-            const instaSellProfit = commafy(items.HYPERGOLIC_GABAGOOL[0] - instaHypergolic);
-            const instaOrderProfit = commafy(items.HYPERGOLIC_GABAGOOL[1] - instaHypergolic);
-            const orderInstaProfit = commafy(items.HYPERGOLIC_GABAGOOL[0] - orderHypergolic);
-            const orderOfferProfit = commafy(items.HYPERGOLIC_GABAGOOL[1] - orderHypergolic);
+            const instaSellProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[0] - instaHypergolic);
+            const instaOrderProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[1] - instaHypergolic);
+            const orderInstaProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[0] - orderHypergolic);
+            const orderOfferProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[1] - orderHypergolic);
 
             ChatLib.chat(`\n${GOLD}${BOLD}Insta Buy Price: ${RESET}${commafy(instaHypergolic)}`);
             ChatLib.chat(`${GOLD}${BOLD}Insta Buy Profit (Insta Sell): ${RESET}${instaSellProfit}`);
@@ -125,15 +99,15 @@ export function calcMinions(args) {
                 "REAPER": (actions / (458182 / eyedrop)).toFixed(4)
             }
             const profit = {
-                "GABAGOOL": drops.GABAGOOL * items.CRUDE_GABAGOOL[1],
-                "CHILI": drops.CHILI * items.CHILI_PEPPER[1],
-                "VERTEX": drops.VERTEX * items.INFERNO_VERTEX[1],
+                "GABAGOOL": drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1],
+                "CHILI": drops.CHILI * bazaar.CHILI_PEPPER[1],
+                "VERTEX": drops.VERTEX * bazaar.INFERNO_VERTEX[1],
                 "APEX": drops.APEX * data.apexPrice,
-                "REAPER": drops.REAPER * items.REAPER_PEPPER[1]
+                "REAPER": drops.REAPER * bazaar.REAPER_PEPPER[1]
             };
 
             // Fuel + Net Gain (Hydra Heads hard coded for now, I'll update once I get around to it :skull:)
-            const fuel = minions * (items.HYPERGOLIC_GABAGOOL[0] + 6 * items.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * items.INFERNO_FUEL_BLOCK[0] + 800000);
+            const fuel = minions * (bazaar.HYPERGOLIC_GABAGOOL[0] + 6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * bazaar.INFERNO_FUEL_BLOCK[0] + 800000);
             const net = Object.values(profit).reduce((a, c) => a + c, 0) - fuel;
 
             // ChatLib the values
@@ -150,14 +124,14 @@ export function calcMinions(args) {
         case "gaba":
             // Heavy 15x
             infernoAction /= 16;
-            const heavyGabagool = minions * 86400 / (2 * infernoAction) * items.CRUDE_GABAGOOL[1];
-            const heavyPrice = minions * (items.HEAVY_GABAGOOL[0] + 6 * items.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * items.INFERNO_FUEL_BLOCK[0]);
+            const heavyGabagool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1];
+            const heavyPrice = minions * (bazaar.HEAVY_GABAGOOL[0] + 6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * bazaar.INFERNO_FUEL_BLOCK[0]);
             const heavyProfit = heavyGabagool - heavyPrice;
 
             // Fuel 10x
             infernoAction *= 1.6;
-            const fuelGabgool = minions * 86400 / (2 * infernoAction) * items.CRUDE_GABAGOOL[1];
-            const fuelPrice = minions * (items.FUEL_GABAGOOL[0] + 6 * items.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * items.INFERNO_FUEL_BLOCK[0]);
+            const fuelGabgool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1];
+            const fuelPrice = minions * (bazaar.FUEL_GABAGOOL[0] + 6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * bazaar.INFERNO_FUEL_BLOCK[0]);
             const fuelProfit = fuelGabgool - fuelPrice;
 
             // Format ChatLib.chat
@@ -171,10 +145,10 @@ export function calcMinions(args) {
             break;
         case "vampire":
         case "vamp":
-            const hemovibe = [(vampAction).toFixed(4), vampAction*items.HEMOVIBE[1]];
-            const hemoglass = [(hemovibe[0]/160).toFixed(4), hemovibe[0]/160*items.HEMOGLASS[1]];
-            const hemobomb = [(hemoglass[0]/15).toFixed(4), hemoglass[0]/15*items.HEMOBOMB[1]];
-            const vampCost = items.HYPER_CATALYST[0] * 4 * minions;
+            const hemovibe = [(vampAction).toFixed(4), vampAction*bazaar.HEMOVIBE[1]];
+            const hemoglass = [(hemovibe[0]/160).toFixed(4), hemovibe[0]/160*bazaar.HEMOGLASS[1]];
+            const hemobomb = [(hemoglass[0]/15).toFixed(4), hemoglass[0]/15*bazaar.HEMOBOMB[1]];
+            const vampCost = bazaar.HYPER_CATALYST[0] * 4 * minions;
             const vampProfit = hemovibe[1] - vampCost;
             
             ChatLib.chat(`\n${GOLD}${BOLD}Drops for ${minions} Vampire Minion(s) t${tier}`);

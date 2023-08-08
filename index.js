@@ -1,8 +1,6 @@
-// Importing settings and initializing if not present
+// Utility Modules
 import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
-
-// Importing various utility modules
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";
@@ -24,14 +22,13 @@ import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
+import "./features/general/Status";
 import { createWaypoint } from "./features/general/UserWaypoints";
-
 // Economy Features
-import "./features/economy/Auction";
 import "./features/economy/CoinTracker";
+import "./features/economy/Economy";
 import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
-
 // Combat Features
 import { getBestiary } from "./features/combat/Bestiary";
 import "./features/combat/BrokenHyp";
@@ -43,22 +40,18 @@ import "./features/combat/HealthAlert";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 import "./features/combat/WatcherAlert";
-
 // Mining Features
 import "./features/mining/PowderTracker";
-
 // Hub Features
 import { setWarps } from "./features/hub/DianaWaypoint";
-import "./features/hub/InquisitorAnnounce";
 import "./features/hub/InquisitorCounter";
-
+import "./features/hub/InquisitorDetect";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
 import "./features/crimsonIsle/VanqCounter";
 import "./features/crimsonIsle/VanqDetect";
 import "./features/crimsonIsle/VanqWarp";
-
 // Kuudra Features
 import { getAttributes } from "./features/kuudra/AttributePricing";
 import "./features/kuudra/KuudraAlerts";
@@ -66,12 +59,10 @@ import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
 import "./features/kuudra/KuudraProfit";
 import { getSplits } from "./features/kuudra/KuudraSplits";
-
 // Garden Features
 import { calcCompost } from "./features/garden/ComposterCalc";
 import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
-
 // Rift Features
 import "./features/rift/DDR";
 import "./features/rift/TubaTimer";
@@ -234,6 +225,13 @@ register ("command", (...args) => {
         case "waypoint":
         case "wp":
             createWaypoint(args);
+            break;
+        // Shh
+        case "extrasensory":
+            if (!isNaN(args[1])) {
+                data.y = args[1];
+                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set ESP y-value to ${args[1]}!`)
+            }
             break;
         // Bazaar Calculations
         case "calculate":

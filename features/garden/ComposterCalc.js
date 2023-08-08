@@ -1,21 +1,9 @@
-import { getBazaar } from "../economy/Bazaar";
 import { AQUA, BOLD, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, romanToNum } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import { getBazaar } from "../economy/Economy";
 
-
-/**
- * Variables used to represent required Bazaar items.
- * "ITEM_NAME": [Low Price, High Price]
- */
-const items = {
-    "BOX_OF_SEEDS": [0, 0],
-    "OIL_BARREL": [0, 0],
-    "VOLTA": [0, 0],
-    "COMPOST": [0, 0],
-}
-getBazaar(items);
 
 /**
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.
@@ -42,7 +30,7 @@ registerWhen(register("guiMouseRelease", () => {
  * Fetches Bazaar data and performs calculations for single, hourly, and daily profits and prints to screen.
  */
 export function calcCompost(args) {
-    getBazaar(items);
+    const bazaar = getBazaar();
 
     // Upgrades
     const testLevel = parseInt(args[2]);
@@ -57,13 +45,13 @@ export function calcCompost(args) {
     // Organic (4k) / Fuel (2k) Cost
     // Box of Seeds give 25.6k organic
     // Oil Barrel gives 10k fuel
-    const organicCost = items["BOX_OF_SEEDS"][0] / (25600 / (4000 * (1 - costUpgrade/100)));
-    const fuelType = items["OIL_BARREL"][0] > items["VOLTA"][0] ? "Volta" : "Oil Barrel";
-    const fuelCost = Math.min(items["OIL_BARREL"][0], items["VOLTA"][0]) / (10000 / (2000 * (1 - costUpgrade/100)));
+    const organicCost = bazaar["BOX_OF_SEEDS"][0] / (25600 / (4000 * (1 - costUpgrade/100)));
+    const fuelType = bazaar["OIL_BARREL"][0] > bazaar["VOLTA"][0] ? "Volta" : "Oil Barrel";
+    const fuelCost = Math.min(bazaar["OIL_BARREL"][0], bazaar["VOLTA"][0]) / (10000 / (2000 * (1 - costUpgrade/100)));
     const totalCost = Math.round(organicCost + fuelCost);
 
     // Profit
-    const compostPrice = Math.round(items["COMPOST"][1] * (1 + multiUpgrade * 0.03)); // Multi Drop => +0.03% per level
+    const compostPrice = Math.round(bazaar["COMPOST"][1] * (1 + multiUpgrade * 0.03)); // Multi Drop => +0.03% per level
     const totalProfit = compostPrice - totalCost;
 
     // Daily Profit

@@ -6,7 +6,7 @@ import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWayp
 import { getVamps } from "../features/rift/VampireSlayer"; // Importing functions for VampireSlayer
 import { getLavaCreatures } from "../features/crimsonIsle/MythicDetect";
 import { getVanquishers } from "../features/crimsonIsle/VanqDetect";
-import { getInquisitors } from "../features/hub/InquisitorAnnounce";
+import { getInquisitors } from "../features/hub/InquisitorDetect";
 import { getEntities } from "../features/combat/EntityDetect";
 
 // Importing render functions from other files
@@ -59,14 +59,14 @@ function formatWaypoints(waypoints, r, g, b) {
         formattedWaypoints.push(wp);
     });
 }
-function formatEntityWaypoints(entities, r, g, b) {
-    if (!entities.length) return;
+function formatEntityWaypoints(entities, rgb) {
+    if (entities === undefined) return;
 
     entities.forEach(entity => {
         formattedEntities.push({
             "x": entity.getX(), "y": entity.getY(), "z": entity.getZ(),
             "width": entity.getWidth(), "height": entity.getHeight(),
-            "r": r, "g": g, "b": b
+            "r": rgb[0], "g": rgb[1], "b": rgb[2]
         });
     });
 }
@@ -81,10 +81,10 @@ register("tick", () => {
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
 
     formattedEntities = [];
-    formatEntityWaypoints(getVanquishers(), 0.5, 0, 0.5); // Purple vanq
-    formatEntityWaypoints(getInquisitors(), 1, 0.84, 0) // Gold inq
-    formatEntityWaypoints(getLavaCreatures(), 1, 0, 0) // Red lava scc
-    formatEntityWaypoints(getEntities(), 0, 1, 0) // Green moblist
+    formatEntityWaypoints(getVanquishers(), (0.5, 0, 0.5)); // Purple vanq
+    formatEntityWaypoints(getInquisitors(), (1, 0.84, 0)); // Gold inq
+    formatEntityWaypoints(getLavaCreatures(), (1, 0, 0)); // Red lava scc
+    getEntities().forEach(entity => { formatEntityWaypoints(entity[0], entity[1]) }); // Colored mob esp
 });
 
 /**

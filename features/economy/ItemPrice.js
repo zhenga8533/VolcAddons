@@ -1,8 +1,7 @@
 import settings from "../../settings";
-import { getAttributeItems, getAuction } from "./Auction";
-import { getBazaar } from "./Bazaar";
-import { commafy, convertToTitleCase, removeReforges } from "../../utils/functions";
+import { commafy } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
+import { getAuction, getBazaar } from "./Economy";
 
 
 /**
@@ -32,34 +31,13 @@ const MAX_ENCHANTS = {
 };
 const ENCHANTS = new Set(Object.keys(MAX_ENCHANTS));
 const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"]);
-const enchants = Object.keys(MAX_ENCHANTS).reduce((acc, key) => {
-    acc[`ENCHANTMENT_${key}_${MAX_ENCHANTS[key]}`] = [0, 0];
-    return acc;
-}, {});
-enchants["SIL_EX"] = [0, 0];
-getBazaar(enchants);
 
 /**
  * Variables used to represent item modifier data.
- * "ENCHANTMENT_NAME": [Offer Price, Insta Price].
  */
-const modifiers = {
-    // General
-    "RECOMBOBULATOR_3000": [0, 0], "HOT_POTATO_BOOK": [0, 0], "FUMING_POTATO_BOOK": [0, 0], "ART_OF_WAR": [0, 0],
-    // Dungeons
-    "WITHER_SHIELD_SCROLL": [0, 0], "IMPLOSION_SCROLL": [0, 0], "SHADOW_WARP_SCROLL": [0, 0],
-    "FIRST_MASTER_STAR": [0, 0], "SECOND_MASTER_STAR": [0, 0], "THIRD_MASTER_STAR": [0, 0], "FOURTH_MASTER_STAR": [0, 0],
-    "FIFTH_MASTER_STAR": [0, 0],
-    // Gems
-    "FLAWLESS_JADE_GEM": [0, 0], "FLAWLESS_AMBER_GEM": [0, 0], "FLAWLESS_TOPAZ_GEM": [0, 0], "FLAWLESS_SAPPHIRE_GEM": [0, 0],
-    "FLAWLESS_AMETHYST_GEM": [0, 0], "FLAWLESS_JASPER_GEM": [0, 0], "FLAWLESS_RUBY_GEM": [0, 0], "FLAWLESS_OPAL_GEM": [0, 0],
-    "PERFECT_JADE_GEM": [0, 0], "PERFECT_AMBER_GEM": [0, 0], "PERFECT_TOPAZ_GEM": [0, 0], "PERFECT_SAPPHIRE_GEM": [0, 0],
-    "PERFECT_AMETHYST_GEM": [0, 0], "PERFECT_JASPER_GEM": [0, 0], "PERFECT_RUBY_GEM": [0, 0], "PERFECT_OPAL_GEM": [0, 0]
-};
 const STAR_PLACEMENT = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
 const GEMSTONE_SLOTS = new Set(["JADE", "AMBER", "TOPAZ", "SAPPHIRE", "AMETHYST", "RUBY", "JASPER", "OPAL"]);
 const MULTIUSE_SLOTS = new Set(["COMBAT", "DEFENSIVE", "MINING", "UNIVERSAL"]);
-getBazaar(modifiers);
 
 /**
  * Figures out the enchantment value of the given item.
@@ -69,85 +47,93 @@ getBazaar(modifiers);
  */
 export function getItemValue(item) {
     if (item === null) return 0;
+
     const auction = getAuction();
-    const heldItem = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").toObject();
-    const itemName = removeReforges("all", item.getNBT().getCompoundTag("tag").getCompoundTag("display").getString("Name").removeFormatting());
-    let value = auction[itemName] || 0;
+    const bazaar = getBazaar();
+    const itemData = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").toObject();
+    const itemID = itemData?.id
+    const auctionItem = auction?.[itemID];
+    let value = auctionItem?.lbin || 0;
+
+    // Check for Pet or Bazaar
+    if (value === 0) {
+        if (itemID === "PET") {
+            const petInfo = JSON.parse(itemData.petInfo);
+            return auction[`${petInfo.tier}_${petInfo.type}`]?.lbin || 0;
+        } else
+            value = bazaar[itemID]?.[0] || 0;
+        return value;
+    }
     
-    // Enchantment values
-    Object.entries(heldItem.enchantments || {}).forEach(([enchant, enchantlvl]) => {
+    // Enchantment Values
+    Object.entries(itemData.enchantments || {}).forEach(([enchant, enchantlvl]) => {
         enchant = enchant.toUpperCase();
         const maxEnchantLevel = MAX_ENCHANTS[enchant];
+        
         if (ENCHANTS.has(enchant) && enchantlvl >= maxEnchantLevel) {
             const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
-            const base = enchants[enchantKey];
+            const base = bazaar[enchantKey];
             const isStackingEnchant = STACKING_ENCHANTS.has(enchant);
             let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
             multiplier = isStackingEnchant ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
             value += base[0] * multiplier;
         }
     });
-  
 
-    // Modifier values
+    // Recomb Value
+    value += itemData.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];
 
-    // Recomb
-    value += heldItem.rarity_upgrades === undefined ? 0 : modifiers["RECOMBOBULATOR_3000"][0];
-
-    // Rune
-    if (heldItem.runes !== undefined) {
-        const [rune, _] = Object.entries(heldItem.runes);
-        const runeCost = auction[`${rune[0].charAt(0).toUpperCase() + rune[0].slice(1).toLowerCase()} Rune ${['I', 'II', 'III'][rune[1] - 1]}`];
-        value += runeCost === undefined ? 0 : runeCost;
+    // Rune Value
+    if (itemData.runes !== undefined) {
+        const runes = itemData.runes
+        const [runeKey, runeValue] = Object.entries(runes)[0];
+        value += auction[`${runeKey}_${runeValue}`]?.lbin || 0;
     }
   
-    // Potato Books
-    const hotPotatoCount = heldItem.hot_potato_count;
-    value += (hotPotatoCount === undefined ? 0 : Math.min(hotPotatoCount, 10) * modifiers["HOT_POTATO_BOOK"][0]) +
-        (hotPotatoCount === undefined ? 0 : Math.max(hotPotatoCount - 10, 0) * modifiers["FUMING_POTATO_BOOK"][0]);
+    // Potato Book Values
+    const hotPotatoCount = itemData.hot_potato_count;
+    value += (hotPotatoCount === undefined ? 0 : Math.min(hotPotatoCount, 10) * bazaar["HOT_POTATO_BOOK"][0]) +
+        (hotPotatoCount === undefined ? 0 : Math.max(hotPotatoCount - 10, 0) * bazaar["FUMING_POTATO_BOOK"][0]);
     
-    // Art of War
-    value += heldItem.art_of_war_count === undefined ? 0 : modifiers["ART_OF_WAR"][0];
+    // Art of War Value
+    value += itemData.art_of_war_count === undefined ? 0 : bazaar["THE_ART_OF_WAR"]?.[0];
   
-    // Master Stars
-    const upgradeLevel = heldItem.upgrade_level;
+    // Master Star Values
+    const upgradeLevel = itemData.upgrade_level;
     const stars = Math.max(upgradeLevel - 5, 0);
     for (let i = 0; i < stars; i++) {
-        value += modifiers[`${STAR_PLACEMENT[i]}_MASTER_STAR`][0];
+        value += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[0];
     }
   
-    // Wither Impact Scrolls
-    (heldItem.ability_scroll || []).forEach(scroll => {
-        value += modifiers[scroll][0];
+    // Wither Impact Scroll Values
+    (itemData.ability_scroll || []).forEach(scroll => {
+        value += bazaar[scroll][0];
     });
 
-    // Gems
-    const gemsKeys = Object.keys(heldItem.gems || {});
+    // Gem Values
+    const gemsKeys = Object.keys(itemData.gems || {});
     gemsKeys.forEach((gemstone) => {
-        const gemstoneData = heldItem.gems[gemstone];
+        const gemstoneData = itemData.gems[gemstone];
         const gemstoneTier = gemstoneData?.quality || gemstoneData;
         const gemstoneType = gemstone.split('_');
 
         let gemstoneValue = 0;
         if (GEMSTONE_SLOTS.has(gemstoneType[0]))
-            gemstoneValue = modifiers[`${gemstoneTier}_${gemstoneType[0]}_GEM`]?.[0] || 0;
+            gemstoneValue = bazaar[`${gemstoneTier}_${gemstoneType[0]}_GEM`]?.[0] || 0;
         else if (MULTIUSE_SLOTS.has(gemstoneType[0]) && gemstoneType[gemstoneType.length - 1] !== "gem")
-            gemstoneValue = modifiers[`${gemstoneTier}_${heldItem.gems[gemstone + "_gem"]}_GEM`]?.[0] || 0;
+            gemstoneValue = bazaar[`${gemstoneTier}_${itemData.gems[gemstone + "_gem"]}_GEM`]?.[0] || 0;
         value += gemstoneValue;
     });
 
-    // Attributes
-    const attributes = Object.keys(heldItem.attributes || {});
-    const attributeItems = getAttributeItems();
+    // Attribute Values
+    const attributes = Object.keys(itemData.attributes || {}).sort();
     let attributeValue = 0;
     attributes.forEach((attribute) => {
-        const attributeTier = heldItem.attributes[attribute];
-        attribute = attribute === "mending" ? "bVitality" : `b${convertToTitleCase(attribute)}`;
-        attributeValue = Math.max(attributeValue,
-            (attributeItems[itemName.split(' ')[1]]?.attributes?.[attribute] || 
-            attributeItems["Attribute Shard"]?.attributes?.[attribute] || 0)
-        * (2 ** (attributeTier - 1)));
-    })
+        const attributeCount = 2 ** (itemData.attributes[attribute] - 1);
+        attributeValue += (auctionItem?.attributes?.[attribute] || 0) * attributeCount;
+    });
+    attributeValue = Math.max(attributeValue, auctionItem?.attribute_combos?.[attributes.join(" ")] || 0);
+    print(attributes.join(" "));
     value += attributeValue;
   
     return value;
@@ -172,5 +158,5 @@ registerWhen(register("itemTooltip", (lore, item) => {
     // Add to item lore.
     const value = getItemValue(item);
     if (value !== 0)
-        list.appendTag(new NBTTagString(`§5§lItem Value: §6${commafy(value)}`));
+        list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
 }), () => settings.itemPrice);

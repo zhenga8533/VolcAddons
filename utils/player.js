@@ -1,7 +1,5 @@
 // Import required modules and constants
 import request from "../../requestV2";
-import settings from "../settings";
-import { LOGO, RED } from "./constants";
 import { data } from "./variables";
 
 
@@ -37,26 +35,3 @@ request({
 register("chat", (id) => {
     data.profileId = id;
 }).setCriteria("Profile ID: ${id}");
-
-
-// --- Bestiary ---
-
-// Variable to store the player's bestiary data, initially set to undefined.
-let bestiary = undefined;
-
-/**
- * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
- */
-export function updateBestiary() {
-    // Make an API request to Hypixel API to get the player's bestiary data from their profile.
-    request({
-        url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${data.profileId}`,
-        json: true
-    }).then((response) => {
-        // Update the 'bestiary' variable with the bestiary data from the API response.
-        bestiary = response.profile.members[getPlayerUUID()].bestiary;
-    }).catch((error) => {
-        // If there is an error, display the error message in the Minecraft chat.
-        ChatLib.chat(`${LOGO} ${RED}${error.cause}`);
-    });
-}
