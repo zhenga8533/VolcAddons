@@ -6,5 +6,6 @@
     "   - Fixed Pet Tracking (no levels yet)",
     "- Fixed mob alert not working",
     "- Fixed bestiary not updating on world change",
-    "- Fixed Kuudra features not working sometimes (i think)"
+    "- Fixed Kuudra features not working sometimes (i think)",
+    "- Fixed compatibility issues with other modules"
 ]

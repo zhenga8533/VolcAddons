@@ -5,10 +5,10 @@ import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 
 // Java packet types
-const S03PacketTimeUpdate = Java.type('net.minecraft.network.play.server.S03PacketTimeUpdate');
-const S37PacketStatistics = Java.type('net.minecraft.network.play.server.S37PacketStatistics');
-const C16PacketClientStatus = Java.type('net.minecraft.network.play.client.C16PacketClientStatus');
-const S01PacketJoinGame = Java.type('net.minecraft.network.play.server.S01PacketJoinGame');
+let S03PacketTimeUpdate = Java.type('net.minecraft.network.play.server.S03PacketTimeUpdate');
+let S37PacketStatistics = Java.type('net.minecraft.network.play.server.S37PacketStatistics');
+let C16PacketClientStatus = Java.type('net.minecraft.network.play.client.C16PacketClientStatus');
+let S01PacketJoinGame = Java.type('net.minecraft.network.play.server.S01PacketJoinGame');
 
 // TPS
 let tps = 20;
@@ -29,14 +29,14 @@ registerWhen(register('packetReceived', () => {
 let ping = 0;
 let lastPing = 0;
 
-const sendPingRequest = () => {
+function sendPingRequest() {
     if (lastPing === 0) {
         Client.sendPacket(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
         lastPing = Date.now();
     }
 };
 
-const calculatePing = () => {
+function calculatePing() {
     if (lastPing !== 0) {
         ping = Math.abs(Date.now() - lastPing);
         lastPing = 0;
@@ -56,7 +56,6 @@ registerWhen(register('packetReceived', () => {
 const statusExample = `${DARK_GREEN}${BOLD}Ping: ${WHITE}Peek
 ${DARK_GREEN}${BOLD}TPS: ${WHITE}A
 ${DARK_GREEN}${BOLD}FPS: ${WHITE}Boo`;
-
 const statusOverlay = new Overlay("serverStatus", ["all"], data.LL, "moveStatus", statusExample);
 
 register('step', () => {
