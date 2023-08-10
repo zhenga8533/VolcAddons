@@ -18,7 +18,7 @@ let pastDate = 0;
 registerWhen(register('packetReceived', () => {
     if (pastDate !== null) {
         const time = Date.now() - pastDate;
-        const instantTps = MathLib.clampFloat(20000 / time, 0, 20);
+        const instantTps = Math.min(20000 / time, 20);
         const alpha = 2 / 11;
         tps = instantTps * alpha + tps * (1 - alpha);
     }

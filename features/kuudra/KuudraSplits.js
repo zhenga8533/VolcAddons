@@ -35,11 +35,11 @@ if (mm < 10) mm = '0' + mm;
 /**
  * Resets Kuudra splits on run start.
  */
-registerWhen(register("chat", () => {
+registerWhen(register("worldLoad", () => {
     kuudraSplit = [0, 0, 0, 0];
     times = ['0s', '0s', '0s', '0s'];
     phase = 0;
-}).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraSplits);
+}), () => settings.kuudraSplits);
 
 /**
  * Tracks party on player ready.
@@ -150,8 +150,6 @@ registerWhen(register("chat", () => {
  * Fifth (final split) if you fail :skull:.
  */
 registerWhen(register("chat", () => {
-    if (!settings.kuudraSplits) return;
-    
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
 }).setCriteria("${before}DEFEAT${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits);

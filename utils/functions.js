@@ -53,6 +53,22 @@ export function commafy(num) {
 }
 
 /**
+ * Converts a number to a string in k, m, b notation
+ * 
+ * @param {number} num 
+ * @returns {string} Formatted number if k, m, b notation
+ */
+export function formatNumber(num) {
+    if (isNaN(num)) return 0;
+
+    const absNum = Math.abs(num);
+    const abbrev = ["", "k", "m", "b"];
+    const index = Math.floor(Math.log10(absNum) / 3);
+  
+    return (num / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
+  }
+
+/**
  * Strips rank and tags off player name.
  * 
  * @param {string} player - Player name with rank and tags.

@@ -15,4 +15,4 @@ registerWhen(register('tick', () => {
     }
     else if (!Keyboard.isKeyDown(key.getKeyCode()) && keyPressed)
         keyPressed = false;
-  }), () => settings.removeSelfie);
+}), () => settings.removeSelfie);

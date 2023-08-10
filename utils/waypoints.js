@@ -81,9 +81,9 @@ register("tick", () => {
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
 
     formattedEntities = [];
-    formatEntityWaypoints(getVanquishers(), (0.5, 0, 0.5)); // Purple vanq
-    formatEntityWaypoints(getInquisitors(), (1, 0.84, 0)); // Gold inq
-    formatEntityWaypoints(getLavaCreatures(), (1, 0, 0)); // Red lava scc
+    formatEntityWaypoints(getVanquishers(), [0.5, 0, 0.5]); // Purple vanq
+    formatEntityWaypoints(getInquisitors(), [1, 0.84, 0]); // Gold inq
+    formatEntityWaypoints(getLavaCreatures(), [1, 0, 0]); // Red lava scc
     getEntities().forEach(entity => { formatEntityWaypoints(entity[0], entity[1]) }); // Colored mob esp
 });
 
@@ -126,8 +126,8 @@ function renderEntities(entities) {
     if (!entities.length) return;
 
     entities.forEach(e => {
-        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, true);
-        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, true);
+        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, false);
+        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, false);
     });
 }
 function renderStands(stands, title, r, g, b) {

@@ -1,6 +1,7 @@
 // Utility Modules
 import settings from "./settings";
 if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
+if (settings.kuudraProfitTracker === true || settings.kuudraProfitTracker === false) settings.kuudraProfitTracker = 0;
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";
@@ -70,6 +71,8 @@ import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 
 
+// Launch Tests
+if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
 const once = register("worldLoad", () => {
     // FIRST RUN - Display welcome message for new users
     if (data.newUser) {
@@ -227,10 +230,10 @@ register ("command", (...args) => {
             createWaypoint(args);
             break;
         // Shh
-        case "extrasensory":
+        case "hitbox":
             if (!isNaN(args[1])) {
                 data.y = args[1];
-                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set ESP y-value to ${args[1]}!`)
+                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set mob hitbox y-value to ${args[1]}!`)
             }
             break;
         // Bazaar Calculations

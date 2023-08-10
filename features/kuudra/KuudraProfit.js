@@ -1,6 +1,6 @@
 import settings from "../../settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/constants";
-import { commafy, getTime } from "../../utils/functions";
+import { commafy, formatNumber, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
@@ -75,11 +75,11 @@ function updateProfitTracker(openedChest) {
     if (openedChest) {
         kuudraSession.profit += chestProfit;
         kuudraSession.chests++;
-        kuudraSession.average += kuudraSession.profit / kuudraSession.chests;
+        kuudraSession.average = kuudraSession.profit / kuudraSession.chests;
         
         data.kuudraSession.profit += chestProfit;
         data.kuudraSession.chests++;
-        data.kuudraSession.average += kuudraSession.profit / kuudraSession.chests;
+        data.kuudraSession.average = data.kuudraSession.profit / data.kuudraSession.chests;
     } else {
         kuudraSession.time++;
         data.kuudraSession.time++;
@@ -89,14 +89,15 @@ function updateProfitTracker(openedChest) {
 
     const profitView = settings.kuudraProfitTracker == 1 ? data.kuudraSession : kuudraSession;
     coinageOverlay.message =
-`${DARK_RED}${BOLD}Profit: ${WHITE}${profitView.profit.toFixed(0)} ¢
-${DARK_RED}${BOLD}Chests Opened: ${WHITE}${profitView.chests} chests
-${DARK_RED}${BOLD}Average Profit: ${WHITE}${profitView.average.toFixed(0)} ¢/chest
+`${DARK_RED}${BOLD}Profit: ${WHITE}${formatNumber(profitView.profit.toFixed(0))} ¢
+${DARK_RED}${BOLD}Chests Opened: ${WHITE}${commafy(profitView.chests)} chests
+${DARK_RED}${BOLD}Average Profit: ${WHITE}${formatNumber(profitView.average.toFixed(0))} ¢/chest
 ${DARK_RED}${BOLD}Time Passed: ${WHITE}${getTime(profitView.time)}
-${DARK_RED}${BOLD}Rate: ${WHITE}${profitView.rate.toFixed(0)}¢/hr`
+${DARK_RED}${BOLD}Rate: ${WHITE}${formatNumber(profitView.rate.toFixed(0))} ¢/hr`
 }
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     if (Player.getContainer().getName() !== "Paid Chest" || gui?.getSlotUnderMouse()?.field_75222_d != 31 || chestOpened) return;
+    downtime = 0;
     updateProfitTracker(true);
     chestOpened = true;
 }), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker);
@@ -122,17 +123,18 @@ registerWhen(register("guiOpened", () => {
 
         const primary = getItemValue(container.getStackInSlot(11));
         let secondary = container.getStackInSlot(12);
-        secondary = bazaar[secondary.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id")]?.[1] || getItemValue(secondary);
+        secondary = bazaar[secondary.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id")]?.[0] || getItemValue(secondary);
         let essence = container.getStackInSlot(14).getNBT().toObject().tag.display.Name;
-        essence = parseInt(essence.slice(essence.indexOf('x') + 1)) * bazaar.ESSENCE_CRIMSON[1];
-        const teeth = settings.maxChili ? (bazaar.ENCHANTMENT_TABASCO_3[1] - 64*bazaar.CHILI_PEPPER[0])/6 * Math.ceil(tier / 2) : 0;
-        const cost = KEY_COST[tier - 1][0] + KEY_COST[tier - 1][1] * Math.min(bazaar.ENCHANTED_RED_SAND[0], bazaar.ENCHANTED_MYCELIUM[0]);
+        essence = parseInt(essence.slice(essence.indexOf('x') + 1)) * bazaar.ESSENCE_CRIMSON[0];
+        const teeth = settings.maxChili ? (bazaar.ENCHANTMENT_TABASCO_3[0] - 64*bazaar.CHILI_PEPPER[1])/6 * Math.ceil(tier / 2) : 0;
+        const cost = KEY_COST[tier - 1][0] + KEY_COST[tier - 1][1] * Math.min(bazaar.ENCHANTED_RED_SAND[1], bazaar.ENCHANTED_MYCELIUM[1]);
         const value = primary + secondary + essence + teeth;
         chestProfit = value - cost;
 
+        const profitMessage = chestProfit >= 0 ? `${GREEN}+${commafy(chestProfit)}` : `${RED}-${commafy(chestProfit)}`;
         profitOverlay.message = 
 `${GOLD}${BOLD}Value (BIN): ${GREEN}+${commafy(value)}
-${GOLD}${BOLD}Profit/Loss: ${GREEN}+${commafy(chestProfit)}
+${GOLD}${BOLD}Profit/Loss: ${profitMessage}
 
 ${AQUA}${BOLD}Primary: ${GREEN}+${commafy(primary)}
 ${DARK_AQUA}${BOLD}Secondary: ${GREEN}+${commafy(secondary)}

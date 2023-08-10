@@ -1,6 +1,9 @@
 [
+    "- Added Kuudra profit",
+    "- Changed mob hitboxes to not be see-throughable wall",
     "- Changed remove selfie mode to not override keybind",
-    "- Fixed some Kuudra bugs (i think)",
+    "- Fixed Kuudra console errors (i think)",
+    "- Fixed Kuudra split saving",
     "- Fixed enchanted book prices not showing",
     "- Removed debugging messages (oops)"
 ]

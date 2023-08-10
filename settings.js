@@ -846,6 +846,30 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     tokenAlert = 0;
     
+    // --- Kuudra Profit ---
+    @SwitchProperty({
+        name: "Kuudra Profit",
+        description: "Display an overlay for accurate (i think) Kuudra chest prices.",
+        category: "Kuudra",
+        subcategory: "Kuudra Profit"
+    })
+    kuudraProfit = false;
+    @SelectorProperty({
+        name: "Kuudra Profit Tracker (WIP)",
+        description: "Tracks hourly Kuudra profit, very untested. /moveKPT to move tracker.",
+        category: "Kuudra",
+        subcategory: "Kuudra Profit",
+        options: ["OFF", "Overall View", "Session View"]
+    })
+    kuudraProfitTracker = 0;
+    @SwitchProperty({
+        name: "Tabasco Enjoyer",
+        description: "Turn off if you are a cringer without max chili pepper collection.",
+        category: "Kuudra",
+        subcategory: "Kuudra Profit"
+    })
+    maxChili = true;
+    
 
     // ████████████████████████████████████████████████████ GARDEN ████████████████████████████████████████████████████
 

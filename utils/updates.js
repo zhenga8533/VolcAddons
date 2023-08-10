@@ -3,8 +3,10 @@ import axios from "../../axios";
 import { delay } from "./thread";
 const { BOLD, GOLD, GREEN, LOGO, WHITE } = require('./constants');
 
+
 /**
  * Retrieves the current version of the addon from the metadata.json file.
+ * 
  * @returns {string|null} The current version, or null if reading the version fails.
  */
 function getCurrentVersion() {
@@ -16,6 +18,30 @@ function getCurrentVersion() {
         console.error('Failed to read current version:', error);
         return null;
     }
+}
+
+/**
+ * If version1 < version 2 return true else false.
+ * 
+ * @param {String} version1 - Version X.X.X numero 1
+ * @param {String} version2 - Version X.x.x numero 2
+ * @returns 
+ */
+function compareVersions(version1, version2) {
+    const parts1 = version1.split('.').map(Number);
+    const parts2 = version2.split('.').map(Number);
+
+    for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+        let part1 = parts1[i] || 0;
+        let part2 = parts2[i] || 0;
+
+        if (part1 < part2)
+            return true;
+        else if (part1 > part2)
+            return false;
+    }
+
+    return false; // Both versions are equal
 }
 
 /**
@@ -46,7 +72,7 @@ function getLatestReleaseVersion() {
         const currentVersion = getCurrentVersion();
 
         // Compare the current version with the latest version and notify the user if an update is available
-        if (currentVersion && currentVersion !== latestVersion) {
+        if (currentVersion && compareVersions(currentVersion, latestVersion)) {
             const downloadLink = latestRelease.html_url;
             ChatLib.chat(`\n${LOGO} ${GOLD}${BOLD}NEW RELEASE: ${WHITE}${BOLD}v${latestVersion}`);
             ChatLib.chat(`${GREEN}Download the new version here: ${downloadLink}\n`);

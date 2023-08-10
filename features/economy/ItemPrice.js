@@ -76,50 +76,49 @@ export function getItemValue(item) {
     // Check for Pet or Bazaar
     if (value === 0) {
         if (itemID === "PET") {
-            const petInfo = JSON.parse(itemData.petInfo);
-            value = auction[`${petInfo.tier}_${petInfo.type}`]?.lbin || 0;
+            const petInfo = JSON.parse(itemData?.petInfo);
+            value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin || 0;
         } else if (itemID === "ENCHANTED_BOOK") {
-            print(item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes"));
-            value = getEnchantmentValue(itemData.enchantments, bazaar);
+            value = getEnchantmentValue(itemData?.enchantments, bazaar);
         } else value = bazaar?.[itemID]?.[0] || 0;
         return value;
     }
     
     // Enchantment Values
-    value += getEnchantmentValue(itemData.enchantments, bazaar);
+    value += getEnchantmentValue(itemData?.enchantments, bazaar);
 
     // Recomb Value
-    value += itemData.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];
+    value += itemData?.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];
 
     // Rune Value
-    if (itemData.runes !== undefined) {
-        const runes = itemData.runes
+    if (itemData?.runes !== undefined) {
+        const runes = itemData?.runes
         const [runeKey, runeValue] = Object.entries(runes)[0];
         value += auction[`${runeKey}_${runeValue}`]?.lbin || 0;
     }
   
     // Potato Book Values
-    const hotPotatoCount = itemData.hot_potato_count;
+    const hotPotatoCount = itemData?.hot_potato_count;
     value += (hotPotatoCount === undefined ? 0 : Math.min(hotPotatoCount, 10) * bazaar["HOT_POTATO_BOOK"][0]) +
         (hotPotatoCount === undefined ? 0 : Math.max(hotPotatoCount - 10, 0) * bazaar["FUMING_POTATO_BOOK"][0]);
     
     // Art of War Value
-    value += itemData.art_of_war_count === undefined ? 0 : bazaar["THE_ART_OF_WAR"]?.[0];
+    value += itemData?.art_of_war_count === undefined ? 0 : bazaar["THE_ART_OF_WAR"]?.[0];
   
     // Master Star Values
-    const upgradeLevel = itemData.upgrade_level;
+    const upgradeLevel = itemData?.upgrade_level;
     const stars = Math.max(upgradeLevel - 5, 0);
     for (let i = 0; i < stars; i++) {
         value += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[0];
     }
   
     // Wither Impact Scroll Values
-    (itemData.ability_scroll || []).forEach(scroll => {
+    (itemData?.ability_scroll || []).forEach(scroll => {
         value += bazaar[scroll][0];
     });
 
     // Gem Values
-    const gemsKeys = Object.keys(itemData.gems || {});
+    const gemsKeys = Object.keys(itemData?.gems || {});
     gemsKeys.forEach((gemstone) => {
         const gemstoneData = itemData.gems[gemstone];
         const gemstoneTier = gemstoneData?.quality || gemstoneData;
@@ -127,17 +126,17 @@ export function getItemValue(item) {
 
         let gemstoneValue = 0;
         if (GEMSTONE_SLOTS.has(gemstoneType[0]))
-            gemstoneValue = bazaar[`${gemstoneTier}_${gemstoneType[0]}_GEM`]?.[0] || 0;
-        else if (MULTIUSE_SLOTS.has(gemstoneType[0]) && gemstoneType[gemstoneType.length - 1] !== "gem")
-            gemstoneValue = bazaar[`${gemstoneTier}_${itemData.gems[gemstone + "_gem"]}_GEM`]?.[0] || 0;
+            gemstoneValue = bazaar[`${gemstoneTier}_${gemstoneType?.[0]}_GEM`]?.[0] || 0;
+        else if (MULTIUSE_SLOTS.has(gemstoneType?.[0]) && gemstoneType?.[gemstoneType.length - 1] !== "gem")
+            gemstoneValue = bazaar[`${gemstoneTier}_${itemData.gems?.[gemstone + "_gem"]}_GEM`]?.[0] || 0;
         value += gemstoneValue;
     });
 
     // Attribute Values
-    const attributes = Object.keys(itemData.attributes || {}).sort();
+    const attributes = Object.keys(itemData?.attributes || {}).sort();
     let attributeValue = 0;
     attributes.forEach((attribute) => {
-        const attributeCount = 2 ** (itemData.attributes[attribute] - 1);
+        const attributeCount = 2 ** (itemData?.attributes[attribute] - 1);
         attributeValue += (auctionItem?.attributes?.[attribute] || 0) * attributeCount;
     });
     attributeValue = Math.max(attributeValue, auctionItem?.attribute_combos?.[attributes.join(" ")] || 0);
