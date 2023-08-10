@@ -18,8 +18,9 @@ export function announceMob(toAll, mob, x, y ,z) {
     if (zoneLine === undefined) zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("ф"));
     const area = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
     
+    const sendTo = toAll ? "ac" : "pc";
     const id = toAll ? ` @${(Math.random() + 1).toString(36).substring(6)}` : "";
-    ChatLib.command(`ac x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!${id}`);
+    ChatLib.command(`${sendTo} x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!${id}`);
 }
 
 /**

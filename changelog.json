@@ -5,5 +5,8 @@
     "- Fixed Kuudra console errors (i think)",
     "- Fixed Kuudra split saving",
     "- Fixed enchanted book prices not showing",
+    "- Fixed mob announce always being sent to ac",
+    "- Fixed Diana not registering before reload",
+    "- Fixed crashes due to lower CT versions",
     "- Removed debugging messages (oops)"
 ]

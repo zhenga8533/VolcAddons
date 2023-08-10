@@ -31,12 +31,14 @@ export function getPerks() {
 /**
  * Makes a PULL request to get mayor info from Hypixel API.
  */
-request({
-    url: MAYOR_API,
-    json: true
-}).then((response)=>{
-    mayor = response.mayor.name;
-    perks = new Set([...response.mayor.perks.map(perk => perk.name)]);
-}).catch((error)=>{
-    console.error(error);
+register("worldLoad", () => {
+    request({
+        url: MAYOR_API,
+        json: true
+    }).then((response)=>{
+        mayor = response.mayor.name;
+        perks = new Set([...response.mayor.perks.map(perk => perk.name)]);
+    }).catch((error)=>{
+        console.error(error);
+    });
 });

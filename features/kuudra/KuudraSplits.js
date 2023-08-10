@@ -56,50 +56,43 @@ registerWhen(register("chat", () => {
     kuudraSplit[0] = Date.now() / 1000;
     phase = 1;
 }).setCriteria("[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!"),
-() => getWorld() === "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra");
 
 /**
  * Second split.
  */
 registerWhen(register("chat", () => {
-    if (!settings.kuudraSplits) return;
-
     kuudraSplit[1] = Date.now() / 1000;
     phase = 2;
 }).setCriteria("[NPC] Elle: OMG! Great work collecting my supplies!"),
-() => getWorld() === "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra");
 
 /**
  * Third split.
  */
 registerWhen(register("chat", () => {
-    if (!settings.kuudraSplits) return;
-
     kuudraSplit[2] = Date.now() / 1000;
     phase = 3;
 }).setCriteria("[NPC] Elle: Phew! The Ballista is finally ready! It should be strong enough to tank Kuudra's blows now!"),
-() => getWorld() === "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra");
 
 /**
  * Fourth split.
  */
 registerWhen(register("chat", () => {
-    if (!settings.kuudraSplits) return;
-    
     kuudraSplit[3] = Date.now() / 1000;
     phase = 4;
 }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"),
-() => getWorld() === "Kuudra" && settings.kuudraSplits);
+() => getWorld() === "Kuudra");
 
 /**
  * Fifth (final) split.
  * Records split to a full and party data file.
  */
 registerWhen(register("chat", () => {
-    if (!settings.kuudraSplits) return;
-    
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
+    if (!settings.kuudraSplits) return;
 
     // Records last split and checks if no fucky wucky
     let broken = false;
@@ -144,7 +137,7 @@ registerWhen(register("chat", () => {
 
     // Resets party tracker
     party = [];
-}).setCriteria("${before}KUUDRA DOWN${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}KUUDRA DOWN${after}"), () => getWorld() === "Kuudra");
 
 /**
  * Fifth (final split) if you fail :skull:.

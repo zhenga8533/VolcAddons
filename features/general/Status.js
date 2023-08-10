@@ -15,15 +15,29 @@ let tps = 20;
 let pastDate = 0;
 
 // Calculate TPS
-registerWhen(register('packetReceived', () => {
-    if (pastDate !== null) {
-        const time = Date.now() - pastDate;
-        const instantTps = Math.min(20000 / time, 20);
-        const alpha = 2 / 11;
-        tps = instantTps * alpha + tps * (1 - alpha);
-    }
-    pastDate = Date.now();
-}).setFilteredClass(S03PacketTimeUpdate), () => settings.serverStatus);
+try {
+    registerWhen(register('packetReceived', () => {
+        if (pastDate !== null) {
+            const time = Date.now() - pastDate;
+            const instantTps = Math.min(20000 / time, 20);
+            const alpha = 2 / 11;
+            tps = instantTps * alpha + tps * (1 - alpha);
+        }
+        pastDate = Date.now();
+    }).setFilteredClass(S03PacketTimeUpdate), () => settings.serverStatus);
+} catch (err) {
+    registerWhen(register('packetReceived', (packet) => {
+        if (packet != S03PacketTimeUpdate) return;
+
+        if (pastDate !== null) {
+            const time = Date.now() - pastDate;
+            const instantTps = Math.min(20000 / time, 20);
+            const alpha = 2 / 11;
+            tps = instantTps * alpha + tps * (1 - alpha);
+        }
+        pastDate = Date.now();
+    }), () => settings.serverStatus);
+}
 
 // Ping
 let ping = 0;
@@ -47,9 +61,16 @@ register("step", () => {
     sendPingRequest();
 }).setDelay(3);
 
-registerWhen(register('packetReceived', () => {
-    calculatePing();
-}).setFilteredClasses([S01PacketJoinGame, S37PacketStatistics]), () => settings.serverStatus);
+try {
+    registerWhen(register('packetReceived', () => {
+        calculatePing();
+    }).setFilteredClasses([S01PacketJoinGame, S37PacketStatistics]), () => settings.serverStatus);
+} catch (err) {
+    registerWhen(register('packetReceived', () => {
+        if (packet != S01PacketJoinGame || packet != S37PacketStatistics) return;
+        calculatePing();
+    }), () => settings.serverStatus);
+}
 
 
 // Create and update the status overlay
