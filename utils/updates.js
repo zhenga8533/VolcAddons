@@ -1,5 +1,6 @@
 // Import required dependencies and constants
 import axios from "../../axios";
+import settings from "../settings";
 import { delay } from "./thread";
 const { BOLD, GOLD, GREEN, LOGO, WHITE } = require('./constants');
 
@@ -84,6 +85,11 @@ function getLatestReleaseVersion() {
 
 // Register an event handler to check for the latest release once the world is loaded
 const once = register("worldLoad", () => {
+    if (!settings.releaseAlert) {
+        once.unregister();
+        return;
+    }
+
     delay(getLatestReleaseVersion, 3000);
     once.unregister();
 });

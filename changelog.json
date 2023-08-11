@@ -1,12 +1,6 @@
 [
-    "- Added Kuudra profit",
-    "- Changed mob hitboxes to not be see-throughable wall",
-    "- Changed remove selfie mode to not override keybind",
-    "- Fixed Kuudra console errors (i think)",
-    "- Fixed Kuudra split saving",
-    "- Fixed enchanted book prices not showing",
-    "- Fixed mob announce always being sent to ac",
-    "- Fixed Diana not registering before reload",
-    "- Fixed crashes due to lower CT versions",
-    "- Removed debugging messages (oops)"
+    "- Added time since to Recent Server Alert",
+    "- Changed /va to have priority in commands",
+    "- Fixed Vanquisher Announce not working",
+    "- Fixed some stacking enchants not being calculated"
 ]

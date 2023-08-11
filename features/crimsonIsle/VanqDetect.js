@@ -19,7 +19,7 @@ export function getVanquishers() { return vanquishers };
  */
 registerWhen(register("chat", () => {
     announceMob(settings.vanqAlert == 1, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
-}).setCriteria("[402] ♫ [MVP+] Volcaronitee: test"), () => getWorld() == "Crimson Isle" && settings.vanqAlert);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqAlert);
 
 /**
  * Alerts player when another VA user posts coords.

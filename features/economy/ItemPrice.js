@@ -38,14 +38,14 @@ function getEnchantmentValue(enchantments, bazaar) {
         enchant = enchant.toUpperCase();
         const maxEnchantLevel = MAX_ENCHANTS[enchant];
         
-        if (ENCHANTS.has(enchant) && enchantlvl >= maxEnchantLevel) {
-            const enchantName = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${enchantlvl}`;
-            const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
-            const base = bazaar?.[enchantKey];
-            let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
-            multiplier = STACKING_ENCHANTS.has(enchant) ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
-            value += Math.max(base?.[0] * multiplier, bazaar?.[enchantName]?.[0]);
-        }
+        if (!ENCHANTS.has(enchant) || enchantlvl < maxEnchantLevel) return;
+
+        const enchantName = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${enchantlvl}`;
+        const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
+        const base = bazaar?.[enchantKey];
+        let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
+        multiplier = STACKING_ENCHANTS.has(enchant) ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
+        value += Math.max(base?.[0] * multiplier, bazaar?.[enchantName]?.[0] || bazaar?.[enchantKey]?.[0]);
     });
     return value;
 }

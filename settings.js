@@ -120,6 +120,24 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     apiKey = "";
 
+    @SwitchProperty({
+        name: "Release Alert",
+        description: "Sends an alert on login if a new version is available on GitHub.",
+        category: "General",
+        subcategory: "Essential"
+    })
+    releaseAlert = true;
+
+    @ButtonProperty({
+        name: "Move GUI",
+        description: "Moves all current active GUIs, runs => /va gui.",
+        category: "General",
+        subcategory: "Essential",
+    })
+    moveGUI() {
+        ChatLib.command("va gui", true);
+    }
+
     @ButtonProperty({
         name: "Discord",
         description: "Just posting releases here, don't expect too much :).",
@@ -157,16 +175,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         max: 120
     })
     drawWaypoint = 0;
-    
-    @SliderProperty({
-        name: "Recent Server Alert",
-        description: "Alerts player when they join a server they have joined in the past 'X' minutes. Set as 0 to turn off.",
-        category: "General",
-        subcategory: "General",
-        min: 0,
-        max: 30
-    })
-    serverAlert = 0;
 
     @SwitchProperty({
         name: "Remove Selfie Mode",
@@ -175,6 +183,16 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     removeSelfie = false;
+
+    @SliderProperty({
+        name: "Skill Tracker",
+        description: "Displays rate of xp gain for skills. Set minutes until tracker resets or as 0 to turn off (Use larger numbers when using wither impact). /moveSkills to move or /resetSkills to reset!",
+        category: "General",
+        subcategory: "General",
+        min: 0,
+        max: 10
+    })
+    skillTracker = 0;
 
     // --- Party ---
     @SwitchProperty({
@@ -336,6 +354,16 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     womenCommand = true;
 
     // --- Server ---
+    @SliderProperty({
+        name: "Recent Server Alert",
+        description: "Alerts player when they join a server they have joined in the past 'X' minutes. Set as 0 to turn off.",
+        category: "General",
+        subcategory: "Server",
+        min: 0,
+        max: 30
+    })
+    serverAlert = 0;
+
     @SwitchProperty({
         name: "Server Status",
         description: "Displays user ping/TPS/FPS as a HUD. /moveStatus to move.",
@@ -343,26 +371,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Server"
     })
     serverStatus = false;
-    
-    // --- Skills ---
-    @SliderProperty({
-        name: "Skill Tracker",
-        description: "Displays rate of xp gain for skills. Set minutes until tracker resets or as 0 to turn off (Use larger numbers when using wither impact). /moveSkills to move.",
-        category: "General",
-        subcategory: "Skills",
-        min: 0,
-        max: 10
-    })
-    skillTracker = 0;
-    @ButtonProperty({
-        name: "Reset Skills Tracker",
-        description: "Resets tracking for every skill. Runs => /resetSkills",
-        category: "General",
-        subcategory: "Skills"
-    })
-    resetSkills() {
-        ChatLib.command("resetSkills", true);
-    }
 
     // --- Timer ---
     @TextProperty({
@@ -385,28 +393,18 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
 
     // ████████████████████████████████████████████████████ ECONOMY ████████████████████████████████████████████████████
-
-    // --- Coins ---
+    
+    // --- Economy ---
     @SliderProperty({
         name: "Coin Tracker",
-        description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off. /moveCoins to move.",
+        description: "Displays rate of coin gain in purse. Set minutes until tracker resets or as 0 to turn off. /moveCoins to move or /resetCoins to reset!",
         category: "Economy",
-        subcategory: "Coins",
+        subcategory: "Economy",
         min: 0,
         max: 10
     })
     coinTracker = 0;
-    @ButtonProperty({
-        name: "Reset Coin Tracker",
-        description: "Resets tracking for coin tracker. Runs => /resetCoins",
-        category: "Economy",
-        subcategory: "Coins"
-    })
-    resetCoins() {
-        ChatLib.command("resetCoins", true);
-    }
-    
-    // --- Economy ---
+
     @SliderProperty({
         name: "Economy Refresh",
         description: "Set how often Hypixel economy trackets reloads. Runs => /updateEconomy.",
@@ -473,7 +471,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SwitchProperty({
         name: "Watcher Alert",
-        description: "Calls an emergency meeting when watcher mobs are dead.",
+        description: "Calls an emergency meeting when watcher mobs are spawned/dead.",
         category: "Combat",
         subcategory: "Dungeon"
     })
@@ -517,23 +515,13 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
     @SliderProperty({
         name: "Powder Tracker",
-        description: "Displays rate of powder gain (only chests). Set minutes until tracker resets or as 0 to turn off. /movePowder",
+        description: "Displays rate of powder gain (only chests). Set minutes until tracker resets or as 0 to turn off. /movePowder to move and /resetPowder to reset!",
         category: "Mining",
         subcategory: "Powder",
         min: 0,
         max: 10
     })
     powderTracker = 0;
-    @ButtonProperty({
-        name: "Reset Powder Tracker",
-        description: "Resets tracking for Powder Tracker. Runs => /resetPowder",
-        category: "Mining",
-        subcategory: "Powder"
-    })
-    resetPowder() {
-        ChatLib.command("resetPowder", true);
-    }
-
 
 
     // ████████████████████████████████████████████████████ HUB ████████████████████████████████████████████████████
@@ -596,19 +584,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SelectorProperty({
         name: "Inquisitor Counter",
-        description: "Counts average kills until Inquisitor spawns. /moveInq to move.",
+        description: "Counts average kills until Inquisitor spawns. /moveInq to move or /resetInq to reset!",
         category: "Hub",
         subcategory: "Inquisitor",
         options: ["OFF", "Overall View", "Session View"]
     })
     inqCounter = 0;
-    @ButtonProperty({
-        name: "Clear Session",
-        description: "Resets all Vanquisher counter stats. Runs => /resetInq",
-        category: "Hub",
-        subcategory: "Inquisitor"
-    })
-    resetInq() { ChatLib.command("resetInq", true) };
     
 
     // ████████████████████████████████████████████████████ CRIMSON ISLES ████████████████████████████████████████████████████
@@ -675,21 +656,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // --- Vanquisher Counter ---
     @SelectorProperty({
         name: "Vanquisher Counter",
-        description: "Counts kills until Vanquisher spawns (Uses Book of Stats). /moveCounter to move.",
+        description: "Counts kills until Vanquisher spawns (Uses Book of Stats). /moveCounter to move or /resetCounter to reset!",
         category: "Crimson Isles",
         subcategory: "Vanquisher Counter",
         options: ["OFF", "Overall View", "Session View"]
     })
     vanqCounter = 0;
-    @ButtonProperty({
-        name: "Clear Session",
-        description: "Resets all Vanquisher counter stats. Runs => /resetCounter",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher Counter"
-    })
-    resetCounter() {
-        ChatLib.command("resetCounter", true);
-    }
 
 
     // ████████████████████████████████████████████████████ KUUDRA ████████████████████████████████████████████████████

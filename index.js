@@ -291,4 +291,4 @@ register ("command", (...args) => {
             }
             break;
     }
-}).setName("volcaddons").setAliases("va", "volc", "itee");
+}).setName("va", true).setAliases("volcaddons", "volc", "itee");
