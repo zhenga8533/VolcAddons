@@ -1,0 +1,368 @@
+Symbol range map extraction starting
+Processing 2 files
+processing com\volca\VolcAddons\CommandUpdateVA.java
+@|com\volca\VolcAddons\CommandUpdateVA.java|8|28|com.volca.VolcAddons|package|com.volca.VolcAddons|(file)
+Class Start: com.volca.VolcAddons.CommandUpdateVA
+   Method Start: getCommandName()Ljava/lang/String;
+      @|com\volca\VolcAddons\CommandUpdateVA.java|342|356|getCommandName|method|net.minecraft.command.ICommand|getCommandName|()Ljava/lang/String;
+      @|com\volca\VolcAddons\CommandUpdateVA.java|335|341|String|class|java.lang.String
+   Method End: getCommandName()Ljava/lang/String;
+   Method Start: getCommandUsage(Lnet/minecraft/command/ICommandSender;)Ljava/lang/String;
+      @|com\volca\VolcAddons\CommandUpdateVA.java|443|458|getCommandUsage|method|net.minecraft.command.ICommand|getCommandUsage|(Lnet/minecraft/command/ICommandSender;)Ljava/lang/String;
+      @|com\volca\VolcAddons\CommandUpdateVA.java|436|442|String|class|java.lang.String
+      @|com\volca\VolcAddons\CommandUpdateVA.java|459|473|ICommandSender|class|net.minecraft.command.ICommandSender
+      @|com\volca\VolcAddons\CommandUpdateVA.java|474|480|sender|param|com.volca.VolcAddons.CommandUpdateVA|getCommandUsage|(Lnet/minecraft/command/ICommandSender;)Ljava/lang/String;|sender|0
+   Method End: getCommandUsage(Lnet/minecraft/command/ICommandSender;)Ljava/lang/String;
+   Method Start: canCommandSenderUseCommand(Lnet/minecraft/command/ICommandSender;)Z
+      @|com\volca\VolcAddons\CommandUpdateVA.java|569|595|canCommandSenderUseCommand|method|net.minecraft.command.ICommand|canCommandSenderUseCommand|(Lnet/minecraft/command/ICommandSender;)Z
+      @|com\volca\VolcAddons\CommandUpdateVA.java|596|610|ICommandSender|class|net.minecraft.command.ICommandSender
+      @|com\volca\VolcAddons\CommandUpdateVA.java|611|617|sender|param|com.volca.VolcAddons.CommandUpdateVA|canCommandSenderUseCommand|(Lnet/minecraft/command/ICommandSender;)Z|sender|0
+   Method End: canCommandSenderUseCommand(Lnet/minecraft/command/ICommandSender;)Z
+   Method Start: processCommand(Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V
+      @|com\volca\VolcAddons\CommandUpdateVA.java|727|741|processCommand|method|net.minecraft.command.ICommand|processCommand|(Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V
+      @|com\volca\VolcAddons\CommandUpdateVA.java|742|756|ICommandSender|class|net.minecraft.command.ICommandSender
+      @|com\volca\VolcAddons\CommandUpdateVA.java|757|763|sender|param|com.volca.VolcAddons.CommandUpdateVA|processCommand|(Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V|sender|0
+      @|com\volca\VolcAddons\CommandUpdateVA.java|765|771|String|class|java.lang.String
+      @|com\volca\VolcAddons\CommandUpdateVA.java|774|778|args|param|com.volca.VolcAddons.CommandUpdateVA|processCommand|(Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V|args|1
+      @|com\volca\VolcAddons\CommandUpdateVA.java|794|800|sender|param|com.volca.VolcAddons.CommandUpdateVA|processCommand|(Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V|sender|0
+      @|com\volca\VolcAddons\CommandUpdateVA.java|812|824|EntityPlayer|class|net.minecraft.entity.player.EntityPlayer
+      @|com\volca\VolcAddons\CommandUpdateVA.java|840|852|EntityPlayer|class|net.minecraft.entity.player.EntityPlayer
+      @|com\volca\VolcAddons\CommandUpdateVA.java|863|875|EntityPlayer|class|net.minecraft.entity.player.EntityPlayer
+      @|com\volca\VolcAddons\CommandUpdateVA.java|877|883|sender|param|com.volca.VolcAddons.CommandUpdateVA|processCommand|(Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V|sender|0
+      @|com\volca\VolcAddons\CommandUpdateVA.java|904|918|addChatMessage|method|net.minecraft.command.ICommandSender|addChatMessage|(Lnet/minecraft/util/IChatComponent;)V
+      @|com\volca\VolcAddons\CommandUpdateVA.java|923|940|ChatComponentText|class|net.minecraft.util.ChatComponentText
+      @|com\volca\VolcAddons\CommandUpdateVA.java|941|959|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\CommandUpdateVA.java|960|963|RED|field|net.minecraft.util.EnumChatFormatting|RED
+      @|com\volca\VolcAddons\CommandUpdateVA.java|1006|1016|VolcAddons|class|com.volca.VolcAddons.VolcAddons
+      @|com\volca\VolcAddons\CommandUpdateVA.java|1017|1025|INSTANCE|field|com.volca.VolcAddons.VolcAddons|INSTANCE
+      @|com\volca\VolcAddons\CommandUpdateVA.java|1026|1050|downloadAndExtractUpdate|method|com.volca.VolcAddons.VolcAddons|downloadAndExtractUpdate|(Lnet/minecraft/entity/player/EntityPlayer;)V
+   Method End: processCommand(Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V
+Class End  : com.volca.VolcAddons.CommandUpdateVA
+endProcessing com\volca\VolcAddons\CommandUpdateVA.java
+
+processing com\volca\VolcAddons\VolcAddons.java
+@|com\volca\VolcAddons\VolcAddons.java|8|28|com.volca.VolcAddons|package|com.volca.VolcAddons|(file)
+Class Start: com.volca.VolcAddons.VolcAddons
+   @|com\volca\VolcAddons\VolcAddons.java|1337|1343|String|class|java.lang.String
+   @|com\volca\VolcAddons\VolcAddons.java|1344|1349|MODID|field|com.volca.VolcAddons.VolcAddons|MODID|
+   @|com\volca\VolcAddons\VolcAddons.java|1390|1396|String|class|java.lang.String
+   @|com\volca\VolcAddons\VolcAddons.java|1397|1404|VERSION|field|com.volca.VolcAddons.VolcAddons|VERSION|
+   @|com\volca\VolcAddons\VolcAddons.java|1432|1442|VolcAddons|class|com.volca.VolcAddons.VolcAddons
+   @|com\volca\VolcAddons\VolcAddons.java|1443|1451|INSTANCE|field|com.volca.VolcAddons.VolcAddons|INSTANCE|
+   @|com\volca\VolcAddons\VolcAddons.java|1479|1485|String|class|java.lang.String
+   @|com\volca\VolcAddons\VolcAddons.java|1486|1502|UPDATE_CHECK_URL|field|com.volca.VolcAddons.VolcAddons|UPDATE_CHECK_URL|
+   @|com\volca\VolcAddons\VolcAddons.java|1595|1608|updateChecked|field|com.volca.VolcAddons.VolcAddons|updateChecked|
+   @|com\volca\VolcAddons\VolcAddons.java|1630|1636|String|class|java.lang.String
+   @|com\volca\VolcAddons\VolcAddons.java|1637|1650|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion|
+   Method Start: preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|1697|1704|preInit|method|com.volca.VolcAddons.VolcAddons|preInit|(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|1705|1730|FMLPreInitializationEvent|class|net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+      @|com\volca\VolcAddons\VolcAddons.java|1731|1736|event|param|com.volca.VolcAddons.VolcAddons|preInit|(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V|event|0
+      @|com\volca\VolcAddons\VolcAddons.java|1748|1756|INSTANCE|field|com.volca.VolcAddons.VolcAddons|INSTANCE
+      @|com\volca\VolcAddons\VolcAddons.java|1773|1781|EventBus|class|net.minecraftforge.fml.common.eventhandler.EventBus
+      @|com\volca\VolcAddons\VolcAddons.java|1793|1807|MinecraftForge|class|net.minecraftforge.common.MinecraftForge
+      @|com\volca\VolcAddons\VolcAddons.java|1808|1817|EVENT_BUS|field|net.minecraftforge.common.MinecraftForge|EVENT_BUS
+      @|com\volca\VolcAddons\VolcAddons.java|1836|1844|register|method|net.minecraftforge.fml.common.eventhandler.EventBus|register|(Ljava/lang/Object;)V
+      @|com\volca\VolcAddons\VolcAddons.java|1860|1880|ClientCommandHandler|class|net.minecraftforge.client.ClientCommandHandler
+      @|com\volca\VolcAddons\VolcAddons.java|1881|1889|instance|field|net.minecraftforge.client.ClientCommandHandler|instance
+      @|com\volca\VolcAddons\VolcAddons.java|1890|1905|registerCommand|method|net.minecraft.command.CommandHandler|registerCommand|(Lnet/minecraft/command/ICommand;)Lnet/minecraft/command/ICommand;
+      @|com\volca\VolcAddons\VolcAddons.java|1910|1925|CommandUpdateVA|class|com.volca.VolcAddons.CommandUpdateVA
+   Method End: preInit(Lnet/minecraftforge/fml/common/event/FMLPreInitializationEvent;)V
+   Method Start: onClientConnected(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|1973|1990|onClientConnected|method|com.volca.VolcAddons.VolcAddons|onClientConnected|(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|1991|2035|FMLNetworkEvent.ClientConnectedToServerEvent|class|net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent
+      @|com\volca\VolcAddons\VolcAddons.java|2036|2041|event|param|com.volca.VolcAddons.VolcAddons|onClientConnected|(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V|event|0
+      @|com\volca\VolcAddons\VolcAddons.java|2058|2071|updateChecked|field|com.volca.VolcAddons.VolcAddons|updateChecked
+      @|com\volca\VolcAddons\VolcAddons.java|2087|2111|ScheduledExecutorService|class|java.util.concurrent.ScheduledExecutorService
+      @|com\volca\VolcAddons\VolcAddons.java|2124|2133|Executors|class|java.util.concurrent.Executors
+      @|com\volca\VolcAddons\VolcAddons.java|2134|2156|newScheduledThreadPool|method|java.util.concurrent.Executors|newScheduledThreadPool|(I)Ljava/util/concurrent/ScheduledExecutorService;
+      @|com\volca\VolcAddons\VolcAddons.java|2253|2261|schedule|method|java.util.concurrent.ScheduledExecutorService|schedule|(Ljava/lang/Runnable;JLjava/util/concurrent/TimeUnit;)Ljava/util/concurrent/ScheduledFuture;
+      @|com\volca\VolcAddons\VolcAddons.java|2266|2274|Runnable|class|java.lang.Runnable
+      Anon Class Start: com.volca.VolcAddons.VolcAddons$1
+         Method Start: run()V
+            @|com\volca\VolcAddons\VolcAddons.java|2333|2336|run|method|java.lang.Runnable|run|()V
+            @|com\volca\VolcAddons\VolcAddons.java|2367|2379|EntityPlayer|class|net.minecraft.entity.player.EntityPlayer
+            @|com\volca\VolcAddons\VolcAddons.java|2389|2398|Minecraft|class|net.minecraft.client.Minecraft
+            @|com\volca\VolcAddons\VolcAddons.java|2399|2411|getMinecraft|method|net.minecraft.client.Minecraft|getMinecraft|()Lnet/minecraft/client/Minecraft;
+            @|com\volca\VolcAddons\VolcAddons.java|2414|2423|thePlayer|field|net.minecraft.client.Minecraft|thePlayer
+            @|com\volca\VolcAddons\VolcAddons.java|2445|2460|checkForUpdates|method|com.volca.VolcAddons.VolcAddons|checkForUpdates|(Lnet/minecraft/entity/player/EntityPlayer;)V
+            @|com\volca\VolcAddons\VolcAddons.java|2490|2503|updateChecked|field|com.volca.VolcAddons.VolcAddons|updateChecked
+         Method End: run()V
+      Anon Class End: com.volca.VolcAddons.VolcAddons$1
+      @|com\volca\VolcAddons\VolcAddons.java|2548|2556|TimeUnit|class|java.util.concurrent.TimeUnit
+      @|com\volca\VolcAddons\VolcAddons.java|2557|2564|SECONDS|field|java.util.concurrent.TimeUnit|SECONDS
+      @|com\volca\VolcAddons\VolcAddons.java|2655|2663|shutdown|method|java.util.concurrent.ExecutorService|shutdown|()V
+   Method End: onClientConnected(Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ClientConnectedToServerEvent;)V
+   Method Start: checkForUpdates(Lnet/minecraft/entity/player/EntityPlayer;)V
+      @|com\volca\VolcAddons\VolcAddons.java|2701|2716|checkForUpdates|method|com.volca.VolcAddons.VolcAddons|checkForUpdates|(Lnet/minecraft/entity/player/EntityPlayer;)V
+      @|com\volca\VolcAddons\VolcAddons.java|2717|2729|EntityPlayer|class|net.minecraft.entity.player.EntityPlayer
+      @|com\volca\VolcAddons\VolcAddons.java|2730|2736|player|param|com.volca.VolcAddons.VolcAddons|checkForUpdates|(Lnet/minecraft/entity/player/EntityPlayer;)V|player|0
+      @|com\volca\VolcAddons\VolcAddons.java|2766|2769|URL|class|java.net.URL
+      @|com\volca\VolcAddons\VolcAddons.java|2780|2783|URL|class|java.net.URL
+      @|com\volca\VolcAddons\VolcAddons.java|2784|2800|UPDATE_CHECK_URL|field|com.volca.VolcAddons.VolcAddons|UPDATE_CHECK_URL
+      @|com\volca\VolcAddons\VolcAddons.java|2815|2832|HttpURLConnection|class|java.net.HttpURLConnection
+      @|com\volca\VolcAddons\VolcAddons.java|2847|2864|HttpURLConnection|class|java.net.HttpURLConnection
+      @|com\volca\VolcAddons\VolcAddons.java|2870|2884|openConnection|method|java.net.URL|openConnection|()Ljava/net/URLConnection;
+      @|com\volca\VolcAddons\VolcAddons.java|2911|2927|setRequestMethod|method|java.net.HttpURLConnection|setRequestMethod|(Ljava/lang/String;)V
+      @|com\volca\VolcAddons\VolcAddons.java|2959|2966|connect|method|java.net.URLConnection|connect|()V
+      @|com\volca\VolcAddons\VolcAddons.java|2998|3013|getResponseCode|method|java.net.HttpURLConnection|getResponseCode|()I
+      @|com\volca\VolcAddons\VolcAddons.java|3019|3036|HttpURLConnection|class|java.net.HttpURLConnection
+      @|com\volca\VolcAddons\VolcAddons.java|3037|3044|HTTP_OK|field|java.net.HttpURLConnection|HTTP_OK
+      @|com\volca\VolcAddons\VolcAddons.java|3064|3078|BufferedReader|class|java.io.BufferedReader
+      @|com\volca\VolcAddons\VolcAddons.java|3092|3106|BufferedReader|class|java.io.BufferedReader
+      @|com\volca\VolcAddons\VolcAddons.java|3111|3128|InputStreamReader|class|java.io.InputStreamReader
+      @|com\volca\VolcAddons\VolcAddons.java|3140|3154|getInputStream|method|java.net.URLConnection|getInputStream|()Ljava/io/InputStream;
+      @|com\volca\VolcAddons\VolcAddons.java|3176|3182|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|3205|3218|StringBuilder|class|java.lang.StringBuilder
+      @|com\volca\VolcAddons\VolcAddons.java|3234|3247|StringBuilder|class|java.lang.StringBuilder
+      @|com\volca\VolcAddons\VolcAddons.java|3290|3298|readLine|method|java.io.BufferedReader|readLine|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|3342|3348|append|method|java.lang.AbstractStringBuilder|append|(Ljava/lang/String;)Ljava/lang/AbstractStringBuilder;
+      @|com\volca\VolcAddons\VolcAddons.java|3398|3403|close|method|java.lang.AutoCloseable|close|()V
+      @|com\volca\VolcAddons\VolcAddons.java|3434|3444|disconnect|method|java.net.HttpURLConnection|disconnect|()V
+      @|com\volca\VolcAddons\VolcAddons.java|3465|3471|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|3496|3504|toString|method|java.lang.Object|toString|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|3524|3534|JsonParser|class|com.google.gson.JsonParser
+      @|com\volca\VolcAddons\VolcAddons.java|3552|3562|JsonParser|class|com.google.gson.JsonParser
+      @|com\volca\VolcAddons\VolcAddons.java|3582|3592|JsonObject|class|com.google.gson.JsonObject
+      @|com\volca\VolcAddons\VolcAddons.java|3618|3623|parse|method|com.google.gson.JsonParser|parse|(Ljava/lang/String;)Lcom/google/gson/JsonElement;
+      @|com\volca\VolcAddons\VolcAddons.java|3638|3653|getAsJsonObject|method|com.google.gson.JsonElement|getAsJsonObject|()Lcom/google/gson/JsonObject;
+      @|com\volca\VolcAddons\VolcAddons.java|3673|3686|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|3701|3704|get|method|com.google.gson.JsonObject|get|(Ljava/lang/String;)Lcom/google/gson/JsonElement;
+      @|com\volca\VolcAddons\VolcAddons.java|3717|3728|getAsString|method|com.google.gson.JsonElement|getAsString|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|3748|3761|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|3764|3777|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|3778|3788|startsWith|method|java.lang.String|startsWith|(Ljava/lang/String;)Z
+      @|com\volca\VolcAddons\VolcAddons.java|3796|3809|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|3810|3819|substring|method|java.lang.String|substring|(I)Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|3825|3838|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|3857|3863|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|3879|3885|System|class|java.lang.System
+      @|com\volca\VolcAddons\VolcAddons.java|3886|3897|getProperty|method|java.lang.System|getProperty|(Ljava/lang/String;)Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|3913|3917|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|3918|3927|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|3966|3970|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|3971|3980|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|3995|3999|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|4000|4009|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|4027|4031|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|4032|4041|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|4079|4083|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|4084|4093|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|4113|4117|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|4118|4127|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|4142|4146|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|4147|4156|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|4198|4202|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|4203|4212|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|4249|4255|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|4273|4290|getCurrentVersion|method|com.volca.VolcAddons.VolcAddons|getCurrentVersion|(Ljava/lang/String;)Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|4327|4341|isNewerVersion|method|com.volca.VolcAddons.VolcAddons|isNewerVersion|(Ljava/lang/String;Ljava/lang/String;)Z
+      @|com\volca\VolcAddons\VolcAddons.java|4342|4355|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|4396|4402|player|param|com.volca.VolcAddons.VolcAddons|checkForUpdates|(Lnet/minecraft/entity/player/EntityPlayer;)V|player|0
+      @|com\volca\VolcAddons\VolcAddons.java|4403|4417|addChatMessage|method|net.minecraft.command.ICommandSender|addChatMessage|(Lnet/minecraft/util/IChatComponent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|4422|4439|ChatComponentText|class|net.minecraft.util.ChatComponentText
+      @|com\volca\VolcAddons\VolcAddons.java|4469|4487|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|4488|4492|GRAY|field|net.minecraft.util.EnumChatFormatting|GRAY
+      @|com\volca\VolcAddons\VolcAddons.java|4536|4554|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|4555|4559|GOLD|field|net.minecraft.util.EnumChatFormatting|GOLD
+      @|com\volca\VolcAddons\VolcAddons.java|4610|4628|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|4629|4633|GRAY|field|net.minecraft.util.EnumChatFormatting|GRAY
+      @|com\volca\VolcAddons\VolcAddons.java|4676|4694|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|4695|4699|GOLD|field|net.minecraft.util.EnumChatFormatting|GOLD
+      @|com\volca\VolcAddons\VolcAddons.java|4702|4720|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|4721|4725|BOLD|field|net.minecraft.util.EnumChatFormatting|BOLD
+      @|com\volca\VolcAddons\VolcAddons.java|4793|4811|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|4812|4817|WHITE|field|net.minecraft.util.EnumChatFormatting|WHITE
+      @|com\volca\VolcAddons\VolcAddons.java|4820|4838|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|4839|4843|BOLD|field|net.minecraft.util.EnumChatFormatting|BOLD
+      @|com\volca\VolcAddons\VolcAddons.java|4852|4865|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|4910|4916|player|param|com.volca.VolcAddons.VolcAddons|checkForUpdates|(Lnet/minecraft/entity/player/EntityPlayer;)V|player|0
+      @|com\volca\VolcAddons\VolcAddons.java|4917|4931|addChatMessage|method|net.minecraft.command.ICommandSender|addChatMessage|(Lnet/minecraft/util/IChatComponent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|4936|4953|ChatComponentText|class|net.minecraft.util.ChatComponentText
+      @|com\volca\VolcAddons\VolcAddons.java|4983|5001|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|5002|5007|GREEN|field|net.minecraft.util.EnumChatFormatting|GREEN
+      @|com\volca\VolcAddons\VolcAddons.java|5053|5071|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|5072|5077|WHITE|field|net.minecraft.util.EnumChatFormatting|WHITE
+      @|com\volca\VolcAddons\VolcAddons.java|5127|5145|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|5146|5151|GREEN|field|net.minecraft.util.EnumChatFormatting|GREEN
+      @|com\volca\VolcAddons\VolcAddons.java|5242|5253|IOException|class|java.io.IOException
+      @|com\volca\VolcAddons\VolcAddons.java|5273|5288|printStackTrace|method|java.lang.Throwable|printStackTrace|()V
+   Method End: checkForUpdates(Lnet/minecraft/entity/player/EntityPlayer;)V
+   Method Start: isNewerVersion(Ljava/lang/String;Ljava/lang/String;)Z
+      @|com\volca\VolcAddons\VolcAddons.java|5329|5343|isNewerVersion|method|com.volca.VolcAddons.VolcAddons|isNewerVersion|(Ljava/lang/String;Ljava/lang/String;)Z
+      @|com\volca\VolcAddons\VolcAddons.java|5344|5350|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|5351|5359|version1|param|com.volca.VolcAddons.VolcAddons|isNewerVersion|(Ljava/lang/String;Ljava/lang/String;)Z|version1|0
+      @|com\volca\VolcAddons\VolcAddons.java|5361|5367|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|5368|5376|version2|param|com.volca.VolcAddons.VolcAddons|isNewerVersion|(Ljava/lang/String;Ljava/lang/String;)Z|version2|1
+      @|com\volca\VolcAddons\VolcAddons.java|5388|5394|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|5413|5421|version1|param|com.volca.VolcAddons.VolcAddons|isNewerVersion|(Ljava/lang/String;Ljava/lang/String;)Z|version1|0
+      @|com\volca\VolcAddons\VolcAddons.java|5422|5427|split|method|java.lang.String|split|(Ljava/lang/String;)[Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|5444|5450|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|5469|5477|version2|param|com.volca.VolcAddons.VolcAddons|isNewerVersion|(Ljava/lang/String;Ljava/lang/String;)Z|version2|1
+      @|com\volca\VolcAddons\VolcAddons.java|5478|5483|split|method|java.lang.String|split|(Ljava/lang/String;)[Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|5521|5525|Math|class|java.lang.Math
+      @|com\volca\VolcAddons\VolcAddons.java|5526|5529|min|method|java.lang.Math|min|(II)I
+      Field: Array Length, skipping
+      Field: Array Length, skipping
+      @|com\volca\VolcAddons\VolcAddons.java|5603|5610|Integer|class|java.lang.Integer
+      @|com\volca\VolcAddons\VolcAddons.java|5611|5619|parseInt|method|java.lang.Integer|parseInt|(Ljava/lang/String;)I
+      @|com\volca\VolcAddons\VolcAddons.java|5660|5667|Integer|class|java.lang.Integer
+      @|com\volca\VolcAddons\VolcAddons.java|5668|5676|parseInt|method|java.lang.Integer|parseInt|(Ljava/lang/String;)I
+      Field: Array Length, skipping
+      Field: Array Length, skipping
+   Method End: isNewerVersion(Ljava/lang/String;Ljava/lang/String;)Z
+   Method Start: downloadAndExtractUpdate(Lnet/minecraft/entity/player/EntityPlayer;)V
+      @|com\volca\VolcAddons\VolcAddons.java|5918|5942|downloadAndExtractUpdate|method|com.volca.VolcAddons.VolcAddons|downloadAndExtractUpdate|(Lnet/minecraft/entity/player/EntityPlayer;)V
+      @|com\volca\VolcAddons\VolcAddons.java|5943|5955|EntityPlayer|class|net.minecraft.entity.player.EntityPlayer
+      @|com\volca\VolcAddons\VolcAddons.java|5956|5962|player|param|com.volca.VolcAddons.VolcAddons|downloadAndExtractUpdate|(Lnet/minecraft/entity/player/EntityPlayer;)V|player|0
+      @|com\volca\VolcAddons\VolcAddons.java|5992|5998|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|6096|6099|URL|class|java.net.URL
+      @|com\volca\VolcAddons\VolcAddons.java|6110|6113|URL|class|java.net.URL
+      @|com\volca\VolcAddons\VolcAddons.java|6140|6157|HttpURLConnection|class|java.net.HttpURLConnection
+      @|com\volca\VolcAddons\VolcAddons.java|6172|6189|HttpURLConnection|class|java.net.HttpURLConnection
+      @|com\volca\VolcAddons\VolcAddons.java|6195|6209|openConnection|method|java.net.URL|openConnection|()Ljava/net/URLConnection;
+      @|com\volca\VolcAddons\VolcAddons.java|6236|6252|setRequestMethod|method|java.net.HttpURLConnection|setRequestMethod|(Ljava/lang/String;)V
+      @|com\volca\VolcAddons\VolcAddons.java|6284|6302|setRequestProperty|method|java.net.URLConnection|setRequestProperty|(Ljava/lang/String;Ljava/lang/String;)V
+      @|com\volca\VolcAddons\VolcAddons.java|6371|6378|connect|method|java.net.URLConnection|connect|()V
+      @|com\volca\VolcAddons\VolcAddons.java|6410|6425|getResponseCode|method|java.net.HttpURLConnection|getResponseCode|()I
+      @|com\volca\VolcAddons\VolcAddons.java|6431|6448|HttpURLConnection|class|java.net.HttpURLConnection
+      @|com\volca\VolcAddons\VolcAddons.java|6449|6456|HTTP_OK|field|java.net.HttpURLConnection|HTTP_OK
+      @|com\volca\VolcAddons\VolcAddons.java|6476|6490|BufferedReader|class|java.io.BufferedReader
+      @|com\volca\VolcAddons\VolcAddons.java|6504|6518|BufferedReader|class|java.io.BufferedReader
+      @|com\volca\VolcAddons\VolcAddons.java|6523|6540|InputStreamReader|class|java.io.InputStreamReader
+      @|com\volca\VolcAddons\VolcAddons.java|6552|6566|getInputStream|method|java.net.URLConnection|getInputStream|()Ljava/io/InputStream;
+      @|com\volca\VolcAddons\VolcAddons.java|6588|6594|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|6617|6630|StringBuilder|class|java.lang.StringBuilder
+      @|com\volca\VolcAddons\VolcAddons.java|6646|6659|StringBuilder|class|java.lang.StringBuilder
+      @|com\volca\VolcAddons\VolcAddons.java|6702|6710|readLine|method|java.io.BufferedReader|readLine|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|6754|6760|append|method|java.lang.AbstractStringBuilder|append|(Ljava/lang/String;)Ljava/lang/AbstractStringBuilder;
+      @|com\volca\VolcAddons\VolcAddons.java|6810|6815|close|method|java.lang.AutoCloseable|close|()V
+      @|com\volca\VolcAddons\VolcAddons.java|6846|6856|disconnect|method|java.net.HttpURLConnection|disconnect|()V
+      @|com\volca\VolcAddons\VolcAddons.java|6877|6883|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|6908|6916|toString|method|java.lang.Object|toString|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|6936|6946|JsonParser|class|com.google.gson.JsonParser
+      @|com\volca\VolcAddons\VolcAddons.java|6960|6970|JsonParser|class|com.google.gson.JsonParser
+      @|com\volca\VolcAddons\VolcAddons.java|6990|7000|JsonObject|class|com.google.gson.JsonObject
+      @|com\volca\VolcAddons\VolcAddons.java|7022|7027|parse|method|com.google.gson.JsonParser|parse|(Ljava/lang/String;)Lcom/google/gson/JsonElement;
+      @|com\volca\VolcAddons\VolcAddons.java|7042|7057|getAsJsonObject|method|com.google.gson.JsonElement|getAsJsonObject|()Lcom/google/gson/JsonObject;
+      @|com\volca\VolcAddons\VolcAddons.java|7077|7083|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|7110|7124|getAsJsonArray|method|com.google.gson.JsonObject|getAsJsonArray|(Ljava/lang/String;)Lcom/google/gson/JsonArray;
+      @|com\volca\VolcAddons\VolcAddons.java|7160|7163|get|method|com.google.gson.JsonArray|get|(I)Lcom/google/gson/JsonElement;
+      @|com\volca\VolcAddons\VolcAddons.java|7167|7182|getAsJsonObject|method|com.google.gson.JsonElement|getAsJsonObject|()Lcom/google/gson/JsonObject;
+      @|com\volca\VolcAddons\VolcAddons.java|7210|7213|get|method|com.google.gson.JsonObject|get|(Ljava/lang/String;)Lcom/google/gson/JsonElement;
+      @|com\volca\VolcAddons\VolcAddons.java|7238|7249|getAsString|method|com.google.gson.JsonElement|getAsString|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|7270|7276|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|7292|7298|System|class|java.lang.System
+      @|com\volca\VolcAddons\VolcAddons.java|7299|7310|getProperty|method|java.lang.System|getProperty|(Ljava/lang/String;)Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|7326|7330|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7331|7340|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|7379|7383|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7384|7393|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|7408|7412|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7413|7422|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|7455|7459|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7477|7481|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7497|7501|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7502|7511|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|7525|7529|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7530|7539|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|7583|7587|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7588|7597|separator|field|java.io.File|separator
+      @|com\volca\VolcAddons\VolcAddons.java|7639|7645|mkdirs|method|java.io.File|mkdirs|()Z
+      @|com\volca\VolcAddons\VolcAddons.java|7666|7669|URL|class|java.net.URL
+      @|com\volca\VolcAddons\VolcAddons.java|7684|7687|URL|class|java.net.URL
+      @|com\volca\VolcAddons\VolcAddons.java|7718|7724|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|7744|7751|getFile|method|java.net.URL|getFile|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|7754|7763|substring|method|java.lang.String|substring|(I)Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|7772|7779|getFile|method|java.net.URL|getFile|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|7782|7793|lastIndexOf|method|java.lang.String|lastIndexOf|(I)I
+      @|com\volca\VolcAddons\VolcAddons.java|7821|7825|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7840|7844|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|7885|7896|InputStream|class|java.io.InputStream
+      @|com\volca\VolcAddons\VolcAddons.java|7933|7945|OutputStream|class|java.io.OutputStream
+      @|com\volca\VolcAddons\VolcAddons.java|8031|8041|openStream|method|java.net.URL|openStream|()Ljava/io/InputStream;
+      @|com\volca\VolcAddons\VolcAddons.java|8084|8100|FileOutputStream|class|java.io.FileOutputStream
+      @|com\volca\VolcAddons\VolcAddons.java|8250|8254|read|method|java.io.InputStream|read|([B)I
+      @|com\volca\VolcAddons\VolcAddons.java|8310|8315|write|method|java.io.OutputStream|write|([BII)V
+      @|com\volca\VolcAddons\VolcAddons.java|8386|8397|IOException|class|java.io.IOException
+      @|com\volca\VolcAddons\VolcAddons.java|8425|8440|printStackTrace|method|java.lang.Throwable|printStackTrace|()V
+      @|com\volca\VolcAddons\VolcAddons.java|8555|8560|close|method|java.lang.AutoCloseable|close|()V
+      @|com\volca\VolcAddons\VolcAddons.java|8671|8676|close|method|java.lang.AutoCloseable|close|()V
+      @|com\volca\VolcAddons\VolcAddons.java|8737|8751|extractZipFile|method|com.volca.VolcAddons.VolcAddons|extractZipFile|(Ljava/io/File;Ljava/io/File;)V
+      @|com\volca\VolcAddons\VolcAddons.java|8799|8805|delete|method|java.io.File|delete|()Z
+      @|com\volca\VolcAddons\VolcAddons.java|8887|8893|player|param|com.volca.VolcAddons.VolcAddons|downloadAndExtractUpdate|(Lnet/minecraft/entity/player/EntityPlayer;)V|player|0
+      @|com\volca\VolcAddons\VolcAddons.java|8894|8908|addChatMessage|method|net.minecraft.command.ICommandSender|addChatMessage|(Lnet/minecraft/util/IChatComponent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|8913|8930|ChatComponentText|class|net.minecraft.util.ChatComponentText
+      @|com\volca\VolcAddons\VolcAddons.java|8956|8974|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|8975|8980|GREEN|field|net.minecraft.util.EnumChatFormatting|GREEN
+      @|com\volca\VolcAddons\VolcAddons.java|9048|9066|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|9067|9072|WHITE|field|net.minecraft.util.EnumChatFormatting|WHITE
+      @|com\volca\VolcAddons\VolcAddons.java|9081|9094|latestVersion|field|com.volca.VolcAddons.VolcAddons|latestVersion
+      @|com\volca\VolcAddons\VolcAddons.java|9126|9144|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|9145|9150|GREEN|field|net.minecraft.util.EnumChatFormatting|GREEN
+      @|com\volca\VolcAddons\VolcAddons.java|9204|9210|player|param|com.volca.VolcAddons.VolcAddons|downloadAndExtractUpdate|(Lnet/minecraft/entity/player/EntityPlayer;)V|player|0
+      @|com\volca\VolcAddons\VolcAddons.java|9211|9225|addChatMessage|method|net.minecraft.command.ICommandSender|addChatMessage|(Lnet/minecraft/util/IChatComponent;)V
+      @|com\volca\VolcAddons\VolcAddons.java|9230|9247|ChatComponentText|class|net.minecraft.util.ChatComponentText
+      @|com\volca\VolcAddons\VolcAddons.java|9278|9296|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|9297|9301|GRAY|field|net.minecraft.util.EnumChatFormatting|GRAY
+      @|com\volca\VolcAddons\VolcAddons.java|9304|9322|EnumChatFormatting|class|net.minecraft.util.EnumChatFormatting
+      @|com\volca\VolcAddons\VolcAddons.java|9323|9329|ITALIC|field|net.minecraft.util.EnumChatFormatting|ITALIC
+      @|com\volca\VolcAddons\VolcAddons.java|9474|9485|IOException|class|java.io.IOException
+      @|com\volca\VolcAddons\VolcAddons.java|9505|9520|printStackTrace|method|java.lang.Throwable|printStackTrace|()V
+   Method End: downloadAndExtractUpdate(Lnet/minecraft/entity/player/EntityPlayer;)V
+   Method Start: extractZipFile(Ljava/io/File;Ljava/io/File;)V
+      @|com\volca\VolcAddons\VolcAddons.java|9558|9572|extractZipFile|method|com.volca.VolcAddons.VolcAddons|extractZipFile|(Ljava/io/File;Ljava/io/File;)V
+      @|com\volca\VolcAddons\VolcAddons.java|9615|9626|IOException|class|java.io.IOException
+      @|com\volca\VolcAddons\VolcAddons.java|9573|9577|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|9578|9585|zipFile|param|com.volca.VolcAddons.VolcAddons|extractZipFile|(Ljava/io/File;Ljava/io/File;)V|zipFile|0
+      @|com\volca\VolcAddons\VolcAddons.java|9587|9591|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|9592|9606|destinationDir|param|com.volca.VolcAddons.VolcAddons|extractZipFile|(Ljava/io/File;Ljava/io/File;)V|destinationDir|1
+      @|com\volca\VolcAddons\VolcAddons.java|9637|9652|FileInputStream|class|java.io.FileInputStream
+      @|com\volca\VolcAddons\VolcAddons.java|9673|9694|ZipArchiveInputStream|class|org.apache.commons.compress.archivers.zip.ZipArchiveInputStream
+      @|com\volca\VolcAddons\VolcAddons.java|9750|9765|FileInputStream|class|java.io.FileInputStream
+      @|com\volca\VolcAddons\VolcAddons.java|9766|9773|zipFile|param|com.volca.VolcAddons.VolcAddons|extractZipFile|(Ljava/io/File;Ljava/io/File;)V|zipFile|0
+      @|com\volca\VolcAddons\VolcAddons.java|9804|9825|ZipArchiveInputStream|class|org.apache.commons.compress.archivers.zip.ZipArchiveInputStream
+      @|com\volca\VolcAddons\VolcAddons.java|9844|9859|ZipArchiveEntry|class|org.apache.commons.compress.archivers.zip.ZipArchiveEntry
+      @|com\volca\VolcAddons\VolcAddons.java|9906|9921|getNextZipEntry|method|org.apache.commons.compress.archivers.zip.ZipArchiveInputStream|getNextZipEntry|()Lorg/apache/commons/compress/archivers/zip/ZipArchiveEntry;
+      @|com\volca\VolcAddons\VolcAddons.java|9952|9956|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|9973|9977|File|class|java.io.File
+      @|com\volca\VolcAddons\VolcAddons.java|9978|9992|destinationDir|param|com.volca.VolcAddons.VolcAddons|extractZipFile|(Ljava/io/File;Ljava/io/File;)V|destinationDir|1
+      @|com\volca\VolcAddons\VolcAddons.java|10000|10007|getName|method|java.util.zip.ZipEntry|getName|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|10039|10050|isDirectory|method|java.util.zip.ZipEntry|isDirectory|()Z
+      @|com\volca\VolcAddons\VolcAddons.java|10086|10092|mkdirs|method|java.io.File|mkdirs|()Z
+      @|com\volca\VolcAddons\VolcAddons.java|10141|10157|FileOutputStream|class|java.io.FileOutputStream
+      @|com\volca\VolcAddons\VolcAddons.java|10249|10265|FileOutputStream|class|java.io.FileOutputStream
+      @|com\volca\VolcAddons\VolcAddons.java|10428|10432|read|method|java.io.InputStream|read|([B)I
+      @|com\volca\VolcAddons\VolcAddons.java|10492|10497|write|method|java.io.OutputStream|write|([BII)V
+      @|com\volca\VolcAddons\VolcAddons.java|10672|10677|close|method|java.lang.AutoCloseable|close|()V
+      @|com\volca\VolcAddons\VolcAddons.java|10844|10849|close|method|java.lang.AutoCloseable|close|()V
+      @|com\volca\VolcAddons\VolcAddons.java|10918|10923|close|method|java.lang.AutoCloseable|close|()V
+   Method End: extractZipFile(Ljava/io/File;Ljava/io/File;)V
+   Method Start: getCurrentVersion(Ljava/lang/String;)Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|10977|10994|getCurrentVersion|method|com.volca.VolcAddons.VolcAddons|getCurrentVersion|(Ljava/lang/String;)Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|10970|10976|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|10995|11001|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|11002|11014|metadataPath|param|com.volca.VolcAddons.VolcAddons|getCurrentVersion|(Ljava/lang/String;)Ljava/lang/String;|metadataPath|0
+      @|com\volca\VolcAddons\VolcAddons.java|11044|11058|BufferedReader|class|java.io.BufferedReader
+      @|com\volca\VolcAddons\VolcAddons.java|11072|11086|BufferedReader|class|java.io.BufferedReader
+      @|com\volca\VolcAddons\VolcAddons.java|11091|11101|FileReader|class|java.io.FileReader
+      @|com\volca\VolcAddons\VolcAddons.java|11102|11114|metadataPath|param|com.volca.VolcAddons.VolcAddons|getCurrentVersion|(Ljava/lang/String;)Ljava/lang/String;|metadataPath|0
+      @|com\volca\VolcAddons\VolcAddons.java|11130|11136|String|class|java.lang.String
+      @|com\volca\VolcAddons\VolcAddons.java|11155|11168|StringBuilder|class|java.lang.StringBuilder
+      @|com\volca\VolcAddons\VolcAddons.java|11183|11196|StringBuilder|class|java.lang.StringBuilder
+      @|com\volca\VolcAddons\VolcAddons.java|11235|11243|readLine|method|java.io.BufferedReader|readLine|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|11282|11288|append|method|java.lang.AbstractStringBuilder|append|(Ljava/lang/String;)Ljava/lang/AbstractStringBuilder;
+      @|com\volca\VolcAddons\VolcAddons.java|11330|11335|close|method|java.lang.AutoCloseable|close|()V
+      @|com\volca\VolcAddons\VolcAddons.java|11352|11362|JsonObject|class|com.google.gson.JsonObject
+      @|com\volca\VolcAddons\VolcAddons.java|11378|11388|JsonParser|class|com.google.gson.JsonParser
+      @|com\volca\VolcAddons\VolcAddons.java|11391|11396|parse|method|com.google.gson.JsonParser|parse|(Ljava/lang/String;)Lcom/google/gson/JsonElement;
+      @|com\volca\VolcAddons\VolcAddons.java|11405|11413|toString|method|java.lang.Object|toString|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|11417|11432|getAsJsonObject|method|com.google.gson.JsonElement|getAsJsonObject|()Lcom/google/gson/JsonObject;
+      @|com\volca\VolcAddons\VolcAddons.java|11464|11467|get|method|com.google.gson.JsonObject|get|(Ljava/lang/String;)Lcom/google/gson/JsonElement;
+      @|com\volca\VolcAddons\VolcAddons.java|11479|11490|getAsString|method|com.google.gson.JsonElement|getAsString|()Ljava/lang/String;
+      @|com\volca\VolcAddons\VolcAddons.java|11511|11522|IOException|class|java.io.IOException
+      @|com\volca\VolcAddons\VolcAddons.java|11542|11557|printStackTrace|method|java.lang.Throwable|printStackTrace|()V
+   Method End: getCurrentVersion(Ljava/lang/String;)Ljava/lang/String;
+Class End  : com.volca.VolcAddons.VolcAddons
+endProcessing com\volca\VolcAddons\VolcAddons.java
+
