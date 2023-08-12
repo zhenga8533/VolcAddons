@@ -42,18 +42,18 @@ register("guiMouseClick", (x, y, button, screen) => {
     });
 });
 register("dragged", (dx, dy, x, y) => {
-    if (currentOverlay === undefined) return;
+    if (currentOverlay === undefined || !gui.isOpen()) return;
 
     if (gui.isOpen()) {
         // Changes location of text
-        currentOverlay.loc[0] = parseInt(x);
-        currentOverlay.loc[1] = parseInt(y);
+        currentOverlay.loc[0] += dx;
+        currentOverlay.loc[1] += dy;
         currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
         currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
     }
 });
-register("guiKey", (char, keyCode, gui, event) => {
-    if (currentOverlay === undefined) return;
+register("guiKey", (char, keyCode, currentGui, event) => {
+    if (currentOverlay === undefined || !gui.isOpen()) return;
     
     if (keyCode === 13) {  // Increase Scale (+ key)
         currentOverlay.loc[2] += 0.05;

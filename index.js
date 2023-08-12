@@ -7,7 +7,6 @@ import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import { delay } from "./utils/thread";
-import "./utils/updates";
 import { data, opened, updateList } from "./utils/variables";
 import "./utils/waypoints";
 import { findZone, getTier, getWorld } from "./utils/worlds";

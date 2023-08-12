@@ -10,6 +10,7 @@ import {
     @CheckboxProperty,
     @SelectorProperty,
 } from '../Vigilance/index';
+import axios from "../axios";
 
 
 // Define the settings class using the @Vigilant decorator
@@ -120,19 +121,24 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     apiKey = "";
 
-    @SwitchProperty({
-        name: "Release Alert",
-        description: "Sends an alert on login if a new version is available on GitHub.",
+    @ButtonProperty({
+        name: "GitHub Updater",
+        description: "Download the Forge.jar file that alerts user when there is a new GitHub release and downloads on user input!",
         category: "General",
-        subcategory: "Essential"
+        subcategory: "Essential",
+        placeholder: "Download!"
     })
-    releaseAlert = true;
+    downloadForge() {
+        const url = "https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar";
+        java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
+    }
 
     @ButtonProperty({
         name: "Move GUI",
         description: "Moves all current active GUIs, runs => /va gui.",
         category: "General",
         subcategory: "Essential",
+        placeholder: "Move GUI"
     })
     moveGUI() {
         ChatLib.command("va gui", true);
@@ -453,7 +459,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SwitchProperty({
         name: "Ragnarok Detection",
-        description: "Detects when Ragnarok Ability finishes casting (sounds must be on).",
+        description: "Alerts the player when Ragnarok Ability finishes casting.",
         category: "Combat",
         subcategory: "Combat"
     })
@@ -471,7 +477,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SwitchProperty({
         name: "Watcher Alert",
-        description: "Calls an emergency meeting when watcher mobs are spawned/dead.",
+        description: "Calls an emergency meeting after all watcher mobs are spawned/killed.",
         category: "Combat",
         subcategory: "Dungeon"
     })
@@ -620,12 +626,12 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     goldenFishAlert = false;
 
-    // --- Vanquisher Alert ---
+    // --- Vanquisher ---
     @SelectorProperty({
         name: "Announce Vanquisher Chat",
         description: "Sends coords of any Vanquishers that you spawn to chat. (Only works if Vanquisher Auto-Warp is empty!)",
         category: "Crimson Isles",
-        subcategory: "Vanquisher Alert",
+        subcategory: "Vanquisher",
         options: ["OFF", "All Chat", "Party Chat"]
     })
     vanqAlert = 0;
@@ -634,34 +640,33 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         name: "Vanquisher Auto-Warp",
         description: "Automatically invites your party to your lobby when you spawn a vanquisher. Enable by entering party as [name, name, ...]",
         category: "Crimson Isles",
-        subcategory: "Vanquisher Alert"
+        subcategory: "Vanquisher"
     })
     vanqParty = "";
+
+    @SelectorProperty({
+        name: "Vanquisher Counter",
+        description: "Counts kills until Vanquisher spawns (Uses Book of Stats). /moveCounter to move or /resetCounter to reset!",
+        category: "Crimson Isles",
+        subcategory: "Vanquisher",
+        options: ["OFF", "Overall View", "Session View"]
+    })
+    vanqCounter = 0;
 
     @SwitchProperty({
         name: "Vanquisher Detection",
         description: "Alerts player of a vanquisher if they get near one. /moveVanq to move.",
         category: "Crimson Isles",
-        subcategory: "Vanquisher Alert"
+        subcategory: "Vanquisher"
     })
     vanqDetect = false;
     @SwitchProperty({
         name: "Vanquisher Detection Sound",
         description: "Plays a sound whenever a vanquisher gets detected.",
         category: "Crimson Isles",
-        subcategory: "Vanquisher Alert"
+        subcategory: "Vanquisher"
     })
     vanqSound = false;
-
-    // --- Vanquisher Counter ---
-    @SelectorProperty({
-        name: "Vanquisher Counter",
-        description: "Counts kills until Vanquisher spawns (Uses Book of Stats). /moveCounter to move or /resetCounter to reset!",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher Counter",
-        options: ["OFF", "Overall View", "Session View"]
-    })
-    vanqCounter = 0;
 
 
     // ████████████████████████████████████████████████████ KUUDRA ████████████████████████████████████████████████████
