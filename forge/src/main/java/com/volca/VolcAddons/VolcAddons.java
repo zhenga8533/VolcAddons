@@ -3,7 +3,8 @@ package com.volca.VolcAddons;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.play.client.C01PacketChatMessage;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,10 +17,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +33,7 @@ public class VolcAddons {
     public static final String VERSION = "1.0";
     public static VolcAddons INSTANCE;
 
+    String modDir = System.getProperty("user.home");
     private static final String UPDATE_CHECK_URL = "https://api.github.com/repos/zhenga8533/VolcAddons/releases/latest";
     private boolean updateChecked = false;
     private String latestVersion = "1.0.0";
@@ -44,6 +44,7 @@ public class VolcAddons {
         EventBus eventBus = MinecraftForge.EVENT_BUS;
         eventBus.register(this);
         ClientCommandHandler.instance.registerCommand(new CommandUpdateVA());
+        modDir = event.getModConfigurationDirectory().getAbsolutePath();
     }
 
     @SubscribeEvent
@@ -91,10 +92,8 @@ public class VolcAddons {
                 latestVersion = releaseJson.get("tag_name").getAsString();
                 latestVersion = latestVersion.startsWith("v") ? latestVersion.substring(1) : latestVersion;
 
-                String metadataPath = System.getProperty("user.home") + File.separator + "AppData" +
-                        File.separator + "Roaming" + File.separator + ".minecraft" + File.separator + "config" +
-                        File.separator + "ChatTriggers" + File.separator + "modules" + File.separator + "VolcAddons" +
-                        File.separator + "metadata.json";
+                String metadataPath = modDir + File.separator + "ChatTriggers" + File.separator + "modules" +
+                        File.separator + "VolcAddons" + File.separator + "metadata.json";
 
                 String currentVersion = getCurrentVersion(metadataPath);
 
@@ -107,9 +106,17 @@ public class VolcAddons {
                                  EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "v" + latestVersion
                     ));
                     player.addChatMessage(new ChatComponentText(
-                            EnumChatFormatting.GREEN + "Run '" +
+                            EnumChatFormatting.GREEN + "Click here or run '" +
                                  EnumChatFormatting.WHITE + "/updateva" +
-                                 EnumChatFormatting.GREEN + "' to update!"
+                                 EnumChatFormatting.GREEN + "' to update!\n"
+                    ).setChatStyle(new ChatStyle().setChatClickEvent(
+                            new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/updateva") {
+                                @Override
+                                public Action getAction() {
+                                    //custom behavior
+                                    return Action.RUN_COMMAND;
+                                }
+                            })
                     ));
                 }
             }
@@ -165,10 +172,7 @@ public class VolcAddons {
                         .get(0).getAsJsonObject()
                         .get("browser_download_url").getAsString();
 
-                String minecraftDir = System.getProperty("user.home") + File.separator + "AppData" +
-                        File.separator + "Roaming" + File.separator + ".minecraft";
-                File modulesDir = new File(minecraftDir + File.separator + "config" + File.separator +
-                        "ChatTriggers" + File.separator + "modules");
+                File modulesDir = new File(modDir + File.separator + "ChatTriggers" + File.separator + "modules");
                 modulesDir.mkdirs();
 
                 URL fileUrl = new URL(downloadUrl);
