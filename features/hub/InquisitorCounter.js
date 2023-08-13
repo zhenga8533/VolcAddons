@@ -20,7 +20,7 @@ const counterExample =
 ${GOLD}${BOLD}Total Burrows: ${RESET}Let.
 ${GOLD}${BOLD}Burrows Since: ${RESET}Him.
 ${GOLD}${BOLD}Average Burrows: ${RESET}Cook.`
-const counterOverlay = new Overlay("inqCounter", ["Hub"], data.IL, "moveInq", counterExample);
+const counterOverlay = new Overlay("inqCounter", ["Hub"], () => true, data.IL, "moveInq", counterExample);
 
 /**
  * Updates the inquisitor counter depending on if an inquisitor spawned.

@@ -32,7 +32,7 @@ registerWhen(register("chat", () => {
  * Tracks world for any vanquishers near player.
  */
 const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher ${WHITE}Detected`;
-const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], data.QL, "moveVanq", vanqExample);
+const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
 registerWhen(register("tick", () => {
     vanquishers = [];
     entities = World.getAllEntitiesOfType(EntityWither);

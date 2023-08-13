@@ -1,10 +1,7 @@
 [
-    "- Added Forge mod to update module",
-    "- Added time since to Recent Server Alert",
-    "- Changed /va to have priority in commands",
-    "- Changed some setting locations (you may need to reactivate again)",
-    "- Fixed Vanquisher Announce not working",
-    "- Fixed some stacking enchants not being calculated",
-    "- Fixed /va gui bugging out after a /move",
-    "- Removed update notifier from module"
+    "- Added Container Values",
+    "- Added advanced item price view",
+    "- Added reforge values to item price",
+    "- Added Wizard Tower to Diana Warp",
+    "- Fixed Remove Selfie for some players"
 ]

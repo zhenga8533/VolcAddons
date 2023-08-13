@@ -20,7 +20,7 @@ const counterExample =
 ${RED}${BOLD}Total Kills: ${RESET}Hua
 ${RED}${BOLD}Kills Since: ${RESET}Piao
 ${RED}${BOLD}Average Kills: ${RESET}Piao`
-const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], data.CL, "moveCounter", counterExample);
+const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], () => true, data.CL, "moveCounter", counterExample);
 
 /**
  * Uses the "Book of Stats" to track whenever player kills an entity and updates the Vanquisher Overlay.

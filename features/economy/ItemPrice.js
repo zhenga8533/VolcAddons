@@ -56,6 +56,21 @@ function getEnchantmentValue(enchantments, bazaar) {
 const STAR_PLACEMENT = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
 const GEMSTONE_SLOTS = new Set(["JADE", "AMBER", "TOPAZ", "SAPPHIRE", "AMETHYST", "RUBY", "JASPER", "OPAL"]);
 const MULTIUSE_SLOTS = new Set(["COMBAT", "DEFENSIVE", "MINING", "UNIVERSAL"]);
+const REFORGES = {
+    "coldfused": "ENTROPY_SUPPRESSOR", "dirty": "DIRT_BOTTLE", "fabled": "DRAGON_CLAW", "gilded": "MIDAS_JEWEL", "suspicious": "SUSPICIOUS_VIAL",
+    "aote_stone": "AOTE_STONE", "withered": "WITHER_BLOOD", "bulky": "BULKY_STONE", "jerry_stone": "JERRY_STONE",
+    "fanged": "FULL_JAW_FANGING_KIT", "precise": "OPTICAL_LENS", "spiritual": "SPIRIT_STONE", "headstrong": "SALMON_OPAL", "candied": "CANDY_CORN",
+    "submerged": "DEEP_SEA_ORB", "perfect": "DIAMOND_ATOM", "reinforced": "RARE_DIAMOND", "renowned": "DRAGON_HORN", "spike": "DRAGON_SCALE",
+    "hyper": "END_STONE_GEODE", "giant": "GIANT_TOOTH", "jaded": "JADERALD", "cubic": "MOLTEN_CUBE", "necrotic": "NECROMANCER_BROOCH",
+    "empowered": "SADAN_BROOCH", "ancient": "PRECURSOR_GEAR", "undead": "PREMIUM_FLESH", "loving": "RED_SCARF", "RIDICULOUS": "red_nose",
+    "bustling": "SKYMART_BROCHURE", "mossy": "OVERGROWN_GRASS", "festive": "FROZEN_BUBBLE", "glistening": "SHINY_PRISM",
+    "strengthened": "SEARING_STONE", "waxed": "BLAZE_WAX", "fortified": "METEOR_SHARD", "rooted": "BURROWING_SPORES",
+    "blooming": "FLOWERING_BOUQUET", "snowy": "TERRY_SNOWGLOBE", "blood_soaked": "PRESUMED_GALLON_OF_RED_PAINT", "salty": "SALT_CUBE",
+    "treacherous": "RUSTY_ANCHOR", "lucky": "LUCKY_DICE", "stiff": "HARDENED_WOOD", "chomp": "KUUDRA_MANDIBLE", "pitchin": "PITCHIN_KOI",
+    "ambered": "AMBERED_MATERIAL", "auspicious": "ROCK_GEMSTONE", "fleet": "DIAMONITE", "heated": "HOT_STUFF", "magnetic": "LAPIS_CRYSTAL",
+    "mithraic": "PURE_MITHRIL", "refined": "REFINED_AMBER", "stellar": "PETRIFIED_STARFALL", "fruitful": "ONYX", "moil": "MOIL_LOG",
+    "toil": "TOIL_LOG", "blessed": "BLESSED_FRUIT", "earthy": "LARGE_WALNUT", "blessed": "BLESSED_FRUIT", "bountiful": "GOLDEN_BALL"
+}
 
 /**
  * Figures out the enchantment value of the given item.
@@ -71,7 +86,7 @@ export function getItemValue(item) {
     const itemData = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").toObject();
     const itemID = itemData?.id
     const auctionItem = auction?.[itemID];
-    let value = auctionItem?.lbin || 0;
+    let value = (auctionItem?.lbin || 0) * item.getStackSize();
 
     // Check for Pet or Bazaar
     if (value === 0) {
@@ -80,12 +95,15 @@ export function getItemValue(item) {
             value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin || 0;
         } else if (itemID === "ENCHANTED_BOOK") {
             value = getEnchantmentValue(itemData?.enchantments, bazaar);
-        } else value = bazaar?.[itemID]?.[0] || 0;
+        } else value = (bazaar?.[itemID]?.[0] || 0) * item.getStackSize();
         return value;
     }
     
     // Enchantment Values
     value += getEnchantmentValue(itemData?.enchantments, bazaar);
+
+    // Modifier Value
+    value += bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] || 0;
 
     // Recomb Value
     value += itemData?.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];

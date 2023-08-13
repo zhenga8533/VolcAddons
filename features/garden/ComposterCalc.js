@@ -8,8 +8,8 @@ import { getBazaar } from "../economy/Economy";
 /**
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.
  */
-registerWhen(register("guiMouseRelease", () => {
-    try {
+registerWhen(register("GuiOpened", () => {
+    Client.scheduleTask(1, () => {
         // Get compsoter upgrades container
         let container = Player.getContainer();
         if (container.getName() != "Composter Upgrades") return;
@@ -22,7 +22,7 @@ registerWhen(register("guiMouseRelease", () => {
         data.composterUpgrades["Composter Speed"] = romanToNum(items[container.indexOf(353)].getName().removeFormatting().split(" ").pop());
         data.composterUpgrades["Multi Drop"] = romanToNum(items[container.indexOf(293)].getName().removeFormatting().split(" ").pop());
         data.composterUpgrades["Cost Reduction"] = romanToNum(items[container.indexOf(266)].getName().removeFormatting().split(" ").pop());
-    } catch(err) {}
+    });
 }), () => getWorld() === "Garden");
 
 

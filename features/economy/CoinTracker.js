@@ -14,7 +14,7 @@ const coinExample =
 `${GOLD}${BOLD}Gained: ${WHITE}COUNTING
 ${GOLD}${BOLD}Time Passed: ${WHITE}ME
 ${GOLD}${BOLD}Rate: ${WHITE}MONEY`;
-const coinOverlay = new Overlay("coinTracker", ["all"], data.ML, "moveCoins", coinExample);
+const coinOverlay = new Overlay("coinTracker", ["all"], () => true, data.ML, "moveCoins", coinExample);
 
 /**
  * Tracks Piggybank in Scoreboard for changes in coins and updates Coins Overlay every second.

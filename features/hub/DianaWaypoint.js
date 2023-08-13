@@ -146,7 +146,8 @@ const WARPS = {
     "castle": [-250, 130, 45],
     "da": [91.5, 75, 173.5],
     "museum": [-75.5, 76, 80.5],
-    "crypt": [-161.5, 61, -99.5]
+    "crypt": [-161.5, 61, -99.5],
+    "wizard": [42.5, 122, 69]
 }
 export function setWarps() {
     warps = [];

@@ -10,7 +10,6 @@ import {
     @CheckboxProperty,
     @SelectorProperty,
 } from '../Vigilance/index';
-import axios from "../axios";
 
 
 // Define the settings class using the @Vigilant decorator
@@ -122,11 +121,22 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     apiKey = "";
 
     @ButtonProperty({
+        name: "Discord",
+        description: "Just posting releases here, don't expect too much :).",
+        category: "General",
+        subcategory: "Essential",
+        placeholder: "Yamete Kudasai"
+    })
+    discordLink() {
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/ftxB4kG2tw"));
+    }
+
+    @ButtonProperty({
         name: "GitHub Updater",
         description: "Download the Forge.jar file that alerts user when there is a new GitHub release and downloads on user input!",
         category: "General",
         subcategory: "Essential",
-        placeholder: "Download!"
+        placeholder: "Download"
     })
     downloadForge() {
         const url = "https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar";
@@ -142,17 +152,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     moveGUI() {
         ChatLib.command("va gui", true);
-    }
-
-    @ButtonProperty({
-        name: "Discord",
-        description: "Just posting releases here, don't expect too much :).",
-        category: "General",
-        subcategory: "Essential",
-        placeholder: "Yamete Kudasai"
-    })
-    discordLink() {
-        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/ftxB4kG2tw"));
     }
 
     // --- General ---
@@ -421,11 +420,22 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     economyRefresh = 60;
 
+    // --- Item Cost ---
+    @SliderProperty({
+        name: "Container Value",
+        description: "Displays item values in any chest GUI. Select number of item values to show in overlay or set as 0 to turn off.",
+        category: "Economy",
+        subcategory: "Pricing",
+        min: 0,
+        max: 54
+    })
+    containerValue = 0;
+
     @SwitchProperty({
         name: "Item Price",
         description: "Displays item cost including enchants in item tooltip.",
         category: "Economy",
-        subcategory: "Economy"
+        subcategory: "Pricing"
     })
     itemPrice = false;
 

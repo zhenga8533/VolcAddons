@@ -21,7 +21,7 @@ ${DARK_GREEN}${BOLD}Mithril Rate: ${WHITE}@
 ${LIGHT_PURPLE}${BOLD}Gemstone Powder: ${WHITE}Banana
 ${LIGHT_PURPLE}${BOLD}Gemstone Rate: ${WHITE}The
 ${BLUE}${BOLD}Time Passed: ${WHITE}Bot`;
-const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], data.PL, "movePowder", powderExample);
+const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], () => true, data.PL, "movePowder", powderExample);
 
 /**
  * Command to reset powder overlay.

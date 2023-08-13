@@ -1,7 +1,6 @@
 // Utility Modules
 import settings from "./settings";
-if (settings.partyCommands === true || settings.partyCommands === false) settings.partyCommands = 0;
-if (settings.kuudraProfitTracker === true || settings.kuudraProfitTracker === false) settings.kuudraProfitTracker = 0;
+if (settings.containerValue === true || settings.containerValue === false) settings.containerValue = 0;
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";
@@ -26,6 +25,7 @@ import "./features/general/Status";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
 import "./features/economy/CoinTracker";
+import "./features/economy/ContainerValue";
 import "./features/economy/Economy";
 import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";

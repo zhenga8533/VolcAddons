@@ -13,7 +13,7 @@ let type = false;
 let cd = 0;
 let alerted = false;
 const tubaExample = `${GRAY}${BOLD}Tuba Timer: ${RESET}Scooby Snack`;
-const tubaOverlay = new Overlay("tubaTimer", ["The Rift"], data.UL, "moveTubaTimer", tubaExample);
+const tubaOverlay = new Overlay("tubaTimer", ["The Rift"], () => true, data.UL, "moveTubaTimer", tubaExample);
 
 /**
  * Tracks action bar for Howl ability and resets tuba timer.

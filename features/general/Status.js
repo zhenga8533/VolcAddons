@@ -77,7 +77,7 @@ try {
 const statusExample = `${DARK_GREEN}${BOLD}Ping: ${WHITE}Peek
 ${DARK_GREEN}${BOLD}TPS: ${WHITE}A
 ${DARK_GREEN}${BOLD}FPS: ${WHITE}Boo`;
-const statusOverlay = new Overlay("serverStatus", ["all"], data.LL, "moveStatus", statusExample);
+const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
 
 register('step', () => {
     statusOverlay.message = 

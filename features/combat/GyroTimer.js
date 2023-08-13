@@ -10,7 +10,7 @@ import { data, registerWhen } from "../../utils/variables";
 let align = 0;
 let cd = 0;
 const gyroExample = `${GREEN}${BOLD}Align Timer: ${RESET}LEAK?!`;
-const gyroOverlay = new Overlay("gyroTimer", ["all"], data.GL, "moveAlignTimer", gyroExample);
+const gyroOverlay = new Overlay("gyroTimer", ["all"], () => true, data.GL, "moveAlignTimer", gyroExample);
 
 /**
  * Detects whenever you get affected by "Cell's Alignment".

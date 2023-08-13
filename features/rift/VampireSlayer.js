@@ -16,7 +16,7 @@ const vampireExample =
 `${DARK_PURPLE}${BOLD}MANIA: ${AQUA}Dracule
 ${GOLD}${BOLD}TWINCLAWS: ${AQUA}Mihawk
 ${DARK_AQUA}${BOLD}ICHOR: ${AQUA}3,590,000,000`;
-const vampireOverlay = new Overlay("vampireAttack", ["The Rift"], data.BL, "moveVamp", vampireExample);
+const vampireOverlay = new Overlay("vampireAttack", ["The Rift"], () => true, data.BL, "moveVamp", vampireExample);
 let dracula = undefined;
 let bossUUID = 0;
 let ichorUUID = 0;

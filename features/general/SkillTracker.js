@@ -24,7 +24,7 @@ const skillExample =
 ${DARK_AQUA}${BOLD}XP Gained: ${WHITE}FI
 ${DARK_AQUA}${BOLD}Time Passed: ${WHITE}FO
 ${DARK_AQUA}${BOLD}Rate: ${WHITE}FUM`;
-const skillOverlay = new Overlay("skillTracker", ["all"], data.AL, "moveSkills", skillExample);
+const skillOverlay = new Overlay("skillTracker", ["all"], () => true, data.AL, "moveSkills", skillExample);
 
 /**
  * Resets skill overlay to base state.

@@ -1,12 +1,31 @@
 import settings from "../settings";
-import { BOLD, GUI_INSTRUCT, ITALIC } from "./constants";
+import { GUI_INSTRUCT, ITALIC } from "./constants";
 import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";
 
 
+
+/**
+ * Render scaled text on a graphical canvas or rendering context.
+ *
+ * @param {number} scale - The scale factor to apply to the text.
+ * @param {string} text - The text to be rendered.
+ * @param {number} x - The x-coordinate where the text will be rendered.
+ * @param {number} y - The y-coordinate where the text will be rendered.
+ */
+function renderScale(scale, text, x, y) {
+    Renderer.scale(scale);
+    new Text(text, x, y).draw();
+    // test.setAlign("right");
+}
+
+/**
+ * Variables used to move all active GUIs.
+ */
 const overlays = [];
 let currentOverlay = undefined;
 const gui = new Gui();
+const background = new Gui();
 export function openGUI() { gui.open() };
 register("renderOverlay", () => {
     if (!gui.isOpen()) return;
@@ -71,19 +90,6 @@ register("guiKey", (char, keyCode, currentGui, event) => {
     currentOverlay.setSize();
 });
 
-/**
- * Render scaled text on a graphical canvas or rendering context.
- *
- * @param {number} scale - The scale factor to apply to the text.
- * @param {string} text - The text to be rendered.
- * @param {number} x - The x-coordinate where the text will be rendered.
- * @param {number} y - The y-coordinate where the text will be rendered.
- */
-function renderScale(scale, text, x, y) {
-    Renderer.scale(scale);
-    Renderer.drawString(text, x, y);
-}
-
 export class Overlay {
     /**
      * Creates an overlay with HUD elements and GUI functionality.
@@ -94,7 +100,7 @@ export class Overlay {
      * @param {string} command - The command name that will open the GUI.
      * @param {string} example - An example text to be displayed as an overlay.
      */
-    constructor(setting, requires, loc, command, example) {
+    constructor(setting, requires, condition, loc, command, example) {
         overlays.push(this);
         // Store the inputs as instance variables.
         this.setting = setting;
@@ -136,7 +142,8 @@ export class Overlay {
                 );
             } else if (settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")) && !gui.isOpen()) {
                 if (this.requires.has("misc")) {
-                    if (Player.getContainer().getName() !== "Paid Chest") return;
+                    if (!condition()) return;
+                    background.func_146278_c(0);
                     renderScale(this.loc[2], this.message, this.X, this.Y);
                 } else  // Draw HUD
                     renderScale(this.loc[2], this.message, this.X, this.Y);
@@ -177,7 +184,7 @@ export class Overlay {
         this.height = 0;
         this.example.split("\n").forEach(line => {
             this.width = Math.max(Renderer.getStringWidth(line) * this.loc[2], this.width);
-            this.height += line.includes(BOLD) ? 10 * this.loc[2] : 5 * this.loc[2];
+            this.height += 10.3 * this.loc[2];
         });
     }
 }

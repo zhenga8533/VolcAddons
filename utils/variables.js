@@ -75,6 +75,7 @@ export let data = new PogObject("VolcAddons", {
     "KL": [100, 350, 1], // Kuudra Profit Location
     "ZL": [100, 450, 1], // Kuudra Profit Tracker Location
     "LL": [50, 350, 1], // Server Status Location
+    "RL": [250, 300, 1], // Container Value Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
