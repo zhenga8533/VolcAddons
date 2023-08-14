@@ -49,8 +49,7 @@ function updateContainerValue() {
         const items = container.getItems();
         const itemValues = {};
         let totalValue = 0;
-        const maxItems = containerName === "Chest" ? 27 : 54;
-        for (let i = 0; i < maxItems; i++) {
+        for (let i = 0; i < items.length - 36; i++) {
             let item = items[i];
             if (item === null) continue;
 

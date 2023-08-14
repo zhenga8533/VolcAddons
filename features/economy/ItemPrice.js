@@ -1,6 +1,8 @@
 import settings from "../../settings";
-import { commafy } from "../../utils/functions";
-import { registerWhen } from "../../utils/variables";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
+import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions";
+import { Overlay } from "../../utils/overlay";
+import { data, registerWhen } from "../../utils/variables";
 import { getAuction, getBazaar } from "./Economy";
 
 
@@ -32,7 +34,7 @@ const MAX_ENCHANTS = {
 const ENCHANTS = new Set(Object.keys(MAX_ENCHANTS));
 const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"]);
 
-function getEnchantmentValue(enchantments, bazaar) {
+function getEnchantmentValue(enchantments, bazaar, type) {
     value = 0;
     Object.entries(enchantments || {}).forEach(([enchant, enchantlvl]) => {
         enchant = enchant.toUpperCase();
@@ -45,7 +47,7 @@ function getEnchantmentValue(enchantments, bazaar) {
         const base = bazaar?.[enchantKey];
         let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
         multiplier = STACKING_ENCHANTS.has(enchant) ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
-        value += Math.max(base?.[0] * multiplier, bazaar?.[enchantName]?.[0] || bazaar?.[enchantKey]?.[0]);
+        value += Math.max(base?.[type] * multiplier, bazaar?.[enchantName]?.[type] || bazaar?.[enchantKey]?.[type]);
     });
     return value;
 }
@@ -54,7 +56,9 @@ function getEnchantmentValue(enchantments, bazaar) {
  * Variables used to represent item modifier data.
  */
 const STAR_PLACEMENT = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
-const GEMSTONE_SLOTS = new Set(["JADE", "AMBER", "TOPAZ", "SAPPHIRE", "AMETHYST", "RUBY", "JASPER", "OPAL"]);
+const GEMSTONE_SLOTS = {
+    "JADE": GREEN, "AMBER": GOLD, "TOPAZ": YELLOW, "SAPPHIRE": AQUA, "AMETHYST": DARK_PURPLE, "RUBY": RED, "JASPER": LIGHT_PURPLE, "OPAL": WHITE
+};
 const MULTIUSE_SLOTS = new Set(["COMBAT", "DEFENSIVE", "MINING", "UNIVERSAL"]);
 const REFORGES = {
     "coldfused": "ENTROPY_SUPPRESSOR", "dirty": "DIRT_BOTTLE", "fabled": "DRAGON_CLAW", "gilded": "MIDAS_JEWEL", "suspicious": "SUSPICIOUS_VIAL",
@@ -73,18 +77,39 @@ const REFORGES = {
 }
 
 /**
+ * Variables used to represent and display advanced item value.
+ */
+const valueExample =
+`${GRAY}Base Item: ${GREEN}In
+${GRAY}Reforge: ${GREEN}The
+${GRAY}Stars: ${GREEN}Jungle,
+${GRAY}Recomb: ${GREEN}The
+${GRAY}Potato Books: ${GREEN}Might
+${GRAY}Art of War: ${GREEN}Jungle.
+${GRAY}Gemstones: ${GREEN}The
+${GRAY}Enchants: ${GREEN}Lion
+${GRAY}Rune: ${GREEN}Sleeps
+${DARK_AQUA}Total: ${GREEN}Tonight`;
+const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
+() => settings.itemPrice == 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
+
+/**
  * Figures out the enchantment value of the given item.
  * 
  * @param {Object} item - Item Object.
  * @returns {number} - Total value of item.
  */
+let savedValues = {}
 export function getItemValue(item) {
+    valueOverlay.message = "";
     if (item === null) return 0;
 
     const auction = getAuction();
     const bazaar = getBazaar();
-    const itemData = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").toObject();
-    const itemID = itemData?.id
+    const itemTag = item.getNBT().getCompoundTag("tag").toObject();
+    const itemData = itemTag.ExtraAttributes;
+    const itemID = itemData?.id;
+    const itemUUID = itemData?.uuid;
     const auctionItem = auction?.[itemID];
     let value = (auctionItem?.lbin || 0) * item.getStackSize();
 
@@ -96,70 +121,149 @@ export function getItemValue(item) {
         } else if (itemID === "ENCHANTED_BOOK") {
             value = getEnchantmentValue(itemData?.enchantments, bazaar);
         } else value = (bazaar?.[itemID]?.[0] || 0) * item.getStackSize();
+        savedValues[itemUUID] = [value, ""];
         return value;
     }
-    
-    // Enchantment Values
-    value += getEnchantmentValue(itemData?.enchantments, bazaar);
 
-    // Modifier Value
-    value += bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] || 0;
-
+    // Base Value
+    valueMessage = `${DARK_AQUA}${BOLD}Item: ${itemTag.display.Name}\n`;
+    valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+    // Reforge Value
+    const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] || 0;
+    if (reforgeValue !== 0) {
+        value += reforgeValue;
+        valueMessage += `- ${AQUA}Reforge: ${GREEN}+${formatNumber(reforgeValue)}\n`;
+    }
+    // Master Star Values
+    let starValue = 0;
+    for (let i = 0; i < Math.max(itemData?.dungeon_item_level - 5, 0); i++) starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[0];
+    if (starValue !== 0) {
+        value += reforgeValue;
+        valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;
+    }
     // Recomb Value
-    value += itemData?.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];
-
+    const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];
+    if (recombValue !== 0) {
+        value += recombValue;
+        valueMessage += `- ${AQUA}Recomb: ${GREEN}+${formatNumber(recombValue)}\n`;
+    }
     // Rune Value
     if (itemData?.runes !== undefined) {
         const runes = itemData?.runes
-        const [runeKey, runeValue] = Object.entries(runes)[0];
-        value += auction[`${runeKey}_${runeValue}`]?.lbin || 0;
+        const [runeKey, runeLevel] = Object.entries(runes)[0];
+        const runeValue = auction[`${runeKey}_${runeLevel}`]?.lbin || 0;
+        if (runeValue !== 0) {
+            valueMessage += `- ${AQUA}Rune: ${GREEN}+${formatNumber(runeValue)}\n`;
+            value += runeValue
+        }
     }
-  
-    // Potato Book Values
-    const hotPotatoCount = itemData?.hot_potato_count;
-    value += (hotPotatoCount === undefined ? 0 : Math.min(hotPotatoCount, 10) * bazaar["HOT_POTATO_BOOK"][0]) +
-        (hotPotatoCount === undefined ? 0 : Math.max(hotPotatoCount - 10, 0) * bazaar["FUMING_POTATO_BOOK"][0]);
     
-    // Art of War Value
-    value += itemData?.art_of_war_count === undefined ? 0 : bazaar["THE_ART_OF_WAR"]?.[0];
-  
-    // Master Star Values
-    const upgradeLevel = itemData?.upgrade_level;
-    const stars = Math.max(upgradeLevel - 5, 0);
-    for (let i = 0; i < stars; i++) {
-        value += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[0];
+    // Potato Book Values
+    const potatoCount = itemData?.hot_potato_count;
+    const hotPotatoCount = potatoCount === undefined ? 0 : Math.min(potatoCount, 10);
+    const hotPotatoValue = hotPotatoCount * bazaar["HOT_POTATO_BOOK"][0];
+    if (hotPotatoValue !== 0) {
+        valueMessage += `\n- ${GOLD}${BOLD}Books:\n`;
+        valueMessage += `   - ${YELLOW}HPB (${hotPotatoCount}/10): ${GREEN}+${formatNumber(hotPotatoValue)}\n`;
+        const fumingPotatoCount = Math.max(potatoCount - 10, 0);
+        const fumingPotatoValue = fumingPotatoCount * bazaar["FUMING_POTATO_BOOK"][0];
+        if (fumingPotatoValue !== 0)
+        valueMessage += `   - ${YELLOW}FPB (${fumingPotatoCount}/5): ${GREEN}+${formatNumber(fumingPotatoValue)}\n`;
+        value += hotPotatoValue + fumingPotatoValue;
     }
-  
-    // Wither Impact Scroll Values
-    (itemData?.ability_scroll || []).forEach(scroll => {
-        value += bazaar[scroll][0];
-    });
-
+    // Art of War Value
+    const tzuValue = itemData?.art_of_war_count === undefined ? 0 : bazaar["THE_ART_OF_WAR"]?.[0];
+    if (tzuValue !== 0) {
+        value += tzuValue;
+        valueMessage += `   - ${YELLOW}Sun Tzu: ${GREEN}+${formatNumber(tzuValue)}\n`;
+    }
+    // Art of Peace Value
+    const peaceValue = itemData?.artOfPeaceApplied === undefined ? 0 : bazaar["THE_ART_OF_PEACE"]?.[0];
+    if (peaceValue !== 0) {
+        value += peaceValue;
+        valueMessage += `   - ${YELLOW}Moon Tzu: ${GREEN}+${formatNumber(peaceValue)}\n`;
+    }
+    
     // Gem Values
     const gemsKeys = Object.keys(itemData?.gems || {});
+    const powerScroll = itemData?.power_ability_scroll;
+    if (gemsKeys.length !== 0 || powerScroll) {
+        valueMessage += `\n- ${GOLD}${BOLD}Gemstones:\n`;
+
+        if (powerScroll) {
+            const powerScrollValue = auction?.[powerScroll]?.lbin || 0;
+            const scrollColor = GEMSTONE_SLOTS[powerScroll.split('_')[0]];
+            valueMessage += `   - ${scrollColor}${convertToTitleCase(powerScroll)}: ${GREEN}+${formatNumber(powerScrollValue)}\n`;
+            value += powerScrollValue;
+        }
+    }
+
     gemsKeys.forEach((gemstone) => {
         const gemstoneData = itemData.gems[gemstone];
         const gemstoneTier = gemstoneData?.quality || gemstoneData;
         const gemstoneType = gemstone.split('_');
 
         let gemstoneValue = 0;
-        if (GEMSTONE_SLOTS.has(gemstoneType[0]))
-            gemstoneValue = bazaar[`${gemstoneTier}_${gemstoneType?.[0]}_GEM`]?.[0] || 0;
-        else if (MULTIUSE_SLOTS.has(gemstoneType?.[0]) && gemstoneType?.[gemstoneType.length - 1] !== "gem")
-            gemstoneValue = bazaar[`${gemstoneTier}_${itemData.gems?.[gemstone + "_gem"]}_GEM`]?.[0] || 0;
-        value += gemstoneValue;
+        let gemstoneName = "";
+        if (gemstoneType[0] in GEMSTONE_SLOTS) {
+            gemstoneName = `${gemstoneTier}_${gemstoneType?.[0]}_GEM`;
+            gemstoneColor = GEMSTONE_SLOTS[gemstoneType[0]];
+            gemstoneValue = bazaar[gemstoneName]?.[0] || 0;
+        } else if (MULTIUSE_SLOTS.has(gemstoneType?.[0]) && gemstoneType?.[gemstoneType.length - 1] !== "gem") {
+            gemstoneName = `${gemstoneTier}_${itemData.gems?.[gemstone + "_gem"]}_GEM`;
+            gemstoneColor = GEMSTONE_SLOTS[itemData.gems?.[gemstone + "_gem"]];
+            gemstoneValue = bazaar[gemstoneName]?.[0] || 0;
+        }
+        
+        if (gemstoneValue !== 0) {
+            value += gemstoneValue;
+            valueMessage += `   - ${gemstoneColor}${convertToTitleCase(gemstoneName)}: ${GREEN}+${formatNumber(gemstoneValue)}\n`;
+        }
+    });
+    
+    // Enchantment Values
+    const enchantOrderValue = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
+    const enchantInstaValue = getEnchantmentValue(itemData?.enchantments, bazaar, 1);
+    if (enchantOrderValue !== 0) {
+        value += enchantOrderValue;
+        valueMessage += `\n- ${GOLD}${BOLD}Enchantments:\n`;
+        valueMessage += `   - ${DARK_GREEN}Buy Order Value: ${GREEN}+${formatNumber(enchantOrderValue)}\n`;
+        valueMessage += `   - ${DARK_GREEN}Insta Buy Value: ${GREEN}+${formatNumber(enchantInstaValue)}\n`;
+    }
+  
+    // Wither Impact Scroll Values
+    const witherScrolls = itemData?.ability_scroll || [];
+    if (witherScrolls.length !== 0) valueMessage += `\n- ${GOLD}${BOLD}Wither Scrolls:\n`;
+    witherScrolls.forEach(scroll => {
+        const scrollValue = bazaar[scroll][0];
+        if (scrollValue !== 0) {
+            valueMessage += `   - ${DARK_GRAY}${convertToTitleCase(scroll)}: ${GREEN}+${formatNumber(scrollValue)}\n`;
+            value += scrollValue;
+        }
     });
 
     // Attribute Values
     const attributes = Object.keys(itemData?.attributes || {}).sort();
-    let attributeValue = 0;
+    let attributesValue = 0;
+    if (attributes.length) valueMessage += `\n- ${GOLD}${BOLD}Attributes:\n`;
     attributes.forEach((attribute) => {
-        const attributeCount = 2 ** (itemData?.attributes[attribute] - 1);
-        attributeValue += (auctionItem?.attributes?.[attribute] || 0) * attributeCount;
+        const attributeLevel = itemData?.attributes[attribute];
+        const attributeCount = 2 ** (attributeLevel - 1);
+        const attributeValue = (auctionItem?.attributes?.[attribute] || 0) * attributeCount;
+        attributesValue += attributeValue;
+        valueMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
     });
-    attributeValue = Math.max(attributeValue, auctionItem?.attribute_combos?.[attributes.join(" ")] || 0);
-    value += attributeValue;
+    const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] || 0;
+    if (comboValue > attributesValue) {
+        valueMessage = valueMessage.split('\n').slice(0, -3).join('\n') + `\n${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
+        attributesValue = comboValue;
+    }
+    value += attributesValue;
+
+    // Total Value
+    valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN}${formatNumber(value)}`;
   
+    savedValues[itemUUID] = [value, valueMessage];
     return value;
 }
 
@@ -172,15 +276,25 @@ export function getItemValue(item) {
 let NBTTagString = Java.type("net.minecraft.nbt.NBTTagString");
 registerWhen(register("itemTooltip", (lore, item) => {
     // Check item data to cancel lore append.
-    const loreTag = item.getNBT().getCompoundTag("tag").getCompoundTag("display").getTagMap().get("Lore");
+    const itemTag = item.getNBT().getCompoundTag("tag");
+    const loreTag = itemTag.getCompoundTag("display").getTagMap().get("Lore");
+    const itemUUID = itemTag.getCompoundTag("ExtraAttributes").getString("uuid");
     if (loreTag === null) return;
+
     const list = new NBTTagList(loreTag);
     for (let i = 0; i < list.getTagCount(); i++) {
-        if (list.getStringTagAt(i).includes("Item Value:")) return;
+        if (list.getStringTagAt(i).includes("Item Value:")) {
+            valueOverlay.message = savedValues?.[itemUUID]?.[1] || "";
+            return;
+        }
     }
 
     // Add to item lore.
-    const value = getItemValue(item);
-    if (value !== 0)
+    const value = savedValues?.[itemUUID]?.[0] || getItemValue(item, settings.itemPrice === 1 || settings.itemPrice === 3);
+    valueOverlay.message = savedValues?.[itemUUID]?.[1] || "";
+    if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
 }), () => settings.itemPrice);
+register("guiClosed", () => {
+    valueOverlay.message = "";
+})

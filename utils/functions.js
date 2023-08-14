@@ -60,7 +60,7 @@ export function commafy(num) {
  * @returns {string} Formatted number if k, m, b notation
  */
 export function formatNumber(num) {
-    if (isNaN(num)) return 0;
+    if (isNaN(num) || num === 0) return 0;
 
     const absNum = Math.abs(num);
     const abbrev = ["", "k", "m", "b"];

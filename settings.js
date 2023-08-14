@@ -431,13 +431,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     containerValue = 0;
 
-    @SwitchProperty({
+    @SelectorProperty({
         name: "Item Price",
-        description: "Displays item cost including enchants in item tooltip.",
+        description: "Calculates and displays complete item price, including enchants, modifiers, and attributes.",
         category: "Economy",
-        subcategory: "Pricing"
+        subcategory: "Pricing",
+        options: ["OFF", "Advanced View", "Tooltip View", "Omnipotent View"]
     })
-    itemPrice = false;
+    itemPrice = 0;
 
 
     // ████████████████████████████████████████████████████ COMBAT ████████████████████████████████████████████████████
