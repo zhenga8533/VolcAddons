@@ -36,7 +36,7 @@ const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMP
 
 function getEnchantmentValue(enchantments, bazaar, type) {
     value = 0;
-    Object.entries(enchantments || {}).forEach(([enchant, enchantlvl]) => {
+    Object.entries(enchantments ?? {}).forEach(([enchant, enchantlvl]) => {
         enchant = enchant.toUpperCase();
         const maxEnchantLevel = MAX_ENCHANTS[enchant];
         
@@ -47,7 +47,7 @@ function getEnchantmentValue(enchantments, bazaar, type) {
         const base = bazaar?.[enchantKey];
         let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
         multiplier = STACKING_ENCHANTS.has(enchant) ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
-        value += Math.max(base?.[type] * multiplier, bazaar?.[enchantName]?.[type] || bazaar?.[enchantKey]?.[type]);
+        value += Math.max(base?.[type] * multiplier, bazaar?.[enchantName]?.[type] ?? bazaar?.[enchantKey]?.[type] ?? 0);
     });
     return value;
 }
@@ -111,16 +111,16 @@ export function getItemValue(item) {
     const itemID = itemData?.id;
     const itemUUID = itemData?.uuid;
     const auctionItem = auction?.[itemID];
-    let value = (auctionItem?.lbin || 0) * item.getStackSize();
+    let value = (auctionItem?.lbin ?? 0) * item.getStackSize();
 
     // Check for Pet or Bazaar
     if (value === 0) {
         if (itemID === "PET") {
             const petInfo = JSON.parse(itemData?.petInfo);
-            value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin || 0;
+            value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
         } else if (itemID === "ENCHANTED_BOOK") {
             value = getEnchantmentValue(itemData?.enchantments, bazaar);
-        } else value = (bazaar?.[itemID]?.[0] || 0) * item.getStackSize();
+        } else value = (bazaar?.[itemID]?.[0] ?? 0) * item.getStackSize();
         savedValues[itemUUID] = [value, ""];
         return value;
     }
@@ -129,7 +129,7 @@ export function getItemValue(item) {
     valueMessage = `${DARK_AQUA}${BOLD}Item: ${itemTag.display.Name}\n`;
     valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
     // Reforge Value
-    const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] || 0;
+    const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] ?? 0;
     if (reforgeValue !== 0) {
         value += reforgeValue;
         valueMessage += `- ${AQUA}Reforge: ${GREEN}+${formatNumber(reforgeValue)}\n`;
@@ -151,7 +151,7 @@ export function getItemValue(item) {
     if (itemData?.runes !== undefined) {
         const runes = itemData?.runes
         const [runeKey, runeLevel] = Object.entries(runes)[0];
-        const runeValue = auction[`${runeKey}_${runeLevel}`]?.lbin || 0;
+        const runeValue = auction[`${runeKey}_${runeLevel}`]?.lbin ?? 0;
         if (runeValue !== 0) {
             valueMessage += `- ${AQUA}Rune: ${GREEN}+${formatNumber(runeValue)}\n`;
             value += runeValue
@@ -185,13 +185,13 @@ export function getItemValue(item) {
     }
     
     // Gem Values
-    const gemsKeys = Object.keys(itemData?.gems || {});
+    const gemsKeys = Object.keys(itemData?.gems ?? {});
     const powerScroll = itemData?.power_ability_scroll;
     if (gemsKeys.length !== 0 || powerScroll) {
         valueMessage += `\n- ${GOLD}${BOLD}Gemstones:\n`;
 
         if (powerScroll) {
-            const powerScrollValue = auction?.[powerScroll]?.lbin || 0;
+            const powerScrollValue = auction?.[powerScroll]?.lbin ?? 0;
             const scrollColor = GEMSTONE_SLOTS[powerScroll.split('_')[0]];
             valueMessage += `   - ${scrollColor}${convertToTitleCase(powerScroll)}: ${GREEN}+${formatNumber(powerScrollValue)}\n`;
             value += powerScrollValue;
@@ -200,7 +200,7 @@ export function getItemValue(item) {
 
     gemsKeys.forEach((gemstone) => {
         const gemstoneData = itemData.gems[gemstone];
-        const gemstoneTier = gemstoneData?.quality || gemstoneData;
+        const gemstoneTier = gemstoneData?.quality ?? gemstoneData;
         const gemstoneType = gemstone.split('_');
 
         let gemstoneValue = 0;
@@ -208,11 +208,11 @@ export function getItemValue(item) {
         if (gemstoneType[0] in GEMSTONE_SLOTS) {
             gemstoneName = `${gemstoneTier}_${gemstoneType?.[0]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[gemstoneType[0]];
-            gemstoneValue = bazaar[gemstoneName]?.[0] || 0;
+            gemstoneValue = bazaar[gemstoneName]?.[0] ?? 0;
         } else if (MULTIUSE_SLOTS.has(gemstoneType?.[0]) && gemstoneType?.[gemstoneType.length - 1] !== "gem") {
             gemstoneName = `${gemstoneTier}_${itemData.gems?.[gemstone + "_gem"]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[itemData.gems?.[gemstone + "_gem"]];
-            gemstoneValue = bazaar[gemstoneName]?.[0] || 0;
+            gemstoneValue = bazaar[gemstoneName]?.[0] ?? 0;
         }
         
         if (gemstoneValue !== 0) {
@@ -232,7 +232,7 @@ export function getItemValue(item) {
     }
   
     // Wither Impact Scroll Values
-    const witherScrolls = itemData?.ability_scroll || [];
+    const witherScrolls = itemData?.ability_scroll ?? [];
     if (witherScrolls.length !== 0) valueMessage += `\n- ${GOLD}${BOLD}Wither Scrolls:\n`;
     witherScrolls.forEach(scroll => {
         const scrollValue = bazaar[scroll][0];
@@ -243,17 +243,19 @@ export function getItemValue(item) {
     });
 
     // Attribute Values
-    const attributes = Object.keys(itemData?.attributes || {}).sort();
+    const attributes = Object.keys(itemData?.attributes ?? {}).sort();
     let attributesValue = 0;
     if (attributes.length) valueMessage += `\n- ${GOLD}${BOLD}Attributes:\n`;
     attributes.forEach((attribute) => {
         const attributeLevel = itemData?.attributes[attribute];
         const attributeCount = 2 ** (attributeLevel - 1);
-        const attributeValue = (auctionItem?.attributes?.[attribute] || 0) * attributeCount;
+        const attributeValue = (Math.min(auctionItem?.attributes?.[attribute] ?? 0,
+            auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? 0)) * attributeCount;
+
         attributesValue += attributeValue;
         valueMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
     });
-    const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] || 0;
+    const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] ?? 0;
     if (comboValue > attributesValue) {
         valueMessage = valueMessage.split('\n').slice(0, -3).join('\n') + `\n${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
         attributesValue = comboValue;
@@ -284,14 +286,14 @@ registerWhen(register("itemTooltip", (lore, item) => {
     const list = new NBTTagList(loreTag);
     for (let i = 0; i < list.getTagCount(); i++) {
         if (list.getStringTagAt(i).includes("Item Value:")) {
-            valueOverlay.message = savedValues?.[itemUUID]?.[1] || "";
+            valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
             return;
         }
     }
 
     // Add to item lore.
-    const value = savedValues?.[itemUUID]?.[0] || getItemValue(item, settings.itemPrice === 1 || settings.itemPrice === 3);
-    valueOverlay.message = savedValues?.[itemUUID]?.[1] || "";
+    const value = savedValues?.[itemUUID]?.[0] ?? getItemValue(item, settings.itemPrice === 1 ?? settings.itemPrice === 3);
+    valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
     if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
 }), () => settings.itemPrice);
