@@ -119,19 +119,21 @@ export function getItemValue(item) {
     // Start Price Checking
     const auction = getAuction();
     const bazaar = getBazaar();
-    const auctionItem = auction?.[itemID];
+    let auctionItem = auction?.[itemID];
     let value = (auctionItem?.lbin ?? 0) * item.getStackSize();
 
     // Base Value
     valueMessage = `${DARK_AQUA}${BOLD}Item: ${itemTag.display.Name}\n`;
-    valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
-
-    // Check for Edge Cases
-    if (value === 0) {
+    if (value !== 0) valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+    else {  // Check for Edge Cases
         const partsID = itemID.split('_');
         const pieceTier = partsID[0];
         if (pieceTier in KUUDRA_UPGRADES) {  // Kuudra Piece Upgrade Value
             itemID = partsID.slice(1).join('_');
+            auctionItem = auction?.[itemID];
+            value = (auctionItem?.lbin ?? 0) * item.getStackSize();
+            valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+
             let crimsonEssence = 0;
             const upgrades = Object.keys(KUUDRA_UPGRADES);
             const upgradeTier = upgrades.indexOf(pieceTier);
@@ -144,7 +146,7 @@ export function getItemValue(item) {
             }
             const crimsonValue = crimsonEssence * (bazaar?.ESSENCE_CRIMSON?.[0] ?? 1);
             value += crimsonValue;
-            valueMessage += `- ${AQUA}Stars: ${GREEN}+${formatNumber(crimsonValue)}\n`;
+            valueMessage += `- ${AQUA}Essence Upgrades: ${GREEN}+${formatNumber(crimsonValue)}\n`;
         } else {
             if (itemID === "PET") {  // Pet Value
                 const petInfo = JSON.parse(itemData?.petInfo);
@@ -277,12 +279,11 @@ export function getItemValue(item) {
     const attributes = Object.keys(itemData?.attributes ?? {}).sort();
     let attributesValue = 0;
     if (attributes.length) valueMessage += `\n- ${GOLD}${BOLD}Attributes:\n`;
-    ChatLib.chat(itemID);
     attributes.forEach((attribute) => {
         const attributeLevel = itemData?.attributes[attribute];
         const attributeCount = 2 ** (attributeLevel - 1);
-        const attributeValue = Math.min(auctionItem?.attributes?.[attribute] ?? 0,
-            auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? auctionItem?.attributes?.[attribute]) * attributeCount;
+        const attributePiece = auctionItem?.attributes?.[attribute] ?? 0;
+        const attributeValue = Math.min(attributePiece, auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? attributePiece) * attributeCount;
 
         attributesValue += attributeValue;
         valueMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;

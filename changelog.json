@@ -1,8 +1,10 @@
 [
-    "- Added Container Values",
+    "- Added container values",
     "- Added advanced item price view",
     "- Added reforge values to item price",
     "- Added Wizard Tower to Diana Warp",
+    "- Changed attribute prices to be more accurate",
     "- Fixed Remove Selfie for some players",
-    "- Fixed item price for tiered Kuudra armor"
+    "- Fixed item price for tiered Kuudra armor",
+    "- Fixed /va calc hypergolic not working"
 ]

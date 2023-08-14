@@ -37,7 +37,8 @@ const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgr
  *
  * @param {string} type - Sound category.
  */
-function calcHypergolic(bazaar, type) {
+function calcHypergolic(type) {
+    const bazaar = getBazaar();
     return 2404 * bazaar.ENCHANTED_COAL[type] + 150.25 * bazaar.ENCHANTED_SULPHUR[type] + 13824 * bazaar.CRUDE_GABAGOOL[type];
 }
 
