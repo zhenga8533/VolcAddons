@@ -74,7 +74,13 @@ const REFORGES = {
     "ambered": "AMBERED_MATERIAL", "auspicious": "ROCK_GEMSTONE", "fleet": "DIAMONITE", "heated": "HOT_STUFF", "magnetic": "LAPIS_CRYSTAL",
     "mithraic": "PURE_MITHRIL", "refined": "REFINED_AMBER", "stellar": "PETRIFIED_STARFALL", "fruitful": "ONYX", "moil": "MOIL_LOG",
     "toil": "TOIL_LOG", "blessed": "BLESSED_FRUIT", "earthy": "LARGE_WALNUT", "blessed": "BLESSED_FRUIT", "bountiful": "GOLDEN_BALL"
-}
+};
+const KUUDRA_UPGRADES = {
+    "HOT": [150, 170, 190, 215, 240, 270, 300, 340, 390, 440, 500],
+    "BURNING": [800, 900, 1000, 1125, 1270, 1450, 1650, 1850, 2100, 2350, 2650],
+    "FIERY": [4500, 5000, 5600, 6300, 7000, 8000, 9000, 10200, 11500, 13000, 14500],
+    "INFERNAL": [25500, 30000, 35000, 41000, 48000, 56000, 65500, 76000, 89000, 105000, 120000, 140000, 165000, 192000, 225000, 265000]
+};
 
 /**
  * Variables used to represent and display advanced item value.
@@ -101,33 +107,58 @@ const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
  */
 let savedValues = {}
 export function getItemValue(item) {
+    // Get Item statistics
     valueOverlay.message = "";
     if (item === null) return 0;
-
-    const auction = getAuction();
-    const bazaar = getBazaar();
     const itemTag = item.getNBT().getCompoundTag("tag").toObject();
     const itemData = itemTag.ExtraAttributes;
-    const itemID = itemData?.id;
+    let itemID = itemData?.id;
+    if (itemID == undefined) return 0;
     const itemUUID = itemData?.uuid;
+
+    // Start Price Checking
+    const auction = getAuction();
+    const bazaar = getBazaar();
     const auctionItem = auction?.[itemID];
     let value = (auctionItem?.lbin ?? 0) * item.getStackSize();
-
-    // Check for Pet or Bazaar
-    if (value === 0) {
-        if (itemID === "PET") {
-            const petInfo = JSON.parse(itemData?.petInfo);
-            value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
-        } else if (itemID === "ENCHANTED_BOOK") {
-            value = getEnchantmentValue(itemData?.enchantments, bazaar);
-        } else value = (bazaar?.[itemID]?.[0] ?? 0) * item.getStackSize();
-        savedValues[itemUUID] = [value, ""];
-        return value;
-    }
 
     // Base Value
     valueMessage = `${DARK_AQUA}${BOLD}Item: ${itemTag.display.Name}\n`;
     valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+
+    // Check for Edge Cases
+    if (value === 0) {
+        const partsID = itemID.split('_');
+        const pieceTier = partsID[0];
+        if (pieceTier in KUUDRA_UPGRADES) {  // Kuudra Piece Upgrade Value
+            itemID = partsID.slice(1).join('_');
+            let crimsonEssence = 0;
+            const upgrades = Object.keys(KUUDRA_UPGRADES);
+            const upgradeTier = upgrades.indexOf(pieceTier);
+
+            for (let i = 0; i <= upgradeTier; i++) {
+                const upgradeArray = KUUDRA_UPGRADES[upgrades[i]];
+                const crimsonStars = (i === upgradeTier) ? (itemData?.upgrade_level || 0) : 10;
+
+                crimsonEssence += upgradeArray.slice(0, crimsonStars + 1).reduce((acc, value) => acc + value, 0);
+            }
+            const crimsonValue = crimsonEssence * (bazaar?.ESSENCE_CRIMSON?.[0] ?? 1);
+            value += crimsonValue;
+            valueMessage += `- ${AQUA}Stars: ${GREEN}+${formatNumber(crimsonValue)}\n`;
+        } else {
+            if (itemID === "PET") {  // Pet Value
+                const petInfo = JSON.parse(itemData?.petInfo);
+                value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
+            } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
+                value = getEnchantmentValue(itemData?.enchantments, bazaar);
+            } else {  // Bazaar Value
+                value = (bazaar?.[itemID]?.[0] ?? 0) * item.getStackSize();
+            }
+            savedValues[itemUUID] = [value, ""];
+            return value;
+        }
+    }
+
     // Reforge Value
     const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] ?? 0;
     if (reforgeValue !== 0) {
@@ -246,11 +277,12 @@ export function getItemValue(item) {
     const attributes = Object.keys(itemData?.attributes ?? {}).sort();
     let attributesValue = 0;
     if (attributes.length) valueMessage += `\n- ${GOLD}${BOLD}Attributes:\n`;
+    ChatLib.chat(itemID);
     attributes.forEach((attribute) => {
         const attributeLevel = itemData?.attributes[attribute];
         const attributeCount = 2 ** (attributeLevel - 1);
-        const attributeValue = (Math.min(auctionItem?.attributes?.[attribute] ?? 0,
-            auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? 0)) * attributeCount;
+        const attributeValue = Math.min(auctionItem?.attributes?.[attribute] ?? 0,
+            auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? auctionItem?.attributes?.[attribute]) * attributeCount;
 
         attributesValue += attributeValue;
         valueMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
@@ -297,6 +329,13 @@ registerWhen(register("itemTooltip", (lore, item) => {
     if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
 }), () => settings.itemPrice);
+
+/**
+ * Reset data on data transfers.
+ */
 register("guiClosed", () => {
     valueOverlay.message = "";
-})
+});
+register("worldUnload", () => {
+    savedValues = {};
+});
