@@ -1,10 +1,7 @@
 [
-    "- Added container values",
-    "- Added advanced item price view",
-    "- Added reforge values to item price",
-    "- Added Wizard Tower to Diana Warp",
-    "- Changed attribute prices to be more accurate",
-    "- Fixed Remove Selfie for some players",
-    "- Fixed item price for tiered Kuudra armor",
-    "- Fixed /va calc hypergolic not working"
+    "- Added Garden Discord webhook",
+    "- Fixed /va w bricking up sometimes",
+    "- Fixed module breaking on server leave",
+    "- Fixed container breaking with enchants",
+    "- Removed Broken Wither Impact :("
 ]

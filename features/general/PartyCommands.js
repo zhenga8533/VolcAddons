@@ -13,26 +13,7 @@ import { request } from "../../../requestV2";
  * Variable used to represent /pc cooldown and possible responses.
  */
 let onCD = false;
-const RESPONSES = ["As I see it, yes",
-                    "It is certain",
-                    "It is decidedly so",
-                    "Most likely",
-                    "Outlook good",
-                    "Signs point to yes",
-                    "Without a doubt",
-                    "Yes",
-                    "Yes - definitely",
-                    "You may rely on it",
-                    "Reply hazy, try again",
-                    "Ask again later",
-                    "Better not tell you now",
-                    "Cannot predict now",
-                    "Concentrate and ask again",
-                    "Don't count on it",
-                    "My reply is no",
-                    "My sources say no",
-                    "Outlook not so good",
-                    "Very doubtful"];
+const RESPONSES = JSON.parse(FileLib.read("./VolcAddons/assets", "8ball.json"));
 const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
 
@@ -63,14 +44,12 @@ let imgur = "";
 function setWaifu() {
     axios.get("https://api.waifu.im/search").then((link) => {
         waifu = link.data.images[0].url;
-    })
-
-    delay(() => {
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
-        })
-    }, 1000);
+        });
+    });
 }
+export function getWaifu() { return imgur };
 setWaifu();
 
 /**

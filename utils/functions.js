@@ -67,7 +67,25 @@ export function formatNumber(num) {
     const index = Math.floor(Math.log10(absNum) / 3);
   
     return (num / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
-  }
+}
+
+export function unformatNumber(str) {
+    const notationMap = {
+        k: 1_000,
+        m: 1_000_000,
+        b: 1_000_000_000
+    };
+  
+    const trimmedStr = str.trim();  // Remove leading and trailing whitespace
+    const numericPart = parseFloat(trimmedStr.replace(/[^\d.-]/g, ''));  // Extract numeric part
+    const notation = trimmedStr.slice(-1).toLowerCase();  // Get the notation
+  
+    const multiplier = notationMap[notation] || 1;  // Get the appropriate multiplier
+  
+    if (!isNaN(numericPart)) return numericPart * multiplier;
+  
+    return NaN;  // If conversion is not possible, return NaN
+}
 
 /**
  * Strips rank and tags off player name.

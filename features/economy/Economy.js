@@ -16,7 +16,7 @@ export function getBazaar() { return products };
  */
 function updateAuction() {
     request({
-        url: `http://volcaronitee.pythonanywhere.com/auction`,
+        url: "https://volcaronitee.pythonanywhere.com/auction",
         json: true
     }).then((response) => {
         items = response.items;
@@ -27,7 +27,7 @@ function updateAuction() {
 updateAuction();
 function updateBazaar() {
     request({
-        url: `http://volcaronitee.pythonanywhere.com/bazaar`,
+        url: "https://volcaronitee.pythonanywhere.com/bazaar",
         json: true
     }).then((response) => {
         products = response.items;

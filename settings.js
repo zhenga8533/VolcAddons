@@ -133,7 +133,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @ButtonProperty({
         name: "GitHub Updater",
-        description: "Download the Forge.jar file that alerts user when there is a new GitHub release and downloads on user input!",
+        description: "Download the Forge.jar file for new release alerts and effortless updating!",
         category: "General",
         subcategory: "Essential",
         placeholder: "Download"
@@ -444,14 +444,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // ████████████████████████████████████████████████████ COMBAT ████████████████████████████████████████████████████
 
     // --- Combat ---
-    @SwitchProperty({
-        name: "Broken Hyperion",
-        description: "Uses 'Book of Stats' and 'Champion' to track when Wither Impact breaks.",
-        category: "Combat",
-        subcategory: "Combat"
-    })
-    brokenHyp = false;
-
     @SwitchProperty({
         name: "Damage Tracker",
         description: "Spams in chat every damage tick that happens around you. (meant for training dummies)",
@@ -869,6 +861,15 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Garden"
     })
     gardenCompost = false;
+
+    @TextProperty({
+        name: "Discord Webhook",
+        description: "Sends Garden statistics to the Webhook link every hour spent on Garden.",
+        category: "Garden",
+        subcategory: "Garden",
+        protected: true
+    })
+    gardenWebhook = "";
 
     @SwitchProperty({
         name: "Garden Warp Override",

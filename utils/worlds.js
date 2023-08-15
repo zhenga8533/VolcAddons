@@ -52,3 +52,6 @@ register("worldLoad", () => {
     noFind = 0; // Resetting the counter when the world loads
     findWorld(); // Finding the current world and its features
 });
+register("worldUnload", () => {
+    world = "";
+});

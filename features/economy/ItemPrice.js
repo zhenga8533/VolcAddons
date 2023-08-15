@@ -86,18 +86,35 @@ const KUUDRA_UPGRADES = {
  * Variables used to represent and display advanced item value.
  */
 const valueExample =
-`${GRAY}Base Item: ${GREEN}In
-${GRAY}Reforge: ${GREEN}The
-${GRAY}Stars: ${GREEN}Jungle,
-${GRAY}Recomb: ${GREEN}The
-${GRAY}Potato Books: ${GREEN}Might
-${GRAY}Art of War: ${GREEN}Jungle.
-${GRAY}Gemstones: ${GREEN}The
-${GRAY}Enchants: ${GREEN}Lion
-${GRAY}Rune: ${GREEN}Sleeps
-${DARK_AQUA}Total: ${GREEN}Tonight`;
+`&3&lItem: §dSussy Baka §6✪§6✪§6✪§6✪§6✪§c➊
+- &bBase: &a+O
+- &bMaster Stars: &a+Say
+- &bRecomb: &a+Can
+- &bRune: &a+You
+
+- &6&lBooks:
+   - &eHPB (10/10): &a+See
+   - &eFPB (5/5): &a+By
+   - &eSun Tzu: &a+The
+
+- &6&lGemstones:
+   - &bPerfect Sapphire Gem: &a+Dawn's
+   - &fPerfect Upal Gem: &aEarly
+   - &bPerfect Sapphire Gem: &aLight
+
+- &6&lEnchantments:
+   - &2Buy Order Value: &a+What
+   - &2Insta Buy Value: &a+So
+
+- &6&lWither Scrolls:
+   - &8Art Shield Scroll: &a+Proudly
+   - &8Shadow Is An: &a+We
+   - &8Explosion Scroll: &a+Hailed
+
+&3Total Value: &aKATSU.`;
 const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
 () => settings.itemPrice == 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
+valueOverlay.message = "";
 
 /**
  * Figures out the enchantment value of the given item.
@@ -152,7 +169,7 @@ export function getItemValue(item) {
                 const petInfo = JSON.parse(itemData?.petInfo);
                 value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
-                value = getEnchantmentValue(itemData?.enchantments, bazaar);
+                value = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
             } else {  // Bazaar Value
                 value = (bazaar?.[itemID]?.[0] ?? 0) * item.getStackSize();
             }

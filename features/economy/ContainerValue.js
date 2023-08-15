@@ -18,8 +18,8 @@ ${AQUA}Item 7${GRAY} - ${WHITE}Point
 ${RED}Item 8${GRAY} - ${WHITE}Of
 ${RED}Item 9${GRAY} - ${WHITE}Formlessness
 ${DARK_RED}-Sun Tzu, The Art of War`;
-const containerOverlay = new Overlay("containerValue", ["all", "misc"], 
-() => VALID_CONTAINERS.has(getFirstSecondWord(Player.getContainer().getName().removeFormatting())), data.RL, "moveContainer", containerExample);
+const containerOverlay = new Overlay("containerValue", ["all", "misc"],
+() => VALID_CONTAINERS.has(getFirstSecondWord(Player.getContainer()?.getName()?.removeFormatting())), data.RL, "moveContainer", containerExample);
 
 /**
  * Extracts the second word from a string if present, otherwise returns the first word.
@@ -28,6 +28,7 @@ const containerOverlay = new Overlay("containerValue", ["all", "misc"],
  * @returns {string} The second word or the first word if no second word is present.
  */
 function getFirstSecondWord(inputString) {
+    if (inputString === undefined) return undefined;
     let firstSpaceIndex = inputString.indexOf(' ');
   
     if (firstSpaceIndex !== -1) {
