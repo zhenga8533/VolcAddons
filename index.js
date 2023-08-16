@@ -61,6 +61,7 @@ import "./features/kuudra/KuudraProfit";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 // Garden Features
 import { calcCompost } from "./features/garden/ComposterCalc";
+import "./features/garden/FarmingWebhook";
 import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 // Rift Features
@@ -68,9 +69,6 @@ import "./features/rift/DDR";
 import "./features/rift/TubaTimer";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
-import "./features/garden/FarmingWebhook";
-import { formatNumber } from "./utils/functions";
-import { getBazaar } from "./features/economy/Economy";
 
 
 // Launch Tests

@@ -7,7 +7,7 @@ import { getWaifu } from "../general/PartyCommands";
 
 const CROP_DROP = {
     "Wheat": 1.0,
-    "Carrot": 3.71,
+    "Carrots": 3.71,
     "Potato": 3.71,
     "Pumpkin": 1.0,
     "Sugar cane": 2.0,
@@ -17,6 +17,17 @@ const CROP_DROP = {
     "Mushroom": 1.0,
     "Nether wart": 3.0,
 };
+const CROP_TRADES = {
+    "ENCHANTED_HAY_BALE": "ENCHANTED_HAY_BLOCK",
+    "TIGHTLY-TIED_HAY_BALE": "TIGHTLY_TIED_HAY_BALE",
+    "JACK_O'_LANTERN": "JACK_O_LANTERN",
+    "ENCHANTED_RED_MUSHROOM_BLOCK": "ENCHANTED_HUGE_MUSHROOM_2",
+    "ENCHANTED_BROWN_MUSHROOM_BLOCK": "ENCHANTED_HUGE_MUSHROOM_1",
+    "ENCHANTED_COCOA_BEAN": "ENCHANTED_COCOA",
+    "ENCHANTED_NETHER_WART": "ENCHANTED_NETHER_STALK",
+    "MUTANT_NETHER_WART": "MUTANT_NETHER_STALK",
+    "ENCHANTED_RAW_RABBIT": "ENCHANTED_RABBIT"
+}
 
 class FarmingStat {
     constructor() {
@@ -94,12 +105,12 @@ function sendWebhook() {
                     },
                     {
                         "name": "Gains",
-                        "value": "Farming XP: +1\nGarden XP: +15\nCopper: +69\nLoss: -10k",
+                        "value": "FXP: +1\nGXP: +15\nCopper: +69\nMoney: -10k",
                         "inline": true
                     },
                     {
                         "name": "Tiers",
-                        "value": "Uncommon: 1\nRare: 0\nLegendary: 0",
+                        "value": ":green_square:: 1\n:blue_square:: 0\n:yellow_square:: 0",
                         "inline": true
                     },
                     {
@@ -121,6 +132,7 @@ function sendWebhook() {
 /**
  * Crop Tracking
  */
+let afk = 0;
 let farmingFortune = 0;
 register("step", () => {
     if (getWorld() !== "Garden") return;
@@ -133,6 +145,8 @@ register("step", () => {
 register("blockBreak", (block) => {
     const blockName = block.type.getName();
     if (!(blockName in CROP_DROP)) return;
+    farmingStats.cropStats[blockName] = farmingStats.cropStats[blockName] ?? [0, 0, 0];
+    farmingStats.cropStats[blockName][0] += CROP_DROP[blockName] * farmingFortune/100;
 })
 
 /**
@@ -158,14 +172,14 @@ register("guiMouseClick", (x, y, button, gui) => {
     if (clickedSlot === undefined) return;
     const item = Player.getContainer().getStackInSlot(clickedSlot);
     if (item === null || item.getName() !== "§aAccept Offer") return;
+    const tradeLore = Object.entries(item.getLore());
+    if (tradeLore.pop()?.[1] === "§5§o§cMissing items to accept!") return;
 
     const bazaar = getBazaar();
-    const itemsRequired = [];
-    const rewards = [];
     let itemsReached = false;
     let rewardsReached = false;
 
-    for ([lineNumber, lineContent] of Object.entries(item.getLore())) {
+    for ([lineNumber, lineContent] of tradeLore) {
         if (lineContent === "§5§o§7Items Required:") itemsReached = true
         else if (lineContent === "§5§o§7Rewards:") rewardsReached = true;
         else if (lineContent === "§5§o") {
@@ -173,31 +187,41 @@ register("guiMouseClick", (x, y, button, gui) => {
             rewardsReached = false;
         } else if (itemsReached) {
             let item = lineContent.removeFormatting().trim().split(' ');
-            let productCost = parseInt(item.pop().replace(/[^0-9]/g, '')) * bazaar?.[item.join('_').toUpperCase()]?.[0] ?? 0;
-            farmingStats.visitorStats.loss += productCost;
-            ChatLib.chat(farmingStats.visitorStats.loss)
+            let amount = parseInt(item.pop().replace(/[^0-9]/g, ''));
+            let product = item.join('_').toUpperCase();
+            let productCost = amount * bazaar?.[CROP_TRADES?.[product] ?? product]?.[0] ?? 0;
+            if (!isNaN(productCost)) farmingStats.visitorStats.loss += productCost;
         }
         else if (rewardsReached) {
             let reward = lineContent.removeFormatting().trim().split(' ');
             let amount = unformatNumber(reward.shift());
             let type = reward.join('');
-            farmingStats.visitorStats?.[type] += amount;
-            ChatLib.chat(farmingStats.visitorStats?.[type])
+            if (!isNaN(amount)) farmingStats.visitorStats?.[type] += amount;
         }
     }
+    farmingStats.visitorStats.accepted++;
 });
 
+/**
+ * Player Tracking
+ */
 register("worldUnload", () => {
     if (getWorld() === "Garden")
         farmingStats.playerStats.disconnects++;
-})
+});
+register("chat", () => {
+    farmingStats.playerStats.deaths++;
+}).setCriteria(" ☠ You ${death}.");
 
 let timePassed = 0;
 register("step", () => {
     timePassed++;
-
     if (timePassed > 3600) {
         sendWebhook();
+        farmingStats.resetStats();
         timePassed = 0;
     }
+
+    afk++;
+    if (afk >= 10) farmingStats.playerStats.afk++;
 }).setDelay(1);
