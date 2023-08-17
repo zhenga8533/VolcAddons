@@ -1,4 +1,5 @@
 import settings from "../../settings";
+import { announceMob } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 
@@ -22,8 +23,8 @@ export function getSlayerBoss() { return bossCD };
  */
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
-
-    annoucePosition(settings.miniAlert == 1, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
+    
+    announceMob(settings.miniAlert == 1, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
     delay(() => miniCD = false, 3000);
@@ -40,7 +41,7 @@ register("step", () => {
         bossCD = true;
         questStart = false;
         if (settings.bossAlert)
-            annoucePosition(settings.bossAlert == 1, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
+            announceMob(settings.bossAlert == 1, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
     }
 }).setFps(5);
 

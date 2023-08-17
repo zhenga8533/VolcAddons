@@ -26,7 +26,7 @@ ${DARK_AQUA}${BOLD}Secondary: ${GREEN}Most
 ${DARK_PURPLE}${BOLD}Teeth: ${GREEN}Compatible
 ${RED}${BOLD}Essence: ${GREEN}Pokemon
 ${DARK_RED}${BOLD}Key: ${RED}For...`;
-const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () => Player.getContainer().getName() !== "Paid Chest", data.KL, "moveKP", profitExample);
+const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () => Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
 
 const coinageExample =
 `${DARK_RED}${BOLD}Profit: ${WHITE}And
@@ -103,7 +103,6 @@ registerWhen(register("guiMouseClick", (x, y, button, gui) => {
 }), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker);
 registerWhen(register("step", () => {
     downtime++;
-    if (downtime >= 300) return;
 
     updateProfitTracker(false);
 }).setFps(1), () => settings.kuudraProfitTracker);

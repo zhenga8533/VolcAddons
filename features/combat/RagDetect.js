@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { BOLD, GOLD } from "../../utils/constants";
+import { BOLD, GOLD, RED } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
 
@@ -17,4 +17,8 @@ registerWhen(register("actionBar", () => {
 
     if (heldItem.equals("RAGNAROCK_AXE"))
         Client.Companion.showTitle(`${GOLD}${BOLD}AWOOGA!`, "", 0, 25, 5);
-}).setCriteria("${before}CASTING"), () => settings.skillTracker);
+}).setCriteria("${before}CASTING"), () => settings.ragDetect);
+
+registerWhen(register("chat", () => {
+    Client.Companion.showTitle(`${RED}${BOLD}CANCELLED!`, "", 0, 25, 5);
+}).setCriteria("Ragnarock was cancelled due to being hit!"), () => settings.ragDetect);

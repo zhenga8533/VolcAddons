@@ -1,21 +1,26 @@
 import request from "../../../requestV2";
 import settings from "../../settings";
-import { unformatNumber } from "../../utils/functions";
+import { formatNumber, getTime, unformatNumber } from "../../utils/functions";
+import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";
-import { getWaifu } from "../general/PartyCommands";
+import { getWaifu, setWaifu } from "../general/PartyCommands";
 
+
+/**
+ * "Crop": [average drop, npc, emoji]
+ */
 const CROP_DROP = {
-    "Wheat": 1.0,
-    "Carrots": 3.71,
-    "Potato": 3.71,
-    "Pumpkin": 1.0,
-    "Sugar cane": 2.0,
-    "Melon": 4.64,
-    "Cactus": 2.0,
-    "Cocoa bean": 3.0,
-    "Mushroom": 1.0,
-    "Nether wart": 3.0,
+    "Crops": [1.0, 9, ":bread:"],
+    "Carrots": [3.71, 3, ":carrot:"],
+    "Potatoes": [3.71, 3, ":potato:"],
+    "Pumpkin": [1.0, 10, "jack_o_lantern:"],
+    "Sugar cane": [2.0, 4, ":candy:"],
+    "Melon": [4.64, 2, ":watermelon:"],
+    "Cactus": [2.0, 3, ":cactus:"],
+    "Cocoa": [3.0, 3, ":coffee:"],
+    "Mushroom": [1.0, 10, ":mushroom:"],
+    "Nether Wart": [3.0, 4, ":hotsprings:"],
 };
 const CROP_TRADES = {
     "ENCHANTED_HAY_BALE": "ENCHANTED_HAY_BLOCK",
@@ -51,18 +56,37 @@ class FarmingStat {
             "legendary": 0
         };
         this.playerStats = {
-            "bronze": 0,
-            "silver": 0,
-            "gpld": 0,
+            "BRONZE": 0,
+            "SILVER": 0,
+            "GOLD": 0,
             "interruptions": 0,
             "deaths": 0,
-            "afk": 0
+            "downtime": 0
         };
     }
 }
 const farmingStats = new FarmingStat(); 
 
+/**
+ * Send webhook data using post request.
+ */
 function sendWebhook() {
+    // Fetch values
+    const cropStats = farmingStats.cropStats;
+    let cropMessages = ["", "", ""];
+    for (crop in cropStats) {
+        let cropStat = cropStats[crop];
+        cropMessages[0] += `${CROP_DROP[crop][2]}: ${formatNumber(cropStat[0])}\n`;
+        cropMessages[1] += `${formatNumber(cropStat[1])}\n`;
+        const milestone = TabList.getNames().find(name => name.includes("Milestone:")).removeFormatting().split(' ').slice(-2);
+        cropMessages[2] += `${cropStat[2]} => ${milestone.toString().replace(":,", " (")})\n`;
+    }
+    
+    const visitorStats = farmingStats.visitorStats;
+    const playerStats = farmingStats.playerStats;
+    setWaifu();
+    
+    // Send webhook via post request
     request({
         url: settings.gardenWebhook,
         method: "POST",
@@ -84,75 +108,83 @@ function sendWebhook() {
                 },
                 "fields": [
                     {
-                        "name": "Harvests",
-                        "value": "Wheat: 1\nCarrot: 2\nPotato: 3",
+                        "name": "Crops",
+                        "value": cropMessages[0],
                         "inline": true
                     },
                     {
                         "name": "Coinage",
-                        "value": "Wheat: 1k\nCarrot: 2k\nPotato: 3k",
+                        "value": cropMessages[1],
                         "inline": true
                     },
                     {
                         "name": "Milestones",
-                        "value": "Wheat: 29\nCarrot: 29\nPotato: 29",
+                        "value": cropMessages[2],
                         "inline": true
                     },
                     {
                         "name": "Visitors",
-                        "value": "Arrived: 1\nAccepted: 1\nDeclined: 0",
-                        "inline": true
-                    },
-                    {
-                        "name": "Gains",
-                        "value": "FXP: +1\nGXP: +15\nCopper: +69\nMoney: -10k",
+                        "value": `Arrived: ${visitorStats.arrived}\nAccepted: ${visitorStats.accepted}\nRefused: ${visitorStats.declined}`,
                         "inline": true
                     },
                     {
                         "name": "Tiers",
-                        "value": ":green_square:: 1\n:blue_square:: 0\n:yellow_square:: 0",
+                        "value": `Uncommon: ${visitorStats.uncommon}\nRare: ${visitorStats.rare}\nLegendary: ${visitorStats.legendary}`,
+                        "inline": true
+                    },
+                    {
+                        "name": "Gains",
+                        "value": `Farming XP: +${visitorStats.FarmingXP}\nGarden XP: +${visitorStats.GardenExperience}\nCopper: +${visitorStats.Copper}\nCost: -${formatNumber(visitorStats.loss)}`,
                         "inline": true
                     },
                     {
                         "name": "Contests",
-                        "value": "Gold: 1\nSilver: 0\nBronze: 0",
+                        "value": `:third_place:: ${playerStats.BRONZE}\n:second_place:: ${playerStats.SILVER}\n:first_place:: ${playerStats.GOLD}`,
                         "inline": true
                     },
                     {
                         "name": "Server Stats",
-                        "value": "Interuptions: 0\nDeaths: 0\nAFK: 0s",
+                        "value": `Interuptions: ${playerStats.interruptions}\nDeaths: ${playerStats.deaths}\nDowntime: ${getTime(playerStats.downtime)}`,
                         "inline": true
                     }
                 ]
             }]
         }
-    });
+    }).then(() => farmingStats.resetStats());
 }
 
 /**
  * Crop Tracking
  */
-let afk = 0;
+let downtime = 0;
 let farmingFortune = 0;
-register("step", () => {
+registerWhen(register("step", () => {
     if (getWorld() !== "Garden") return;
     const tablist = TabList.getNames();
     if (tablist === null) return;
     const fortune = tablist.find(line => line.includes("Farming Fortune"));
     if (fortune === undefined) return;
     farmingFortune = parseInt(fortune.substring(fortune.indexOf('☘') + 1));
-}).setDelay(10);
-register("blockBreak", (block) => {
+}).setDelay(10), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
+
+registerWhen(register("blockBreak", (block) => {
     const blockName = block.type.getName();
     if (!(blockName in CROP_DROP)) return;
-    farmingStats.cropStats[blockName] = farmingStats.cropStats[blockName] ?? [0, 0, 0];
-    farmingStats.cropStats[blockName][0] += CROP_DROP[blockName] * farmingFortune/100;
-})
+    farmingStats.cropStats[blockName] = farmingStats.cropStats[blockName] ?? [0, 0, null];
+    if (farmingStats.cropStats[blockName][2] === null) {
+        const milestone = TabList.getNames().find(name => name.includes("Milestone:")).removeFormatting().split(' ');
+        farmingStats.cropStats[blockName][2] = milestone.slice(-2).toString().replace(":,", " (") + ")";
+    }
+    const dropAmount = CROP_DROP[blockName][0] * farmingFortune/100;
+    farmingStats.cropStats[blockName][0] += dropAmount;
+    farmingStats.cropStats[blockName][1] += dropAmount * CROP_DROP[blockName][1];
+    downtime = 0;
+}), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
  * Visitor Tracking
  */
-register("chat", (visitor) => {
+registerWhen(register("chat", (visitor) => {
     farmingStats.visitorStats.arrived++;
     switch(visitor[1]) {
         case 'a':
@@ -165,13 +197,21 @@ register("chat", (visitor) => {
             farmingStats.visitorStats.legendary++;
             break;
     }
-}).setCriteria("&r&a&r${visitor} &r&ehas arrived on your &r&bGarden&r&e!&r");
-register("guiMouseClick", (x, y, button, gui) => {
+}).setCriteria("&r&a&r${visitor} &r&ehas arrived on your &r&bGarden&r&e!&r"),
+() => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
+
+registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     // Get clicked item
     const clickedSlot = gui?.getSlotUnderMouse()?.field_75222_d;
     if (clickedSlot === undefined) return;
     const item = Player.getContainer().getStackInSlot(clickedSlot);
-    if (item === null || item.getName() !== "§aAccept Offer") return;
+    if (item === null) return;
+    downtime = 0;
+    const itemName = item.getName();
+    if (itemName=== "§cRefuse Offer") {
+        farmingStats.visitorStats.declined++;
+        return;
+    } else if (itemName !== "§aAccept Offer") return;
     const tradeLore = Object.entries(item.getLore());
     if (tradeLore.pop()?.[1] === "§5§o§cMissing items to accept!") return;
 
@@ -200,28 +240,32 @@ register("guiMouseClick", (x, y, button, gui) => {
         }
     }
     farmingStats.visitorStats.accepted++;
-});
+}), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
  * Player Tracking
  */
-register("worldUnload", () => {
-    if (getWorld() === "Garden")
+registerWhen(register("worldUnload", () => {
         farmingStats.playerStats.disconnects++;
-});
-register("chat", () => {
+}), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
+
+registerWhen(register("chat", () => {
     farmingStats.playerStats.deaths++;
-}).setCriteria(" ☠ You ${death}.");
+}).setCriteria(" ☠ You ${death}."), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
+
+registerWhen(register("chat", (medal, crop) => {
+    farmingStats.playerStats[medal]++;
+}).setCriteria("[NPC] Jacob: You earned a ${medal} medal in the ${crop} contest!"),
+() => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 let timePassed = 0;
-register("step", () => {
+registerWhen(register("step", () => {
     timePassed++;
-    if (timePassed > 3600) {
+    if (timePassed >= settings.webhookTimer * 60) {
         sendWebhook();
-        farmingStats.resetStats();
         timePassed = 0;
     }
 
-    afk++;
-    if (afk >= 10) farmingStats.playerStats.afk++;
-}).setDelay(1);
+    downtime++;
+    if (downtime >= 10) farmingStats.playerStats.downtime++;
+}).setDelay(1), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);

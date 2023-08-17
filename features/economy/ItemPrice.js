@@ -99,8 +99,8 @@ const valueExample =
 
 - &6&lGemstones:
    - &bPerfect Sapphire Gem: &a+Dawn's
-   - &fPerfect Upal Gem: &aEarly
-   - &bPerfect Sapphire Gem: &aLight
+   - &fPerfect Upal Gem: &a+Early
+   - &bPerfect Sapphire Gem: &a+Light
 
 - &6&lEnchantments:
    - &2Buy Order Value: &a+What

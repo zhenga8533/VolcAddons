@@ -41,7 +41,7 @@ function upload(image) {
  */
 let waifu = "";
 let imgur = "";
-function setWaifu() {
+export function setWaifu() {
     axios.get("https://api.waifu.im/search").then((link) => {
         waifu = link.data.images[0].url;
         upload(waifu).then(({ data: { link } }) => {

@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { AMOGUS } from "../../utils/constants";
+import { AMOGUS, BOLD, GOLD, GREEN } from "../../utils/constants";
 import { playSound } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 
@@ -10,9 +10,11 @@ import { registerWhen } from "../../utils/variables";
  */
 registerWhen(register("chat", () => {
     if (cd) return;
+    Client.Companion.showTitle(`${GREEN}${BOLD}BLOOD COMPLETE!`, "", 0, 25, 5);
     playSound(AMOGUS, 3000);
 }).setCriteria("[BOSS] The Watcher: You have proven yourself. You may pass."), () => settings.watcherAlert);
 registerWhen(register("chat", () => {
     if (cd) return;
+    Client.Companion.showTitle(`${GOLD}${BOLD}BLOOD SPAWNED!`, "", 0, 25, 5);
     playSound(AMOGUS, 3000);
 }).setCriteria("[BOSS] The Watcher: That will be enough for now."), () => settings.watcherAlert);

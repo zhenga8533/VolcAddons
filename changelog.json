@@ -1,7 +1,13 @@
 [
-    "- Added Garden Discord webhook",
+    "- Added Garden Discord webhook (WIP)",
+    "- Changed button commands in settings to colored info",
+    "- Changed /va gui boxes to be more accurate",
+    "- Fixed slayer announce not working",
+    "- Fixed Rag detection being linked to wrong setting",
+    "- Fixed Kuudra profit not showing",
     "- Fixed /va w bricking up sometimes",
-    "- Fixed module breaking on server leave",
+    "- Fixed parts of module breaking on server leave",
     "- Fixed container breaking with enchants",
+    "- Stole the only useful line Thomas has ever wrote",
     "- Removed Broken Wither Impact :("
 ]

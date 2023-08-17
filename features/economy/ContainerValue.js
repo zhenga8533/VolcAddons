@@ -101,6 +101,7 @@ register("GuiOpened", (event) => {
     updateContainerValue();
 });
 
-register("guiMouseRelease", () => {
+register("guiMouseRelease", (x, y, button, gui) => {
+    if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiChest") return;
     updateContainerValue();
-})
+});

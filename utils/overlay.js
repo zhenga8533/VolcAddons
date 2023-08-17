@@ -4,7 +4,6 @@ import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";
 
 
-
 /**
  * Render scaled text on a graphical canvas or rendering context.
  *
@@ -15,8 +14,8 @@ import { getWorld } from "./worlds";
  */
 function renderScale(scale, text, x, y) {
     Renderer.scale(scale);
-    new Text(text, x, y).draw();
-    // test.setAlign("right");
+    Renderer.drawString(text, x, y);
+    // new Text(text, x, y).setAlign("right").draw();
 }
 
 /**
@@ -35,8 +34,8 @@ register("renderOverlay", () => {
         // Draw example text
         Renderer.drawRect(
             Renderer.color(69, 69, 69, 169),
-            overlay.loc[0] - 3*overlay.loc[2], overlay.loc[1] - 2*overlay.loc[2],
-            overlay.width, overlay.height
+            overlay.loc[0] - 3*overlay.loc[2], overlay.loc[1] - 3*overlay.loc[2],
+            overlay.width + 6*overlay.loc[2], overlay.height + 6*overlay.loc[2]
         );
         renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y);
     });
@@ -54,9 +53,9 @@ register("guiMouseClick", (x, y, button, screen) => {
 
     overlays.forEach(overlay => {
         if (x > overlay.loc[0] - 3*overlay.loc[2] &&
-            x < overlay.loc[0] - 3*overlay.loc[2] + overlay.width &&
-            y > overlay.loc[1] - 2*overlay.loc[2] &&
-            y < overlay.loc[1] - 2*overlay.loc[2] + overlay.height
+            x < overlay.loc[0] + 3*overlay.loc[2] + overlay.width &&
+            y > overlay.loc[1] - 3*overlay.loc[2] &&
+            y < overlay.loc[1] + 3*overlay.loc[2] + overlay.height
         ) currentOverlay = overlay;
     });
 });
@@ -160,7 +159,7 @@ export class Overlay {
             }
         });
         
-        register("guiKey", (char, keyCode, gui, event) => {
+        register("guiKey", (char, keyCode, guiScreen, event) => {
             if (this.gui.isOpen()) {
                 if (keyCode === 13) {  // Increase Scale (+ key)
                     this.loc[2] += 0.05;
@@ -180,11 +179,18 @@ export class Overlay {
     }
 
     setSize() {
+        const lines = this.example.split("\n");
         this.width = 0;
-        this.height = 0;
-        this.example.split("\n").forEach(line => {
-            this.width = Math.max(Renderer.getStringWidth(line) * this.loc[2], this.width);
-            this.height += 10.3 * this.loc[2];
+        this.height = lines.length * 9 * this.loc[2];
+        lines.forEach(line => {
+            const regex = /&l(.*?)(?:&|$)/g;
+            const matches = [];
+            let match;
+
+            while ((match = regex.exec(line)) !== null) matches.push(match[1]);
+
+            const width = 1.1*Renderer.getStringWidth(matches.join('')) + Renderer.getStringWidth(line.replace(regex, ''));
+            this.width = Math.max(this.width, width * this.loc[2]);
         });
     }
 }
