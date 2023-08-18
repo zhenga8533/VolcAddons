@@ -18,20 +18,19 @@ const KEY_COST = [[200000, 2], [400000, 6], [750000, 20], [1500000, 60], [300000
  * Variables used to represent and render overlay.
  */
 const profitExample =
-`${GOLD}${BOLD}Value (BIN): ${GREEN}Vaporean
-${GOLD}${BOLD}Profit/Loss: ${GREEN}Is
+`${GOLD}${BOLD}Profit/Loss: ${GREEN}Vaporean
 
-${AQUA}${BOLD}Primary: ${GREEN}The
-${DARK_AQUA}${BOLD}Secondary: ${GREEN}Most
-${DARK_PURPLE}${BOLD}Teeth: ${GREEN}Compatible
-${RED}${BOLD}Essence: ${GREEN}Pokemon
-${DARK_RED}${BOLD}Key: ${RED}For...`;
+${AQUA}${BOLD}Primary: ${GREEN}Is
+${DARK_AQUA}${BOLD}Secondary: ${GREEN}The
+${DARK_PURPLE}${BOLD}Teeth: ${GREEN}Most
+${RED}${BOLD}Essence: ${GREEN}Compatible
+${DARK_RED}${BOLD}Key: ${RED}Pokemon...`;
 const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () => Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
 
 const coinageExample =
 `${DARK_RED}${BOLD}Profit: ${WHITE}And
-${DARK_RED}${BOLD}Chests Opened: ${WHITE}He
-${DARK_RED}${BOLD}Average Profit: ${WHITE}Asked
+${DARK_RED}${BOLD}Chests: ${WHITE}He
+${DARK_RED}${BOLD}Average: ${WHITE}Asked
 ${DARK_RED}${BOLD}Time Passed: ${WHITE}The
 ${DARK_RED}${BOLD}Rate: ${WHITE}Man`;
 const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Isle"], () => true, data.ZL, "moveKPT", coinageExample);
@@ -90,8 +89,8 @@ function updateProfitTracker(openedChest) {
     const profitView = settings.kuudraProfitTracker == 1 ? data.kuudraSession : kuudraSession;
     coinageOverlay.message =
 `${DARK_RED}${BOLD}Profit: ${WHITE}${formatNumber(profitView.profit.toFixed(0))} ¢
-${DARK_RED}${BOLD}Chests Opened: ${WHITE}${commafy(profitView.chests)} chests
-${DARK_RED}${BOLD}Average Profit: ${WHITE}${formatNumber(profitView.average.toFixed(0))} ¢/chest
+${DARK_RED}${BOLD}Chests: ${WHITE}${commafy(profitView.chests)} chests
+${DARK_RED}${BOLD}Average: ${WHITE}${formatNumber(profitView.average.toFixed(0))} ¢/chest
 ${DARK_RED}${BOLD}Time Passed: ${WHITE}${getTime(profitView.time)}
 ${DARK_RED}${BOLD}Rate: ${WHITE}${formatNumber(profitView.rate.toFixed(0))} ¢/hr`
 }
@@ -103,7 +102,7 @@ registerWhen(register("guiMouseClick", (x, y, button, gui) => {
 }), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker);
 registerWhen(register("step", () => {
     downtime++;
-
+    if (downtime >= 300) return;
     updateProfitTracker(false);
 }).setFps(1), () => settings.kuudraProfitTracker);
 registerWhen(register("chat", () => {
@@ -132,8 +131,7 @@ registerWhen(register("guiOpened", () => {
 
         const profitMessage = chestProfit >= 0 ? `${GREEN}+${commafy(chestProfit)}` : `${RED}-${commafy(chestProfit)}`;
         profitOverlay.message = 
-`${GOLD}${BOLD}Value (BIN): ${GREEN}+${commafy(value)}
-${GOLD}${BOLD}Profit/Loss: ${profitMessage}
+`${GOLD}${BOLD}Profit/Loss: ${profitMessage}
 
 ${AQUA}${BOLD}Primary: ${GREEN}+${commafy(primary)}
 ${DARK_AQUA}${BOLD}Secondary: ${GREEN}+${commafy(secondary)}
