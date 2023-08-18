@@ -458,6 +458,14 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     // --- Combat ---
     @SwitchProperty({
+        name: "Combo Display",
+        description: "Replaces Grandma Wolf combo chat messages with a custom GUI.",
+        category: "Combat",
+        subcategory: "Combat"
+    })
+    comboDisplay = false;
+    
+    @SwitchProperty({
         name: "Damage Tracker",
         description: `Spams chat with every damage tick ${RED}(this is meant for training dummies)${GRAY}.`,
         category: "Combat",

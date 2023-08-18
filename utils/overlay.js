@@ -139,9 +139,8 @@ export class Overlay {
                     Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
                     Renderer.screen.getHeight() / 2.4,
                 );
-            } else if (settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")) && !gui.isOpen()) {
+            } else if (settings[this.setting] && condition() && (this.requires.has(getWorld()) || this.requires.has("all")) && !gui.isOpen()) {
                 if (this.requires.has("misc")) {
-                    if (!condition()) return;
                     background.func_146278_c(0);
                     renderScale(this.loc[2], this.message, this.X, this.Y);
                 } else  // Draw HUD

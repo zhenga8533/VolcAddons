@@ -27,20 +27,20 @@ ${RED}${BOLD}Essence: ${GREEN}Compatible
 ${DARK_RED}${BOLD}Key: ${RED}Pokemon...`;
 const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () => Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
 
+let downtime = 300;
 const coinageExample =
 `${DARK_RED}${BOLD}Profit: ${WHITE}And
 ${DARK_RED}${BOLD}Chests: ${WHITE}He
 ${DARK_RED}${BOLD}Average: ${WHITE}Asked
 ${DARK_RED}${BOLD}Time Passed: ${WHITE}The
 ${DARK_RED}${BOLD}Rate: ${WHITE}Man`;
-const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Isle"], () => true, data.ZL, "moveKPT", coinageExample);
+const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Isle"], () => downtime < 300, data.ZL, "moveKPT", coinageExample);
 
 /**
  * Variables used to track Kuudra session profit.
  */
 let chestOpened = false;
 let chestProfit = 0;
-let downtime = 300;
 let kuudraSession = {
     "profit": 0,
     "chests": 0,

@@ -33,6 +33,7 @@ import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
 // Combat Features
 import { getBestiary } from "./features/combat/Bestiary";
+import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/DungeonRejoin";
 import "./features/combat/EntityDetect";
@@ -229,13 +230,6 @@ register ("command", (...args) => {
         case "waypoint":
         case "wp":
             createWaypoint(args);
-            break;
-        // Shh
-        case "hitbox":
-            if (!isNaN(args[1])) {
-                data.y = args[1];
-                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set mob hitbox y-value to ${args[1]}!`)
-            }
             break;
         // Bazaar Calculations
         case "calculate":

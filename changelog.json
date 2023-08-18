@@ -1,5 +1,7 @@
 [
+    "- Added combo display",
     "- Added anti ghost party",
-    "- Moved party settings into new tab",
+    "- Changed party settings to be in a new tab",
+    "- Changed Kuudra profit to only show when running",
     "- Fixed container value not registering at times"
 ]

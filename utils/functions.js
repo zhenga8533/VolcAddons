@@ -84,7 +84,7 @@ export function unformatNumber(str) {
   
     if (!isNaN(numericPart)) return numericPart * multiplier;
   
-    return NaN;  // If conversion is not possible, return NaN
+    return 0;  // If conversion is not possible, return NaN
 }
 
 /**
