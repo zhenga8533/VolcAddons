@@ -14,6 +14,7 @@ data.autosave();
 
 // General Features
 import "./features/general/AbiphoneBlocker";
+import "./features/general/AntiGhostParty";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
 import "./features/general/JoinParty";

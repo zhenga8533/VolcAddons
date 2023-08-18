@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { BOLD, GOLD, RED, WHITE } from "../../utils/constants";
+import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
@@ -9,7 +9,10 @@ import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
  * Variables used to track and display coin tracker.
  */
 const piggy = new Stat();
-register("command", () => { piggy.reset() }).setName("resetCoins");
+register("command", () => {
+    piggy.reset();
+    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset coin tracker!`);
+}).setName("resetCoins");
 const coinExample = 
 `${GOLD}${BOLD}Gained: ${WHITE}COUNTING
 ${GOLD}${BOLD}Time Passed: ${WHITE}ME

@@ -1,5 +1,6 @@
 import request from "../../../requestV2";
 import settings from "../../settings";
+import { LOGO } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
 
@@ -53,4 +54,5 @@ registerWhen(register("step", () => {
 register("command", () => {
     updateAuction();
     updateBazaar();
+    ChatLib.chat(`${LOGO} Successfully updated Auction and Bazaar!`);
 }).setName("updateEconomy");

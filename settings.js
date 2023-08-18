@@ -16,7 +16,7 @@ import {
 @Vigilant("VolcAddons", "VolcAddons", {
     // Function to compare categories for sorting settings
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Economy", "Combat", "Mining", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
+        const categories = ["General", "Party", "Economy", "Combat", "Mining", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -199,166 +199,6 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     })
     skillTracker = 0;
 
-    // --- Party ---
-    @SwitchProperty({
-        name: "Auto Join Reparty",
-        description: "Accepts reparty invites sent within 60 seconds.",
-        category: "General",
-        subcategory: "Party"
-    })
-    joinRP = false;
-    
-    @SwitchProperty({
-        name: "Auto Transfer Back",
-        description: "Prevents player from being party leader by instantly transferring party back.",
-        category: "General",
-        subcategory: "Party"
-    })
-    autoTransfer = false;
-
-    @SwitchProperty({
-        name: "Whitelist Rejoin",
-        description: `Accepts party invites from players on the whitelist.
-Add players with ${AQUA}/va whitelist${GRAY}.`,
-        category: "General",
-        subcategory: "Party"
-    })
-    joinWhitelist = false;
-
-    // --- Party Commands ---
-    @SwitchProperty({
-        name: "Leader Chat Commands",
-        description: `Allows players in party to use leader commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    leaderCommands = false;
-    @SwitchProperty({
-        name: "Leader Command Options",
-        description: "Toggle to display leader commands control panel.",
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    leaderOptions = false;
-    @CheckboxProperty({
-        name: `Allinvite Command ${DARK_AQUA}?<allinvite, allinv>`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    allinvCommand = true;
-    @CheckboxProperty({
-        name: `Demote Command ${DARK_AQUA}?demote`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    demoteCommand = true;
-    @CheckboxProperty({
-        name: `Promote Command ${DARK_AQUA}?promote`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    promoteCommand = true;
-    @CheckboxProperty({
-        name: `Stream Command ${DARK_AQUA}?<streamopen, stream> [num]`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    streamCommand = true;
-    @CheckboxProperty({
-        name: `Transfer Command ${DARK_AQUA}?transfer`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    transferCommand = true;
-    @CheckboxProperty({
-        name: `Warp Command ${DARK_AQUA}?warp`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    warpCommand = true;
-
-    @SelectorProperty({
-        name: "Party Chat Commands",
-        description: `Allows players to use party commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
-        category: "General",
-        subcategory: "Party Commands",
-        options: ["OFF", "All", "Party", "Guild", "DM"]
-    })
-    partyCommands = 0;
-    @SwitchProperty({
-        name: "Party Command Options",
-        description: "Toggle to display party commands control panel.",
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    partyOptions = false;
-    @CheckboxProperty({
-        name: `Coords Command ${DARK_AQUA}?coords`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    coordsCommand = true;
-    @CheckboxProperty({
-        name: `8ball Command ${DARK_AQUA}?8ball`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    ballCommand = true;
-    @CheckboxProperty({
-        name: `Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    coinCommand = true;
-    @CheckboxProperty({
-        name: `Dice Command ${DARK_AQUA}?<dice, roll>`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    diceCommand = true;
-    @CheckboxProperty({
-        name: `Help Command ${DARK_AQUA}?help`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    helpCommand = true;
-    @CheckboxProperty({
-        name: `Invite Command ${DARK_AQUA}?invite`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    inviteCommand = true;
-    @CheckboxProperty({
-        name: `Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    limboCommand = false;
-    @CheckboxProperty({
-        name: `Leave Command ${DARK_AQUA}?leave`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    leaveCommand = false;
-    @CheckboxProperty({
-        name: `RPS Command ${DARK_AQUA}?rps`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    rpsCommand = true;
-    @CheckboxProperty({
-        name: `Slander Command ${DARK_AQUA}?<racist, gay, cringe>`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    slanderCommand = true;
-    @CheckboxProperty({
-        name: `Women Command ${DARK_AQUA}?<w, waifu, women>`,
-        category: "General",
-        subcategory: "Party Commands"
-    })
-    womenCommand = true;
-
     // --- Server ---
     @SliderProperty({
         name: "Recent Server Alert",
@@ -396,6 +236,177 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
         max: 120
     })
     reminderTime = 0;
+
+
+    // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
+
+    // --- Party ---
+    @SwitchProperty({
+        name: "Auto Ghost Party",
+        description: "Prevents creating ghost parties when inviting multiple players.",
+        category: "Party",
+        subcategory: "Party"
+    })
+    antiGhostParty = false;
+
+    @SwitchProperty({
+        name: "Auto Join Reparty",
+        description: "Accepts reparty invites sent within 60 seconds.",
+        category: "Party",
+        subcategory: "Party"
+    })
+    joinRP = false;
+    
+    @SwitchProperty({
+        name: "Auto Transfer Back",
+        description: "Prevents player from being party leader by instantly transferring party back.",
+        category: "Party",
+        subcategory: "Party"
+    })
+    autoTransfer = false;
+
+    @SwitchProperty({
+        name: "Whitelist Rejoin",
+        description: `Accepts party invites from players on the whitelist.
+Add players with ${AQUA}/va whitelist${GRAY}.`,
+        category: "Party",
+        subcategory: "Party"
+    })
+    joinWhitelist = false;
+
+    // --- Party Commands ---
+    @SwitchProperty({
+        name: "Leader Chat Commands",
+        description: `Allows players in party to use leader commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    leaderCommands = false;
+    @SwitchProperty({
+        name: "Leader Command Options",
+        description: "Toggle to display leader commands control panel.",
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    leaderOptions = false;
+    @CheckboxProperty({
+        name: `Allinvite Command ${DARK_AQUA}?<allinvite, allinv>`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    allinvCommand = true;
+    @CheckboxProperty({
+        name: `Demote Command ${DARK_AQUA}?demote`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    demoteCommand = true;
+    @CheckboxProperty({
+        name: `Promote Command ${DARK_AQUA}?promote`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    promoteCommand = true;
+    @CheckboxProperty({
+        name: `Stream Command ${DARK_AQUA}?<streamopen, stream> [num]`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    streamCommand = true;
+    @CheckboxProperty({
+        name: `Transfer Command ${DARK_AQUA}?transfer`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    transferCommand = true;
+    @CheckboxProperty({
+        name: `Warp Command ${DARK_AQUA}?warp`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    warpCommand = true;
+
+    @SelectorProperty({
+        name: "Party Chat Commands",
+        description: `Allows players to use party commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
+        category: "Party",
+        subcategory: "Party Commands",
+        options: ["OFF", "All", "Party", "Guild", "DM"]
+    })
+    partyCommands = 0;
+    @SwitchProperty({
+        name: "Party Command Options",
+        description: "Toggle to display party commands control panel.",
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    partyOptions = false;
+    @CheckboxProperty({
+        name: `Coords Command ${DARK_AQUA}?coords`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    coordsCommand = true;
+    @CheckboxProperty({
+        name: `8ball Command ${DARK_AQUA}?8ball`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    ballCommand = true;
+    @CheckboxProperty({
+        name: `Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    coinCommand = true;
+    @CheckboxProperty({
+        name: `Dice Command ${DARK_AQUA}?<dice, roll>`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    diceCommand = true;
+    @CheckboxProperty({
+        name: `Help Command ${DARK_AQUA}?help`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    helpCommand = true;
+    @CheckboxProperty({
+        name: `Invite Command ${DARK_AQUA}?invite`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    inviteCommand = true;
+    @CheckboxProperty({
+        name: `Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    limboCommand = false;
+    @CheckboxProperty({
+        name: `Leave Command ${DARK_AQUA}?leave`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    leaveCommand = false;
+    @CheckboxProperty({
+        name: `RPS Command ${DARK_AQUA}?rps`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    rpsCommand = true;
+    @CheckboxProperty({
+        name: `Slander Command ${DARK_AQUA}?<racist, gay, cringe>`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    slanderCommand = true;
+    @CheckboxProperty({
+        name: `Women Command ${DARK_AQUA}?<w, waifu, women>`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    womenCommand = true;
 
 
     // ████████████████████████████████████████████████████ ECONOMY ████████████████████████████████████████████████████
@@ -891,20 +902,20 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     })
     nextVisitor = false;
     
-    // --- Webhook ---
+    // --- Garden Webhook ---
     @TextProperty({
-        name: "Discord Webhook (WIP)",
+        name: "Discord Webhook",
         description: "Input Discord Webhook link to send the Garden Statistics to.",
         category: "Garden",
-        subcategory: "Webhook",
+        subcategory: "Garden Webhook",
         protected: true
     })
     gardenWebhook = "";
     @SliderProperty({
-        name: "Webhook Timer (WIP)",
+        name: "Webhook Timer",
         description: "Set minutes until data is sent to webhook or as 0 to turn OFF.",
         category: "Garden",
-        subcategory: "Webhook",
+        subcategory: "Garden Webhook",
         min: 0,
         max: 120
     })
