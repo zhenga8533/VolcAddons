@@ -49,16 +49,16 @@ function getFirstSecondWord(inputString) {
  * Calculates and displays the total value of items in the player's container.
  * Generates a formatted overlay message for the containerOverlay.
  */
-function updateContainerValue() {
+function updateContainerValue(remove) {
     Client.scheduleTask(3, () => {
         const container = Player.getContainer();
         const containerName = container.getName().removeFormatting();
-        if (!VALID_CONTAINERS.has(getFirstSecondWord(containerName))) return;
+        if (!VALID_CONTAINERS.has(getFirstSecondWord(containerName)) && remove !== 0) return;
 
         const items = container.getItems();
         const itemValues = {};
         let totalValue = 0;
-        for (let i = 0; i < items.length - 36; i++) {
+        for (let i = 0; i < items.length - remove; i++) {
             let item = items[i];
             if (item === null) continue;
 
@@ -110,8 +110,9 @@ function updateContainerValue() {
  * @param {object} event - The GUI event object.
  */
 registerWhen(register("guiOpened", (event) => {
-    if (event.gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiChest") return;
-    updateContainerValue();
+    const guiName = event.gui.class.getName();
+    if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
+    else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
 }), () => settings.containerValue);
 
 /**
@@ -124,8 +125,9 @@ registerWhen(register("guiOpened", (event) => {
  * @param {object} gui - Associated GUI object.
  */
 registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
-    if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiChest") return;
-    updateContainerValue();
+    const guiName = gui.class.getName();
+    if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
+    else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
 }), () => settings.containerValue);
 
 /**
