@@ -19,10 +19,10 @@ registerWhen(register("chat", () => {
     entities = World.getAllEntitiesOfType(EntityPlayerMP.class);
     inquisitor = entities.find((entity) => entity.getName().equals("Minos Inquisitor"));
 
-    updateInqCounter(inquisitor != undefined);
-    if (inquisitor != undefined && settings.inqAlert)
-        announceMob(settings.inqAlert == 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
-}).setCriteria("${wow}! You dug out a Minos Champion!"), () => getWorld() === "Hub" && (settings.inqAlert || settings.inqCounter));
+    updateInqCounter(inquisitor !== undefined);
+    if (inquisitor !== undefined && settings.inqAlert)
+        announceMob(settings.inqAlert === 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
+}).setCriteria("${wow}! You dug out a Minos Champion!"), () => getWorld() === "Hub" && (settings.inqAlert !== 0 || settings.inqCounter !== 0));
 
 /**
  * Tracks world for any inquisitors near player.
@@ -40,4 +40,4 @@ registerWhen(register("tick", () => {
         if (data.moblist.includes("inquisitor"))
             inqs.forEach(inq => { inquisitors.push(inq) });
     }
-}), () => getWorld() === "Hub" && settings.detectInq);
+}), () => getWorld() === "Hub" && settings.detectInq === true);

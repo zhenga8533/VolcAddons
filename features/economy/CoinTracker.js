@@ -35,7 +35,7 @@ registerWhen(register("step", () => {
     }
 
     // Calculate changes
-    if (purse != piggy.now && piggy.now) piggy.since = 0;
+    if (purse !== piggy.now && piggy.now) piggy.since = 0;
     piggy.time++;
     piggy.now = purse;
     piggy.gain = piggy.now - piggy.start;
@@ -47,4 +47,4 @@ registerWhen(register("step", () => {
 `${GOLD}${BOLD}Gained: ${WHITE}${commafy(piggy.gain)} ¢
 ${GOLD}${BOLD}Time Passed: ${WHITE}${timeDisplay}
 ${GOLD}${BOLD}Rate: ${WHITE}${commafy(piggy.rate)} ¢/hr`;
-}).setFps(1), () => settings.coinTracker);
+}).setFps(1), () => settings.coinTracker !== 0);

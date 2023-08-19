@@ -12,16 +12,16 @@ let heldItem = undefined;
  * Tracks action bar for "CASTING" and held item to detect when Ragnarok ability goes off.
  */
 registerWhen(register("actionBar", () => {
-    if (Player.getHeldItem() == null) return;
+    if (Player.getHeldItem() === null) return;
     heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
 
     if (heldItem.equals("RAGNAROCK_AXE"))
         Client.Companion.showTitle(`${GOLD}${BOLD}AWOOGA!`, "", 0, 25, 5);
-}).setCriteria("${before}CASTING"), () => settings.ragDetect);
+}).setCriteria("${before}CASTING"), () => settings.ragDetect === true);
 
 /**
  * Tracks chat for rag cancelled message to display alert on screen.
  */
 registerWhen(register("chat", () => {
     Client.Companion.showTitle(`${RED}${BOLD}CANCELLED!`, "", 0, 25, 5);
-}).setCriteria("Ragnarock was cancelled due to being hit!"), () => settings.ragDetect);
+}).setCriteria("Ragnarock was cancelled due to being hit!"), () => settings.ragDetect === true);

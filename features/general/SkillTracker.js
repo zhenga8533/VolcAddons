@@ -54,7 +54,7 @@ registerWhen(register("actionBar", (before, gain, type, amount, next, after) => 
     if (skill === undefined) return;
     
     // Reset skill tracking
-    if (skill.start == 0)
+    if (skill.start === 0)
         skill.start = amount - parseInt(gain.replace(/,/g, ''));
     
     // Calc skill gain
@@ -66,7 +66,7 @@ registerWhen(register("actionBar", (before, gain, type, amount, next, after) => 
     // Finish updating info
     skill.next = parseInt(next);
     skill.since = 0;
-}).setCriteria("${before}+${gain} ${type} (${amount}/${next})${after}"), () => settings.skillTracker);
+}).setCriteria("${before}+${gain} ${type} (${amount}/${next})${after}"), () => settings.skillTracker !== 0);
 
 /**
  * Updates skill tracker data every second.
@@ -90,4 +90,4 @@ registerWhen(register("step", () => {
 ${DARK_AQUA}${BOLD}XP Gained: ${WHITE}${commafy(skills[current].gain)} xp
 ${DARK_AQUA}${BOLD}Time Passed: ${WHITE}${timeDisplay}
 ${DARK_AQUA}${BOLD}Rate: ${WHITE}${commafy(skills[current].rate)} xp/hr`;
-}).setFps(1), () => settings.skillTracker);
+}).setFps(1), () => settings.skillTracker !== 0);

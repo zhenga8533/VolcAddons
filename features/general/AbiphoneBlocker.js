@@ -26,7 +26,7 @@ registerWhen(register("chat", (npc, event) => {
         // Cancel Text
         cancel(event);
     }
-}).setCriteria("✆ ${npc} ✆ "), () => settings.abiphoneBlocker)
+}).setCriteria("✆ ${npc} ✆ "), () => settings.abiphoneBlocker === true)
 
 /**
  * Blocks the 3 ringing messages from unwanted callers.
@@ -36,7 +36,7 @@ registerWhen(register("chat", (npc, event) => {
  */
 registerWhen(register("chat", (rings, event) => {
     if (blockRings) cancel(event);
-}).setCriteria("✆ ${rings} [PICK UP]"), () => settings.abiphoneBlocker);
+}).setCriteria("✆ ${rings} [PICK UP]"), () => settings.abiphoneBlocker === true);
 
 /**
  * Cancels ringing sounds from unwatned callers.
@@ -45,4 +45,4 @@ registerWhen(register("chat", (rings, event) => {
  */
 registerWhen(register("soundPlay", (event) => {
     if (blockRings) cancel(event);
-}).setCriteria("note.pling"), () => settings.abiphoneBlocker);
+}).setCriteria("note.pling"), () => settings.abiphoneBlocker === true);

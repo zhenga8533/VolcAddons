@@ -78,4 +78,4 @@ registerWhen(register("messageSent", (message, event) => {
         ChatLib.say(message);
         cancel(event);
     }
-}), () => settings.enableEmotes);
+}), () => settings.enableEmotes === true);

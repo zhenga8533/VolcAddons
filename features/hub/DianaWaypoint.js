@@ -82,7 +82,7 @@ registerWhen(register("spawnParticle", (particle, type) => {
                 closest[0][0] = "Mob";
             break;
     }
-}), () => getWorld() === "Hub" && (settings.dianaWaypoint || settings.dianaBurrow) &&
+}), () => getWorld() === "Hub" && (settings.dianaWaypoint === true || settings.dianaBurrow === true) &&
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
@@ -109,7 +109,7 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
 
     if (pitch > 0)
         distance = 4 / Math.pow(pitch, 6) + 0.2 / Math.pow(pitch, 5) - correct;
-}).setCriteria("note.harp"), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+}).setCriteria("note.harp"), () => getWorld() === "Hub" && settings.dianaWaypoint === true &&
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
@@ -131,7 +131,7 @@ registerWhen(register("clicked", (x, y, button, state) => {
         delay(() => { cast = false }, 2000);
         delay(() => { cd = false }, 3000);
     }
-}), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+}), () => getWorld() === "Hub" && settings.dianaWaypoint === true &&
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
@@ -168,7 +168,7 @@ setWarps();
  * Uses burrow estimator to determine which hub warp is closest to burrow.
  */
 registerWhen(register("tick", () => {
-    if (particles.length == 0 || !cast) return;
+    if (particles.length === 0 || !cast) return;
 
     start = particles.length > 12 ? particles[3] : particles[particles.length - 1];
     end = particles[particles.length - 1];
@@ -178,7 +178,7 @@ registerWhen(register("tick", () => {
     // Set theory burrow
     theory[0] = "warp " + getClosest(theory, warps)[0][0];
     theoryBurrow = [theory];
-}), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+}), () => getWorld() === "Hub" && settings.dianaWaypoint === true &&
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
@@ -186,7 +186,7 @@ getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
  */
 const dianaKey = new KeyBind("Diana Warp", 33, "VolcAddons");
 dianaKey.registerKeyPress(() => {
-    if (settings.dianaWarp && theory[0] != undefined && theory[0] != "warp player")
+    if (settings.dianaWarp && theory[0] !== undefined && theory[0] !== "warp player")
         ChatLib.command(theory[0])
 })
 
@@ -200,9 +200,9 @@ registerWhen(register("chat", () => {
 
     // Delete closest burrow from list
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
-    if (closest != undefined);
+    if (closest !== undefined);
         burrows.splice(burrows.indexOf(closest[0]), 1);
-}).setCriteria("${before}urrow${after}"), () => getWorld() === "Hub" && settings.dianaWaypoint &&
+}).setCriteria("${before}urrow${after}"), () => getWorld() === "Hub" && settings.dianaWaypoint === true &&
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
@@ -214,5 +214,5 @@ register("worldUnload", () => {
 });
 registerWhen(register("chat", () => {
     burrows = [];
-}).setCriteria(" ☠ You ${died}."), () => getWorld() == "Hub" && settings.dianaWaypoint &&
+}).setCriteria(" ☠ You ${died}."), () => getWorld() === "Hub" && settings.dianaWaypoint === true &&
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));

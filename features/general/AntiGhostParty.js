@@ -16,4 +16,4 @@ registerWhen(register("messageSent", (message, event) => {
     cancel(event);
     ChatLib.command(`p ${args[1]}`);
     delay(() => ChatLib.command(`p ${args.splice(2).join(' ')}`), 500);
-}), () => settings.antiGhostParty);
+}), () => settings.antiGhostParty === true);

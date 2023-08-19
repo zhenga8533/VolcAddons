@@ -14,9 +14,7 @@ export function getMVP() {
 
 // Event handler for chat messages to check MVP status
 register("chat", (player) => {
-    if (player == Player.getName()) {
-        isMVP = true;
-    }
+    isMVP = player === Player.getName();
 }).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<");
 
 /**

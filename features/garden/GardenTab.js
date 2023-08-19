@@ -37,14 +37,14 @@ registerWhen(register("step", () => {
     visitors = tablist.findIndex((tab) => tab.includes("Visitors:"));
     if (!visitors) return;
 
-    if (visitors != -1) {
+    if (visitors !== -1) {
         count = parseInt(tablist[visitors].removeFormatting().substring(11, 12)) + 1;
         for (count; count >= 0; count--)
             gardenOverlay.message = tablist[visitors + count] + "\n" + gardenOverlay.message;
     } else {
         gardenOverlay.message += `${AQUA}${BOLD}Visitors: ${RESET}(0)`;
     }
-}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);
+}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab === true);
 
 /**
  * Checks tablist for the time until next visitor and updates the Next Visitor Overlay every second.
@@ -57,24 +57,24 @@ registerWhen(register("step", () => {
         `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)}`:
         `${AQUA}${BOLD}Next Visitor: ${RED}Shipment Received`;
 
-    if (getWorld() != "Garden" || tablist === null) return;
+    if (getWorld() !== "Garden" || tablist === null) return;
 
     // Set Next Visitor
-    nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") != -1);
+    nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") !== -1);
     if (!nextVisit) return;
 
-    if (nextVisit != undefined && !nextVisit.includes("Full")) {
+    if (nextVisit !== undefined && !nextVisit.includes("Full")) {
         nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
 
         next = nextVisit[0];
-        if (nextVisit.length == 2)
+        if (nextVisit.length === 2)
             next = next * 60 + parseInt(nextVisit[1]);
     }
-}).setFps(1), () => (settings.nextVisitor || settings.warpGarden));
+}).setFps(1), () => settings.nextVisitor === true || settings.warpGarden === true);
 
 registerWhen(register("chat", () => {
     next = 720;
-}).setCriteria("Tarwen has arrived on your Garden!"), () => (settings.nextVisitor || settings.warpGarden));
+}).setCriteria("Tarwen has arrived on your Garden!"), () => settings.nextVisitor === true || settings.warpGarden === true);
 
 /**
  * Checks tablist for inactive composter and displays a title if there is.
@@ -82,7 +82,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("step", () => {
     if (!tablist) return;
 
-    composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") != -1);
-    if (composter != -1)
+    composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") !== -1);
+    if (composter !== -1)
         Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
-}).setFps(1), () => getWorld() === "Garden" && settings.gardenCompost);
+}).setFps(1), () => getWorld() === "Garden" && settings.gardenCompost === true);

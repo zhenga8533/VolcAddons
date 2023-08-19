@@ -27,7 +27,7 @@ registerWhen(register("chat", (server, event) => {
     } else {
         servers[server] = currentTime;
     }
-}).setCriteria("Sending to server ${server}..."), () => settings.serverAlert);
+}).setCriteria("Sending to server ${server}..."), () => settings.serverAlert !== 0);
 
 /**
  * Clears server entry after X minutes when leaving it.
@@ -41,4 +41,4 @@ registerWhen(register("worldUnload", () => {
             delete servers[server];
         }
     });
-}), () => settings.serverAlert);
+}), () => settings.serverAlert !== 0);

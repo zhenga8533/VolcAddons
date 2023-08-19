@@ -122,7 +122,7 @@ const valueExample =
 
 &3Total Value: &aKATSU.`;
 const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
-() => settings.itemPrice == 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
+() => settings.itemPrice === 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
 valueOverlay.message = "";
 
 /**
@@ -362,7 +362,7 @@ registerWhen(register("itemTooltip", (lore, item) => {
     valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
     if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
-}), () => settings.itemPrice);
+}), () => settings.itemPrice !== 0);
 
 /**
  * Reset data on data transfers.

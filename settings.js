@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_AQUA, DARK_RED, GRAY, HEADER, ITALIC, RED } from "./utils/constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./utils/constants";
 import {
     @TextProperty,
 	@PercentSliderProperty,
@@ -171,7 +171,7 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
 
     @SliderProperty({
         name: "Draw Waypoint",
-        description: `Creates waypoints out of patcher formated coords in chat. Set seconds until waypoints expire or as 0 to turn OFF ${RED}(mob waypoints last 1/3 as long)${GRAY}.`,
+        description: `Creates waypoints out of patcher formated coords in chat. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
         category: "General",
         subcategory: "General",
         min: 0,
@@ -189,7 +189,7 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
 
     @SliderProperty({
         name: "Skill Tracker",
-        description: `Tracks and displays skill XP's rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn OFF.
+        description: `Tracks and displays skill XP's rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
 Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkills${GRAY}.`,
         category: "General",
         subcategory: "General",
@@ -219,7 +219,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @SliderProperty({
         name: "Recent Server Alert",
-        description: `Alerts player when they rejoin a recent server. Set minutes until a server is no longer "recent" or as 0 to turn OFF.`,
+        description: `Alerts player when they rejoin a recent server. Set minutes until a server is no longer "recent" or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
         subcategory: "Server",
         min: 0,
@@ -246,7 +246,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     reminderText = "";
     @SliderProperty({
         name: "Reminder Time",
-        description: "Set minutes until timer expires or as 0 to turn OFF.",
+        description: `Set minutes until timer expires or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
         subcategory: "Timer",
         min: 0,
@@ -431,7 +431,7 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
     // --- Economy ---
     @SliderProperty({
         name: "Coin Tracker",
-        description: `Tracks and displays purse's rate of gain. Set minutes until tracker resets or as 0 to turn OFF.
+        description: `Tracks and displays purse's rate of gain. Set minutes until tracker resets or as 0 to turn ${RED}OFF${GRAY}.
 Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins${GRAY}.`,
         category: "Economy",
         subcategory: "Economy",
@@ -453,7 +453,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Item Cost ---
     @SliderProperty({
         name: "Container Value",
-        description: "Displays item values in any chest GUI. Set number of item prices to display or as 0 to turn OFF.",
+        description: `Displays item values in any inventory. Set number of item prices to display or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Economy",
         subcategory: "Pricing",
         min: 0,
@@ -484,7 +484,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     
     @SwitchProperty({
         name: "Damage Tracker",
-        description: `Spams chat with every damage tick ${RED}(this is meant for training dummies)${GRAY}.`,
+        description: `Spams chat with every damage tick ${BLUE}(this is meant for training dummies)${GRAY}.`,
         category: "Combat",
         subcategory: "Combat"
     })
@@ -492,7 +492,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     
     @PercentSliderProperty({
         name: "Low Health Alert",
-        description: "Set percent hp threshold until alert appears or as 0 to turn OFF.",
+        description: `Set percent hp threshold until alert appears or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Combat",
         subcategory: "Combat"
     })
@@ -509,7 +509,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Dungeon ---
     @SelectorProperty({
         name: "Dungeon Rejoin",
-        description: `Rejoins last completed dungeon when 4 players join your party ${RED}(does NOT reparty)${GRAY}.`,
+        description: `Rejoins last completed dungeon when 4 players join your party ${BLUE}(does NOT reparty)${GRAY}.`,
         category: "Combat",
         subcategory: "Dungeon",
         options: ["OFF", "No DT", "Social Farm", "Visitor Magnet"]
@@ -551,7 +551,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     bossAlert = 0;
     @SelectorProperty({
         name: "Announce Miniboss Chat",
-        description: `Sends coordinates of user slayer miniboss spawns to chat ${RED}(sounds must be ON)${GRAY}.`,
+        description: `Sends coordinates of user slayer miniboss spawns to chat ${BLUE}(sounds must be ${GREEN}ON${BLUE})${GRAY}.`,
         category: "Combat",
         subcategory: "Slayer",
         options: ["OFF", "All Chat", "Party Chat"]
@@ -562,7 +562,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
     @SliderProperty({
         name: "Powder Tracker",
-        description: `Displays powders' rate of gain ${RED}(ONLY chests)${GRAY}. Set minutes of inactivity required for tracker to reset or as 0 to turn OFF.
+        description: `Displays powders' rate of gain ${BLUE}(ONLY chests)${GRAY}. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
 Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowder${GRAY}.`,
         category: "Mining",
         subcategory: "Powder",
@@ -577,15 +577,15 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     // --- Diana ---
     @SwitchProperty({
         name: "Diana Waypoint",
-        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${RED}(POV Soopy servers are down)${GRAY}.
-Particles must be ON and use ${AQUA}/togglemusic ${GRAY}to turn music OFF.`,
+        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
+Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
         category: "Hub",
         subcategory: "Diana"
     })
     dianaWaypoint = false;
     @SwitchProperty({
         name: "Diana Warp",
-        description: `Press F ${RED}(change in controls) ${GRAY}to warp to location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
+        description: `Press F ${BLUE}(change in controls) ${GRAY}to warp to location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
         category: "Hub",
         subcategory: "Diana"
     })
@@ -672,7 +672,7 @@ Particles must be ON and use ${AQUA}/togglemusic ${GRAY}to turn music OFF.`,
     // --- Vanquisher ---
     @SelectorProperty({
         name: "Announce Vanquisher Chat",
-        description: `Sends coordinates of user Vanquisher spawns ${RED}(only works if Vanquisher Auto-Warp is empty)${GRAY}.`,
+        description: `Sends coordinates of user Vanquisher spawns ${BLUE}(only works if Vanquisher Auto-Warp is empty)${GRAY}.`,
         category: "Crimson Isles",
         subcategory: "Vanquisher",
         options: ["OFF", "All Chat", "Party Chat"]
@@ -690,7 +690,7 @@ Particles must be ON and use ${AQUA}/togglemusic ${GRAY}to turn music OFF.`,
 
     @SelectorProperty({
         name: "Vanquisher Counter",
-        description: `Tracks average kills of Vanquisher spawns ${RED}(must have Book of Stats)${GRAY}.
+        description: `Tracks average kills of Vanquisher spawns ${BLUE}(must have Book of Stats)${GRAY}.
 Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCounter${GRAY}.`,
         category: "Crimson Isles",
         subcategory: "Vanquisher",
@@ -727,7 +727,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     @SwitchProperty({
         name: "Kuudra Spawn",
-        description: `Displays a title for where Kuudra spawns in p4 ${RED}(requires animation skip, so don't fail @BananaTheBot)${GRAY}.`,
+        description: `Displays a title for where Kuudra spawns in p4 ${BLUE}(requires animation skip, so don't fail @BananaTheBot)${GRAY}.`,
         category: "Kuudra",
         subcategory: "Kuudra"
     })
@@ -860,7 +860,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     dropshipAlert = true;
     @SliderProperty({
         name: "Token Alert",
-        description: "Set token threshold before alert goes off or as 0 to turn OFF (only alerts once per run).",
+        description: `Set token threshold before alert appears or as 0 to turn ${RED}OFF${GRAY} (only alerts once per run).`,
         category: "Kuudra",
         subcategory: "Kuudra Alert",
         min: 0,
@@ -886,7 +886,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     kuudraProfitTracker = 0;
     @SwitchProperty({
         name: "Tabasco Enjoyer",
-        description: "Toggle OFF if you are a cringer without max chili pepper collection.",
+        description: `Toggle ${RED}OFF ${GRAY}if you are a cringer without max chili pepper collection.`,
         category: "Kuudra",
         subcategory: "Kuudra Profit"
     })
@@ -939,7 +939,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     gardenWebhook = "";
     @SliderProperty({
         name: "Webhook Timer",
-        description: "Set minutes until data is sent to webhook or as 0 to turn OFF.",
+        description: `Set minutes until data is sent to webhook or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Garden",
         subcategory: "Garden Webhook",
         min: 0,
@@ -977,7 +977,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     @SliderProperty({
         name: "Enigma Soul Waypoints",
-        description: "Set distance at which Enigma Soul waypoints will register or as 0 to turn OFF.",
+        description: `Set distance at which Enigma Soul waypoints will register or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Rift",
         subcategory: "Rift",
         min: 0,

@@ -51,7 +51,7 @@ registerWhen(register("tick", () => {
 
         // Mania Detect
         const maniaIndex = name.indexOf("§5§lMANIA");
-        if (maniaIndex != -1) {
+        if (maniaIndex !== -1) {
             vampireOverlay.message += `${name[maniaIndex]}: ${name[maniaIndex + 1]}\n`;
             if (!inMania) {
                 mania++;
@@ -60,7 +60,7 @@ registerWhen(register("tick", () => {
                 const pX = Math.round(Player.getX());
                 const PY = Math.round(Player.getY());
                 const PZ = Math.round(Player.getZ());
-                if (settings.announceMania == 1) {
+                if (settings.announceMania === 1) {
                     const id = (Math.random() + 1).toString(36).substring(6);
                     ChatLib.command(`ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`);
                 } else if (getInParty())
@@ -70,11 +70,11 @@ registerWhen(register("tick", () => {
 
         // Twinclaw Detect
         const clawIndex = name.indexOf("§6§lTWINCLAWS");
-        if (clawIndex != -1) vampireOverlay.message += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
+        if (clawIndex !== -1) vampireOverlay.message += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
 
         // Ichor Detect
         const ichorIndex = name.indexOf("§3§lICHOR");
-        if (ichorIndex != -1) ichorSpawn = true;
+        if (ichorIndex !== -1) ichorSpawn = true;
     }
 
     // Ichor Nametag Shit
@@ -93,7 +93,7 @@ registerWhen(register("tick", () => {
             ichorUUID = ichor.getUUID();
         }
     }
-}), () => getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania));
+}), () => getWorld() === "The Rift" && (settings.vampireAttack === true || settings.announceMania !== 0));
 
 /**
  * Replaces Hypixel's impel subtitle with a flashy title.
@@ -107,7 +107,7 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
         cancel(event);
         Client.Companion.showTitle(subtitle, "", 0, 20, 0);
     }
-}), () => getWorld() === "The Rift" && settings.vampireImpel);
+}), () => getWorld() === "The Rift" && settings.vampireImpel === true);
 
 /**
  * Draws an ESP box around player boss and highlights when low.
@@ -115,17 +115,16 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
 registerWhen(register("renderWorld", () => {
     if (dracula === undefined) return;
     RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, false);
-}), () => settings.vampireHitbox);
-
-let vamps = [];
-export function getVamps() { return vamps };
+}), () => settings.vampireHitbox === true && getWorld() === "The Rift");
 
 /**
  * Highlights vampire bosses with steakable HP.
  */
+let vamps = [];
+export function getVamps() { return vamps };
 registerWhen(register("tick", () => {
-    if (vamps.length) vamps = [];
+    vamps = [];
     const stands = get3x3Stands();
     let bosses = stands.filter(stand => stand.getName().includes("Bloodfiend §e§l"));
     vamps = bosses === undefined ? [] : bosses;
-}), () => data.moblist.includes("vampire") && getWorld() === "The Rift");
+}), () => settings.vampireHitbox === true && getWorld() === "The Rift");

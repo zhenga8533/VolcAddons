@@ -39,13 +39,13 @@ function formatWaypoints(waypoints, r, g, b) {
 
         // Formats and realigns everything
         distance = Math.round(distance) + "m";
-        xSign = x == 0 ? 1 : Math.sign(x);
-        zSign = z == 0 ? 1 : Math.sign(z);
+        xSign = x === 0 ? 1 : Math.sign(x);
+        zSign = z === 0 ? 1 : Math.sign(z);
         wp[0] = [`${waypoint[0]} §b[${distance}]`, x + 0.5*xSign, y - 1, z + 0.5*zSign];
 
         // Aligns the beam correctly based on which quadrant it is in
-        if (xSign == 1) xSign = 0;
-        if (zSign == 1) zSign = 0;
+        if (xSign === 1) xSign = 0;
+        if (zSign === 1) zSign = 0;
         wp[1] = [x + xSign, y - 1, z + zSign];
 
         /* Return Matrix

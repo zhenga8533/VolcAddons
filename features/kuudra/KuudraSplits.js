@@ -40,7 +40,7 @@ registerWhen(register("worldLoad", () => {
     kuudraSplit = [0, 0, 0, 0];
     times = ['0s', '0s', '0s', '0s'];
     phase = 0;
-}), () => settings.kuudraSplits);
+}), () => settings.kuudraSplits === true);
 
 /**
  * Tracks party on player ready.
@@ -48,7 +48,7 @@ registerWhen(register("worldLoad", () => {
 registerWhen(register("chat", (player) => {
     player = player.toLowerCase();
     if (!party.includes(player)) party.push(player);
-}).setCriteria("${player} is now ready!"), () => settings.kuudraSplits);
+}).setCriteria("${player} is now ready!"), () => settings.kuudraSplits === true);
 
 /**
  * First split.
@@ -99,7 +99,7 @@ registerWhen(register("chat", () => {
     let broken = false;
     for (let i = 0; i < data.splits.last.length - 1; i++) {
         data.splits.last[i] = parseFloat(Math.abs(kuudraSplit[i + 1] - kuudraSplit[i]).toFixed(2));
-        if (data.splits.last[i] > 69420 || data.splits.last[i] == 0) broken = true;
+        if (data.splits.last[i] > 69420 || data.splits.last[i] === 0) broken = true;
     }
 
     // Record Total
@@ -107,13 +107,13 @@ registerWhen(register("chat", () => {
     
     // Record splits
     let splitFormat = "";
-    if (getTier() == 5) {
+    if (getTier() === 5) {
         // Check if new best split / run
         for (let i = 0; i < data.splits.last.length; i++) {
             if (!broken)
                 splitFormat += `${data.splits.last[i]}, `;
             // Record best splits
-            if (data.splits.last[i] < data.splits.best[i] && data.splits.last[i] != 0)
+            if (data.splits.last[i] < data.splits.best[i] && data.splits.last[i] !== 0)
                 data.splits.best[i] = data.splits.last[i];
             // Record worst splits
             if (data.splits.last[i] > data.splits.worst[i] && data.splits.last[i] < 999)
@@ -128,7 +128,7 @@ registerWhen(register("chat", () => {
 
             // Tracks splits for unique parties
             const fileMembers = party.sort().join("-") + ".txt";
-            if (party.length == 4) {
+            if (party.length === 4) {
                 FileLib.append("./VolcAddons/data", fileMembers, splitFormat);
                 if (!data.files.includes(fileMembers)) 
                     data.files.push(fileMembers);
@@ -146,18 +146,18 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
-}).setCriteria("${before}DEFEAT${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}DEFEAT${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits === true);
 
 /**
  * Updates time splits overlay.
  */
 registerWhen(register("step", () => {
     // Phase 4 fail safe
-    if (phase == 3 && getKuudraHP() < 25000 && getTier() == 5) {
+    if (phase === 3 && getKuudraHP() < 25000 && getTier() === 5) {
         kuudraSplit[3] = Date.now() / 1000;
         phase = 4;
     }
-    if (phase == 4 && getKuudraHP() < 10) {
+    if (phase === 4 && getKuudraHP() < 10) {
         kuudraSplit[4] = Date.now() / 1000;
         phase = 5;
     }
@@ -189,7 +189,7 @@ registerWhen(register("step", () => {
 ${AQUA}${BOLD}Build: ${RESET}${times[1]}
 ${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
 ${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
-}).setFps(19), () => getWorld() === "Kuudra" && settings.kuudraSplits);
+}).setFps(19), () => getWorld() === "Kuudra" && settings.kuudraSplits === true);
 
 /**
  * Party commands for splits.
@@ -228,7 +228,7 @@ registerWhen(register("chat", (player, message) => {
 
     onCD = true;
     delay(() => onCD = false, 500);
-}).setCriteria("Party > ${player}: ?${message}"), () => settings.kuudraSplits);
+}).setCriteria("Party > ${player}: ?${message}"), () => settings.kuudraSplits === true);
 
 /**
  * Uses sound name and pitch to determine whenever Ragnarok Ability goes off.
@@ -260,7 +260,7 @@ function formatSplits(splits, color, runs) {
  * @param {string[]} args - Array of player input values.
  */
 export function getSplits(args){
-    if (args[1] != undefined) {
+    if (args[1] !== undefined) {
         switch (args[1]) {
             case "last":
                 formatSplits(data.splits.last, AQUA, 0);
@@ -276,8 +276,8 @@ export function getSplits(args){
             case "average":
                 // Gets file name
                 let fileName = "splits.txt";
-                if (args[6] != undefined) fileName = [args[3], args[4], args[5], args[6]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
-                else if (args[5] != undefined) fileName = [args[2], args[3], args[4], args[5]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
+                if (args[6] !== undefined) fileName = [args[3], args[4], args[5], args[6]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
+                else if (args[5] !== undefined) fileName = [args[2], args[3], args[4], args[5]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
 
                 const fileSplits = FileLib.read("./VolcAddons/data", fileName);
 
@@ -288,9 +288,9 @@ export function getSplits(args){
 
                     // Filter by date
                     if (isValidDate(args[2]))
-                        runs = runs.filter((run) => run.split(", ")[5] == args[2]);
+                        runs = runs.filter((run) => run.split(", ")[5] === args[2]);
                     if (today || args[2] === "today")
-                        runs = runs.filter((run) => run.split(", ")[5] == (mm+"/"+dd+"/"+yyyy));
+                        runs = runs.filter((run) => run.split(", ")[5] === (mm+"/"+dd+"/"+yyyy));
                     
                     // Get # of runs to average
                     let runsWanted = runs.length;

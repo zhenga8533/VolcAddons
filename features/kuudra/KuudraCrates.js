@@ -18,7 +18,7 @@ export function getBuilds() { return builds };
  * Tracks crates near player and colors them depending on how close they are.
  */
 registerWhen(register("tick", () => {
-    if (getPhase() != 1 && getPhase() != 3) return;
+    if (getPhase() !== 1 && getPhase() !== 3) return;
     
     const gzs = World.getAllEntitiesOfType(EntityGiantZombie.class);
     const supplies = gzs.filter(gz => gz.getY() < 67);
@@ -31,19 +31,19 @@ registerWhen(register("tick", () => {
         const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180));
         return [x, 75, z, distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0];
     });
-}), () => getWorld() === "Kuudra" && settings.kuudraCrates);
+}), () => getWorld() === "Kuudra" && settings.kuudraCrates === true);
 
 /**
  * Marks build piles that are not completed.
  */
 registerWhen(register("step", () => {
-    if (getPhase() != 2) return;
+    if (getPhase() !== 2) return;
 
     builds = [];
     const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
-}).setFps(2), () => getWorld() === "Kuudra" && settings.kuudraBuild);
+}).setFps(2), () => getWorld() === "Kuudra" && settings.kuudraBuild === true);
 
 /**
  * Marks build piles that are not completed.

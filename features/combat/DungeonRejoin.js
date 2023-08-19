@@ -29,7 +29,7 @@ registerWhen(register("chat", (type, floor) => {
     dungeon = [type, floor];
     invited = 4;
 
-    if (settings.dungeonRejoin == 2 || settings.dungeonRejoin == 3)
+    if (settings.dungeonRejoin === 2 || settings.dungeonRejoin === 3)
         delay(() => ChatLib.command("warp garden"), 1000);
     else {
         if (dungeon[0].includes("Master"))
@@ -37,7 +37,7 @@ registerWhen(register("chat", (type, floor) => {
         else
             delay(() => ChatLib.command(`joindungeon catacombs ${dungeon[1]}`), 1000);
     }
-}).setCriteria("${type} - Floor ${floor}"), () => settings.dungeonRejoin);
+}).setCriteria("${type} - Floor ${floor}"), () => settings.dungeonRejoin !== 0);
 
 /**
  * Attempts to warp party into lobby/dunngeon once correct world is detected.
@@ -47,7 +47,7 @@ registerWhen(register("chat", (type, floor) => {
 function tryWarp(world) {
     if (getWorld() === world) {
         baseDelay = 0
-        if (settings.dungeonRejoin == 2) {
+        if (settings.dungeonRejoin === 2) {
             delay(() => ChatLib.command("p warp"), 4000);
             baseDelay += 7000
         }
@@ -63,13 +63,13 @@ function tryWarp(world) {
  * Tracks whenever a player joins party to determine when all players have joined the party.
  */
 registerWhen(register("chat", () => {
-    if (invited == 0) return;
+    if (invited === 0) return;
     
     invited--;
-    if (invited == 0) {
-        if (settings.dungeonRejoin == 2)
+    if (invited === 0) {
+        if (settings.dungeonRejoin === 2)
             tryWarp("garden");
         else
             tryWarp(undefined);
     }
-}).setCriteria("${player} joined the party."), () => settings.dungeonRejoin == 2 || settings.dungeonRejoin == 3);
+}).setCriteria("${player} joined the party."), () => settings.dungeonRejoin === 2 || settings.dungeonRejoin === 3);

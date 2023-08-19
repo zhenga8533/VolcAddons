@@ -32,12 +32,12 @@ function calcTPS() {
 try {
     registerWhen(register('packetReceived', () => {
         calcTPS()
-    }).setFilteredClass(S03PacketTimeUpdate), () => settings.serverStatus);
+    }).setFilteredClass(S03PacketTimeUpdate), () => settings.serverStatus === true);
 } catch (err) {
     registerWhen(register('packetReceived', (packet) => {
-        if (packet != S03PacketTimeUpdate) return;
+        if (packet !== S03PacketTimeUpdate) return;
         calcTPS();
-    }), () => settings.serverStatus);
+    }), () => settings.serverStatus === true);
 }
 
 /**
@@ -73,12 +73,12 @@ function calculatePing() {
 try {
     registerWhen(register('packetReceived', () => {
         calculatePing();
-    }).setFilteredClasses([S01PacketJoinGame, S37PacketStatistics]), () => settings.serverStatus);
+    }).setFilteredClasses([S01PacketJoinGame, S37PacketStatistics]), () => settings.serverStatus === true);
 } catch (err) {
     registerWhen(register('packetReceived', () => {
-        if (packet != S01PacketJoinGame || packet != S37PacketStatistics) return;
+        if (packet !== S01PacketJoinGame || packet !== S37PacketStatistics) return;
         calculatePing();
-    }), () => settings.serverStatus);
+    }), () => settings.serverStatus === true);
 }
 
 

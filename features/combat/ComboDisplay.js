@@ -44,7 +44,7 @@ registerWhen(register("chat", (color, kills, bonus, event) => {
     cancel(event);
     stats[0] = `${color}${BOLD}${kills}:`;
     updateOverlay();
-}).setCriteria("&r${color}&l+${kills} &r&8${bonus}&r"), () => settings.comboDisplay);
+}).setCriteria("&r${color}&l+${kills} &r&8${bonus}&r"), () => settings.comboDisplay === true);
 
 /**
  * Updates overlay with formatted kill combo message.
@@ -55,7 +55,7 @@ registerWhen(register("chat", (color, kills, bonus, event) => {
 registerWhen(register("chat", (color, kills) => {
     stats[0] = `${color}${kills} Kill Combo:`;
     updateOverlay();
-}).setCriteria("&r${color}+${kills} Kill Combo&r"), () => settings.comboDisplay);
+}).setCriteria("&r${color}+${kills} Kill Combo&r"), () => settings.comboDisplay === true);
 
 /**
  * Resets statistics and overlay message.
@@ -63,8 +63,8 @@ registerWhen(register("chat", (color, kills) => {
 registerWhen(register("chat", () => {
     stats = ["", 0, 0, 0];
     comboOverlay.message = "";
-}).setCriteria("Your Kill Combo has expired! You reached a ${kills} Kill Combo!"), () => settings.comboDisplay);
+}).setCriteria("Your Kill Combo has expired! You reached a ${kills} Kill Combo!"), () => settings.comboDisplay === true);
 registerWhen(register("worldUnload", () => {
     stats = ["", 0, 0, 0];
     comboOverlay.message = "";
-}), () => settings.comboDisplay);
+}), () => settings.comboDisplay === true);

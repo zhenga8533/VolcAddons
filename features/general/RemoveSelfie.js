@@ -24,4 +24,4 @@ registerWhen(register('tick', () => {
         if (Client.settings.getSettings().field_74320_O === 2)
                 Client.settings.getSettings().field_74320_O = 0;
     }
-}), () => settings.removeSelfie);
+}), () => settings.removeSelfie === true);

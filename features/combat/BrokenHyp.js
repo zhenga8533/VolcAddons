@@ -15,8 +15,9 @@ let trackerXP = 0;
 /**
  * Tracks Book of Stats and Champion to detect when Wither Impact stops giving xp.
  * Announces a title whenever it does fail.
+ * (boppeler21 cutie)
  */
-registerWhen(register("entityDeath", () => { // (boppeler21 cutie)
+registerWhen(register("entityDeath", () => {
     if (Player.getHeldItem() === null) return;
 
     // Update held item
@@ -27,9 +28,9 @@ registerWhen(register("entityDeath", () => { // (boppeler21 cutie)
         const newKills = heldItem.getInteger("stats_book");
         const newXP = heldItem.getDouble("champion_combat_xp");
 
-        if (trackerKills != newKills) {
+        if (trackerKills !== newKills) {
             if (broken) broken = false;
-            else if (trackerXP == newXP) {
+            else if (trackerXP === newXP) {
                 Client.Companion.showTitle(`${DARK_RED}${BOLD}HYPE BROKEN!`, "", 5, 25, 5);
                 broken = true;
             }
@@ -38,4 +39,4 @@ registerWhen(register("entityDeath", () => { // (boppeler21 cutie)
             trackerXP = newXP;
         }
     }
-}), () => settings.brokenHyp);
+}), () => settings.brokenHyp === true);

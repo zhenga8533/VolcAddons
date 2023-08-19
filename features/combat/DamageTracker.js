@@ -29,4 +29,4 @@ registerWhen(register("step", () => {
         delay(() => damaged.shift(), 1000);
       }
     });
-}).setFps(2), () => settings.damageTracker);
+}).setFps(2), () => settings.damageTracker === true);

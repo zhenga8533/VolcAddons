@@ -102,9 +102,9 @@ export function executeCommand(name, args, sendTo) {
                 if (!settings.rpsCommand) return;
 
                 const player = args[1] === undefined ? -1 : RPS.indexOf(args[1].toLowerCase());
-                let reply = player == -1 ? `Wtf is a(n) ${args[1]}? Are you from the jungle?` : "zzz...";
+                let reply = player === -1 ? `Wtf is a(n) ${args[1]}? Are you from the jungle?` : "zzz...";
                 // Plays game out if user inputs a correct symbol
-                if (player != -1) {
+                if (player !== -1) {
                     const choice = Math.floor(Math.random() * 3);
                     if (sendTo) ChatLib.command(`${sendTo} I choose ${RPS[choice]}! ${randID}`);
                     else ChatLib.chat(`${LOGO} ${DARK_AQUA}I choose ${WHITE}${RPS[choice]}${DARK_AQUA}!`);
@@ -147,7 +147,7 @@ export function executeCommand(name, args, sendTo) {
                 break;
             case "invite":
             case "inv":
-                if (!settings.inviteCommand || sendTo != "r") return;
+                if (!settings.inviteCommand || sendTo !== "r") return;
 
                 if (data.whitelist.includes(name.toLowerCase())) ChatLib.command(`p ${name}`);
                 else ChatLib.command(`r You are not in the whitelist! ${randID}`);
@@ -175,7 +175,7 @@ export function executeCommand(name, args, sendTo) {
     }
     
     if (getIsLeader() && settings.leaderCommands) { // LEADER COMMANDS
-        if (sendTo != "pc") return;
+        if (sendTo !== "pc") return;
         
         delay(() => {
             switch (args[0]) {
@@ -229,12 +229,12 @@ export function executeCommand(name, args, sendTo) {
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
     executeCommand(getPlayerName(player), message.split(" "), "pc");
-}).setCriteria("Party > ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 2);
+}).setCriteria("Party > ${player}: ?${message}"), () => settings.partyCommands === 1 || settings.partyCommands === 2);
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
     executeCommand(getGuildName(player), message.split(" "), "gc");
-}).setCriteria("Guild > ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 3);
+}).setCriteria("Guild > ${player}: ?${message}"), () => settings.partyCommands === 1 || settings.partyCommands === 3);
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
     executeCommand(getPlayerName(player), message.split(" "), "r");
-}).setCriteria("From ${player}: ?${message}"), () => settings.partyCommands == 1 || settings.partyCommands == 4);
+}).setCriteria("From ${player}: ?${message}"), () => settings.partyCommands === 1 || settings.partyCommands === 4);

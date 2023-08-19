@@ -24,26 +24,26 @@ export function getSlayerBoss() { return bossCD };
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
     
-    announceMob(settings.miniAlert == 1, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
+    announceMob(settings.miniAlert === 1, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
     delay(() => miniCD = false, 3000);
-}).setCriteria("random.explode"), () => settings.miniAlert);
+}).setCriteria("random.explode"), () => settings.miniAlert !== 0);
 
 /**
  * Uses scoreboard to detect if a slayer boss is active.
  */
-register("step", () => {
+registerWhen(register("step", () => {
     if (bossCD) return;
 
     const bossLine = Scoreboard.getLines().find((line) => line.getName().includes("Slay the boss!"));
-    if (questStart && bossLine != undefined) {
+    if (questStart && bossLine !== undefined) {
         bossCD = true;
         questStart = false;
         if (settings.bossAlert)
-            announceMob(settings.bossAlert == 1, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
+            announceMob(settings.bossAlert === 1, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
     }
-}).setFps(5);
+}).setFps(5), () => settings.bossAlert !== 1 || (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
 
 /**
  * Uses chat to track slayer quest state.

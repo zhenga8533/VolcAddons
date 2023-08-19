@@ -11,7 +11,7 @@ import { data } from "../../utils/variables";
  * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
  */
 let bestiaryApi = undefined;
-const bestiaryUpdate = register("worldLoad", () => { updateBestiary() });
+const bestiaryUpdate = register("worldLoad", () => updateBestiary());
 export function updateBestiary() {
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
@@ -22,7 +22,7 @@ export function updateBestiary() {
         bestiaryApi = response.profile.members[getPlayerUUID()].bestiary.kills;
     }).catch((error) => {
         // If there is an error, display the error message in the Minecraft chat.
-        if (error.cause != "Invalid API key")
+        if (error.cause !== "Invalid API key")
             delay(updateBestiary, 3000);
         else if (settings.apiKey) {
             delay(() => ChatLib.chat(`${LOGO} ${RED}${error.cause}!`), 1000);

@@ -88,7 +88,7 @@ function updateProfitTracker(openedChest) {
     kuudraSession.rate = kuudraSession.profit / kuudraSession.time * 3600;
     data.kuudraSession.rate = kuudraSession.profit / kuudraSession.time * 3600;
 
-    const profitView = settings.kuudraProfitTracker == 1 ? data.kuudraSession : kuudraSession;
+    const profitView = settings.kuudraProfitTracker === 1 ? data.kuudraSession : kuudraSession;
     coinageOverlay.message =
 `${DARK_RED}${BOLD}Profit: ${WHITE}${formatNumber(profitView.profit.toFixed(0))} ¢
 ${DARK_RED}${BOLD}Chests: ${WHITE}${commafy(profitView.chests)} chests
@@ -106,11 +106,11 @@ ${DARK_RED}${BOLD}Rate: ${WHITE}${formatNumber(profitView.rate.toFixed(0))} ¢/h
  * @param {object} gui - The associated GUI object.
  */
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
-    if (Player.getContainer().getName() !== "Paid Chest" || gui?.getSlotUnderMouse()?.field_75222_d != 31 || chestOpened) return;
+    if (Player.getContainer().getName() !== "Paid Chest" || gui?.getSlotUnderMouse()?.field_75222_d !== 31 || chestOpened) return;
     downtime = 0;
     updateProfitTracker(true);
     chestOpened = true;
-}), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker);
+}), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker !== 0);
 
 /**
  * Track time and downtime of runs.
@@ -119,10 +119,10 @@ registerWhen(register("step", () => {
     downtime++;
     if (downtime >= 300) return;
     updateProfitTracker(false);
-}).setFps(1), () => settings.kuudraProfitTracker);
+}).setFps(1), () => settings.kuudraProfitTracker !== 0);
 registerWhen(register("chat", () => {
     downtime = 0;
-}).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraProfitTracker);
+}).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraProfitTracker !== 0);
 
 /**
  * Updates Kuudra chest profit data and overlay on chest open.

@@ -1,9 +1,10 @@
 // Utility Modules
-import settings from "./settings";
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import "./utils/functions";
 import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
+import settings from "./settings";
 import { delay } from "./utils/thread";
 import { data, opened, updateList } from "./utils/variables";
 import "./utils/waypoints";

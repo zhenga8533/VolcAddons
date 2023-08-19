@@ -28,7 +28,7 @@ registerWhen(register("chat", () => {
             timeout += 500;
         }
     })
-}).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraRP);
+}).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraRP !== "");
 
 /**
  * Tracks party transfers with a delay to prevent fast transfer bug.
@@ -42,15 +42,14 @@ TRANSFER.forEach(msg => {
     registerWhen(register("chat", () => {
         onCD = true;
         delay(() => onCD = false, 6900);
-    }).setCriteria(msg), () => settings.kuudraRP);
+    }).setCriteria(msg), () => settings.kuudraRP !== "");
 });
 
 /**
  * Tracks when trader joins party to warp.
  */
 registerWhen(register("chat", () => {
-    if (!getIsLeader() || notInParty == 0) return;
-
+    if (!getIsLeader() || notInParty === 0) return;
     notInParty--;
 
     if (notInParty <= 0) {
@@ -60,11 +59,11 @@ registerWhen(register("chat", () => {
         settings.kuudraRP.split(", ").forEach((player) => { players.push(player) });
 
         delay(() => ChatLib.command("p warp"), 500);
-        if (players.length == 3) delay(() => ChatLib.command(`p kick ${players[2]}`), 1000);
+        if (players.length === 3) delay(() => ChatLib.command(`p kick ${players[2]}`), 1000);
         delay(() => ChatLib.command(`p transfer ${players[0]}`), 1500);
         delay(() => ChatLib.command("p leave"), 2000);
     }
-}).setCriteria("${player} joined the party."), () => settings.kuudraRP);
+}).setCriteria("${player} joined the party."), () => settings.kuudraRP !== "");
 
 /**
  * Alerts player if they are leader as run ends.
@@ -79,7 +78,7 @@ registerWhen(register("chat", () => {
             Client.Companion.showTitle(`${AQUA}${BOLD}BING CHILLING!`, "", 10, 50, 10);
         }
     }, 1000);
-}).setCriteria("${before}Tokens Earned:${after}"), () => getWorld() === "Kuudra" && settings.kuudraRP);
+}).setCriteria("${before}Tokens Earned:${after}"), () => getWorld() === "Kuudra" && settings.kuudraRP !== "");
 
 /**
  * Resets party if player leaves instance.

@@ -8,7 +8,7 @@ export function getPlayerName(player) {
     let name = player;
     let nameIndex = name.indexOf(']');
 
-    while (nameIndex != -1) {
+    while (nameIndex !== -1) {
         name = name.substring(nameIndex + 2);
         nameIndex = name.indexOf(']');
     }
@@ -25,7 +25,7 @@ export function getPlayerName(player) {
 export function getGuildName(player) {
     let name = player;
     let rankIndex = name.indexOf('] ');
-    if (rankIndex != -1)
+    if (rankIndex !== -1)
         name = name.substring(name.indexOf('] ') + 2);
     name = name.substring(0, name.indexOf('[') - 1);
 
@@ -96,7 +96,7 @@ export function commafy(num) {
  * @returns {string} Formatted number if k, m, b notation
  */
 export function formatNumber(num) {
-    if (isNaN(num) || num == 0) return 0;
+    if (isNaN(num) || num === 0) return 0;
 
     const absNum = Math.abs(num);
     const abbrev = ["", "k", "m", "b"];
@@ -307,13 +307,13 @@ export function isValidDate(dateString) {
     var year = parseInt(parts[2], 10);
 
     // Check the ranges of month and year
-    if(year < 1000 || year > 3000 || month == 0 || month > 12)
+    if(year < 1000 || year > 3000 || month === 0 || month > 12)
         return false;
 
     var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
     // Adjust for leap years
-    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    if(year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0))
         monthLength[1] = 29;
 
     // Check the range of the day

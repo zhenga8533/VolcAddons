@@ -19,4 +19,4 @@ registerWhen(register("step", () => {
         playSound(AMOGUS, 1000);
         minutes = 0;
     }
-}).setDelay(60), () => settings.reminderTime);
+}).setDelay(60), () => settings.reminderTime !== 0);

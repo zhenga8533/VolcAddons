@@ -47,7 +47,7 @@ export function updateInqCounter(inqSpawned) {
     if (session.inqs) session.average = Math.round(session.burrows / session.inqs);
 
     // Update HUD
-    counterOverlay.message = settings.inqCounter == 1 ?
+    counterOverlay.message = settings.inqCounter === 1 ?
 `${GOLD}${BOLD}Total Inqs: ${RESET}${data.inqSession.inqs}
 ${GOLD}${BOLD}Total Burrows: ${RESET}${data.inqSession.burrows}
 ${GOLD}${BOLD}Burrows Since: ${RESET}${data.inqSession.last}
@@ -66,9 +66,9 @@ ${GOLD}${BOLD}Average Burrows: ${RESET}${session.average}`;
  * @param {string} mob - Name of the mob that spawned from burrow.
  */
 registerWhen(register("chat", (_, mob) => {
-    if (mob != "Minos Champion")
+    if (mob !== "Minos Champion")
         updateInqCounter(false);
-}).setCriteria("${_}! You dug out a ${mob}!"), () => getWorld() === "Hub" &&
+}).setCriteria("${_}! You dug out a ${mob}!"), () => getWorld() === "Hub" && settings.inqCounter !== 0 &&
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**

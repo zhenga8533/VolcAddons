@@ -50,7 +50,7 @@ registerWhen(register("step", () => {
         updateBazaar();
         minutes = 0;
     }
-}).setDelay(60), () => settings.economyRefresh);
+}).setDelay(60), () => settings.economyRefresh !== 0);
 
 /**
  * Updates auction and bazaar data and notifies the user upon successful update.

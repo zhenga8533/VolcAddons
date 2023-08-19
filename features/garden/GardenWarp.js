@@ -24,16 +24,16 @@ registerWhen(register("messageSent", (message, event) => {
         ChatLib.command("warp garden");
         warpTo = message;
     }
-}), () => settings.warpGarden);
+}), () => settings.warpGarden === true);
 
 /**
  * Attempts to warp the player to a specified location (`warpTo`) if a next visitor is present.
  * Uses a delayed recursive approach to retry warp until a next visitor is available.
  */
 function tryWarp() {
-    if (getNextVisitor() != 0) {
+    if (getNextVisitor() !== 0) {
         ChatLib.say(warpTo);
         warpTo = "";
     } else delay(() => tryWarp(), 1000);
 }
-registerWhen(register("worldLoad", () => { tryWarp() }), () => settings.warpGarden);
+registerWhen(register("worldLoad", () => { tryWarp() }), () => settings.warpGarden === true);

@@ -21,8 +21,8 @@ registerWhen(register("tick", () => {
     cubes = World.getAllEntitiesOfType(EntityMagmaCube.class);
 
     // Find Kuudra based off size and HP
-    kuudra = cubes.find((cube) => cube.getWidth().toFixed(0) == 15 && cube.getEntity().func_110143_aJ() <= 100_000);
-    if (kuudra != undefined) {
+    kuudra = cubes.find((cube) => cube.getWidth().toFixed(0) === 15 && cube.getEntity().func_110143_aJ() <= 100_000);
+    if (kuudra !== undefined) {
         currentHP = kuudra.getEntity().func_110143_aJ().toFixed(0);
 
         if (settings.kuudraHP) {
@@ -35,7 +35,7 @@ registerWhen(register("tick", () => {
         }
 
         // KUUDRA SPAWN DETECT
-        if (settings.kuudraSpawn && getTier() == 5 && currentHP <= 25_000 && currentHP > 24_900) {
+        if (settings.kuudraSpawn && getTier() === 5 && currentHP <= 25_000 && currentHP > 24_900) {
             x = kuudra.getX();
             z = kuudra.getZ();
 
@@ -49,21 +49,21 @@ registerWhen(register("tick", () => {
                 Client.Companion.showTitle(`${DARK_RED}${BOLD}BACK!`, "", 0, 25, 5);
         }
     } else HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
-}), () => getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
+}), () => getWorld() === "Kuudra" && (settings.kuudraHP === true || settings.kuudraSpawn === true));
 
 /**
  * Renders Kuudra's percent HP.
  */
 registerWhen(register('renderOverlay', () => {
     percentHP.draw();
-}), () => getWorld() === "Kuudra" && settings.kuudraHP);
+}), () => getWorld() === "Kuudra" && settings.kuudraHP === true);
 
 /**
  * Draws Kuudra HP onto its physical body.
  */
 registerWhen(register('renderWorld', () => {
     if (HPDisplay[1]) Tessellator.drawString(HPDisplay[0], HPDisplay[1], HPDisplay[2] + 10, HPDisplay[3], 0xA7171A, true, 0.25, false);
-}), () => getWorld() === "Kuudra" && settings.kuudraHP);
+}), () => getWorld() === "Kuudra" && settings.kuudraHP === true);
 
 /**
  * Reset Kuudra's UUID on world exit.

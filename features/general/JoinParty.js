@@ -19,7 +19,7 @@ registerWhen(register("chat", (player) => {
 
     invites.push(name);
     delay(() => invites.shift(), 60000);
-}).setCriteria("${player} has disbanded the party!"), () => settings.joinRP);
+}).setCriteria("${player} has disbanded the party!"), () => settings.joinRP === true);
 
 /**
  * Acceots oarty invite if party was disbanded in last 60 seconds or part of user whitelist.
@@ -34,7 +34,7 @@ registerWhen(register("chat", (player) => {
     else if (settings.joinRP && invites.includes(name))  // Reparty
         delay(() => ChatLib.command("p join " + name), 500);
 }).setCriteria("-----------------------------------------------------\n${player} has invited you to join their party!\nYou have 60 seconds to accept. Click here to join!\n-----------------------------------------------------"),
-() => settings.joinRP || settings.joinWhitelist);
+() => settings.joinRP === true || settings.joinWhitelist === true);
 registerWhen(register("chat", (player1, player2) => {
     const name1 = getPlayerName(player1).toLowerCase();
     const name2 = getPlayerName(player2).toLowerCase();
@@ -42,4 +42,4 @@ registerWhen(register("chat", (player1, player2) => {
     
     delay(() => ChatLib.command("p join " + name1), 500);
 }).setCriteria("-----------------------------------------------------\n${player1} has invited you to join ${player2}'s party!\nYou have 60 seconds to accept. Click here to join!\n-----------------------------------------------------"),
-() => settings.joinWhitelist);
+() => settings.joinWhitelist === true);

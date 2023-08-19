@@ -32,7 +32,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     // Remove anything after z coords
     const spaceIndex = z.indexOf(' ');
     let time = 999;
-    if (spaceIndex != -1) {
+    if (spaceIndex !== -1) {
         if (z.includes('|'))
             time /= 3;
         z = z.substring(0, spaceIndex);
@@ -42,7 +42,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
 
     // Delete waypoint after 'X' seconds
     delay(() => { if (chatWaypoints.length) chatWaypoints.shift() }, settings.drawWaypoint * time);
-}).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint);
+}).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint !== 0);
 
 /**
  * Allows user to create waypoints via command.

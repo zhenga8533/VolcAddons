@@ -18,7 +18,7 @@ export function getCat() { return settings.catWaypoint && getWorld() === "The Ri
 registerWhen(register("chat", () => {
     // Delete closest soul
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
-    if (closest != undefined)
+    if (closest !== undefined)
         data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
 }).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => getWorld() === "The Rift");
 
@@ -40,7 +40,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("step", () => {
     // Filters to closest souls
     enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[1], Player.getZ() - enigma[3]) < settings.enigmaWaypoint);
-}).setFps(1), () => getWorld() === "The Rift" && settings.enigmaWaypoint);
+}).setFps(1), () => getWorld() === "The Rift" && settings.enigmaWaypoint !== 0);
 
 /**
  * Removes closest Montezuma soul piece when player finds one.
@@ -48,7 +48,7 @@ registerWhen(register("step", () => {
 registerWhen(register("chat", () => {
     // Delete closest soul
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
-    if (closest != undefined)
+    if (closest !== undefined)
         data.catSouls.splice(data.catSouls.indexOf(closest[0]), 1);
 }).setCriteria("You found a piece of Montezuma's soul!"), () => getWorld() === "The Rift");
 
@@ -92,13 +92,13 @@ export function soulEdit(args, type, soul, base) {
             ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared ${type} waypoint!`);
             break;
         case "pop":
-            if (data[soul].length == 0) {
+            if (data[soul].length === 0) {
                 ChatLib.chat(`${LOGO} ${RED}There are no ${type} souls to pop!`);
                 return;
             } 
 
             const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data[soul]);
-            if (closest != undefined)
+            if (closest !== undefined)
                 data[soul].splice(data[soul].indexOf(closest[0]), 1);
             ChatLib.chat(`${LOGO} ${GREEN}Succesfully popped closest ${type}!`);
             break;
@@ -162,4 +162,4 @@ registerWhen(register("step", () => {
     effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
     effigies.shift();
     effigies.forEach((effigy, i) => { if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]) });
-}).setFps(1), () => getWorld() === "The Rift" && settings.effigyWaypoint);
+}).setFps(1), () => getWorld() === "The Rift" && settings.effigyWaypoint !== 0);

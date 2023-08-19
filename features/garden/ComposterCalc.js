@@ -12,7 +12,7 @@ registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         // Get compsoter upgrades container
         let container = Player.getContainer();
-        if (container.getName() != "Composter Upgrades") return;
+        if (container.getName() !== "Composter Upgrades") return;
         
         // Get composter levels
         // Composter Speed => Sugar ID: 353
@@ -35,7 +35,7 @@ export function calcCompost(args) {
 
     // Upgrades
     const testLevel = parseInt(args[2]);
-    if (isNaN(testLevel) && data.composterUpgrades["Cost Reduction"] == -1) {
+    if (isNaN(testLevel) && data.composterUpgrades["Cost Reduction"] === -1) {
         ChatLib.chat(`${LOGO} ${RED}Please input as /va calc compost [level] / open you composter upgrades menu!`);
         return;
     }

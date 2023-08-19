@@ -1,5 +1,5 @@
 import { convertToPascalCase, unformatNumber } from "../../utils/functions";
-import { data } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 
 /**
@@ -50,7 +50,7 @@ updateEntityList();
  * Creates colored entity list from entity data in `entityList`.
  * Determines color based on class and filters by HP if applicable.
  */
-register("tick", () =>{
+registerWhen(register("tick", () =>{
     entities = [];
     entityList.forEach(entityData => {
         // Match coloring
@@ -70,4 +70,4 @@ register("tick", () =>{
         if (filteredEntities.length === 0) return;
         entities.push([[...filteredEntities], color]);
     });
-});
+}), () => entityList.length !== 0);

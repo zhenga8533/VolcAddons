@@ -79,6 +79,50 @@ export let data = new PogObject("VolcAddons", {
 }, "datitee.json");
 
 
+// --- TRIGGER CONTROL ---
+
+// An array to store registered triggers and their dependencies
+let registers = [];
+let openVA = false;
+
+/**
+ * Adds a trigger with its associated dependency to the list of registered triggers.
+ *
+ * @param {Trigger} trigger - The trigger to be added.
+ * @param {function} dependency - The function representing the dependency of the trigger.
+ */
+export function registerWhen(trigger, dependency) {
+    registers.push([trigger.unregister(), dependency, false]);
+}
+
+// Updates trigger registrations based on world or GUI changes
+export function setRegisters() {
+    registers.forEach(trigger => {
+        if ((!trigger[1]() && trigger[2]) || !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")) {
+            trigger[0].unregister();
+            trigger[2] = false;
+        } else if (trigger[1]() && !trigger[2]) {
+            trigger[0].register();
+            trigger[2] = true;
+        }
+    });
+}
+delay(() => setRegisters(), 1000);
+
+/**
+ * Marks that the VolcAddons GUI has been opened.
+ */
+export function opened() {
+    openVA = true;
+}
+
+// Event handler for GUI settings close.
+register("guiClosed", (event) => {
+    if (event.toString().includes("vigilance"))
+        setRegisters()
+});
+
+
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
 
@@ -137,62 +181,18 @@ export function updateList(args, list, listName) {
             break;
     }
     
-    if (args[0] == "ml" || args[0] == "mob" || args[0] == "moblist")
+    if (args[0] === "ml" || args[0] === "mob" || args[0] === "moblist")
         updateEntityList();
 }
 
 
-// --- TRIGGER CONTROL ---
-
-// An array to store registered triggers and their dependencies
-let registers = [];
-let openVA = false;
-
-/**
- * Adds a trigger with its associated dependency to the list of registered triggers.
- *
- * @param {Trigger} trigger - The trigger to be added.
- * @param {function} dependency - The function representing the dependency of the trigger.
- */
-export function registerWhen(trigger, dependency) {
-    registers.push([trigger.unregister(), dependency, false]);
-}
-
-// Updates trigger registrations based on world or GUI changes
-export function setRegisters() {
-    registers.forEach(trigger => {
-        if ((!trigger[1]() && trigger[2]) || !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")) {
-            trigger[0].unregister();
-            trigger[2] = false;
-        } else if (trigger[1]() && !trigger[2]) {
-            trigger[0].register();
-            trigger[2] = true;
-        }
-    });
-}
-delay(() => setRegisters(), 1000);
-
-/**
- * Marks that the VolcAddons GUI has been opened.
- */
-export function opened() {
-    openVA = true;
-}
-
-// Event handler for GUI settings close.
-register("guiClosed", (event) => {
-    if (event.toString().includes("vigilance"))
-        setRegisters()
-});
-
-// Variable to store the pause state
-let paused = false;
-
+// --- ETC ---
 /**
  * Returns the current paused state.
  *
  * @returns {boolean} - The current paused state.
  */
+let paused = false;
 export function getPaused() {
     return paused;
 }

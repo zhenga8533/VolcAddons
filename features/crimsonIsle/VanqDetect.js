@@ -18,8 +18,8 @@ export function getVanquishers() { return vanquishers };
  * Announce vanquisher spawn on chat message appears.
  */
 registerWhen(register("chat", () => {
-    announceMob(settings.vanqAlert == 1, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
-}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() == "Crimson Isle" && settings.vanqAlert);
+    announceMob(settings.vanqAlert === 1, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
+}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqAlert !== 0);
 
 /**
  * Alerts player when another VA user posts coords.
@@ -36,7 +36,7 @@ const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data
 registerWhen(register("tick", () => {
     vanquishers = [];
     entities = World.getAllEntitiesOfType(EntityWither);
-    vanqs = entities.filter(entity => entity.getEntity().func_110138_aP() == 1024);
+    vanqs = entities.filter(entity => entity.getEntity().func_110138_aP() === 1024);
 
     if (vanqs.length > 0) {
         vanqOverlay.message = vanqExample;
@@ -45,4 +45,4 @@ registerWhen(register("tick", () => {
             if (settings.vanqSound) playSound(AMOGUS, 10000);
         }
     } else vanqOverlay.message = "";
-}), () => getWorld() === "Crimson Isle" && settings.vanqDetect);
+}), () => getWorld() === "Crimson Isle" && settings.vanqDetect === true);

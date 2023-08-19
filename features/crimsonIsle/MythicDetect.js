@@ -17,13 +17,13 @@ export function getLavaCreatures() { return lavaCreatures };
  * Announce to party/all chat whenever player spawns a mythic lava creature.
  */
 registerWhen(register("chat", () => {
-    announceMob(settings.mythicLavaAnnounce == 1, "Lord Jawbus", Player.getX(), Player.getY(), Player.getZ());
+    announceMob(settings.mythicLavaAnnounce === 1, "Lord Jawbus", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("You have angered a legendary creature... Lord Jawbus has arrived"),
-() => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce);
+() => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
 registerWhen(register("chat", () => {
-    announceMob(settings.mythicLavaAnnounce == 1, "Thunder", Player.getX(), Player.getY(), Player.getZ());
+    announceMob(settings.mythicLavaAnnounce === 1, "Thunder", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("You hear a massive rumble as Thunder emerges."),
-() => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce);
+() => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
 
 /**
  * Detects if any mythic lava creatures are near the player.
@@ -48,4 +48,4 @@ registerWhen(register("tick", () => {
         if (data.moblist.includes("thunder"))
             lavaCreatures.push(guardian);
     });
-}), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
+}), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect !== 0);

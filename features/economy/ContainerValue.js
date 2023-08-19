@@ -113,7 +113,7 @@ registerWhen(register("guiOpened", (event) => {
     const guiName = event.gui.class.getName();
     if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
     else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
-}), () => settings.containerValue);
+}), () => settings.containerValue !== 0);
 
 /**
  * Handles mouse click interactions within container GUIs.
@@ -128,11 +128,11 @@ registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
     const guiName = gui.class.getName();
     if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
     else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
-}), () => settings.containerValue);
+}), () => settings.containerValue !== 0);
 
 /**
  * This function clears the content of the container overlay message, effectively removing it from display.
  */
 registerWhen(register("guiClosed", () => {
     containerOverlay.message = "";
-}), () => settings.containerValue);
+}), () => settings.containerValue !== 0);

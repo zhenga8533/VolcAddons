@@ -84,22 +84,22 @@ let dancing = [...DANCES];
  * @param {Object} event - Title and subtitle event.
  */
 registerWhen(register("renderTitle", (title, subtitle, event) => {
-    if (title == "§aIt's happening!§r" || title == "§aKeep it up!§r") cancel(event);
-    if (!dancing.includes(subtitle) || subtitle == last) return;
+    if (title === "§aIt's happening!§r" || title === "§aKeep it up!§r") cancel(event);
+    if (!dancing.includes(subtitle) || subtitle === last) return;
 
     const move = dancing.shift();
     Client.Companion.showTitle(move, `NEXT: ${dancing[0]}`, 0, 50, 0);
     last = subtitle;
     print(subtitle);
     cancel(event);
-}), () => getWorld() === "The Rift" && settings.ddrHelper);
+}), () => getWorld() === "The Rift" && settings.ddrHelper === true);
 
 /**
  * Resets dance if player fails.
  */
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You were${failure}!"),
-() => getWorld() === "The Rift" && settings.ddrHelper);
+() => getWorld() === "The Rift" && settings.ddrHelper === true);
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You d${failure}!"),
-() => getWorld() === "The Rift" && settings.ddrHelper);
+() => getWorld() === "The Rift" && settings.ddrHelper === true);
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You're ${failure}!"),
-() => getWorld() === "The Rift" && settings.ddrHelper);
+() => getWorld() === "The Rift" && settings.ddrHelper === true);
