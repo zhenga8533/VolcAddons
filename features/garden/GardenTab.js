@@ -66,7 +66,7 @@ registerWhen(register("step", () => {
     if (nextVisit != undefined && !nextVisit.includes("Full")) {
         nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
 
-        next = nextVisit[0]
+        next = nextVisit[0];
         if (nextVisit.length == 2)
             next = next * 60 + parseInt(nextVisit[1]);
     }

@@ -151,9 +151,7 @@ const WARPS = {
 }
 
 /**
- * This function populates the `warps` array with warp data based on the predefined `WARPS` and `data.warplist`.
- * It adds entries to the array for each warp in the `data.warplist` that corresponds to an entry in `WARPS`.
- * The entries consist of the warp name and associated coordinates (x, y, z).
+ * Populates the `warps` array with warp data from `WARPS` and `data.warplist`.
  */
 export function setWarps() {
     warps = [];

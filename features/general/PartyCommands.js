@@ -1,6 +1,5 @@
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
-
 import settings from "../../settings";
 import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, WHITE } from "../../utils/constants";
 import { getGuildName, getPlayerName } from "../../utils/functions";

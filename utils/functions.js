@@ -17,11 +17,10 @@ export function getPlayerName(player) {
 }
 
 /**
- * This function extracts and returns the guild name from a player's name string.
- * It handles cases where the player's name includes guild tags and ranks.
+ * Extracts and returns the guild name from a player's name string.
  *
- * @param {string} player - The name of the player, possibly with guild tags and ranks.
- * @returns {string} - The extracted guild name from the player's name.
+ * @param {string} player - Player's name, possibly with guild tags and ranks.
+ * @returns {string} - Extracted guild name from the player's name.
  */
 export function getGuildName(player) {
     let name = player;
@@ -107,12 +106,10 @@ export function formatNumber(num) {
 }
 
 /**
- * This function converts formatted numbers with suffix notations (e.g., k, m, b) into their numeric values.
- * It extracts the numeric part of the input string, determines the notation (suffix), and uses a map to get
- * the appropriate multiplier. It then returns the converted numeric value, or 0 if conversion is not possible.
+ * Converts formatted numbers with suffix notations into their numeric values.
  *
- * @param {string} str - The formatted number string with optional suffix notation (k, m, b).
- * @returns {number} - The numeric value represented by the input string, considering the notation.
+ * @param {string} str - Formatted number string with optional suffix notation (k, m, b).
+ * @returns {number} - Numeric value represented by the input string, considering the notation.
  */
 export function unformatNumber(str) {
     const notationMap = {
@@ -190,16 +187,11 @@ const REFORGES = {
 };
 
 /**
- * This function removes reforge words from an item string based on the specified item type.
- * It takes the item type and item string as arguments and follows these steps:
- * - Determines the corresponding set of reforges for the given item type.
- * - If the item type is not valid or the reforges set is empty, returns the original item string.
- * - Splits the item string into individual words and filters out words matching any reforges using Set.has().
- * - Returns the modified item string with reforges removed.
+ * Removes specified reforges from an item string based on item type.
  *
- * @param {string} itemType - The type of item (e.g., "weapon", "armor", "misc", "all") to remove reforges for.
- * @param {string} itemString - The original item string containing reforges and other words.
- * @returns {string} - The item string with reforges removed based on the specified item type.
+ * @param {string} itemType - Type of item ("weapon", "armor", "misc", "all").
+ * @param {string} itemString - Original item string with reforges and other words.
+ * @returns {string} - Item string with specified reforges removed.
  */
 export function removeReforges(itemType, itemString) {
     // Get the corresponding reforges Set based on the item type

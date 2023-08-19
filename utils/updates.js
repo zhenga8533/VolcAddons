@@ -1,4 +1,3 @@
-// Import required dependencies and constants
 import axios from "../../axios";
 import settings from "../settings";
 import { delay } from "./thread";

@@ -126,7 +126,7 @@ const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
 valueOverlay.message = "";
 
 /**
- * Figures out the enchantment value of the given item.
+ * Calculates the complete value of given item.
  * 
  * @param {Object} item - Item Object.
  * @returns {number} - Total value of item.

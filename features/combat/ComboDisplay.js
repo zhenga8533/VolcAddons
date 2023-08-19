@@ -27,13 +27,12 @@ function updateOverlay() {
 }
 
 /**
- * This function is responsible for processing chat messages in a game context and updating
- * relevant statistics based on the provided information.
+ * Processes chat messages and updates statistics based on provided information.
  *
- * @param {string} color - The color of the chat message.
- * @param {string} kills - The number of kills indicated in the chat message.
- * @param {string} bonus - A bonus string containing information about gained stats.
- * @param {object} event - The event object representing the chat message event.
+ * @param {string} color - Message color.
+ * @param {string} kills - Number of kills.
+ * @param {string} bonus - Bonus string with stat info.
+ * @param {object} event - Chat message event.
  */
 registerWhen(register("chat", (color, kills, bonus, event) => {
     const stat = bonus.split(' ')[0].removeFormatting();
@@ -48,11 +47,10 @@ registerWhen(register("chat", (color, kills, bonus, event) => {
 }).setCriteria("&r${color}&l+${kills} &r&8${bonus}&r"), () => settings.comboDisplay);
 
 /**
- * This function is responsible for updating the overlay display with a formatted message
- * indicating a kill combo in a game context.
+ * Updates overlay with formatted kill combo message.
  *
- * @param {string} color - The color of the display message.
- * @param {string} kills - The number of kills in the combo.
+ * @param {string} color - Display message color.
+ * @param {string} kills - Number of kills in combo.
  */
 registerWhen(register("chat", (color, kills) => {
     stats[0] = `${color}${kills} Kill Combo:`;
@@ -60,8 +58,7 @@ registerWhen(register("chat", (color, kills) => {
 }).setCriteria("&r${color}+${kills} Kill Combo&r"), () => settings.comboDisplay);
 
 /**
- * This function resets the statistics and overlay message in a game context.
- * It sets the stats array to initial values and clears the comboOverlay message.
+ * Resets statistics and overlay message.
  */
 registerWhen(register("chat", () => {
     stats = ["", 0, 0, 0];

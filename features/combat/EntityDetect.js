@@ -10,13 +10,11 @@ let entities = [];
 export function getEntities() { return entities };
 
 /**
- * This function attempts to identify an entity class based on the provided entity name,
- * and if successful, adds the entity class and its associated HP value to a list.
+ * Identifies entity class based on name and adds to list with associated HP value.
  *
- * @param {string} entity - The name of the entity to test the class for.
- * @param {number} HP - The HP value associated with the entity.
- * @returns {boolean} - Returns true if the entity class is identified and added to the list,
- *                     otherwise returns false.
+ * @param {string} entity - Entity name to test class for.
+ * @param {number} HP - Associated HP value.
+ * @returns {boolean} - True if entity class is identified and added to the list.
  */
 function testClass(entity, HP) {
     try {
@@ -30,9 +28,7 @@ function testClass(entity, HP) {
 }
 
 /**
- * This function iterates through a list of mobs and their data to update the entity list.
- * For each mob, it processes the mob's HP and class, and adds them to the entity list
- * based on their class type using the `testClass` function.
+ * Updates entity list based on mob data, processing HP and class information.
  */
 export function updateEntityList() {
     entityList = [];
@@ -51,9 +47,8 @@ export function updateEntityList() {
 updateEntityList();
 
 /**
- * This function processes the entity data in the `entityList` to create a list of colored entities.
- * For each entity, it determines the appropriate color based on its class and adds the entity
- * (with its color) to the `entities` list. The entities are filtered based on HP if applicable.
+ * Creates colored entity list from entity data in `entityList`.
+ * Determines color based on class and filters by HP if applicable.
  */
 register("tick", () =>{
     entities = [];

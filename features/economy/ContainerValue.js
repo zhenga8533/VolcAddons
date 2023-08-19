@@ -46,9 +46,8 @@ function getFirstSecondWord(inputString) {
 }
 
 /**
- * This function retrieves item information from the player's container, calculates the total value
- * of items inside the container, and generates a formatted overlay message to display the item values.
- * The message is based on settings and is shown in the containerOverlay.
+ * Calculates and displays the total value of items in the player's container.
+ * Generates a formatted overlay message for the containerOverlay.
  */
 function updateContainerValue() {
     Client.scheduleTask(3, () => {
@@ -106,11 +105,9 @@ function updateContainerValue() {
 }
 
 /**
- * This event handler is triggered when a GUI event occurs, specifically for container GUIs.
- * It checks if the event is associated with a chest GUI (inventory GUI), and if so, it invokes
- * the `updateContainerValue` function to update the value overlay display for the container.
+ * Handles GUI events in container GUIs, updating value overlay display if a chest GUI is involved.
  *
- * @param {object} event - The event object representing the GUI event.
+ * @param {object} event - The GUI event object.
  */
 registerWhen(register("guiOpened", (event) => {
     if (event.gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiChest") return;
@@ -118,14 +115,13 @@ registerWhen(register("guiOpened", (event) => {
 }), () => settings.containerValue);
 
 /**
- * This event handler is triggered when a mouse click interaction occurs in a GUI.
- * It specifically targets interactions within a container GUI (chest GUI) and invokes
- * the `updateContainerValue` function to update the value overlay display for the container.
+ * Handles mouse click interactions within container GUIs.
+ * Invokes `updateContainerValue` to update value overlay display.
  *
- * @param {number} x - The x-coordinate of the mouse click.
- * @param {number} y - The y-coordinate of the mouse click.
- * @param {number} button - The mouse button pressed during the interaction.
- * @param {object} gui - The GUI object associated with the interaction.
+ * @param {number} x - X-coordinate of mouse click.
+ * @param {number} y - Y-coordinate of mouse click.
+ * @param {number} button - Pressed mouse button.
+ * @param {object} gui - Associated GUI object.
  */
 registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
     if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiChest") return;

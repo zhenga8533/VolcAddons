@@ -26,10 +26,9 @@ registerWhen(register("guiOpened", () => {
 }), () => getWorld() === "Garden");
 
 /**
- * This function calculates the profit and cost associated with using a composter,
- * factoring in various upgrades and commodity prices from the bazaar.
+ * Calculates composting profit and cost considering composter upgrades and bazaar prices.
  *
- * @param {Array} args - An array of arguments containing composter upgrade levels.
+ * @param {Array} args - Array of composter upgrade levels.
  */
 export function calcCompost(args) {
     const bazaar = getBazaar();

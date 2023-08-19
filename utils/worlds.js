@@ -13,13 +13,8 @@ export function getTier() { return tier };
 let noFind = 0;
 
 /**
- * This function searches for the current zone by inspecting the lines on the scoreboard.
- * It first attempts to find a line containing the symbol "⏣" and assigns it to the variable "zoneLine".
- * If the symbol "⏣" is not found, it then attempts to find a line containing the Cyrillic symbol "ф".
- * If neither symbol is found, it returns "None" to indicate that the zone is not identified.
- * Otherwise, it returns the name of the zone extracted from "zoneLine" after removing formatting codes.
- *
- * @returns {string} - The name of the current zone or "None" if the zone is not identified.
+ * Searches for the current zone based on the scoreboard lines.
+ * @returns {string} - The name of the current zone or "None" if not identified.
  */
 export function findZone() {
     let zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
@@ -29,13 +24,7 @@ export function findZone() {
 }
 
 /**
- * This function attempts to identify the current world the player is in by inspecting the tab list.
- * It includes measures to prevent infinite loops and delay-based retries if the world is not immediately identified.
- * The function first checks for the presence of the word "Area" in tab list names and assigns it to the "world" variable.
- * If "world" is not found, the function schedules a delayed retry after 1000 milliseconds (1 second).
- * If "world" is found, it extracts the formatted world name from it by removing formatting codes and extracting
- * the portion after the colon and space. For the "Kuudra" world, it also attempts to determine the tier based on the zone.
- * The function then proceeds to register/unregister features based on the current world and set player-related settings.
+ * Identifies the current world the player is in based on the tab list.
  */
 function findWorld() {
     // Infinite loop prevention

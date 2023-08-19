@@ -1,4 +1,3 @@
-// Import required modules and constants
 import request from "../../../requestV2";
 import settings from "../../settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
@@ -12,7 +11,7 @@ import { data } from "../../utils/variables";
  * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
  */
 let bestiaryApi = undefined;
-let valid = true;
+const bestiaryUpdate = register("worldLoad", () => { updateBestiary() });
 export function updateBestiary() {
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
@@ -25,13 +24,12 @@ export function updateBestiary() {
         // If there is an error, display the error message in the Minecraft chat.
         if (error.cause != "Invalid API key")
             delay(updateBestiary, 3000);
-        else if (settings.apiKey && valid) {
+        else if (settings.apiKey) {
             delay(() => ChatLib.chat(`${LOGO} ${RED}${error.cause}!`), 1000);
-            valid = false;
+            bestiaryUpdate.unregister();
         }
     });
 }
-register("worldLoad", () => { updateBestiary() });
 
 /**
  * Variable and class to track mob bestiary data.

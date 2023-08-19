@@ -36,10 +36,9 @@ const CROP_TRADES = {
     "ENCHANTED_RAW_RABBIT": "ENCHANTED_RABBIT"
 }
 
-/**\
- * This class encapsulates various statistics related to farming activities and interactions.
- * It provides methods to reset the statistics and initializes default values for different
- * types of statistics, including crop stats, visitor stats, and player stats.
+/**
+ * Encapsulates farming-related statistics and interactions.
+ * Provides methods to reset and manage crop, visitor, and player statistics.
  */
 class FarmingStat {
     /**
@@ -170,9 +169,8 @@ function sendWebhook() {
 }
 
 /**
- * This function is responsible for updating the `farmingFortune` variable based on information
- * extracted from the TabList. It checks if the player is in the "Garden" world, retrieves the TabList,
- * and searches for a line containing "Farming Fortune". If found, it extracts the value of Farming Fortune.
+ * Updates the farmingFortune variable from the TabList information.
+ * Retrieves Farming Fortune value if the player is in the Garden world.
  */
 let downtime = 0;
 let farmingFortune = 0;
@@ -186,10 +184,10 @@ registerWhen(register("step", () => {
 }).setDelay(10), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
- * This function updates the statistics for a given crop block based on its type and drop information.
- * It calculates the drop amounts and values, updates the cropStats for the block, and resets the downtime.
+ * Updates crop statistics for a harvested crop block.
+ * Calculates drop amounts, values, and updates cropStats.
  *
- * @param {object} block - The block object representing the harvested crop.
+ * @param {object} block - The block object of the harvested crop.
  */
 registerWhen(register("blockBreak", (block) => {
     const blockName = block.type.getName();
@@ -206,11 +204,10 @@ registerWhen(register("blockBreak", (block) => {
 }), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
- * This function updates the statistics for visitors to the farm based on their arrival.
- * It increments the "arrived" count in the visitorStats and categorizes visitors into
- * different rarity tiers, updating the corresponding counts for each rarity.
+ * Updates farm visitor statistics based on their arrival.
+ * Increments the "arrived" count and categorizes visitors into rarity tiers.
  *
- * @param {Array} visitor - An array representing the visitor, where index 1 indicates their rarity.
+ * @param {Array} visitor - An array representing the visitor, with index 1 indicating rarity.
  */
 registerWhen(register("chat", (visitor) => {
     farmingStats.visitorStats.arrived++;
@@ -229,8 +226,8 @@ registerWhen(register("chat", (visitor) => {
 () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
- * This function handles mouse click interactions in a GUI, specifically related to trade offers.
- * It analyzes the clicked item, its lore, and interactions to update visitor statistics.
+ * Handles mouse click interactions in a GUI related to trade offers.
+ * Analyzes clicked items, lore, and interactions to update visitor statistics.
  *
  * @param {number} x - The x-coordinate of the mouse click.
  * @param {number} y - The y-coordinate of the mouse click.
@@ -294,10 +291,8 @@ registerWhen(register("chat", (medal, crop) => {
 () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
- * This function is responsible for handling time-based events and tracking player downtime.
- * It increments the timePassed and downtime counters, triggering actions based on their values.
- * If the specified time has passed, it sends a webhook and resets the timePassed counter.
- * If player downtime exceeds a threshold, it updates the player's downtime statistics.
+ * Manages time-based events and player downtime tracking.
+ * Handles webhook sending and updates downtime statistics.
  */
 let timePassed = 0;
 registerWhen(register("step", () => {

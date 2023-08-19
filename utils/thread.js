@@ -1,4 +1,6 @@
-// Import the Java threading library
+/**
+ * Essentials threading library.
+ */
 const Threading = Java.type("gg.essential.api.utils.Multithreading");
 
 /**

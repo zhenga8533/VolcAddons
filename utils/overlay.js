@@ -28,12 +28,7 @@ const background = new Gui();
 export function openGUI() { gui.open() };
 
 /**
- * This function handles rendering of overlays on the GUI if it's open.
- * It iterates through each overlay in the "overlays" array and performs the following steps:
- * - If the overlay's setting is enabled in the settings and the GUI is open, it proceeds to draw.
- * - It draws a background rectangle around the overlay using the overlay's location and size.
- * - It calls the "renderScale" function to render the example text of the overlay.
- * Additionally, the function renders GUI instructions at the center of the screen.
+ * Renders overlays on the GUI if it's open.
  */
 register("renderOverlay", () => {
     if (!gui.isOpen()) return;
@@ -58,14 +53,11 @@ register("renderOverlay", () => {
 });
 
 /**
- * This function is responsible for handling overlay selection when clicking on the screen.
- * It first checks if the GUI is open; if not, it returns. It then sets the currentOverlay to undefined.
- * For each overlay in the "overlays" array, it checks if the click coordinates (x, y) are within
- * the bounds of the overlay. If the click is within the bounds, the currentOverlay is set to the overlay.
+ * Handles overlay selection when clicking on the screen.
  *
- * @param {number} x - The x-coordinate of the mouse click.
- * @param {number} y - The y-coordinate of the mouse click.
- * @param {number} button - The mouse button pressed during the interaction.
+ * @param {number} x - X-coordinate of the mouse click.
+ * @param {number} y - Y-coordinate of the mouse click.
+ * @param {number} button - Mouse button pressed during the interaction.
  * @param {object} screen - The screen object associated with the interaction.
  */
 register("guiMouseClick", (x, y, button, screen) => {
@@ -82,15 +74,13 @@ register("guiMouseClick", (x, y, button, screen) => {
 });
 
 /**
- * This function handles the movement of the currently selected overlay.
- * It first checks if there's a currentOverlay selected and if the GUI is open; if not, it returns.
- * If the GUI is open, it updates the location of the currentOverlay based on the change in coordinates (dx, dy).
- * It also recalculates the normalized X and Y coordinates based on the new location.
+ * Handles movement of the selected overlay.
+ * Updates location and normalized coordinates based on delta coordinates.
  *
- * @param {number} dx - The change in x-coordinate during the movement.
- * @param {number} dy - The change in y-coordinate during the movement.
- * @param {number} x - The x-coordinate of the mouse pointer during the movement.
- * @param {number} y - The y-coordinate of the mouse pointer during the movement.
+ * @param {number} dx - Change in x-coordinate during movement.
+ * @param {number} dy - Change in y-coordinate during movement.
+ * @param {number} x - X-coordinate of mouse pointer during movement.
+ * @param {number} y - Y-coordinate of mouse pointer during movement.
  */
 register("dragged", (dx, dy, x, y) => {
     if (currentOverlay === undefined || !gui.isOpen()) return;
@@ -105,19 +95,14 @@ register("dragged", (dx, dy, x, y) => {
 });
 
 /**
- * This function handles the scaling of the currently selected overlay using key presses.
- * It first checks if there's a currentOverlay selected and if the GUI is open; if not, it returns.
- * It then listens for specific key codes:
- * - 13 (Enter key): Increases the scale of the currentOverlay by 0.05.
- * - 12 (Minus key): Decreases the scale of the currentOverlay by 0.05.
- * - 19 (r key): Resets the scale of the currentOverlay to 1.
- * After each scaling operation, the normalized X and Y coordinates are updated based on the new scale,
- * and the "setSize" method of the currentOverlay is called.
+ * Handles scaling of the selected overlay using key presses.
+ * Listens for specific keys: Enter (increase), Minus (decrease), r (reset).
+ * Updates normalized coordinates and calls "setSize" after scaling.
  *
- * @param {string} char - The character associated with the pressed key.
- * @param {number} keyCode - The key code of the pressed key.
- * @param {object} currentGui - The current GUI object.
- * @param {object} event - The event object associated with the key press.
+ * @param {string} char - Pressed key character.
+ * @param {number} keyCode - Key code of the pressed key.
+ * @param {object} currentGui - Current GUI object.
+ * @param {object} event - Event object for key press.
  */
 register("guiKey", (char, keyCode, currentGui, event) => {
     if (currentOverlay === undefined || !gui.isOpen()) return;
@@ -227,10 +212,9 @@ export class Overlay {
     }
 
     /**
-     * This method calculates and sets the dimensions (width and height) of the overlay based on its example text.
-     * It first splits the example text into lines and calculates the total height based on the number of lines and scaling.
-     * Then, for each line, it extracts bold portions using a regular expression and calculates the total width by combining
-     * the widths of bold and non-bold portions of the line. The maximum width across all lines is stored in this.width.
+     * Calculates and sets overlay dimensions based on example text.
+     * Splits text into lines, calculates total height, and determines width for each line.
+     * Maximum width across lines is stored in `this.width`.
      */
     setSize() {
         const lines = this.example.split("\n");

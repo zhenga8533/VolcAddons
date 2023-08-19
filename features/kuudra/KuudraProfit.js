@@ -68,13 +68,9 @@ ${DARK_RED}${BOLD}Rate: ${WHITE}Man`;
 const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Isle"], () => downtime < 300, data.ZL, "moveKPT", coinageExample);
 
 /**
- * This function updates the profit tracker and associated metrics based on whether a chest was opened.
- * If a chest was opened, it adds the chest profit to the session's profit, increments the chest count,
- * and calculates the new average profit per chest. If a chest was not opened, it increments the time count.
- * The function then calculates and updates the rate of profit per hour. Finally, it constructs and updates
- * the coinage overlay message with the relevant profit tracking information.
+ * Updates the profit tracker and metrics based on chest opening.
  *
- * @param {boolean} openedChest - Indicates whether a chest was opened (true) or not (false).
+ * @param {boolean} openedChest - Whether a chest was opened.
  */
 function updateProfitTracker(openedChest) {
     if (openedChest) {
@@ -102,15 +98,12 @@ ${DARK_RED}${BOLD}Rate: ${WHITE}${formatNumber(profitView.rate.toFixed(0))} ¢/h
 }
 
 /**
- * This code block contains multiple event handlers that contribute to Kuudra profit tracking.
- * 
- * The first event handler triggers when a specific slot in the "Paid Chest" container is clicked.
- * It checks conditions to determine whether to update the profit tracker and sets `chestOpened` accordingly.
+ * Handles interactions with the "Paid Chest" container and updates the profit tracker.
  * 
  * @param {number} x - The x-coordinate of the mouse click.
  * @param {number} y - The y-coordinate of the mouse click.
- * @param {number} button - The mouse button pressed during the interaction.
- * @param {object} gui - The GUI object associated with the interaction.
+ * @param {number} button - The mouse button pressed.
+ * @param {object} gui - The associated GUI object.
  */
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     if (Player.getContainer().getName() !== "Paid Chest" || gui?.getSlotUnderMouse()?.field_75222_d != 31 || chestOpened) return;

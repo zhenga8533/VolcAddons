@@ -1,4 +1,3 @@
-// Import functions from external files
 import { getPlayerName } from "./functions";
 import { delay } from "./thread";
 

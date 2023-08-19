@@ -5,10 +5,7 @@ import { registerWhen } from "../../utils/variables";
 
 
 /**
- * This function handles redirection of party commands by intercepting and modifying chat messages.
- * If the player is in a party, or if the message doesn't meet criteria for redirection, it's ignored.
- * Otherwise, it cancels the event, reformulates the party command, and issues the modified command.
- * A delay is applied to ensure proper execution sequence.
+ * Handles redirection of party commands by intercepting and modifying chat messages.
  *
  * @param {string} message - The chat message to be intercepted and redirected.
  * @param {object} event - The event object representing the chat message event.
