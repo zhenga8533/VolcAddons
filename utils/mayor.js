@@ -1,10 +1,10 @@
 import { request } from "../../requestV2";
 
 
-// The URL of the API endpoint to fetch information about the mayor.
+/**
+ * Variables used to represent mayor data.
+ */
 const MAYOR_API = "https://api.hypixel.net/resources/skyblock/election";
-
-// Variable to store the mayor's name, initially set to undefined.
 let mayor = undefined;
 
 /**

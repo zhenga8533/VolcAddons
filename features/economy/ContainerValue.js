@@ -6,6 +6,9 @@ import { data, registerWhen } from "../../utils/variables";
 import { getItemValue } from "./ItemPrice";
 
 
+/**
+ * Variables used to track and display container value.
+ */
 const VALID_CONTAINERS = new Set(["Chest", "Backpack"]);
 const containerExample = 
 `${WHITE}Item 1${GRAY} - ${WHITE}Be
@@ -42,6 +45,11 @@ function getFirstSecondWord(inputString) {
     return inputString;
 }
 
+/**
+ * This function retrieves item information from the player's container, calculates the total value
+ * of items inside the container, and generates a formatted overlay message to display the item values.
+ * The message is based on settings and is shown in the containerOverlay.
+ */
 function updateContainerValue() {
     Client.scheduleTask(3, () => {
         const container = Player.getContainer();
@@ -97,16 +105,36 @@ function updateContainerValue() {
     });
 }
 
-registerWhen(register("GuiOpened", (event) => {
+/**
+ * This event handler is triggered when a GUI event occurs, specifically for container GUIs.
+ * It checks if the event is associated with a chest GUI (inventory GUI), and if so, it invokes
+ * the `updateContainerValue` function to update the value overlay display for the container.
+ *
+ * @param {object} event - The event object representing the GUI event.
+ */
+registerWhen(register("guiOpened", (event) => {
     if (event.gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiChest") return;
     updateContainerValue();
 }), () => settings.containerValue);
 
-registerWhen(register("guiClosed", () => {
-    containerOverlay.message = "";
-}), () => settings.containerValue);
-
+/**
+ * This event handler is triggered when a mouse click interaction occurs in a GUI.
+ * It specifically targets interactions within a container GUI (chest GUI) and invokes
+ * the `updateContainerValue` function to update the value overlay display for the container.
+ *
+ * @param {number} x - The x-coordinate of the mouse click.
+ * @param {number} y - The y-coordinate of the mouse click.
+ * @param {number} button - The mouse button pressed during the interaction.
+ * @param {object} gui - The GUI object associated with the interaction.
+ */
 registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
     if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiChest") return;
     updateContainerValue();
+}), () => settings.containerValue);
+
+/**
+ * This function clears the content of the container overlay message, effectively removing it from display.
+ */
+registerWhen(register("guiClosed", () => {
+    containerOverlay.message = "";
 }), () => settings.containerValue);

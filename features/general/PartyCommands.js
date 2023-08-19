@@ -1,12 +1,12 @@
+import axios from "../../../axios";
+import { request } from "../../../requestV2";
+
 import settings from "../../settings";
 import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, WHITE } from "../../utils/constants";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
-
-import axios from "../../../axios";
-import { request } from "../../../requestV2";
 
 
 /**

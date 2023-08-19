@@ -4,63 +4,73 @@ import { BOLD, DARK_GREEN, GREEN, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 
+
 // Java packet types
 let S03PacketTimeUpdate = Java.type('net.minecraft.network.play.server.S03PacketTimeUpdate');
 let S37PacketStatistics = Java.type('net.minecraft.network.play.server.S37PacketStatistics');
 let C16PacketClientStatus = Java.type('net.minecraft.network.play.client.C16PacketClientStatus');
 let S01PacketJoinGame = Java.type('net.minecraft.network.play.server.S01PacketJoinGame');
 
-// TPS
+/**
+ * Variables used to represent TPS data.
+ */
 let tps = 20;
 let pastDate = 0;
 
-// Calculate TPS
+/**
+ * This function calculates the TPS (ticks per second) based on the time difference between
+ * the current time and the previously recorded `pastDate`. If `pastDate` is not null,
+ * it calculates the TPS using the formula: minimum(20000 / time, 20), where `time` is the time
+ * difference in milliseconds. It then updates the `tps` value and sets `pastDate` to the current time.
+ */
+function calcTPS() {
+    if (pastDate !== null) {
+        const time = Date.now() - pastDate;
+        tps = Math.min(20000 / time, 20);
+    }
+    pastDate = Date.now();
+}
 try {
     registerWhen(register('packetReceived', () => {
-        if (pastDate !== null) {
-            const time = Date.now() - pastDate;
-            const instantTps = Math.min(20000 / time, 20);
-            const alpha = 2 / 11;
-            tps = instantTps * alpha + tps * (1 - alpha);
-        }
-        pastDate = Date.now();
+        calcTPS()
     }).setFilteredClass(S03PacketTimeUpdate), () => settings.serverStatus);
 } catch (err) {
     registerWhen(register('packetReceived', (packet) => {
         if (packet != S03PacketTimeUpdate) return;
-
-        if (pastDate !== null) {
-            const time = Date.now() - pastDate;
-            const instantTps = Math.min(20000 / time, 20);
-            const alpha = 2 / 11;
-            tps = instantTps * alpha + tps * (1 - alpha);
-        }
-        pastDate = Date.now();
+        calcTPS();
     }), () => settings.serverStatus);
 }
 
-// Ping
+/**
+ * Variables used to represent ping data.
+ */
 let ping = 0;
 let lastPing = 0;
 
+/**
+ * This function sends a ping request packet to the server to measure the latency (ping).
+ * If `lastPing` is not set (0), it sends the request and updates `lastPing` with the current time.
+ */
 function sendPingRequest() {
     if (lastPing === 0) {
         Client.sendPacket(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
         lastPing = Date.now();
     }
 };
+register("step", () => {
+    sendPingRequest();
+}).setDelay(3);
 
+/**
+ * This function calculates the ping (latency) based on the difference between the current time
+ * and the time when the last ping request was sent. It updates the `ping` value and resets `lastPing`.
+ */
 function calculatePing() {
     if (lastPing !== 0) {
         ping = Math.abs(Date.now() - lastPing);
         lastPing = 0;
     }
 };
-
-register("step", () => {
-    sendPingRequest();
-}).setDelay(3);
-
 try {
     registerWhen(register('packetReceived', () => {
         calculatePing();
@@ -73,12 +83,19 @@ try {
 }
 
 
-// Create and update the status overlay
+/**
+ * Variables used to represent and display player status.
+ */
 const statusExample = `${DARK_GREEN}${BOLD}Ping: ${WHITE}Peek
 ${DARK_GREEN}${BOLD}TPS: ${WHITE}A
 ${DARK_GREEN}${BOLD}FPS: ${WHITE}Boo`;
 const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
 
+/**
+ * This function updates the status overlay message with the current ping, TPS, and FPS information.
+ * It constructs a formatted message containing the ping in milliseconds, TPS in ticks per second,
+ * and FPS (frames per second) using the values from the `ping`, `tps`, and `Client.getFPS()` respectively.
+ */
 register('step', () => {
     statusOverlay.message = 
 `${DARK_GREEN}${BOLD}Ping: ${WHITE}${ping}${GREEN} ms

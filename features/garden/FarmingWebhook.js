@@ -8,7 +8,9 @@ import { getWaifu, setWaifu } from "../general/PartyCommands";
 
 
 /**
+ * Variables used to represent possible crop drops.
  * "Crop": [average drop, npc, emoji]
+ * "Crop Trade": "Crop ID"
  */
 const CROP_DROP = {
     "Crops": [1.0, 9, ":bread:"],
@@ -34,13 +36,27 @@ const CROP_TRADES = {
     "ENCHANTED_RAW_RABBIT": "ENCHANTED_RABBIT"
 }
 
+/**\
+ * This class encapsulates various statistics related to farming activities and interactions.
+ * It provides methods to reset the statistics and initializes default values for different
+ * types of statistics, including crop stats, visitor stats, and player stats.
+ */
 class FarmingStat {
+    /**
+     * Constructor for FarmingStat.
+     * Initializes the cropStats, visitorStats, and playerStats objects.
+     */
     constructor() {
         this.cropStats = {};
         this.visitorStats = {};
         this.playerStats = {};
         this.resetStats();
     }
+
+    /**
+     * Reset all statistics to their default values.
+     * Resets the cropStats, visitorStats, and playerStats objects.
+     */
     resetStats() {
         this.cropStats = {};
         this.visitorStats = {
@@ -68,7 +84,7 @@ class FarmingStat {
 const farmingStats = new FarmingStat(); 
 
 /**
- * Send webhook data using post request.
+ * Send webhook data using POST request.
  */
 function sendWebhook() {
     // Fetch values
@@ -86,7 +102,7 @@ function sendWebhook() {
     const playerStats = farmingStats.playerStats;
     setWaifu();
     
-    // Send webhook via post request
+    // Send data to webhook
     request({
         url: settings.gardenWebhook,
         method: "POST",
@@ -154,7 +170,9 @@ function sendWebhook() {
 }
 
 /**
- * Crop Tracking
+ * This function is responsible for updating the `farmingFortune` variable based on information
+ * extracted from the TabList. It checks if the player is in the "Garden" world, retrieves the TabList,
+ * and searches for a line containing "Farming Fortune". If found, it extracts the value of Farming Fortune.
  */
 let downtime = 0;
 let farmingFortune = 0;
@@ -167,6 +185,12 @@ registerWhen(register("step", () => {
     farmingFortune = parseInt(fortune.substring(fortune.indexOf('☘') + 1));
 }).setDelay(10), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
+/**
+ * This function updates the statistics for a given crop block based on its type and drop information.
+ * It calculates the drop amounts and values, updates the cropStats for the block, and resets the downtime.
+ *
+ * @param {object} block - The block object representing the harvested crop.
+ */
 registerWhen(register("blockBreak", (block) => {
     const blockName = block.type.getName();
     if (!(blockName in CROP_DROP)) return;
@@ -182,7 +206,11 @@ registerWhen(register("blockBreak", (block) => {
 }), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
- * Visitor Tracking
+ * This function updates the statistics for visitors to the farm based on their arrival.
+ * It increments the "arrived" count in the visitorStats and categorizes visitors into
+ * different rarity tiers, updating the corresponding counts for each rarity.
+ *
+ * @param {Array} visitor - An array representing the visitor, where index 1 indicates their rarity.
  */
 registerWhen(register("chat", (visitor) => {
     farmingStats.visitorStats.arrived++;
@@ -200,6 +228,15 @@ registerWhen(register("chat", (visitor) => {
 }).setCriteria("&r&a&r${visitor} &r&ehas arrived on your &r&bGarden&r&e!&r"),
 () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
+/**
+ * This function handles mouse click interactions in a GUI, specifically related to trade offers.
+ * It analyzes the clicked item, its lore, and interactions to update visitor statistics.
+ *
+ * @param {number} x - The x-coordinate of the mouse click.
+ * @param {number} y - The y-coordinate of the mouse click.
+ * @param {number} button - The mouse button pressed during the interaction.
+ * @param {object} gui - The GUI object associated with the interaction.
+ */
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     // Get clicked item
     const clickedSlot = gui?.getSlotUnderMouse()?.field_75222_d;
@@ -243,21 +280,25 @@ registerWhen(register("guiMouseClick", (x, y, button, gui) => {
 }), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
 /**
- * Player Tracking
+ * Function handling for player statistics.
  */
 registerWhen(register("worldUnload", () => {
         farmingStats.playerStats.disconnects++;
 }), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
-
 registerWhen(register("chat", () => {
     farmingStats.playerStats.deaths++;
 }).setCriteria(" ☠ You ${death}."), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
-
 registerWhen(register("chat", (medal, crop) => {
     farmingStats.playerStats[medal]++;
 }).setCriteria("[NPC] Jacob: You earned a ${medal} medal in the ${crop} contest!"),
 () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 
+/**
+ * This function is responsible for handling time-based events and tracking player downtime.
+ * It increments the timePassed and downtime counters, triggering actions based on their values.
+ * If the specified time has passed, it sends a webhook and resets the timePassed counter.
+ * If player downtime exceeds a threshold, it updates the player's downtime statistics.
+ */
 let timePassed = 0;
 registerWhen(register("step", () => {
     timePassed++;

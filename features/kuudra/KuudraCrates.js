@@ -1,5 +1,4 @@
 import settings from "../../settings";
-import { get3x3Stands } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getPhase } from "./KuudraSplits";

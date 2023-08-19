@@ -3,5 +3,7 @@
     "- Added anti ghost party",
     "- Changed party settings to be in a new tab",
     "- Changed Kuudra profit to only show when running",
-    "- Fixed container value not registering at times"
+    "- Refactored some code",
+    "- Fixed container value not registering at times",
+    "- Fixed announce mob trying to /pc when not in party"
 ]

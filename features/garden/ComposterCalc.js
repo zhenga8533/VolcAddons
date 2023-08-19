@@ -8,7 +8,7 @@ import { getBazaar } from "../economy/Economy";
 /**
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.
  */
-registerWhen(register("GuiOpened", () => {
+registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         // Get compsoter upgrades container
         let container = Player.getContainer();
@@ -25,9 +25,11 @@ registerWhen(register("GuiOpened", () => {
     });
 }), () => getWorld() === "Garden");
 
-
 /**
- * Fetches Bazaar data and performs calculations for single, hourly, and daily profits and prints to screen.
+ * This function calculates the profit and cost associated with using a composter,
+ * factoring in various upgrades and commodity prices from the bazaar.
+ *
+ * @param {Array} args - An array of arguments containing composter upgrade levels.
  */
 export function calcCompost(args) {
     const bazaar = getBazaar();

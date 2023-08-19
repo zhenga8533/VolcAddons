@@ -1,7 +1,6 @@
 import settings from "../../settings";
 import { BOLD, DARK_RED, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
-import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 
 

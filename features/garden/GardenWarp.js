@@ -25,6 +25,13 @@ registerWhen(register("messageSent", (message, event) => {
         warpTo = message;
     }
 }), () => settings.warpGarden);
+
+/**
+ * This function attempts to warp the player to a specified location (`warpTo`) if conditions are met.
+ * It checks if there is a next visitor and issues a warp command if applicable.
+ * The function also uses a delayed recursive approach to continue attempting warp
+ * until a next visitor is available.
+ */
 function tryWarp() {
     if (getNextVisitor() != 0) {
         ChatLib.say(warpTo);

@@ -5,12 +5,14 @@ import { getBazaar } from './Economy';
 
 
 /**
- * Variables used to represent minion upgrades and action speeds.
+ * Variables used to represent minion upgrades.
  */
 const INFERNO_ACTION_UPGRADE = 34.5;
 const INFERNO_ACTION_BASE = 1102 + INFERNO_ACTION_UPGRADE;
 const VAMPIRE_ACTIONS = [190, 175, 160, 140, 117, 95];
+
 /**
+ * Variables used to represent minion action speeds.
  * 1 (base) + 0.4 (2 flycatchers) + 0.11 (beacon) + 0.1 (mithril infusion) = 1.61
  * 
  * Other potention upgrades:

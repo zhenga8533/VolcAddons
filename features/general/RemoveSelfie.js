@@ -1,6 +1,10 @@
 import settings from "../../settings";
 import { registerWhen } from "../../utils/variables";
 
+
+/**
+ * Variables used to represent F5 key bind.
+ */
 let key = new KeyBind(Client.getMinecraft().field_71474_y.field_151457_aa);
 let keyPressed = false;
 

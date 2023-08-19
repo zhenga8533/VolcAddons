@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -34,6 +34,15 @@ const MAX_ENCHANTS = {
 const ENCHANTS = new Set(Object.keys(MAX_ENCHANTS));
 const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"]);
 
+/**
+ * This function calculates the value of enchantments on an item, taking into account
+ * the provided enchantments, bazaar data, and enchantment type.
+ *
+ * @param {object} enchantments - The enchantments object containing enchantment names and levels.
+ * @param {object} bazaar - The bazaar data containing enchantment value information.
+ * @param {string} type - The type of value to calculate (e.g., "buy", "sell").
+ * @returns {number} - The calculated value of the enchantments on the item.
+ */
 function getEnchantmentValue(enchantments, bazaar, type) {
     value = 0;
     Object.entries(enchantments ?? {}).forEach(([enchant, enchantlvl]) => {
@@ -351,9 +360,5 @@ registerWhen(register("itemTooltip", (lore, item) => {
 /**
  * Reset data on data transfers.
  */
-register("guiClosed", () => {
-    valueOverlay.message = "";
-});
-register("worldUnload", () => {
-    savedValues = {};
-});
+register("guiClosed", () => { valueOverlay.message = "" });
+register("worldUnload", () => { savedValues = {} });

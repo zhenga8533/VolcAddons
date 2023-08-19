@@ -1,14 +1,9 @@
-// Importing constants and utility functions from other files
+import PogObject from "../../PogData";
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 import { delay } from "./thread";
 
-// Importing the PogObject class from another file named "PogData"
-import PogObject from "../../PogData";
-
 
 // --- PERSISTENT DATA ---
-
-// Initializing a persistent data object using the PogObject class
 export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
     "newUser": true,
@@ -209,25 +204,6 @@ pauseKey.registerKeyPress(() => {
     const message = paused ? `${RED}Paused` : `${GREEN}Resumed`;
     ChatLib.chat(`${LOGO} ${GOLD}Tracker ${message}!`);
 });
-
-// MVP+/++ Check
-let isMVP = false;
-
-/**
- * Returns whether the player is MVP+ or MVP++ based on chat messages.
- *
- * @returns {boolean} - Whether the player is MVP+ or MVP++.
- */
-export function getMVP() {
-    return isMVP;
-}
-
-// Event handler for chat messages to check MVP status
-register("chat", (player) => {
-    if (player == Player.getName()) {
-        isMVP = true;
-    }
-}).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<");
 
 // Stats tracking class
 export class Stat {

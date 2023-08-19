@@ -1,5 +1,6 @@
 import settings from "../../settings";
-import { data, getMVP, registerWhen } from "../../utils/variables";
+import { getMVP } from "../../utils/player";
+import { data, registerWhen } from "../../utils/variables";
 
 
 /**

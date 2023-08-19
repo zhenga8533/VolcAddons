@@ -51,6 +51,11 @@ registerWhen(register("step", () => {
         minutes = 0;
     }
 }).setDelay(60), () => settings.economyRefresh);
+
+/**
+ * This function updates auction and bazaar data by invoking the `updateAuction` and `updateBazaar` functions.
+ * After the updates, it sends a chat message to notify the user about the successful update.
+ */
 register("command", () => {
     updateAuction();
     updateBazaar();

@@ -19,6 +19,9 @@ registerWhen(register("actionBar", () => {
         Client.Companion.showTitle(`${GOLD}${BOLD}AWOOGA!`, "", 0, 25, 5);
 }).setCriteria("${before}CASTING"), () => settings.ragDetect);
 
+/**
+ * Tracks chat for rag cancelled message to display alert on screen.
+ */
 registerWhen(register("chat", () => {
     Client.Companion.showTitle(`${RED}${BOLD}CANCELLED!`, "", 0, 25, 5);
 }).setCriteria("Ragnarock was cancelled due to being hit!"), () => settings.ragDetect);

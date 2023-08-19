@@ -15,30 +15,9 @@ import { getItemValue } from "../economy/ItemPrice";
 const KEY_COST = [[200000, 2], [400000, 6], [750000, 20], [1500000, 60], [3000000, 120]];
 
 /**
- * Variables used to represent and render overlay.
- */
-const profitExample =
-`${GOLD}${BOLD}Profit/Loss: ${GREEN}Vaporean
-
-${AQUA}${BOLD}Primary: ${GREEN}Is
-${DARK_AQUA}${BOLD}Secondary: ${GREEN}The
-${DARK_PURPLE}${BOLD}Teeth: ${GREEN}Most
-${RED}${BOLD}Essence: ${GREEN}Compatible
-${DARK_RED}${BOLD}Key: ${RED}Pokemon...`;
-const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () => Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
-
-let downtime = 300;
-const coinageExample =
-`${DARK_RED}${BOLD}Profit: ${WHITE}And
-${DARK_RED}${BOLD}Chests: ${WHITE}He
-${DARK_RED}${BOLD}Average: ${WHITE}Asked
-${DARK_RED}${BOLD}Time Passed: ${WHITE}The
-${DARK_RED}${BOLD}Rate: ${WHITE}Man`;
-const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Isle"], () => downtime < 300, data.ZL, "moveKPT", coinageExample);
-
-/**
  * Variables used to track Kuudra session profit.
  */
+let downtime = 300;
 let chestOpened = false;
 let chestProfit = 0;
 let kuudraSession = {
@@ -68,7 +47,34 @@ register("command", () => {
 register("worldUnload", () => { chestOpened = false });
 
 /**
- * Updates Kuudra profit tracker data an overlay every second or on chest open.
+ * Variables used to represent and render overlay.
+ */
+const profitExample =
+`${GOLD}${BOLD}Profit/Loss: ${GREEN}Vaporean
+
+${AQUA}${BOLD}Primary: ${GREEN}Is
+${DARK_AQUA}${BOLD}Secondary: ${GREEN}The
+${DARK_PURPLE}${BOLD}Teeth: ${GREEN}Most
+${RED}${BOLD}Essence: ${GREEN}Compatible
+${DARK_RED}${BOLD}Key: ${RED}Pokemon...`;
+const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () => Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
+
+const coinageExample =
+`${DARK_RED}${BOLD}Profit: ${WHITE}And
+${DARK_RED}${BOLD}Chests: ${WHITE}He
+${DARK_RED}${BOLD}Average: ${WHITE}Asked
+${DARK_RED}${BOLD}Time Passed: ${WHITE}The
+${DARK_RED}${BOLD}Rate: ${WHITE}Man`;
+const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Isle"], () => downtime < 300, data.ZL, "moveKPT", coinageExample);
+
+/**
+ * This function updates the profit tracker and associated metrics based on whether a chest was opened.
+ * If a chest was opened, it adds the chest profit to the session's profit, increments the chest count,
+ * and calculates the new average profit per chest. If a chest was not opened, it increments the time count.
+ * The function then calculates and updates the rate of profit per hour. Finally, it constructs and updates
+ * the coinage overlay message with the relevant profit tracking information.
+ *
+ * @param {boolean} openedChest - Indicates whether a chest was opened (true) or not (false).
  */
 function updateProfitTracker(openedChest) {
     if (openedChest) {
@@ -94,12 +100,28 @@ ${DARK_RED}${BOLD}Average: ${WHITE}${formatNumber(profitView.average.toFixed(0))
 ${DARK_RED}${BOLD}Time Passed: ${WHITE}${getTime(profitView.time)}
 ${DARK_RED}${BOLD}Rate: ${WHITE}${formatNumber(profitView.rate.toFixed(0))} ¢/hr`
 }
+
+/**
+ * This code block contains multiple event handlers that contribute to Kuudra profit tracking.
+ * 
+ * The first event handler triggers when a specific slot in the "Paid Chest" container is clicked.
+ * It checks conditions to determine whether to update the profit tracker and sets `chestOpened` accordingly.
+ * 
+ * @param {number} x - The x-coordinate of the mouse click.
+ * @param {number} y - The y-coordinate of the mouse click.
+ * @param {number} button - The mouse button pressed during the interaction.
+ * @param {object} gui - The GUI object associated with the interaction.
+ */
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     if (Player.getContainer().getName() !== "Paid Chest" || gui?.getSlotUnderMouse()?.field_75222_d != 31 || chestOpened) return;
     downtime = 0;
     updateProfitTracker(true);
     chestOpened = true;
 }), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker);
+
+/**
+ * Track time and downtime of runs.
+ */
 registerWhen(register("step", () => {
     downtime++;
     if (downtime >= 300) return;

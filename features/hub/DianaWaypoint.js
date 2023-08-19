@@ -135,7 +135,7 @@ registerWhen(register("clicked", (x, y, button, state) => {
 getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 
 /**
- * Resets "lastCast" variable whenever player right clicks with a fishing rod in hand.
+ * Variables used to represent hub warp locations and burrow estimation.
  */
 let warps = [];
 let start = 0;
@@ -149,6 +149,12 @@ const WARPS = {
     "crypt": [-161.5, 61, -99.5],
     "wizard": [42.5, 122, 69]
 }
+
+/**
+ * This function populates the `warps` array with warp data based on the predefined `WARPS` and `data.warplist`.
+ * It adds entries to the array for each warp in the `data.warplist` that corresponds to an entry in `WARPS`.
+ * The entries consist of the warp name and associated coordinates (x, y, z).
+ */
 export function setWarps() {
     warps = [];
     warps.push(["player", 0, 0, 0]);

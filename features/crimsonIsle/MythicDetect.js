@@ -25,7 +25,6 @@ registerWhen(register("chat", () => {
 }).setCriteria("You hear a massive rumble as Thunder emerges."),
 () => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce);
 
-
 /**
  * Detects if any mythic lava creatures are near the player.
  */

@@ -83,7 +83,9 @@ function getLatestReleaseVersion() {
     });
 }
 
-// Register an event handler to check for the latest release once the world is loaded
+/**
+ * Register an event handler to check for the latest release once the world is loaded
+ */
 const once = register("worldLoad", () => {
     if (!settings.releaseAlert) {
         once.unregister();

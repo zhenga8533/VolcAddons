@@ -38,7 +38,6 @@ registerWhen(register("chat", (player) => {
 registerWhen(register("chat", (player1, player2) => {
     const name1 = getPlayerName(player1).toLowerCase();
     const name2 = getPlayerName(player2).toLowerCase();
-
     if (!data.whitelist.includes(name1) && !data.whitelist.includes(name2)) return;
     
     delay(() => ChatLib.command("p join " + name1), 500);

@@ -3,6 +3,28 @@ import request from "../../requestV2";
 import { data } from "./variables";
 
 
+// --- Get Player Rank ---
+
+// MVP++ Check
+let isMVP = false;
+
+/**
+ * Returns whether the player is MVP+ or MVP++ based on chat messages.
+ *
+ * @returns {boolean} - Whether the player is MVP+ or MVP++.
+ */
+export function getMVP() {
+    return isMVP;
+}
+
+// Event handler for chat messages to check MVP status
+register("chat", (player) => {
+    if (player == Player.getName()) {
+        isMVP = true;
+    }
+}).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<");
+
+
 // --- Get Player UUID ---
 
 // Variable to store the player's UUID, initially set to undefined.

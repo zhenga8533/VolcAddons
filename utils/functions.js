@@ -1,4 +1,40 @@
+/**
+ * Strips rank and tags off player name.
+ * 
+ * @param {string} player - Player name with rank and tags.
+ * @returns {string} Base player ign.
+ */
+export function getPlayerName(player) {
+    let name = player;
+    let nameIndex = name.indexOf(']');
+
+    while (nameIndex != -1) {
+        name = name.substring(nameIndex + 2);
+        nameIndex = name.indexOf(']');
+    }
+
+    return name;
+}
+
+/**
+ * This function extracts and returns the guild name from a player's name string.
+ * It handles cases where the player's name includes guild tags and ranks.
+ *
+ * @param {string} player - The name of the player, possibly with guild tags and ranks.
+ * @returns {string} - The extracted guild name from the player's name.
+ */
+export function getGuildName(player) {
+    let name = player;
+    let rankIndex = name.indexOf('] ');
+    if (rankIndex != -1)
+        name = name.substring(name.indexOf('] ') + 2);
+    name = name.substring(0, name.indexOf('[') - 1);
+
+    return name;
+}
+
 import { delay } from "./thread";
+import { getInParty } from "./party";
 
 
 /**
@@ -11,6 +47,7 @@ import { delay } from "./thread";
  * @param {number} z - Z coordinate.
  */
 export function announceMob(toAll, mob, x, y ,z) {
+    if (!toAll && !getInParty()) return;
     x = Math.round(x);
     y = Math.round(y);
     z = Math.round(z);
@@ -69,6 +106,14 @@ export function formatNumber(num) {
     return (num / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
 }
 
+/**
+ * This function converts formatted numbers with suffix notations (e.g., k, m, b) into their numeric values.
+ * It extracts the numeric part of the input string, determines the notation (suffix), and uses a map to get
+ * the appropriate multiplier. It then returns the converted numeric value, or 0 if conversion is not possible.
+ *
+ * @param {string} str - The formatted number string with optional suffix notation (k, m, b).
+ * @returns {number} - The numeric value represented by the input string, considering the notation.
+ */
 export function unformatNumber(str) {
     const notationMap = {
         k: 1_000,
@@ -84,34 +129,7 @@ export function unformatNumber(str) {
   
     if (!isNaN(numericPart)) return numericPart * multiplier;
   
-    return 0;  // If conversion is not possible, return NaN
-}
-
-/**
- * Strips rank and tags off player name.
- * 
- * @param {string} player - Player name with rank and tags.
- * @returns {string} Base player ign.
- */
-export function getPlayerName(player) {
-    let name = player;
-    let nameIndex = name.indexOf(']');
-
-    while (nameIndex != -1) {
-        name = name.substring(nameIndex + 2);
-        nameIndex = name.indexOf(']');
-    }
-
-    return name;
-}
-export function getGuildName(player) {
-    let name = player;
-    let rankIndex = name.indexOf('] ');
-    if (rankIndex != -1)
-        name = name.substring(name.indexOf('] ') + 2);
-    name = name.substring(0, name.indexOf('[') - 1);
-
-    return name;
+    return 0;  // If conversion is not possible, return 0
 }
 
 /**
@@ -170,6 +188,19 @@ const REFORGES = {
         "Lvl"
     ])
 };
+
+/**
+ * This function removes reforge words from an item string based on the specified item type.
+ * It takes the item type and item string as arguments and follows these steps:
+ * - Determines the corresponding set of reforges for the given item type.
+ * - If the item type is not valid or the reforges set is empty, returns the original item string.
+ * - Splits the item string into individual words and filters out words matching any reforges using Set.has().
+ * - Returns the modified item string with reforges removed.
+ *
+ * @param {string} itemType - The type of item (e.g., "weapon", "armor", "misc", "all") to remove reforges for.
+ * @param {string} itemString - The original item string containing reforges and other words.
+ * @returns {string} - The item string with reforges removed based on the specified item type.
+ */
 export function removeReforges(itemType, itemString) {
     // Get the corresponding reforges Set based on the item type
     const reforgesSet = itemType === "all" ? new Set([

@@ -3,6 +3,7 @@ import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import settings from "../../settings";
 
+
 /**
  * Variable used to track all damage ticks around the player.
  */

@@ -1,7 +1,5 @@
 // Utility Modules
 import settings from "./settings";
-if (settings.containerValue === true || settings.containerValue === false) settings.containerValue = 0;
-if (settings.itemPrice === true || settings.itemPrice === false) settings.itemPrice = 0;
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { openGUI } from "./utils/overlay";
 import { getInParty, getIsLeader } from "./utils/party";

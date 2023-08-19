@@ -31,14 +31,12 @@ export function updateBestiary() {
         }
     });
 }
-register("worldLoad", () => {
-    updateBestiary();
-});
+register("worldLoad", () => { updateBestiary() });
 
 /**
  * Variable and class to track mob bestiary data.
  */
-const killBrackets = [
+const KILL_BRACKETS = [
     [20, 40, 60, 100, 200, 400, 800, 1400, 2000, 3000, 6000, 12000, 20000, 30000, 40000, 50000, 60000, 72000, 86000, 100000, 200000, 400000, 600000, 800000, 1000000],
     [5, 10, 15, 25, 50, 100, 200, 350, 500, 750, 1500, 3000, 5000, 7500, 10000, 12500, 15000, 18000, 21500, 25000, 50000, 100000, 150000, 200000, 250000],
     [4, 8, 12, 16, 20, 40, 80, 140, 200, 300, 600, 1200, 2000, 3000, 4000, 5000, 6000, 7200, 8600, 10000, 20000, 40000, 60000, 80000, 100000],
@@ -62,7 +60,7 @@ class Mob {
     constructor(names, levels, bracket, maxLevel, time) {
         this.names = names;
         this.levels = levels;
-        this.bracket = killBrackets[bracket - 1];
+        this.bracket = KILL_BRACKETS[bracket - 1];
         this.maxLevel = maxLevel - 1;
         this.level = 0;
         this.kills = 0;
@@ -317,7 +315,7 @@ const bestiary = {
     "Magma Follower": new Mob(["magma_follower"], [100, 200, 300, 400, 500], 5, 10, 30),
     "Wandering Blaze": new Mob(["wandering_blaze"], [100, 200, 300, 400, 500], 4, 20, 15),
     "Wither Sentry": new Mob(["wither_sentry"], [100, 200, 300, 400, 500], 4, 10, 30),
-}
+};
 register("worldLoad", () => {
     delay(() => {
         Object.keys(bestiary).forEach(key => {
@@ -336,7 +334,7 @@ function sortBestiary(val, amount) {
     // Filtering the bestiary based on the provided criteria and amount
     const filteredBestiary = Object.entries(bestiary).filter(([key, value]) =>
         val === "bracket"
-            ? value.bracket === killBrackets[amount - 1] && value.next !== 0
+            ? value.bracket === KILL_BRACKETS[amount - 1] && value.next !== 0
             : value.next !== 0
     );
 
