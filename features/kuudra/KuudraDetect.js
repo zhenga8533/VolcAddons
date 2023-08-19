@@ -21,7 +21,7 @@ registerWhen(register("tick", () => {
     cubes = World.getAllEntitiesOfType(EntityMagmaCube.class);
 
     // Find Kuudra based off size and HP
-    kuudra = cubes.find((cube) => cube.getWidth().toFixed(0) == 15 && cube.getEntity().func_110143_aJ() <= 100000);
+    kuudra = cubes.find((cube) => cube.getWidth().toFixed(0) == 15 && cube.getEntity().func_110143_aJ() <= 100_000);
     if (kuudra != undefined) {
         currentHP = kuudra.getEntity().func_110143_aJ().toFixed(0);
 
@@ -30,12 +30,12 @@ registerWhen(register("tick", () => {
             HPDisplay = [`${currentHP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}/100,000 ❤`, kuudra.getX(), kuudra.getY(), kuudra.getZ()];
             
             // Boss Health Bar Percentage
-            const percent = `${(currentHP / 100000 * 100).toFixed(2)}%`;
+            const percent = `${(currentHP / 100_000 * 100).toFixed(2)}%`;
             percentHP = new Text(percent, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(percent) / 2, 10);
         }
 
         // KUUDRA SPAWN DETECT
-        if (settings.kuudraSpawn && getTier() == 5 && currentHP <= 25000 && currentHP > 24900) {
+        if (settings.kuudraSpawn && getTier() == 5 && currentHP <= 25_000 && currentHP > 24_900) {
             x = kuudra.getX();
             z = kuudra.getZ();
 
@@ -48,8 +48,7 @@ registerWhen(register("tick", () => {
             else if (z < -132)
                 Client.Companion.showTitle(`${DARK_RED}${BOLD}BACK!`, "", 0, 25, 5);
         }
-    } else
-        HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
+    } else HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
 }), () => getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
 
 /**

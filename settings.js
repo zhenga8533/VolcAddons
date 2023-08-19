@@ -1,4 +1,3 @@
-// Importing various constants and utilities
 import { AQUA, BOLD, DARK_AQUA, DARK_RED, GRAY, HEADER, ITALIC, RED } from "./utils/constants";
 import {
     @TextProperty,
@@ -200,6 +199,24 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     skillTracker = 0;
 
     // --- Server ---
+    @SliderProperty({
+        name: "Hide Server Entities",
+        description: "Set maximum distance away from player an entity can be.",
+        category: "General",
+        subcategory: "Server",
+        min: 0,
+        max: 128
+    })
+    hideEntity = 0;
+    @TextProperty({
+        name: "Hide on bush",
+        description: `Enter world names as [${AQUA}World1, World2, ...${GRAY}] or leave empty for all worlds.`,
+        category: "General",
+        subcategory: "Server",
+        placeholder: "World1, World2, ..."
+    })
+    hideWorlds = "";
+
     @SliderProperty({
         name: "Recent Server Alert",
         description: `Alerts player when they rejoin a recent server. Set minutes until a server is no longer "recent" or as 0 to turn OFF.`,
@@ -664,9 +681,10 @@ Particles must be ON and use ${AQUA}/togglemusic ${GRAY}to turn music OFF.`,
 
     @TextProperty({
         name: "Vanquisher Auto-Warp",
-        description: `Parties and warps players in list to lobby on user Vanquisher spawn.\nEnable by entering party as [${AQUA}ign, ign, ...${GRAY}].`,
+        description: `Parties and warps players in list to lobby on user Vanquisher spawn.\nEnable by entering party as [${AQUA}ign1, ign2, ...${GRAY}].`,
         category: "Crimson Isles",
-        subcategory: "Vanquisher"
+        subcategory: "Vanquisher",
+        placeholder: "ign1, ign2, ..."
     })
     vanqParty = "";
 

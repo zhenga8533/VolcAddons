@@ -1,6 +1,8 @@
 [
     "- Added combo display",
     "- Added anti ghost party",
+    "- Added skin value to item price",
+    "- Added hide entity",
     "- Changed party settings to be in a new tab",
     "- Changed Kuudra profit to only show when running",
     "- Refactored some code",

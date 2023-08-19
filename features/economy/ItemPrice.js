@@ -186,6 +186,13 @@ export function getItemValue(item) {
             return value;
         }
     }
+    
+    // Skin Value
+    const skinValue = auction?.[itemData.skin]?.lbin ?? 0;
+    if (skinValue !== 0) {
+        value += skinValue;
+        valueMessage += `- ${AQUA}Skin: ${GREEN}+${formatNumber(skinValue)}\n`;
+    }
 
     // Reforge Value
     const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] ?? 0;

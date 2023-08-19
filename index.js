@@ -17,6 +17,7 @@ import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
+import "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
