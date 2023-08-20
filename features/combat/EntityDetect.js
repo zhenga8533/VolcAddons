@@ -64,9 +64,9 @@ registerWhen(register("tick", () =>{
         const color = colorMap[Object.keys(colorMap).find(type => entityClass.toString().includes(type))] || [1, 1, 1];
         
         // Add entities
-        const livingEntities = World.getAllEntitiesOfType(entityClass).filter(entity => entity.getEntity().func_110143_aJ() !== 0);
+        const livingEntities = World.getAllEntitiesOfType(entityClass).filter(entity => entity.getEntity().func_110143_aJ() != 0);
         const filteredEntities = entityHp === 0 ? livingEntities :
-            World.getAllEntitiesOfType(entityClass).filter(entity => entity.getEntity().func_110138_aP() === entityHp);
+            livingEntities.filter(entity => entity.getEntity().func_110138_aP() === entityHp);
         if (filteredEntities.length === 0) return;
         entities.push([[...filteredEntities], color]);
     });

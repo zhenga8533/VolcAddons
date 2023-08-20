@@ -123,8 +123,8 @@ function renderEntities(entities) {
     if (!entities.length) return;
 
     entities.forEach(e => {
-        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, true);
-        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, true);
+        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, false);
+        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, false);
     });
 }
 function renderStands(stands, title, r, g, b) {

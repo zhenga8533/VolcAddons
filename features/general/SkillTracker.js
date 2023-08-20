@@ -30,8 +30,8 @@ const skillOverlay = new Overlay("skillTracker", ["all"], () => true, data.AL, "
  * Resets skill overlay to base state.
  */
 register("command", () => {
-    for (let key in skills)
-        skills[key].reset()
+    for (let key in skills) skills[key].reset();
+    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset skill tracker!`);
 }).setName("resetSkills");
 
 /**
