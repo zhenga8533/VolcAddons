@@ -8,6 +8,7 @@ import { registerWhen } from "../../utils/variables";
  * Dictionary to track servers and their last join time.
  */
 let servers = {};
+let currentServer = null;
 
 /**
  * Replaces joining message if player has been in server in past X minutes.
@@ -17,24 +18,24 @@ let servers = {};
  */
 registerWhen(register("chat", (server, event) => {
     const currentTime = Date.now();
-    const timeDiff = (currentTime - servers[server]) / 1000; // Convert to seconds
-    const timeThreshold = settings.serverAlert * 60; // Convert to seconds
+    const timeDiff = (currentTime - servers[server]) / 1000;
+    const timeThreshold = settings.serverAlert * 60;
 
-    if (servers[server] && timeDiff < timeThreshold) {
+    if (servers?.[server] !== undefined && timeDiff < timeThreshold) {
         cancel(event);
         ChatLib.chat(`${DARK_RED}${BOLD}Recent Server: ${WHITE}${server}${DARK_RED}${BOLD}!`);
         ChatLib.chat(`${DARK_RED}${BOLD}Last Joined: ${WHITE}${getTime(timeDiff)} ago!`);
-    } else {
-        servers[server] = currentTime;
-    }
+    } else currentServer = server;
 }).setCriteria("Sending to server ${server}..."), () => settings.serverAlert !== 0);
 
 /**
  * Clears server entry after X minutes when leaving it.
  */
 registerWhen(register("worldUnload", () => {
+    if (currentServer === null) return;
     const currentTime = Date.now();
-    const timeThreshold = settings.serverAlert * 60000; // Convert to milliseconds
+    servers[currentServer] = currentTime;
+    const timeThreshold = settings.serverAlert * 60000;
 
     Object.keys(servers).forEach(server => {
         if (currentTime - servers[server] >= timeThreshold) {

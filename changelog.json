@@ -8,5 +8,6 @@
     "- Changed Kuudra profit to only show when running",
     "- Refactored some code",
     "- Fixed container value not registering at times",
-    "- Fixed announce mob trying to /pc when not in party"
+    "- Fixed announce mob trying to /pc when not in party",
+    "- Fixed server tracker starting on world join"
 ]
