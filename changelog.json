@@ -1,13 +1,5 @@
 [
-    "- Added combo display",
-    "- Added anti ghost party",
-    "- Added skin value to item price",
-    "- Added hide entity",
-    "- Added inventory value to container value",
-    "- Changed party settings to be in a new tab",
-    "- Changed Kuudra profit to only show when running",
-    "- Refactored some code",
-    "- Fixed container value not registering at times",
-    "- Fixed announce mob trying to /pc when not in party",
-    "- Fixed server tracker starting on world join"
+    "- Added /va cd",
+    "- Added ability to find newerish features in settings by searching for `new`",
+    "- Fixed dictionary linking"
 ]

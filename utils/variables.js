@@ -139,9 +139,8 @@ export function updateList(args, list, listName) {
     const isArray = Array.isArray(list);
     const command = args[1]
     const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
-    const value = listName === "cdlist" ? args.slice(-1)[0] : args.slice(3).join(' ');
-    const key = listName !== "cdlist" ? args[2] :
-        command === "remove" ? convertToTitleCase(args.slice(2).join(' ')) : convertToTitleCase(args.slice(2, args.length - 1).join(' '));
+    const value = listName === "cdlist" ? args[2] : args.slice(3).join(' ');
+    const key = listName === "cdlist" ? Player.getHeldItem().getName() : args[2];
 
     switch (command) {
         case ("add"): // ADD TO LIST
@@ -163,6 +162,7 @@ export function updateList(args, list, listName) {
             } else ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is not in the ${listName}!`);
             break;
         case ("clear"): // CLEAR LIST
+        case ("reset"):
             if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared the ${listName}!`);
@@ -184,6 +184,7 @@ export function updateList(args, list, listName) {
     
     if (args[0] === "ml" || args[0] === "mob" || args[0] === "moblist")
         updateEntityList();
+    setRegisters();
 }
 
 

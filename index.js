@@ -136,11 +136,8 @@ export function unformatNumber(str) {
  * @returns {string} String in title case format.
  */
 export function convertToTitleCase(input) {
-    return input
-        .toLowerCase()
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+    const args = input.includes('_') ? input.toLowerCase().split('_') : input.toLowerCase().split(' ');
+    return args.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 /**
  * Converts a string of words to pascal case format.
