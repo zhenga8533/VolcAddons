@@ -3,6 +3,13 @@ import { GREEN } from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
 
 
+/**
+ * Callback for handling mouse button clicks and releases to track ability usage.
+ * @param {number} x - The x-coordinate of the mouse pointer.
+ * @param {number} y - The y-coordinate of the mouse pointer.
+ * @param {number} button - The index of the clicked mouse button (0 for left, 1 for right, 2 for middle).
+ * @param {boolean} down - Indicates whether the button was pressed (true) or released (false).
+ */
 const items = {};
 registerWhen(register("clicked", (x, y, button, down) => {
     if (Client.isInGui()) return;
@@ -15,6 +22,9 @@ registerWhen(register("clicked", (x, y, button, down) => {
     items[heldName] = cd;
 }), () => data.cooldownlist.length !== 0);
 
+/**
+ * Update function for handling cooldowns and item stack sizes.
+ */
 registerWhen(register("tick", () => {
     const dupe = new Set();
     Player.getInventory().getItems().filter(item => item !== null && item.getName() in items).forEach(item => {

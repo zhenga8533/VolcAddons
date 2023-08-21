@@ -1,5 +1,6 @@
 [
     "- Added /va cd",
     "- Added ability to find newerish features in settings by searching for `new`",
-    "- Fixed dictionary linking"
+    "- Fixed dictionary linking",
+    "- Removed tuba timer"
 ]
