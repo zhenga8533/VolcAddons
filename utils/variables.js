@@ -15,11 +15,11 @@ export let data = new PogObject("VolcAddons", {
     "blacklist": [],
     "blocklist": [],
     // An array of default warp locations
-    "warplist": ["hub", "da", "castle", "museum"],
+    "warplist": ["hub", "da", "castle", "museum", "wizard"],
     "moblist": [],
     "emotelist": {},
+    "cooldownlist": {},
     "files": [],
-    "y": 0,
     // Properties related to timing and split data
     "splits": {
         "last": [0, 0, 0, 0, 0],
@@ -125,6 +125,7 @@ register("guiClosed", (event) => {
 
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
+import { convertToTitleCase } from "./functions";
 
 /**
  * Updates a list based on the provided arguments.
@@ -135,35 +136,35 @@ import { updateEntityList } from "../features/combat/EntityDetect";
  * @returns {Array|string} - The updated list.
  */
 export function updateList(args, list, listName) {
-    const item = listName === "mob-list" ? args.slice(2).join(" ") : args.slice(2).join(" ").toLowerCase();
     const isArray = Array.isArray(list);
+    const command = args[1]
+    const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
+    const value = listName === "cdlist" ? args.slice(-1)[0] : args.slice(3).join(' ');
+    const key = listName !== "cdlist" ? args[2] :
+        command === "remove" ? convertToTitleCase(args.slice(2).join(' ')) : convertToTitleCase(args.slice(2, args.length - 1).join(' '));
 
-    switch (args[1]) {
+    switch (command) {
         case ("add"): // ADD TO LIST
             if (isArray && !list.includes(item)) {
                 list.push(item);
                 ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${WHITE}${item}${GREEN}] to the ${listName}!`);
-            } else if (!(item in list)) {
-                list[item] = args[3];
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully linked [${WHITE}${item}${GREEN}] to [${WHITE}${args[3]}${GREEN}]!`);
-            } else
-                ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is already in the ${listName}!`);
+            } else if (!isArray && !(key in list)) {
+                list[key] = value;
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully linked [${WHITE}${value}${GREEN}] to [${WHITE}${key}${GREEN}]!`);
+            } else ChatLib.chat(`${LOGO} ${RED}[${WHITE}${isArray ? item : key}${RED}] is already in the ${listName}!`);
             break;
         case ("remove"): // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
                 list.splice(list.indexOf(item), 1);
                 ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${item}${GREEN}] from the ${listName}!`);
-            } else if (!isArray && item in list) {
-                delete list[item];
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${item}${GREEN}] from the ${listName}!`);
-            } else 
-                ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is not in the ${listName}!`);
+            } else if (!isArray && key in list) {
+                delete list[key];
+                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${key}${GREEN}] from the ${listName}!`);
+            } else ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is not in the ${listName}!`);
             break;
         case ("clear"): // CLEAR LIST
-            if (isArray)
-                list.length = 0;
-            else
-                Object.keys(list).forEach(key => delete list[key]);
+            if (isArray) list.length = 0;
+            else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared the ${listName}!`);
             break;
         case ("view"): // DISPLAY LIST
