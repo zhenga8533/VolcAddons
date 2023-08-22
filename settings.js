@@ -88,7 +88,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency(`Leave Command ${DARK_AQUA}?leave`, "Party Command Options");
 
         // Webhook Chats
-        this.addDependency("Game Chat", "Chat Options");
         this.addDependency("Public Chat", "Chat Options");
         this.addDependency("Party Chat", "Chat Options");
         this.addDependency("Guild Chat", "Chat Options");
@@ -286,11 +285,6 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         subcategory: "Webhook",
     })
     chatOptions = false;
-    @CheckboxProperty({
-        name: "Game Chat",
-        category: "General",
-        subcategory: "Webhook",
-    })
     gameChat = false;
     @CheckboxProperty({
         name: "Public Chat",
@@ -322,7 +316,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     // --- Party ---
     @SwitchProperty({
-        name: "Auto Ghost Party",
+        name: "Anti Ghost Party",
         description: "Prevents creating ghost parties when inviting multiple players.",
         category: "Party",
         subcategory: "Party"

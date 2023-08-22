@@ -9,6 +9,7 @@ import { delay } from "./utils/thread";
 import { data, updateList } from "./utils/variables";
 import "./utils/waypoints";
 import { findZone, getTier, getWorld } from "./utils/worlds";
+import { getLatestReleaseVersion } from "./utils/updates";
 data.autosave();
 
 // General Features
@@ -16,6 +17,7 @@ import "./features/general/AbiphoneBlocker";
 import "./features/general/AntiGhostParty";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
+import "./features/general/ChatWebhook";
 import "./features/general/Cooldowns";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
@@ -71,7 +73,6 @@ import "./features/garden/GardenWarp";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
-import { getLatestReleaseVersion } from "./utils/updates";
 
 
 // Launch Tests
