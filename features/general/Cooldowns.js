@@ -13,7 +13,7 @@ import { data, registerWhen } from "../../utils/variables";
 let items = {};
 registerWhen(register("clicked", (x, y, button, down) => {
     const held = Player.getHeldItem();
-    if (Client.isInGui() || down === false || held === null) return;
+    if (Client.isInGui() || down === false || button === 0 || held === null) return;
     const heldName = held.getName();
     if (!(heldName in data.cooldownlist) || heldName in items) return;
     const cd = data.cooldownlist[heldName];

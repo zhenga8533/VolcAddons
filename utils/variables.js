@@ -112,23 +112,14 @@ export function setRegisters() {
 }
 delay(() => setRegisters(), 1000);
 
-/**
- * Marks that the VolcAddons GUI has been opened.
- */
-export function opened() {
-    openVA = true;
-}
-
 // Event handler for GUI settings close.
 register("guiClosed", (event) => {
-    if (event.toString().includes("vigilance"))
-        setRegisters()
+    if (event.toString().includes("vigilance")) setRegisters();
 });
 
 
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
-import { convertToTitleCase } from "./functions";
 
 /**
  * Updates a list based on the provided arguments.

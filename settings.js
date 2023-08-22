@@ -66,7 +66,7 @@ ${ITALIC}Related Commands: /va calc compost`);
         `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
-        // Leader / Party Commands
+        // Leader
         this.addDependency(`Allinvite Command ${DARK_AQUA}?<allinvite, allinv>`, "Leader Command Options");
         this.addDependency(`Demote Command ${DARK_AQUA}?demote`, "Leader Command Options");
         this.addDependency(`Warp Command ${DARK_AQUA}?warp`, "Leader Command Options");
@@ -86,6 +86,13 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         this.addDependency(`Help Command ${DARK_AQUA}?help`, "Party Command Options");
         this.addDependency(`Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`, "Party Command Options");
         this.addDependency(`Leave Command ${DARK_AQUA}?leave`, "Party Command Options");
+
+        // Webhook Chats
+        this.addDependency("Game Chat", "Chat Options");
+        this.addDependency("Public Chat", "Chat Options");
+        this.addDependency("Party Chat", "Chat Options");
+        this.addDependency("Guild Chat", "Chat Options");
+        this.addDependency("Private Chat", "Chat Options");
 
         // Kuudra Alerts
         this.addDependency("Kuudra Alert Options", "Kuudra Alerts");
@@ -210,7 +217,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     hideEntity = 0;
     @TextProperty({
         name: "Hide on bush",
-        description: `Enter world names as [${AQUA}World1, World2, ...${GRAY}] or leave empty for all worlds.`,
+        description: `Enter world names as [${AQUA}World1, World2, ...${GRAY}] for entity hider to work on or leave empty for all worlds.`,
         category: "General",
         subcategory: "Server",
         placeholder: "World1, World2, ..."
@@ -261,6 +268,54 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         max: 120
     })
     reminderTime = 0;
+
+    // --- Webhook ---
+    @TextProperty({
+        name: "Discord Webhook",
+        description: "Input Discord Webhook link to send the chat messages to.",
+        category: "General",
+        subcategory: "Webhook",
+        protected: true
+    })
+    chatWebhook = "";
+
+    @SwitchProperty({
+        name: "Chat Options",
+        description: "Toggle to display chat control panel.",
+        category: "General",
+        subcategory: "Webhook",
+    })
+    chatOptions = false;
+    @CheckboxProperty({
+        name: "Game Chat",
+        category: "General",
+        subcategory: "Webhook",
+    })
+    gameChat = false;
+    @CheckboxProperty({
+        name: "Public Chat",
+        category: "General",
+        subcategory: "Webhook",
+    })
+    publicChat = false;
+    @CheckboxProperty({
+        name: "Party Chat",
+        category: "General",
+        subcategory: "Webhook",
+    })
+    partyChat = false;
+    @CheckboxProperty({
+        name: "Guild Chat",
+        category: "General",
+        subcategory: "Webhook",
+    })
+    guildChat = false;
+    @CheckboxProperty({
+        name: "Private Chat",
+        category: "General",
+        subcategory: "Webhook",
+    })
+    privateChat = false;
 
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████

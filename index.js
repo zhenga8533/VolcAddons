@@ -6,7 +6,7 @@ import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import settings from "./settings";
 import { delay } from "./utils/thread";
-import { data, opened, updateList } from "./utils/variables";
+import { data, updateList } from "./utils/variables";
 import "./utils/waypoints";
 import { findZone, getTier, getWorld } from "./utils/worlds";
 data.autosave();
@@ -127,7 +127,6 @@ const PARTY_COMMANDS = new Set(["cringe", "gay", "racist", "dice", "roll", "coin
 register ("command", (...args) => {
     if (args === undefined) {
         settings.openGUI();
-        opened();
         return;
     }
 
@@ -138,7 +137,6 @@ register ("command", (...args) => {
         case undefined:
         case "settings":
             settings.openGUI();
-            opened();
             break;
         // Help
         case "help":

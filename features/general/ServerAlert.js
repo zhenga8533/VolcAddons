@@ -17,6 +17,7 @@ let currentServer = null;
  * @param {Object} event - Chat message event.
  */
 registerWhen(register("chat", (server, event) => {
+    currentServer = server;
     const currentTime = Date.now();
     const timeDiff = (currentTime - servers[server]) / 1000;
     const timeThreshold = settings.serverAlert * 60;
@@ -25,7 +26,7 @@ registerWhen(register("chat", (server, event) => {
         cancel(event);
         ChatLib.chat(`${DARK_RED}${BOLD}Recent Server: ${WHITE}${server}${DARK_RED}${BOLD}!`);
         ChatLib.chat(`${DARK_RED}${BOLD}Last Joined: ${WHITE}${getTime(timeDiff)} ago!`);
-    } else currentServer = server;
+    }
 }).setCriteria("Sending to server ${server}..."), () => settings.serverAlert !== 0);
 
 /**
