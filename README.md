@@ -48,7 +48,7 @@
 - GENERAL COMMANDS:
   - Settings: /va <help, settings, gui, clear>
   - Waypoints: /va <coords, waypoint, enigma, npc, zone>
-  - Lists: /va <whitelist, blocklist, warplist>
+  - Lists: /va <cd, whitelist, blocklist, warplist>
   - Inferno Minions: /va <calc, apex>
   - Misc: /va <splits, be>
 
@@ -67,7 +67,9 @@
     - Remove Selfie Mode
     - Skill Tracker => /va moveSkills
     - Alert Timer
+    - Item Cooldown => /va cd
   - Party
+    - Anti Ghost Party
     - Auto Join Reparty
     - Auto Transfer Party
     - Auto Join Whitelist => /va wl
@@ -127,6 +129,5 @@
 - RIFT FEATURES
   - DDR Helper
   - Enigma Soul Waypoints
-  - Enigma, NPC, Zone, Montezuma, and Effigy Waypoints
-  - Weird Tuba Tracker
+  - Enigma, NPC, Zone, Montezuma, and Effigy Waypointsz
   - Vampire Slayer Features
