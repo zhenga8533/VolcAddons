@@ -1,6 +1,4 @@
 import axios from "../../axios";
-import settings from "../settings";
-import { delay } from "./thread";
 const { BOLD, GOLD, GREEN, LOGO, WHITE } = require('./constants');
 
 
@@ -47,7 +45,7 @@ function compareVersions(version1, version2) {
 /**
  * Fetches the latest release version from the GitHub repository and notifies the user if a new release is available.
  */
-function getLatestReleaseVersion() {
+export function getLatestReleaseVersion() {
     const releasesUrl = `https://api.github.com/repos/zhenga8533/VolcAddons/releases`;
 
     // Fetch the releases from the GitHub API using Axios
@@ -81,16 +79,3 @@ function getLatestReleaseVersion() {
         console.error("Failed to fetch releases:", error);
     });
 }
-
-/**
- * Register an event handler to check for the latest release once the world is loaded
- */
-const once = register("worldLoad", () => {
-    if (!settings.releaseAlert) {
-        once.unregister();
-        return;
-    }
-
-    delay(getLatestReleaseVersion, 3000);
-    once.unregister();
-});

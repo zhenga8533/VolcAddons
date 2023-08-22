@@ -11,6 +11,7 @@ export let data = new PogObject("VolcAddons", {
     "profileId": undefined,
     "world": "none",
     "tier": 0,
+    "lastMsg": "joe",
     "whitelist": [],
     "blacklist": [],
     "blocklist": [],
@@ -54,6 +55,8 @@ export let data = new PogObject("VolcAddons", {
     },
     // Various location properties used for displaying HUD elements
     "apexPrice": 2e9,
+    "dianaKey": 0,
+    "pauseKey": 0,
     "QL": [15, 200, 1], // Vanquisher Location
     "GL": [15, 200, 1], // Gyro Location
     "SL": [15, 250, 1], // Splits Location
@@ -200,11 +203,14 @@ export function getPaused() {
 }
 
 // Key binding for pausing or unpausing trackers
-const pauseKey = new KeyBind("Pause Trackers", 25, "VolcAddons");
+const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "VolcAddons");
 pauseKey.registerKeyPress(() => {
     paused = !paused;
     const message = paused ? `${RED}Paused` : `${GREEN}Resumed`;
     ChatLib.chat(`${LOGO} ${GOLD}Tracker ${message}!`);
+});
+register("gameUnload", () => {
+    data.pauseKey = pauseKey.getKeyCode();
 });
 
 // Stats tracking class
@@ -229,4 +235,4 @@ export class Stat {
 // Saving data to persistent storage upon game unload
 register("gameUnload", () => {
     data.save();
-});
+}).setPriority(Priority.LOWEST);

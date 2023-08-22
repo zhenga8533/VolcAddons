@@ -79,3 +79,17 @@ registerWhen(register("messageSent", (message, event) => {
         cancel(event);
     }
 }), () => settings.enableEmotes === true);
+
+/**
+ * Message back lack messaged player with `/b ${msg}`
+ */
+register("command", (event) => {
+    ChatLib.command(`msg ${data.lastMsg}`);
+    cancel(event);
+}).setName("b", true);
+
+register("messageSent", (message) => {
+    const args = message.split(' ');
+    if (!(args[0] === "/msg" || args[0] === "/message")) return;
+    data.lastMsg = args[1];
+});

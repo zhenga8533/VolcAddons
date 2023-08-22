@@ -8,6 +8,8 @@ import { data, registerWhen } from "../../utils/variables";
 let entityList = [];
 let entities = [];
 export function getEntities() { return entities };
+let x = 0;
+let y = 0;
 
 /**
  * Identifies entity class based on name and adds to list with associated HP value.
@@ -32,6 +34,8 @@ function testClass(entity, HP) {
  */
 export function updateEntityList() {
     entityList = [];
+    x = 0;
+    y = 0;
 
     data.moblist.forEach(mob => {
         const args = mob.split(' ');
@@ -42,6 +46,13 @@ export function updateEntityList() {
         else if (testClass(`net.minecraft.entity.monster.Entity${PascalCaseMob}`, HP)) return;
         else if (testClass(`net.minecraft.entity.boss.Entity${PascalCaseMob}`, HP)) return;
         else if (testClass(`net.minecraft.entity.passive.Entity${PascalCaseMob}`, HP)) return;
+        else {
+            const remaining = parseInt(mob.substring(1));
+            if (isNaN(remaining)) return;
+            const front = mob[0].toLowerCase();
+            if (front === 'x') x = remaining;
+            else if (front === 'y') y = remaining;
+        }
     });
 }
 updateEntityList();
@@ -50,6 +61,7 @@ updateEntityList();
  * Creates colored entity list from entity data in `entityList`.
  * Determines color based on class and filters by HP if applicable.
  */
+let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
 registerWhen(register("tick", () =>{
     entities = [];
     entityList.forEach(entityData => {
@@ -65,8 +77,10 @@ registerWhen(register("tick", () =>{
         
         // Add entities
         const livingEntities = World.getAllEntitiesOfType(entityClass).filter(entity => entity.getEntity().func_110143_aJ() != 0);
-        const filteredEntities = entityHp === 0 ? livingEntities :
-            livingEntities.filter(entity => entity.getEntity().func_110138_aP() === entityHp);
+        let filteredEntities = entityHp === 0 ? livingEntities :
+            livingEntities.filter(entity => entity.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b() === entityHp);
+        if (x !== 0) filteredEntities = filteredEntities.filter(entity => Math.abs(Player.getX() - entity.getX()) <= x);
+        if (y !== 0) filteredEntities = filteredEntities.filter(entity => Math.abs(Player.getY() - entity.getY()) <= y);
         if (filteredEntities.length === 0) return;
         entities.push([[...filteredEntities], color]);
     });

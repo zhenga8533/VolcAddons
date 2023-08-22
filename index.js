@@ -71,6 +71,7 @@ import "./features/garden/GardenWarp";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+import { getLatestReleaseVersion } from "./utils/updates";
 
 
 // Launch Tests
@@ -142,6 +143,12 @@ register ("command", (...args) => {
         // Help
         case "help":
             getHelp();
+            break;
+        // Update
+        case "update":
+        case "upadtes":
+        case "version":
+            getLatestReleaseVersion();
             break;
         // Move GUI
         case "gui":

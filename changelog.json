@@ -1,6 +1,9 @@
 [
-    "- Added /va cd",
-    "- Added ability to find newerish features in settings by searching for `new`",
+    "- Added `/va cd`",
+    "- Added `NEW!` to all new features for easier search",
+    "- Added `/b` to use as `/msg lastIGN`",
+    "- Changed dungeon rejoin to rejoin after set time",
+    "- Fixed keybinds being cringe",
     "- Fixed dictionary linking",
-    "- Removed tuba timer"
+    "- Removed tuba timer (use `/va cd`)"
 ]

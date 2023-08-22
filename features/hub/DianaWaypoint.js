@@ -184,11 +184,14 @@ getMayor() === "Diana" && getPerks().has("Mythological Ritual"));
 /**
  * Key press to warp player to closest burrow.
  */
-const dianaKey = new KeyBind("Diana Warp", 33, "VolcAddons");
+const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "VolcAddons");
 dianaKey.registerKeyPress(() => {
     if (settings.dianaWarp && theory[0] !== undefined && theory[0] !== "warp player")
         ChatLib.command(theory[0])
-})
+});
+register("gameUnload", () => {
+    data.dianaKey = dianaKey.getKeyCode();
+});
 
 /**
  * Deletes burrow when one is dug out.

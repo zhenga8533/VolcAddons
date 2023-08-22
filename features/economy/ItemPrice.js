@@ -358,7 +358,7 @@ registerWhen(register("itemTooltip", (lore, item) => {
     }
 
     // Add to item lore.
-    const value = savedValues?.[itemUUID]?.[0] ?? getItemValue(item, settings.itemPrice === 1 ?? settings.itemPrice === 3);
+    const value = savedValues?.[itemUUID]?.[0] ?? getItemValue(item);
     valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
     if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
