@@ -1,1080 +1,234 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./utils/constants";
-import {
-    @TextProperty,
-	@PercentSliderProperty,
-	@SliderProperty,
-	@SwitchProperty,
-    @ButtonProperty,
-    @Vigilant,
-    @CheckboxProperty,
-    @SelectorProperty,
-} from '../Vigilance/index';
-
-
-// Define the settings class using the @Vigilant decorator
-@Vigilant("VolcAddons", "VolcAddons", {
-    // Function to compare categories for sorting settings
-    getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Party", "Economy", "Combat", "Mining", "Hub", "Crimson Isles", "Kuudra", "Garden", "Rift"];
-        return categories.indexOf(a.name) - categories.indexOf(b.name);
-    }
-})
-class Settings {
-    constructor() {
-        this.initialize(this);
-
-        // Set category descriptions for different groups of settings
-
-        // General Category
-        this.setCategoryDescription("General",
-        `${HEADER}
-${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, whitelist, blacklist, blocklist>
-${DARK_RED}${BOLD}CAUTION: Some features are technically chat macros, so use at own risk!`);
-
-        // Economy Category
-        this.setCategoryDescription("Economy",
-        `${HEADER}
-${ITALIC}Related Commands: /va <attribute, calc>`);
-
-        // Combat Category
-        this.setCategoryDescription("Combat",
-        `${HEADER}
-    ${ITALIC}Related Commands: /va be`);
-
-        // Hub Category
-        this.setCategoryDescription("Hub",
-        `${HEADER}
-${ITALIC}Related Commands: /va warplist`);
-
-        // Crimson Isles Category
-        this.setCategoryDescription("Crimson Isles",
-        `${HEADER}
-${ITALIC}Related Commands: /va <calc, apex>`);
-
-        // Kuudra Category
-        this.setCategoryDescription("Kuudra",
-        `${HEADER}
-${ITALIC}Related Commands: /va <attribute, splits>`);
-
-        // Garden Category
-        this.setCategoryDescription("Garden",
-        `${HEADER}
-${ITALIC}Related Commands: /va calc compost`);
-
-        // Rift Category
-        this.setCategoryDescription("Rift",
-        `${HEADER}
-${ITALIC}Related Commands: /va <enigma, npc, zone>`);
-
-        // Leader
-        this.addDependency(`Allinvite Command ${DARK_AQUA}?<allinvite, allinv>`, "Leader Command Options");
-        this.addDependency(`Demote Command ${DARK_AQUA}?demote`, "Leader Command Options");
-        this.addDependency(`Warp Command ${DARK_AQUA}?warp`, "Leader Command Options");
-        this.addDependency(`Transfer Command ${DARK_AQUA}?transfer`, "Leader Command Options");
-        this.addDependency(`Promote Command ${DARK_AQUA}?promote`, "Leader Command Options");
-        this.addDependency(`Stream Command ${DARK_AQUA}?<streamopen, stream> [num]`, "Leader Command Options");
-
-        // Party Commands
-        this.addDependency(`Coords Command ${DARK_AQUA}?coords`, "Party Command Options");
-        this.addDependency(`Slander Command ${DARK_AQUA}?<racist, gay, cringe>`, "Party Command Options");
-        this.addDependency(`Dice Command ${DARK_AQUA}?<dice, roll>`, "Party Command Options");
-        this.addDependency(`Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`, "Party Command Options");
-        this.addDependency(`8ball Command ${DARK_AQUA}?8ball`, "Party Command Options");
-        this.addDependency(`RPS Command ${DARK_AQUA}?rps`, "Party Command Options");
-        this.addDependency(`Women Command ${DARK_AQUA}?<w, waifu, women>`, "Party Command Options");
-        this.addDependency(`Invite Command ${DARK_AQUA}?invite`, "Party Command Options");
-        this.addDependency(`Help Command ${DARK_AQUA}?help`, "Party Command Options");
-        this.addDependency(`Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`, "Party Command Options");
-        this.addDependency(`Leave Command ${DARK_AQUA}?leave`, "Party Command Options");
-
-        // Webhook Chats
-        this.addDependency("Public Chat", "Chat Options");
-        this.addDependency("Party Chat", "Chat Options");
-        this.addDependency("Guild Chat", "Chat Options");
-        this.addDependency("Private Chat", "Chat Options");
-
-        // Kuudra Alerts
-        this.addDependency("Kuudra Alert Options", "Kuudra Alerts");
-        const kuudraAlerts = [
-            "No Key", "Unready", "Choose Route", "Pickup Supply", "Building", "Fresh Tools", "Fuel Percent", "Stunner Eaten", "Stunner",
-            "Mount Ballista", "Cannonear", "Stun", "Dropship", "Token"
-        ];
-        kuudraAlerts.forEach(alert => {
-            this.addDependency(`${alert} Alert`, "Kuudra Alerts");
-            this.addDependency(`${alert} Alert`, "Kuudra Alert Options");
-        });
-
-        // Etc
-        this.addDependency("Burrow Amogus Alert", "Burrow Detection");
-        this.addDependency("Burrow Chat Alert", "Burrow Detection");
-        this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
-    }
-    
-
-    // ████████████████████████████████████████████████████ GENERAL FEATURES ████████████████████████████████████████████████████
-
-    // --- Essential ---
-    @TextProperty({
-        name: "API Key",
-        description: `Input your API key (this will be changed later).\nYou may need to run ${AQUA}/ct load ${GRAY}after inputting key.`,
-        category: "General",
-        subcategory: "Essential",
-        protected: true
-    })
-    apiKey = "";
-
-    @ButtonProperty({
-        name: "Discord",
-        description: "Just posting releases here, don't expect too much :).",
-        category: "General",
-        subcategory: "Essential",
-        placeholder: "Yamete Kudasai"
-    })
-    discordLink() {
-        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/ftxB4kG2tw"));
-    }
-
-    @ButtonProperty({
-        name: "GitHub Updater",
-        description: "Download the Forge.jar file for new release alerts and effortless updating!",
-        category: "General",
-        subcategory: "Essential",
-        placeholder: "Download"
-    })
-    downloadForge() {
-        const url = "https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar";
-        java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
-    }
-
-    @ButtonProperty({
-        name: "Move GUI",
-        description: `Moves all current active GUIs.\nRuns ${AQUA}/va gui${GRAY}.`,
-        category: "General",
-        subcategory: "Essential",
-        placeholder: "Move GUI"
-    })
-    moveGUI() {
-        ChatLib.command("va gui", true);
-    }
-
-    // --- General ---
-    @SwitchProperty({
-        name: "Abiphone Blocker",
-        description: `Blocks abiphone callers in ${AQUA}/va blocklist${GRAY}.`,
-        category: "General",
-        subcategory: "General"
-    })
-    abiphoneBlocker = false;
-    
-    @SwitchProperty({
-        name: "Custom Emotes",
-        description: `Replaces parts of chat messages containing emotes in ${AQUA}/emotes${GRAY}.
-Add custom emotes with ${AQUA}/va emote${GRAY}.`,
-        category: "General",
-        subcategory: "General"
-    })
-    enableEmotes = false;
-
-    @SliderProperty({
-        name: "Draw Waypoint",
-        description: `Creates waypoints out of patcher formated coords in chat. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
-        category: "General",
-        subcategory: "General",
-        min: 0,
-        max: 120
-    })
-    drawWaypoint = 0;
-
-    @SwitchProperty({
-        name: "Remove Selfie Mode",
-        description: "Removes selfie mode from perspective toggle.",
-        category: "General",
-        subcategory: "General"
-    })
-    removeSelfie = false;
-
-    @SliderProperty({
-        name: "Skill Tracker",
-        description: `Tracks and displays skill XP's rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
-Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkills${GRAY}.`,
-        category: "General",
-        subcategory: "General",
-        min: 0,
-        max: 10
-    })
-    skillTracker = 0;
-
-    // --- Server ---
-    @SliderProperty({
-        name: "Hide Server Entities",
-        description: "Set maximum distance away from player an entity can be.",
-        category: "General",
-        subcategory: "Server",
-        min: 0,
-        max: 128
-    })
-    hideEntity = 0;
-    @TextProperty({
-        name: "Hide on bush",
-        description: `Enter world names as [${AQUA}World1, World2, ...${GRAY}] for entity hider to work on or leave empty for all worlds.`,
-        category: "General",
-        subcategory: "Server",
-        placeholder: "World1, World2, ..."
-    })
-    hideWorlds = "";
-
-    @SliderProperty({
-        name: "Recent Server Alert",
-        description: `Alerts player when they rejoin a recent server. Set minutes until a server is no longer "recent" or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "General",
-        subcategory: "Server",
-        min: 0,
-        max: 30
-    })
-    serverAlert = 0;
-
-    @SwitchProperty({
-        name: "Server Status",
-        description: `Tracks and displays user ping, TPS, and FPS.\nMove GUI with ${AQUA}/moveStatus${GRAY}.`,
-        category: "General",
-        subcategory: "Server"
-    })
-    serverStatus = false;
-
-    // --- Timer ---
-    @SwitchProperty({
-        name: "Item Cooldown Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Alerts player once item cooldown timer expires.\nAdd cooldowns with ${AQUA}/va cd${GRAY}.`,
-        category: "General",
-        subcategory: "Timer"
-    })
-    cooldownAlert = false;
-
-    @TextProperty({
-        name: "Reminder Text",
-        description: "Set the warning text that appears when timer expires.",
-        category: "General",
-        subcategory: "Timer",
-        placeholder: "konnichiwa."
-    })
-    reminderText = "";
-    @SliderProperty({
-        name: "Reminder Time",
-        description: `Set minutes until timer expires or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "General",
-        subcategory: "Timer",
-        min: 0,
-        max: 120
-    })
-    reminderTime = 0;
-
-    // --- Webhook ---
-    @TextProperty({
-        name: "Discord Webhook",
-        description: "Input Discord Webhook link to send the chat messages to.",
-        category: "General",
-        subcategory: "Webhook",
-        protected: true
-    })
-    chatWebhook = "";
-
-    @SwitchProperty({
-        name: "Chat Options",
-        description: "Toggle to display chat control panel.",
-        category: "General",
-        subcategory: "Webhook",
-    })
-    chatOptions = false;
-    gameChat = false;
-    @CheckboxProperty({
-        name: "Public Chat",
-        category: "General",
-        subcategory: "Webhook",
-    })
-    publicChat = false;
-    @CheckboxProperty({
-        name: "Party Chat",
-        category: "General",
-        subcategory: "Webhook",
-    })
-    partyChat = false;
-    @CheckboxProperty({
-        name: "Guild Chat",
-        category: "General",
-        subcategory: "Webhook",
-    })
-    guildChat = false;
-    @CheckboxProperty({
-        name: "Private Chat",
-        category: "General",
-        subcategory: "Webhook",
-    })
-    privateChat = false;
-
-
-    // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
-
-    // --- Party ---
-    @SwitchProperty({
-        name: "Anti Ghost Party",
-        description: "Prevents creating ghost parties when inviting multiple players.",
-        category: "Party",
-        subcategory: "Party"
-    })
-    antiGhostParty = false;
-
-    @SwitchProperty({
-        name: "Auto Join Reparty",
-        description: "Accepts reparty invites sent within 60 seconds.",
-        category: "Party",
-        subcategory: "Party"
-    })
-    joinRP = false;
-    
-    @SwitchProperty({
-        name: "Auto Transfer Back",
-        description: "Prevents player from being party leader by instantly transferring party back.",
-        category: "Party",
-        subcategory: "Party"
-    })
-    autoTransfer = false;
-
-    @SwitchProperty({
-        name: "Whitelist Rejoin",
-        description: `Accepts party invites from players on the whitelist.
-Add players with ${AQUA}/va whitelist${GRAY}.`,
-        category: "Party",
-        subcategory: "Party"
-    })
-    joinWhitelist = false;
-
-    // --- Party Commands ---
-    @SwitchProperty({
-        name: "Leader Chat Commands",
-        description: `Allows players in party to use leader commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    leaderCommands = false;
-    @SwitchProperty({
-        name: "Leader Command Options",
-        description: "Toggle to display leader commands control panel.",
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    leaderOptions = false;
-    @CheckboxProperty({
-        name: `Allinvite Command ${DARK_AQUA}?<allinvite, allinv>`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    allinvCommand = true;
-    @CheckboxProperty({
-        name: `Demote Command ${DARK_AQUA}?demote`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    demoteCommand = true;
-    @CheckboxProperty({
-        name: `Promote Command ${DARK_AQUA}?promote`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    promoteCommand = true;
-    @CheckboxProperty({
-        name: `Stream Command ${DARK_AQUA}?<streamopen, stream> [num]`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    streamCommand = true;
-    @CheckboxProperty({
-        name: `Transfer Command ${DARK_AQUA}?transfer`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    transferCommand = true;
-    @CheckboxProperty({
-        name: `Warp Command ${DARK_AQUA}?warp`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    warpCommand = true;
-
-    @SelectorProperty({
-        name: "Party Chat Commands",
-        description: `Allows players to use party commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
-        category: "Party",
-        subcategory: "Party Commands",
-        options: ["OFF", "All", "Party", "Guild", "DM"]
-    })
-    partyCommands = 0;
-    @SwitchProperty({
-        name: "Party Command Options",
-        description: "Toggle to display party commands control panel.",
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    partyOptions = false;
-    @CheckboxProperty({
-        name: `Coords Command ${DARK_AQUA}?coords`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    coordsCommand = true;
-    @CheckboxProperty({
-        name: `8ball Command ${DARK_AQUA}?8ball`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    ballCommand = true;
-    @CheckboxProperty({
-        name: `Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    coinCommand = true;
-    @CheckboxProperty({
-        name: `Dice Command ${DARK_AQUA}?<dice, roll>`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    diceCommand = true;
-    @CheckboxProperty({
-        name: `Help Command ${DARK_AQUA}?help`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    helpCommand = true;
-    @CheckboxProperty({
-        name: `Invite Command ${DARK_AQUA}?invite`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    inviteCommand = true;
-    @CheckboxProperty({
-        name: `Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    limboCommand = false;
-    @CheckboxProperty({
-        name: `Leave Command ${DARK_AQUA}?leave`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    leaveCommand = false;
-    @CheckboxProperty({
-        name: `RPS Command ${DARK_AQUA}?rps`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    rpsCommand = true;
-    @CheckboxProperty({
-        name: `Slander Command ${DARK_AQUA}?<racist, gay, cringe>`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    slanderCommand = true;
-    @CheckboxProperty({
-        name: `Women Command ${DARK_AQUA}?<w, waifu, women>`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    womenCommand = true;
-
-
-    // ████████████████████████████████████████████████████ ECONOMY ████████████████████████████████████████████████████
-    
-    // --- Economy ---
-    @SliderProperty({
-        name: "Coin Tracker",
-        description: `Tracks and displays purse's rate of gain. Set minutes until tracker resets or as 0 to turn ${RED}OFF${GRAY}.
-Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins${GRAY}.`,
-        category: "Economy",
-        subcategory: "Economy",
-        min: 0,
-        max: 10
-    })
-    coinTracker = 0;
-
-    @SliderProperty({
-        name: "Economy Refresh",
-        description: `Set minutes until Auction/Bazaar data gets updated.\nRuns ${AQUA}/updateEconomy${GRAY}.`,
-        category: "Economy",
-        subcategory: "Economy",
-        min: 0,
-        max: 180
-    })
-    economyRefresh = 60;
-
-    // --- Item Cost ---
-    @SliderProperty({
-        name: "Container Value",
-        description: `Displays item values in any inventory. Set number of item prices to display or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "Economy",
-        subcategory: "Pricing",
-        min: 0,
-        max: 54
-    })
-    containerValue = 0;
-
-    @SelectorProperty({
-        name: "Item Price",
-        description: "Displays complete item price including enchants, modifiers, and attributes.",
-        category: "Economy",
-        subcategory: "Pricing",
-        options: ["OFF", "Advanced View", "Tooltip View", "Omnipotent View"]
-    })
-    itemPrice = 0;
-
-
-    // ████████████████████████████████████████████████████ COMBAT ████████████████████████████████████████████████████
-
-    // --- Combat ---
-    @SwitchProperty({
-        name: "Combo Display",
-        description: "Replaces Grandma Wolf combo chat messages with a custom GUI.",
-        category: "Combat",
-        subcategory: "Combat"
-    })
-    comboDisplay = false;
-    
-    @SwitchProperty({
-        name: "Damage Tracker",
-        description: `Spams chat with every damage tick ${BLUE}(this is meant for training dummies)${GRAY}.`,
-        category: "Combat",
-        subcategory: "Combat"
-    })
-    damageTracker = false;
-    
-    @PercentSliderProperty({
-        name: "Low Health Alert",
-        description: `Set percent hp threshold until alert appears or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "Combat",
-        subcategory: "Combat"
-    })
-    healthAlert = 0.0;
-
-    @SwitchProperty({
-        name: "Ragnarok Detection",
-        description: "Displays an alert title when Ragnarock Axe finishes casting or is canceled.",
-        category: "Combat",
-        subcategory: "Combat"
-    })
-    ragDetect = false;
-
-    // --- Dungeon ---
-    @SelectorProperty({
-        name: "Dungeon Rejoin",
-        description: `Rejoins last completed dungeon when 4 players join your party ${BLUE}(does NOT reparty)${GRAY}.`,
-        category: "Combat",
-        subcategory: "Dungeon",
-        options: ["OFF", "No DT", "Social Farm", "Visitor Magnet"]
-    })
-    dungeonRejoin = 0;
-
-    @SwitchProperty({
-        name: "Watcher Alert",
-        description: "Alerts player when all Watcher mobs are spawned and killed.",
-        category: "Combat",
-        subcategory: "Dungeon"
-    })
-    watcherAlert = false;
-
-    // --- Gyrokinetic Wand ---
-    @SwitchProperty({
-        name: "Cells Alignment Alert",
-        description: "Alerts player when Cells Alignment is about to run out.",
-        category: "Combat",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroAlert = false;
-    @SwitchProperty({
-        name: "Cells Alignment Timer",
-        description: `Displays the time left before Cells Alignment ends.\nMove GUI with ${AQUA}/moveAlignTimer${GRAY}.`,
-        category: "Combat",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroTimer = false;
-
-    // --- Slayer ---
-    @SelectorProperty({
-        name: "Announce Boss Chat",
-        description: "Sends coordinates of user slayer boss spawns to chat.",
-        category: "Combat",
-        subcategory: "Slayer",
-        options: ["OFF", "All Chat", "Party Chat"]
-    })
-    bossAlert = 0;
-    @SelectorProperty({
-        name: "Announce Miniboss Chat",
-        description: `Sends coordinates of user slayer miniboss spawns to chat ${BLUE}(sounds must be ${GREEN}ON${BLUE})${GRAY}.`,
-        category: "Combat",
-        subcategory: "Slayer",
-        options: ["OFF", "All Chat", "Party Chat"]
-    })
-    miniAlert = 0;
-
-
-    // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
-    @SliderProperty({
-        name: "Powder Tracker",
-        description: `Displays powders' rate of gain ${BLUE}(ONLY chests)${GRAY}. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
-Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowder${GRAY}.`,
-        category: "Mining",
-        subcategory: "Powder",
-        min: 0,
-        max: 10
-    })
-    powderTracker = 0;
-
-
-    // ████████████████████████████████████████████████████ HUB ████████████████████████████████████████████████████
-
-    // --- Diana ---
-    @SwitchProperty({
-        name: "Diana Waypoint",
-        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
-Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
-        category: "Hub",
-        subcategory: "Diana"
-    })
-    dianaWaypoint = false;
-    @SwitchProperty({
-        name: "Diana Warp",
-        description: `Press F ${BLUE}(change in controls) ${GRAY}to warp to location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
-        category: "Hub",
-        subcategory: "Diana"
-    })
-    dianaWarp = false;
-
-    // --- Griffin Burrow ---
-    @SwitchProperty({
-        name: "Burrow Detection",
-        description: "Detects and creates waypoints to the burrow particles around you.",
-        category: "Hub",
-        subcategory: "Griffin Burrow"
-    })
-    dianaBurrow = false;
-    @SwitchProperty({
-        name: "Burrow Amogus Alert",
-        description: "Calls an emergency meeting once a burrow is detected.",
-        category: "Hub",
-        subcategory: "Griffin Burrow"
-    })
-    dianaAmogus = false;
-    @SwitchProperty({
-        name: "Burrow Chat Alert",
-        description: "Sends a message in chat once a burrow is detected.",
-        category: "Hub",
-        subcategory: "Griffin Burrow"
-    })
-    dianaChat = false;
-
-    // --- Inquisitor ---
-    @SwitchProperty({
-        name: "Detect Inquisitor",
-        description: "Alerts player of nearby Inquisitors.",
-        category: "Hub",
-        subcategory: "Inquisitor"
-    })
-    detectInq = false;
-    @SelectorProperty({
-        name: "Announce Inquisitor Chat",
-        description: "Sends coordinates of user Inquisitor spawns to chat.",
-        category: "Hub",
-        subcategory: "Inquisitor",
-        options: ["OFF", "All Chat", "Party Chat"]
-    })
-    inqAlert = 0;
-
-    @SelectorProperty({
-        name: "Inquisitor Counter",
-        description: `Tracks average kills of Inquisitor spawns.\nMove GUI with ${AQUA}/moveInq ${GRAY}or reset tracker with ${AQUA}/resetInq${GRAY}.`,
-        category: "Hub",
-        subcategory: "Inquisitor",
-        options: ["OFF", "Overall View", "Session View"]
-    })
-    inqCounter = 0;
-    
-
-    // ████████████████████████████████████████████████████ CRIMSON ISLES ████████████████████████████████████████████████████
-
-    // --- Fishing ---
-    @SelectorProperty({
-        name: "Announce Mythic Creature Spawn",
-        description: "Sends coordinates of user mythic lava creature spawns to chat.",
-        category: "Crimson Isles",
-        subcategory: "Fishing",
-        options: ["OFF", "All Chat", "Party Chat"]
-    })
-    mythicLavaAnnounce = 0;
-
-    @SwitchProperty({
-        name: "Mythic Lava Creature Detect",
-        description: "Alerts player of nearby Thunders or Lord Jawbuses.",
-        category: "Crimson Isles",
-        subcategory: "Fishing"
-    })
-    mythicLavaDetect = false;
-
-    @SwitchProperty({
-        name: "Golden Fish Timer",
-        description: `Sets a 4 minute timer on rod cast to track Golden Fish reset.\nMove GUI with ${AQUA}/moveTimer${GRAY}.`,
-        category: "Crimson Isles",
-        subcategory: "Fishing"
-    })
-    goldenFishAlert = false;
-
-    // --- Vanquisher ---
-    @SelectorProperty({
-        name: "Announce Vanquisher Chat",
-        description: `Sends coordinates of user Vanquisher spawns ${BLUE}(only works if Vanquisher Auto-Warp is empty)${GRAY}.`,
-        category: "Crimson Isles",
-        subcategory: "Vanquisher",
-        options: ["OFF", "All Chat", "Party Chat"]
-    })
-    vanqAlert = 0;
-
-    @TextProperty({
-        name: "Vanquisher Auto-Warp",
-        description: `Parties and warps players in list to lobby on user Vanquisher spawn.\nEnable by entering party as [${AQUA}ign1, ign2, ...${GRAY}].`,
-        category: "Crimson Isles",
-        subcategory: "Vanquisher",
-        placeholder: "ign1, ign2, ..."
-    })
-    vanqParty = "";
-
-    @SelectorProperty({
-        name: "Vanquisher Counter",
-        description: `Tracks average kills of Vanquisher spawns ${BLUE}(must have Book of Stats)${GRAY}.
-Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCounter${GRAY}.`,
-        category: "Crimson Isles",
-        subcategory: "Vanquisher",
-        options: ["OFF", "Overall View", "Session View"]
-    })
-    vanqCounter = 0;
-
-    @SwitchProperty({
-        name: "Vanquisher Detection",
-        description: `Alerts player of nearby Vanquishers.\nMove GUI with ${AQUA}/moveVanq${GRAY}.`,
-        category: "Crimson Isles",
-        subcategory: "Vanquisher"
-    })
-    vanqDetect = false;
-    @SwitchProperty({
-        name: "Vanquisher Detection Sound",
-        description: "Calls an emergency meeting once a Vanquisher is detected.",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher"
-    })
-    vanqSound = false;
-
-
-    // ████████████████████████████████████████████████████ KUUDRA ████████████████████████████████████████████████████
-
-    // --- Kuudra ---
-    @SwitchProperty({
-        name: "Kuudra HP Display",
-        description: "Displays Kuudra's HP as a percent and renders it on the boss.",
-        category: "Kuudra",
-        subcategory: "Kuudra"
-    })
-    kuudraHP = false;
-
-    @SwitchProperty({
-        name: "Kuudra Spawn",
-        description: `Displays a title for where Kuudra spawns in p4 ${BLUE}(requires animation skip, so don't fail @BananaTheBot)${GRAY}.`,
-        category: "Kuudra",
-        subcategory: "Kuudra"
-    })
-    kuudraSpawn = false;
-
-    @SwitchProperty({
-        name: "Kuudra Splits",
-        description: `Displays and records Kuudra splits.\nMove GUI with ${AQUA}/moveSplits ${GRAY}or view splits with ${AQUA}/va splits${GRAY}.`,
-        category: "Kuudra",
-        subcategory: "Kuudra"
-    })
-    kuudraSplits = false;
-
-    @SwitchProperty({
-        name: "Show Crate Waypoints",
-        description: "Creates waypoints to nearby supplies and fuels.",
-        category: "Kuudra",
-        subcategory: "Kuudra"
-    })
-    kuudraCrates = false;
-
-    @SwitchProperty({
-        name: "Show Supply Piles",
-        description: "Creates waypoints to uncompleted supply piles.",
-        category: "Kuudra",
-        subcategory: "Kuudra"
-    })
-    kuudraBuild = false;
-
-    // --- Kuudra Alert ---
-    @SwitchProperty({
-        name: "Kuudra Alerts",
-        description: "Alerts player of important events Kuudra.",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    kuudraAlerts = false;
-    @SwitchProperty({
-        name: "Kuudra Alert Options",
-        description: "Toggle to display alerts control panel.",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    alertsToggle = false;
-    @CheckboxProperty({
-        name: "No Key Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    keyAlert = true;
-    @CheckboxProperty({
-        name: "Unready Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    unreadyAlert = true;
-    @CheckboxProperty({
-        name: "Choose Route Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    routeAlert = true;
-    @CheckboxProperty({
-        name: "Pickup Supply Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    supplyAlert = true;
-    @CheckboxProperty({
-        name: "Building Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    buildingAlert = true;
-    @CheckboxProperty({
-        name: "Fresh Tools Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    freshAlert = true;
-    @CheckboxProperty({
-        name: "Fuel Percent Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    fuelAlert = true;
-    @CheckboxProperty({
-        name: "Fresh Tools Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    freshAlert = true;
-    @CheckboxProperty({
-        name: "Stunner Eaten Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    eatenAlert = true;
-    @TextProperty({
-        name: "Stunner Alert",
-        description: "Tracks who is stunning Kuudra (leave empty to track everyone).",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    kuudraStunner = "";
-    @CheckboxProperty({
-        name: "Mount Ballista Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    ballistaAlert = true;
-    @TextProperty({
-        name: "Cannonear Alert",
-        description: "Tracks who is shooting the ballista (leave empty to track everyone).",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    kuudraCannonear = "";
-    @CheckboxProperty({
-        name: "Stun Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    stunAlert = true;
-    @CheckboxProperty({
-        name: "Dropship Alert",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    dropshipAlert = true;
-    @SliderProperty({
-        name: "Token Alert",
-        description: `Set token threshold before alert appears or as 0 to turn ${RED}OFF${GRAY} (only alerts once per run).`,
-        category: "Kuudra",
-        subcategory: "Kuudra Alert",
-        min: 0,
-        max: 1000
-    })
-    tokenAlert = 0;
-    
-    // --- Kuudra Profit ---
-    @SwitchProperty({
-        name: "Kuudra Profit",
-        description: `Display overall profit of Kuudra chests.\nMove GUI with ${AQUA}/moveKP${GRAY}.`,
-        category: "Kuudra",
-        subcategory: "Kuudra Profit"
-    })
-    kuudraProfit = false;
-    @SelectorProperty({
-        name: "Kuudra Profit Tracker",
-        description: `Display Kuudra hourly rate of gain. Move GUI with ${AQUA}/moveKPT or reset tracker with ${AQUA}/resetKPT${GRAY}.`,
-        category: "Kuudra",
-        subcategory: "Kuudra Profit",
-        options: ["OFF", "Overall View", "Session View"]
-    })
-    kuudraProfitTracker = 0;
-    @SwitchProperty({
-        name: "Tabasco Enjoyer",
-        description: `Toggle ${RED}OFF ${GRAY}if you are a cringer without max chili pepper collection.`,
-        category: "Kuudra",
-        subcategory: "Kuudra Profit"
-    })
-    maxChili = true;
-    
-
-    // ████████████████████████████████████████████████████ GARDEN ████████████████████████████████████████████████████
-
-    // --- Garden ---
-    @SwitchProperty({
-        name: "Composter Alert",
-        description: "Alerts player when the composter is inactive.",
-        category: "Garden",
-        subcategory: "Garden"
-    })
-    gardenCompost = false;
-
-    @SwitchProperty({
-        name: "Garden Warp Override",
-        description: `Overrides any warp command with a ${AQUA}/warp garden ${GRAY}if theres an awaiting visitor.`,
-        category: "Garden",
-        subcategory: "Garden"
-    })
-    warpGarden = false;
-
-    @SwitchProperty({
-        name: "Garden Tab Display",
-        description: `Displays garden visitors outside of tab menu.\nMove GUI with ${AQUA}/moveVisitors${GRAY}.`,
-        category: "Garden",
-        subcategory: "Garden"
-    })
-    gardenTab = false;
-
-    @SwitchProperty({
-        name: "Next Visitor Display",
-        description: `Displays the time until a visitor can arrive.\nMove GUI with ${AQUA}/moveNext${GRAY}.`,
-        category: "Garden",
-        subcategory: "Garden"
-    })
-    nextVisitor = false;
-    
-    // --- Garden Webhook ---
-    @TextProperty({
-        name: "Discord Webhook",
-        description: "Input Discord Webhook link to send the Garden Statistics to.",
-        category: "Garden",
-        subcategory: "Garden Webhook",
-        protected: true
-    })
-    gardenWebhook = "";
-    @SliderProperty({
-        name: "Webhook Timer",
-        description: `Set minutes until data is sent to webhook or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "Garden",
-        subcategory: "Garden Webhook",
-        min: 0,
-        max: 120
-    })
-    webhookTimer = 0;
-
-
-    // ████████████████████████████████████████████████████ RIFT ████████████████████████████████████████████████████
-    
-    // --- Rift ---
-    @SwitchProperty({
-        name: "DDR Helper",
-        description: "Replaces Dance Room titles with custom ones.",
-        category: "Rift",
-        subcategory: "Rift",
-    })
-    ddrHelper = false;
-
-    @SliderProperty({
-        name: "Enigma Soul Waypoints",
-        description: `Set distance at which Enigma Soul waypoints will register or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "Rift",
-        subcategory: "Rift",
-        min: 0,
-        max: 1000
-    })
-    enigmaWaypoint = 0;
-    
-    @SwitchProperty({
-        name: "Montezuma Soul Waypoints",
-        description: "Displays waypoints of nearby discord kittens.",
-        category: "Rift",
-        subcategory: "Rift",
-    })
-    catWaypoint = false;
-
-    // --- Vampire ---
-    @SelectorProperty({
-        name: "Announce Mania Phase",
-        description: "Sends coordinates when user's Vampire boss goes into mania.",
-        category: "Rift",
-        subcategory: "Vampire",
-        options: ["OFF", "All Chat", "Party Chat"]
-    })
-    announceMania = 0;
-    
-    @SwitchProperty({
-        name: "Effigy Waypoint",
-        description: "Displays waypoints of inactive Blood Effigies.",
-        category: "Rift",
-        subcategory: "Vampire",
-    })
-    effigyWaypoint = false;
-
-    @SwitchProperty({
-        name: "Enlarge Impel Message",
-        description: "Converts Impel messages to be disturbingly noticable.",
-        category: "Rift",
-        subcategory: "Vampire",
-    })
-    vampireImpel = false;
-    
-    @SwitchProperty({
-        name: "Vampire Hitbox",
-        description: "Renders a small box around the vampire and colors it in when boss is steakable.",
-        category: "Rift",
-        subcategory: "Vampire",
-    })
-    vampireHitbox = false;
-    
-    @SwitchProperty({
-        name: "Vampire Attack Display",
-        description: `Displays time of Mania, Twinclaws, and Ichor attacks.\nMove GUI with ${AQUA}/moveVamp${GRAY}.`,
-        category: "Rift",
-        subcategory: "Vampire",
-    })
-    vampireAttack = false;
+import settings from "../settings";
+import { GUI_INSTRUCT, ITALIC } from "./constants";
+import { registerWhen } from "./variables";
+import { getWorld } from "./worlds";
+
+
+/**
+ * Render scaled text on a graphical canvas or rendering context.
+ *
+ * @param {number} scale - The scale factor to apply to the text.
+ * @param {string} text - The text to be rendered.
+ * @param {number} x - The x-coordinate where the text will be rendered.
+ * @param {number} y - The y-coordinate where the text will be rendered.
+ */
+function renderScale(scale, text, x, y) {
+    Renderer.scale(scale);
+    Renderer.drawString(text, x, y);
+    // new Text(text, x, y).setAlign("right").draw();
 }
 
-export default new Settings    
+/**
+ * Variables used to move all active GUIs.
+ */
+const overlays = [];
+let currentOverlay = undefined;
+const gui = new Gui();
+const background = new Gui();
+export function openGUI() { gui.open() };
+
+/**
+ * Renders overlays on the GUI if it's open.
+ */
+register("renderOverlay", () => {
+    if (!gui.isOpen()) return;
+    
+    overlays.forEach(overlay => {
+        if (!settings[overlay.setting]) return;
+        // Draw example text
+        Renderer.drawRect(
+            Renderer.color(69, 69, 69, 169),
+            overlay.loc[0] - 3*overlay.loc[2], overlay.loc[1] - 3*overlay.loc[2],
+            overlay.width + 6*overlay.loc[2], overlay.height + 6*overlay.loc[2]
+        );
+        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y);
+    });
+
+    // GUI Instructions
+    renderScale(
+        1.2, GUI_INSTRUCT,
+        Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+        Renderer.screen.getHeight() / 2.4,
+    );
+});
+
+/**
+ * Handles overlay selection when clicking on the screen.
+ *
+ * @param {number} x - X-coordinate of the mouse click.
+ * @param {number} y - Y-coordinate of the mouse click.
+ * @param {number} button - Mouse button pressed during the interaction.
+ * @param {object} screen - The screen object associated with the interaction.
+ */
+register("guiMouseClick", (x, y, button, screen) => {
+    if (!gui.isOpen()) return;
+    currentOverlay = undefined;
+
+    overlays.forEach(overlay => {
+        if (x > overlay.loc[0] - 3*overlay.loc[2] &&
+            x < overlay.loc[0] + 3*overlay.loc[2] + overlay.width &&
+            y > overlay.loc[1] - 3*overlay.loc[2] &&
+            y < overlay.loc[1] + 3*overlay.loc[2] + overlay.height
+        ) currentOverlay = overlay;
+    });
+});
+
+/**
+ * Handles movement of the selected overlay.
+ * Updates location and normalized coordinates based on delta coordinates.
+ *
+ * @param {number} dx - Change in x-coordinate during movement.
+ * @param {number} dy - Change in y-coordinate during movement.
+ * @param {number} x - X-coordinate of mouse pointer during movement.
+ * @param {number} y - Y-coordinate of mouse pointer during movement.
+ */
+register("dragged", (dx, dy, x, y) => {
+    if (currentOverlay === undefined || !gui.isOpen()) return;
+
+    if (gui.isOpen()) {
+        // Changes location of text
+        currentOverlay.loc[0] += dx;
+        currentOverlay.loc[1] += dy;
+        currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
+        currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
+    }
+});
+
+/**
+ * Handles scaling of the selected overlay using key presses.
+ * Listens for specific keys: Enter (increase), Minus (decrease), r (reset).
+ * Updates normalized coordinates and calls "setSize" after scaling.
+ *
+ * @param {string} char - Pressed key character.
+ * @param {number} keyCode - Key code of the pressed key.
+ * @param {object} currentGui - Current GUI object.
+ * @param {object} event - Event object for key press.
+ */
+register("guiKey", (char, keyCode, currentGui, event) => {
+    if (currentOverlay === undefined || !gui.isOpen()) return;
+    
+    if (keyCode === 13) {  // Increase Scale (+ key)
+        currentOverlay.loc[2] += 0.05;
+        currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
+        currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
+    } else if (keyCode === 12) {  // Decrease Scale (- key)
+        currentOverlay.loc[2] -= 0.05;
+        currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
+        currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
+    } else if (keyCode === 19) {  // Reset Scale (r key)
+        currentOverlay.loc[2] = 1;
+        currentOverlay.X = currentOverlay.loc[0];
+        currentOverlay.Y = currentOverlay.loc[1];
+    }
+    currentOverlay.setSize();
+});
+
+export class Overlay {
+    /**
+     * Creates an overlay with HUD elements and GUI functionality.
+     *
+     * @param {string} setting - The setting key used to determine whether the overlay should be shown.
+     * @param {string[]} requires - An array of world names where the overlay should be displayed (or "all" for all requires).
+     * @param {number[]} loc - An array representing the x, y, and scale of the overlay.
+     * @param {string} command - The command name that will open the GUI.
+     * @param {string} example - An example text to be displayed as an overlay.
+     */
+    constructor(setting, requires, condition, loc, command, example) {
+        overlays.push(this);
+        // Store the inputs as instance variables.
+        this.setting = setting;
+        this.requires = new Set(requires);
+        this.loc = loc;
+        this.X = this.loc[0] / this.loc[2];
+        this.Y = this.loc[1] / this.loc[2];
+        this.example = example;
+        this.message = example;
+        this.gui = new Gui();
+        this.setSize();
+
+        // Register a command to open the GUI when executed.
+        register("command", () => {
+            this.gui.open();
+        }).setName(command);
+
+        // Register a render function to display the overlay and GUI instructions.
+        // The overlay is shown when the GUI is open or in requires specified in 'requires' array.'
+        registerWhen(register(this.requires.has("misc") ? "postGuiRender" : "renderOverlay", () => {
+            if (this.gui.isOpen()) {
+                // Coords and scale
+                renderScale(
+                    this.loc[2],
+                    `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`,
+                    this.X, this.Y - 10
+                );
+                Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], Renderer.screen.getHeight(), 0.5);
+                Renderer.drawLine(Renderer.WHITE, Renderer.screen.getWidth(), this.loc[1], 1, this.loc[1], 0.5);
+
+                // Draw example text
+                renderScale(this.loc[2], this.example, this.X, this.Y);
+
+                // GUI Instructions
+                renderScale(
+                    1.2, GUI_INSTRUCT,
+                    Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+                    Renderer.screen.getHeight() / 2.4,
+                );
+            } else if (settings[this.setting] && condition() && (this.requires.has(getWorld()) || this.requires.has("all")) && !gui.isOpen()) {
+                if (this.requires.has("misc")) {
+                    background.func_146278_c(0);
+                    renderScale(this.loc[2], this.message, this.X, this.Y);
+                } else  // Draw HUD
+                    renderScale(this.loc[2], this.message, this.X, this.Y);
+            }
+        }), () => true);
+
+        register("dragged", (dx, dy, x, y) => {
+            if (this.gui.isOpen()) {
+                // Changes location of text
+                this.loc[0] = parseInt(x);
+                this.loc[1] = parseInt(y);
+                this.X = this.loc[0] / this.loc[2];
+                this.Y = this.loc[1] / this.loc[2];
+            }
+        });
+        
+        register("guiKey", (char, keyCode, guiScreen, event) => {
+            if (this.gui.isOpen()) {
+                if (keyCode === 13) {  // Increase Scale (+ key)
+                    this.loc[2] += 0.05;
+                    this.X = this.loc[0] / this.loc[2];
+                    this.Y = this.loc[1] / this.loc[2];
+                } else if (keyCode === 12) {  // Decrease Scale (- key)
+                    this.loc[2] -= 0.05;
+                    this.X = this.loc[0] / this.loc[2];
+                    this.Y = this.loc[1] / this.loc[2];
+                } else if (keyCode === 19) {  // Reset Scale (r key)
+                    this.loc[2] = 1;
+                    this.X = this.loc[0];
+                    this.Y = this.loc[1];
+                }
+            }
+        });
+    }
+
+    /**
+     * Calculates and sets overlay dimensions based on example text.
+     * Splits text into lines, calculates total height, and determines width for each line.
+     * Maximum width across lines is stored in `this.width`.
+     */
+    setSize() {
+        const lines = this.example.split("\n");
+        this.width = 0;
+        this.height = lines.length * 9 * this.loc[2];
+        lines.forEach(line => {
+            const regex = /&l(.*?)(?:&|$)/g;
+            const matches = [];
+            let match;
+
+            while ((match = regex.exec(line)) !== null) matches.push(match[1]);
+
+            const width = 1.1*Renderer.getStringWidth(matches.join('')) + Renderer.getStringWidth(line.replace(regex, ''));
+            this.width = Math.max(this.width, width * this.loc[2]);
+        });
+    }
+}

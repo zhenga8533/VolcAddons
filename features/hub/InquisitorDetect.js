@@ -21,7 +21,7 @@ registerWhen(register("chat", () => {
 
     updateInqCounter(inquisitor !== undefined);
     if (inquisitor !== undefined && settings.inqAlert)
-        announceMob(settings.inqAlert === 1, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
+        announceMob(settings.inqAlert, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
 }).setCriteria("${wow}! You dug out a Minos Champion!"), () => getWorld() === "Hub" && (settings.inqAlert !== 0 || settings.inqCounter !== 0));
 
 /**

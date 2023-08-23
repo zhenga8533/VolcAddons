@@ -45,18 +45,18 @@ import { getInParty } from "./party";
  * @param {number} y - Y coordinate.
  * @param {number} z - Z coordinate.
  */
-export function announceMob(toAll, mob, x, y ,z) {
-    if (!toAll && !getInParty()) return;
+const CHATS = ["OFF", "ac", "pc", `msg ${Player.getName()}`];
+export function announceMob(chat, mob, x, y ,z) {
+    if (chat === 2 && !getInParty()) return;
     x = Math.round(x);
     y = Math.round(y);
     z = Math.round(z);
-    let zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
-    if (zoneLine === undefined) zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("ф"));
+    let zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣")) ??
+        Scoreboard.getLines().find((line) => line.getName().includes("ф"));
     const area = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
     
-    const sendTo = toAll ? "ac" : "pc";
-    const id = toAll ? ` @${(Math.random() + 1).toString(36).substring(6)}` : "";
-    ChatLib.command(`${sendTo} x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!${id}`);
+    const id = chat === 2 ? "" : ` @${(Math.random() + 1).toString(36).substring(6)} ${(Math.random() + 1).toString(36).substring(9)}`;
+    ChatLib.command(`${CHATS[chat]} x: ${x}, y: ${y}, z: ${z} | ${mob} Spawned at [${area} ]!${id}`);
 }
 
 /**

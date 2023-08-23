@@ -1,8 +1,10 @@
 [
     "- Added `/va cd`",
+    "- Added `/va update`",
     "- Added `NEW!` to all new features for easier search",
     "- Added `/b` to use as `/msg lastIGN`",
     "- Added send game messages to Discord",
+    "- Added send to self on mob announces",
     "- Changed dungeon rejoin to rejoin after set time",
     "- Fixed keybinds being cringe",
     "- Fixed dictionary linking",

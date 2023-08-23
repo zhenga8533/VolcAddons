@@ -1,5 +1,5 @@
 import axios from "../../axios";
-const { BOLD, GOLD, GREEN, LOGO, WHITE } = require('./constants');
+const { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY } = require('./constants');
 
 
 /**
@@ -13,7 +13,7 @@ function getCurrentVersion() {
         const metadata = JSON.parse(metadataJson);
         return metadata.version;
     } catch (error) {
-        console.error('Failed to read current version:', error);
+        console.error('Failed to read current version: ', error);
         return null;
     }
 }
@@ -74,8 +74,15 @@ export function getLatestReleaseVersion() {
             const downloadLink = latestRelease.html_url;
             ChatLib.chat(`\n${LOGO} ${GOLD}${BOLD}NEW RELEASE: ${WHITE}${BOLD}v${latestVersion}`);
             ChatLib.chat(`${GREEN}Download the new version here: ${downloadLink}\n`);
+        } else {
+            ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}You are on the latest version (${WHITE}${BOLD}v${currentVersion}${GREEN}${BOLD})!\n`);
+            ChatLib.chat(`${GRAY}${BOLD}Changelog:`);
+            JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => {
+                ChatLib.chat(change);
+            });
+            ChatLib.chat();
         }
     }).catch(error => {
-        console.error("Failed to fetch releases:", error);
+        console.error("Failed to fetch releases: ", error);
     });
 }

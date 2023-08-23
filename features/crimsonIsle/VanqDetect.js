@@ -18,7 +18,7 @@ export function getVanquishers() { return vanquishers };
  * Announce vanquisher spawn on chat message appears.
  */
 registerWhen(register("chat", () => {
-    announceMob(settings.vanqAlert === 1, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
+    announceMob(settings.vanqAlert, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqAlert !== 0);
 
 /**
