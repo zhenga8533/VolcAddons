@@ -54,7 +54,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     playSound(MUSIC, 1000);
     Client.Companion.showTitle(`${GREEN}${BOLD}EAT FRESH!`, "", 10, 50, 10);
-}).setCriteria("Your Fresh Tools Perk bonus doubles your building speed for the next 5 seconds!"),
+}).setCriteria("Your Fresh Tools Perk bonus doubles your building speed for the next ${time} seconds!"),
 () => getWorld() === "Kuudra" && settings.kuudraAlerts === true && settings.freshAlert === true);
 
 /**

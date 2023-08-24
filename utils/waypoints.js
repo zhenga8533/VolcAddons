@@ -9,6 +9,7 @@ import { getLavaCreatures } from "../features/crimsonIsle/MythicDetect";
 import { getVanquishers } from "../features/crimsonIsle/VanqDetect";
 import { getInquisitors } from "../features/hub/InquisitorDetect";
 import { getEntities } from "../features/combat/EntityDetect";
+import { getPowderChests } from "../features/mining/PowderChest";
 
 
 /**
@@ -100,6 +101,18 @@ function renderSimple(waypoints, r, g, b) {
         renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
     });
 }
+function renderSimpler(entities, r, g, b) {
+    if (!entities.length) return;
+
+    entities.forEach((entity) => {
+        x = entity.getX();
+        y = entity.getY();
+        z = entity.getZ();
+    
+        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, false);
+        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, false);
+    });
+}
 function renderWaypoint(waypoints) {
     if (!waypoints.length) return;
 
@@ -149,6 +162,7 @@ register("renderWorld", () => {
     renderBeam(getCrates()); // White Crates
     renderBeam(getBuilds()); // Red Builds
     renderStands(getVamps(), "Medium Rare", 1, 0, 0); // Red Vamps
-    renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple enigma
-    renderSimple(getCat(), 0, 0, 1); // Blue enigma
+    renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple Enigma
+    renderSimple(getCat(), 0, 0, 1); // Blue Cat
+    renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder
 });

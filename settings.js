@@ -244,7 +244,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     // --- Timer ---
     @SwitchProperty({
         name: "Item Cooldown Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Alerts player once item cooldown timer expires.\nAdd cooldowns with ${AQUA}/va cd${GRAY}.`,
+        description: `${GRAY}Alerts player once item cooldown timer expires.\nAdd cooldowns with ${AQUA}/va cd${GRAY}.`,
         category: "General",
         subcategory: "Timer"
     })
@@ -271,7 +271,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     // --- Webhook ---
     @TextProperty({
         name: "Discord Webhook",
-        description: `${DARK_RED}NEW! ${GRAY}Input Discord Webhook link to send the chat messages to.`,
+        description: "Input Discord Webhook link to send the chat messages to.",
         category: "General",
         subcategory: "Webhook",
         protected: true
@@ -563,24 +563,6 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     ragDetect = false;
 
-    // --- Dungeon ---
-    @SelectorProperty({
-        name: "Dungeon Rejoin",
-        description: `Rejoins last completed dungeon when 4 players join your party ${BLUE}(does NOT reparty)${GRAY}.`,
-        category: "Combat",
-        subcategory: "Dungeon",
-        options: ["OFF", "No DT", "Social Farm", "Visitor Magnet"]
-    })
-    dungeonRejoin = 0;
-
-    @SwitchProperty({
-        name: "Watcher Alert",
-        description: "Alerts player when all Watcher mobs are spawned and killed.",
-        category: "Combat",
-        subcategory: "Dungeon"
-    })
-    watcherAlert = false;
-
     // --- Gyrokinetic Wand ---
     @SwitchProperty({
         name: "Cells Alignment Alert",
@@ -619,7 +601,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
     @SliderProperty({
         name: "Powder Tracker",
-        description: `Displays powders' rate of gain ${BLUE}(ONLY chests)${GRAY}. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
+        description: `Displays powders' rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
 Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowder${GRAY}.`,
         category: "Mining",
         subcategory: "Powder",
@@ -627,6 +609,17 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         max: 10
     })
     powderTracker = 0;
+
+    @SliderProperty({
+        name: "Powder Chest Detect",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights and counts nearby powder chests. Set block range of detection radius or as 0 to turn off.
+Move GUI with ${AQUA}/moveChest${GRAY}.`,
+        category: "Mining",
+        subcategory: "Powder",
+        min: 0,
+        max: 128
+    })
+    powderChest = 0;
 
 
     // ████████████████████████████████████████████████████ HUB ████████████████████████████████████████████████████
@@ -988,7 +981,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     // --- Garden Webhook ---
     @TextProperty({
         name: "Discord Webhook",
-        description: `${DARK_RED}NEW! ${GRAY}Input Discord Webhook link to send the Garden Statistics to.`,
+        description: "Input Discord Webhook link to send the Garden Statistics to.",
         category: "Garden",
         subcategory: "Garden Webhook",
         protected: true

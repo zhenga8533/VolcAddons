@@ -76,6 +76,7 @@ export let data = new PogObject("VolcAddons", {
     "RL": [250, 300, 1], // Container Value Location
     "EL": [300, 200, 1], // Advanced Value Location
     "WL": [30, 200, 1], // Wolf Combo Location
+    "HL": [30, 200, 1], // Powder Chest Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

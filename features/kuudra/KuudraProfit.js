@@ -57,7 +57,8 @@ ${DARK_AQUA}${BOLD}Secondary: ${GREEN}The
 ${DARK_PURPLE}${BOLD}Teeth: ${GREEN}Most
 ${RED}${BOLD}Essence: ${GREEN}Compatible
 ${DARK_RED}${BOLD}Key: ${RED}Pokemon...`;
-const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () => Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
+const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () =>
+Player.getContainer() !== null && Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
 
 const coinageExample =
 `${DARK_RED}${BOLD}Profit: ${WHITE}And

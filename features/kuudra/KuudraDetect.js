@@ -7,8 +7,8 @@ import { getTier, getWorld } from "../../utils/worlds";
 /**
  * Variables used to track and display Kuudra HP and entity.
  */
-const EntityMagmaCube = Java.type('net.minecraft.entity.monster.EntityMagmaCube');
-let cubes = World.getAllEntitiesOfType(EntityMagmaCube.class);
+const EntityMagmaCube = Java.type('net.minecraft.entity.monster.EntityMagmaCube').class;
+let cubes = undefined;
 let percentHP = new Text(`One Cycleable`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2, 10);
 let HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
 let currentHP = 0;
@@ -18,10 +18,10 @@ export function getKuudraHP() { return currentHP };
  * Tracks Kuudra's HP and spawn location if entering phase 4.
  */
 registerWhen(register("tick", () => {
-    cubes = World.getAllEntitiesOfType(EntityMagmaCube.class);
+    cubes = World.getAllEntitiesOfType(EntityMagmaCube);
 
     // Find Kuudra based off size and HP
-    kuudra = cubes.find((cube) => cube.getWidth().toFixed(0) === 15 && cube.getEntity().func_110143_aJ() <= 100_000);
+    const kuudra = cubes.find((cube) => cube.getWidth().toFixed(1) == 15.3 && cube.getEntity().func_110143_aJ() <= 100_000);
     if (kuudra !== undefined) {
         currentHP = kuudra.getEntity().func_110143_aJ().toFixed(0);
 

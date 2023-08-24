@@ -83,9 +83,8 @@ registerWhen(register("messageSent", (message, event) => {
 /**
  * Message back lack messaged player with `/b ${msg}`
  */
-register("command", (event) => {
-    ChatLib.command(`msg ${data.lastMsg}`);
-    cancel(event);
+register("command", (...args) => {
+    ChatLib.command(`msg ${data.lastMsg} ${args.join(' ')}`);
 }).setName("b", true);
 
 register("messageSent", (message) => {

@@ -38,14 +38,13 @@ import { calcMinions } from "./features/economy/MinionCalc";
 import { getBestiary } from "./features/combat/Bestiary";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
-import "./features/combat/DungeonRejoin";
 import "./features/combat/EntityDetect";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
-import "./features/combat/WatcherAlert";
 // Mining Features
+import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
 // Hub Features
 import { setWarps } from "./features/hub/DianaWaypoint";

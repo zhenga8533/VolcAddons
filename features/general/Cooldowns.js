@@ -15,11 +15,19 @@ registerWhen(register("clicked", (x, y, button, down) => {
     const held = Player.getHeldItem();
     if (Client.isInGui() || down === false || button === 0 || held === null) return;
     const heldName = held.getName();
-    if (!(heldName in data.cooldownlist) || heldName in items) return;
+    if (!(heldName in data.cooldownlist)) return;
     const cd = data.cooldownlist[heldName];
-    if (isNaN(cd)) return;
-    held.setStackSize(cd);
-    items[heldName] = cd;
+    if (isNaN(cd)) {
+        const firstLetter = cd[0];
+        const remaining = cd.substring(1);
+        if (firstLetter !== 'a' || isNaN(remaining)) return;
+        held.setStackSize(remaining);
+        items[heldName] = remaining;
+    } else if (heldName in items) return;
+    else {
+        held.setStackSize(cd);
+        items[heldName] = cd;
+    }
 }), () => data.cooldownlist.length !== 0);
 
 registerWhen(register("worldUnload", () => {

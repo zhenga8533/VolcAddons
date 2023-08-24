@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { BLUE, BOLD, DARK_GREEN, LIGHT_PURPLE, RED, WHITE } from "../../utils/constants";
+import { BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
@@ -9,8 +9,6 @@ import { getWorld } from "../../utils/worlds";
 /**
  * Variables used to track and display current event and powder.
  */
-const WitherClass = Java.type('net.minecraft.entity.boss.EntityWither').class;
-let doublePowder = false;
 const powders = {
     "Mithril": new Stat(),
     "Gemstone": new Stat()
@@ -24,86 +22,53 @@ ${BLUE}${BOLD}Time Passed: ${WHITE}Bot`;
 const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], () => true, data.PL, "movePowder", powderExample);
 
 /**
- * Check if trackers should be registered.
- */
-function checkRegister() {
-    return (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !==0;
-}
-
-/**
  * Command to reset powder overlay.
  */
 register("command", () => {
     for (let key in powders)
         powders[key].reset();
+    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset powder tracker!`);
 }).setName("resetPowder");
 
 /**
- * Check withers in world for 2x powder.
+ * Update the powder tracking values based on the current time.
+ * @param {object} powder - The powder object to update.
+ * @param {number} current - The current time.
  */
-registerWhen(register("step", () => {
-    if (doublePowder) return;
-    withers = World.getAllEntitiesOfType(WitherClass);
-    festivity = withers.find(wither => wither.getName().includes("2X POWDER"));
-    if (festivity !== undefined) doublePowder = true;
-}).setFps(1), () => checkRegister());
-
-/**
- * Checks chat for 2x powder event start message.
- */
-registerWhen(register("chat", (festivity) => {
-    if (festivity.includes("2X POWDER")) doublePowder = true;
-}).setCriteria("${festivity} STARTED!"), () => checkRegister());
-
-/**
- * Checks chat for 2x powder event end message.
- */
-registerWhen(register("chat", (festivity) => {
-    if (festivity.includes("2X POWDER")) doublePowder = false;
-}).setCriteria("${festivity} ENDED!"), () => checkRegister());
-registerWhen(register("worldUnload", () => {
-    doublePowder = false
-}), () => checkRegister());
-
-/**
- * Tracks chat for any powder gain messages.
- *
- * @param {string} amount - Amount of powder in "x,xxx" format.
- * @param {string} type - Type of powder (mithril/gemstone).
- */
-registerWhen(register("chat", (amount, type) => { // Chests
-    if (getPaused()) return;
-    
-    let powder = powders[type];
-    powder.now += doublePowder ? parseInt(amount) * 2 : parseInt(amount);
+function updatePowder(powder, current) {
+    if (powder.now !== current && powder.now !== 0) powder.since = 0;
+    if (powder.start === 0) powder.start = current;
+    if (current < powder.now) powder.start -= powder.now - current; 
+    powder.now = current;
     powder.gain = powder.now - powder.start;
-    powder.since = 0;
-}).setCriteria("You received +${amount} ${type} Powder."),
-() => checkRegister());
+
+    if (powder.since < settings.powderTracker * 60) {
+        powder.since += 1;
+        powder.time += 1;
+        powder.rate = powder.gain / powder.time * 3600;
+    }
+}
 
 /**
  * Updates powder overlay every second.
  */
 registerWhen(register("step", () => {
-    if (getPaused()) return;
-
-    // Update powder data every second
-    for (let key in powders) {
-        let powder = powders[key];
-        if (powder.since < settings.powderTracker * 60) {
-            powder.since += 1;
-            powder.time += 1;
-            powder.rate = powder.gain / powder.time * 3600;
-        }
-    }
+    if (getPaused() || (getWorld() !== "Crystal Hollows" && getWorld() !== "Dwarven Mines")) return;
+    const tabLines = TabList.getNames();
+    const powderIndex = tabLines.findIndex(line => line === "§r§9§l᠅ Powders§r");
+    if (powderIndex === -1) return;
+    const currentMithril = parseInt(tabLines[powderIndex + 1].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
+    const currentGemstone = parseInt(tabLines[powderIndex + 2].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
+    updatePowder(powders.Mithril, currentMithril);
+    updatePowder(powders.Gemstone, currentGemstone);
 
     // Set HUD
-    const timeDisplay = powders.Gemstone.since < settings.powderTracker * 60 ? getTime(powders.Gemstone.time) : `${RED}Inactive`;
+    const timeDisplay = powders.Mithril.since < settings.powderTracker * 60 ? getTime(powders.Mithril.time) : 
+        powders.Gemstone.since < settings.powderTracker * 60 ? getTime(powders.Gemstone.time) : `${RED}Inactive`;
     powderOverlay.message = 
 `${DARK_GREEN}${BOLD}Mithril Powder: ${WHITE}${commafy(powders.Mithril.gain)} ᠅
 ${DARK_GREEN}${BOLD}Mithril Rate: ${WHITE}${commafy(powders.Mithril.rate)} ᠅/hr
 ${LIGHT_PURPLE}${BOLD}Gemstone Powder: ${WHITE}${commafy(powders.Gemstone.gain)} ᠅
 ${LIGHT_PURPLE}${BOLD}Gemstone Rate: ${WHITE}${commafy(powders.Gemstone.rate)} ᠅/hr
 ${BLUE}${BOLD}Time Passed: ${WHITE}${timeDisplay}`;
-}).setFps(1),
-() => checkRegister());
+}).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !==0);

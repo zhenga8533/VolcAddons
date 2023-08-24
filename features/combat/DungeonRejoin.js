@@ -46,10 +46,10 @@ registerWhen(register("chat", (type, floor) => {
  */
 function tryWarp(world) {
     if (getWorld() === world) {
-        baseDelay = 0
+        baseDelay = 0;
         if (settings.dungeonRejoin === 2) {
             delay(() => ChatLib.command("p warp"), 4000);
-            baseDelay += 7000
+            baseDelay += 7000;
         }
 
         if (dungeon[0].includes("Master"))
