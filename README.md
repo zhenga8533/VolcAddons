@@ -88,13 +88,11 @@
     - Damage Tracker
     - Low Health Alert
     - Ragnarok Detection
-  - Dungeon & Slayer
-    - Dungeon Rejoin
-    - Watcher Alert
     - Announce Slayer Mini/Boss Spawn
 
 - MINING FEATURES
   - Powder Tracker => /movePowder
+  - Chest Detection
 
 - HUB FEATURES
   - Burrow Estimator
