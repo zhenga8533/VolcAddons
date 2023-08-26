@@ -96,8 +96,8 @@ function renderSimple(waypoints, r, g, b) {
         y = waypoint[2];
         z = waypoint[3];
     
-        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, false);
-        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, false);
+        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true);
+        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, true);
         renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
     });
 }
@@ -109,8 +109,8 @@ function renderSimpler(entities, r, g, b) {
         y = entity.getY();
         z = entity.getZ();
     
-        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true);
-        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, true);
+        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, false);
+        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, false);
     });
 }
 function renderWaypoint(waypoints) {
