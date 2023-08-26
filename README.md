@@ -60,7 +60,6 @@
 ## Features
 - GENERAL FEATURES
   - General
-    - Abiphone Blocker => /va bl
     - Custom Emotes => /va emote
     - Draw Waypoints => /va wp
     - Recent Server Alert
@@ -93,6 +92,7 @@
 - MINING FEATURES
   - Powder Tracker => /movePowder
   - Chest Detection
+  - Chest Spam Hider
 
 - HUB FEATURES
   - Burrow Estimator
