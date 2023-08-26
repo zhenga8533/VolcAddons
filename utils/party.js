@@ -44,6 +44,12 @@ register("chat", () => {
     isLeader = false;
 }).setCriteria("You left the party.");
 
+// Not in party backup
+register("chat", () => {
+    inParty = false;
+    isLeader = false;
+}).setCriteria("You are not in a party right now.");
+
 
 // --- TRACK PARTY LEADER ---
 

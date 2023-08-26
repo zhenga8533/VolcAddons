@@ -8,8 +8,8 @@ import { getWorld } from "../../utils/worlds";
 /**
  * Variables used to track world for mythic lava creatures.
  */
-const EntityIronGolem = Java.type('net.minecraft.entity.monster.EntityIronGolem').class;
-const EntityGuardian = Java.type('net.minecraft.entity.monster.EntityGuardian').class;
+const GOLEM_CLASS = Java.type('net.minecraft.entity.monster.EntityIronGolem').class;
+const GUARDIAN_CLASS = Java.type('net.minecraft.entity.monster.EntityGuardian').class;
 let lavaCreatures = [];
 export function getLavaCreatures() { return lavaCreatures };
 
@@ -31,7 +31,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("tick", () => {
     lavaCreatures = [];
 
-    const ironGolems = World.getAllEntitiesOfType(EntityIronGolem);
+    const ironGolems = World.getAllEntitiesOfType(GOLEM_CLASS);
     ironGolems.forEach(ironGolem => {
         Client.Companion.showTitle(`${DARK_RED}${BOLD}LORD JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5);
         playSound(AMOGUS, 10000);
@@ -39,7 +39,7 @@ registerWhen(register("tick", () => {
             lavaCreatures.push(ironGolem);
     });
     
-    const guardians = World.getAllEntitiesOfType(EntityGuardian);
+    const guardians = World.getAllEntitiesOfType(GUARDIAN_CLASS);
     guardians.forEach(guardian => {
         if (guardian.getEntity().func_175461_cl() === false) return;
 

@@ -239,24 +239,24 @@ export function findFirstRomanNumeral(str) {
 }
 
 /**
- * Retrieves all entities of type StandClass within a 3x3 area of chunks centered around the given coordinates (x, z).
+ * Retrieves all entities of type STAND_CLASS within a 3x3 area of chunks centered around the given coordinates (x, z).
  *
  * @param {number} x - The x-coordinate of the center chunk.
  * @param {number} z - The z-coordinate of the center chunk.
  * @param {number} diff - The difference from the center chunk to extend the search (3x3 area).
- * @returns {Object[]} - An array containing all StandClass entities found within the 3x3 area.
+ * @returns {Object[]} - An array containing all STAND_CLASS entities found within the 3x3 area.
  */
-const StandClass = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
+const STAND_CLASS = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
 export function get3x3Stands(x, z, diff) {
-    const stands = [...World.getChunk(x, 69, z).getAllEntitiesOfType(StandClass)];
-    stands.push(...World.getChunk(x + diff, 69, z + diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + diff, 69, z - diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - diff, 69, z + diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - diff, 69, z - diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x + diff, 69, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x - diff, 69, z).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, 69, z + diff).getAllEntitiesOfType(StandClass));
-    stands.push(...World.getChunk(x, 69, z - diff).getAllEntitiesOfType(StandClass));
+    const stands = [...World.getChunk(x, 69, z).getAllEntitiesOfType(STAND_CLASS)];
+    stands.push(...World.getChunk(x + diff, 69, z + diff).getAllEntitiesOfType(STAND_CLASS));
+    stands.push(...World.getChunk(x + diff, 69, z - diff).getAllEntitiesOfType(STAND_CLASS));
+    stands.push(...World.getChunk(x - diff, 69, z + diff).getAllEntitiesOfType(STAND_CLASS));
+    stands.push(...World.getChunk(x - diff, 69, z - diff).getAllEntitiesOfType(STAND_CLASS));
+    stands.push(...World.getChunk(x + diff, 69, z).getAllEntitiesOfType(STAND_CLASS));
+    stands.push(...World.getChunk(x - diff, 69, z).getAllEntitiesOfType(STAND_CLASS));
+    stands.push(...World.getChunk(x, 69, z + diff).getAllEntitiesOfType(STAND_CLASS));
+    stands.push(...World.getChunk(x, 69, z - diff).getAllEntitiesOfType(STAND_CLASS));
 
     return stands;
 }

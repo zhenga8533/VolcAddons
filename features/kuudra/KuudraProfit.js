@@ -2,7 +2,6 @@ import settings from "../../settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/constants";
 import { commafy, formatNumber, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
-import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";
@@ -129,7 +128,7 @@ registerWhen(register("chat", () => {
  * Updates Kuudra chest profit data and overlay on chest open.
  */
 registerWhen(register("guiOpened", () => {
-    delay(() => {
+    Client.scheduleTask(1, () => {
         const container = Player.getContainer();
         if (container.getName() !== "Paid Chest") return;
         const bazaar = getBazaar();
@@ -154,5 +153,5 @@ ${DARK_AQUA}${BOLD}Secondary: ${GREEN}+${commafy(secondary)}
 ${DARK_PURPLE}${BOLD}Teeth: ${GREEN}+${commafy(teeth)}
 ${RED}${BOLD}Essence: ${GREEN}+${commafy(essence)}
 ${DARK_RED}${BOLD}Key: ${RED}-${commafy(cost)}`;
-    }, 250);
+    });
 }), () => getWorld() === "Kuudra");

@@ -64,4 +64,4 @@ register("worldLoad", () => {
 });
 register("worldUnload", () => {
     world = "";
-});
+}).setPriority(Priority.LOWEST);

@@ -4,7 +4,6 @@ import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";
 
-
 /**
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.
  */

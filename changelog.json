@@ -1,8 +1,13 @@
 [
     "- Added nearby chest detect",
-    "- Added `/va cd add a{num}` to track ability actives",
+    "- Added `/va cd add a{num}` to track actives",
+    "- Added hide non powder chests",
+    "- Added farming event reward highlight",
+    "- Changed Garden tab to Farming",
+    "- Fixed some Kuudra detection issues",
     "- Fixed powder tracker to be more accurate",
     "- Fixed some errors that occur on server leave",
     "- Fixed `/b {msg}`",
-    "- Removed Dungeon features"
+    "- Removed Dungeon features",
+    "- Removed Abihpone blocker and /va blocklist"
 ]

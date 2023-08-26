@@ -9,14 +9,14 @@ import { updateInqCounter } from "../hub/InquisitorCounter";
 /**
  * Inquisitor alert variables.
  */
-const EntityPlayerMP = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP");
+const PLAYER_CLASS = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP").class;
 let inquisitor = undefined;
 
 /**
  * Announce inquisitor spawn on chat message appears.
  */
 registerWhen(register("chat", () => {
-    entities = World.getAllEntitiesOfType(EntityPlayerMP.class);
+    entities = World.getAllEntitiesOfType(PLAYER_CLASS);
     inquisitor = entities.find((entity) => entity.getName().equals("Minos Inquisitor"));
 
     updateInqCounter(inquisitor !== undefined);
@@ -32,7 +32,7 @@ export function getInquisitors() { return inquisitors };
 registerWhen(register("tick", () => {
     inquisitors = [];
 
-    entities = World.getAllEntitiesOfType(EntityPlayerMP.class);
+    entities = World.getAllEntitiesOfType(PLAYER_CLASS);
     inqs = entities.filter((entity) => entity.getName().equals("Minos Inquisitor"));
 
     if (inqs.length > 0) {

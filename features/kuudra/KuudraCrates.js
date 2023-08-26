@@ -7,8 +7,8 @@ import { getPhase } from "./KuudraSplits";
 /**
  * Variables used to track and display crate locations.
  */
-const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
-const EntityGiantZombie = Java.type("net.minecraft.entity.monster.EntityGiantZombie");
+const STAND_CLASS = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
+const GIANT_CLASS = Java.type("net.minecraft.entity.monster.EntityGiantZombie").class;
 let crates = [];
 export function getCrates() { return crates };
 let builds = [];
@@ -20,7 +20,7 @@ export function getBuilds() { return builds };
 registerWhen(register("tick", () => {
     if (getPhase() !== 1 && getPhase() !== 3) return;
     
-    const gzs = World.getAllEntitiesOfType(EntityGiantZombie.class);
+    const gzs = World.getAllEntitiesOfType(GIANT_CLASS);
     const supplies = gzs.filter(gz => gz.getY() < 67);
     const player = Player.asPlayerMP();
 
@@ -40,7 +40,7 @@ registerWhen(register("step", () => {
     if (getPhase() !== 2) return;
 
     builds = [];
-    const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
+    const stands = World.getAllEntitiesOfType(STAND_CLASS);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
 }).setFps(2), () => getWorld() === "Kuudra" && settings.kuudraBuild === true);

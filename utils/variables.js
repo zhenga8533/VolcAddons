@@ -14,7 +14,6 @@ export let data = new PogObject("VolcAddons", {
     "lastMsg": "joe",
     "whitelist": [],
     "blacklist": [],
-    "blocklist": [],
     // An array of default warp locations
     "warplist": ["hub", "da", "castle", "museum", "wizard"],
     "moblist": [],
@@ -77,6 +76,7 @@ export let data = new PogObject("VolcAddons", {
     "EL": [300, 200, 1], // Advanced Value Location
     "WL": [30, 200, 1], // Wolf Combo Location
     "HL": [30, 200, 1], // Powder Chest Location
+    "DL": [30, 200, 1], // Broodmother Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
@@ -87,7 +87,6 @@ export let data = new PogObject("VolcAddons", {
 
 // An array to store registered triggers and their dependencies
 let registers = [];
-let openVA = false;
 
 /**
  * Adds a trigger with its associated dependency to the list of registered triggers.
@@ -177,8 +176,7 @@ export function updateList(args, list, listName) {
             break;
     }
     
-    if (args[0] === "ml" || args[0] === "mob" || args[0] === "moblist")
-        updateEntityList();
+    if (args[0] === "ml" || args[0] === "mob" || args[0] === "moblist") updateEntityList();
     setRegisters();
 }
 

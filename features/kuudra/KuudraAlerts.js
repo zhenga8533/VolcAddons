@@ -119,11 +119,11 @@ registerWhen(register("chat", () => {
 /**
  * Warns player about dropship as they get close to center.
  */
-const EntityGhast = Java.type('net.minecraft.entity.monster.EntityGhast');
+const GHAST_CLASS = Java.type('net.minecraft.entity.monster.EntityGhast').class;
 let alerted = false
 registerWhen(register("step", () => {
     if (settings.kuudraAlerts && settings.dropshipAlert) {
-        let ghasts = World.getAllEntitiesOfType(EntityGhast.class);
+        let ghasts = World.getAllEntitiesOfType(GHAST_CLASS);
         const dropships = ghasts.filter((ghast) => {
             distance = Math.hypot(ghast.getX() + 101, ghast.getZ() + 105);
             return distance < 20 && distance > 10;

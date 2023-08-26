@@ -9,7 +9,7 @@ import { getWorld } from "../../utils/worlds";
 /**
  * Vanquisher detection variables.
  */
-const EntityWither = Java.type('net.minecraft.entity.boss.EntityWither').class;
+const WITHER_CLASS = Java.type('net.minecraft.entity.boss.EntityWither').class;
 let entities = [];
 let vanquishers = [];
 export function getVanquishers() { return vanquishers };
@@ -35,7 +35,7 @@ const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher ${WHITE}Detected`;
 const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
 registerWhen(register("tick", () => {
     vanquishers = [];
-    entities = World.getAllEntitiesOfType(EntityWither);
+    entities = World.getAllEntitiesOfType(WITHER_CLASS);
     vanqs = entities.filter(entity => entity.getEntity().func_110138_aP() === 1024);
 
     if (vanqs.length > 0) {

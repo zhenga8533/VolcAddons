@@ -129,6 +129,7 @@ export class Overlay {
      *
      * @param {string} setting - The setting key used to determine whether the overlay should be shown.
      * @param {string[]} requires - An array of world names where the overlay should be displayed (or "all" for all requires).
+     * @param {function} condition - Function to check if condition is met before rendering.
      * @param {number[]} loc - An array representing the x, y, and scale of the overlay.
      * @param {string} command - The command name that will open the GUI.
      * @param {string} example - An example text to be displayed as an overlay.
