@@ -10,7 +10,16 @@ let world = undefined;
 export function getWorld() { return world };
 let tier = 0;
 export function getTier() { return tier };
+let server = undefined;
+export function getServer() { return server };
 let noFind = 0;
+
+/**
+ * Load server ID on chat message
+ */
+register("chat", (serv) => {
+    server = serv;
+}).setCriteria("Sending to server ${serv}...");
 
 /**
  * Searches for the current zone based on the scoreboard lines.
@@ -59,9 +68,10 @@ function findWorld() {
  * Set and reset world on world change.
  */
 register("worldLoad", () => {
-    noFind = 0; // Resetting the counter when the world loads
-    findWorld(); // Finding the current world and its features
+    noFind = 0;
+    findWorld();
 });
 register("worldUnload", () => {
-    world = "";
+    world = undefined;
+    setRegisters();
 }).setPriority(Priority.LOWEST);

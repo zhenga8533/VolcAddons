@@ -38,6 +38,7 @@ function testClass(entity, HP) {
  */
 export function updateEntityList() {
     entityList = [];
+    entities = [];
     x = 0;
     y = 0;
 
@@ -115,6 +116,9 @@ registerWhen(register("step", () => {
     }
 }).setFps(1), () => getWorld() === "Spider's Den" && settings.broodmotherDetect);
 
+/**
+ * World timer of world leave.
+ */
 registerWhen(register("worldUnload", () => {
     nextSpawn = 0;
     broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${RED}???`;

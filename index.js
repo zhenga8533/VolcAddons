@@ -4,6 +4,7 @@ import "./utils/functions";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import settings from "./settings";
+
 import { delay } from "./utils/thread";
 import { data, updateList } from "./utils/variables";
 import { openGUI } from "./utils/overlay";

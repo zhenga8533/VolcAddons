@@ -215,15 +215,13 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     })
     hideWorlds = "";
 
-    @SliderProperty({
-        name: "Recent Server Alert",
-        description: `Alerts player when they rejoin a recent server. Set minutes until a server is no longer "recent" or as 0 to turn ${RED}OFF${GRAY}.`,
+    @SwitchProperty({
+        name: "Server Alert",
+        description: "Alerts player when they rejoin a previously joined server.",
         category: "General",
-        subcategory: "Server",
-        min: 0,
-        max: 30
+        subcategory: "Server"
     })
-    serverAlert = 0;
+    serverAlert = false;
 
     @SwitchProperty({
         name: "Server Status",
@@ -601,13 +599,13 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
 
-    // --- Powder ---
+    // --- Jinx ---
     @SliderProperty({
         name: "Powder Chest Detect",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights and counts nearby powder chests. Set block range of detection radius or as 0 to turn off.
+        description: `Highlights and counts nearby powder chests. Set block range of detection radius or as 0 to turn off.
 Move GUI with ${AQUA}/moveChest${GRAY}.`,
         category: "Mining",
-        subcategory: "Powder",
+        subcategory: "Jinx",
         min: 0,
         max: 128
     })
@@ -615,9 +613,9 @@ Move GUI with ${AQUA}/moveChest${GRAY}.`,
 
     @SelectorProperty({
         name: "Powder Chest Hider",
-        description: `${DARK_RED}NEW! ${GRAY}Removes specified chat messages from powder chest openings.`,
+        description: "Removes specified chat messages from powder chest openings.",
         category: "Mining",
-        subcategory: "Powder",
+        subcategory: "Jinx",
         options: ["OFF", "Items", "Powder", "All"]
     })
     powderHider = 0;
@@ -627,7 +625,7 @@ Move GUI with ${AQUA}/moveChest${GRAY}.`,
         description: `Displays powders' rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
 Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowder${GRAY}.`,
         category: "Mining",
-        subcategory: "Powder",
+        subcategory: "Jinx",
         min: 0,
         max: 10
     })
@@ -639,7 +637,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     // --- Farming ---
     @SwitchProperty({
         name: "Jacob Reward Highlight",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights unclaimed Jacob event rewards.`,
+        description: "Highlights unclaimed Jacob event rewards.",
         category: "Farming",
         subcategory: "Farming"
     })
