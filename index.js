@@ -3,15 +3,17 @@ import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, R
 import "./utils/functions";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
-import settings from "./settings";
-
-import { delay } from "./utils/thread";
-import { data, updateList } from "./utils/variables";
 import { openGUI } from "./utils/overlay";
+import settings from "./settings";
+import { delay } from "./utils/thread";
+import { getLatestReleaseVersion } from "./utils/updates";
+import { data, updateList } from "./utils/variables";
 import "./utils/waypoints";
 import { findZone, getTier, getWorld } from "./utils/worlds";
-import { getLatestReleaseVersion } from "./utils/updates";
+// Utility Variable Control
 data.autosave();
+const CHANGED_SETTINGS = new Set(["partyCommands", "itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
+for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
 
 // General Features
 import "./features/general/AntiGhostParty";
@@ -19,6 +21,7 @@ import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
 import "./features/general/Cooldowns";
+import "./features/general/ImageViewer";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
 import "./features/general/Performance";

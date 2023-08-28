@@ -1,8 +1,10 @@
 [
+    "- Added image viewer",
     "- Added drill upgrades to item price",
     "- Changed Broodmother timer to carry over servers",
+    "- Changed ?coords to not send on self message",
     "- Fixed some registers carrying over world change",
+    "- Fixed Vigilance settings crash",
     "- Removed time threshold on recent servers",
-    "TODO: Make attribute price best of 1",
-    "TODO: Fix vigilance settings crash"
+    "TODO: Make attribute price best of 1"
 ]

@@ -177,6 +177,15 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
     })
     drawWaypoint = 0;
 
+    @PercentSliderProperty({
+        name: "Image Viewer",
+        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
+Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
+        category: "General",
+        subcategory: "General"
+    })
+    imageRatio = 0.0;
+
     @SwitchProperty({
         name: "Remove Selfie Mode",
         description: "Removes selfie mode from perspective toggle.",
@@ -275,7 +284,6 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         subcategory: "Webhook",
     })
     chatOptions = false;
-    gameChat = false;
     @CheckboxProperty({
         name: "Public Chat",
         category: "General",
