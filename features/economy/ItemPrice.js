@@ -249,6 +249,20 @@ export function getItemValue(item) {
         value += peaceValue;
         valueMessage += `   - ${YELLOW}Moon Tzu: ${GREEN}+${formatNumber(peaceValue)}\n`;
     }
+
+    // Drill Part Values
+    const tankPart = itemData?.drill_part_fuel_tank;
+    const enginePart = itemData?.drill_part_engine;
+    const modulePart = itemData?.drill_part_upgrade_module;
+    if (tankPart !== undefined || enginePart !== undefined || modulePart !== undefined) {
+        valueMessage += `\n- ${GOLD}${BOLD}Drill Parts:\n`;
+        const tankValue = tankPart === undefined ? 0 : auction?.[tankPart.toUpperCase()]?.lbin ?? 0;
+        const engineValue = enginePart === undefined ? 0 : auction?.[enginePart.toUpperCase()]?.lbin ?? 0;
+        const moduleValue = modulePart === undefined ? 0 : auction?.[modulePart.toUpperCase()]?.lbin ?? 0;
+        if (tankValue !== 0) valueMessage += `   - ${AQUA}${convertToTitleCase(tankPart)}: ${GREEN}+${formatNumber(tankValue)}\n`;
+        if (engineValue !== 0) valueMessage += `   - ${AQUA}${convertToTitleCase(enginePart)}: ${GREEN}+${formatNumber(engineValue)}\n`;
+        if (moduleValue !== 0) valueMessage += `   - ${AQUA}${convertToTitleCase(modulePart)}: ${GREEN}+${formatNumber(moduleValue)}\n`;
+    }
     
     // Gem Values
     const gemsKeys = Object.keys(itemData?.gems ?? {});

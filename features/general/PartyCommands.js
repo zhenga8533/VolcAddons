@@ -68,6 +68,7 @@ export function executeCommand(name, args, sendTo) {
             case "cringe": // Cringe gay
             case "gay":
             case "racist":
+            case "trans":
                 if (!settings.slanderCommand) return;
 
                 const percentage = Math.floor(Math.random() * 100) + 1;

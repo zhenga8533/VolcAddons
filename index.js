@@ -124,7 +124,9 @@ function getHelp() {
 }
 
 // GENERAL FUNCTION COMMANDS - Handling command inputs
-const PARTY_COMMANDS = new Set(["cringe", "gay", "racist", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"]);
+const PARTY_COMMANDS = new Set(
+    ["cringe", "gay", "racist", "trans", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"]
+);
 register ("command", (...args) => {
     if (args === undefined) {
         settings.openGUI();

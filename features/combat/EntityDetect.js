@@ -3,7 +3,7 @@ import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE } from "../../utils/con
 import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
+import { getServer, getWorld } from "../../utils/worlds";
 
 
 /**
@@ -99,8 +99,11 @@ const SPIDER_CLASS = Java.type("net.minecraft.entity.monster.EntitySpider").clas
 let nextSpawn = 0;
 const broodmotherExample = `${GRAY}${BOLD}Next Spawn: ${RED}???`;
 const broodmotherOverlay = new Overlay("broodmotherDetect", ["Spider's Den"], () => true, data.DL, "moveBrood", broodmotherExample);
+const broodLobbies = {};
 registerWhen(register("step", () => {
+    const server = getServer();
     if (nextSpawn === 0) {
+        nextSpawn = broodLobbies[server] ?? 0;
         const broodmother = World.getAllEntitiesOfType(SPIDER_CLASS)
             .find(spider => spider.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b() === 6_000 && spider.getY() > 150);
         if (broodmother === undefined) return;
@@ -112,6 +115,7 @@ registerWhen(register("step", () => {
         if (nextSpawn === 0) {
             broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${GREEN}Soon TM`;
             Client.Companion.showTitle("", `${RED}Broodmother Spawning Soon!`, 0, 25, 5);
+            if (server in broodLobbies) delete broodLobbies[server];
         } else broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${WHITE}${getTime(nextSpawn)}`;
     }
 }).setFps(1), () => getWorld() === "Spider's Den" && settings.broodmotherDetect);
@@ -120,6 +124,7 @@ registerWhen(register("step", () => {
  * World timer of world leave.
  */
 registerWhen(register("worldUnload", () => {
+    broodLobbies[getServer()] = nextSpawn;
     nextSpawn = 0;
     broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${RED}???`;
 }), () => getWorld() === "Spider's Den" && settings.broodmotherDetect);
