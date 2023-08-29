@@ -128,7 +128,8 @@ function getHelp() {
 
 // GENERAL FUNCTION COMMANDS - Handling command inputs
 const PARTY_COMMANDS = new Set(
-    ["cringe", "gay", "racist", "trans", "dice", "roll", "coin", "flip", "coinflip", "cf", "8ball", "rps", "waifu", "w"]
+    ["cringe", "gay", "racist", "trans", "dice", "roll", "coin", "flip", "coinflip",
+    "cf", "8ball", "rps", "waifu", "w", "coords", "waypoint", "xyz"]
 );
 register ("command", (...args) => {
     if (args === undefined) {
@@ -183,13 +184,6 @@ register ("command", (...args) => {
             ChatLib.chat("Leader: " + getIsLeader());
             ChatLib.chat("Party: " + getInParty());
             ChatLib.chat("Garden: " + getNextVisitor());
-            break;
-        // Send Coords in Chat
-        case "coords":
-        case "sendcoords":
-        case "xyz":
-            const id = (Math.random() + 1).toString(36).substring(7);
-            ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} @${id}`);
             break;
         // Bestiary Stuff
         case "be":

@@ -2,7 +2,7 @@
     "- Added image viewer",
     "- Added drill upgrades to item price",
     "- Changed Broodmother timer to carry over servers",
-    "- Changed ?coords to not send on self message",
+    "- Changed ?coords and leader commands to not send on user message",
     "- Fixed some registers carrying over world change",
     "- Fixed Vigilance settings crash",
     "- Removed time threshold on recent servers",

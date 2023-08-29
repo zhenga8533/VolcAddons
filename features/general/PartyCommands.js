@@ -141,10 +141,12 @@ export function executeCommand(name, args, sendTo) {
                 setWaifu();
                 break;
             case "coords":
-                if (!settings.coordsCommand) return;
+            case "waypoint":
+            case "xyz":
+                if (!settings.coordsCommand || Player.getName() === name) return;
 
                 if (sendTo) ChatLib.command(`${sendTo} x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
-                else ChatLib.chat(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
+                else ChatLib.command(`r x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                 break;
             case "invite":
             case "inv":
@@ -175,7 +177,7 @@ export function executeCommand(name, args, sendTo) {
         } }, 690);
     }
     
-    if (getIsLeader() && settings.leaderCommands) { // LEADER COMMANDS
+    if (getIsLeader() && settings.leaderCommands & Player.getName() !== name) { // LEADER COMMANDS
         if (sendTo !== "pc") return;
         
         delay(() => {
