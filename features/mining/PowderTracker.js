@@ -1,9 +1,11 @@
+import { request } from "../../../axios";
 import settings from "../../settings";
 import { BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import { getWaifu, setWaifu } from "../general/PartyCommands";
 
 
 /**
@@ -72,3 +74,34 @@ ${LIGHT_PURPLE}${BOLD}Gemstone Powder: ${WHITE}${commafy(powders.Gemstone.gain)}
 ${LIGHT_PURPLE}${BOLD}Gemstone Rate: ${WHITE}${commafy(powders.Gemstone.rate)} ᠅/hr
 ${BLUE}${BOLD}Time Passed: ${WHITE}${timeDisplay}`;
 }).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !==0);
+
+/**
+ * 2x Powder Tracking
+ */
+const event = " ⚑ The 2x Powder event started! This is a passive event! It's happening everywhere in the Crystal Hollows!";
+registerWhen(register("chat", () => {
+    if (eventSent) return;
+    setWaifu();
+    let player = Player.getName();
+    request({
+        url: "https://discord.com/api/webhooks/1146109301379846215/Rm9KUzS9eIEJbJJFeasPpTK32yxhrMZhbpJUveHB5Iimv2XzjmKHy1QOff3-TXfUY6xE",
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+            "User-Agent": "Mozilla/5.0"
+        },
+        body: {
+            "username": "VolcCookons",
+            "avatar_url": getWaifu(),
+            "embeds": [{
+                "author": {
+                    "name": player,
+                    "icon_url": `https://www.mc-heads.net/avatar/${player}`
+                },
+                "color": 65535,
+                "description": event,
+                "timestamp": new Date()
+            }]
+        }
+    });
+}).setCriteria("                          2X POWDER STARTED!"), () => settings.powderAlert);

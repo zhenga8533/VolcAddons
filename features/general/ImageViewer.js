@@ -23,9 +23,11 @@ registerWhen(register("worldLoad", () => {
  */
 registerWhen(register("renderOverlay", () => {
     if (img === undefined) return;
-    const ratio = img.getTextureHeight() / SCREEN_HEIGHT / settings.imageRatio;
-    const width = img.getTextureWidth() / ratio;
-    const height = img.getTextureHeight() / ratio;
+    const imgWidth = img.getTextureWidth();
+    const imgHeight = img.getTextureHeight();
+    const ratio =  (imgWidth > imgHeight ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) / settings.imageRatio;
+    const width = imgWidth / ratio;
+    const height = imgHeight / ratio;
     img.draw(Math.min(Client.Companion.getMouseX(), SCREEN_WIDTH - width), Math.max(0, Client.Companion.getMouseY() - height), width, height);
 }).setPriority(Priority.LOWEST), () => settings.imageRatio !== 0);
 
