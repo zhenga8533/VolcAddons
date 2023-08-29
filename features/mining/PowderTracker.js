@@ -80,7 +80,6 @@ ${BLUE}${BOLD}Time Passed: ${WHITE}${timeDisplay}`;
  */
 const event = " ⚑ The 2x Powder event started! This is a passive event! It's happening everywhere in the Crystal Hollows!";
 registerWhen(register("chat", () => {
-    if (eventSent) return;
     setWaifu();
     let player = Player.getName();
     request({
