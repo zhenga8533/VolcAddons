@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -325,21 +325,38 @@ export function getItemValue(item) {
     // Attribute Values
     const attributes = Object.keys(itemData?.attributes ?? {}).sort();
     let attributesValue = 0;
+    let doubleCalc = false;
+    let attributeMessage = "";
     if (attributes.length) valueMessage += `\n- ${GOLD}${BOLD}Attributes:\n`;
     attributes.forEach((attribute) => {
         const attributeLevel = itemData?.attributes[attribute];
         const attributeCount = 2 ** (attributeLevel - 1);
         const attributePiece = auctionItem?.attributes?.[attribute] ?? 0;
         const attributeValue = Math.min(attributePiece, auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? attributePiece) * attributeCount;
-
-        attributesValue += attributeValue;
-        valueMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
+        
+        if (attributeLevel > 5) {
+            attributesValue += attributeValue;
+            attributeMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
+            doubleCalc = true;
+        } else if (attributeValue > attributesValue && !doubleCalc) {
+            attributeMessage = attributeMessage.replace(/(\+[^\n]+)/, `${DARK_RED}Nullified`);
+            attributeMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
+            attributesValue = attributeValue;
+        } else attributeMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${DARK_RED}Nullified\n`;
     });
+    // Attribute combo value
     const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] ?? 0;
-    if (comboValue > attributesValue) {
-        valueMessage = valueMessage.split('\n').slice(0, -3).join('\n') + `\n${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
-        attributesValue = comboValue;
+    if (comboValue >= 50_000_000) {
+        if (doubleCalc) {
+            attributeMessage += `   - ${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
+            attributesValue += comboValue;
+        } else if (comboValue > attributesValue) {
+            attributeMessage = `   - ${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
+            attributesValue = comboValue;
+        }
     }
+    // Final values
+    valueMessage += attributeMessage;
     value += attributesValue;
 
     // Total Value
