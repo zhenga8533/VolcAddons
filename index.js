@@ -114,12 +114,12 @@ function getHelp() {
     ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, clear, enigma, npc, zone>`);
     ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <cd, whitelist, blacklist, emotelist, warplist>`);
     ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
-    ChatLib.chat(`${RED}${BOLD}Inferno Minions: ${RESET}/va <calc, apex>\n`);
+    ChatLib.chat(`${GRAY}${BOLD}Economy: ${RESET}/va <calc, apex>\n`);
 
     // General Features
     ChatLib.chat(`${AQUA}${BOLD}GENERAL FEATURES:${RESET}`);
     ChatLib.chat(`${GRAY}${BOLD}Party Commands: ${RESET}?<warp, transfer, promote, demote, allinv>`);
-    ChatLib.chat(`${GRAY}${BOLD}Other Commands: ${RESET}?<cringe, gay, racist, dice, flip, 8ball, rps, w>\n`);
+    ChatLib.chat(`${GRAY}${BOLD}Other Commands: ${RESET}?<w, dice, flip, 8ball, rps, cringe, gay, racist, trans, transphobic, femboy>\n`);
     
     // Crimson Isle Features
     ChatLib.chat(`${AQUA}${BOLD}OTHER FEATURES:${RESET}`);
@@ -128,7 +128,7 @@ function getHelp() {
 
 // GENERAL FUNCTION COMMANDS - Handling command inputs
 const PARTY_COMMANDS = new Set(
-    ["cringe", "gay", "racist", "trans", "dice", "roll", "coin", "flip", "coinflip",
+    ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
     "cf", "8ball", "rps", "waifu", "w", "coords", "waypoint", "xyz"]
 );
 register ("command", (...args) => {
@@ -285,8 +285,7 @@ register ("command", (...args) => {
             break;
         // Party Commands and Else Case
         default:
-            if (PARTY_COMMANDS.has(command))
-                executeCommand(Player.getName(), args, false);
+            if (PARTY_COMMANDS.has(command)) executeCommand(Player.getName(), args, false);
             else {
                 ChatLib.chat(`${LOGO} ${RED}Unkown command: "${command}" was not found!`);
                 ChatLib.chat(`${LOGO} ${RED}Use '/va help' for a full list of commands.`);

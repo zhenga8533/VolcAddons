@@ -76,7 +76,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         // Party Commands
         this.addDependency(`Coords Command ${DARK_AQUA}?coords`, "Party Command Options");
-        this.addDependency(`Slander Commands ${DARK_AQUA}?<racist, gay, cringe>`, "Party Command Options");
+        this.addDependency(`Slander Commands ${DARK_AQUA}?o7`, "Party Command Options");
         this.addDependency(`Dice Command ${DARK_AQUA}?<dice, roll>`, "Party Command Options");
         this.addDependency(`Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`, "Party Command Options");
         this.addDependency(`8ball Command ${DARK_AQUA}?8ball`, "Party Command Options");
@@ -468,7 +468,7 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
     })
     rpsCommand = true;
     @CheckboxProperty({
-        name: `Slander Commands ${DARK_AQUA}?<racist, gay, cringe>`,
+        name: `Slander Commands ${DARK_AQUA}?o7`,
         category: "Party",
         subcategory: "Party Commands"
     })

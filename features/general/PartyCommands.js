@@ -65,10 +65,12 @@ export function executeCommand(name, args, sendTo) {
         const randID = '@' + (Math.random() + 1).toString(36).substring(5);
 
         delay(() => { switch (args[0]) {
-            case "cringe": // Cringe gay
+            case "cringe": // Slander
             case "gay":
             case "racist":
+            case "femboy":
             case "trans":
+            case "transphobic":
                 if (!settings.slanderCommand) return;
 
                 const percentage = Math.floor(Math.random() * 100) + 1;
