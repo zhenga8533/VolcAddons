@@ -1,11 +1,5 @@
 [
-    "- Added image viewer (lf patcher to work)",
-    "- Added drill upgrades to item price",
-    "- Added 2x powder webhook",
-    "- Changed Broodmother timer to carry over servers",
-    "- Changed ?coords and leader commands to not send on user message",
-    "- Changed attributes with level < 5 to take single value",
-    "- Fixed some registers carrying over world change",
-    "- Fixed Vigilance settings crash for new users",
-    "- Removed time threshold on recent servers"
+    "- Added show bestiary level as stack",
+    "- Changed some default settings",
+    "- Obfuscated 2x powder webhook (please let me off)"
 ]

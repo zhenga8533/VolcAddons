@@ -179,7 +179,7 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
 
     @PercentSliderProperty({
         name: "Image Viewer",
-        description: `${DARK_RED}NEW! ${GRAY}Patcher image viewer but works for every Imgur/Discord image and is laggier :).
+        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
 Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
         subcategory: "General"
@@ -530,6 +530,14 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     // --- Bestiary ---
     @SwitchProperty({
+        name: "Bestiary GUI",
+        description: `${DARK_RED}NEW! ${GRAY}Shows bestiary level as stack size and highlight uncompleted bestiary milestones.`,
+        category: "Combat",
+        subcategory: "Bestiary"
+    })
+    bestiaryGUI = false;
+
+    @SwitchProperty({
         name: "Broodmother Detect",
         description: `Alerts player when Broodmother spawns in lobby and displays time until next spawn.\nMove GUI with ${AQUA}/moveBrood${GRAY}.`,
         category: "Combat",
@@ -610,7 +618,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Jinx ---
     @SwitchProperty({
         name: "2x Powder Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Posts a webhook to the VolcAddons Discord when 2x Powder Event starts. ${BLUE}(WIP)`,
+        description: `Posts a webhook to the VolcAddons Discord when 2x Powder Event starts. ${BLUE}(WIP)`,
         category: "Mining",
         subcategory: "Jinx"
     })
