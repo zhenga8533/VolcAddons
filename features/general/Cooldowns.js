@@ -37,9 +37,11 @@ registerWhen(register("worldUnload", () => {
 /**
  * Update function for handling cooldowns and item stack sizes.
  */
+let filteredItems = undefined;
 registerWhen(register("tick", () => {
     const dupe = new Set();
-    Player.getInventory().getItems().filter(item => item !== null && item.getName() in items).forEach(item => {
+    filteredItems = Player.getInventory().getItems().filter(item => item !== null && item.getName() in items);
+    filteredItems.forEach(item => {
         const itemName = item.getName();
         if (!dupe.has(itemName)) {
             items[itemName] -= 0.05;
@@ -52,6 +54,22 @@ registerWhen(register("tick", () => {
             if (settings.cooldownAlert) Client.Companion.showTitle("", `${itemName} ${GREEN}is Ready!`, 5, 25, 5);
             item.setStackSize(1);
             delete items[itemName];
-        } else item.setStackSize(cd);
+        }
+    });
+}), () => data.cooldownlist.length !== 0);
+
+/**
+ * Change stack size during renderHotbar for smoother countdown.
+ */
+registerWhen(register("renderHotbar", () => {
+    if (filteredItems === undefined || filteredItems.length === 0) return;
+    
+    filteredItems = Player.getInventory().getItems().filter(item => item !== null && item.getName() in items);
+    filteredItems.forEach(item => {
+        const itemName = item.getName();
+
+        const cd = Math.ceil(items[itemName]);
+        if (isNaN(cd)) delete items[itemName];
+        else item.setStackSize(cd);
     });
 }), () => data.cooldownlist.length !== 0);

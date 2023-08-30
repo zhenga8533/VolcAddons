@@ -4,7 +4,7 @@ import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions";
 import { getPlayerUUID } from "../../utils/player";
 import { delay } from "../../utils/thread";
-import { data } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 
 /**
@@ -412,7 +412,7 @@ const setLevels = register("tick", () => {
     bestiaryData[0].forEach((level, i) => {
         let index = 2*parseInt(i/7) + 10 + i;
         let item = container.getStackInSlot(index);
-        item.setStackSize(level);
+        item.setStackSize(isNaN(level) ? 0 : level);
     })
 }).unregister();
 
@@ -437,17 +437,17 @@ const setHighlight = register('guiRender', () => {
 /**
  * Register/unregister bestiary stack size
  */
-register("guiOpened", () => {
+registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const containerName = Player.getContainer().getName();
         if ((!containerName.includes("Bestiary ➜") && !containerName.includes("Fishing ➜"))) return;
         setLevels.register();
         setHighlight.register();
     })
-});
-register("guiClosed", () => {
+}), () => settings.bestiaryGUI);
+registerWhen(register("guiClosed", () => {
     setLevels.unregister();
     setHighlight.unregister();
     bestiaryData[0] = [];
     bestiaryData[1] = [];
-})
+}), () => settings.bestiaryGUI);
