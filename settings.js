@@ -76,7 +76,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         // Party Commands
         this.addDependency(`Coords Command ${DARK_AQUA}?coords`, "Party Command Options");
-        this.addDependency(`Slander Command ${DARK_AQUA}?<racist, gay, cringe>`, "Party Command Options");
+        this.addDependency(`Slander Commands ${DARK_AQUA}?<racist, gay, cringe>`, "Party Command Options");
         this.addDependency(`Dice Command ${DARK_AQUA}?<dice, roll>`, "Party Command Options");
         this.addDependency(`Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`, "Party Command Options");
         this.addDependency(`8ball Command ${DARK_AQUA}?8ball`, "Party Command Options");
@@ -230,7 +230,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         category: "General",
         subcategory: "Server"
     })
-    serverAlert = false;
+    serverAlert = true;
 
     @SwitchProperty({
         name: "Server Status",
@@ -319,7 +319,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         category: "Party",
         subcategory: "Party"
     })
-    antiGhostParty = false;
+    antiGhostParty = true;
 
     @SwitchProperty({
         name: "Auto Join Reparty",
@@ -344,7 +344,7 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
         category: "Party",
         subcategory: "Party"
     })
-    joinWhitelist = false;
+    joinWhitelist = true;
 
     // --- Party Commands ---
     @SwitchProperty({
@@ -414,12 +414,6 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
     })
     partyOptions = false;
     @CheckboxProperty({
-        name: `Coords Command ${DARK_AQUA}?coords`,
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    coordsCommand = true;
-    @CheckboxProperty({
         name: `8ball Command ${DARK_AQUA}?8ball`,
         category: "Party",
         subcategory: "Party Commands"
@@ -431,6 +425,12 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
         subcategory: "Party Commands"
     })
     coinCommand = true;
+    @CheckboxProperty({
+        name: `Coords Command ${DARK_AQUA}?coords`,
+        category: "Party",
+        subcategory: "Party Commands"
+    })
+    coordsCommand = true;
     @CheckboxProperty({
         name: `Dice Command ${DARK_AQUA}?<dice, roll>`,
         category: "Party",
@@ -468,7 +468,7 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
     })
     rpsCommand = true;
     @CheckboxProperty({
-        name: `Slander Command ${DARK_AQUA}?<racist, gay, cringe>`,
+        name: `Slander Commands ${DARK_AQUA}?<racist, gay, cringe>`,
         category: "Party",
         subcategory: "Party Commands"
     })
@@ -501,9 +501,9 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
         category: "Economy",
         subcategory: "Economy",
         min: 0,
-        max: 180
+        max: 120
     })
-    economyRefresh = 60;
+    economyRefresh = 30;
 
     // --- Item Cost ---
     @SliderProperty({
@@ -535,7 +535,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
         category: "Combat",
         subcategory: "Bestiary"
     })
-    bestiaryGUI = false;
+    bestiaryGUI = true;
 
     @SwitchProperty({
         name: "Broodmother Detect",
@@ -576,7 +576,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
         category: "Combat",
         subcategory: "Combat"
     })
-    ragDetect = false;
+    ragDetect = true;
 
     // --- Gyrokinetic Wand ---
     @SwitchProperty({
@@ -618,7 +618,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Jinx ---
     @SwitchProperty({
         name: "2x Powder Alert",
-        description: `Posts a webhook to the VolcAddons Discord when 2x Powder Event starts. ${BLUE}(WIP)`,
+        description: "Posts a webhook to the VolcAddons Discord when 2x Powder Event starts.",
         category: "Mining",
         subcategory: "Jinx"
     })
@@ -665,7 +665,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         category: "Farming",
         subcategory: "Farming"
     })
-    jacobReward = false;
+    jacobReward = true;
 
     // --- Garden ---
     @SwitchProperty({
@@ -674,7 +674,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         category: "Farming",
         subcategory: "Garden"
     })
-    gardenCompost = false;
+    gardenCompost = true;
 
     @SwitchProperty({
         name: "Garden Warp Override",
@@ -1038,7 +1038,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
         category: "Kuudra",
         subcategory: "Kuudra Profit"
     })
-    maxChili = true;
+    maxChili = false;
 
 
     // ████████████████████████████████████████████████████ RIFT ████████████████████████████████████████████████████
@@ -1086,7 +1086,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
         category: "Rift",
         subcategory: "Vampire",
     })
-    effigyWaypoint = false;
+    effigyWaypoint = true;
 
     @SwitchProperty({
         name: "Enlarge Impel Message",

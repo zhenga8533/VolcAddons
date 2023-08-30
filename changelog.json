@@ -1,7 +1,8 @@
 [
     "- Added show bestiary level as stack",
     "- TODO: Added more partaying",
-    "- TODO: Changed some default settings",
+    "- Changed some default settings",
     "- Obfuscated 2x powder webhook (please let me off)",
-    "- Fixed /va cd to be smoother"
+    "- Fixed /va cd to be smoother",
+    "- Fixed MVP++ emote replace"
 ]

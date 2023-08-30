@@ -51,7 +51,7 @@ registerWhen(register("messageSent", (message, event) => {
     let contains = false;
 
     // MVP++ Emotes
-    if (!getMVP) {
+    if (!getMVP()) {
         Object.keys(MVP).forEach((key) => {
             if (message.includes(key)) {
                 message = message.replace(key, MVP[key]);
@@ -80,8 +80,9 @@ registerWhen(register("messageSent", (message, event) => {
     }
 }), () => settings.enableEmotes === true);
 
+
 /**
- * Message back lack messaged player with `/b ${msg}`
+ * Message back last messaged player with `/b ${msg}`
  */
 register("command", (...args) => {
     ChatLib.command(`msg ${data.lastMsg} ${args.join(' ')}`);
