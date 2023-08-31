@@ -160,12 +160,12 @@ export function executeCommand(name, args, sendTo) {
             case "limbo":
             case "lobby":
             case "l":
-                if (!settings.limboCommand || getIsLeader()) return;
+                if (!settings.limboCommand || getIsLeader() || Player.getName() === name) return;
 
                 ChatLib.command("l");
                 break;
             case "leave":
-                if (!settings.limboCommand || getIsLeader()) return;
+                if (!settings.limboCommand || getIsLeader() || Player.getName() === name) return;
 
                 ChatLib.command("p leave");
                 break;

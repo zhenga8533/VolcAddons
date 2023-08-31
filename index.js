@@ -129,7 +129,7 @@ function getHelp() {
 // GENERAL FUNCTION COMMANDS - Handling command inputs
 const PARTY_COMMANDS = new Set(
     ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
-    "cf", "8ball", "rps", "waifu", "w", "coords", "waypoint", "xyz"]
+    "cf", "8ball", "rps", "waifu", "w"]
 );
 register ("command", (...args) => {
     if (args === undefined) {
@@ -175,6 +175,12 @@ register ("command", (...args) => {
                 ChatLib.chat(`${LOGO} ${GREEN}Succesfully set API key as ${settings.apiKey}!`);
             } else
                 ChatLib.chat(`${LOGO} ${RED}Please input as /va api [key]!`);
+            break;
+        // Waypoint
+        case "coords":
+        case "xyz":
+            const randID = '@' + (Math.random() + 1).toString(36).substring(5);
+            ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
             break;
         // Testing (please work)
         case "test":

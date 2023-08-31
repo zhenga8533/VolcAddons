@@ -17,6 +17,7 @@ let S01PacketJoinGame = Java.type('net.minecraft.network.play.server.S01PacketJo
  * Variables used to represent TPS data.
  */
 let tps = 20;
+const pastTps = [20, 20, 20];
 let pastDate = 0;
 
 /**
@@ -26,6 +27,9 @@ function calcTPS() {
     if (pastDate !== null) {
         const time = Date.now() - pastDate;
         tps = Math.min(20000 / time, 20);
+        pastTps.shift();
+        pastTps.push(tps);
+        tps = Math.min(...pastTps);
     }
     pastDate = Date.now();
 }

@@ -1,8 +1,11 @@
 [
     "- Added show bestiary level as stack",
     "- Added more partaying",
+    "- Added /bl to waypoints",
     "- Changed some default settings",
+    "- Changed some more party commands to not run on user message",
     "- Obfuscated 2x powder webhook (please let me off)",
+    "- Fixed TPS discrepancy",
     "- Fixed /va cd to be smoother",
     "- Fixed MVP++ emote replace"
 ]

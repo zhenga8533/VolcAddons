@@ -1,7 +1,8 @@
 import settings from "../../settings";
 import { AQUA, GREEN, LOGO } from "../../utils/constants";
+import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";
-import { registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 
 /**
@@ -22,6 +23,9 @@ export function getUserWaypoints() { return userWaypoints };
  * @param {string} z - Z coordinate.
  */
 registerWhen(register("chat", (player, spacing, x, y, z) => {
+    // Check blacklist
+    if (data.blacklist.includes(getPlayerName(player).toLowerCase())) return;
+
     // Gets colors and titles in name
     const bracketIndex = player.indexOf('[') - 2;
     if (bracketIndex >= 0)
