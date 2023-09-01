@@ -35,6 +35,7 @@ import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/economy/CoinTracker";
 import "./features/economy/ContainerValue";
 import "./features/economy/Economy";
+import { calcGdrag } from "./features/economy/GdragCalc";
 import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
 // Combat Features
@@ -168,6 +169,11 @@ register ("command", (...args) => {
             settings.reminderText = "";
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
             break;
+        // Testing
+        case "dev":
+            data.dev = !data.dev;
+            ChatLib.chat(`${LOGO} ${data.dev ? GREEN : RED}You have ${data.dev ? "ASCENDED" : "DESCENDED"}!`);
+            break;
         // Set API key
         case "api": 
             if (args[1]) {
@@ -261,8 +267,11 @@ register ("command", (...args) => {
                 case "vamp":
                     calcMinions(args);
                     break;
+                case "gdrag":
+                    calcGdrag(isNaN(args[2]) ? 100 : args[2]);
+                    break;
                 default:
-                    ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost>${AQUA}>`);
+                    ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost, gdrag>${AQUA}>`);
                     break;
             }
             break;
@@ -299,3 +308,13 @@ register ("command", (...args) => {
             break;
     }
 }).setName("va", true).setAliases("volcaddons", "volc", "itee");
+
+
+// Dev Mode
+register("guiKey", (char, keyCode, gui) => {
+    if (keyCode !== 157) return;
+    const slot = gui.getSlotUnderMouse()?.field_75222_d;
+    if (slot === undefined) return;
+    const item = Player.getContainer().getStackInSlot(slot);
+    print(item.getNBT());
+})

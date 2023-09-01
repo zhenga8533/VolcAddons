@@ -7,6 +7,7 @@ import { delay } from "./thread";
 export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
     "newUser": true,
+    "dev": false,
     "version": "2.3.1",
     "profileId": undefined,
     "world": "none",

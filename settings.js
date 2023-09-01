@@ -58,8 +58,7 @@ ${ITALIC}Related Commands: /va <attribute, splits>`);
 
         // Garden Category
         this.setCategoryDescription("Garden",
-        `${HEADER}
-${ITALIC}Related Commands: /va calc compost`);
+        `${HEADER}`);
 
         // Rift Category
         this.setCategoryDescription("Rift",
