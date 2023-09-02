@@ -1,5 +1,9 @@
 [
     "- Added /va calc gdrag",
-    "- TODO: Added /va dev (idea from SBA, just with a few more interactions)",
-    "- TODO: Fixed some server leave errors"
+    "- Added /va dev (idea from SBA, just with entity interactions)",
+    "- Fixed remove selfie not registering on rare occasions",
+    "- TODO: Fixed Inquisitor alert (ty magical)",
+    "- TODO: Fixed some server leave errors",
+    "- TODO: Randomized entity colors",
+    "- TODO: Added ?w farming webhook"
 ]

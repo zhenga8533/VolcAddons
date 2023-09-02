@@ -13,7 +13,9 @@ let keyPressed = false;
  */
 registerWhen(register('tick', () => {
     try {
-        if (Keyboard.isKeyDown(key.getKeyCode()) && !keyPressed) {
+        if (Client.settings.getSettings().field_74320_O === 2)
+            Client.settings.getSettings().field_74320_O = 0;
+        else if (Keyboard.isKeyDown(key.getKeyCode()) && !keyPressed) {
             if (Client.settings.getSettings().field_74320_O === 1)
                 Client.settings.getSettings().field_74320_O = 2;
             keyPressed = true;

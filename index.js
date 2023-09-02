@@ -127,11 +127,53 @@ function getHelp() {
     ChatLib.chat(`Should be self explanatory, DM 'grapefruited' on discord if any questions...`);
 }
 
+// Dev Mode
+const devKey = new KeyBind("Dev Key", data.devKey, "VolcAddons");
+let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
+register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
+devKey.registerKeyPress(() => {
+    const view = Player.lookingAt();
+    if (view instanceof Entity) {
+        // Get entity data
+        const entity = view.entity;
+        const extraData = {
+            nbt: entity.getEntityData(),
+            persistantID: entity.persistentID,
+            entityClass: entity.class,
+            entityAttribute: entity.func_70668_bt(),
+            maxHP: entity.func_110148_a(SMA.field_111267_a).func_111125_b(),
+            pitch: entity.field_70125_A,
+            yaw: entity.field_70177_z,
+            ticksAlive: entity.field_70173_aa
+        }
+        const textComponent = entity.func_145748_c_();
+        let extraString = "";
+        for (data in extraData) extraString += `${data}=${extraData[data]}, `;
+        ChatLib.command(`ct copy ${view.toString()} ⦿ ${textComponent} ⦿ ExtraData[${extraString}]`, true);
+        ChatLib.chat(`${LOGO} ${GREEN}Successfully copied entity data!`);
+    } else {
+        ChatLib.command(`ct copy ${view.toString()}`, true);
+        ChatLib.chat(`${LOGO} ${GREEN}Successfully copied block data!`);
+    }
+});
+register("guiKey", (char, keyCode, gui) => {
+    if (keyCode !== devKey.getKeyCode()) return;
+    const slot = gui.getSlotUnderMouse()?.field_75222_d;
+    if (slot === undefined) return;
+    const item = Player.getContainer().getStackInSlot(slot);
+    if (item === null) return;
+    ChatLib.command(`ct copy ${item.getNBT()}`, true);
+    ChatLib.chat(`${LOGO} ${GREEN}Successfully copied ${GRAY}[${item.getName()}${GRAY}] ${GREEN}NBT!`);
+});
+
+
 // GENERAL FUNCTION COMMANDS - Handling command inputs
 const PARTY_COMMANDS = new Set(
     ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
     "cf", "8ball", "rps", "waifu", "w"]
 );
+
+// /va ...args
 register ("command", (...args) => {
     if (args === undefined) {
         settings.openGUI();
@@ -308,13 +350,3 @@ register ("command", (...args) => {
             break;
     }
 }).setName("va", true).setAliases("volcaddons", "volc", "itee");
-
-
-// Dev Mode
-register("guiKey", (char, keyCode, gui) => {
-    if (keyCode !== 157) return;
-    const slot = gui.getSlotUnderMouse()?.field_75222_d;
-    if (slot === undefined) return;
-    const item = Player.getContainer().getStackInSlot(slot);
-    print(item.getNBT());
-})
