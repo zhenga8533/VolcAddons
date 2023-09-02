@@ -26,9 +26,9 @@ register("chat", (serv) => {
  * @returns {string} - The name of the current zone or "None" if not identified.
  */
 export function findZone() {
-    let zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("⏣"));
+    let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣"));
     // Rift has a different symbol
-    if (zoneLine === undefined) zoneLine = Scoreboard.getLines().find((line) => line.getName().includes("ф"));
+    if (zoneLine === undefined) zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
     return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
 }
 
@@ -41,7 +41,7 @@ function findWorld() {
     noFind++;
 
     // Get world from tab list
-    world = TabList.getNames().find(tab => tab.includes("Area"));
+    world = TabList?.getNames().find(tab => tab.includes("Area"));
     if (world === undefined) {
         // If the world is not found, try again after a delay
         delay(() => findWorld(), 1000);

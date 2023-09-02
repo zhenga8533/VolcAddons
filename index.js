@@ -52,7 +52,6 @@ import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
 // Hub Features
 import { setWarps } from "./features/hub/DianaWaypoint";
-import "./features/hub/InquisitorCounter";
 import "./features/hub/InquisitorDetect";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
@@ -210,11 +209,6 @@ register ("command", (...args) => {
             settings.kuudraStunner = "";
             settings.reminderText = "";
             ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
-            break;
-        // Testing
-        case "dev":
-            data.dev = !data.dev;
-            ChatLib.chat(`${LOGO} ${data.dev ? GREEN : RED}You have ${data.dev ? "ASCENDED" : "DESCENDED"}!`);
             break;
         // Set API key
         case "api": 

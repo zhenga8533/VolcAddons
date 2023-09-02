@@ -86,7 +86,7 @@ registerWhen(register("chat", (player) => {
     const ign = player.toUpperCase();
     const stunner = settings.kuudraStunner.toUpperCase();
 
-    if (!ign.equals("ELLE") && (stunner.length === 0 || ign.equals(stunner))) {
+    if (!ign.equals("ELLE") && (stunner === "" || ign.equals(stunner))) {
         playSound(MUSIC, 1000);
         Client.Companion.showTitle(`${GREEN}${BOLD}${ign} WAS EATEN!`, "", 10, 100, 10);
     }
@@ -100,7 +100,7 @@ registerWhen(register("chat", (player) => {
     const ign = player.toUpperCase();
     const cannonear = settings.kuudraCannonear.toUpperCase();
 
-    if (settings.kuudraCannonear.length === 0 || ign.equals(cannonear)) {
+    if (cannonear === "" || ign.equals(cannonear)) {
         playSound(MUSIC, 1000);
         Client.Companion.showTitle(`${AQUA}${BOLD}${ign} ASSUMED THE POSITION!`, "", 10, 100, 10);
     }
@@ -122,31 +122,26 @@ registerWhen(register("chat", () => {
 const GHAST_CLASS = Java.type('net.minecraft.entity.monster.EntityGhast').class;
 let alerted = false
 registerWhen(register("step", () => {
-    if (settings.kuudraAlerts && settings.dropshipAlert) {
-        let ghasts = World.getAllEntitiesOfType(GHAST_CLASS);
-        const dropships = ghasts.filter((ghast) => {
-            distance = Math.hypot(ghast.getX() + 101, ghast.getZ() + 105);
-            return distance < 20 && distance > 10;
-        })
+    const dropships = World.getAllEntitiesOfType(GHAST_CLASS).find(ghast => {
+        distance = Math.hypot(ghast.getX() + 101, ghast.getZ() + 105);
+        return distance < 20 && distance > 10;
+    });
 
-        if (dropships.length)
-            Client.Companion.showTitle(`${RED}${BOLD}ART IS AN EXPLOSION!`, "", 0, 50, 5);
-    }
+    if (dropships !== undefined) Client.Companion.showTitle(`${RED}${BOLD}ART IS AN EXPLOSION!`, "", 0, 50, 5);
 }).setFps(1), () => getWorld() === "Kuudra" && settings.kuudraAlerts === true && settings.dropshipAlert === true);
 
 /**
  * Alerts player when token gathered surpasses set threshhold.
  */
 registerWhen(register("step", () => {
-    if (settings.kuudraAlerts && settings.tokenAlert && !alerted) {
-        tokens = Scoreboard.getLines().find((line) => line.getName().includes("Tokens"));
-        if (tokens) {
-            tokens = tokens.getName().removeFormatting().replace(/\D/g,'');
-            if (tokens >= Math.round(settings.tokenAlert / 10) * 10) {
-                Client.Companion.showTitle(`${BOLD}${tokens} ${DARK_PURPLE}${BOLD}TOKENS GATHERED!`, "", 0, 50, 5);
-                alerted = true
-            }
-        }
+    if (alerted === true) return;
+    tokens = Scoreboard?.getLines()?.find((line) => line.getName().includes("Tokens"));
+    if (tokens === undefined) return;
+
+    tokens = tokens.getName().removeFormatting().replace(/\D/g,'');
+    if (tokens >= Math.round(settings.tokenAlert / 10) * 10) {
+        Client.Companion.showTitle(`${BOLD}${tokens} ${DARK_PURPLE}${BOLD}TOKENS GATHERED!`, "", 0, 50, 5);
+        alerted = true
     }
 }).setFps(5), () => getWorld() === "Kuudra" && settings.kuudraAlerts === true && settings.tokenAlert !== 0);
 register("worldLoad", () => { alerted = false });

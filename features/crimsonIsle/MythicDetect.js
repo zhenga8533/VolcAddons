@@ -48,4 +48,4 @@ registerWhen(register("tick", () => {
         if (data.moblist.includes("thunder"))
             lavaCreatures.push(guardian);
     });
-}), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect !== 0);
+}), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect === true);

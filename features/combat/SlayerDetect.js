@@ -34,15 +34,14 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
  * Uses scoreboard to detect if a slayer boss is active.
  */
 registerWhen(register("step", () => {
-    if (bossCD) return;
-
-    const bossLine = Scoreboard.getLines().find((line) => line.getName().includes("Slay the boss!"));
-    if (questStart && bossLine !== undefined) {
-        bossCD = true;
-        questStart = false;
-        if (settings.bossAlert)
-            announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
-    }
+    if (bossCD === false) return;
+    const bossLine = Scoreboard?.getLines().find((line) => line.getName().includes("Slay the boss!"));
+    if (questStart === false || bossLine === undefined) return;
+    
+    bossCD = true;
+    questStart = false;
+    if (settings.bossAlert)
+        announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
 }).setFps(5), () => settings.bossAlert !== 1 || (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
 
 /**

@@ -1,9 +1,12 @@
 [
     "- Added /va calc gdrag",
-    "- Added /va dev (idea from SBA, just with entity interactions)",
+    "- Added dev key (idea from SBA, just with entity interactions)",
+    "- TODO: Added ?w farming webhook",
+    "- Changed Diana overlays to only show when Mytho event is active",
     "- Fixed remove selfie not registering on rare occasions",
-    "- TODO: Fixed Inquisitor alert (ty magical)",
-    "- TODO: Fixed some server leave errors",
+    "- Fixed Inquisitor alert (ty magical)",
+    "- Fixed Mythic LC being untoggleable (ty spicymelon)",
+    "- Fixed some server leave errors",
     "- TODO: Randomized entity colors",
-    "- TODO: Added ?w farming webhook"
+    "- Removed unused files"
 ]

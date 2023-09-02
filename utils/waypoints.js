@@ -109,8 +109,8 @@ function renderSimpler(entities, r, g, b) {
         y = entity.getY();
         z = entity.getZ();
     
-        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, false);
-        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, false);
+        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true);
+        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, true);
     });
 }
 function renderWaypoint(waypoints) {
@@ -136,8 +136,8 @@ function renderEntities(entities) {
     if (!entities.length) return;
 
     entities.forEach(e => {
-        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, false);
-        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, false);
+        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, true);
+        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, true);
     });
 }
 function renderStands(stands, title, r, g, b) {

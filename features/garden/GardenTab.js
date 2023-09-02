@@ -28,14 +28,10 @@ const nextOverlay = new Overlay("nextVisitor", ["all"], () => true, data.NL, "mo
  * Fetches the visitor data in tablist and updates the Visitors Overlay every second.
  */
 registerWhen(register("step", () => {
-    if (getWorld() !== "Garden") return;
-    tablist = TabList.getNames();
-    if (tablist === null || tablist === undefined) return;
-
-    // Get Visitors
+    tablist = TabList?.getNames();
     gardenOverlay.message = "";
-    visitors = tablist.findIndex((tab) => tab.includes("Visitors:"));
-    if (!visitors) return;
+    visitors = tablist?.findIndex((tab) => tab.includes("Visitors:"));
+    if (visitors === undefined) return;
 
     if (visitors !== -1) {
         count = parseInt(tablist[visitors].removeFormatting().substring(11, 12)) + 1;

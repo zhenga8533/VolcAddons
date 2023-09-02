@@ -55,12 +55,12 @@ function updatePowder(powder, current) {
  * Updates powder overlay every second.
  */
 registerWhen(register("step", () => {
-    if (getPaused() || (getWorld() !== "Crystal Hollows" && getWorld() !== "Dwarven Mines")) return;
-    const tabLines = TabList.getNames();
-    const powderIndex = tabLines.findIndex(line => line === "§r§9§l᠅ Powders§r");
-    if (powderIndex === -1) return;
-    const currentMithril = parseInt(tabLines[powderIndex + 1].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
-    const currentGemstone = parseInt(tabLines[powderIndex + 2].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
+    if (getPaused()) return;
+    const tablist = TabList?.getNames();
+    const powderIndex = tablist?.findIndex(line => line === "§r§9§l᠅ Powders§r");
+    if (powderIndex === undefined || powderIndex === -1) return;
+    const currentMithril = parseInt(tablist[powderIndex + 1].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
+    const currentGemstone = parseInt(tablist[powderIndex + 2].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
     updatePowder(powders.Mithril, currentMithril);
     updatePowder(powders.Gemstone, currentGemstone);
 

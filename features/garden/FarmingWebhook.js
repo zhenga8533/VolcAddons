@@ -93,7 +93,7 @@ function sendWebhook() {
         let cropStat = cropStats[crop];
         cropMessages[0] += `${CROP_DROP[crop][2]}: ${formatNumber(cropStat[0])}\n`;
         cropMessages[1] += `${formatNumber(cropStat[1])}\n`;
-        const milestone = TabList.getNames().find(name => name.includes("Milestone:")).removeFormatting().split(' ').slice(-2);
+        const milestone = TabList?.getNames().find(name => name.includes("Milestone:")).removeFormatting().split(' ').slice(-2);
         cropMessages[2] += `${cropStat[2]} => ${milestone.toString().replace(":,", " (")})\n`;
     }
     
@@ -175,10 +175,8 @@ function sendWebhook() {
 let downtime = 0;
 let farmingFortune = 0;
 registerWhen(register("step", () => {
-    if (getWorld() !== "Garden") return;
-    const tablist = TabList.getNames();
-    if (tablist === null) return;
-    const fortune = tablist.find(line => line.includes("Farming Fortune"));
+    const tablist = TabList?.getNames();
+    const fortune = tablist?.find(line => line.includes("Farming Fortune"));
     if (fortune === undefined) return;
     farmingFortune = parseInt(fortune.substring(fortune.indexOf('☘') + 1));
 }).setDelay(10), () => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
@@ -194,7 +192,7 @@ registerWhen(register("blockBreak", (block) => {
     if (!(blockName in CROP_DROP)) return;
     farmingStats.cropStats[blockName] = farmingStats.cropStats[blockName] ?? [0, 0, null];
     if (farmingStats.cropStats[blockName][2] === null) {
-        const milestone = TabList.getNames().find(name => name.includes("Milestone:")).removeFormatting().split(' ');
+        const milestone = TabList?.getNames().find(name => name.includes("Milestone:")).removeFormatting().split(' ');
         farmingStats.cropStats[blockName][2] = milestone.slice(-2).toString().replace(":,", " (") + ")";
     }
     const dropAmount = CROP_DROP[blockName][0] * farmingFortune/100;

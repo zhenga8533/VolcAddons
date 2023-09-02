@@ -156,7 +156,7 @@ let missingEffigies = [];
 export function getEffigies() { return missingEffigies };
 registerWhen(register("step", () => {
     missingEffigies = [];
-    let effigies = Scoreboard.getLines().find((line) => line.getName().includes("Effigies"));
+    let effigies = Scoreboard?.getLines()?.find((line) => line.getName().includes("Effigies"));
     if (effigies === undefined) return;
 
     effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
