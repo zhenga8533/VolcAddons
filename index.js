@@ -29,7 +29,6 @@ import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
-import "./features/general/Status";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
 import "./features/economy/CoinTracker";
