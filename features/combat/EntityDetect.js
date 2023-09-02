@@ -9,6 +9,7 @@ import { getServer, getWorld } from "../../utils/worlds";
 /**
  * Variables used to track active entities.
  */
+let colorMap = {};
 let entityList = [];
 let entities = [];
 export function getEntities() { return entities };
@@ -27,6 +28,7 @@ function testClass(entity, HP) {
         mob = Java.type(entity).class;
         World.getAllEntitiesOfType(mob);
         entityList.push([mob, HP]);
+        colorMap[mob.toString()] = [Math.random(), Math.random(), Math.random()];
         return true;
     } catch(err) {
         return false;
@@ -37,6 +39,7 @@ function testClass(entity, HP) {
  * Updates entity list based on mob data, processing HP and class information.
  */
 export function updateEntityList() {
+    colorMap = {};
     entityList = [];
     entities = [];
     x = 0;
@@ -73,12 +76,7 @@ registerWhen(register("tick", () =>{
         // Match coloring
         const entityClass = entityData[0];
         const entityHp = entityData[1];
-        const colorMap = {
-            "monster": [1, 0, 0], // Red
-            "boss": [0, 1, 0],    // Green
-            "passive": [0, 0, 1], // Blue
-        };
-        const color = colorMap[Object.keys(colorMap).find(type => entityClass.toString().includes(type))] || [1, 1, 1];
+        const color = colorMap[entityClass.toString()];
         
         // Add entities
         const livingEntities = World.getAllEntitiesOfType(entityClass).filter(entity => entity.getEntity().func_110143_aJ() != 0);
