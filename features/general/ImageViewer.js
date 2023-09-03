@@ -36,7 +36,7 @@ registerWhen(register("renderOverlay", () => {
  */
 registerWhen(register("chatComponentHovered", (text) => {
     const hoverValue = text.getHoverValue().removeFormatting();
-    if (hoverValue === imgUrl || !(hoverValue.includes("imgur.com") || hoverValue.includes("cdn.discordapp"))) return;
+    if (hoverValue === imgUrl || !(hoverValue.includes("imgur.com") || hoverValue.includes("cdn.discordapp") || hoverValue.includes("cdn.waifu"))) return;
     imgUrl = hoverValue;
     img = Image.fromUrl(imgUrl);
 }), () => settings.imageRatio !== 0);

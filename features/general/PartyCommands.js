@@ -1,7 +1,7 @@
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
 import settings from "../../settings";
-import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, WHITE } from "../../utils/constants";
+import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
@@ -15,6 +15,13 @@ let onCD = false;
 const RESPONSES = JSON.parse(FileLib.read("./VolcAddons/assets", "8ball.json"));
 const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
+const IMGUR_KEYS = [
+    "d30c6dc9941b52b",
+    "b2e8519cbb7712a",
+    "eb1f61e23b9eabd",
+    "d1275dca5af8904",
+    "ed46361ccd67d6d"
+];
 
 /**
  * Makes a POST request to upload an image to Imgur.
@@ -22,11 +29,13 @@ const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
  * @param {string} image - Link of the image.
  */
 function upload(image) {
+    const clientID = settings.imgurKey || IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
+
     return request({
         url: "https://api.imgur.com/3/image",
         method: "POST",
         headers: {
-            Authorization: `Client-ID d30c6dc9941b52b`,
+            Authorization: `Client-ID ${clientID}`,
         },
         body: {
             image
@@ -45,6 +54,10 @@ export function setWaifu() {
         waifu = link.data.images[0].url;
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
+        }).catch((err) => {
+            const error = err.data.error;
+            const message = error?.message
+            ChatLib.chat(`${LOGO} ${RED}Imgur Upload Failed: ${message ?? error}`);
         });
     });
 }
@@ -137,8 +150,8 @@ export function executeCommand(name, args, sendTo) {
                 if (!settings.womenCommand) return;
 
                 ChatLib.chat(`${LOGO} ${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
-                if (sendTo) ChatLib.command(`${sendTo} ${imgur} ${randID}`);
-                else ChatLib.command(`msg ${Player.getName()} ${imgur} @${(Math.random() + 1).toString(36).substring(6)}`);
+                if (sendTo) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
+                else ChatLib.command(`msg ${Player.getName()} ${imgur} ${randID}-vaw`);
                 // Randomize end to avoid duplicate message ^
                 setWaifu();
                 break;

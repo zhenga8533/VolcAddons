@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./utils/constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED, RESET, UNDERLINE, WHITE } from "./utils/constants";
 import {
     @TextProperty,
 	@PercentSliderProperty,
@@ -122,6 +122,24 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     })
     apiKey = "";
 
+    @TextProperty({
+        name: `Imgur API Key`,
+        category: "General",
+        subcategory: "Essential",
+        description: `Please enter your own Imgur API key if you are rate limited:
+
+${WHITE}1. ${GRAY}Go to ${UNDERLINE}https://apidocs.imgur.com
+${WHITE}2. ${GRAY}Ctrl + F to find "Registration Quickstart"
+${WHITE}3. ${GRAY}Click on "Register your application" on step 2
+${WHITE}4. ${GRAY}Enter ${UNDERLINE}https://www.getpostman.com/oauth2/callback${RESET} as callback URL
+${WHITE}5. ${GRAY}Select the "Anonymous usage without user authorization" option
+${WHITE}6. ${GRAY}Enter any Application Name, Email, and Description
+${WHITE}7. ${GRAY}Copy the 15 digit API key here
+${WHITE}8. ${GRAY}Finally, just wait until rate limit is reset`,
+        protected: true
+    })
+    imgurKey = "";
+    
     @ButtonProperty({
         name: "Discord",
         description: "Just posting releases here, don't expect too much :).",
@@ -144,7 +162,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         const url = "https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar";
         java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
     }
-
+    
     @ButtonProperty({
         name: "Move GUI",
         description: `Moves all current active GUIs.\nRuns ${AQUA}/va gui${GRAY}.`,
