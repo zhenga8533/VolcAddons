@@ -8,6 +8,7 @@
     "- Fixed Inquisitor alert",
     "- Fixed Mythic LC being untoggleable",
     "- Fixed some server leave errors",
+    "- Fixed image viewer errors",
     "- Randomized entity hitbox colors",
     "- Removed unused files"
 ]

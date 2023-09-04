@@ -25,7 +25,7 @@ registerWhen(register("renderOverlay", () => {
     if (img === undefined) return;
     const imgWidth = img.getTextureWidth();
     const imgHeight = img.getTextureHeight();
-    const ratio =  (imgWidth > imgHeight ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) / settings.imageRatio;
+    const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) / settings.imageRatio;
     const width = imgWidth / ratio;
     const height = imgHeight / ratio;
     img.draw(Math.min(Client.Companion.getMouseX(), SCREEN_WIDTH - width), Math.max(0, Client.Companion.getMouseY() - height), width, height);
@@ -36,9 +36,11 @@ registerWhen(register("renderOverlay", () => {
  */
 registerWhen(register("chatComponentHovered", (text) => {
     const hoverValue = text.getHoverValue().removeFormatting();
-    if (hoverValue === imgUrl || !(hoverValue.includes("imgur.com") || hoverValue.includes("cdn.discordapp") || hoverValue.includes("cdn.waifu"))) return;
+    if (hoverValue === imgUrl || !(hoverValue.includes("imgur.com") || hoverValue.includes("cdn.discordapp"))) return;
     imgUrl = hoverValue;
-    img = Image.fromUrl(imgUrl);
+    try {
+        img = Image.fromUrl(imgUrl);
+    } catch (err) {}
 }), () => settings.imageRatio !== 0);
 
 /**
