@@ -75,7 +75,7 @@ export function executeCommand(name, args, sendTo) {
     if (data.blacklist.includes(name.toLowerCase())) return;
 
     if (settings.partyCommands) { // PARTY COMMANDS
-        const randID = '@' + (Math.random() + 1).toString(36).substring(5);
+        const randID = sendTo === "pc" ? '' : '@' + (Math.random() + 1).toString(36).substring(5);
 
         delay(() => { switch (args[0]) {
             case "cringe": // Slander

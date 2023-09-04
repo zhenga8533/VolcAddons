@@ -101,10 +101,13 @@ const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, 
  */
 register('step', () => {
     statusOverlay.message = 
-`${DARK_GREEN}${BOLD}Ping: ${WHITE}${ping}${GREEN} ms
+`${DARK_GREEN}${BOLD}Ping: ${WHITE}${ping} ${GREEN}ms
 ${DARK_GREEN}${BOLD}TPS: ${WHITE}${tps.toFixed(1)} ${GREEN}tps
 ${DARK_GREEN}${BOLD}FPS: ${WHITE}${Client.getFPS()} ${GREEN}fps`;
 }).setDelay(1);
+
+
+
 
 
 /**
