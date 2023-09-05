@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, DARK_AQUA } from "../../utils/constants";
-import { formatNumber } from "../../utils/functions";
+import { convertToTitleCase, formatNumber, numToRoman } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getItemValue } from "./ItemPrice";
@@ -63,6 +63,11 @@ function updateContainerValue(remove) {
             if (item === null) continue;
 
             let itemName = item.getName();
+            if (itemName === "§fAttribute Shard") {
+                const attribute = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getCompoundTag("attributes").toObject();
+                const key = Object.keys(attribute)[0];
+                itemName = `${AQUA}${convertToTitleCase(key)} ${numToRoman(attribute[key])} Shard`;
+            }
             let value = getItemValue(item);
 
             if (value !== 0) {

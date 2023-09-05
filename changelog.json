@@ -3,6 +3,7 @@
     "- Added colors to status display",
     "- Added remove close entities",
     "- Changed toggles to be in a seperate menu",
+    "- Changed shard name in container values",
     "- Fixed SkyBlock detection",
     "- Fixed ?w partially",
     "- Removed '@randID' from party messages"

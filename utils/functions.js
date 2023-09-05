@@ -336,6 +336,16 @@ export function romanToNum(str) {
     return num;
 };
 
+/**
+ * Converts a number 1-10 to its roman numeral counterpart.
+ *
+ * @param {number} num - The integer representation of the Roman numeral.
+ * @returns {string} - The roman numeral counterpart.
+ */
+export function numToRoman(num) {
+    return ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][num - 1];
+};
+
 
 /**
  * Plays a sound and sets cooldown
