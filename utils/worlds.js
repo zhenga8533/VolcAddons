@@ -41,7 +41,7 @@ function findWorld() {
     noFind++;
 
     // Get world from tab list
-    world = TabList?.getNames().find(tab => tab.includes("Area"));
+    world = TabList?.getNames().find(tab => tab.includes("Area:") || tab.includes("Dungeon:"));
     if (world === undefined) {
         // If the world is not found, try again after a delay
         delay(() => findWorld(), 1000);

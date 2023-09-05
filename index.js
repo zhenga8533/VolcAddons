@@ -1,10 +1,11 @@
 // Utility Modules
-import { AMOGUS, AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import "./utils/functions";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
 import { openGUI } from "./utils/overlay";
-import settings from "./settings";
+import settings from "./utils/settings";
+import toggles from "./utils/toggles";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
 import { data, updateList } from "./utils/variables";
@@ -24,7 +25,7 @@ import "./features/general/Cooldowns";
 import "./features/general/ImageViewer";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
-import "./features/general/Performance";
+import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
@@ -75,8 +76,6 @@ import "./features/garden/JacobHighlight";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
-import { playSound } from "./utils/functions";
-import { getStatus } from "./features/general/Performance";
 
 
 // Launch Tests
@@ -180,6 +179,9 @@ register ("command", (...args) => {
         case undefined:
         case "settings":
             settings.openGUI();
+            break;
+        case "toggles":
+            toggles.openGUI();
             break;
         // Help
         case "help":

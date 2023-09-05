@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import { getClosest, playSound } from "../../utils/functions";
 import { getMayor, getPerks } from "../../utils/mayor";

@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { BOLD, DARK_AQUA, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";

@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getPhase } from "./KuudraSplits";

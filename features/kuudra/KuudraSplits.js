@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, LOGO, RED, RESET } from "../../utils/constants";
 import { getPlayerName, getTime, isValidDate } from "../../utils/functions";
 import { getKuudraHP } from "./KuudraDetect";

@@ -1,5 +1,5 @@
 import request from "../../../requestV2";
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { formatNumber, getTime, unformatNumber } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";

@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { GREEN } from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
 

@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";

@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getNextVisitor } from "./GardenTab";

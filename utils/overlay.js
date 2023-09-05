@@ -1,4 +1,4 @@
-import settings from "../settings";
+import settings from "./settings";
 import { GUI_INSTRUCT, ITALIC } from "./constants";
 import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";

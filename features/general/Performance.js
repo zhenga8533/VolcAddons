@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -151,7 +151,7 @@ export function getStatus(status) {
 }
 
 /**
- * Check entity distance to player. Hide if too close.
+ * Check entity distance to player. Hide if too close or far.
  * 
  * @param {Entity} entity - The entity being checked.
  * @param {Position} pos - The entity's position.
@@ -159,6 +159,21 @@ export function getStatus(status) {
  * @param {Event} event - The event being handled.
  */
 registerWhen(register("renderEntity", (entity, pos, tick, event) => {
-    if (entity.distanceTo(Player.asPlayerMP()) < settings.hideEntity) return;
+    const distance = entity.distanceTo(Player.asPlayerMP());
+    if ((settings.hideFarEntity === 0 || distance < settings.hideFarEntity) && 
+        (settings.hideCloseEntity === 0 || distance > settings.hideCloseEntity)) return;
     cancel(event);
-}), () => settings.hideEntity !== 0 && (settings.hideWorlds === "" || settings.hideWorlds.split(", ").includes(getWorld())));
+}), () => (settings.hideFarEntity !== 0 || settings.hideCloseEntity !== 0) &&
+(settings.hideWorlds === "" || settings.hideWorlds.toLowerCase().split(", ").includes(getWorld().toLowerCase())));
+
+
+/**
+ * Prevents any particles from rendering.
+ * 
+ * @param {Particle} - The particle entity.
+ * @param {MCTEnumParticleTypes} - Particle type name
+ * @param {CancelableEvent} - Particle spawn event.
+ */
+registerWhen(register("spawnParticle", (particle, type, event) => {
+    cancel(event);
+}), () => settings.hideParticles === true);

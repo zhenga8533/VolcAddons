@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { BOLD, GOLD, WHITE, RESET } from "../../utils/constants";
 import { announceMob } from "../../utils/functions";
 import { getMayor, getPerks } from "../../utils/mayor";

@@ -1,5 +1,5 @@
 import request from "../../../requestV2";
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions";
 import { getPlayerUUID } from "../../utils/player";

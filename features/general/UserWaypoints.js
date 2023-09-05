@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AQUA, GREEN, LOGO } from "../../utils/constants";
 import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";

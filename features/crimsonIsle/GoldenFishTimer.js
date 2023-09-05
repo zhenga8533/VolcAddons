@@ -1,4 +1,4 @@
-import settings from "../../settings"
+import settings from "../../utils/settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";

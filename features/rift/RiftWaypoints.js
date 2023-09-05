@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AQUA, GREEN, LOGO, RED } from "../../utils/constants";
 import { getClosest } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";

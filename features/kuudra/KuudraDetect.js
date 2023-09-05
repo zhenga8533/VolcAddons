@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";

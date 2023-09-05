@@ -1,5 +1,5 @@
 import RenderLib from "../../../RenderLib";
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, GOLD } from "../../utils/constants";
 import { get3x3Stands } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";

@@ -1,5 +1,6 @@
 import { request } from "../../../axios";
-import settings from "../../settings";
+import settings from "../../utils/settings";
+import toggles from "../../utils/toggles";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 import { getWaifu } from "./PartyCommands";
@@ -39,31 +40,30 @@ function sendWebhook(player, msg, color) {
  * Check for public chat messages.
  */
 registerWhen(register("chat", (player, color, msg) => {
-    print(color);
     if (player.includes("Party") || player.includes("Guild") || !(color === "f" || color === "7")) return;
     sendWebhook(getPlayerName(player.removeFormatting()), msg, 0);
-}).setCriteria("&r${player}&${color}: ${msg}&r"), () => settings.chatWebhook !== "" && settings.publicChat);
+}).setCriteria("&r${player}&${color}: ${msg}&r"), () => settings.chatWebhook !== "" && toggles.publicChat === true);
 
 /**
  * Check for party chat messages.
  */
 registerWhen(register("chat", (player, msg) => {
     sendWebhook(getPlayerName(player), msg, 255);
-}).setCriteria("Party > ${player}: ${msg}"), () => settings.chatWebhook !== "" && settings.partyChat);
+}).setCriteria("Party > ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.partyChat === true);
 
 /**
  * Check for guild chat messages.
  */
 registerWhen(register("chat", (player, msg) => {
     sendWebhook(getGuildName(player), msg, 32768);
-}).setCriteria("Guild > ${player}: ${msg}"), () => settings.chatWebhook !== "" && settings.guildChat);
+}).setCriteria("Guild > ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.guildChat === true);
 
 /**
  * Check for private chat messages.
  */
 registerWhen(register("chat", (player, msg) => {
     sendWebhook(getPlayerName(player), msg, 16711935);
-}).setCriteria("From ${player}: ${msg}"), () => settings.chatWebhook !== "" && settings.privateChat);
+}).setCriteria("From ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.privateChat === true);
 
 
 /**

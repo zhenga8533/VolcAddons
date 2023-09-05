@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { AMOGUS, BOLD, DARK_PURPLE, WHITE } from "../../utils/constants";
 import { announceMob, playSound } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";

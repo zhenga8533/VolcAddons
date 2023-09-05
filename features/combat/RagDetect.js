@@ -1,4 +1,4 @@
-import settings from "../../settings";
+import settings from "../../utils/settings";
 import { BOLD, GOLD, RED } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
