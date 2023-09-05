@@ -1,7 +1,7 @@
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
 import settings from "../../settings";
-import { AQUA, DARK_AQUA, DARK_GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, DARK_AQUA, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
@@ -52,8 +52,10 @@ let imgur = "";
 export function setWaifu() {
     axios.get("https://api.waifu.pics/sfw/waifu").then((link) => {
         waifu = link.data.url;
+        ChatLib.chat(`${LOGO} ${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
+            ChatLib.chat(`${LOGO} ${GREEN}Upload Successful!`);
         }).catch((err) => {
             const error = err.data.error;
             const message = error?.message
@@ -149,7 +151,6 @@ export function executeCommand(name, args, sendTo) {
             case "w":
                 if (!settings.womenCommand) return;
 
-                ChatLib.chat(`${LOGO} ${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
                 if (sendTo) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
                 else ChatLib.command(`msg ${Player.getName()} ${imgur} ${randID}-vaw`);
                 // Randomize end to avoid duplicate message ^

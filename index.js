@@ -166,13 +166,6 @@ register("guiKey", (char, keyCode, gui) => {
     ChatLib.chat(`${LOGO} ${GREEN}Successfully copied ${GRAY}[${item.getName()}${GRAY}] ${GREEN}NBT!`);
 });
 
-
-// GENERAL FUNCTION COMMANDS - Handling command inputs
-const PARTY_COMMANDS = new Set(
-    ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
-    "cf", "8ball", "rps", "waifu", "w"]
-);
-
 // /va ...args
 register ("command", (...args) => {
     if (args === undefined) {
@@ -343,6 +336,10 @@ register ("command", (...args) => {
             break;
         // Party Commands and Else Case
         default:
+            const PARTY_COMMANDS = new Set(
+                ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
+                "cf", "8ball", "rps", "waifu", "w", "women"]
+            );
             if (PARTY_COMMANDS.has(command)) executeCommand(Player.getName(), args, false);
             else {
                 ChatLib.chat(`${LOGO} ${RED}Unkown command: "${command}" was not found!`);
