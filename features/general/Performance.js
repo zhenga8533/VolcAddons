@@ -1,5 +1,5 @@
 import settings from "../../settings";
-import { BOLD, DARK_GREEN, GREEN, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -34,14 +34,14 @@ function calcTPS() {
     pastDate = Date.now();
 }
 try {
-    registerWhen(register('packetReceived', () => {
+    register('packetReceived', () => {
         calcTPS()
-    }).setFilteredClass(S03PacketTimeUpdate), () => settings.serverStatus === true);
+    }).setFilteredClass(S03PacketTimeUpdate);
 } catch (err) {
-    registerWhen(register('packetReceived', (packet) => {
+    register('packetReceived', (packet) => {
         if (packet !== S03PacketTimeUpdate) return;
         calcTPS();
-    }), () => settings.serverStatus === true);
+    });
 }
 
 /**
@@ -75,24 +75,25 @@ function calculatePing() {
     }
 };
 try {
-    registerWhen(register('packetReceived', () => {
+    register('packetReceived', () => {
         calculatePing();
-    }).setFilteredClasses([S01PacketJoinGame, S37PacketStatistics]), () => settings.serverStatus === true);
+    }).setFilteredClasses([S01PacketJoinGame, S37PacketStatistics]);
 } catch (err) {
-    registerWhen(register('packetReceived', () => {
+    register('packetReceived', () => {
         if (packet !== S01PacketJoinGame || packet !== S37PacketStatistics) return;
         calculatePing();
-    }), () => settings.serverStatus === true);
+    });
 }
 
 
 /**
  * Variables used to represent and display player status.
  */
-const statusExample = `${DARK_GREEN}${BOLD}Ping: ${WHITE}Peek
-${DARK_GREEN}${BOLD}TPS: ${WHITE}A
-${DARK_GREEN}${BOLD}FPS: ${WHITE}Boo`;
+const statusExample = `${DARK_AQUA}${BOLD}Ping: ${WHITE}Peek
+${DARK_AQUA}${BOLD}TPS: ${WHITE}A
+${DARK_AQUA}${BOLD}FPS: ${WHITE}Boo`;
 const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
+const maxFps = Client.settings.getSettings().field_74350_i;
 
 /**
  * Updates the status overlay message with the current ping, TPS, and FPS information.
@@ -100,15 +101,54 @@ const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, 
  * and FPS (frames per second) using the values from the `ping`, `tps`, and `Client.getFPS()` respectively.
  */
 register('step', () => {
+    const pingColor = ping < 100 ? GREEN :
+        ping < 200 ? DARK_GREEN :
+        ping < 300 ? YELLOW :
+        ping < 400 ? GOLD : RED;
+    const tpsColor = tps > 19 ? GREEN :
+        tps > 16 ? DARK_GREEN :
+        tps > 13 ? YELLOW :
+        tps > 10 ? GOLD : RED;
+    const fps = Client.getFPS();
+    const fpsRatio = fps / maxFps;
+    const fpsColor = fpsRatio > 0.9 ? GREEN :
+        fpsRatio > 0.8 ? DARK_GREEN :
+        fpsRatio > 0.7 ? YELLOW :
+        fpsRatio > 0.6 ? GOLD : RED;
+
     statusOverlay.message = 
-`${DARK_GREEN}${BOLD}Ping: ${WHITE}${ping} ${GREEN}ms
-${DARK_GREEN}${BOLD}TPS: ${WHITE}${tps.toFixed(1)} ${GREEN}tps
-${DARK_GREEN}${BOLD}FPS: ${WHITE}${Client.getFPS()} ${GREEN}fps`;
+`${DARK_AQUA}${BOLD}Ping: ${pingColor}${ping} ${AQUA}ms
+${DARK_AQUA}${BOLD}TPS: ${tpsColor}${tps.toFixed(1)} ${AQUA}tps
+${DARK_AQUA}${BOLD}FPS: ${fpsColor}${fps} ${AQUA}fps`;
 }).setDelay(1);
 
-
-
-
+export function getStatus(status) {
+    switch (status) {
+        case "ping":
+            const pingColor = ping < 100 ? GREEN :
+                ping < 200 ? DARK_GREEN :
+                ping < 300 ? YELLOW :
+                ping < 400 ? GOLD : RED;
+            ChatLib.chat(`${LOGO} ${DARK_AQUA}Ping: ${pingColor}${ping} ${AQUA}ms`);
+            break;
+        case "tps":
+            const tpsColor = tps > 19 ? GREEN :
+                tps > 16 ? DARK_GREEN :
+                tps > 13 ? YELLOW :
+                tps > 10 ? GOLD : RED;
+            ChatLib.chat(`${LOGO} ${DARK_AQUA}TPS: ${tpsColor}${tps.toFixed(1)} ${AQUA}tps`);
+            break;
+        case "fps":
+            const fps = Client.getFPS();
+            const fpsRatio = fps / maxFps;
+            const fpsColor = fpsRatio > 0.9 ? GREEN :
+                fpsRatio > 0.8 ? DARK_GREEN :
+                fpsRatio > 0.7 ? YELLOW :
+                fpsRatio > 0.6 ? GOLD : RED;
+            ChatLib.chat(`${LOGO} ${DARK_AQUA}FPS: ${fpsColor}${fps} ${AQUA}fps`);
+            break;
+    }
+}
 
 /**
  * Check entity distance to player. Hide if too close.

@@ -29,7 +29,7 @@ const IMGUR_KEYS = [
  * @param {string} image - Link of the image.
  */
 function upload(image) {
-    const clientID = settings.imgurKey || IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
+    const clientID = IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
 
     return request({
         url: "https://api.imgur.com/3/image",
@@ -50,8 +50,8 @@ function upload(image) {
 let waifu = "";
 let imgur = "";
 export function setWaifu() {
-    axios.get("https://api.waifu.im/search").then((link) => {
-        waifu = link.data.images[0].url;
+    axios.get("https://api.waifu.pics/sfw/waifu").then((link) => {
+        waifu = link.data.url;
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
         }).catch((err) => {

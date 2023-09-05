@@ -1,4 +1,6 @@
 [
+    "- Added /va <tps, fps, ping>",
+    "- Added colors to status display",
     "- Fixed SkyBlock detection",
     "- Removed '@randID' from party messages"
 ]

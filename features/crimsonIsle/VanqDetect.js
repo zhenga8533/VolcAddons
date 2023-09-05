@@ -33,6 +33,7 @@ registerWhen(register("chat", () => {
  */
 const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher ${WHITE}Detected`;
 const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
+vanqOverlay.message = "";
 registerWhen(register("tick", () => {
     vanquishers = [];
     entities = World.getAllEntitiesOfType(WITHER_CLASS);

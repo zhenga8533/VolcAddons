@@ -121,22 +121,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         protected: true
     })
     apiKey = "";
-
-    @TextProperty({
-        name: `Imgur API Key`,
-        category: "General",
-        subcategory: "Essential",
-        description: `Please enter your own Imgur API key (if you are rate limited):
-
-${WHITE}1. ${GRAY}Go to ${UNDERLINE}https://api.imgur.com/oauth2/addclient
-${WHITE}2. ${GRAY}Enter ${UNDERLINE}https://www.getpostman.com/oauth2/callback${RESET} as callback URL
-${WHITE}3. ${GRAY}Select the "Anonymous usage without user authorization" option
-${WHITE}4. ${GRAY}Enter any Application Name, Email, and Description
-${WHITE}5. ${GRAY}Copy the 15 digit API key here
-${WHITE}6. ${GRAY}Finally, just wait until rate limit is reset`,
-        protected: true
-    })
-    imgurKey = "";
     
     @ButtonProperty({
         name: "Discord",

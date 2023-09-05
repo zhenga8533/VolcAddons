@@ -1,5 +1,5 @@
 // Utility Modules
-import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AMOGUS, AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import "./utils/functions";
 import { getInParty, getIsLeader } from "./utils/party";
 import "./utils/player";
@@ -75,6 +75,8 @@ import "./features/garden/JacobHighlight";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+import { playSound } from "./utils/functions";
+import { getStatus } from "./features/general/Performance";
 
 
 // Launch Tests
@@ -217,6 +219,12 @@ register ("command", (...args) => {
             } else
                 ChatLib.chat(`${LOGO} ${RED}Please input as /va api [key]!`);
             break;
+        // Server Status
+        case "ping":
+        case "tps":
+        case "fps":
+            getStatus(command);
+            break;
         // Waypoint
         case "coords":
         case "xyz":
@@ -343,3 +351,38 @@ register ("command", (...args) => {
             break;
     }
 }).setName("va", true).setAliases("volcaddons", "volc", "itee");
+
+const useKey = Client.getKeyBindFromDescription("key.use");
+const wKey = Client.getKeyBindFromKey(Keyboard.KEY_W);
+const sKey = Client.getKeyBindFromKey(Keyboard.KEY_S);
+const shiftKey = Client.getKeyBindFromKey(Keyboard.KEY_LSHIFT);
+let direction = false;
+register("soundPlay", () => {
+    let holding = Player.getHeldItem();
+    if (holding === null || holding.getRegistryName() != "minecraft:fishing_rod" || !Client.isInGui ||
+        World.getAllEntitiesOfType(Java.type("net.minecraft.entity.item.EntityArmorStand").class).
+        find(stand => stand.getName().includes("!!!")) === undefined) return;
+    
+    // Press
+    useKey.setState(true);
+    delay(() => {
+        shiftKey.setState(true);
+        delay(() => {
+            if (direction) wKey.setState(true);
+            else sKey.setState(true);
+        }, 150);
+    }, 150)
+
+    // Lift
+    delay(() => {
+        useKey.setState(false);
+        delay(() => {
+            if (direction) wKey.setState(false);
+            else sKey.setState(false);
+            direction = !direction;
+            delay(() => {
+                shiftKey.setState(false);
+            }, 400);
+        }, 300)
+    }, 250);
+}).setCriteria("note.pling");
