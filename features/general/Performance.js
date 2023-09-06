@@ -163,8 +163,12 @@ registerWhen(register("renderEntity", (entity, pos, tick, event) => {
     if ((settings.hideFarEntity === 0 || distance < settings.hideFarEntity) && 
         (settings.hideCloseEntity === 0 || distance > settings.hideCloseEntity)) return;
     cancel(event);
-}), () => (settings.hideFarEntity !== 0 || settings.hideCloseEntity !== 0) &&
-(settings.hideWorlds === "" || settings.hideWorlds.toLowerCase().split(", ").includes(getWorld().toLowerCase())));
+}), () => {
+    if (settings.hideFarEntity === 0 && settings.hideCloseEntity === 0) return false;
+    const world = getWorld()?.toLowerCase() ?? "";
+    const worlds = settings.hideWorlds.toLowerCase().split(", ");
+    return worlds[0] === "" || worlds.includes(world);
+});
 
 
 /**

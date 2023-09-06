@@ -188,8 +188,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     hideCloseEntity = 0;
     @TextProperty({
         name: "Hide on bush",
-        description: `Enter world names as [${AQUA}world1, world2, ...${GRAY}] for entity hiders to work on or leave empty for all worlds.
-${DARK_AQUA}Special Args: ${AQUA}dclear, dboss`,
+        description: `Enter world names as [${AQUA}world1, world2, ...${GRAY}] for entity hiders to work on or leave empty for all worlds.`,
         category: "General",
         subcategory: "Server",
         placeholder: "world1, world2, ..."
@@ -198,7 +197,7 @@ ${DARK_AQUA}Special Args: ${AQUA}dclear, dboss`,
 
     @SwitchProperty({
         name: "Hide All Particles",
-        description: "Prevents any particle from rendering including those not in settings.",
+        description: `${DARK_RED}NEW! ${GRAY}Prevents any particle from rendering including those not in settings.`,
         category: "General",
         subcategory: "Server"
     })

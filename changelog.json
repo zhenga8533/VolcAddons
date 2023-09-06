@@ -2,9 +2,12 @@
     "- Added /va <tps, fps, ping>",
     "- Added colors to status display",
     "- Added remove close entities",
+    "- Added hide all particles",
     "- Changed toggles to be in a seperate menu",
     "- Changed shard name in container values",
+    "- Fixed some container values being undefined",
+    "- Fixed /va calc inferno to account for double apex",
     "- Fixed SkyBlock detection",
-    "- Fixed ?w partially",
+    "- Fixed ?w partially part 2 (part 3 soon tm)",
     "- Removed '@randID' from party messages"
 ]

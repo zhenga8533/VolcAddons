@@ -93,12 +93,13 @@ export function calcMinions(args) {
 
             // Drops
             const actions = minions * 86400 / (2 * infernoAction);
+            const apexMinion = tier >= 10 ? 2 : 1;
 
             const drops = {
                 "GABAGOOL": actions.toFixed(4),
                 "CHILI": (actions / (156 / eyedrop)).toFixed(4),
                 "VERTEX": (actions / (16364 / eyedrop)).toFixed(4),
-                "APEX": (actions / (1570909 / eyedrop)).toFixed(4),
+                "APEX": (actions / (1570909 / eyedrop) * apexMinion).toFixed(4),
                 "REAPER": (actions / (458182 / eyedrop)).toFixed(4)
             }
             const profit = {

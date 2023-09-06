@@ -180,7 +180,9 @@ register ("command", (...args) => {
         case "settings":
             settings.openGUI();
             break;
+        case "toggle":
         case "toggles":
+        case "control":
             toggles.openGUI();
             break;
         // Help

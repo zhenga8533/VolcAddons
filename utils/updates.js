@@ -80,7 +80,7 @@ export function getLatestReleaseVersion() {
             JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => {
                 ChatLib.chat(change);
             });
-            ChatLib.chat();
+            ChatLib.chat("");
         }
     }).catch(error => {
         console.error("Failed to fetch releases: ", error);
