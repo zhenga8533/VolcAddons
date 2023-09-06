@@ -48,13 +48,13 @@
 - GENERAL COMMANDS:
   - Settings: /va <help, settings, gui, clear>
   - Waypoints: /va <coords, waypoint, enigma, npc, zone>
-  - Lists: /va <cd, whitelist, blocklist, warplist>
-  - Inferno Minions: /va <calc, apex>
+  - Lists: /va <cd, whitelist, blacklist, warplist>
+  - Economy: /va <calc, apex>
   - Misc: /va <splits, be>
 
 - PARTY CHAT COMMANDS:
-  - Party Commands: ?<warp, transfer, promote, demote, allinv, invite>
-  - Other Commands: ?<cringe, gay, racist, dice, flip, 8ball, rps, w>
+  - Leader Commands: ?<warp, mute, transfer, promote, demote, allinv, invite>
+  - Party Commands: ?<slandering, dice, flip, 8ball, rps, w>
 </br>
 
 ## Features
