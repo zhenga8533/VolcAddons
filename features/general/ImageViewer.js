@@ -13,10 +13,11 @@ let imgUrl = undefined;
 /**
  * Sets size of screen.
  */
-registerWhen(register("worldLoad", () => {
+const setSize = register("worldLoad", () => {
     SCREEN_WIDTH = Renderer.screen.getWidth();
     SCREEN_HEIGHT = Renderer.screen.getHeight();
-}), () => settings.imageRatio !== 0);
+    setSize.unregister();
+});
 
 /**
  * Renders the image on cursor location / lowest xy.

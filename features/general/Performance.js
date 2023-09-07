@@ -85,6 +85,14 @@ try {
     });
 }
 
+/**
+ * Set fps cap
+ */
+let maxFps = Client.settings.getSettings().field_74350_i;
+const setFps = register("worldLoad", () => {
+    maxFps = Client.settings.getSettings().field_74350_i;
+    setFps.unregister();
+});
 
 /**
  * Variables used to represent and display player status.
@@ -93,7 +101,6 @@ const statusExample = `${DARK_AQUA}${BOLD}Ping: ${WHITE}Peek
 ${DARK_AQUA}${BOLD}TPS: ${WHITE}A
 ${DARK_AQUA}${BOLD}FPS: ${WHITE}Boo`;
 const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
-const maxFps = Client.settings.getSettings().field_74350_i;
 
 /**
  * Updates the status overlay message with the current ping, TPS, and FPS information.
@@ -160,10 +167,12 @@ export function getStatus(status) {
  */
 registerWhen(register("renderEntity", (entity, pos, tick, event) => {
     const distance = entity.distanceTo(Player.asPlayerMP());
-    if ((settings.hideFarEntity === 0 || distance < settings.hideFarEntity) && 
-        (settings.hideCloseEntity === 0 || distance > settings.hideCloseEntity)) return;
-    cancel(event);
-}), () => {
+    if (settings.hideFarEntity !== 0 && distance >= settings.hideFarEntity)
+        cancel(event);
+    if (settings.hideCloseEntity !== 0 && distance <= settings.hideCloseEntity &&
+        entity.entity.class.toString() === "class net.minecraft.client.entity.EntityOtherPlayerMP" && entity.name !== Player.name)
+        cancel(event);
+}).setPriority(Priority.LOWEST), () => {
     if (settings.hideFarEntity === 0 && settings.hideCloseEntity === 0) return false;
     const world = getWorld()?.toLowerCase() ?? "";
     const worlds = settings.hideWorlds.toLowerCase().split(", ");
@@ -180,4 +189,4 @@ registerWhen(register("renderEntity", (entity, pos, tick, event) => {
  */
 registerWhen(register("spawnParticle", (particle, type, event) => {
     cancel(event);
-}), () => settings.hideParticles === true);
+}).setPriority(Priority.LOWEST), () => settings.hideParticles === true);

@@ -1,5 +1,5 @@
 import axios from "../../axios";
-const { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY } = require('./constants');
+const { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY, RED } = require('./constants');
 
 
 /**
@@ -73,7 +73,8 @@ export function getLatestReleaseVersion() {
         if (currentVersion && compareVersions(currentVersion, latestVersion)) {
             const downloadLink = latestRelease.html_url;
             ChatLib.chat(`\n${LOGO} ${GOLD}${BOLD}NEW RELEASE: ${WHITE}${BOLD}v${latestVersion}`);
-            ChatLib.chat(`${GREEN}Download the new version here: ${downloadLink}\n`);
+            ChatLib.chat(`${GREEN}Download the new version here: ${downloadLink}`);
+            ChatLib.chat(`${GREEN}OR install using the forge installer: https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar`);
         } else {
             ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}You are on the latest version (${WHITE}${BOLD}v${currentVersion}${GREEN}${BOLD})!\n`);
             ChatLib.chat(`${GRAY}${BOLD}Changelog:`);
@@ -83,6 +84,6 @@ export function getLatestReleaseVersion() {
             ChatLib.chat("");
         }
     }).catch(error => {
-        console.error("Failed to fetch releases: ", error);
+        ChatLib.chat(`${LOGO} ${RED}Failed to fetch releases: ${error}`);
     });
 }

@@ -178,8 +178,8 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     })
     hideFarEntity = 0;
     @SliderProperty({
-        name: "Hide Close Entities",
-        description: `${DARK_RED}NEW! ${GRAY}Set minimum distance away from player an entity can be or as 0 to turn ${RED}OFF${GRAY}.`,
+        name: "Hide Close Players",
+        description: `${DARK_RED}NEW! ${GRAY}Set minimum distance away from player a player can be or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
         subcategory: "Server",
         min: 0,

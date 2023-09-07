@@ -1,7 +1,7 @@
 [
     "- Added /va <tps, fps, ping>",
     "- Added colors to status display",
-    "- Added remove close entities",
+    "- Added remove close players",
     "- Added hide all particles",
     "- Changed toggles to be in a seperate menu",
     "- Changed shard name in container values",
