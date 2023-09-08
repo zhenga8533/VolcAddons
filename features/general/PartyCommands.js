@@ -2,7 +2,7 @@ import axios from "../../../axios";
 import { request } from "../../../requestV2";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { AQUA, DARK_AQUA, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, DARK_AQUA, DARK_GREEN, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
@@ -53,10 +53,17 @@ let imgur = "";
 export function setWaifu(announce) {
     axios.get("https://api.waifu.pics/sfw/waifu").then((link) => {
         waifu = link.data.url;
-        if (announce === true) ChatLib.chat(`${LOGO} ${DARK_GREEN}Uploading ${waifu} ${DARK_GREEN}to Imgur!`);
+        if (announce === true)
+            new Message(`${LOGO} ${DARK_GREEN}Uploading `,
+            new TextComponent(waifu).setHoverValue(waifu),
+            ` ${DARK_GREEN}to Imgur!`).chat();
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
-            if (announce === true) ChatLib.chat(`${LOGO} ${GREEN}Upload Successful!`);
+            if (announce === true)
+            new Message(`${LOGO} ${GREEN}Uploaded `,
+            new TextComponent(imgur).setHoverValue(imgur),
+            ` ${GREEN}to Imgur Successfully! `,
+            new TextComponent(`${GRAY}[click here to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click Me!")).chat();
         }).catch((err) => {
             const error = err.data.error;
             const message = error?.message
@@ -155,7 +162,6 @@ export function executeCommand(name, args, sendTo) {
                 if (toggles.womenCommand === false) return;
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
-                else ChatLib.command(`msg ${Player.getName()} ${imgur} ${randID}-vaw`);
                 // Randomize end to avoid duplicate message ^
                 setWaifu(true);
                 break;

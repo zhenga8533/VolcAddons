@@ -74,7 +74,7 @@ export function getLatestReleaseVersion() {
             const downloadLink = latestRelease.html_url;
             ChatLib.chat(`\n${LOGO} ${GOLD}${BOLD}NEW RELEASE: ${WHITE}${BOLD}v${latestVersion}`);
             ChatLib.chat(`${GREEN}Download the new version here: ${downloadLink}`);
-            ChatLib.chat(`${GREEN}OR install using the forge installer: https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar`);
+            ChatLib.chat(`${GREEN}OR install using the forge installer: https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar\n`);
         } else {
             ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}You are on the latest version (${WHITE}${BOLD}v${currentVersion}${GREEN}${BOLD})!\n`);
             ChatLib.chat(`${GRAY}${BOLD}Changelog:`);

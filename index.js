@@ -98,7 +98,7 @@ const once = register("worldLoad", () => {
             JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => {
                 ChatLib.chat(change);
             });
-            ChatLib.chat();
+            ChatLib.chat("");
         }
     }, 1000);
     once.unregister();
@@ -352,38 +352,3 @@ register ("command", (...args) => {
             break;
     }
 }).setName("va", true).setAliases("volcaddons", "volc", "itee");
-
-const useKey = Client.getKeyBindFromDescription("key.use");
-const wKey = Client.getKeyBindFromKey(Keyboard.KEY_W);
-const sKey = Client.getKeyBindFromKey(Keyboard.KEY_S);
-const shiftKey = Client.getKeyBindFromKey(Keyboard.KEY_LSHIFT);
-let direction = false;
-register("soundPlay", () => {
-    let holding = Player.getHeldItem();
-    if (holding === null || holding.getRegistryName() != "minecraft:fishing_rod" || !Client.isInGui ||
-        World.getAllEntitiesOfType(Java.type("net.minecraft.entity.item.EntityArmorStand").class).
-        find(stand => stand.getName().includes("!!!")) === undefined) return;
-    
-    // Press
-    useKey.setState(true);
-    delay(() => {
-        shiftKey.setState(true);
-        delay(() => {
-            if (direction) wKey.setState(true);
-            else sKey.setState(true);
-        }, 150);
-    }, 150)
-
-    // Lift
-    delay(() => {
-        useKey.setState(false);
-        delay(() => {
-            if (direction) wKey.setState(false);
-            else sKey.setState(false);
-            direction = !direction;
-            delay(() => {
-                shiftKey.setState(false);
-            }, 400);
-        }, 300)
-    }, 250);
-}).setCriteria("note.pling");

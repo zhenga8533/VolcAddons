@@ -24,7 +24,7 @@ const coinOverlay = new Overlay("coinTracker", ["all"], () => true, data.ML, "mo
  */
 registerWhen(register("step", () => {
     // Get cha ching from purse
-    let purse = Scoreboard?.getLines().find((line) => line.getName().includes("Purse:"));
+    let purse = Scoreboard?.getLines()?.find(line => line.getName().includes("Purse:"));
     if (getPaused() || purse === undefined) return;
     purse = parseInt(purse.getName().removeFormatting().split(" ")[1].replace(/\D/g,''));
 

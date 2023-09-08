@@ -55,12 +55,14 @@ function findWorld() {
             delay(() => {
                 const zone = findZone();
                 tier = parseInt(zone.charAt(zone.length - 2));
-            }, 1000);
+            }, 420);
         }
 
         // Register/unregister features for the current world
-        setRegisters();
-        setPlayer();
+        delay(() => {
+            setRegisters();
+            setPlayer();
+        }, 690);
     }
 }
 
@@ -70,8 +72,12 @@ function findWorld() {
 register("worldLoad", () => {
     noFind = 0;
     findWorld();
-});
+}).setPriority(Priority.LOWEST);
 register("worldUnload", () => {
     world = undefined;
-    setRegisters();
+    setRegisters(off=true);
 }).setPriority(Priority.LOWEST);
+register("serverDisconnect", () => {
+    world = undefined;
+    setRegisters(off=true);
+})

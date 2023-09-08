@@ -62,14 +62,16 @@ function updateContainerValue(remove) {
             let item = items[i];
             if (item === null) continue;
 
+            // Change name if attribute shard
             let itemName = item.getName();
             if (itemName === "§fAttribute Shard") {
                 const attribute = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getCompoundTag("attributes").toObject();
                 const key = Object.keys(attribute)[0];
                 itemName = `${AQUA}${convertToTitleCase(key)} ${numToRoman(attribute[key])} Shard`;
             }
-            let value = getItemValue(item);
 
+            // Get item value + item count
+            let value = getItemValue(item);
             if (value !== 0) {
                 let itemCount = item.getStackSize();
 

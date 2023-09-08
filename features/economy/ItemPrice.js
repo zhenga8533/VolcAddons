@@ -142,6 +142,10 @@ export function getItemValue(item) {
     if (itemID == undefined) return 0;
     const itemUUID = itemData?.uuid;
 
+    // Check if value is already calculated
+    const saved = savedValues?.[itemUUID]?.[0];
+    if (saved !== undefined) return saved;
+
     // Start Price Checking
     const auction = getAuction();
     const bazaar = getBazaar();
@@ -389,7 +393,7 @@ registerWhen(register("itemTooltip", (lore, item) => {
     }
 
     // Add to item lore.
-    const value = savedValues?.[itemUUID]?.[0] ?? getItemValue(item);
+    const value = getItemValue(item);
     valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
     if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
