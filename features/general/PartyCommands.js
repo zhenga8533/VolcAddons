@@ -50,7 +50,7 @@ function upload(image) {
  */
 let waifu = "";
 let imgur = "";
-export function setWaifu(announce) {
+function setWaifu(announce) {
     axios.get("https://api.waifu.pics/sfw/waifu").then((link) => {
         waifu = link.data.url;
         if (announce === true)
