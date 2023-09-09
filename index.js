@@ -61,6 +61,7 @@ import "./features/crimsonIsle/VanqDetect";
 import "./features/crimsonIsle/VanqWarp";
 // Kuudra Features
 import { getAttributes } from "./features/kuudra/AttributePricing";
+import { calcTabasco } from "./features/kuudra/TabascoCalc";
 import "./features/kuudra/KuudraAlerts";
 import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
@@ -309,6 +310,9 @@ register ("command", (...args) => {
                     break;
                 case "gdrag":
                     calcGdrag(isNaN(args[2]) ? 100 : args[2]);
+                    break;
+                case "tabasco":
+                    calcTabasco(args);
                     break;
                 default:
                     ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost, gdrag>${AQUA}>`);

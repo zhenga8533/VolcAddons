@@ -28,7 +28,7 @@ function testClass(entity, HP) {
         mob = Java.type(entity).class;
         World.getAllEntitiesOfType(mob);
         entityList.push([mob, HP]);
-        colorMap[mob.toString()] = [Math.random(), Math.random(), Math.random()];
+        colorMap[mob.toString() + HP] = [Math.random(), Math.random(), Math.random()];
         return true;
     } catch(err) {
         return false;
@@ -76,7 +76,7 @@ registerWhen(register("tick", () =>{
         // Match coloring
         const entityClass = entityData[0];
         const entityHp = entityData[1];
-        const color = colorMap[entityClass.toString()];
+        const color = colorMap[entityClass.toString() + entityHp];
         
         // Add entities
         const livingEntities = World.getAllEntitiesOfType(entityClass).filter(entity => entity.getEntity().func_110143_aJ() != 0);

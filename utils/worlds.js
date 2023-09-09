@@ -55,14 +55,14 @@ function findWorld() {
             delay(() => {
                 const zone = findZone();
                 tier = parseInt(zone.charAt(zone.length - 2));
-            }, 420);
+            }, 1000);
         }
 
         // Register/unregister features for the current world
         delay(() => {
             setRegisters();
             setPlayer();
-        }, 690);
+        }, 1000);
     }
 }
 
