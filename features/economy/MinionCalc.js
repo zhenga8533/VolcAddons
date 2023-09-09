@@ -1,4 +1,4 @@
-import { AQUA, BOLD, GOLD, GRAY, GREEN, ITALIC, RED, RESET } from '../../utils/constants';
+import { AQUA, BOLD, DARK_AQUA, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/constants';
 import { commafy } from "../../utils/functions";
 import { data } from '../../utils/variables';
 import { getBazaar } from './Economy';
@@ -63,19 +63,26 @@ export function calcMinions(args) {
     switch (args[1]) {
         case "hypergolic":
         case "hg":
-            const instaHypergolic = calcHypergolic(1);
+            const hypergolic = bazaar.HYPERGOLIC_GABAGOOL;
             const orderHypergolic = calcHypergolic(0);
-            const instaSellProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[0] - instaHypergolic);
-            const instaOrderProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[1] - instaHypergolic);
-            const orderInstaProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[0] - orderHypergolic);
-            const orderOfferProfit = commafy(bazaar.HYPERGOLIC_GABAGOOL[1] - orderHypergolic);
+            const instaHypergolic = calcHypergolic(1);
+            const p1 = hypergolic[0] - orderHypergolic;
+            const p2 = hypergolic[0] - instaHypergolic;
+            const p3 = hypergolic[1] - orderHypergolic;
+            const p4 = hypergolic[1] - instaHypergolic;
 
-            ChatLib.chat(`\n${GOLD}${BOLD}Insta Buy Price: ${RESET}${commafy(instaHypergolic)}`);
-            ChatLib.chat(`${GOLD}${BOLD}Insta Buy Profit (Insta Sell): ${RESET}${instaSellProfit}`);
-            ChatLib.chat(`${GOLD}${BOLD}Insta Buy Profit (Sell Offer): ${RESET}${instaOrderProfit}`);
-            ChatLib.chat(`${GREEN}${BOLD}Buy Order Price: ${RESET}${commafy(orderHypergolic)}`);
-            ChatLib.chat(`${GREEN}${BOLD}Buy Order Profit (Insta Sell): ${RESET}${orderInstaProfit}`);
-            ChatLib.chat(`${GREEN}${BOLD}Buy Order Profit (Sell Offer): ${RESET}${orderOfferProfit}\n`);
+            ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}Hypergolic Craft Profits:`);
+            ChatLib.chat(`${RED}${BOLD}${UNDERLINE}Hypergolic Gabagool Cost:`);
+            ChatLib.chat(`${AQUA}Insta Sell: ${WHITE}${commafy(hypergolic[0])}`);
+            ChatLib.chat(`${AQUA}Sell Offer: ${WHITE}${commafy(hypergolic[1])}\n`);
+            ChatLib.chat(`${GREEN}${BOLD}${UNDERLINE}Material Cost:`);
+            ChatLib.chat(`${AQUA}Buy Order: ${WHITE}${commafy(orderHypergolic)}`);
+            ChatLib.chat(`${AQUA}Insta Buy: ${WHITE}${commafy(instaHypergolic)}\n`);
+            ChatLib.chat(`${DARK_AQUA}${BOLD}${UNDERLINE}Total Profit:`)
+            ChatLib.chat(`${AQUA}Insta Sell + Buy Order: ${WHITE}${commafy(p1)}`);
+            ChatLib.chat(`${AQUA}Insta Sell + Insta Buy: ${WHITE}${commafy(p2)}`);
+            ChatLib.chat(`${AQUA}Sell Offer + Buy Order: ${WHITE}${commafy(p3)}`);
+            ChatLib.chat(`${AQUA}Sell Offer + Insta Buy: ${WHITE}${commafy(p4)}\n`);
             break;
         /*  INFERNO MINION LOOT TABLE:
             Chili Pepper 1/156

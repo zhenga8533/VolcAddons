@@ -294,29 +294,33 @@ register ("command", (...args) => {
         // Bazaar Calculations
         case "calculate":
         case "calc":
-            switch(args[1]) {
-                case "composter":
-                case "compost":
-                    calcCompost(args);
-                    break;
-                case "hypergolic":
-                case "hg":
-                case "inferno":
-                case "gabagool":
-                case "gaba":
-                case "vampire":
-                case "vamp":
-                    calcMinions(args);
-                    break;
-                case "gdrag":
-                    calcGdrag(isNaN(args[2]) ? 100 : args[2]);
-                    break;
-                case "tabasco":
-                    calcTabasco(args);
-                    break;
-                default:
-                    ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost, gdrag>${AQUA}>`);
-                    break;
+            try {
+                switch(args[1]) {
+                    case "composter":
+                    case "compost":
+                        calcCompost(args);
+                        break;
+                    case "hypergolic":
+                    case "hg":
+                    case "inferno":
+                    case "gabagool":
+                    case "gaba":
+                    case "vampire":
+                    case "vamp":
+                        calcMinions(args);
+                        break;
+                    case "gdrag":
+                        calcGdrag(isNaN(args[2]) ? 100 : args[2]);
+                        break;
+                    case "tabasco":
+                        calcTabasco(args);
+                        break;
+                    default:
+                        ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost, gdrag>${AQUA}>`);
+                        break;
+                }
+            } catch (err) {
+                ChatLib.chat(`${LOGO} ${RED}${err}`);
             }
             break;
         // Set Apex Price
