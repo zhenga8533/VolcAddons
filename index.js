@@ -172,6 +172,7 @@ register ("command", (...args) => {
         settings.openGUI();
         return;
     }
+    args = args.map(w => w.toLowerCase());
 
     // Parsing command and executing appropriate actions
     const command = args[0] === undefined ? undefined : args[0].toLowerCase();
@@ -352,7 +353,8 @@ register ("command", (...args) => {
                 ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
                 "cf", "8ball", "rps", "waifu", "w", "women"]
             );
-            if (PARTY_COMMANDS.has(command)) executeCommand(Player.getName(), args, false);
+            const INSTANCES = new Set(["f", "m", "t"]);
+            if (PARTY_COMMANDS.has(command) || (INSTANCES.has(command[0]) && !isNaN(command[1]))) executeCommand(Player.getName(), args, false);
             else {
                 ChatLib.chat(`${LOGO} ${RED}Unkown command: "${command}" was not found!`);
                 ChatLib.chat(`${LOGO} ${RED}Use '/va help' for a full list of commands.`);

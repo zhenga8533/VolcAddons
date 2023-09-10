@@ -63,7 +63,7 @@ function setWaifu(announce) {
             new Message(`${LOGO} ${GREEN}Uploaded `,
             new TextComponent(imgur).setHoverValue(imgur),
             ` ${GREEN}to Imgur Successfully! `,
-            new TextComponent(`${GRAY}[click here to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click Me!")).chat();
+            new TextComponent(`${GRAY}[click here to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
         }).catch((err) => {
             const error = err.data.error;
             const message = error?.message
@@ -84,6 +84,7 @@ setWaifu(false);
 export function executeCommand(name, args, sendTo) {
     if (data.blacklist.includes(name.toLowerCase())) return;
     const command = args[0];
+    args = args.map(w => w.toLowerCase());
 
     // PARTY COMMANDS
     if (settings.partyCommands !== 0) {
@@ -196,7 +197,7 @@ export function executeCommand(name, args, sendTo) {
     }
     
     // LEADER COMMANDS
-    if (getIsLeader() === true && settings.leaderCommands === true & Player.getName() !== name) {
+    if (sendTo === false || getIsLeader() === true && settings.leaderCommands === true && Player.getName() !== name) {
         switch (command) {
             case "mute":
                 if (toggles.warpCommand === false) return;
@@ -229,6 +230,30 @@ export function executeCommand(name, args, sendTo) {
 
                 num = isNaN(args[1]) ? 10 : args[1];
                 ChatLib.command(`stream open ${args[1]}`);
+                break;
+            default:  // Join instance commands
+                const floors = {
+                    1: "one",
+                    2: "two",
+                    3: "three",
+                    4: "four",
+                    5: "five",
+                    6: "six",
+                    7: "seven"
+                }
+                const tiers = {
+                    1: "basic",
+                    2: "hot",
+                    3: "burning",
+                    4: "fiery",
+                    5: "infernal"
+                }
+                const l1 = args[0][0];
+                const l2 = args[0][1];
+
+                if (l1 === "m" && l2 in floors) ChatLib.command(`joininstance master_catacombs_floor_${floors[l2]}`);
+                else if (l1 === "f" && l2 in floors) ChatLib.command(`joininstance catacombs_floor_${floors[l2]}`);
+                else if (l1 === "t" && l2 in tiers) ChatLib.command(`joininstance kuudra_${tiers[l2]}`);
                 break;
         }
     }
