@@ -286,13 +286,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     })
     joinRP = false;
     
-    @SwitchProperty({
-        name: "Auto Transfer Back",
-        description: "Prevents player from being party leader by instantly transferring party back.",
+    @SelectorProperty({
+        name: "Auto Transfer",
+        description: `${DARK_RED}RED! ${GRAY}Transfers party when certain conditions are met.`,
         category: "Party",
-        subcategory: "Party"
+        subcategory: "Party",
+        options: ["OFF", "On Transfer", "On Kick"]
     })
-    autoTransfer = false;
+    autoTransfer = 0;
 
     @SwitchProperty({
         name: "Whitelist Rejoin",

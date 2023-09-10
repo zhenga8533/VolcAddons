@@ -116,7 +116,7 @@ registerWhen(register("step", () => {
             if (server in broodLobbies) delete broodLobbies[server];
         } else broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${WHITE}${getTime(nextSpawn)}`;
     }
-}).setFps(1), () => getWorld() === "Spider's Den" && settings.broodmotherDetect);
+}).setFps(1), () => settings.broodmotherDetect);
 
 /**
  * World timer of world leave.

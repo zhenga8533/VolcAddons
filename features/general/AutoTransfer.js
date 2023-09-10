@@ -3,7 +3,7 @@ import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { getIsLeader } from "../../utils/party";
+import { getIsLeader, getParty } from "../../utils/party";
 
 
 /**
@@ -18,24 +18,22 @@ registerWhen(register("chat", (player1, player2) => {
 
     if (name1 === Player.getName().toLowerCase())
         delay(() => ChatLib.command("p transfer " + name2), 500);
-}).setCriteria("The party was transferred to ${player1} by ${player2}"), () => settings.autoTransfer === true);
+}).setCriteria("The party was transferred to ${player1} by ${player2}"), () => settings.autoTransfer === 1);
 
 
 /**
  * Auto transfer if in lobby.
  */
- 
-register("chat", (player1, player2) => {
+registerWhen(register("chat", (player1, player2) => {
     if (getWorld() !== undefined) return;
     const name1 = getPlayerName(player1).toLowerCase();
     const name2 = getPlayerName(player2).toLowerCase();
 
-    if (name1 === Player.getName().toLowerCase())
-        delay(() => ChatLib.command("p transfer " + name2), 500);
-}).setCriteria("The party was transferred to ${player1} by ${player2}");
+    if (name1 === Player.getName().toLowerCase()) delay(() => ChatLib.command("p transfer " + name2), 500);
+}).setCriteria("The party was transferred to ${player1} by ${player2}"), () => settings.autoTransfer === 2);
 
-register("chat", () => {
+registerWhen(register("chat", () => {
     if (getIsLeader() === false) return;
-
-    // transfer
-}).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!");
+    const party = Array.from(getParty());
+    ChatLib.command(`p transfer ${party[Math.floor(Math.random() * party.length)]}`);
+}).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!"), () => settings.autoTransfer === 2);

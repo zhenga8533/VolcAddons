@@ -4,18 +4,18 @@ import { delay } from "./thread";
 
 // --- VARIABLES ---
 
-// Variable to track if the party is being detected
-let detecting = false;
-
 // The player's in-game name (initially set to "limga")
 let ign = "limga";
 
 // Variables to track party status and leadership
 let inParty = false;
-export function getInParty() { return inParty; }
+export function getInParty() { return inParty };
+
+let party = new Set([]);
+export function getParty() { return party };
 
 let isLeader = false;
-export function getIsLeader() { return isLeader; }
+export function getIsLeader() { return isLeader };
 
 
 // --- TRACK PARTY ---
@@ -42,6 +42,7 @@ register("chat", () => {
 register("chat", () => {
     inParty = false;
     isLeader = false;
+    party = new Set();
 }).setCriteria("You left the party.");
 
 // Not in party backup
@@ -86,35 +87,67 @@ register("chat", (player) => {
 // Event handler for detecting when a player is kicked from the party
 register("chat", () => {
     inParty = false;
+    party = new Set();
 }).setCriteria("You have been kicked from the party by ${player}");
 
 
 // --- CONTROL FOR GAME/CT RS ---
 
+// Cancel event when detecting is in progress to avoid unintended interactions with other chat events
+const cancelChat = register("chat", (event) => {
+    cancel(event);
+});
+
 // Event handler for game load
 register("gameLoad", () => {
     ign = Player.getName();
-    detecting = true;
+    cancelChat.register();
     delay(() => { ChatLib.command("p list"); }, 500);
-    delay(() => { detecting = false; }, 1000);
+    delay(() => { cancelChat.unregister() }, 1000);
 });
 
 // Event handler for detecting game chat message (Welcomes players to Hypixel SkyBlock)
 register("chat", () => {
     ign = Player.getName();
-    detecting = true;
+    cancelChat.register();
     delay(() => { ChatLib.command("p list"); }, 500);
-    delay(() => { detecting = false; }, 1000);
+    delay(() => { cancelChat.unregister() }, 1000);
 }).setCriteria("Welcome to Hypixel SkyBlock!");
 
 // Remove message on restart
 register("chat", (leader) => {
-    isLeader = ign === getPlayerName(leader);
+    const player = getPlayerName(leader);
+    isLeader = ign === player;
     inParty = true;
+    if (player === Player.getName()) return;
+    party.add(player);
 }).setCriteria("Party Leader: ${leader} ●");
 
-// Cancel event when detecting is in progress to avoid unintended interactions with other chat events
-register("chat", (event) => {
-    if (detecting)
-        cancel(event);
-});
+// Track party members
+register("chat", (members) => {
+    members.split(" ● ").forEach(member => {
+        const name = getPlayerName(member);
+        if (name === Player.getName()) return;
+        party.add(name);
+    });
+}).setCriteria("Party Moderators: ${members} ● ");
+
+register("chat", (members) => {
+    members.split(" ● ").forEach(member => {
+        const name = getPlayerName(member);
+        if (name === Player.getName()) return;
+        party.add(name);
+    });
+}).setCriteria("Party Members: ${members} ● ");
+
+register("chat", (player) => {
+    const name = getPlayerName(player);
+    if (name === Player.getName()) return;
+    party.add(name);
+}).setCriteria("${player} has been removed from the party.");
+
+register("chat", (player) => {
+    const name = getPlayerName(player);
+    if (name === Player.getName()) return;
+    party.add(name);
+}).setCriteria("${player} Somxone has been removed from the party.");

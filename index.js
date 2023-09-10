@@ -1,7 +1,7 @@
 // Utility Modules
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import "./utils/functions";
-import { getInParty, getIsLeader } from "./utils/party";
+import { getInParty, getIsLeader, getParty } from "./utils/party";
 import "./utils/player";
 import { openGUI } from "./utils/overlay";
 import settings from "./utils/settings";
@@ -172,7 +172,6 @@ register ("command", (...args) => {
         settings.openGUI();
         return;
     }
-    args = args.map(w => w.toLowerCase());
 
     // Parsing command and executing appropriate actions
     const command = args[0] === undefined ? undefined : args[0].toLowerCase();
@@ -237,6 +236,7 @@ register ("command", (...args) => {
             ChatLib.chat("Tier: " + getTier());
             ChatLib.chat("Leader: " + getIsLeader());
             ChatLib.chat("Party: " + getInParty());
+            ChatLib.chat("Members: " + getParty().join(' '));
             ChatLib.chat("Garden: " + getNextVisitor());
             break;
         // Bestiary Stuff
@@ -349,6 +349,7 @@ register ("command", (...args) => {
             break;
         // Party Commands and Else Case
         default:
+            args = args.map(w => w.toLowerCase());
             const PARTY_COMMANDS = new Set(
                 ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
                 "cf", "8ball", "rps", "waifu", "w", "women"]
