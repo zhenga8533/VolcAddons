@@ -45,6 +45,7 @@ import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
+import "./features/combat/KillTracker";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features

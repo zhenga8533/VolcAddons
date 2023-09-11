@@ -78,6 +78,7 @@ export let data = new PogObject("VolcAddons", {
     "WL": [30, 200, 1], // Wolf Combo Location
     "HL": [30, 200, 1], // Powder Chest Location
     "DL": [30, 200, 1], // Broodmother Location
+    "JL": [30, 250, 1], // Kill Counter Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
