@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, RED, RESET } from "../../utils/constants";
+import { BOLD, DARK_BLUE, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -10,17 +10,15 @@ import { getWorld } from "../../utils/worlds";
  */
 let items = {};
 let session = {
-    "vanqs": 0,
     "kills": 0,
-    "last": 0,
-    "average": 0,
+    "time": 0,
+    "average": 0
 };
 const counterExample =
-`${RED}${BOLD}Total Vanqs: ${RESET}Xue
-${RED}${BOLD}Total Kills: ${RESET}Hua
-${RED}${BOLD}Kills Since: ${RESET}Piao
-${RED}${BOLD}Average Kills: ${RESET}Piao`
-const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], () => true, data.CL, "moveCounter", counterExample);
+`${DARK_BLUE}${BOLD}Total Kills: ${RESET}this
+${DARK_BLUE}${BOLD}Time Passed: ${RESET}game
+${DARK_BLUE}${BOLD}Hourly Kills: ${RESET}sucks.`
+const counterOverlay = new Overlay("killCounter", ["all"], () => true, data.CL, "moveCounter", counterExample);
 
 /**
  * Uses the "Book of Stats" to track whenever player kills an entity and updates the Vanquisher Overlay.

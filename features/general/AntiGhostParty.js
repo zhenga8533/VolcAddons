@@ -10,7 +10,7 @@ import { registerWhen } from "../../utils/variables";
  * @param {string} message - The chat message to be intercepted and redirected.
  * @param {object} event - The event object representing the chat message event.
  */
-const partyCommands = new Set(["accept", "join"])
+const partyCommands = new Set(["accept", "join"]);
 registerWhen(register("messageSent", (message, event) => {
     const args = message.split(' ');
     if (getInParty() || args.length < 3 || (args[0] !== "/p" && args[0] !== "/party") || partyCommands.has(args[1].toLowerCase())) return;

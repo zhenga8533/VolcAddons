@@ -317,7 +317,7 @@ register ("command", (...args) => {
                         calcTabasco(args);
                         break;
                     default:
-                        ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <hypergolic, inferno, gabagool, vampire, compost, gdrag>${AQUA}>`);
+                        ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <gdrag, hypergolic, inferno, gabagool, tabasco, vampire, compost>${AQUA}>`);
                         break;
                 }
             } catch (err) {

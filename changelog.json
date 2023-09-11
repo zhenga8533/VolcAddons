@@ -2,7 +2,7 @@
     "- Added /va calc tabasco",
     "- Added ?<floor, tier> to party commands",
     "- Added auto transfer party on lobby",
-    "- TODO: Added kill tracker",
+    "- Added kill tracker",
     "- TODO: Changed ?w farming to anonymous mode",
     "- Fixed hitbox colors not changing for different hp inputs"
 ]
