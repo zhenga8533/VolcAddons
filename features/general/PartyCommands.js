@@ -274,10 +274,10 @@ export function executeCommand(name, args, sendTo) {
  * @param {string} player - "[rank] ign".
  * @param {string} message - Message sent by player following a "?"
  */
-registerWhen(register("chat", (player, message) => {
+register("chat", (player, message) => {
     if (onCD) return;
     executeCommand(getPlayerName(player), message.split(" "), "pc");
-}).setCriteria("Party > ${player}: ?${message}"), () => settings.partyCommands === 1 || settings.partyCommands === 2);
+}).setCriteria("Party > ${player}: ?${message}");
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;
     executeCommand(getGuildName(player), message.split(" "), "gc");

@@ -237,7 +237,7 @@ register ("command", (...args) => {
             ChatLib.chat("Tier: " + getTier());
             ChatLib.chat("Leader: " + getIsLeader());
             ChatLib.chat("Party: " + getInParty());
-            ChatLib.chat("Members: " + getParty().join(' '));
+            if (getParty().size !== 0) ChatLib.chat("Members: " + getParty().join(' '));
             ChatLib.chat("Garden: " + getNextVisitor());
             break;
         // Bestiary Stuff
