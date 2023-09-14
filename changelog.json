@@ -2,6 +2,7 @@
     "- Added /va calc tabasco",
     "- Added ?<floor, tier> to party commands",
     "- Added auto transfer party on lobby",
+    "- Added auto announce server kick",
     "- Added kill tracker",
     "- Added trophy fish counter",
     "- Changed party commands to not be skyblock locked",

@@ -20,6 +20,7 @@ export let data = new PogObject("VolcAddons", {
     "emotelist": {},
     "cooldownlist": {},
     "files": [],
+    "trophyFish": {},
     // Properties related to timing and split data
     "splits": {
         "last": [0, 0, 0, 0, 0],
@@ -79,6 +80,7 @@ export let data = new PogObject("VolcAddons", {
     "HL": [30, 200, 1], // Powder Chest Location
     "DL": [30, 200, 1], // Broodmother Location
     "JL": [30, 250, 1], // Kill Counter Location
+    "FL": [30, 300, 1], // Trophy Fish Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

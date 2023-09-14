@@ -668,7 +668,7 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
     mythicLavaAnnounce = 0;
 
     @SwitchProperty({
-        name: "Mythic Lava Creature Detect",
+        name: "Detect Mythic Lava Creature",
         description: "Alerts player of nearby Thunders or Lord Jawbuses.",
         category: "Crimson Isles",
         subcategory: "Fishing"
@@ -682,6 +682,16 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
         subcategory: "Fishing"
     })
     goldenFishAlert = false;
+
+    @SelectorProperty({
+        name: "Trophy Fish Counter",
+        description: `${DARK_RED}NEW! ${GRAY}Tracks number of trophy fishes caught and displays rates when on "Session View".
+Move GUI with ${AQUA}/moveTrophy${GRAY}.`,
+        category: "Crimson Isles",
+        subcategory: "Fishing",
+        options: ["OFF", "Overall View", "Session View"]
+    })
+    trophyCounter = 0;
 
     // --- Vanquisher ---
     @SelectorProperty({
