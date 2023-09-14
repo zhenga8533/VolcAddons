@@ -11,7 +11,7 @@ let ign = "limga";
 let inParty = false;
 export function getInParty() { return inParty };
 
-let party = new Set([]);
+let party = new Set();
 export function getParty() { return party };
 
 let isLeader = false;
@@ -143,11 +143,5 @@ register("chat", (members) => {
 register("chat", (player) => {
     const name = getPlayerName(player);
     if (name === Player.getName()) return;
-    party.add(name);
+    party.delete(name);
 }).setCriteria("${player} has been removed from the party.");
-
-register("chat", (player) => {
-    const name = getPlayerName(player);
-    if (name === Player.getName()) return;
-    party.add(name);
-}).setCriteria("${player} Somxone has been removed from the party.");

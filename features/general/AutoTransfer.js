@@ -3,7 +3,7 @@ import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { getIsLeader, getParty } from "../../utils/party";
+import { getInParty, getIsLeader, getParty } from "../../utils/party";
 
 
 /**
@@ -37,3 +37,8 @@ registerWhen(register("chat", () => {
     const party = Array.from(getParty());
     ChatLib.command(`p transfer ${party[Math.floor(Math.random() * party.length)]}`);
 }).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!"), () => settings.autoTransfer === 2);
+
+registerWhen(register("chat", () => {
+    if (getInParty() === false) return;
+    ChatLib.command(`pc ${settings.kickAnnounce}`);
+}).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!"), () => settings.kickAnnounce !== "");

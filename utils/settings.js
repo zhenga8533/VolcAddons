@@ -288,12 +288,20 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     
     @SelectorProperty({
         name: "Auto Transfer",
-        description: `${DARK_RED}RED! ${GRAY}Transfers party when certain conditions are met.`,
+        description: `${DARK_RED}NEW! ${GRAY}Transfers party when certain conditions are met.`,
         category: "Party",
         subcategory: "Party",
         options: ["OFF", "On Transfer", "On Kick"]
     })
     autoTransfer = 0;
+
+    @TextProperty({
+        name: "Server Kick Announce",
+        description: `Set the message to be sent to the party if you get lobby kicked or as nothing to turn ${RED}OFF${GRAY}.`,
+        category: "Party",
+        subcategory: "Party"
+    })
+    kickAnnounce = "";
 
     @SwitchProperty({
         name: "Whitelist Rejoin",

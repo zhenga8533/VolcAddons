@@ -3,7 +3,7 @@
     "- Added ?<floor, tier> to party commands",
     "- Added auto transfer party on lobby",
     "- Added kill tracker",
-    "- TODO: Added trophy fish counter",
+    "- Added trophy fish counter",
     "- Changed party commands to not be skyblock locked",
     "- TODO: Changed ?w farming to anonymous mode",
     "- Fixed hitbox colors not changing for different hp inputs"
