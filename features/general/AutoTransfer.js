@@ -35,10 +35,10 @@ registerWhen(register("chat", (player1, player2) => {
 registerWhen(register("chat", () => {
     if (getIsLeader() === false) return;
     const party = Array.from(getParty());
-    ChatLib.command(`p transfer ${party[Math.floor(Math.random() * party.length)]}`);
+    delay(() => ChatLib.command(`p transfer ${party[Math.floor(Math.random() * party.length)]}`), 500);
 }).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!"), () => settings.autoTransfer === 2);
 
 registerWhen(register("chat", () => {
     if (getInParty() === false) return;
-    ChatLib.command(`pc ${settings.kickAnnounce}`);
+    delay(() => ChatLib.command(`pc ${settings.kickAnnounce}`), 1000);
 }).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!"), () => settings.kickAnnounce !== "");

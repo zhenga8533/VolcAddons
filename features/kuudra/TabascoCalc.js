@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_AQUA, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE } from "../../utils/constants";
 import { commafy } from "../../utils/functions";
 import { getBazaar } from "../economy/Economy";
 
@@ -13,7 +13,7 @@ export function calcTabasco(args) {
     const p3 = tabasco[1] - orderPepper;
     const p4 = tabasco[1] - instaPepper;
     
-    ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}Tabasco Craft Profits:`);
+    ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}Tabasco Craft Profits:\n`);
     ChatLib.chat(`${RED}${BOLD}${UNDERLINE}Tabasco III Cost:`);
     ChatLib.chat(`${AQUA}Insta Sell: ${WHITE}${commafy(tabasco[0])}`);
     ChatLib.chat(`${AQUA}Sell Offer: ${WHITE}${commafy(tabasco[1])}\n`);

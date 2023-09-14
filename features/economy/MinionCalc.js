@@ -71,7 +71,7 @@ export function calcMinions(args) {
             const p3 = hypergolic[1] - orderHypergolic;
             const p4 = hypergolic[1] - instaHypergolic;
 
-            ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}Hypergolic Craft Profits:`);
+            ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}Hypergolic Craft Profits:\n`);
             ChatLib.chat(`${RED}${BOLD}${UNDERLINE}Hypergolic Gabagool Cost:`);
             ChatLib.chat(`${AQUA}Insta Sell: ${WHITE}${commafy(hypergolic[0])}`);
             ChatLib.chat(`${AQUA}Sell Offer: ${WHITE}${commafy(hypergolic[1])}\n`);
