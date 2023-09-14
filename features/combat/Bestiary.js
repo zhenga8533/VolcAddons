@@ -23,7 +23,7 @@ export function updateBestiary() {
     }).catch((error) => {
         // If there is an error, display the error message in the Minecraft chat.
         if (error.cause !== "Invalid API key")
-            delay(updateBestiary, 3000);
+            delay(updateBestiary(), 3000);
         else if (settings.apiKey) {
             delay(() => ChatLib.chat(`${LOGO} ${RED}${error.cause}!`), 1000);
             bestiaryUpdate.unregister();

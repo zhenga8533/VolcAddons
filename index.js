@@ -57,6 +57,7 @@ import "./features/hub/InquisitorDetect";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
+import "./features/crimsonIsle/TrophyCounter";
 import "./features/crimsonIsle/VanqCounter";
 import "./features/crimsonIsle/VanqDetect";
 import "./features/crimsonIsle/VanqWarp";
