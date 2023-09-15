@@ -297,7 +297,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @TextProperty({
         name: "Server Kick Announce",
-        description: `Set the message to be sent to the party if you get lobby kicked or as nothing to turn ${RED}OFF${GRAY}.`,
+        description: `${DARK_RED}NEW! ${GRAY}Set the message to be sent to the party if you get lobby kicked or as nothing to turn ${RED}OFF${GRAY}.`,
         category: "Party",
         subcategory: "Party"
     })
@@ -686,7 +686,7 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
     @SelectorProperty({
         name: "Trophy Fish Counter",
         description: `${DARK_RED}NEW! ${GRAY}Tracks number of trophy fishes caught and displays rates when on "Session View".
-Move GUI with ${AQUA}/moveTrophy${GRAY}.`,
+Move GUI with ${AQUA}/moveTrophy ${GRAY}or reset tracker with ${AQUA}/resetTrophy${GRAY}.`,
         category: "Crimson Isles",
         subcategory: "Fishing",
         options: ["OFF", "Overall View", "Session View"]

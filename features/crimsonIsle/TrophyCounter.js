@@ -1,14 +1,15 @@
 import request from "../../../requestV2";
-import { AQUA, BLUE, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LIGHT_PURPLE, WHITE } from "../../utils/constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { convertToTitleCase } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { getPlayerUUID } from "../../utils/player";
 import settings from "../../utils/settings";
-import { data } from "../../utils/variables";
+import { data, getPaused, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 
 /**
- * Variables used to track and display trophy fishes.
+ * Variables used to format and display trophy fishes.
  */
 const trophyExample =
 `&6Trophy Fishing:
@@ -31,9 +32,12 @@ const trophyExample =
 &5Soul Fish&f: &373 &850 &720 &61 &b2
 &5Moldfin&f: &360 &837 &721 &61 &b1`;
 const trophyOverlay = new Overlay("trophyCounter", ["Crimson Isle"], () => true, data.FL, "moveTrophy", trophyExample);
-trophyOverlay.message = `${GOLD}Trophy Fishing:\n`;
+trophyOverlay.message = "";
 
-const trophyColors = {
+/**
+ * Variables used for formatting
+ */
+const TROPHY_COLORS = {
     blobfish: WHITE,
     gusher: WHITE,
     skeleton_fish: DARK_PURPLE,
@@ -53,27 +57,73 @@ const trophyColors = {
     karate_fish: DARK_PURPLE,
     slugfish: GREEN
 }
+const TROPHY_ID = {
+    lavahorse: "lava_horse",
+    obfuscated_1: "obfuscated_fish_1",
+    obfuscated_2: "obfuscated_fish_2",
+    obfuscated_3: "obfuscated_fish_3",
+}
+const TIER_INDEX = {
+    "bronze": 1,
+    "silver": 2,
+    "gold": 3,
+    "diamond": 4
+}
 
-register("chat", () => {
-    
-}).setCriteria("TROPHY FISH! You caught a Sulphur Skitter GOLD");
+/**
+ * Variables used to track trophy fishes/
+ */
+let totalTrophy = {};
+let sessionTrophy = {};
+let timePassed = 0;
+register("command", () => {
+    sessionTrophy = {};
+    timePassed = 0;
+    trophyOverlay.message = "";
+    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset trophy fish counter!`);
+}).setName("resetTrophy");
 
-function updateTrophy() {
+/**
+ * Update trophyOverlay message using inputted trophy data.
+ * 
+ * @param {Object} trophyVar - "totalTrophy" or "sessionTrophy" depending on setting
+ */
+function updateMessage(trophyVar) {
+    const sortedTrophy = Object.entries(trophyVar).sort((a, b) => b[1][0] - a[1][0]).reduce((sorted, [fish, fishData]) => {
+        if (fishData[0] !== 0) {
+            const title = TROPHY_COLORS[fish] + convertToTitleCase(fish);
+            const [total, bronze, silver, gold, diamond] = fishData;
+            const rate = settings.trophyCounter === 1 ? "" : `${GRAY}- ${WHITE}${(total * 3600 / timePassed).toFixed(0)}/hr`;
+            sorted.push(`${title}${WHITE}: ${DARK_AQUA}${total} ${DARK_GRAY}${bronze} ${GRAY}${silver} ${GOLD}${gold} ${AQUA}${diamond} ${rate}`);
+        }
+        return sorted;
+    }, []);
+  
+    if (sortedTrophy.length != 0) trophyOverlay.message = `${GOLD}${BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`;
+}  
+
+/**
+ * API PULL request to get player trophy fishing data.
+ * 
+ * @param {String} profileId - Profile ID of player.
+ */
+export function updateTrophy(profileId) {
+    if (settings.api === "" || profileId === undefined) return;
+
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
-        url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${data.profileId}`,
+        url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${profileId}`,
         json: true
     }).then((response) => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
-        const trophyData = response.profile.members[getPlayerUUID()].trophy_fish;
+        const trophyData = response.profile.members[getPlayerUUID()]?.trophy_fish;
         if (trophyData === undefined) return;
-        const trophyFish = {};
         
         Object.keys(trophyData).forEach(fish => {
             if (fish.endsWith("_gold") || fish.endsWith("_silver") || fish.endsWith("_bronze") || fish.endsWith("_diamond") ||
                 fish === "rewards" || fish === "total_caught") return;
 
-            trophyFish[fish] = [
+            totalTrophy[fish] = [
                 trophyData[fish],
                 trophyData[fish + "_bronze"] ?? 0,
                 trophyData[fish + "_silver"] ?? 0,
@@ -83,27 +133,57 @@ function updateTrophy() {
         });
 
         // Sort by highest catches
-        const trophyEntries = Object.entries(trophyFish);
-        trophyEntries.sort((a, b) => b[1][0] - a[1][0]);
-        data.trophyFish = {};
-        for ([key, value] of trophyEntries) data.trophyFish[key] = value;
-
-        // Set counter message
-        if (settings.trophyCounter === 1) {
-            Object.keys(data.trophyFish).forEach(fish => {
-                const total = data.trophyFish[fish][0];
-                if (total === 0) return;
-                const title = trophyColors[fish] + convertToTitleCase(fish);
-                const bronze = DARK_GRAY + data.trophyFish[fish][1];
-                const silver = GRAY + data.trophyFish[fish][2];
-                const gold = GOLD + data.trophyFish[fish][3];
-                const diamond = AQUA + data.trophyFish[fish][4];
-                
-                trophyOverlay.message += `${title}${WHITE}: ${DARK_AQUA}${total} ${bronze} ${silver} ${gold} ${diamond}\n`;
-            })
-        }
+        if (settings.trophyCounter === 1) updateMessage(totalTrophy);
     }).catch((err) => {
-        console.error(`[VolcAddons] ${err.cause ?? err}`);
+        ChatLib.chat(`${LOGO} ${RED}${err.cause ?? err}`);
+        if (err.cause === "Invalid API key") {
+            settings.api = "";
+            ChatLib.chat(`${GREEN}API key cleared!`);
+        }
     });
 }
-updateTrophy();
+updateTrophy(data.lastID);
+
+/**
+ * Update counter variables.
+ * 
+ * @param {String} fish - Fish type and tier.
+ */
+function updateCounter(fish) {
+    const args = fish.toLowerCase().split(' ');
+    const tier = args.pop();
+    let type = args.join('_');
+    if (type in TROPHY_ID) type = TROPHY_ID[type];
+
+    // Update Total
+    if (!(type in totalTrophy)) totalTrophy[type] = [0, 0, 0, 0, 0];
+    totalTrophy[type][0]++;
+    totalTrophy[type][TIER_INDEX[tier]]++;
+
+    // Update Session
+    if (!(type in sessionTrophy)) sessionTrophy[type] = [0, 0, 0, 0, 0];
+    sessionTrophy[type][0]++;
+    sessionTrophy[type][TIER_INDEX[tier]]++;
+
+    // Update Message
+    updateMessage(settings.trophyCounter === 1 ? totalTrophy : sessionTrophy);
+}
+
+/**
+ * Track fishing messages to update counter.
+ */
+registerWhen(register("chat", (fish) => {
+    updateCounter(fish);
+}).setCriteria("TROPHY FISH! You caught a ${fish}."), () => getWorld() === "Crimson Isle" && settings.trophyCounter !== 0);
+
+registerWhen(register("chat", (fish) => {
+    updateCounter(fish);
+}).setCriteria("NEW DISCOVERY: ${fish}"), () => getWorld() === "Crimson Isle" && settings.trophyCounter !== 0);
+
+/**
+ * Update time for session view
+ */
+registerWhen(register("step", () => {
+    if (Object.keys(sessionTrophy).length !== 0 && getPaused() === false) timePassed++;
+    updateMessage(sessionTrophy);
+}).setFps(1), () => getWorld() === "Crimson Isle" && settings.trophyCounter === 2);

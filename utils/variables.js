@@ -8,7 +8,7 @@ export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
     "newUser": true,
     "version": "2.3.1",
-    "profileId": undefined,
+    "lastID" : undefined,
     "world": "none",
     "tier": 0,
     "lastMsg": "joe",
@@ -20,7 +20,6 @@ export let data = new PogObject("VolcAddons", {
     "emotelist": {},
     "cooldownlist": {},
     "files": [],
-    "trophyFish": {},
     // Properties related to timing and split data
     "splits": {
         "last": [0, 0, 0, 0, 0],

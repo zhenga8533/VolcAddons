@@ -23,9 +23,7 @@ register("chat", (player) => {
  * @returns {string|undefined} - The player's UUID, or undefined if not fetched yet.
  */
 let uuid = undefined;
-export function getPlayerUUID() {
-    return uuid;
-}
+export function getPlayerUUID() { return uuid };
 
 // Make an API request to Mojang to get the player's UUID based on their in-game name.
 request({
@@ -38,7 +36,15 @@ request({
     console.error(error);
 });
 
-// Event handler for detecting the player's profile ID from a chat message.
+// Event handler for detecting the player's profile ID from a chat message and update API data.
+import { updateBestiary } from "../features/combat/Bestiary";
+import { updateTrophy } from "../features/crimsonIsle/TrophyCounter";
+let updatedTrophy = false;
 register("chat", (id) => {
-    data.profileId = id;
+    data.lastID = id;
+    updateBestiary(id);
+    if (updatedTrophy === false) {
+        updateTrophy(id);
+        updatedTrophy = true;
+    }
 }).setCriteria("Profile ID: ${id}");

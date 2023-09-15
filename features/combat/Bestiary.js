@@ -11,25 +11,26 @@ import { data, registerWhen } from "../../utils/variables";
  * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
  */
 let bestiaryApi = undefined;
-const bestiaryUpdate = register("worldLoad", () => updateBestiary());
-export function updateBestiary() {
+export function updateBestiary(profileId) {
+    if (settings.api === "" || profileId === undefined) return;
+
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
-        url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${data.profileId}`,
+        url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${profileId}`,
         json: true
     }).then((response) => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
-        bestiaryApi = response.profile.members[getPlayerUUID()].bestiary.kills;
-    }).catch((error) => {
+        bestiaryApi = response.profile.members[getPlayerUUID()]?.bestiary?.kills;
+    }).catch((err) => {
         // If there is an error, display the error message in the Minecraft chat.
-        if (error.cause !== "Invalid API key")
-            delay(updateBestiary(), 3000);
-        else if (settings.apiKey) {
-            delay(() => ChatLib.chat(`${LOGO} ${RED}${error.cause}!`), 1000);
-            bestiaryUpdate.unregister();
+        ChatLib.chat(`${LOGO} ${RED}${err.cause ?? err}`);
+        if (err.cause === "Invalid API key") {
+            settings.api = "";
+            ChatLib.chat(`${GREEN}API key cleared!`);
         }
     });
 }
+updateBestiary(data.lastID);
 
 /**
  * Variable and class to track mob bestiary data.
@@ -331,15 +332,12 @@ register("worldLoad", () => {
 function sortBestiary(val, amount) {
     // Filtering the bestiary based on the provided criteria and amount
     const filteredBestiary = Object.entries(bestiary).filter(([key, value]) =>
-        val === "bracket"
-            ? value.bracket === KILL_BRACKETS[amount - 1] && value.next !== 0
-            : value.next !== 0
+        val === "bracket" ? value.bracket === KILL_BRACKETS[amount - 1] && value.next !== 0 : value.next !== 0
     );
 
     // Sorting the filtered bestiary in descending order based on the provided criteria
-    const sortedBestiary = filteredBestiary.sort((a, b) =>
-        b[1][val === "bracket" ? "next" : val] - a[1][val === "bracket" ? "next" : val]
-    ).slice(val === "bracket" ? -10 : -amount).reduce((acc, [key, value]) => {
+    const sortedBestiary = filteredBestiary.sort((a, b) => b[1][val === "bracket" ? "next" : val] - a[1][val === "bracket" ? "next" : val])
+    .slice(val === "bracket" ? -10 : -amount).reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
     }, {});
