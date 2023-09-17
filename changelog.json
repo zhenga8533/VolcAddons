@@ -1,12 +1,5 @@
 [
-    "- Added `/va calc tabasco`",
-    "- Added ?<floor, tier> to VA and party commands",
-    "- Added auto transfer party on lobby",
-    "- Added auto announce server kick",
-    "- Added kill counter",
-    "- Added trophy fish counter",
-    "- Changed `/va calc hg` formatting",
-    "- Changed party commands to not be skyblock locked",
-    "- Fixed hitbox colors not changing for different hp inputs",
-    "- Fixed some minor bugs that I cba to list"
+    "- Added ?instance commands to settings",
+    "- TODO: Changed ?w farming to be anonymous",
+    "- TODO: Changed composter inactive to display time"
 ]

@@ -37,6 +37,12 @@ class Settings {
     })
     demoteCommand = true;
     @CheckboxProperty({
+        name: `Instance Command ${DARK_AQUA}?<f, m, t>[1-7]`,
+        category: "Leader Commands",
+        subcategory: "Leader Commands"
+    })
+    instanceCommand = true;
+    @CheckboxProperty({
         name: `Promote Command ${DARK_AQUA}?promote`,
         category: "Leader Commands",
         subcategory: "Leader Commands"

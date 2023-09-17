@@ -83,8 +83,7 @@ setWaifu(false);
  */
 export function executeCommand(name, args, sendTo) {
     if (data.blacklist.includes(name.toLowerCase())) return;
-    const command = args[0];
-    args = args.map(w => w.toLowerCase());
+    const command = args[0].toLowerCase();
 
     // PARTY COMMANDS
     if (settings.partyCommands !== 0) {
@@ -99,8 +98,9 @@ export function executeCommand(name, args, sendTo) {
             case "transphobic":
                 if (toggles.slanderCommand === false) return;
 
+                const slandering = args[1] ?? name;
                 const percentage = Math.floor(Math.random() * 100) + 1;
-                if (sendTo !== false) ChatLib.command(`${sendTo} ${name} is ${percentage}% ${command}! ${randID}`);
+                if (sendTo !== false) ChatLib.command(`${sendTo} ${slandering} is ${percentage}% ${command}! ${randID}`);
                 else ChatLib.chat(`${LOGO} ${DARK_AQUA}You are ${WHITE}${percentage}% ${DARK_AQUA}${command}!`);
                 break;
             case "dice": // Dice roll
@@ -197,7 +197,7 @@ export function executeCommand(name, args, sendTo) {
     }
     
     // LEADER COMMANDS
-    if (sendTo === false || getIsLeader() === true && settings.leaderCommands === true && Player.getName() !== name) {
+    if (sendTo === false || (sendTo === "pc" && getIsLeader() === true && settings.leaderCommands === true && Player.getName() !== name)) {
         switch (command) {
             case "mute":
                 if (toggles.warpCommand === false) return;
@@ -232,6 +232,7 @@ export function executeCommand(name, args, sendTo) {
                 ChatLib.command(`stream open ${args[1]}`);
                 break;
             default:  // Join instance commands
+                if (toggles.instanceCommand == false) return;
                 const floors = {
                     1: "one",
                     2: "two",
@@ -248,8 +249,9 @@ export function executeCommand(name, args, sendTo) {
                     4: "fiery",
                     5: "infernal"
                 }
-                const l1 = args[0][0];
+                const l1 = args[0][0].toLowerCase();
                 const l2 = args[0][1];
+                args?.[0];
 
                 if (l1 === "m" && l2 in floors) ChatLib.command(`joininstance master_catacombs_floor_${floors[l2]}`);
                 else if (l1 === "f" && l2 in floors) ChatLib.command(`joininstance catacombs_floor_${floors[l2]}`);

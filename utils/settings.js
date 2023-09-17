@@ -179,7 +179,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     hideFarEntity = 0;
     @SliderProperty({
         name: "Hide Close Players",
-        description: `${DARK_RED}NEW! ${GRAY}Set minimum distance away from player a player can be or as 0 to turn ${RED}OFF${GRAY}.`,
+        description: `Set minimum distance away from player a player can be or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
         subcategory: "Server",
         min: 0,
@@ -197,7 +197,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @SwitchProperty({
         name: "Hide All Particles",
-        description: `${DARK_RED}NEW! ${GRAY}Prevents any particle from rendering including those not in settings.`,
+        description: "Prevents any particle from rendering including those not in settings.",
         category: "General",
         subcategory: "Server"
     })
@@ -288,7 +288,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     
     @SelectorProperty({
         name: "Auto Transfer",
-        description: `${DARK_RED}NEW! ${GRAY}Transfers party when certain conditions are met.`,
+        description: "Transfers party when certain conditions are met.",
         category: "Party",
         subcategory: "Party",
         options: ["OFF", "On Transfer", "On Kick"]
@@ -297,7 +297,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @TextProperty({
         name: "Server Kick Announce",
-        description: `${DARK_RED}NEW! ${GRAY}Set the message to be sent to the party if you get lobby kicked or as nothing to turn ${RED}OFF${GRAY}.`,
+        description: `Set the message to be sent to the party if you get lobby kicked or as nothing to turn ${RED}OFF${GRAY}.`,
         category: "Party",
         subcategory: "Party"
     })
@@ -405,7 +405,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     
     @SwitchProperty({
         name: "Kill Counter",
-        description: `${DARK_RED}NEW! ${GRAY}Tracks average amount of kills an hour ${BLUE}(must have Book of Stats)${GRAY}.`,
+        description: `Tracks average amount of kills an hour ${BLUE}(must have Book of Stats)${GRAY}.`,
         category: "Combat",
         subcategory: "Bestiary"
     })
@@ -685,7 +685,7 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
 
     @SelectorProperty({
         name: "Trophy Fish Counter",
-        description: `${DARK_RED}NEW! ${GRAY}Tracks number of trophy fishes caught and displays rates when on "Session View".
+        description: `Tracks number of trophy fishes caught and displays rates when on "Session View".
 Move GUI with ${AQUA}/moveTrophy ${GRAY}or reset tracker with ${AQUA}/resetTrophy${GRAY}.`,
         category: "Crimson Isles",
         subcategory: "Fishing",
