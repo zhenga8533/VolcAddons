@@ -110,6 +110,8 @@ register("dragged", (dx, dy, x, y) => {
  */
 register("guiKey", (char, keyCode, currentGui, event) => {
     if (!gui.isOpen()) return;
+    
+    // View Change
     if (keyCode === 17) {
         worldView = !worldView;
         if (worldView === true) {
@@ -120,14 +122,14 @@ register("guiKey", (char, keyCode, currentGui, event) => {
                 }
                 return true;
             });
-            ChatLib.chat(`${LOGO} ${GREEN}Changed to world view!`);
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed to world view!`);
         } else {
             overlays.push(...overlaid);
             overlaid.length = 0;
-            ChatLib.chat(`${LOGO} ${GREEN}Changed to global view!`);
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed to global view!`);
         }
     }
-
+    
     if (currentOverlay === undefined) return;
     
     if (keyCode === 13) {  // Increase Scale (+ key)

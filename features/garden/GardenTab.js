@@ -101,12 +101,14 @@ function updateCompost() {
     const fuel = Object.entries(fuelMeter)[1][1].removeFormatting().replace(/[\s,]/g, '').replace('/', ' ').split(' ')[0];
     const noCrop = crop / (4000 * (1 - costUpgrade/100)) * speed;
     const noFuel = fuel / (2000 * (1 - costUpgrade/100)) * speed;
-    emptyCompost = Math.min(noCrop, noFuel) + Date.now()/1000;
+    emptyCompost = Math.min(noCrop, noFuel);
 }
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, updateCompost);
 }), () => getWorld() === "Garden");
-registerWhen(register("guiMouseClick", updateCompost), () => getWorld() === "Garden");
+registerWhen(register("guiMouseClick", () => {
+    Client.scheduleTask(1, updateCompost);
+}), () => getWorld() === "Garden");
 
 /**
  * Update compost overlay.
@@ -124,11 +126,11 @@ registerWhen(register("step", () => {
         const fuel = tablist.find(tab => tab.includes("Fuel")).removeFormatting().replace(/\D/g, "") * 1000;
         const noCrop = crop / (4000 * (1 - costUpgrade/100)) * speed;
         const noFuel = fuel / (2000 * (1 - costUpgrade/100)) * speed;
-        emptyCompost = Math.min(noCrop, noFuel) + Date.now()/1000;
+        emptyCompost = Math.min(noCrop, noFuel);
     }
 
-    const empty = emptyCompost - Date.now()/1000;
-    const message = empty <= 0 ? `${RED}Composter Empty!` : `${WHITE}${getTime(empty)}`;
+    emptyCompost--;
+    const message = emptyCompost <= 0 ? `${RED}Composter Empty!` : `${WHITE}${getTime(emptyCompost)}`;
     const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
     const next = !time ? `${RED}Inactive` :
         getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
