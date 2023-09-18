@@ -1,5 +1,7 @@
 [
     "- Added ?instance commands to settings",
-    "- TODO: Changed ?w farming to be anonymous",
-    "- TODO: Changed composter inactive to display time"
+    "- TODO: Added toggle to `/va gui` to take world into account",
+    "- TODO: Changed composter inactive to display time",
+    "- TODO: Changed default GUI locations",
+    "- TODO: Fixed slayer boss announce"
 ]

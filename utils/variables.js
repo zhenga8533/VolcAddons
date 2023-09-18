@@ -80,6 +80,7 @@ export let data = new PogObject("VolcAddons", {
     "DL": [30, 200, 1], // Broodmother Location
     "JL": [30, 250, 1], // Kill Counter Location
     "FL": [30, 300, 1], // Trophy Fish Location
+    "OL": [30, 300, 1], // Composter Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

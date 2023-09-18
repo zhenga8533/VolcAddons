@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_RED, GREEN, RED, RESET, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -30,7 +30,7 @@ const nextOverlay = new Overlay("nextVisitor", ["all"], () => true, data.NL, "mo
 registerWhen(register("step", () => {
     tablist = TabList?.getNames();
     gardenOverlay.message = "";
-    visitors = tablist?.findIndex((tab) => tab.includes("Visitors:"));
+    visitors = tablist?.findIndex(tab => tab.includes("Visitors:"));
     if (visitors === undefined) return;
 
     if (visitors !== -1) {
@@ -72,13 +72,67 @@ registerWhen(register("chat", () => {
     next = 720;
 }).setCriteria("Tarwen has arrived on your Garden!"), () => settings.nextVisitor === true || settings.warpGarden === true);
 
+
 /**
- * Checks tablist for inactive composter and displays a title if there is.
+ * Composter timers ...
+ */
+const compostExample =
+`${DARK_GREEN}${BOLD}Empty Compost: ${WHITE}loading
+${DARK_GREEN}${BOLD}Next Compost: ${WHITE}...`;
+const compostOverlay = new Overlay("compostTab", ["Garden"], () => true, data.OL, "moveCompost", compostExample);
+let emptyCompost = 0;
+
+/**
+ * Tracks time until compost empty
+ */
+function updateCompost() {
+    const container = Player.getContainer();
+    if (container.getName() !== "Composter") return;
+    const cropMeter = container.getStackInSlot(46)?.getLore();
+    const fuelMeter = container.getStackInSlot(52)?.getLore();
+    if (cropMeter === undefined || fuelMeter === undefined) return;
+
+    // Composter Upgrades
+    const costUpgrade = data.composterUpgrades["Cost Reduction"];
+    const speed = (600 / (1 + data.composterUpgrades["Composter Speed"] * 0.2));
+
+    // Run out calc
+    const crop = Object.entries(cropMeter)[1][1].removeFormatting().replace(/[\s,]/g, '').replace('/', ' ').split(' ')[0];
+    const fuel = Object.entries(fuelMeter)[1][1].removeFormatting().replace(/[\s,]/g, '').replace('/', ' ').split(' ')[0];
+    const noCrop = crop / (4000 * (1 - costUpgrade/100)) * speed;
+    const noFuel = fuel / (2000 * (1 - costUpgrade/100)) * speed;
+    emptyCompost = Math.min(noCrop, noFuel) + Date.now()/1000;
+}
+registerWhen(register("guiOpened", () => {
+    Client.scheduleTask(1, updateCompost);
+}), () => getWorld() === "Garden");
+registerWhen(register("guiMouseClick", updateCompost), () => getWorld() === "Garden");
+
+/**
+ * Update compost overlay.
  */
 registerWhen(register("step", () => {
-    if (!tablist) return;
+    if (tablist === null) return;
 
-    composter = tablist.findIndex((tab) => tab.indexOf("INACTIVE") !== -1);
-    if (composter !== -1)
-        Client.Companion.showTitle(`${DARK_RED}${BOLD}COMPOSTER INACTIVE`, "", 0, 25, 5);
-}).setFps(1), () => getWorld() === "Garden" && settings.gardenCompost === true);
+    if (emptyCompost === 0) {
+        // Composter Upgrades
+        const costUpgrade = data.composterUpgrades["Cost Reduction"];
+        const speed = (600 / (1 + data.composterUpgrades["Composter Speed"] * 0.2));
+
+        // Run out calc
+        const crop = tablist.find(tab => tab.includes("Organic Matter")).removeFormatting().replace(/\D/g, "") * 1000;
+        const fuel = tablist.find(tab => tab.includes("Fuel")).removeFormatting().replace(/\D/g, "") * 1000;
+        const noCrop = crop / (4000 * (1 - costUpgrade/100)) * speed;
+        const noFuel = fuel / (2000 * (1 - costUpgrade/100)) * speed;
+        emptyCompost = Math.min(noCrop, noFuel) + Date.now()/1000;
+    }
+
+    const empty = emptyCompost - Date.now()/1000;
+    const message = empty <= 0 ? `${RED}Composter Empty!` : `${WHITE}${getTime(empty)}`;
+    const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
+    const next = !time ? `${RED}Inactive` :
+        getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
+    compostOverlay.message =
+`${DARK_GREEN}${BOLD}Empty Compost: ${message}
+${DARK_GREEN}${BOLD}Next Compost: ${WHITE}${next}`;
+}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab !== 0);
