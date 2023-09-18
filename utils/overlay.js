@@ -1,5 +1,5 @@
 import settings from "./settings";
-import { GUI_INSTRUCT, ITALIC } from "./constants";
+import { GREEN, ITALIC, LOGO } from "./constants";
 import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";
 
@@ -21,11 +21,15 @@ function renderScale(scale, text, x, y) {
 /**
  * Variables used to move all active GUIs.
  */
-const overlays = [];
-let currentOverlay = undefined;
+const GUI_INSTRUCT = "Use +/- to scale, R to reset, or W to change view";
 const gui = new Gui();
-const background = new Gui();
 export function openGUI() { gui.open() };
+const background = new Gui();
+
+let overlays = [];
+let overlaid = [];
+let currentOverlay = undefined;
+let worldView = false;
 
 /**
  * Renders overlays on the GUI if it's open.
@@ -105,7 +109,26 @@ register("dragged", (dx, dy, x, y) => {
  * @param {object} event - Event object for key press.
  */
 register("guiKey", (char, keyCode, currentGui, event) => {
-    if (currentOverlay === undefined || !gui.isOpen()) return;
+    if (!gui.isOpen()) return;
+    if (keyCode === 17) {
+        worldView = !worldView;
+        if (worldView === true) {
+            overlays = overlays.filter(overlay => {
+                if (!overlay.requires.has(getWorld()) && !overlay.requires.has("all")) {
+                    overlaid.push(overlay);
+                    return false;
+                }
+                return true;
+            });
+            ChatLib.chat(`${LOGO} ${GREEN}Changed to world view!`);
+        } else {
+            overlays.push(...overlaid);
+            overlaid.length = 0;
+            ChatLib.chat(`${LOGO} ${GREEN}Changed to global view!`);
+        }
+    }
+
+    if (currentOverlay === undefined) return;
     
     if (keyCode === 13) {  // Increase Scale (+ key)
         currentOverlay.loc[2] += 0.05;

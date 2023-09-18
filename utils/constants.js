@@ -43,7 +43,6 @@ ${GOLD}${BOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json"
 ${WHITE}Made By Volcaronitee
 `;
 export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}]`;
-export const GUI_INSTRUCT = "Use +/- to change scale or press R to reset";
 
 /**
  * Rift waypoints.
