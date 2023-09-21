@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, RESET, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GREEN, DARK_RED, GRAY, GREEN, RED, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -12,6 +12,7 @@ import { getWorld } from "../../utils/worlds";
 let tablist = null;
 let visitors = 0;
 let next = 0;
+let lastTick = 0;
 export function getNextVisitor() { return next };
 const gardenExample =
 `${AQUA}${BOLD}Visitors ${WHITE}(5):
@@ -47,8 +48,7 @@ registerWhen(register("step", () => {
  */
 registerWhen(register("step", () => {
     // Update Next Visitor Message
-    if (next > 0)
-        next -= 1;
+    if (next > 0) next -= 1;
     nextOverlay.message = next > 0 ?
         `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)}`:
         `${AQUA}${BOLD}Next Visitor: ${RED}Shipment Received`;
@@ -63,8 +63,10 @@ registerWhen(register("step", () => {
         nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
 
         next = nextVisit[0];
-        if (nextVisit.length === 2)
-            next = next * 60 + parseInt(nextVisit[1]);
+        if (nextVisit.length === 2) next = next * 60 + parseInt(nextVisit[1]);
+        const estimated = next / (lastTick - next);
+        if (estimated > 0) nextOverlay.message = `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)} ${GRAY}[ETA: ${getTime(estimated)}]`;
+        lastTick = next;
     }
 }).setFps(1), () => settings.nextVisitor === true || settings.warpGarden === true);
 
