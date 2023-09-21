@@ -34,19 +34,18 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
  * Uses scoreboard to detect if a slayer boss is active.
  */
 registerWhen(register("step", () => {
-    if (bossCD === false) return;
+    if (bossCD === true) return;
     const bossLine = Scoreboard?.getLines().find((line) => line.getName().includes("Slay the boss!"));
     if (questStart === false || bossLine === undefined) return;
     
     bossCD = true;
     questStart = false;
-    if (settings.bossAlert)
-        announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
-}).setFps(5), () => settings.bossAlert !== 1 || (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
+    if (settings.bossAlert) announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
+}).setFps(5), () => settings.bossAlert !== 0 || (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
 
 /**
  * Uses chat to track slayer quest state.
  */
-register("chat", () => {  delay(() => questStart = true, 500) }).setCriteria("  SLAYER QUEST STARTED!");
+register("chat", () => { delay(() => questStart = true, 500) }).setCriteria("  SLAYER QUEST STARTED!");
 register("chat", () => { bossCD = false }).setCriteria("  SLAYER QUEST COMPLETE!");
 register("chat", () => { bossCD = false }).setCriteria("  SLAYER QUEST FAILED!");

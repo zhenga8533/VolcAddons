@@ -2,6 +2,8 @@
     "- Added ?instance commands to settings",
     "- Added toggle to `/va gui` to take world into account",
     "- Added composter inactive option for display time",
+    "- TODO: Added estimated next visitor",
     "- TODO: Changed default GUI locations",
-    "- TODO: Fixed slayer boss announce"
+    "- Fixed trophy fishing colors",
+    "- Fixed slayer boss announce"
 ]

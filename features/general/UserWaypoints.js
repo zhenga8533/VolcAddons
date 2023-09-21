@@ -24,6 +24,7 @@ export function getUserWaypoints() { return userWaypoints };
  */
 registerWhen(register("chat", (player, spacing, x, y, z) => {
     // Check blacklist
+    print(player);
     if (data.blacklist.includes(getPlayerName(player).toLowerCase())) return;
 
     // Gets colors and titles in name
@@ -46,7 +47,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
 
     // Delete waypoint after 'X' seconds
     delay(() => { if (chatWaypoints.length) chatWaypoints.shift() }, settings.drawWaypoint * time);
-}).setCriteria("${player}&f${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint !== 0);
+}).setCriteria("${player}:${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint !== 0);
 
 /**
  * Allows user to create waypoints via command.
