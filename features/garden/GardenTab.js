@@ -79,7 +79,7 @@ registerWhen(register("chat", () => {
 const compostExample =
 `${DARK_GREEN}${BOLD}Empty Compost: ${WHITE}loading
 ${DARK_GREEN}${BOLD}Next Compost: ${WHITE}...`;
-const compostOverlay = new Overlay("compostTab", ["Garden"], () => true, data.OL, "moveCompost", compostExample);
+const compostOverlay = new Overlay("compostTab", ["Garden"], () => settings.compostTab === 2, data.OL, "moveCompost", compostExample);
 let emptyCompost = 0;
 
 /**
@@ -105,16 +105,22 @@ function updateCompost() {
 }
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => getWorld() === "Garden");
+}), () => getWorld() === "Garden" && settings.compostTab === 2);
 registerWhen(register("guiMouseClick", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => getWorld() === "Garden");
+}), () => getWorld() === "Garden" && settings.compostTab === 2);
 
 /**
  * Update compost overlay.
  */
 registerWhen(register("step", () => {
     if (tablist === null) return;
+
+    if (settings.gardenTab === 1) {
+        if (tablist.find(tab => tab.includes("Time Left")) !== undefined)
+            Client.Companion.showTitle(`${DARK_RED}${BOLD} ${WHITE}COMPOSTER INACTIVE!`, "", 0, 25, 5);
+        return;
+    }
 
     if (emptyCompost === 0) {
         // Composter Upgrades

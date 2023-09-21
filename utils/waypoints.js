@@ -88,23 +88,23 @@ register("tick", () => {
 /**
  * Various render functions for different types of waypoints (i.e. entities or blocks).
  */
-function renderSimple(waypoints, r, g, b) {
+function renderSimple(waypoints, r, g, b, beacon) {
     if (!waypoints.length) return;
 
-    waypoints.forEach((waypoint) => {
+    waypoints.forEach(waypoint => {
         x = waypoint[1];
         y = waypoint[2];
         z = waypoint[3];
     
         RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true);
         RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, true);
-        renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
+        if (beacon) renderBeaconBeam(x, y, z, r, g, b, 0.5, false);
     });
 }
 function renderSimpler(entities, r, g, b) {
     if (!entities.length) return;
 
-    entities.forEach((entity) => {
+    entities.forEach(entity => {
         x = entity.getX();
         y = entity.getY();
         z = entity.getZ();
@@ -162,7 +162,7 @@ register("renderWorld", () => {
     renderBeam(getCrates()); // White Crates
     renderBeam(getBuilds()); // Red Builds
     renderStands(getVamps(), "Medium Rare", 1, 0, 0); // Red Vamps
-    renderSimple(getEnigma(), 0.5, 0, 0.5); // Purple Enigma
-    renderSimple(getCat(), 0, 0, 1); // Blue Cat
+    renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma
+    renderSimple(getCat(), 0, 0, 1, true); // Blue Cat
     renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder
 });

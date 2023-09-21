@@ -534,13 +534,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     jacobReward = true;
 
     // --- Garden ---
-    @SwitchProperty({
+    @SelectorProperty({
         name: "Composter Display",
-        description: "Displays the time until compost is produced and until composter is empty.",
+        description: "Alerts player when composter is inactive or display time until it is inactive.",
         category: "Farming",
-        subcategory: "Garden"
+        subcategory: "Garden",
+        options: ["OFF", "Inactive Title", "Time Overlay"]
     })
-    compostTab = false;
+    compostTab = 0;
 
     @SwitchProperty({
         name: "Garden Warp Override",
