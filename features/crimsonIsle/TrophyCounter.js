@@ -58,10 +58,11 @@ const TROPHY_COLORS = {
     slugfish: GREEN
 }
 const TROPHY_ID = {
-    lavahorse: "lava_horse",
-    obfuscated_1: "obfuscated_fish_1",
-    obfuscated_2: "obfuscated_fish_2",
-    obfuscated_3: "obfuscated_fish_3",
+    "lavahorse": "lava_horse",
+    "obfuscated_1": "obfuscated_fish_1",
+    "obfuscated_2": "obfuscated_fish_2",
+    "obfuscated_3": "obfuscated_fish_3",
+    "steaming-hot_flounder": "steaming_hot_flounder"
 }
 const TIER_INDEX = {
     "bronze": 1,
