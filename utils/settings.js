@@ -480,6 +480,16 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     miniAlert = 0;
 
+    @SliderProperty({
+        name: "Slayer Spawn Warning",
+        description: `Warns player when slayer boss is about to spawn. Set warning percentage or as 0 to turn ${RED}OFF${GRAY}.`,
+        category: "Combat",
+        subcategory: "Slayer",
+        min: 0,
+        max: 100
+    })
+    slayerSpawn = 0;
+
 
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
 
@@ -494,7 +504,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     @SliderProperty({
         name: "Powder Chest Detect",
-        description: `Highlights and counts nearby powder chests. Set block range of detection radius or as 0 to turn off.
+        description: `Highlights and counts nearby powder chests. Set block range of detection radius or as 0 to turn ${RED}OFF${GRAY}.
 Move GUI with ${AQUA}/moveChest${GRAY}.`,
         category: "Mining",
         subcategory: "Jinx",
@@ -751,7 +761,6 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
         options: ["OFF", "Highlight", "Box", "Outline"]
     })
     starDetect = 0;
-
     @ColorProperty({
         name: "Star Highlight Color",
         description: "Choose the highlight color.",

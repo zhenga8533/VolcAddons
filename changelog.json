@@ -4,7 +4,8 @@
     "- Added composter inactive option for display time",
     "- Added estimated next visitor",
     "- Added star dungeon highlights",
-    "- TODO: Added slayer spawn warning",
+    "- Added slayer spawn warning",
+    "- Changed slayer (mini)boss spawn self warning",
     "- Fixed trophy fishing colors",
     "- Fixed slayer boss announce"
 ]
