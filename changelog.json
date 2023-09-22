@@ -1,11 +1,6 @@
 [
-    "- Added ?instance commands to settings",
-    "- Added toggle to `/va gui` to take world into account",
-    "- Added composter inactive option for display time",
-    "- Added estimated next visitor",
-    "- Added star dungeon highlights",
-    "- Added slayer spawn warning",
-    "- Changed slayer (mini)boss spawn self warning",
-    "- Fixed trophy fishing colors",
-    "- Fixed slayer boss announce"
+    "- TODO: Added side armor rendering",
+    "- TODO: Added more ?commands",
+    "- TODO: Changed some detections to more optimized",
+    "- Fixed initial compost timer being off"
 ]

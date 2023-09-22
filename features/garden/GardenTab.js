@@ -65,15 +65,11 @@ registerWhen(register("step", () => {
         next = nextVisit[0];
         if (nextVisit.length === 2) next = next * 60 + parseInt(nextVisit[1]);
         const estimated = next / (lastTick - next);
-        if (estimated > 0) nextOverlay.message = `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)} ${GRAY}[ETA: ${getTime(estimated)}]`;
+        if (estimated > 0 && estimated != next)
+            nextOverlay.message = `${AQUA}${BOLD}Next Visitor: ${RESET}${getTime(next)} ${GRAY}[ETA: ${getTime(estimated)}]`;
         lastTick = next;
     }
 }).setFps(1), () => settings.nextVisitor === true || settings.warpGarden === true);
-
-registerWhen(register("chat", () => {
-    next = 720;
-}).setCriteria("Tarwen has arrived on your Garden!"), () => settings.nextVisitor === true || settings.warpGarden === true);
-
 
 /**
  * Composter timers ...
@@ -130,10 +126,12 @@ registerWhen(register("step", () => {
         const speed = (600 / (1 + data.composterUpgrades["Composter Speed"] * 0.2));
 
         // Run out calc
-        const crop = tablist.find(tab => tab.includes("Organic Matter")).removeFormatting().replace(/\D/g, "") * 1000;
+        const organic = tablist.find(tab => tab.includes("Organic Matter")).removeFormatting();
+        const crop = organic.replace(/\D/g, "") * (organic.includes('k') ? 1000 : 1);
         const fuel = tablist.find(tab => tab.includes("Fuel")).removeFormatting().replace(/\D/g, "") * 1000;
         const noCrop = crop / (4000 * (1 - costUpgrade/100)) * speed;
         const noFuel = fuel / (2000 * (1 - costUpgrade/100)) * speed;
+        
         emptyCompost = Math.min(noCrop, noFuel);
     }
 
