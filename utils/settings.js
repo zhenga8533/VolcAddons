@@ -9,6 +9,8 @@ import {
     @Vigilant,
     @CheckboxProperty,
     @SelectorProperty,
+    @ColorProperty,
+    Color
 } from '../../Vigilance/index';
 
 
@@ -16,7 +18,7 @@ import {
 @Vigilant("VolcAddons", "VolcAddons", {
     // Function to compare categories for sorting settings
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Party", "Economy", "Combat", "Mining", "Farming", "Hub", "Crimson Isles", "Kuudra", "Rift"];
+        const categories = ["General", "Party", "Economy", "Combat", "Mining", "Farming", "Hub", "Crimson Isles", "Dungeon", "Kuudra", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -737,6 +739,26 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
         subcategory: "Vanquisher"
     })
     vanqSound = false;
+
+    // ████████████████████████████████████████████████████ DUNGEON ████████████████████████████████████████████████████
+
+    // --- Star Detect ---
+    @SelectorProperty({
+        name: "Star Mob Highlight",
+        description: "Detects star mobs and highlights them in the chosen method.",
+        category: "Dungeon",
+        subcategory: "Star Detect",
+        options: ["OFF", "Highlight", "Box", "Outline"]
+    })
+    starDetect = 0;
+
+    @ColorProperty({
+        name: "Star Highlight Color",
+        description: "Choose the highlight color.",
+        category: "Dungeon",
+        subcategory: "Star Detect",
+    })
+    starColor = Color.GREEN;
 
 
     // ████████████████████████████████████████████████████ KUUDRA ████████████████████████████████████████████████████

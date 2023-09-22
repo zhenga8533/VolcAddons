@@ -51,6 +51,12 @@ import "./features/combat/SlayerDetect";
 // Mining Features
 import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
+// Farming Features
+import { calcCompost } from "./features/garden/ComposterCalc";
+import "./features/garden/FarmingWebhook";
+import { getNextVisitor } from "./features/garden/GardenTab";
+import "./features/garden/GardenWarp";
+import "./features/garden/JacobHighlight";
 // Hub Features
 import { setWarps } from "./features/hub/DianaWaypoint";
 import "./features/hub/InquisitorDetect";
@@ -61,6 +67,8 @@ import "./features/crimsonIsle/TrophyCounter";
 import "./features/crimsonIsle/VanqCounter";
 import "./features/crimsonIsle/VanqDetect";
 import "./features/crimsonIsle/VanqWarp";
+// Dungeon Features
+import "./features/dungeon/StarDetect";
 // Kuudra Features
 import { getAttributes } from "./features/kuudra/AttributePricing";
 import { calcTabasco } from "./features/kuudra/TabascoCalc";
@@ -69,12 +77,6 @@ import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
 import "./features/kuudra/KuudraProfit";
 import { getSplits } from "./features/kuudra/KuudraSplits";
-// Garden Features
-import { calcCompost } from "./features/garden/ComposterCalc";
-import "./features/garden/FarmingWebhook";
-import { getNextVisitor } from "./features/garden/GardenTab";
-import "./features/garden/GardenWarp";
-import "./features/garden/JacobHighlight";
 // Rift Features
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";

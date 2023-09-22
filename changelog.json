@@ -3,7 +3,8 @@
     "- Added toggle to `/va gui` to take world into account",
     "- Added composter inactive option for display time",
     "- Added estimated next visitor",
-    "- TODO: Changed default GUI locations",
+    "- Added star dungeon highlights",
+    "- TODO: Added slayer spawn warning",
     "- Fixed trophy fishing colors",
     "- Fixed slayer boss announce"
 ]
