@@ -33,16 +33,15 @@ registerWhen(register("chat", () => {
 const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher ${WHITE}Detected`;
 const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
 vanqOverlay.message = "";
-registerWhen(register("tick", () => {
-    const entities = World.getAllEntitiesOfType(WITHER_CLASS);
-    vanquishers = entities.filter(entity => entity.getEntity().func_110138_aP() === 1024);
+registerWhen(register("step", () => {
+    vanquishers = World.getAllEntitiesOfType(WITHER_CLASS).filter(entity => entity.getEntity().func_110138_aP() === 1024);
 
     if (vanquishers.length > 0) {
         vanqOverlay.message = vanqExample;
         if (settings.vanqSound)playSound(AMOGUS, 10000);
         if (!data.moblist.includes("vanquisher")) vanquishers = [];
     } else vanqOverlay.message = "";
-}), () => getWorld() === "Crimson Isle" && settings.vanqDetect === true);
+}).setFps(1), () => getWorld() === "Crimson Isle" && settings.vanqDetect === true);
 registerWhen(register("renderWorld", () => {
     renderEntities(vanquishers, 0.5, 0, 0.5);
 }), () => getWorld() === "Crimson Isle" && settings.vanqDetect === true);

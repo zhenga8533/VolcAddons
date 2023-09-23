@@ -5,7 +5,6 @@ import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { getLavaCreatures } from "../features/crimsonIsle/MythicDetect";
-import { getInquisitors } from "../features/hub/InquisitorDetect";
 import { getEntities } from "../features/combat/EntityDetect";
 import { getPowderChests } from "../features/mining/PowderChest";
 
@@ -77,7 +76,6 @@ register("tick", () => {
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
 
     formattedEntities = [];
-    formatEntityWaypoints(getInquisitors(), [1, 0.84, 0]); // Gold inq
     formatEntityWaypoints(getLavaCreatures(), [1, 0, 0]); // Red lava scc
     getEntities().forEach(entity => { formatEntityWaypoints(entity[0], entity[1]) }); // Colored mob esp
 });
