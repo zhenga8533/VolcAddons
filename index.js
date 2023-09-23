@@ -40,6 +40,7 @@ import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
 // Combat Features
 import { getBestiary } from "./features/combat/Bestiary";
+import "./features/combat/BowCancel";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
