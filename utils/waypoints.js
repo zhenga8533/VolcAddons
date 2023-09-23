@@ -4,7 +4,6 @@ import { getBurrow, getTheory } from "../features/hub/DianaWaypoint";
 import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
-import { getVamps } from "../features/rift/VampireSlayer";
 import { getLavaCreatures } from "../features/crimsonIsle/MythicDetect";
 import { getVanquishers } from "../features/crimsonIsle/VanqDetect";
 import { getInquisitors } from "../features/hub/InquisitorDetect";
@@ -140,20 +139,6 @@ function renderEntities(entities) {
         RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, false);
     });
 }
-function renderStands(stands, title, r, g, b) {
-    if (!stands.length) return;
-
-    stands.forEach(stand => {
-        let x = stand.getX();
-        let y = stand.getY() - 2;
-        let z = stand.getZ();
-
-        distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
-        Tessellator.drawString(`${title} §b[${distance}]`, x, y + 3.5, z, 0xffffff, false);
-        RenderLib.drawEspBox(x, y, z, 1, 2, r, g, b, 1, true);
-        RenderLib.drawInnerEspBox(x, y, z, 1, 2, r, g, b, 0.25, true);
-    });
-}
 
 // Registering renderWorld event to render the waypoints and other entities
 register("renderWorld", () => {
@@ -161,7 +146,6 @@ register("renderWorld", () => {
     renderEntities(formattedEntities);
     renderBeam(getCrates()); // White Crates
     renderBeam(getBuilds()); // Red Builds
-    renderStands(getVamps(), "Medium Rare", 1, 0, 0); // Red Vamps
     renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma
     renderSimple(getCat(), 0, 0, 1, true); // Blue Cat
     renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder

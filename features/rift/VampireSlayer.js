@@ -120,11 +120,29 @@ registerWhen(register("renderWorld", () => {
 /**
  * Highlights vampire bosses with steakable HP.
  */
+const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 let vamps = [];
-export function getVamps() { return vamps };
-registerWhen(register("tick", () => {
+registerWhen(register("step", () => {
     vamps = [];
-    const stands = get3x3Stands();
-    let bosses = stands.filter(stand => stand.getName().includes("Bloodfiend §e§l"));
-    vamps = bosses === undefined ? [] : bosses;
-}), () => settings.vampireHitbox === true && getWorld() === "The Rift");
+    
+    const player = Player.asPlayerMP().getEntity();
+    vamps = World.getWorld()?.func_72839_b(player, player.func_174813_aQ().func_72314_b(32, 32, 32))?.filter(entity => {
+        entity instanceof EntityArmorStand && entity?.func_95999_t()?.includes("Bloodfiend §e§l")
+    }) ?? [];
+}).setFps(2), () => getWorld() === "The Rift" && settings.vampireHitbox === true);
+
+/**
+ * Render mob hitboxes
+ */
+registerWhen(register("renderWorld", () => {
+    stands.forEach(stand => {
+        const x = stand.field_70142_S;
+        const y = stand.field_70137_T - 2;
+        const z = stand.field_70136_U;
+
+        const distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
+        Tessellator.drawString(`Medium Rare §b[${distance}]`, x, y + 3.5, z, 0xffffff, false);
+        RenderLib.drawEspBox(x, y, z, 1, 2, 1, 0, 0, 1, true);
+        RenderLib.drawInnerEspBox(x, y, z, 1, 2, 1, 0, 0, 0.25, true);
+    });
+}), () => getWorld() === "The Rift" && settings.vampireHitbox === true);

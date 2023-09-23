@@ -14,7 +14,7 @@ let starMobs = {};
 /**
  * Scans and stores all starred mob in world every half second.
  */
-register("step", () => {
+registerWhen(register("step", () => {
     starMobs = {};
     const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
 
@@ -38,7 +38,7 @@ register("step", () => {
         if (mob === undefined) return;
         starMobs[mob.func_145782_y()] = mob;
     })
-}).setFps(2);
+}).setFps(2), () => getWorld() === "Catacombs" && settings.starDetect !== 0);
 
 /**
  * Rendering for box and outline of star mobs.
