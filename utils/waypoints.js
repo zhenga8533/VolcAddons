@@ -4,7 +4,6 @@ import { getBurrow, getTheory } from "../features/hub/DianaWaypoint";
 import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
-import { getEntities } from "../features/combat/EntityDetect";
 import { getPowderChests } from "../features/mining/PowderChest";
 
 
@@ -12,7 +11,6 @@ import { getPowderChests } from "../features/mining/PowderChest";
  * Variables used to organize and render waypoints.
  */
 let formattedWaypoints = [];
-let formattedEntities = [];
 
 /**
  * Functions to format waypoints into the above variables to reduce renderOverlay load.
@@ -53,17 +51,6 @@ function formatWaypoints(waypoints, r, g, b) {
         formattedWaypoints.push(wp);
     });
 }
-function formatEntityWaypoints(entities, rgb) {
-    if (entities === undefined) return;
-
-    entities.forEach(entity => {
-        formattedEntities.push({
-            "x": entity.getX(), "y": entity.getY(), "z": entity.getZ(),
-            "width": entity.getWidth(), "height": entity.getHeight(),
-            "r": rgb[0], "g": rgb[1], "b": rgb[2]
-        });
-    });
-}
 register("tick", () => {
     formattedWaypoints = [];
     formatWaypoints(getChatWaypoints(), 0, 1, 1); // Cyan Waypoint
@@ -73,9 +60,6 @@ register("tick", () => {
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
-
-    formattedEntities = [];
-    getEntities().forEach(entity => { formatEntityWaypoints(entity[0], entity[1]) }); // Colored mob esp
 });
 
 /**
@@ -125,8 +109,16 @@ function renderBeam(waypoints) {
 
     waypoints.forEach((waypoint) => renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
 }
+/**
+ * 
+ * @param {Array} entities - list of entities to draw hitboxes around
+ * @param {number} r - 0-1 red value
+ * @param {number} g - 0-1 green value
+ * @param {number} b - 0-1 blue value
+ */
 export function renderEntities(entities, r, g, b) {
     entities.forEach(entity => {
+        entity = entity.getEntity() ?? entity;
         const x = entity.field_70142_S;
         const y = entity.field_70137_T;
         const z = entity.field_70136_U;
@@ -136,19 +128,10 @@ export function renderEntities(entities, r, g, b) {
         RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.5, false);
     });
 }
-function renderEntities(entities) {
-    if (!entities.length) return;
-
-    entities.forEach(e => {
-        RenderLib.drawEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 1, false);
-        RenderLib.drawInnerEspBox(e.x, e.y, e.z, e.width, e.height, e.r, e.g, e.b, 0.25, false);
-    });
-}
 
 // Registering renderWorld event to render the waypoints and other entities
 register("renderWorld", () => {
     renderWaypoint(formattedWaypoints);
-    renderEntities(formattedEntities);
     renderBeam(getCrates()); // White Crates
     renderBeam(getBuilds()); // Red Builds
     renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma

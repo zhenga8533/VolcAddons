@@ -106,3 +106,4 @@ registerWhen(register("step", () => {
 registerWhen(register("renderWorld", () => {
     renderEntities(inquisitors, 1, 0.84, 0);
 }), () => getWorld() === "Hub" && settings.detectInq === true && getPerks().has("Mythological Ritual"));
+register("worldUnload", () => inquisitors = []);

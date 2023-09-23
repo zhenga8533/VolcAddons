@@ -45,3 +45,4 @@ registerWhen(register("step", () => {
 registerWhen(register("renderWorld", () => {
     renderEntities(vanquishers, 0.5, 0, 0.5);
 }), () => getWorld() === "Crimson Isle" && settings.vanqDetect === true);
+register("worldUnload", () => vanquishers = []);

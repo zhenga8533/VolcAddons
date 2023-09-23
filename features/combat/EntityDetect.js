@@ -4,6 +4,7 @@ import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../u
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getServer, getWorld } from "../../utils/worlds";
+import { renderEntities } from "../../utils/waypoints";
 
 
 /**
@@ -12,7 +13,6 @@ import { getServer, getWorld } from "../../utils/worlds";
 let colorMap = {};
 let entityList = [];
 let entities = [];
-export function getEntities() { return entities };
 let x = 0;
 let y = 0;
 
@@ -70,7 +70,7 @@ updateEntityList();
  * Determines color based on class and filters by HP if applicable.
  */
 let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
-registerWhen(register("tick", () =>{
+registerWhen(register("step", () => {
     entities = [];
     entityList.forEach(entityData => {
         // Match coloring
@@ -85,7 +85,13 @@ registerWhen(register("tick", () =>{
         if (x !== 0) filteredEntities = filteredEntities.filter(entity => Math.abs(Player.getX() - entity.getX()) <= x);
         if (y !== 0) filteredEntities = filteredEntities.filter(entity => Math.abs(Player.getY() - entity.getY()) <= y);
         if (filteredEntities.length === 0) return;
-        entities.push([[...filteredEntities], color]);
+        entities.push([filteredEntities, color]);
+    });
+}).setFps(2), () => entityList.length !== 0);
+registerWhen(register("renderWorld", () => {
+    entities.forEach(entity => {
+        const color = entity[1];
+        renderEntities(entity[0], color[0], color[1], color[2]);
     });
 }), () => entityList.length !== 0);
 

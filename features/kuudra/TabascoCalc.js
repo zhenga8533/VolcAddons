@@ -2,7 +2,11 @@ import { AQUA, BOLD, DARK_AQUA, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE } from 
 import { commafy } from "../../utils/functions";
 import { getBazaar } from "../economy/Economy";
 
-export function calcTabasco(args) {
+
+/**
+ * /va calc for tabasco book prices
+ */
+export function calcTabasco() {
     const bazaar = getBazaar();
     const tabasco = bazaar.ENCHANTMENT_TABASCO_3;
     const pepper = bazaar.CHILI_PEPPER;
