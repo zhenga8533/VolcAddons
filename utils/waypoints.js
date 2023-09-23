@@ -5,7 +5,6 @@ import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { getLavaCreatures } from "../features/crimsonIsle/MythicDetect";
-import { getVanquishers } from "../features/crimsonIsle/VanqDetect";
 import { getInquisitors } from "../features/hub/InquisitorDetect";
 import { getEntities } from "../features/combat/EntityDetect";
 import { getPowderChests } from "../features/mining/PowderChest";
@@ -78,7 +77,6 @@ register("tick", () => {
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
 
     formattedEntities = [];
-    formatEntityWaypoints(getVanquishers(), [0.5, 0, 0.5]); // Purple vanq
     formatEntityWaypoints(getInquisitors(), [1, 0.84, 0]); // Gold inq
     formatEntityWaypoints(getLavaCreatures(), [1, 0, 0]); // Red lava scc
     getEntities().forEach(entity => { formatEntityWaypoints(entity[0], entity[1]) }); // Colored mob esp
@@ -130,6 +128,17 @@ function renderBeam(waypoints) {
     if (!waypoints.length) return;
 
     waypoints.forEach((waypoint) => renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
+}
+export function renderEntities(entities, r, g, b) {
+    entities.forEach(entity => {
+        const x = entity.field_70142_S;
+        const y = entity.field_70137_T;
+        const z = entity.field_70136_U;
+        const width = entity.field_70130_N;
+        const height =  entity.field_70131_O;
+        RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, false);
+        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.5, false);
+    });
 }
 function renderEntities(entities) {
     if (!entities.length) return;
