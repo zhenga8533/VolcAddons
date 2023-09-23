@@ -102,7 +102,7 @@ registerWhen(register("step", () => {
         Client.Companion.showTitle(`${GOLD}${BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
-}).setFps(1), () => getWorld() === "Hub" && settings.detectInq === true && getPerks().has("Mythological Ritual"));
+}).setFps(2), () => getWorld() === "Hub" && settings.detectInq === true && getPerks().has("Mythological Ritual"));
 registerWhen(register("renderWorld", () => {
     renderEntities(inquisitors, 1, 0.84, 0);
 }), () => getWorld() === "Hub" && settings.detectInq === true && getPerks().has("Mythological Ritual"));

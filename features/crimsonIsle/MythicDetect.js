@@ -3,6 +3,7 @@ import { AMOGUS, BOLD, DARK_BLUE, DARK_RED, WHITE } from "../../utils/constants"
 import { announceMob, playSound } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import { renderEntities } from "../../utils/waypoints";
 
 
 /**
@@ -10,8 +11,6 @@ import { getWorld } from "../../utils/worlds";
  */
 const GOLEM_CLASS = Java.type('net.minecraft.entity.monster.EntityIronGolem').class;
 const GUARDIAN_CLASS = Java.type('net.minecraft.entity.monster.EntityGuardian').class;
-let lavaCreatures = [];
-export function getLavaCreatures() { return lavaCreatures };
 
 /**
  * Announce to party/all chat whenever player spawns a mythic lava creature.
@@ -28,24 +27,24 @@ registerWhen(register("chat", () => {
 /**
  * Detects if any mythic lava creatures are near the player.
  */
-registerWhen(register("tick", () => {
-    lavaCreatures = [];
-
-    const ironGolems = World.getAllEntitiesOfType(GOLEM_CLASS);
-    ironGolems.forEach(ironGolem => {
+let jawbussy = [];
+let thunders = [];
+registerWhen(register("step", () => {
+    jawbussy = World.getAllEntitiesOfType(GOLEM_CLASS);
+    if (jawbussy.length > 0) {
         Client.Companion.showTitle(`${DARK_RED}${BOLD}LORD JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5);
         playSound(AMOGUS, 10000);
-        if (data.moblist.includes("jawbus"))
-            lavaCreatures.push(ironGolem);
-    });
+        if (!data.moblist.includes("jawbus")) jawbussy = [];
+    }
     
-    const guardians = World.getAllEntitiesOfType(GUARDIAN_CLASS);
-    guardians.forEach(guardian => {
-        if (guardian.getEntity().func_175461_cl() === false) return;
-
+    thunders = World.getAllEntitiesOfType(GUARDIAN_CLASS).filter(guardian => guardian.getEntity().func_175461_cl());
+    if (thunders.length > 0) {
         Client.Companion.showTitle(`${DARK_BLUE}${BOLD}THUNDER ${WHITE}DETECTED!`, "", 0, 25, 5);
         playSound(AMOGUS, 10000);
-        if (data.moblist.includes("thunder"))
-            lavaCreatures.push(guardian);
-    });
-}), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect === true);
+        if (!data.moblist.includes("thunder")) thunders = [];
+    }
+}).setFps(2), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect === true);
+registerWhen(register("step", () => {
+    renderEntities(jawbussy, 0.55, 0, 0);
+    renderEntities(thunders, 0, 0, 0.55);
+}).setFps(2), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect === true);
