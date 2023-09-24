@@ -18,6 +18,7 @@ for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key
 
 // General Features
 import "./features/general/AntiGhostParty";
+import "./features/general/ArmorDisplay";
 import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
@@ -46,7 +47,7 @@ import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
-import "./features/combat/KillTracker";
+import "./features/combat/KillCounter";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features

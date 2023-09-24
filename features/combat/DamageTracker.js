@@ -1,4 +1,3 @@
-import { get3x3Stands } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import settings from "../../utils/settings";
