@@ -406,8 +406,8 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     broodmotherDetect = false;
     
     @SwitchProperty({
-        name: "Kill Counter",
-        description: `Tracks average amount of kills an hour ${BLUE}(must have Book of Stats)${GRAY}.`,
+        name: "Scuffed Kill Counter",
+        description: `${DARK_RED}NEW! ${GRAY}Tracks average amount of specific mob kills an hour ${BLUE}(must have Book of Stats)${GRAY}.`,
         category: "Combat",
         subcategory: "Bestiary"
     })

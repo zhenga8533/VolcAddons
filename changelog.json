@@ -2,6 +2,7 @@
     "- Added cancel bow swing",
     "- TODO: Added side armor rendering",
     "- TODO: Added more ?commands",
+    "- Changed kill counter to detect mobs",
     "- Changed some detections to more optimized",
     "- Changed `/va calc inferno` to use new odds",
     "- Fixed bazaar item prices being off",
