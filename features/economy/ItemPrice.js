@@ -154,8 +154,7 @@ export function getItemValue(item) {
 
     // Base Value
     valueMessage = `${DARK_AQUA}${BOLD}Item: ${itemTag.display.Name}\n`;
-    if (value !== 0) valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
-    else {  // Check for Edge Cases
+    if (value === 0) {  // Check for Edge Cases
         const partsID = itemID.split('_');
         const pieceTier = partsID[0];
         if (pieceTier in KUUDRA_UPGRADES) {  // Kuudra Piece Upgrade Value
@@ -181,15 +180,16 @@ export function getItemValue(item) {
             if (itemID === "PET") {  // Pet Value
                 const petInfo = JSON.parse(itemData?.petInfo);
                 value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
+                savedValues[itemUUID] = [value, ""];
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
                 value = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
             } else {  // Bazaar Value
                 value = (bazaar?.[itemID]?.[0] ?? 0) * item.getStackSize();
             }
-            savedValues[itemUUID] = [value, ""];
             return value;
         }
     }
+    valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
     
     // Skin Value
     const skinValue = auction?.[itemData.skin]?.lbin ?? 0;
