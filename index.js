@@ -1,6 +1,6 @@
 // Utility Modules
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
-import "./utils/functions";
+import { formatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import "./utils/player";
 import { openGUI } from "./utils/overlay";
@@ -332,7 +332,7 @@ register ("command", (...args) => {
         // Set Apex Price
         case "apex":
             data.apexPrice = isNaN(args[1]) ? data.apexPrice : args[1];
-            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatInt(data.apexPrice)}!`);
+            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatNumber(data.apexPrice)}!`);
             break;
         // Configure enigma souls
         case "enigma":

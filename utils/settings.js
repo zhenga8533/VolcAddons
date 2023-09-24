@@ -416,7 +416,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Combat ---
     @SwitchProperty({
         name: "Bow Swing Cancel",
-        description: "Cancels left click bow swing animations.",
+        description: `${DARK_RED}NEW! ${GRAY}Cancels left click bow swing animations.`,
         category: "Combat",
         subcategory: "Combat"
     })

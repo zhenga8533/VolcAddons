@@ -4,5 +4,6 @@
     "- TODO: Added more ?commands",
     "- Changed some detections to more optimized",
     "- Changed `/va calc inferno` to use new odds",
-    "- Fixed initial compost timer being off"
+    "- Fixed initial compost timer being off",
+    "- Fixed `/va apex`"
 ]
