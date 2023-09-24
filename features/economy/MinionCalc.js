@@ -56,7 +56,7 @@ export function calcMinions(args) {
     // Universal variables
     const minions = isNaN(args[2]) ? 31 : args[2];
     const tier = isNaN(args[3]) || args[3] > 11 ? 3 : args[3];
-    let infernoAction = (INFERNO_ACTION_BASE - (tier * INFERNO_ACTION_UPGRADE)) / MAX_INFERNO;
+    let infernoAction = 1.1 * (INFERNO_ACTION_BASE - (tier * INFERNO_ACTION_UPGRADE)) / MAX_INFERNO;
     const vampAction = 86400 / (VAMPIRE_ACTIONS[Math.ceil(tier/2) - 1]*2/MAX_CATALYST) * minions;
 
     // Different Calcs
@@ -104,9 +104,9 @@ export function calcMinions(args) {
 
             const drops = {
                 "GABAGOOL": actions.toFixed(4),
-                "CHILI": (actions / (156 / eyedrop)).toFixed(4),
-                "VERTEX": (actions / (16364 / eyedrop)).toFixed(4),
-                "APEX": (actions / (1570909 / eyedrop) * apexMinion).toFixed(4),
+                "CHILI": (actions / (156 / eyedrop) * 1.15).toFixed(4),
+                "VERTEX": (actions / (16364 / eyedrop) * 2.8).toFixed(4),
+                "APEX": (actions / (1570909 / eyedrop) * apexMinion * 1.2).toFixed(4),
                 "REAPER": (actions / (458182 / eyedrop)).toFixed(4)
             }
             const profit = {
