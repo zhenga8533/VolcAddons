@@ -5,6 +5,7 @@ import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { getPowderChests } from "../features/mining/PowderChest";
+import { data } from "./variables";
 
 
 /**
@@ -86,8 +87,8 @@ function renderSimpler(entities, r, g, b) {
         y = entity.getY();
         z = entity.getZ();
     
-        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, false);
-        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, false);
+        RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, data.vision);
+        RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, data.vision);
     });
 }
 function renderWaypoint(waypoints) {
@@ -124,8 +125,8 @@ export function renderEntities(entities, r, g, b) {
         const z = entity.field_70136_U;
         const width = entity.field_70130_N;
         const height =  entity.field_70131_O;
-        RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, false);
-        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.5, false);
+        RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, data.vision);
+        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.5, data.vision);
     });
 }
 

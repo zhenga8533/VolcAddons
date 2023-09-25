@@ -1,6 +1,6 @@
 import RenderLib from "../../../RenderLib";
 import settings from "../../utils/settings";
-import { registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
 
@@ -57,9 +57,9 @@ registerWhen(register("renderWorld", () => {
         const z = mob.field_70136_U;
         const width = mob.field_70130_N * 1.5;
         const height =  mob.field_70131_O * 1.2;
-        RenderLib.drawEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 1, false);
+        RenderLib.drawEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 1, data.vision);
         if (settings.starDetect === 2)
-            RenderLib.drawInnerEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 0.5, false);
+            RenderLib.drawInnerEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 0.5, data.vision);
     })
 }), () => getWorld() === "Catacombs" && (settings.starDetect === 2 || settings.starDetect === 3));
 

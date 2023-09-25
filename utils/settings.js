@@ -415,14 +415,6 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     // --- Combat ---
     @SwitchProperty({
-        name: "Bow Swing Cancel",
-        description: `${DARK_RED}NEW! ${GRAY}Cancels left click bow swing animations.`,
-        category: "Combat",
-        subcategory: "Combat"
-    })
-    bowCancel = false;
-
-    @SwitchProperty({
         name: "Combo Display",
         description: "Replaces Grandma Wolf combo chat messages with a custom GUI.",
         category: "Combat",

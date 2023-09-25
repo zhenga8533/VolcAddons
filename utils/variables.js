@@ -12,6 +12,7 @@ export let data = new PogObject("VolcAddons", {
     "world": "none",
     "tier": 0,
     "lastMsg": "joe",
+    "vision": false,
     "whitelist": [],
     "blacklist": [],
     // An array of default warp locations

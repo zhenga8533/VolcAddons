@@ -116,7 +116,7 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
  */
 registerWhen(register("renderWorld", () => {
     if (dracula === undefined) return;
-    RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, false);
+    RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, data.vision);
 }), () => settings.vampireHitbox === true && getWorld() === "The Rift");
 
 /**
@@ -143,7 +143,7 @@ registerWhen(register("renderWorld", () => {
 
         const distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
         Tessellator.drawString(`Medium Rare §b[${distance}]`, x, y + 3.5, z, 0xffffff, false);
-        RenderLib.drawEspBox(x, y, z, 1, 2, 1, 0, 0, 1, true);
-        RenderLib.drawInnerEspBox(x, y, z, 1, 2, 1, 0, 0, 0.25, true);
+        RenderLib.drawEspBox(x, y, z, 1, 2, 1, 0, 0, 1, data.vision);
+        RenderLib.drawInnerEspBox(x, y, z, 1, 2, 1, 0, 0, 0.25, data.vision);
     });
 }), () => getWorld() === "The Rift" && settings.vampireHitbox === true);

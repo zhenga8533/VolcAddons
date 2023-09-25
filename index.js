@@ -1,5 +1,5 @@
 // Utility Modules
-import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_RED, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { formatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import "./utils/player";
@@ -41,7 +41,6 @@ import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
 // Combat Features
 import { getBestiary } from "./features/combat/Bestiary";
-import "./features/combat/BowCancel";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
@@ -87,6 +86,8 @@ import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
+if (!FileLib.exists("VolcAddons", "data/contract")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
+
 const once = register("worldLoad", () => {
     // FIRST RUN - Display welcome message for new users
     if (data.newUser) {
@@ -201,6 +202,24 @@ register ("command", (...args) => {
         case "upadtes":
         case "version":
             getLatestReleaseVersion();
+            break;
+        // Contract
+        case "contract":
+            const Desktop = Java.type('java.awt.Desktop');
+            const File = (Java.type("java.io.File"));
+            Desktop.getDesktop().open(new File(Config.modulesFolder + "/VolcAddons/data/contract.txt"));
+            ChatLib.chat(`${LOGO} ${RED}My wealth and treasure? If you want it, I'll let you have it! Look for it! I left it all at that place!`);
+            break;
+        case "wdr":
+        case "sin":
+            if (FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName()) === false) {
+                ChatLib.chat(`${LOGO} ${RED}The contract, signed it must be. Access granted, for you to see. ${GRAY}/va contract`);
+                break;
+            }
+
+            data.vision = !data.vision;
+            if (data.vision) ChatLib.chat(`${LOGO} ${WHITE}The white eye has been activated.`);
+            else ChatLib.chat(`${LOGO} ${GREEN}See no evil, hear no evil, speak no evil...`);
             break;
         // Move GUI
         case "gui":
