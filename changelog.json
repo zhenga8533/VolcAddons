@@ -5,6 +5,7 @@
     "- Changed kill counter to detect mobs",
     "- Changed some detections to more optimized",
     "- Changed `/va calc inferno` to use new odds",
+    "- Changed stand detection",
     "- Fixed bazaar item prices being off",
     "- Fixed initial compost timer being off",
     "- Fixed `/va apex`"

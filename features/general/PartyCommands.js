@@ -7,6 +7,7 @@ import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
+import { getPing, getTPS } from "./Performance";
 
 
 /**
@@ -173,6 +174,21 @@ export function executeCommand(name, args, sendTo) {
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
                 else ChatLib.command(`r x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
+                break;
+            case "fps":
+                if (toggles.statusCommand === false) return;
+
+                if (sendTo !== false) ChatLib.command(`${sendTo} ${Client.getFPS()}fps`);
+                break;
+            case "ping":
+                if (toggles.statusCommand === false) return;
+
+                if (sendTo !== false) ChatLib.command(`${sendTo} ${getPing()}ms`);
+                break;
+            case "tps":
+                if (toggles.statusCommand === false) return;
+
+                if (sendTo !== false) ChatLib.command(`${sendTo} ${getTPS().toFixed(2)}tps`);
                 break;
             case "limbo":
             case "lobby":

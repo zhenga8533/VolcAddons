@@ -3,6 +3,7 @@ import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, GOLD, GREEN, LOGO, RED, WHITE, YELLO
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import toggles from "../../utils/toggles";
 
 
 /**
@@ -17,6 +18,7 @@ let S01PacketJoinGame = Java.type('net.minecraft.network.play.server.S01PacketJo
  * Variables used to represent TPS data.
  */
 let tps = 20;
+export function getTPS() { return tps };
 const pastTps = [20, 20, 20];
 let pastDate = 0;
 
@@ -48,6 +50,7 @@ try {
  * Variables used to represent ping data.
  */
 let ping = 0;
+export function getPing() { return ping };
 let lastPing = 0;
 
 /**
@@ -60,9 +63,9 @@ function sendPingRequest() {
         lastPing = Date.now();
     }
 };
-register("step", () => {
+registerWhen(register("step", () => {
     sendPingRequest();
-}).setDelay(3);
+}).setDelay(3), () => settings.serverStatus || toggles.statusCommand);
 
 /**
  * Calculates the ping (latency) based on the difference between the current time
@@ -107,7 +110,7 @@ const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, 
  * Constructs a formatted message containing the ping in milliseconds, TPS in ticks per second,
  * and FPS (frames per second) using the values from the `ping`, `tps`, and `Client.getFPS()` respectively.
  */
-register('step', () => {
+registerWhen(register('step', () => {
     const pingColor = ping < 100 ? GREEN :
         ping < 200 ? DARK_GREEN :
         ping < 300 ? YELLOW :
@@ -127,7 +130,7 @@ register('step', () => {
 `${DARK_AQUA}${BOLD}Ping: ${pingColor}${ping} ${AQUA}ms
 ${DARK_AQUA}${BOLD}TPS: ${tpsColor}${tps.toFixed(1)} ${AQUA}tps
 ${DARK_AQUA}${BOLD}FPS: ${fpsColor}${fps} ${AQUA}fps`;
-}).setDelay(1);
+}).setDelay(1), () => settings.serverStatus || toggles.statusCommand);
 
 export function getStatus(status) {
     switch (status) {

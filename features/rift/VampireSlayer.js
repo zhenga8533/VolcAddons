@@ -11,6 +11,7 @@ import { getSlayerBoss } from "../combat/SlayerDetect";
 /**
  * Variables used to track and display vampire boss attacks.
  */
+const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const vampireExample =
 `${DARK_PURPLE}${BOLD}MANIA: ${AQUA}Dracule
 ${GOLD}${BOLD}TWINCLAWS: ${AQUA}Mihawk
@@ -35,18 +36,20 @@ registerWhen(register("tick", () => {
         return;
     }
 
-    const stands = get3x3Stands();
+    const stands = World.getWorld()
+        .func_72839_b(player, player.func_174813_aQ().func_72314_b(16, 16, 16))
+        .filter(entity => entity instanceof EntityArmorStand);
 
     // Boss Nametag Shit
     if (!bossUUID) {
-        const spawn = stands.find(stand => stand.getName().includes('03:59'));
+        const spawn = stands.find(stand => stand.func_95999_t().includes('03:59'));
         if (spawn === undefined) return;
-        bossUUID = spawn.getUUID();
+        bossUUID = spawn.getUniqueID();
     } else {
-        const boss = stands.find(stand => stand.getUUID() === bossUUID);
+        const boss = stands.find(stand => stand.getUniqueID() === bossUUID);
         if (boss === undefined) return;
         dracula = boss;
-        const name = boss.getName().split(" ");
+        const name = boss.func_95999_t().split(" ");
 
         // Mania Detect
         const maniaIndex = name.indexOf("§5§lMANIA");
@@ -119,7 +122,6 @@ registerWhen(register("renderWorld", () => {
 /**
  * Highlights vampire bosses with steakable HP.
  */
-const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 let vamps = [];
 registerWhen(register("step", () => {
     vamps = [];

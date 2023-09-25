@@ -129,6 +129,12 @@ class Settings {
     })
     slanderCommand = true;
     @CheckboxProperty({
+        name: `Status Commands ${DARK_AQUA}?<fps, ping, tps>`,
+        category: "Party Commands",
+        subcategory: "Party Commands"
+    })
+    statusCommand = true;
+    @CheckboxProperty({
         name: `Women Command ${DARK_AQUA}?<w, waifu, women>`,
         category: "Party Commands",
         subcategory: "Party Commands"
