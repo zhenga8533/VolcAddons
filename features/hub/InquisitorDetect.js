@@ -96,7 +96,7 @@ registerWhen(register("chat", (mob) => {
 let inquisitors = [];
 export function getInquisitors() { return inquisitors };
 registerWhen(register("step", () => {
-    inquisitors = World.getAllEntitiesOfType(PLAYER_CLASS);
+    inquisitors = World.getAllEntitiesOfType(PLAYER_CLASS).filter(player => player.getName() === "Minos Inquisitor");
 
     if (inquisitors.length > 0) {
         Client.Companion.showTitle(`${GOLD}${BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);

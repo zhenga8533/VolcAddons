@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, GRAY, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data, getPaused, registerWhen } from "../../utils/variables";
 import { getTime } from "../../utils/functions";
 
 
@@ -28,7 +28,8 @@ function resetCounter() {
 
 function updateCounter() {
     counterOverlay.message = "";
-    for (let mob in mobs) counterOverlay.message += `${RED}${BOLD}${mob}: ${RESET}${mobs[mob]} ${GRAY}(${(mobs[mob]/time*3600).toFixed(0)}/hr)\n`;
+    for (let mob in mobs)
+        counterOverlay.message += `${RED}${BOLD}${mob}: ${RESET}${mobs[mob]} ${GRAY}(${(mobs[mob]/time*3600).toFixed(0)}/hr)\n`;
     counterOverlay.message += `${DARK_RED}${BOLD}Time Passed: ${RESET}${getTime(time)}`;
 }
 
@@ -50,12 +51,13 @@ registerWhen(register("entityDeath", (death) => {
 
             // Update mob kill counter
             death = death.getEntity();
-            World.getWorld().func_72839_b(death, death.func_174813_aQ().func_72314_b(1, 3, 1)).filter(entity =>
-                entity && entity instanceof EntityArmorStand
+            World.getWorld().func_72839_b(death, death.func_174813_aQ().func_72314_b(1, 3, 1)).filter(entity => 
+                entity instanceof EntityArmorStand
             ).forEach(entity => {
+                const registry = Player.getHeldItem().getRegistryName();
                 const match = entity?.func_95999_t()?.removeFormatting().match(/\[Lv\d+] ([\w\s]+) \d+\/\d+❤/);
 
-                if (match !== null) {
+                if (match !== null && (registry.endsWith("hoe") || registry.endsWith("bow") || Player.asPlayerMP().distanceTo(death) <= 16)) {
                     const mobName = match[1];
                     if (mobName in mobs) mobs[mobName] += killsDiff;
                     else mobs[mobName] = killsDiff;
@@ -69,7 +71,7 @@ registerWhen(register("entityDeath", (death) => {
 }), () => settings.killCounter);
 
 registerWhen(register("step", () => {
-    if (Object.keys(mobs).length === 0) return;
+    if (Object.keys(mobs).length === 0 || getPaused()) return;
     
     time++;
     updateCounter();
