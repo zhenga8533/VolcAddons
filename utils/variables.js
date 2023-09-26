@@ -1,5 +1,5 @@
 import PogObject from "../../PogData";
-import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
+import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 import { delay } from "./thread";
 
 
@@ -173,7 +173,7 @@ export function updateList(args, list, listName) {
                 list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
             } else {
                 ChatLib.chat(`${GOLD + BOLD + Object.keys(list).length} Items in ${listName}:${RESET}`);
-                Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key} => ${list[key]}`) });
+                Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key + GRAY} => ${WHITE + list[key]}`) });
             }
             break;
         default:

@@ -44,29 +44,31 @@ registerWhen(register("entityDeath", (death) => {
         const heldItem = ExtraAttributes.getString("id");
         const newKills = ExtraAttributes.getInteger("stats_book");
 
-        if (heldItem in items) {
-            const killsDiff = Math.abs(newKills - items[heldItem]);
-            if (killsDiff === 0) return;
-            items[heldItem] += killsDiff;
+        if (!(heldItem in items)) {
+            items[heldItem] = newKills;
+            return;
+        }
 
-            // Update mob kill counter
-            death = death.getEntity();
-            World.getWorld().func_72839_b(death, death.func_174813_aQ().func_72314_b(1, 3, 1)).filter(entity => 
-                entity instanceof EntityArmorStand
-            ).forEach(entity => {
-                const registry = Player.getHeldItem().getRegistryName();
-                const match = entity?.func_95999_t()?.removeFormatting().match(/\[Lv\d+] ([\w\s]+) \d+\/\d+❤/);
+        const killsDiff = Math.abs(newKills - items[heldItem]);
+        if (killsDiff === 0) return;
+        items[heldItem] += killsDiff;
 
-                if (match !== null && (registry.endsWith("hoe") || registry.endsWith("bow") || Player.asPlayerMP().distanceTo(death) <= 16)) {
-                    const mobName = match[1];
-                    if (mobName in mobs) mobs[mobName] += killsDiff;
-                    else mobs[mobName] = killsDiff;
-                }
-            });
+        // Update mob kill counter
+        death = death.getEntity();
+        World.getWorld().func_72839_b(death, death.func_174813_aQ().func_72314_b(1, 5, 1)).filter(entity => 
+            entity instanceof EntityArmorStand
+        ).forEach(entity => {
+            const registry = Player.getHeldItem().getRegistryName();
+            const match = entity?.func_95999_t()?.removeFormatting().match(/\[Lv\d+\] ([\w\s]+) (\d+\/\d+[KkMmBb]?)❤/);
 
-            // Update HUD
-            updateCounter();
-        } else items[heldItem] = newKills;
+            if (match !== null && (registry.endsWith("hoe") || registry.endsWith("bow") || Player.asPlayerMP().distanceTo(death) <= 16)) {
+                const mobName = match[1];
+                ChatLib.chat(mobName);
+                if (mobName in mobs) mobs[mobName] += killsDiff;
+                else mobs[mobName] = killsDiff;
+                updateCounter();
+            }
+        });
     });
 }), () => settings.killCounter);
 

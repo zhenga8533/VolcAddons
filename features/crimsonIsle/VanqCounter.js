@@ -19,37 +19,48 @@ const counterExample =
 `${RED + BOLD}Total Vanqs: ${RESET}Xue
 ${RED + BOLD}Total Kills: ${RESET}Hua
 ${RED + BOLD}Kills Since: ${RESET}Piao
-${RED + BOLD}Average Kills: ${RESET}Piao`
+${RED + BOLD}Average Kills: ${RESET}Piao`;
 const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], () => true, data.CL, "moveCounter", counterExample);
+counterOverlay.message = "";
 
 /**
  * Uses the "Book of Stats" to track whenever player kills an entity and updates the Vanquisher Overlay.
  */
-registerWhen(register("entityDeath", () => {
+registerWhen(register("entityDeath", (death) => {
     if (Player.getHeldItem() === null) return;
+    const registry = Player.getHeldItem().getRegistryName();
+    if (!registry.endsWith("hoe") && !registry.endsWith("bow") && Player.asPlayerMP().distanceTo(death) > 16) return;
 
-    const ExtraAttributes = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
-    const heldItem = ExtraAttributes.getString("id");
-    const newKills = ExtraAttributes.getInteger("stats_book");
+    Client.scheduleTask(1, () => {
+        const ExtraAttributes = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
+        const heldItem = ExtraAttributes.getString("id");
+        const newKills = ExtraAttributes.getInteger("stats_book");
 
-    if (heldItem in items) {
+        if (!(heldItem in items)) {
+            items[heldItem] = newKills;
+            return;
+        }
+
         killsDiff = Math.abs(newKills - items[heldItem]);
 
-        if (killsDiff > 10) items[heldItem] = newKills; // In order for mobs in other islands to not count
-        else {
-            // Overall
-            data.vanqSession.kills += killsDiff;
-            data.vanqSession.last += killsDiff;
-            if (data.vanqSession.vanqs) data.vanqSession.average = Math.round(data.vanqSession.kills / data.vanqSession.vanqs);
-
-            // Session
-            session.kills += killsDiff;
-            session.last += killsDiff;
-            if (session.vanqs) session.average = Math.round(session.kills / session.vanqs);
+        if (killsDiff > 10) {  // In order for mobs in other islands to not count
             items[heldItem] = newKills;
+            return;
+        }
 
-            // Update HUD
-            counterOverlay.message = settings.vanqCounter === 1 ?
+        // Overall
+        data.vanqSession.kills += killsDiff;
+        data.vanqSession.last += killsDiff;
+        if (data.vanqSession.vanqs) data.vanqSession.average = Math.round(data.vanqSession.kills / data.vanqSession.vanqs);
+
+        // Session
+        session.kills += killsDiff;
+        session.last += killsDiff;
+        if (session.vanqs) session.average = Math.round(session.kills / session.vanqs);
+        items[heldItem] = newKills;
+
+        // Update HUD
+        counterOverlay.message = settings.vanqCounter === 1 ?
 `${RED + BOLD}Total Vanqs: ${RESET + data.vanqSession.vanqs}
 ${RED + BOLD}Total Kills: ${RESET + data.vanqSession.kills}
 ${RED + BOLD}Kills Since: ${RESET + data.vanqSession.last}
@@ -59,8 +70,7 @@ ${RED + BOLD}Average Kills: ${RESET + data.vanqSession.average}`
 ${RED + BOLD}Total Kills: ${RESET + session.kills}
 ${RED + BOLD}Kills Since: ${RESET + session.last}
 ${RED + BOLD}Average Kills: ${RESET + session.average}`;
-        }
-    } else items[heldItem] = newKills;
+    });
 }), () => getWorld() === "Crimson Isle" && settings.vanqCounter !== 0);
 
 /**

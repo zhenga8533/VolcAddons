@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { GREEN } from "../../utils/constants";
+import { BOLD, GREEN } from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
 
 
@@ -51,7 +51,8 @@ registerWhen(register("tick", () => {
         const cd = Math.ceil(items[itemName]);
         if (isNaN(cd)) delete items[itemName];
         else if (cd <= 0) {
-            if (settings.cooldownAlert) Client.Companion.showTitle("", `${itemName} ${GREEN}is Ready!`, 5, 25, 5);
+            if (settings.cooldownAlert)
+                Client.Companion.showTitle("", `${itemName.slice(0, 2) + BOLD + itemName.slice(2)} ${GREEN}is Ready!`, 5, 25, 5);
             item.setStackSize(1);
             delete items[itemName];
         }

@@ -3,6 +3,7 @@
     "- Changed some interal logic",
     "- Changed formatting of some titles",
     "- Changed `/va apex` to take in <k, m, b> args",
+    "- Fixed kill counter regex to actually work",
     "- Fixed jawbus announce",
     "- Fixed update spam"
 ]
