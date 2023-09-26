@@ -40,30 +40,30 @@ registerWhen(register("tick", () => {
             z = kuudra.getZ();
 
             if (x < -128)
-                Client.Companion.showTitle(`${RED}${BOLD}RIGHT!`, "", 0, 25, 5);
+                Client.Companion.showTitle(`${RED + BOLD}RIGHT!`, "", 0, 25, 5);
             else if (z > -84)
-                Client.Companion.showTitle(`${DARK_GREEN}${BOLD}FRONT!`, "", 0, 25, 5);
+                Client.Companion.showTitle(`${DARK_GREEN + BOLD}FRONT!`, "", 0, 25, 5);
             else if (x > -72)
-                Client.Companion.showTitle(`${GREEN}${BOLD}LEFT!`, "", 0, 25, 5);
+                Client.Companion.showTitle(`${GREEN + BOLD}LEFT!`, "", 0, 25, 5);
             else if (z < -132)
-                Client.Companion.showTitle(`${DARK_RED}${BOLD}BACK!`, "", 0, 25, 5);
+                Client.Companion.showTitle(`${DARK_RED + BOLD}BACK!`, "", 0, 25, 5);
         }
     } else HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
-}), () => getWorld() === "Kuudra" && (settings.kuudraHP === true || settings.kuudraSpawn === true));
+}), () => getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
 
 /**
  * Renders Kuudra's percent HP.
  */
 registerWhen(register('renderOverlay', () => {
     percentHP.draw();
-}), () => getWorld() === "Kuudra" && settings.kuudraHP === true);
+}), () => getWorld() === "Kuudra" && settings.kuudraHP);
 
 /**
  * Draws Kuudra HP onto its physical body.
  */
 registerWhen(register('renderWorld', () => {
     if (HPDisplay[1]) Tessellator.drawString(HPDisplay[0], HPDisplay[1], HPDisplay[2] + 10, HPDisplay[3], 0xA7171A, true, 0.25, false);
-}), () => getWorld() === "Kuudra" && settings.kuudraHP === true);
+}), () => getWorld() === "Kuudra" && settings.kuudraHP);
 
 /**
  * Reset Kuudra's UUID on world exit.

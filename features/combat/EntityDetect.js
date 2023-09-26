@@ -101,7 +101,7 @@ registerWhen(register("renderWorld", () => {
  */
 const SPIDER_CLASS = Java.type("net.minecraft.entity.monster.EntitySpider").class;
 let nextSpawn = 0;
-const broodmotherExample = `${GRAY}${BOLD}Next Spawn: ${RED}???`;
+const broodmotherExample = `${GRAY + BOLD}Next Spawn: ${RED}???`;
 const broodmotherOverlay = new Overlay("broodmotherDetect", ["Spider's Den"], () => true, data.DL, "moveBrood", broodmotherExample);
 const broodLobbies = {};
 registerWhen(register("step", () => {
@@ -111,16 +111,16 @@ registerWhen(register("step", () => {
         const broodmother = World.getAllEntitiesOfType(SPIDER_CLASS)
             .find(spider => spider.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b() === 6_000 && spider.getY() > 150);
         if (broodmother === undefined) return;
-        Client.Companion.showTitle(`${DARK_RED}${BOLD}Broodmother Spawned!`, "", 0, 25, 5);
+        Client.Companion.showTitle(`${DARK_RED + BOLD}Broodmother Spawned!`, "", 0, 25, 5);
         playSound(AMOGUS, 10000);
         nextSpawn = 600;
     } else {
         nextSpawn--;
         if (nextSpawn === 0) {
-            broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${GREEN}Soon TM`;
+            broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${GREEN}Soon TM`;
             Client.Companion.showTitle("", `${RED}Broodmother Spawning Soon!`, 0, 25, 5);
             if (server in broodLobbies) delete broodLobbies[server];
-        } else broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${WHITE}${getTime(nextSpawn)}`;
+        } else broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${WHITE + getTime(nextSpawn)}`;
     }
 }).setFps(1), () => settings.broodmotherDetect);
 
@@ -130,5 +130,5 @@ registerWhen(register("step", () => {
 registerWhen(register("worldUnload", () => {
     broodLobbies[getServer()] = nextSpawn;
     nextSpawn = 0;
-    broodmotherOverlay.message = `${GRAY}${BOLD}Next Spawn: ${RED}???`;
+    broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${RED}???`;
 }), () => getWorld() === "Spider's Den" && settings.broodmotherDetect);

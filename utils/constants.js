@@ -39,10 +39,10 @@ export const MUSIC = new Sound({source: "music.ogg"});
  */
 export const HEADER = 
 `
-${GOLD}${BOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
+${GOLD + BOLD}VolcAddons ${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
 ${WHITE}Made By Volcaronitee
 `;
-export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}]`;
+export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}] `;
 export const CONTRACT =
 `VolcAddons Module User Agreement & Terms of Service
 

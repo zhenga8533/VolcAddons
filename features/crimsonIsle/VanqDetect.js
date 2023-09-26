@@ -30,7 +30,7 @@ registerWhen(register("chat", () => {
 /**
  * Tracks world for any vanquishers near player.
  */
-const vanqExample = `${DARK_PURPLE}${BOLD}Vanquisher ${WHITE}Detected`;
+const vanqExample = `${DARK_PURPLE + BOLD}Vanquisher ${WHITE}Detected`;
 const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
 vanqOverlay.message = "";
 registerWhen(register("step", () => {
@@ -41,8 +41,8 @@ registerWhen(register("step", () => {
         if (settings.vanqSound)playSound(AMOGUS, 10000);
         if (!data.moblist.includes("vanquisher")) vanquishers = [];
     } else vanqOverlay.message = "";
-}).setFps(2), () => getWorld() === "Crimson Isle" && settings.vanqDetect === true);
+}).setFps(2), () => getWorld() === "Crimson Isle" && settings.vanqDetect);
 registerWhen(register("renderWorld", () => {
     renderEntities(vanquishers, 0.5, 0, 0.5);
-}), () => getWorld() === "Crimson Isle" && settings.vanqDetect === true);
+}), () => getWorld() === "Crimson Isle" && settings.vanqDetect);
 register("worldUnload", () => vanquishers = []);

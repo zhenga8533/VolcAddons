@@ -24,10 +24,10 @@ const session = {
     "average": 0,
 };
 const counterExample =
-`${GOLD}${BOLD}Total Inqs: ${RESET}Who.
-${GOLD}${BOLD}Total Burrows: ${RESET}Let.
-${GOLD}${BOLD}Burrows Since: ${RESET}Him.
-${GOLD}${BOLD}Average Burrows: ${RESET}Cook.`
+`${GOLD + BOLD}Total Inqs: ${RESET}Who.
+${GOLD + BOLD}Total Burrows: ${RESET}Let.
+${GOLD + BOLD}Burrows Since: ${RESET}Him.
+${GOLD + BOLD}Average Burrows: ${RESET}Cook.`
 const counterOverlay = new Overlay("inqCounter", ["Hub"], () => getPerks().has("Mythological Ritual"), data.IL, "moveInq", counterExample);
 
 /**
@@ -56,15 +56,15 @@ export function updateInqCounter(inqSpawned) {
 
     // Update HUD
     counterOverlay.message = settings.inqCounter === 1 ?
-`${GOLD}${BOLD}Total Inqs: ${RESET}${data.inqSession.inqs}
-${GOLD}${BOLD}Total Burrows: ${RESET}${data.inqSession.burrows}
-${GOLD}${BOLD}Burrows Since: ${RESET}${data.inqSession.last}
-${GOLD}${BOLD}Average Burrows: ${RESET}${data.inqSession.average}`
+`${GOLD + BOLD}Total Inqs: ${RESET + data.inqSession.inqs}
+${GOLD + BOLD}Total Burrows: ${RESET + data.inqSession.burrows}
+${GOLD + BOLD}Burrows Since: ${RESET + data.inqSession.last}
+${GOLD + BOLD}Average Burrows: ${RESET + data.inqSession.average}`
 :
-`${GOLD}${BOLD}Total Inqs: ${RESET}${session.inqs}
-${GOLD}${BOLD}Total Burrows: ${RESET}${session.burrows}
-${GOLD}${BOLD}Burrows Since: ${RESET}${session.last}
-${GOLD}${BOLD}Average Burrows: ${RESET}${session.average}`;
+`${GOLD + BOLD}Total Inqs: ${RESET + session.inqs}
+${GOLD + BOLD}Total Burrows: ${RESET + session.burrows}
+${GOLD + BOLD}Burrows Since: ${RESET + session.last}
+${GOLD + BOLD}Average Burrows: ${RESET + session.average}`;
 }
 
 /**
@@ -99,11 +99,11 @@ registerWhen(register("step", () => {
     inquisitors = World.getAllEntitiesOfType(PLAYER_CLASS).filter(player => player.getName() === "Minos Inquisitor");
 
     if (inquisitors.length > 0) {
-        Client.Companion.showTitle(`${GOLD}${BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
+        Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
-}).setFps(2), () => getWorld() === "Hub" && settings.detectInq === true && getPerks().has("Mythological Ritual"));
+}).setFps(2), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
 registerWhen(register("renderWorld", () => {
     renderEntities(inquisitors, 1, 0.84, 0);
-}), () => getWorld() === "Hub" && settings.detectInq === true && getPerks().has("Mythological Ritual"));
+}), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
 register("worldUnload", () => inquisitors = []);

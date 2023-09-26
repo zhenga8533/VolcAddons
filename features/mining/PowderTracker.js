@@ -1,11 +1,9 @@
-import { request } from "../../../axios";
 import settings from "../../utils/settings";
 import { BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { getWaifu } from "../general/PartyCommands";
 
 
 /**
@@ -16,11 +14,11 @@ const powders = {
     "Gemstone": new Stat()
 }
 const powderExample =
-`${DARK_GREEN}${BOLD}Mithril Powder: ${WHITE}Hello
-${DARK_GREEN}${BOLD}Mithril Rate: ${WHITE}@
-${LIGHT_PURPLE}${BOLD}Gemstone Powder: ${WHITE}Banana
-${LIGHT_PURPLE}${BOLD}Gemstone Rate: ${WHITE}The
-${BLUE}${BOLD}Time Passed: ${WHITE}Bot`;
+`${DARK_GREEN + BOLD}Mithril Powder: ${WHITE}Hello
+${DARK_GREEN + BOLD}Mithril Rate: ${WHITE}@
+${LIGHT_PURPLE + BOLD}Gemstone Powder: ${WHITE}Banana
+${LIGHT_PURPLE + BOLD}Gemstone Rate: ${WHITE}The
+${BLUE + BOLD}Time Passed: ${WHITE}Bot`;
 const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], () => true, data.PL, "movePowder", powderExample);
 
 /**
@@ -29,7 +27,7 @@ const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Ho
 register("command", () => {
     for (let key in powders)
         powders[key].reset();
-    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset powder tracker!`);
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset powder tracker!`);
 }).setName("resetPowder");
 
 /**
@@ -68,11 +66,11 @@ registerWhen(register("step", () => {
     const timeDisplay = powders.Mithril.since < settings.powderTracker * 60 ? getTime(powders.Mithril.time) : 
         powders.Gemstone.since < settings.powderTracker * 60 ? getTime(powders.Gemstone.time) : `${RED}Inactive`;
     powderOverlay.message = 
-`${DARK_GREEN}${BOLD}Mithril Powder: ${WHITE}${commafy(powders.Mithril.gain)} ᠅
-${DARK_GREEN}${BOLD}Mithril Rate: ${WHITE}${commafy(powders.Mithril.rate)} ᠅/hr
-${LIGHT_PURPLE}${BOLD}Gemstone Powder: ${WHITE}${commafy(powders.Gemstone.gain)} ᠅
-${LIGHT_PURPLE}${BOLD}Gemstone Rate: ${WHITE}${commafy(powders.Gemstone.rate)} ᠅/hr
-${BLUE}${BOLD}Time Passed: ${WHITE}${timeDisplay}`;
+`${DARK_GREEN + BOLD}Mithril Powder: ${WHITE + commafy(powders.Mithril.gain)} ᠅
+${DARK_GREEN + BOLD}Mithril Rate: ${WHITE + commafy(powders.Mithril.rate)} ᠅/hr
+${LIGHT_PURPLE + BOLD}Gemstone Powder: ${WHITE + commafy(powders.Gemstone.gain)} ᠅
+${LIGHT_PURPLE + BOLD}Gemstone Rate: ${WHITE + commafy(powders.Gemstone.rate)} ᠅/hr
+${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`;
 }).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !==0);
 
 /**

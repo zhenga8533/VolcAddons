@@ -43,11 +43,11 @@ export function calcGdrag(minLvl) {
 
     // Find X lowest
     const sortedCosts = Object.keys(levelCosts).sort((a, b) => a - b).slice(0, 5);
-    ChatLib.chat(`${LOGO} ${GOLD}${BOLD}Top ${5} Golden Dragons [${WHITE}lvl ${minLvl}+${GOLD}]:`);
+    ChatLib.chat(`${LOGO + GOLD + BOLD}Top ${5} Golden Dragons [${WHITE}lvl ${minLvl}+${GOLD}]:`);
     for (let i = 0; i < 5; i++) {
         let uuid = levelCosts[sortedCosts[i]];
         if (uuid === undefined) return;
-        new Message(`${i+1}. `, new TextComponent(`${BLUE}${uuid}`)
+        new Message(`${i+1}. `, new TextComponent(`${BLUE + uuid}`)
             .setClick("run_command", `/viewauction ${uuid}`)
             .setHoverValue(`Click to open auction #${i+1}!`),
             `${GRAY} (CpL: ${formatNumber(sortedCosts[i])})`).chat();
@@ -66,7 +66,7 @@ function findGdrag(page, minLvl) {
         json: true
     }).then((response)=>{
         ChatLib.clearChat(888);
-        new Message(`${LOGO} ${RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(888).chat();
+        new Message(`${LOGO + RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(888).chat();
         
         response.auctions.forEach(auction => {
             const { uuid, item_name, bin, starting_bid, item_bytes } = auction;
@@ -88,7 +88,7 @@ function findGdrag(page, minLvl) {
 
         if (page + 1 < response.totalPages) findGdrag(page + 1, minLvl);
         else {
-            ChatLib.chat(`${LOGO} ${GREEN}Auction loop complete!`);
+            ChatLib.chat(`${LOGO + GREEN}Auction loop complete!`);
             ChatLib.chat(`${GRAY}GDrag values saved, use \`/refreshGdrag\` to refresh data.`);
             if (minLvl != 0) calcGdrag(minLvl);
         }

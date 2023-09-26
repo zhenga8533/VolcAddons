@@ -1,6 +1,6 @@
+import settings from "../../utils/settings";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
-import settings from "../../utils/settings";
 
 
 /**
@@ -33,4 +33,4 @@ registerWhen(register("step", () => {
         delay(() => damaged.shift(), 1000);
       }
     });
-}).setFps(2), () => settings.damageTracker === true);
+}).setFps(2), () => settings.damageTracker);

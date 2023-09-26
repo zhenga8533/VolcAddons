@@ -92,14 +92,14 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
     last = subtitle;
     print(subtitle);
     cancel(event);
-}), () => getWorld() === "The Rift" && settings.ddrHelper === true);
+}), () => getWorld() === "The Rift" && settings.ddrHelper);
 
 /**
  * Resets dance if player fails.
  */
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You were${failure}!"),
-() => getWorld() === "The Rift" && settings.ddrHelper === true);
+() => getWorld() === "The Rift" && settings.ddrHelper);
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You d${failure}!"),
-() => getWorld() === "The Rift" && settings.ddrHelper === true);
+() => getWorld() === "The Rift" && settings.ddrHelper);
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You're ${failure}!"),
-() => getWorld() === "The Rift" && settings.ddrHelper === true);
+() => getWorld() === "The Rift" && settings.ddrHelper);

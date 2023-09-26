@@ -85,25 +85,25 @@ export function soulEdit(args, type, soul, base) {
     switch (args[1]) {
         case "reset":
             data[soul] = base;
-            ChatLib.chat(`${LOGO} ${GREEN}Succesfully reset ${type} waypoint!`);
+            ChatLib.chat(`${LOGO + GREEN}Succesfully reset ${type} waypoint!`);
             break;
         case "clear":
             data[soul] = [];
-            ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared ${type} waypoint!`);
+            ChatLib.chat(`${LOGO + GREEN}Succesfully cleared ${type} waypoint!`);
             break;
         case "pop":
             if (data[soul].length === 0) {
-                ChatLib.chat(`${LOGO} ${RED}There are no ${type} souls to pop!`);
+                ChatLib.chat(`${LOGO + RED}There are no ${type} souls to pop!`);
                 return;
             } 
 
             const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data[soul]);
             if (closest !== undefined)
                 data[soul].splice(data[soul].indexOf(closest[0]), 1);
-            ChatLib.chat(`${LOGO} ${GREEN}Succesfully popped closest ${type}!`);
+            ChatLib.chat(`${LOGO + GREEN}Succesfully popped closest ${type}!`);
             break;
         default:
-            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${type} <reset, clear, pop>!`);
+            ChatLib.chat(`${LOGO + AQUA}Please enter as /va ${type} <reset, clear, pop>!`);
             break;
     }
 }
@@ -121,7 +121,7 @@ export function riftWaypointEdit(args, type, base) {
     if (args[1] === "clear") {
         if (type === "npc") NPCs = [];
         else zones = [];
-        ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared ${type} waypoint!`);
+        ChatLib.chat(`${LOGO + GREEN}Succesfully cleared ${type} waypoint!`);
         return;
     }
 
@@ -133,10 +133,10 @@ export function riftWaypointEdit(args, type, base) {
             base[name].forEach(coords => { waypoint.push(coords) });
         else
             waypoint.push(base[name]);
-        ChatLib.chat(`${LOGO} ${GREEN}Succesfully loaded [${name}] waypoint!`);
+        ChatLib.chat(`${LOGO + GREEN}Succesfully loaded [${name}] waypoint!`);
     } else {
-        ChatLib.chat(`${LOGO} ${RED}${type} [${name}] not found!`);
-        ChatLib.chat(`${LOGO} ${AQUA}Remember to enter as /va ${type} <[name], clear>`);
+        ChatLib.chat(`${LOGO + RED + type} [${name}] not found!`);
+        ChatLib.chat(`${LOGO + AQUA}Remember to enter as /va ${type} <[name], clear>`);
     }
 }
 
@@ -162,5 +162,5 @@ registerWhen(register("step", () => {
     effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
     effigies.shift();
     effigies.forEach((effigy, i) => { if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]) });
-}).setFps(1), () => getWorld() === "The Rift" && settings.effigyWaypoint === true);
+}).setFps(1), () => getWorld() === "The Rift" && settings.effigyWaypoint);
 register("worldUnload", () => { missingEffigies = [] });

@@ -16,10 +16,10 @@ let session = {
     "average": 0,
 };
 const counterExample =
-`${RED}${BOLD}Total Vanqs: ${RESET}Xue
-${RED}${BOLD}Total Kills: ${RESET}Hua
-${RED}${BOLD}Kills Since: ${RESET}Piao
-${RED}${BOLD}Average Kills: ${RESET}Piao`
+`${RED + BOLD}Total Vanqs: ${RESET}Xue
+${RED + BOLD}Total Kills: ${RESET}Hua
+${RED + BOLD}Kills Since: ${RESET}Piao
+${RED + BOLD}Average Kills: ${RESET}Piao`
 const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], () => true, data.CL, "moveCounter", counterExample);
 
 /**
@@ -50,15 +50,15 @@ registerWhen(register("entityDeath", () => {
 
             // Update HUD
             counterOverlay.message = settings.vanqCounter === 1 ?
-`${RED}${BOLD}Total Vanqs: ${RESET}${data.vanqSession.vanqs}
-${RED}${BOLD}Total Kills: ${RESET}${data.vanqSession.kills}
-${RED}${BOLD}Kills Since: ${RESET}${data.vanqSession.last}
-${RED}${BOLD}Average Kills: ${RESET}${data.vanqSession.average}`
+`${RED + BOLD}Total Vanqs: ${RESET + data.vanqSession.vanqs}
+${RED + BOLD}Total Kills: ${RESET + data.vanqSession.kills}
+${RED + BOLD}Kills Since: ${RESET + data.vanqSession.last}
+${RED + BOLD}Average Kills: ${RESET + data.vanqSession.average}`
 :
-`${RED}${BOLD}Total Vanqs: ${RESET}${session.vanqs}
-${RED}${BOLD}Total Kills: ${RESET}${session.kills}
-${RED}${BOLD}Kills Since: ${RESET}${session.last}
-${RED}${BOLD}Average Kills: ${RESET}${session.average}`;
+`${RED + BOLD}Total Vanqs: ${RESET + session.vanqs}
+${RED + BOLD}Total Kills: ${RESET + session.kills}
+${RED + BOLD}Kills Since: ${RESET + session.last}
+${RED + BOLD}Average Kills: ${RESET + session.average}`;
         }
     } else items[heldItem] = newKills;
 }), () => getWorld() === "Crimson Isle" && settings.vanqCounter !== 0);

@@ -31,7 +31,7 @@ registerWhen(register("tick", () => {
         const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180));
         return [x, 75, z, distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0];
     });
-}), () => getWorld() === "Kuudra" && settings.kuudraCrates === true);
+}), () => getWorld() === "Kuudra" && settings.kuudraCrates);
 
 /**
  * Marks build piles that are not completed.
@@ -43,7 +43,7 @@ registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
-}).setFps(2), () => getWorld() === "Kuudra" && settings.kuudraBuild === true);
+}).setFps(2), () => getWorld() === "Kuudra" && settings.kuudraBuild);
 
 /**
  * Marks build piles that are not completed.

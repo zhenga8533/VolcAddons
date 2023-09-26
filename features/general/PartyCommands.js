@@ -1,7 +1,7 @@
 import axios from "../../../axios";
-import { request } from "../../../requestV2";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
+import { request } from "../../../requestV2";
 import { AQUA, DARK_AQUA, DARK_GREEN, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
@@ -54,21 +54,21 @@ let imgur = "";
 function setWaifu(announce) {
     axios.get("https://api.waifu.pics/sfw/waifu").then((link) => {
         waifu = link.data.url;
-        if (announce === true)
-            new Message(`${LOGO} ${DARK_GREEN}Uploading `,
-            new TextComponent(waifu).setHoverValue(waifu),
-            ` ${DARK_GREEN}to Imgur!`).chat();
+        if (announce)
+            new Message(`${LOGO + DARK_GREEN}Uploading `,
+                new TextComponent(waifu).setHoverValue(waifu),
+                ` ${DARK_GREEN}to Imgur!`).chat();
         upload(waifu).then(({ data: { link } }) => {
             imgur = link;
-            if (announce === true)
-            new Message(`${LOGO} ${GREEN}Uploaded `,
-            new TextComponent(imgur).setHoverValue(imgur),
-            ` ${GREEN}to Imgur Successfully! `,
-            new TextComponent(`${GRAY}[click here to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
+            if (announce)
+            new Message(`${LOGO + GREEN}Uploaded `,
+                new TextComponent(imgur).setHoverValue(imgur),
+                ` ${GREEN}to Imgur Successfully! `,
+                new TextComponent(`${GRAY}[click here to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
         }).catch((err) => {
             const error = err.data.error;
             const message = error?.message
-            if (announce === true) ChatLib.chat(`${LOGO} ${RED}Imgur Upload Failed: ${message ?? error}`);
+            if (announce) ChatLib.chat(`${LOGO + RED}Imgur Upload Failed: ${message ?? error}`);
         });
     });
 }
@@ -97,39 +97,39 @@ export function executeCommand(name, args, sendTo) {
             case "femboy":
             case "trans":
             case "transphobic":
-                if (toggles.slanderCommand === false) return;
+                if (!toggles.slanderCommand) return;
 
                 const slandering = args[1] ?? name;
                 const percentage = Math.floor(Math.random() * 100) + 1;
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${slandering} is ${percentage}% ${command}! ${randID}`);
-                else ChatLib.chat(`${LOGO} ${DARK_AQUA}You are ${WHITE}${percentage}% ${DARK_AQUA}${command}!`);
+                else ChatLib.chat(`${LOGO + DARK_AQUA}You are ${WHITE + percentage}% ${DARK_AQUA + command}!`);
                 break;
             case "dice": // Dice roll
             case "roll":
-                if (toggles.diceCommand === false) return;
+                if (!toggles.diceCommand) return;
 
                 const roll = Math.floor(Math.random() * 6) + 1;
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${name} rolled a ${roll}! ${randID}`);
-                else ChatLib.chat(`${LOGO} ${DARK_AQUA}You rolled a ${WHITE}${roll}${DARK_AQUA}!`);
+                else ChatLib.chat(`${LOGO + DARK_AQUA}You rolled a ${WHITE + roll + DARK_AQUA}!`);
                 break;
             case "coin": // Coin flip
             case "flip":
             case "coinflip":
             case "cf":
-                if (toggles.coinCommand === false) return;
+                if (!toggles.coinCommand) return;
 
                 const flip = Math.floor(Math.random() * 2) ? "heads" : "tails";
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${name} flipped ${flip}! ${randID}`);
-                else ChatLib.chat(`${LOGO} ${DARK_AQUA}You flipped ${WHITE}${flip}${DARK_AQUA}!`);
+                else ChatLib.chat(`${LOGO + DARK_AQUA}You flipped ${WHITE + flip + DARK_AQUA}!`);
                 break;
             case "8ball": // 8ball
-                if (toggles.ballCommand === false) return;
+                if (!toggles.ballCommand) return;
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${RESPONSES[Math.floor(Math.random() * 20) + 1]}. ${randID}`);
-                else ChatLib.chat(`${LOGO} ${DARK_AQUA}${RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
+                else ChatLib.chat(`${LOGO + DARK_AQUA + RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
                 break;
             case "rps": // Rock Paper Siccors
-                if (toggles.rpsCommand === false) return;
+                if (!toggles.rpsCommand) return;
 
                 const player = args[1] === undefined ? -1 : RPS.indexOf(args[1].toLowerCase());
                 let reply = player === -1 ? `Wtf is a(n) ${args[1]}? Are you from the jungle?` : "zzz...";
@@ -137,7 +137,7 @@ export function executeCommand(name, args, sendTo) {
                 if (player !== -1) {
                     const choice = Math.floor(Math.random() * 3);
                     if (sendTo !== false) ChatLib.command(`${sendTo} I choose ${RPS[choice]}! ${randID}`);
-                    else ChatLib.chat(`${LOGO} ${DARK_AQUA}I choose ${WHITE}${RPS[choice]}${DARK_AQUA}!`);
+                    else ChatLib.chat(`${LOGO + DARK_AQUA}I choose ${WHITE + RPS[choice] + DARK_AQUA}!`);
                     const outcome = (player - choice);
 
                     // Determine outcome of the game
@@ -156,12 +156,12 @@ export function executeCommand(name, args, sendTo) {
                 
                 // Output reponse depending if use wants party message or user message
                 if (sendTo !== false) delay(() => ChatLib.command(`${sendTo} ${reply} ${randID}`), 690);
-                else ChatLib.chat(`${LOGO} ${DARK_AQUA}${reply}`);
+                else ChatLib.chat(`${LOGO + DARK_AQUA + reply}`);
                 break;
             case "waifu":
             case "women":
             case "w":
-                if (toggles.womenCommand === false) return;
+                if (!toggles.womenCommand) return;
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
                 // Randomize end to avoid duplicate message ^
@@ -170,40 +170,40 @@ export function executeCommand(name, args, sendTo) {
             case "coords":
             case "waypoint":
             case "xyz":
-                if (toggles.coordsCommand === false || Player.getName() === name) return;
+                if (!toggles.coordsCommand || Player.getName() === name) return;
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
                 else ChatLib.command(`r x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                 break;
             case "fps":
-                if (toggles.statusCommand === false) return;
+                if (!toggles.statusCommand) return;
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${Client.getFPS()}fps`);
                 break;
             case "ping":
-                if (toggles.statusCommand === false) return;
+                if (!toggles.statusCommand) return;
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${getPing()}ms`);
                 break;
             case "tps":
-                if (toggles.statusCommand === false) return;
+                if (!toggles.statusCommand) return;
 
                 if (sendTo !== false) ChatLib.command(`${sendTo} ${getTPS().toFixed(2)}tps`);
                 break;
             case "limbo":
             case "lobby":
             case "l":
-                if (toggles.limboCommand === false || getIsLeader() || Player.getName() === name) return;
+                if (!toggles.limboCommand || getIsLeader() || Player.getName() === name) return;
 
                 ChatLib.command("l");
                 break;
             case "leave":
-                if (toggles.limboCommand === false || getIsLeader() || Player.getName() === name) return;
+                if (!toggles.limboCommand || getIsLeader() || Player.getName() === name) return;
 
                 ChatLib.command("p leave");
                 break;
             case "help":
-                if (toggles.helpCommand === false || !sendTo) return;
+                if (!toggles.helpCommand || !sendTo) return;
 
                 ChatLib.command(`${sendTo} Party Commands: ?<slander was here, dice, coin, 8ball, rps, w, lobby, leave, help> ${randID}`);
                 if (getIsLeader() && settings.leaderCommands)
@@ -213,36 +213,36 @@ export function executeCommand(name, args, sendTo) {
     }
     
     // LEADER COMMANDS
-    if (sendTo === false || (sendTo === "pc" && getIsLeader() === true && settings.leaderCommands === true && Player.getName() !== name)) {
+    if (!sendTo || (sendTo === "pc" && getIsLeader() && settings.leaderCommands && Player.getName() !== name)) {
         switch (command) {
             case "mute":
-                if (toggles.warpCommand === false) return;
+                if (!toggles.warpCommand) return;
                 ChatLib.command("p mute");
                 break;
             case "warp":
-                if (toggles.warpCommand === false) return;
+                if (!toggles.warpCommand) return;
                 ChatLib.command("p warp");
                 break;
             case "transfer":
-                if (toggles.transferCommand === false) return;
+                if (!toggles.transferCommand) return;
                 ChatLib.command("p transfer " + name);
                 break;
             case "promote":
-                if (toggles.promoteCommand === false) return;
+                if (!toggles.promoteCommand) return;
                 ChatLib.command("p promote " + name);
                 break;
             case "demote":
-                if (toggles.demoteCommand === false) return;
+                if (!toggles.demoteCommand) return;
                 ChatLib.command("p demote " + name);
                 break;
             case "allinvite":
             case "allinv":
-                if (toggles.allinvCommand === false) return;
+                if (!toggles.allinvCommand) return;
                 ChatLib.command("p settings allinvite");
                 break;
             case "streamopen":
             case "stream":
-                if (toggles.streamCommand === false) return;
+                if (!toggles.streamCommand) return;
 
                 num = isNaN(args[1]) ? 10 : args[1];
                 ChatLib.command(`stream open ${args[1]}`);
@@ -277,7 +277,7 @@ export function executeCommand(name, args, sendTo) {
     }
     
     // MODERATOR COMMANDS
-    if (settings.leaderCommands === true && toggles.inviteCommand === true && (command === "inv" || command === "invite")) {
+    if (settings.leaderCommands && toggles.inviteCommand && (command === "inv" || command === "invite")) {
         if (data.whitelist.includes(name.toLowerCase())) ChatLib.command(`p ${name}`);
         else ChatLib.command(`r You are not in the whitelist! ${randID}`);
     }

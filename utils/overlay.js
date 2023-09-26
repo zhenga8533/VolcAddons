@@ -114,7 +114,7 @@ register("guiKey", (char, keyCode, currentGui, event) => {
     // View Change
     if (keyCode === 17) {
         worldView = !worldView;
-        if (worldView === true) {
+        if (worldView) {
             overlays = overlays.filter(overlay => {
                 if (!overlay.requires.has(getWorld()) && !overlay.requires.has("all")) {
                     overlaid.push(overlay);
@@ -122,11 +122,11 @@ register("guiKey", (char, keyCode, currentGui, event) => {
                 }
                 return true;
             });
-            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed to world view!`);
+            ChatLib.chat(`${LOGO + GREEN}Successfully changed to world view!`);
         } else {
             overlays.push(...overlaid);
             overlaid.length = 0;
-            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed to global view!`);
+            ChatLib.chat(`${LOGO + GREEN}Successfully changed to global view!`);
         }
     }
     

@@ -20,10 +20,10 @@ const skills = {
 }
 let current = "None";
 const skillExample =
-`${DARK_AQUA}${BOLD}Skill: ${WHITE}FEE
-${DARK_AQUA}${BOLD}XP Gained: ${WHITE}FI
-${DARK_AQUA}${BOLD}Time Passed: ${WHITE}FO
-${DARK_AQUA}${BOLD}Rate: ${WHITE}FUM`;
+`${DARK_AQUA + BOLD}Skill: ${WHITE}FEE
+${DARK_AQUA + BOLD}XP Gained: ${WHITE}FI
+${DARK_AQUA + BOLD}Time Passed: ${WHITE}FO
+${DARK_AQUA + BOLD}Rate: ${WHITE}FUM`;
 const skillOverlay = new Overlay("skillTracker", ["all"], () => true, data.AL, "moveSkills", skillExample);
 
 /**
@@ -31,7 +31,7 @@ const skillOverlay = new Overlay("skillTracker", ["all"], () => true, data.AL, "
  */
 register("command", () => {
     for (let key in skills) skills[key].reset();
-    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset skill tracker!`);
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset skill tracker!`);
 }).setName("resetSkills");
 
 /**
@@ -86,8 +86,8 @@ registerWhen(register("step", () => {
     // Set HUD
     const timeDisplay = skills[current].since < settings.skillTracker * 60 ? getTime(skills[current].time) : `${RED}Inactive`;
     skillOverlay.message = 
-`${DARK_AQUA}${BOLD}Skill: ${WHITE}${current}
-${DARK_AQUA}${BOLD}XP Gained: ${WHITE}${commafy(skills[current].gain)} xp
-${DARK_AQUA}${BOLD}Time Passed: ${WHITE}${timeDisplay}
-${DARK_AQUA}${BOLD}Rate: ${WHITE}${commafy(skills[current].rate)} xp/hr`;
+`${DARK_AQUA + BOLD}Skill: ${WHITE + current}
+${DARK_AQUA + BOLD}XP Gained: ${WHITE + commafy(skills[current].gain)} xp
+${DARK_AQUA + BOLD}Time Passed: ${WHITE + timeDisplay}
+${DARK_AQUA + BOLD}Rate: ${WHITE + commafy(skills[current].rate)} xp/hr`;
 }).setFps(1), () => settings.skillTracker !== 0);

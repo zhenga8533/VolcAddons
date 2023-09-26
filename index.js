@@ -1,15 +1,15 @@
 // Utility Modules
+import "./utils/player";
+import settings from "./utils/settings";
+import toggles from "./utils/toggles";
+import "./utils/waypoints";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { formatNumber, unformatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
-import "./utils/player";
 import { openGUI } from "./utils/overlay";
-import settings from "./utils/settings";
-import toggles from "./utils/toggles";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
 import { data, updateList } from "./utils/variables";
-import "./utils/waypoints";
 import { findZone, getTier, getWorld } from "./utils/worlds";
 // Utility Variable Control
 data.autosave();
@@ -91,7 +91,7 @@ if (!FileLib.exists("VolcAddons", "data/contract.txt")) FileLib.write("VolcAddon
 const once = register("worldLoad", () => {
     // FIRST RUN - Display welcome message for new users
     if (data.newUser) {
-        ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}`);
+        ChatLib.chat(`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}`);
         ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
         ChatLib.chat("Instruction manual (i think) => /va help or DM 'grapefruited' on Discord!\n");
     
@@ -102,7 +102,7 @@ const once = register("worldLoad", () => {
     delay(() => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
-            ChatLib.chat(`\n${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
+            ChatLib.chat(`\n${LOGO + WHITE + BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => ChatLib.chat(change));
             ChatLib.chat("");
         }
@@ -112,23 +112,23 @@ const once = register("worldLoad", () => {
 
 // HELP - Display help message for available commands
 function getHelp() {
-    ChatLib.chat(`\n${GOLD}${BOLD}${UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}${RESET}\n`);
+    ChatLib.chat(`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}\n`);
     
     // General Commands
-    ChatLib.chat(`${AQUA}${BOLD}GENERAL COMMANDS:${RESET}`);
-    ChatLib.chat(`${GRAY}${BOLD}Settings: ${RESET}/va <help, settings, gui, clear ${ITALIC}(resets text settings)${RESET}>`);
-    ChatLib.chat(`${GRAY}${BOLD}Waypoints: ${RESET}/va <coords, waypoint, clear, enigma, npc, zone>`);
-    ChatLib.chat(`${GRAY}${BOLD}Lists: ${RESET}/va <cd, whitelist, blacklist, emotelist, warplist>`);
-    ChatLib.chat(`${GRAY}${BOLD}Kuudra: ${RESET}/va splits`);
-    ChatLib.chat(`${GRAY}${BOLD}Economy: ${RESET}/va <calc, apex>\n`);
+    ChatLib.chat(`${AQUA + BOLD}GENERAL COMMANDS:${RESET}`);
+    ChatLib.chat(`${GRAY + BOLD}Settings: ${RESET}/va <help, settings, gui, clear ${ITALIC}(resets text settings)${RESET}>`);
+    ChatLib.chat(`${GRAY + BOLD}Waypoints: ${RESET}/va <coords, waypoint, clear, enigma, npc, zone>`);
+    ChatLib.chat(`${GRAY + BOLD}Lists: ${RESET}/va <cd, whitelist, blacklist, emotelist, warplist>`);
+    ChatLib.chat(`${GRAY + BOLD}Kuudra: ${RESET}/va splits`);
+    ChatLib.chat(`${GRAY + BOLD}Economy: ${RESET}/va <calc, apex>\n`);
 
     // General Features
-    ChatLib.chat(`${AQUA}${BOLD}GENERAL FEATURES:${RESET}`);
-    ChatLib.chat(`${GRAY}${BOLD}Party Commands: ${RESET}?<warp, transfer, promote, demote, allinv>`);
-    ChatLib.chat(`${GRAY}${BOLD}Other Commands: ${RESET}?<w, dice, flip, 8ball, rps, cringe, gay, racist, trans, transphobic, femboy>\n`);
+    ChatLib.chat(`${AQUA + BOLD}GENERAL FEATURES:${RESET}`);
+    ChatLib.chat(`${GRAY + BOLD}Party Commands: ${RESET}?<warp, transfer, promote, demote, allinv>`);
+    ChatLib.chat(`${GRAY + BOLD}Other Commands: ${RESET}?<w, dice, flip, 8ball, rps, cringe, gay, racist, trans, transphobic, femboy>\n`);
     
     // Crimson Isle Features
-    ChatLib.chat(`${AQUA}${BOLD}OTHER FEATURES:${RESET}`);
+    ChatLib.chat(`${AQUA + BOLD}OTHER FEATURES:${RESET}`);
     ChatLib.chat(`Should be self explanatory, DM 'grapefruited' on discord if any questions...`);
 }
 
@@ -155,10 +155,10 @@ devKey.registerKeyPress(() => {
         let extraString = "";
         for (data in extraData) extraString += `${data}=${extraData[data]}, `;
         ChatLib.command(`ct copy ${view.toString()} ⦿ ${textComponent} ⦿ ExtraData[${extraString}]`, true);
-        ChatLib.chat(`${LOGO} ${GREEN}Successfully copied entity data!`);
+        ChatLib.chat(`${LOGO + GREEN}Successfully copied entity data!`);
     } else {
         ChatLib.command(`ct copy ${view.toString()}`, true);
-        ChatLib.chat(`${LOGO} ${GREEN}Successfully copied block data!`);
+        ChatLib.chat(`${LOGO + GREEN}Successfully copied block data!`);
     }
 });
 register("guiKey", (char, keyCode, gui) => {
@@ -168,7 +168,7 @@ register("guiKey", (char, keyCode, gui) => {
     const item = Player.getContainer().getStackInSlot(slot);
     if (item === null) return;
     ChatLib.command(`ct copy ${item.getNBT()}`, true);
-    ChatLib.chat(`${LOGO} ${GREEN}Successfully copied ${GRAY}[${item.getName()}${GRAY}] ${GREEN}NBT!`);
+    ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
 });
 
 // /va ...args
@@ -206,18 +206,18 @@ register ("command", (...args) => {
             const Desktop = Java.type('java.awt.Desktop');
             const File = (Java.type("java.io.File"));
             Desktop.getDesktop().open(new File(Config.modulesFolder + "/VolcAddons/data/contract.txt"));
-            ChatLib.chat(`${LOGO} ${RED}My wealth and treasure? If you want it, I'll let you have it! Look for it! I left it all at that place!`);
+            ChatLib.chat(`${LOGO + RED}My wealth and treasure? If you want it, I'll let you have it! Look for it! I left it all at that place!`);
             break;
         case "wdr":
         case "sin":
-            if (FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName()) === false) {
-                ChatLib.chat(`${LOGO} ${RED}The contract, signed it must be. Access granted, for you to see. ${GRAY}/va contract`);
+            if (!FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName())) {
+                ChatLib.chat(`${LOGO + RED}The contract, signed it must be. Access granted, for you to see. ${GRAY}/va contract`);
                 break;
             }
 
             data.vision = !data.vision;
-            if (data.vision) ChatLib.chat(`${LOGO} ${GREEN}The white eye has been activated.`);
-            else ChatLib.chat(`${LOGO} ${RED}See no evil, hear no evil, speak no evil...`);
+            if (data.vision) ChatLib.chat(`${LOGO + GREEN}The white eye has been activated.`);
+            else ChatLib.chat(`${LOGO + RED}See no evil, hear no evil, speak no evil...`);
             break;
         // Move GUI
         case "gui":
@@ -230,15 +230,15 @@ register ("command", (...args) => {
             settings.kuudraCannonear = "";
             settings.kuudraStunner = "";
             settings.reminderText = "";
-            ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared all text property settings!`);
+            ChatLib.chat(`${LOGO + GREEN}Successfully cleared all text property settings!`);
             break;
         // Set API key
         case "api": 
             if (args[1]) {
                 settings.apiKey = args[1]
-                ChatLib.chat(`${LOGO} ${GREEN}Succesfully set API key as ${settings.apiKey}!`);
+                ChatLib.chat(`${LOGO + GREEN}Succesfully set API key as ${settings.apiKey}!`);
             } else
-                ChatLib.chat(`${LOGO} ${RED}Please input as /va api [key]!`);
+                ChatLib.chat(`${LOGO + RED}Please input as /va api [key]!`);
             break;
         // Server Status
         case "ping":
@@ -340,17 +340,15 @@ register ("command", (...args) => {
                         calcTabasco(args);
                         break;
                     default:
-                        ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va calc <gdrag, hypergolic, inferno, gabagool, tabasco, vampire, compost>`);
+                        ChatLib.chat(`${LOGO + AQUA}Please enter as /va calc <gdrag, hypergolic, inferno, gabagool, tabasco, vampire, compost>`);
                         break;
                 }
-            } catch (err) {
-                ChatLib.chat(`${LOGO} ${RED}${err}`);
-            }
+            } catch (err) { ChatLib.chat(`${LOGO + RED + err}`); }
             break;
         // Set Apex Price
         case "apex":
             data.apexPrice = unformatNumber(args[1]) || data.apexPrice;
-            ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatNumber(data.apexPrice)}!`);
+            ChatLib.chat(`${LOGO + GREEN}Successfully changed Apex price to ${formatNumber(data.apexPrice)}!`);
             break;
         // Configure enigma souls
         case "enigma":
@@ -380,8 +378,8 @@ register ("command", (...args) => {
             const INSTANCES = new Set(["f", "m", "t"]);
             if (PARTY_COMMANDS.has(command) || (INSTANCES.has(command[0]) && !isNaN(command[1]))) executeCommand(Player.getName(), args, false);
             else {
-                ChatLib.chat(`${LOGO} ${RED}Unkown command: "${command}" was not found!`);
-                ChatLib.chat(`${LOGO} ${RED}Use '/va help' for a full list of commands.`);
+                ChatLib.chat(`${LOGO + RED}Unkown command: "${command}" was not found!`);
+                ChatLib.chat(`${LOGO + RED}Use '/va help' for a full list of commands.`);
             }
             break;
     }

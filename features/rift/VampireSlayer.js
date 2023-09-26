@@ -13,9 +13,9 @@ import { getSlayerBoss } from "../combat/SlayerDetect";
  */
 const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const vampireExample =
-`${DARK_PURPLE}${BOLD}MANIA: ${AQUA}Dracule
-${GOLD}${BOLD}TWINCLAWS: ${AQUA}Mihawk
-${DARK_AQUA}${BOLD}ICHOR: ${AQUA}3,590,000,000`;
+`${DARK_PURPLE + BOLD}MANIA: ${AQUA}Dracule
+${GOLD + BOLD}TWINCLAWS: ${AQUA}Mihawk
+${DARK_AQUA + BOLD}ICHOR: ${AQUA}3,590,000,000`;
 const vampireOverlay = new Overlay("vampireAttack", ["The Rift"], () => true, data.BL, "moveVamp", vampireExample);
 let dracula = undefined;
 let bossUUID = 0;
@@ -89,14 +89,14 @@ registerWhen(register("tick", () => {
                 ichorUUID = 0;
                 return;
             }
-            vampireOverlay.message += `${DARK_AQUA}${BOLD}ICHOR: ${ichor.func_95999_t()}\n`;
+            vampireOverlay.message += `${DARK_AQUA + BOLD}ICHOR: ${ichor.func_95999_t()}\n`;
         } else {
             const ichor = stands.find(stand => stand.func_95999_t().includes('24.'));
             if (ichor === undefined) return;
             ichorUUID = ichor.persistentID;
         }
     }
-}), () => getWorld() === "The Rift" && (settings.vampireAttack === true || settings.announceMania !== 0));
+}), () => getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
 
 /**
  * Replaces Hypixel's impel subtitle with a flashy title.
@@ -110,7 +110,7 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
         cancel(event);
         Client.Companion.showTitle(subtitle, "", 0, 20, 0);
     }
-}), () => getWorld() === "The Rift" && settings.vampireImpel === true);
+}), () => getWorld() === "The Rift" && settings.vampireImpel);
 
 /**
  * Highlights vampire bosses with steakable HP.
@@ -122,7 +122,7 @@ registerWhen(register("step", () => {
     const player = Player.asPlayerMP().getEntity();
     vamps = World.getWorld()?.func_72839_b(player, player.func_174813_aQ().func_72314_b(32, 32, 32))?.filter(entity => 
         entity instanceof EntityArmorStand && entity?.func_95999_t()?.includes("Bloodfiend §e§l")) ?? [];
-}).setFps(2), () => getWorld() === "The Rift" && settings.vampireHitbox === true);
+}).setFps(2), () => getWorld() === "The Rift" && settings.vampireHitbox);
 
 /**
  * Render boxx hitboxes
@@ -141,4 +141,4 @@ registerWhen(register("renderWorld", () => {
         RenderLib.drawEspBox(x, y, z, 1, 2, 1, 0, 0, 1, data.vision);
         RenderLib.drawInnerEspBox(x, y, z, 1, 2, 1, 0, 0, 0.25, data.vision);
     });
-}), () => getWorld() === "The Rift" && settings.vampireHitbox === true);
+}), () => getWorld() === "The Rift" && settings.vampireHitbox);

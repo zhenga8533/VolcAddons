@@ -13,10 +13,10 @@ let mobs = {};
 let items = {};
 let time = 0;
 const counterExample =
-`${RED}${BOLD}Graveyard Zombie: ${RESET}this
-${RED}${BOLD}Zombie Villager: ${RESET}game
-${RED}${BOLD}...: ${RESET}is
-${DARK_RED}${BOLD}Time Passed: ${RESET}dead`;
+`${RED + BOLD}Graveyard Zombie: ${RESET}this
+${RED + BOLD}Zombie Villager: ${RESET}game
+${RED + BOLD}...: ${RESET}is
+${DARK_RED + BOLD}Time Passed: ${RESET}dead`;
 const counterOverlay = new Overlay("killCounter", ["all"], () => true, data.JL, "moveKills", counterExample);
 counterOverlay.message = "";
 
@@ -29,8 +29,8 @@ function resetCounter() {
 function updateCounter() {
     counterOverlay.message = "";
     for (let mob in mobs)
-        counterOverlay.message += `${RED}${BOLD}${mob}: ${RESET}${mobs[mob]} ${GRAY}(${(mobs[mob]/time*3600).toFixed(0)}/hr)\n`;
-    counterOverlay.message += `${DARK_RED}${BOLD}Time Passed: ${RESET}${getTime(time)}`;
+        counterOverlay.message += `${RED + BOLD + mob}: ${RESET + mobs[mob] + GRAY} (${(mobs[mob]/time*3600).toFixed(0)}/hr)\n`;
+    counterOverlay.message += `${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`;
 }
 
 /**

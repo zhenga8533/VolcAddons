@@ -333,7 +333,7 @@ export function numToRoman(num) {
  */
 let soundCD = false;
 export function playSound(sound, cd) {
-    if (soundCD === true) return;
+    if (soundCD) return;
 
     sound.play();
     soundCD = true;

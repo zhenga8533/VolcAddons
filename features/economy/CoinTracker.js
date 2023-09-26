@@ -11,12 +11,12 @@ import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 const piggy = new Stat();
 register("command", () => {
     piggy.reset();
-    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset coin tracker!`);
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset coin tracker!`);
 }).setName("resetCoins");
 const coinExample = 
-`${GOLD}${BOLD}Gained: ${WHITE}COUNTING
-${GOLD}${BOLD}Time Passed: ${WHITE}ME
-${GOLD}${BOLD}Rate: ${WHITE}MONEY`;
+`${GOLD + BOLD}Gained: ${WHITE}COUNTING
+${GOLD + BOLD}Time Passed: ${WHITE}ME
+${GOLD + BOLD}Rate: ${WHITE}MONEY`;
 const coinOverlay = new Overlay("coinTracker", ["all"], () => true, data.ML, "moveCoins", coinExample);
 
 /**
@@ -44,7 +44,7 @@ registerWhen(register("step", () => {
     // Update GUI
     const timeDisplay = piggy.since < settings.coinTracker * 60 ? getTime(piggy.time) : `${RED}Inactive`;
     coinOverlay.message = 
-`${GOLD}${BOLD}Gained: ${WHITE}${commafy(piggy.gain)} ¢
-${GOLD}${BOLD}Time Passed: ${WHITE}${timeDisplay}
-${GOLD}${BOLD}Rate: ${WHITE}${commafy(piggy.rate)} ¢/hr`;
+`${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.gain)} ¢
+${GOLD + BOLD}Time Passed: ${WHITE + timeDisplay}
+${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.rate)} ¢/hr`;
 }).setFps(1), () => settings.coinTracker !== 0);

@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -32,7 +32,7 @@ class Settings {
         this.setCategoryDescription("General",
         `${HEADER}
 ${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, whitelist, blacklist, blocklist>
-${DARK_RED}${BOLD}CAUTION: Some features are technically chat macros, so use at own risk!`);
+${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at own risk!`);
 
         // Economy Category
         this.setCategoryDescription("Economy",

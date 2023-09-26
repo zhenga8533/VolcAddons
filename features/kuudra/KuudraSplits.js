@@ -17,10 +17,10 @@ let phase = 0;
 export function getPhase() { return phase };
 let party = [];
 const splitsExample =
-`${AQUA}${BOLD}Supplies: ${RESET}Bei
-${AQUA}${BOLD}Build: ${RESET}Feng
-${AQUA}${BOLD}Fuel/Stun: ${RESET}Xiao
-${AQUA}${BOLD}Kuudra: ${RESET}Xiao`;
+`${AQUA + BOLD}Supplies: ${RESET}Bei
+${AQUA + BOLD}Build: ${RESET}Feng
+${AQUA + BOLD}Fuel/Stun: ${RESET}Xiao
+${AQUA + BOLD}Kuudra: ${RESET}Xiao`;
 const splitsOverlay = new Overlay("kuudraSplits", ["Kuudra"], () => true, data.SL, "moveSplits", splitsExample);
 
 /**
@@ -40,7 +40,7 @@ registerWhen(register("worldLoad", () => {
     kuudraSplit = [0, 0, 0, 0];
     times = ['0s', '0s', '0s', '0s'];
     phase = 0;
-}), () => settings.kuudraSplits === true);
+}), () => settings.kuudraSplits);
 
 /**
  * Tracks party on player ready.
@@ -48,7 +48,7 @@ registerWhen(register("worldLoad", () => {
 registerWhen(register("chat", (player) => {
     player = player.toLowerCase();
     if (!party.includes(player)) party.push(player);
-}).setCriteria("${player} is now ready!"), () => settings.kuudraSplits === true);
+}).setCriteria("${player} is now ready!"), () => settings.kuudraSplits);
 
 /**
  * First split.
@@ -146,7 +146,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
-}).setCriteria("${before}DEFEAT${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits === true);
+}).setCriteria("${before}DEFEAT${after}"), () => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Updates time splits overlay.
@@ -185,11 +185,11 @@ registerWhen(register("step", () => {
     
     // Draw Splits
     splitsOverlay.message =
-`${AQUA}${BOLD}Supplies: ${RESET}${times[0]}
-${AQUA}${BOLD}Build: ${RESET}${times[1]}
-${AQUA}${BOLD}Fuel/Stun: ${RESET}${times[2]}
-${AQUA}${BOLD}Kuudra: ${RESET}${times[3]}` 
-}).setFps(19), () => getWorld() === "Kuudra" && settings.kuudraSplits === true);
+`${AQUA + BOLD}Supplies: ${RESET + times[0]}
+${AQUA + BOLD}Build: ${RESET + times[1]}
+${AQUA + BOLD}Fuel/Stun: ${RESET + times[2]}
+${AQUA + BOLD}Kuudra: ${RESET + times[3]}` 
+}).setFps(19), () => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**
  * Party commands for splits.
@@ -228,7 +228,7 @@ registerWhen(register("chat", (player, message) => {
 
     onCD = true;
     delay(() => onCD = false, 500);
-}).setCriteria("Party > ${player}: ?${message}"), () => settings.kuudraSplits === true);
+}).setCriteria("Party > ${player}: ?${message}"), () => settings.kuudraSplits);
 
 /**
  * Uses sound name and pitch to determine whenever Ragnarok Ability goes off.
@@ -238,19 +238,19 @@ registerWhen(register("chat", (player, message) => {
  * @param {int} runs - Amount of runs to average.
  */
 function formatSplits(splits, color, runs) {
-    if (color === GREEN) ChatLib.chat(`${DARK_GREEN}${BOLD}Average for last ${runs} runs:`);
-    ChatLib.chat(`${color}${BOLD}Supplies: ${RESET}${getTime(splits[0])}`);
-    ChatLib.chat(`${color}${BOLD}Build: ${RESET}${getTime(splits[1])}`);
-    ChatLib.chat(`${color}${BOLD}Fuel/Stun: ${RESET}${getTime(splits[2])}`);
-    ChatLib.chat(`${color}${BOLD}Kuudra: ${RESET}${getTime(splits[3])}`);
-    ChatLib.chat(`${color}${BOLD}Overall Run: ${RESET}${getTime(splits[4])}`);
+    if (color === GREEN) ChatLib.chat(`${DARK_GREEN + BOLD}Average for last ${runs} runs:`);
+    ChatLib.chat(`${color + BOLD}Supplies: ${RESET + getTime(splits[0])}`);
+    ChatLib.chat(`${color + BOLD}Build: ${RESET + getTime(splits[1])}`);
+    ChatLib.chat(`${color + BOLD}Fuel/Stun: ${RESET + getTime(splits[2])}`);
+    ChatLib.chat(`${color + BOLD}Kuudra: ${RESET + getTime(splits[3])}`);
+    ChatLib.chat(`${color + BOLD}Overall Run: ${RESET + getTime(splits[4])}`);
     if (color === GOLD) {
         const theory = (data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3]).toFixed(2);
-        ChatLib.chat(`${color}${BOLD}Theoretical Best: ${RESET}${getTime(theory)}`);
+        ChatLib.chat(`${color + BOLD}Theoretical Best: ${RESET + getTime(theory)}`);
     }
     if (color === RED) {
         const conjecture = (data.splits.worst[0] + data.splits.worst[1] + data.splits.worst[2] + data.splits.worst[3]).toFixed(2);
-        ChatLib.chat(`${color}${BOLD}Theoretical Worst: ${RESET}${getTime(conjecture)}`);
+        ChatLib.chat(`${color + BOLD}Theoretical Worst: ${RESET + getTime(conjecture)}`);
     }
 }
 
@@ -306,7 +306,7 @@ export function getSplits(args){
                     for (let i = 0; i < average.length; i++) average[i] = average[i] / runsWanted;
 
                     formatSplits(average, GREEN, runsWanted);
-                } else ChatLib.chat(`${RED}File [${fileName}${RED}] not found!`);
+                } else ChatLib.chat(`${RED}File [${fileName + RED}] not found!`);
                 break;
             case "clear":
                 // Clears every split
@@ -315,11 +315,11 @@ export function getSplits(args){
                 });
                 data.files = [];
                 
-                ChatLib.chat(`${LOGO} ${GREEN}Succesfully cleared splits!`)
+                ChatLib.chat(`${LOGO + GREEN}Succesfully cleared splits!`)
                 break;
             default:
-                ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET}${AQUA}, clear>!`);
+                ChatLib.chat(`${LOGO + AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET + AQUA}, clear>!`);
                 break;
         }
-    } else ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET}${AQUA}, clear>!`);
+    } else ChatLib.chat(`${LOGO + AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET + AQUA}, clear>!`);
 };

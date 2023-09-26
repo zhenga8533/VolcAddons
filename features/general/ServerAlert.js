@@ -23,8 +23,8 @@ registerWhen(register("chat", (server, event) => {
 
     if (servers?.[server] !== undefined && timeDiff < timeThreshold) {
         cancel(event);
-        ChatLib.chat(`${DARK_RED}${BOLD}Recent Server: ${WHITE}${server}${DARK_RED}${BOLD}!`);
-        ChatLib.chat(`${DARK_RED}${BOLD}Last Joined: ${WHITE}${getTime(timeDiff)} ago!`);
+        ChatLib.chat(`${DARK_RED + BOLD}Recent Server: ${WHITE + server + DARK_RED + BOLD}!`);
+        ChatLib.chat(`${DARK_RED + BOLD}Last Joined: ${WHITE + getTime(timeDiff)} ago!`);
     }
 }).setCriteria("Sending to server ${server}..."), () => settings.serverAlert !== 0);
 

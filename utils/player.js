@@ -43,7 +43,7 @@ let updatedTrophy = false;
 register("chat", (id) => {
     data.lastID = id;
     updateBestiary(id);
-    if (updatedTrophy === false) {
+    if (!updatedTrophy) {
         updateTrophy(id);
         updatedTrophy = true;
     }

@@ -67,7 +67,7 @@ function updateContainerValue(remove) {
             if (itemName === "§fAttribute Shard") {
                 const attribute = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getCompoundTag("attributes").toObject();
                 const key = Object.keys(attribute)[0];
-                itemName = `${AQUA}${convertToTitleCase(key)} ${numToRoman(attribute[key])} Shard`;
+                itemName = `${AQUA + convertToTitleCase(key)} ${numToRoman(attribute[key])} Shard`;
             }
 
             // Get item value + item count
@@ -91,17 +91,17 @@ function updateContainerValue(remove) {
         const sortedItems = Object.entries(itemValues).sort((a, b) => b[1][1] - a[1][1]);
         
         // Display the sorted items and total value
-        let overlayMessage = `${DARK_AQUA}Total Value: ${AQUA}${formatNumber(totalValue)}\n\n`;
+        let overlayMessage = `${DARK_AQUA}Total Value: ${AQUA + formatNumber(totalValue)}\n\n`;
         let displayedItems = 0;
         
         // Destructuring here for cleaner loop
         for ([itemName, [itemCount, itemValue]] of sortedItems) {
-            overlayMessage += `${itemName} ${GRAY}x${itemCount} ${WHITE}= ${GREEN}${formatNumber(itemValue)}\n`;
+            overlayMessage += `${itemName} ${GRAY}x${itemCount} ${WHITE}= ${GREEN + formatNumber(itemValue)}\n`;
             displayedItems++;
             if (displayedItems >= settings.containerValue) {
                 const remainingItems = sortedItems.length - settings.containerValue;
                 if (remainingItems > 0) {
-                    overlayMessage += `${GRAY}${ITALIC}+ ${remainingItems} more items...\n`;
+                    overlayMessage += `${GRAY + ITALIC}+ ${remainingItems} more items...\n`;
                 }
                 break;
             }

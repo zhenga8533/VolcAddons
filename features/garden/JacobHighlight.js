@@ -18,10 +18,10 @@ registerWhen(register("guiOpened", () => {
             }
         }        
     })
-}), () => getWorld() === "Garden" && settings.jacobReward === true);
+}), () => getWorld() === "Garden" && settings.jacobReward);
 registerWhen(register("guiClosed", () => {
     unclaimed = [];
-}), () => getWorld() === "Garden" && settings.jacobReward === true);
+}), () => getWorld() === "Garden" && settings.jacobReward);
 
 /**
  * Renders neon green box over unclaimed rewards.
@@ -38,4 +38,4 @@ registerWhen(register('guiRender', () => {
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(57, 255, 20, 128), renderX - 9, renderY - 9, 17, 17);
     })
-}), () => getWorld() === "Garden" && settings.jacobReward === true);
+}), () => getWorld() === "Garden" && settings.jacobReward);

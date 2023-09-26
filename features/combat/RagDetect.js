@@ -16,12 +16,12 @@ registerWhen(register("actionBar", () => {
     heldItem = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
 
     if (heldItem.equals("RAGNAROCK_AXE"))
-        Client.Companion.showTitle(`${GOLD}${BOLD}AWOOGA!`, "", 0, 25, 5);
-}).setCriteria("${before}CASTING"), () => settings.ragDetect === true);
+        Client.Companion.showTitle(`${GOLD + BOLD}AWOOGA!`, "", 0, 25, 5);
+}).setCriteria("${before}CASTING"), () => settings.ragDetect);
 
 /**
  * Tracks chat for rag cancelled message to display alert on screen.
  */
 registerWhen(register("chat", () => {
-    Client.Companion.showTitle(`${RED}${BOLD}CANCELLED!`, "", 0, 25, 5);
-}).setCriteria("Ragnarock was cancelled due to being hit!"), () => settings.ragDetect === true);
+    Client.Companion.showTitle(`${RED + BOLD}CANCELLED!`, "", 0, 25, 5);
+}).setCriteria("Ragnarock was cancelled due to being hit!"), () => settings.ragDetect);

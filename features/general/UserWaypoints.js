@@ -60,10 +60,10 @@ export function createWaypoint(args) {
         userWaypoints = [];
         NPCs = [];
         zones = [];
-        ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared waypoints!`);
+        ChatLib.chat(`${LOGO + GREEN}Successfully cleared waypoints!`);
     } else if (!isNaN(args[2]) && !isNaN(args[3]) && !isNaN(args[4])) {
         userWaypoints.push([args[1], args[2], args[3], args[4]]);
         ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
-    } else ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va waypoint [name] [x] [y] [z] | /va waypoint clear!`);
+    } else ChatLib.chat(`${LOGO + AQUA}Please enter as /va waypoint [name] [x] [y] [z] | /va waypoint clear!`);
 }
 register("worldUnload", () => { userWaypoints = [] });

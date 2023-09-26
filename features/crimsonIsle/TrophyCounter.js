@@ -1,9 +1,9 @@
 import request from "../../../requestV2";
+import settings from "../../utils/settings";
 import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { convertToTitleCase } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { getPlayerUUID } from "../../utils/player";
-import settings from "../../utils/settings";
 import { data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
@@ -81,7 +81,7 @@ register("command", () => {
     sessionTrophy = {};
     timePassed = 0;
     trophyOverlay.message = "";
-    ChatLib.chat(`${LOGO} ${GREEN}Successfully reset trophy fish counter!`);
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset trophy fish counter!`);
 }).setName("resetTrophy");
 
 /**
@@ -94,13 +94,13 @@ function updateMessage(trophyVar) {
         if (fishData[0] !== 0) {
             const title = TROPHY_COLORS[fish] + convertToTitleCase(fish);
             const [total, bronze, silver, gold, diamond] = fishData;
-            const rate = settings.trophyCounter === 1 ? "" : `${GRAY}- ${WHITE}${(total * 3600 / timePassed).toFixed(0)}/hr`;
-            sorted.push(`${title}${WHITE}: ${DARK_AQUA}${total} ${DARK_GRAY}${bronze} ${GRAY}${silver} ${GOLD}${gold} ${AQUA}${diamond} ${rate}`);
+            const rate = settings.trophyCounter === 1 ? "" : `${GRAY}- ${WHITE + (total * 3600 / timePassed).toFixed(0)}/hr`;
+            sorted.push(`${title + WHITE}: ${DARK_AQUA + total} ${DARK_GRAY + bronze} ${GRAY + silver} ${GOLD + gold} ${AQUA + diamond} ${rate}`);
         }
         return sorted;
     }, []);
   
-    if (sortedTrophy.length != 0) trophyOverlay.message = `${GOLD}${BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`;
+    if (sortedTrophy.length != 0) trophyOverlay.message = `${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`;
 }  
 
 /**
@@ -136,7 +136,7 @@ export function updateTrophy(profileId) {
         // Sort by highest catches
         if (settings.trophyCounter === 1) updateMessage(totalTrophy);
     }).catch((err) => {
-        ChatLib.chat(`${LOGO} ${RED}${err.cause ?? err}`);
+        ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
         if (err.cause === "Invalid API key") {
             settings.api = "";
             ChatLib.chat(`${GREEN}API key cleared!`);
@@ -185,6 +185,7 @@ registerWhen(register("chat", (fish) => {
  * Update time for session view
  */
 registerWhen(register("step", () => {
-    if (Object.keys(sessionTrophy).length !== 0 && getPaused() === false) timePassed++;
+    if (getPaused()) return;
+    if (Object.keys(sessionTrophy).length !== 0) timePassed++;
     updateMessage(sessionTrophy);
 }).setFps(1), () => getWorld() === "Crimson Isle" && settings.trophyCounter === 2);

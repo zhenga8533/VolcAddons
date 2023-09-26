@@ -58,5 +58,5 @@ registerWhen(register("step", () => {
 register("command", () => {
     updateAuction();
     updateBazaar();
-    ChatLib.chat(`${LOGO} ${GREEN}Successfully updated Auction and Bazaar!`);
+    ChatLib.chat(`${LOGO + GREEN}Successfully updated Auction and Bazaar!`);
 }).setName("updateEconomy");

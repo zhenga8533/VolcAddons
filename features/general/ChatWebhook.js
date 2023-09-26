@@ -1,6 +1,6 @@
-import { request } from "../../../axios";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
+import { request } from "../../../axios";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 import { getWaifu } from "./PartyCommands";
@@ -42,25 +42,25 @@ function sendWebhook(player, msg, color) {
 registerWhen(register("chat", (player, color, msg) => {
     if (player.includes("Party") || player.includes("Guild") || !(color === "f" || color === "7")) return;
     sendWebhook(getPlayerName(player.removeFormatting()), msg, 0);
-}).setCriteria("&r${player}&${color}: ${msg}&r"), () => settings.chatWebhook !== "" && toggles.publicChat === true);
+}).setCriteria("&r${player}&${color}: ${msg}&r"), () => settings.chatWebhook !== "" && toggles.publicChat);
 
 /**
  * Check for party chat messages.
  */
 registerWhen(register("chat", (player, msg) => {
     sendWebhook(getPlayerName(player), msg, 255);
-}).setCriteria("Party > ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.partyChat === true);
+}).setCriteria("Party > ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.partyChat);
 
 /**
  * Check for guild chat messages.
  */
 registerWhen(register("chat", (player, msg) => {
     sendWebhook(getGuildName(player), msg, 32768);
-}).setCriteria("Guild > ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.guildChat === true);
+}).setCriteria("Guild > ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.guildChat);
 
 /**
  * Check for private chat messages.
  */
 registerWhen(register("chat", (player, msg) => {
     sendWebhook(getPlayerName(player), msg, 16711935);
-}).setCriteria("From ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.privateChat === true);
+}).setCriteria("From ${player}: ${msg}"), () => settings.chatWebhook !== "" && toggles.privateChat);

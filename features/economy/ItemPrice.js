@@ -153,7 +153,7 @@ export function getItemValue(item) {
     let value = (auctionItem?.lbin ?? 0) * item.getStackSize();
 
     // Base Value
-    valueMessage = `${DARK_AQUA}${BOLD}Item: ${itemTag.display.Name}\n`;
+    valueMessage = `${DARK_AQUA + BOLD}Item: ${itemTag.display.Name}\n`;
     if (value === 0) {  // Check for Edge Cases
         const partsID = itemID.split('_');
         const pieceTier = partsID[0];
@@ -233,7 +233,7 @@ export function getItemValue(item) {
     const hotPotatoCount = potatoCount === undefined ? 0 : Math.min(potatoCount, 10);
     const hotPotatoValue = hotPotatoCount * bazaar["HOT_POTATO_BOOK"][0];
     if (hotPotatoValue !== 0) {
-        valueMessage += `\n- ${GOLD}${BOLD}Books:\n`;
+        valueMessage += `\n- ${GOLD + BOLD}Books:\n`;
         valueMessage += `   - ${YELLOW}HPB (${hotPotatoCount}/10): ${GREEN}+${formatNumber(hotPotatoValue)}\n`;
         const fumingPotatoCount = Math.max(potatoCount - 10, 0);
         const fumingPotatoValue = fumingPotatoCount * bazaar["FUMING_POTATO_BOOK"][0];
@@ -259,25 +259,25 @@ export function getItemValue(item) {
     const enginePart = itemData?.drill_part_engine;
     const modulePart = itemData?.drill_part_upgrade_module;
     if (tankPart !== undefined || enginePart !== undefined || modulePart !== undefined) {
-        valueMessage += `\n- ${GOLD}${BOLD}Drill Parts:\n`;
+        valueMessage += `\n- ${GOLD + BOLD}Drill Parts:\n`;
         const tankValue = tankPart === undefined ? 0 : auction?.[tankPart.toUpperCase()]?.lbin ?? 0;
         const engineValue = enginePart === undefined ? 0 : auction?.[enginePart.toUpperCase()]?.lbin ?? 0;
         const moduleValue = modulePart === undefined ? 0 : auction?.[modulePart.toUpperCase()]?.lbin ?? 0;
-        if (tankValue !== 0) valueMessage += `   - ${AQUA}${convertToTitleCase(tankPart)}: ${GREEN}+${formatNumber(tankValue)}\n`;
-        if (engineValue !== 0) valueMessage += `   - ${AQUA}${convertToTitleCase(enginePart)}: ${GREEN}+${formatNumber(engineValue)}\n`;
-        if (moduleValue !== 0) valueMessage += `   - ${AQUA}${convertToTitleCase(modulePart)}: ${GREEN}+${formatNumber(moduleValue)}\n`;
+        if (tankValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(tankPart)}: ${GREEN}+${formatNumber(tankValue)}\n`;
+        if (engineValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(enginePart)}: ${GREEN}+${formatNumber(engineValue)}\n`;
+        if (moduleValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(modulePart)}: ${GREEN}+${formatNumber(moduleValue)}\n`;
     }
     
     // Gem Values
     const gemsKeys = Object.keys(itemData?.gems ?? {});
     const powerScroll = itemData?.power_ability_scroll;
     if (gemsKeys.length !== 0 || powerScroll) {
-        valueMessage += `\n- ${GOLD}${BOLD}Gemstones:\n`;
+        valueMessage += `\n- ${GOLD + BOLD}Gemstones:\n`;
 
         if (powerScroll) {
             const powerScrollValue = auction?.[powerScroll]?.lbin ?? 0;
             const scrollColor = GEMSTONE_SLOTS[powerScroll.split('_')[0]];
-            valueMessage += `   - ${scrollColor}${convertToTitleCase(powerScroll)}: ${GREEN}+${formatNumber(powerScrollValue)}\n`;
+            valueMessage += `   - ${scrollColor + convertToTitleCase(powerScroll)}: ${GREEN}+${formatNumber(powerScrollValue)}\n`;
             value += powerScrollValue;
         }
     }
@@ -301,7 +301,7 @@ export function getItemValue(item) {
         
         if (gemstoneValue !== 0) {
             value += gemstoneValue;
-            valueMessage += `   - ${gemstoneColor}${convertToTitleCase(gemstoneName)}: ${GREEN}+${formatNumber(gemstoneValue)}\n`;
+            valueMessage += `   - ${gemstoneColor + convertToTitleCase(gemstoneName)}: ${GREEN}+${formatNumber(gemstoneValue)}\n`;
         }
     });
     
@@ -310,18 +310,18 @@ export function getItemValue(item) {
     const enchantInstaValue = getEnchantmentValue(itemData?.enchantments, bazaar, 1);
     if (enchantOrderValue !== 0) {
         value += enchantOrderValue;
-        valueMessage += `\n- ${GOLD}${BOLD}Enchantments:\n`;
+        valueMessage += `\n- ${GOLD + BOLD}Enchantments:\n`;
         valueMessage += `   - ${DARK_GREEN}Buy Order Value: ${GREEN}+${formatNumber(enchantOrderValue)}\n`;
         valueMessage += `   - ${DARK_GREEN}Insta Buy Value: ${GREEN}+${formatNumber(enchantInstaValue)}\n`;
     }
   
     // Wither Impact Scroll Values
     const witherScrolls = itemData?.ability_scroll ?? [];
-    if (witherScrolls.length !== 0) valueMessage += `\n- ${GOLD}${BOLD}Wither Scrolls:\n`;
+    if (witherScrolls.length !== 0) valueMessage += `\n- ${GOLD + BOLD}Wither Scrolls:\n`;
     witherScrolls.forEach(scroll => {
         const scrollValue = bazaar[scroll][0];
         if (scrollValue !== 0) {
-            valueMessage += `   - ${DARK_GRAY}${convertToTitleCase(scroll)}: ${GREEN}+${formatNumber(scrollValue)}\n`;
+            valueMessage += `   - ${DARK_GRAY + convertToTitleCase(scroll)}: ${GREEN}+${formatNumber(scrollValue)}\n`;
             value += scrollValue;
         }
     });
@@ -331,7 +331,7 @@ export function getItemValue(item) {
     let attributesValue = 0;
     let doubleCalc = false;
     let attributeMessage = "";
-    if (attributes.length) valueMessage += `\n- ${GOLD}${BOLD}Attributes:\n`;
+    if (attributes.length) valueMessage += `\n- ${GOLD + BOLD}Attributes:\n`;
     attributes.forEach((attribute) => {
         const attributeLevel = itemData?.attributes[attribute];
         const attributeCount = 2 ** (attributeLevel - 1);
@@ -340,13 +340,13 @@ export function getItemValue(item) {
         
         if (attributeLevel > 5) {
             attributesValue += attributeValue;
-            attributeMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
+            attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
             doubleCalc = true;
         } else if (attributeValue > attributesValue && !doubleCalc) {
             attributeMessage = attributeMessage.replace(/(\+[^\n]+)/, `${DARK_RED}Nullified`);
-            attributeMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
+            attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
             attributesValue = attributeValue;
-        } else attributeMessage += `   - ${RED}${convertToTitleCase(attribute)} ${attributeLevel}: ${DARK_RED}Nullified\n`;
+        } else attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${DARK_RED}Nullified\n`;
     });
     // Attribute combo value
     const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] ?? 0;
@@ -364,7 +364,7 @@ export function getItemValue(item) {
     value += attributesValue;
 
     // Total Value
-    valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN}${formatNumber(value)}`;
+    valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN + formatNumber(value)}`;
   
     savedValues[itemUUID] = [value, valueMessage];
     return value;

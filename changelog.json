@@ -1,4 +1,7 @@
 [
+    "TODO: - Added Skyblock toggle",
+    "- Changed some interal logic",
+    "- Changed formatting of some titles",
     "- Changed `/va apex` to take in <k, m, b> args",
     "- Fixed jawbus announce",
     "- Fixed update spam"

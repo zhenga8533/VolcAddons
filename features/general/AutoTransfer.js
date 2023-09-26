@@ -26,7 +26,7 @@ registerWhen(register("chat", (player1, player2) => {
  */
 let transferred = false;
 registerWhen(register("chat", (player1, player2) => {
-    if (getWorld() !== undefined && transferred === false) return;
+    if (getWorld() !== undefined && !transferred) return;
     const name1 = getPlayerName(player1).toLowerCase();
     const name2 = getPlayerName(player2).toLowerCase();
 
@@ -35,7 +35,7 @@ registerWhen(register("chat", (player1, player2) => {
 }).setCriteria("The party was transferred to ${player1} by ${player2}"), () => settings.autoTransfer === 2);
 registerWhen(register("worldLoad", () => { transferred = false }), () => settings.autoTransfer === 2);
 registerWhen(register("chat", () => {
-    if (getIsLeader() === false) return;
+    if (!getIsLeader()) return;
     const party = Array.from(getParty());
     delay(() => ChatLib.command(`p transfer ${party[Math.floor(Math.random() * party.length)]}`), 500);
 }).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!"), () => settings.autoTransfer === 2);
@@ -44,10 +44,10 @@ registerWhen(register("chat", () => {
  * Announce to party when kicked
  */
 registerWhen(register("chat", () => {
-    if (getInParty() === false) return;
+    if (!getInParty()) return;
     delay(() => ChatLib.command(`pc ${settings.kickAnnounce}`), 1000);
 }).setCriteria("Oops! You are not on SkyBlock so we couldn't warp you!"), () => settings.kickAnnounce !== "");
 registerWhen(register("chat", () => {
-    if (getInParty() === false) return;
+    if (!getInParty()) return;
     delay(() => ChatLib.command(`pc ${settings.kickAnnounce}`), 1000);
 }).setCriteria("You were kicked while joining that server!"), () => settings.kickAnnounce !== "");

@@ -24,7 +24,7 @@ registerWhen(register("messageSent", (message, event) => {
         ChatLib.command("warp garden");
         warpTo = message;
     }
-}), () => settings.warpGarden === true);
+}), () => settings.warpGarden);
 
 /**
  * Attempts to warp the player to a specified location (`warpTo`) if a next visitor is present.
@@ -36,4 +36,4 @@ function tryWarp() {
         warpTo = "";
     } else delay(() => tryWarp(), 1000);
 }
-registerWhen(register("worldLoad", () => { tryWarp() }), () => settings.warpGarden === true);
+registerWhen(register("worldLoad", () => { tryWarp() }), () => settings.warpGarden);

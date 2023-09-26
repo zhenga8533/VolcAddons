@@ -11,7 +11,7 @@ import { getWorld } from "../../utils/worlds";
 const CHEST_CLASS = Java.type("net.minecraft.tileentity.TileEntityChest").class
 let nearbyChests = [];
 export function getPowderChests() { return nearbyChests };
-const powderExample = `${DARK_AQUA}${BOLD}Nearby Chests: ${WHITE}dentge.`;
+const powderExample = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE}dentge.`;
 const powderOverlay = new Overlay("powderChest", ["Crystal Hollows"], () => true, data.HL, "moveChest", powderExample);
 
 /**
@@ -20,7 +20,7 @@ const powderOverlay = new Overlay("powderChest", ["Crystal Hollows"], () => true
 registerWhen(register("tick", () => {
     nearbyChests = World.getAllTileEntitiesOfType(CHEST_CLASS)
         .filter(chest => Player.asPlayerMP().distanceTo(chest.getBlockPos()) <= settings.powderChest);
-    powderOverlay.message = `${DARK_AQUA}${BOLD}Nearby Chests: ${WHITE}${nearbyChests.length}`;
+    powderOverlay.message = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + nearbyChests.length}`;
 }), () => getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
 
 /**

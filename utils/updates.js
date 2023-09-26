@@ -1,5 +1,5 @@
 import axios from "../../axios";
-const { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY, RED } = require('./constants');
+import { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY, RED } from "./constants";
 
 
 /**
@@ -72,18 +72,18 @@ export function getLatestReleaseVersion() {
         // Compare the current version with the latest version and notify the user if an update is available
         if (currentVersion && compareVersions(currentVersion, latestVersion)) {
             const downloadLink = latestRelease.html_url;
-            ChatLib.chat(`\n${LOGO} ${GOLD}${BOLD}NEW RELEASE: ${WHITE}${BOLD}v${latestVersion}`);
+            ChatLib.chat(`\n${LOGO + GOLD + BOLD}NEW RELEASE: ${WHITE + BOLD}v${latestVersion}`);
             ChatLib.chat(`${GREEN}Download the new version here: ${downloadLink}`);
             ChatLib.chat(`${GREEN}OR install using the forge installer: https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar\n`);
         } else {
-            ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}You are on the latest version (${WHITE}${BOLD}v${currentVersion}${GREEN}${BOLD})!\n`);
-            ChatLib.chat(`${GRAY}${BOLD}Changelog:`);
+            ChatLib.chat(`\n${LOGO + GREEN + BOLD}You are on the latest version (${WHITE + BOLD}v${currentVersion + GREEN + BOLD})!\n`);
+            ChatLib.chat(`${GRAY + BOLD}Changelog:`);
             JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => {
                 ChatLib.chat(change);
             });
             ChatLib.chat("");
         }
     }).catch(error => {
-        ChatLib.chat(`${LOGO} ${RED}Failed to fetch releases: ${error}`);
+        ChatLib.chat(`${LOGO + RED}Failed to fetch releases: ${error}`);
     });
 }

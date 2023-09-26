@@ -12,7 +12,7 @@ let tuba = 0;
 let type = false;
 let cd = 0;
 let alerted = false;
-const tubaExample = `${GRAY}${BOLD}Tuba Timer: ${RESET}Scooby Snack`;
+const tubaExample = `${GRAY + BOLD}Tuba Timer: ${RESET}Scooby Snack`;
 const tubaOverlay = new Overlay("tubaTimer", ["The Rift"], () => true, data.UL, "moveTubaTimer", tubaExample);
 
 /**
@@ -26,7 +26,7 @@ registerWhen(register("actionBar", () => {
     cd = 19.8;
     alerted = false;
 }).setCriteria("${before}-${x} Mana (Howl)${after}"),
-() => getWorld() === "The Rift" && (settings.tubaTimer === true || settings.tubaAlert === true));
+() => getWorld() === "The Rift" && (settings.tubaTimer || settings.tubaAlert));
 
 /**
  * Updates tuba overlay every tick and alerst player when ability can be used again.
@@ -42,10 +42,10 @@ registerWhen(register("tick", () => {
     if (cd > 0) cd = (cd - 0.05).toFixed(2);
     if (tuba > 0) {
         if (settings.tubaAlert && !alerted && cd === 0) {
-            Client.Companion.showTitle(`${DARK_RED}${BOLD}USE TUBA`, "", 0, 25, 5);
+            Client.Companion.showTitle(`${DARK_RED + BOLD}USE TUBA`, "", 0, 25, 5);
             alerted = true;
         }
         tuba = (tuba - 0.05).toFixed(2);
-        tubaOverlay.message = `${GRAY}${BOLD}Tuba Timer: ${RESET}${tuba}s`;
-    } else tubaOverlay.message = `${GRAY}${BOLD}Tuba Timer: ${RED}NO TUBA`;
-}), () => getWorld() === "The Rift" && (settings.tubaTimer === true || settings.tubaAlert === true));
+        tubaOverlay.message = `${GRAY + BOLD}Tuba Timer: ${RESET + tuba}s`;
+    } else tubaOverlay.message = `${GRAY + BOLD}Tuba Timer: ${RED}NO TUBA`;
+}), () => getWorld() === "The Rift" && (settings.tubaTimer || settings.tubaAlert));

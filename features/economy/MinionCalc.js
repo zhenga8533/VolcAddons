@@ -24,7 +24,7 @@ const VAMPIRE_ACTIONS = [190, 175, 160, 140, 117, 95];
 const MAX_UPGRADES = 1.41;
 const MAX_INFERNO = 3.41;
 const MAX_CATALYST = 6.44;
-const PSA = `${GRAY}${ITALIC}Note that these calculations are done with max upgrades!\n`;
+const PSA = `${GRAY + ITALIC}Note that these calculations are done with max upgrades!\n`;
 
 /**
  * Hypergolic gabagool calculation.
@@ -71,18 +71,18 @@ export function calcMinions(args) {
             const p3 = hypergolic[1] - orderHypergolic;
             const p4 = hypergolic[1] - instaHypergolic;
 
-            ChatLib.chat(`\n${LOGO} ${GREEN}${BOLD}Hypergolic Craft Profits:\n`);
-            ChatLib.chat(`${RED}${BOLD}${UNDERLINE}Hypergolic Gabagool Cost:`);
-            ChatLib.chat(`${AQUA}Insta Sell: ${WHITE}${commafy(hypergolic[0])}`);
-            ChatLib.chat(`${AQUA}Sell Offer: ${WHITE}${commafy(hypergolic[1])}\n`);
-            ChatLib.chat(`${GREEN}${BOLD}${UNDERLINE}Material Cost:`);
-            ChatLib.chat(`${AQUA}Buy Order: ${WHITE}${commafy(orderHypergolic)}`);
-            ChatLib.chat(`${AQUA}Insta Buy: ${WHITE}${commafy(instaHypergolic)}\n`);
-            ChatLib.chat(`${DARK_AQUA}${BOLD}${UNDERLINE}Total Profit:`)
-            ChatLib.chat(`${AQUA}Insta Sell + Buy Order: ${WHITE}${commafy(p1)}`);
-            ChatLib.chat(`${AQUA}Insta Sell + Insta Buy: ${WHITE}${commafy(p2)}`);
-            ChatLib.chat(`${AQUA}Sell Offer + Buy Order: ${WHITE}${commafy(p3)}`);
-            ChatLib.chat(`${AQUA}Sell Offer + Insta Buy: ${WHITE}${commafy(p4)}\n`);
+            ChatLib.chat(`\n${LOGO + GREEN + BOLD}Hypergolic Craft Profits:\n`);
+            ChatLib.chat(`${RED + BOLD + UNDERLINE}Hypergolic Gabagool Cost:`);
+            ChatLib.chat(`${AQUA}Insta Sell: ${WHITE + commafy(hypergolic[0])}`);
+            ChatLib.chat(`${AQUA}Sell Offer: ${WHITE + commafy(hypergolic[1])}\n`);
+            ChatLib.chat(`${GREEN + BOLD + UNDERLINE}Material Cost:`);
+            ChatLib.chat(`${AQUA}Buy Order: ${WHITE + commafy(orderHypergolic)}`);
+            ChatLib.chat(`${AQUA}Insta Buy: ${WHITE + commafy(instaHypergolic)}\n`);
+            ChatLib.chat(`${DARK_AQUA + BOLD + UNDERLINE}Total Profit:`)
+            ChatLib.chat(`${AQUA}Insta Sell + Buy Order: ${WHITE + commafy(p1)}`);
+            ChatLib.chat(`${AQUA}Insta Sell + Insta Buy: ${WHITE + commafy(p2)}`);
+            ChatLib.chat(`${AQUA}Sell Offer + Buy Order: ${WHITE + commafy(p3)}`);
+            ChatLib.chat(`${AQUA}Sell Offer + Insta Buy: ${WHITE + commafy(p4)}\n`);
             break;
         /*  INFERNO MINION LOOT TABLE:
             Chili Pepper 1/156
@@ -122,14 +122,14 @@ export function calcMinions(args) {
             const net = Object.values(profit).reduce((a, c) => a + c, 0) - fuel;
 
             // ChatLib the values
-            ChatLib.chat(`\n${GOLD}${BOLD}Average Profit for ${minions} Inferno Minion(s) t${tier}`);
-            ChatLib.chat(`${AQUA}${BOLD}Crude Gabagool ${GRAY}${BOLD}[${drops.GABAGOOL}]${AQUA}: ${RESET}${commafy(profit.GABAGOOL)}`);
-            ChatLib.chat(`${AQUA}${BOLD}Chili Pepper ${GRAY}${BOLD}[${drops.CHILI}]${AQUA}: ${RESET}${commafy(profit.CHILI)}`);
-            ChatLib.chat(`${AQUA}${BOLD}Inferno Vertex ${GRAY}${BOLD}[${drops.VERTEX}]${AQUA}: ${RESET}${commafy(profit.VERTEX)}`);
-            ChatLib.chat(`${AQUA}${BOLD}Inferno Apex ${GRAY}${BOLD}[${drops.APEX}]${AQUA}: ${RESET}${commafy(profit.APEX)}`);
-            ChatLib.chat(`${AQUA}${BOLD}Reaper Pepper ${GRAY}${BOLD}[${drops.REAPER}]${AQUA}: ${RESET}${commafy(profit.REAPER)}\n`);
-            ChatLib.chat(`${RED}${BOLD}Fuel Price: ${RESET}${commafy(fuel)}`);
-            ChatLib.chat(`${GREEN}${BOLD}Total Profit: ${RESET}${commafy(net)}\n${PSA}`);
+            ChatLib.chat(`\n${GOLD + BOLD}Average Profit for ${minions} Inferno Minion(s) t${tier}`);
+            ChatLib.chat(`${AQUA + BOLD}Crude Gabagool ${GRAY + BOLD}[${drops.GABAGOOL}]${AQUA}: ${RESET + commafy(profit.GABAGOOL)}`);
+            ChatLib.chat(`${AQUA + BOLD}Chili Pepper ${GRAY + BOLD}[${drops.CHILI}]${AQUA}: ${RESET + commafy(profit.CHILI)}`);
+            ChatLib.chat(`${AQUA + BOLD}Inferno Vertex ${GRAY + BOLD}[${drops.VERTEX}]${AQUA}: ${RESET + commafy(profit.VERTEX)}`);
+            ChatLib.chat(`${AQUA + BOLD}Inferno Apex ${GRAY + BOLD}[${drops.APEX}]${AQUA}: ${RESET + commafy(profit.APEX)}`);
+            ChatLib.chat(`${AQUA + BOLD}Reaper Pepper ${GRAY + BOLD}[${drops.REAPER}]${AQUA}: ${RESET + commafy(profit.REAPER)}\n`);
+            ChatLib.chat(`${RED + BOLD}Fuel Price: ${RESET + commafy(fuel)}`);
+            ChatLib.chat(`${GREEN + BOLD}Total Profit: ${RESET + commafy(net)}\n${PSA}`);
             break;
         case "gabagool": // GABAGOOL!!!
         case "gaba":
@@ -146,13 +146,13 @@ export function calcMinions(args) {
             const fuelProfit = fuelGabgool - fuelPrice;
 
             // Format ChatLib.chat
-            ChatLib.chat(`\n${GOLD}${BOLD}Average Profit for ${minions} Inferno Minion(s) t${tier}`);
-            ChatLib.chat(`${AQUA}${BOLD}Heavy Gabagool Drops: ${RESET}${commafy(heavyGabagool)}`);
-            ChatLib.chat(`${RED}${BOLD}Heavy Gabagool Cost: ${RESET}${commafy(heavyPrice)}`);
-            ChatLib.chat(`${GREEN}${BOLD}Heavy Gabagool Profit: ${RESET}${commafy(heavyProfit)}\n`);
-            ChatLib.chat(`${AQUA}${BOLD}Fuel Gabagool Drops: ${RESET}${commafy(fuelGabgool)}`);
-            ChatLib.chat(`${RED}${BOLD}Fuel Gabagool Cost: ${RESET}${commafy(fuelPrice)}`);
-            ChatLib.chat(`${GREEN}${BOLD}Fuel Gabagool Profit: ${RESET}${commafy(fuelProfit)}\n${PSA}`);
+            ChatLib.chat(`\n${GOLD + BOLD}Average Profit for ${minions} Inferno Minion(s) t${tier}`);
+            ChatLib.chat(`${AQUA + BOLD}Heavy Gabagool Drops: ${RESET + commafy(heavyGabagool)}`);
+            ChatLib.chat(`${RED + BOLD}Heavy Gabagool Cost: ${RESET + commafy(heavyPrice)}`);
+            ChatLib.chat(`${GREEN + BOLD}Heavy Gabagool Profit: ${RESET + commafy(heavyProfit)}\n`);
+            ChatLib.chat(`${AQUA + BOLD}Fuel Gabagool Drops: ${RESET + commafy(fuelGabgool)}`);
+            ChatLib.chat(`${RED + BOLD}Fuel Gabagool Cost: ${RESET + commafy(fuelPrice)}`);
+            ChatLib.chat(`${GREEN + BOLD}Fuel Gabagool Profit: ${RESET + commafy(fuelProfit)}\n${PSA}`);
             break;
         case "vampire":
         case "vamp":
@@ -162,12 +162,12 @@ export function calcMinions(args) {
             const vampCost = bazaar.HYPER_CATALYST[0] * 4 * minions;
             const vampProfit = hemovibe[1] - vampCost;
             
-            ChatLib.chat(`\n${GOLD}${BOLD}Drops for ${minions} Vampire Minion(s) t${tier}`);
-            ChatLib.chat(`${AQUA}${BOLD}Hemovibe ${GRAY}${BOLD}[${hemovibe[0]}]${AQUA}: ${RESET}${commafy(hemovibe[1])}`);
-            ChatLib.chat(`${AQUA}${BOLD}Hemoglass ${GRAY}${BOLD}[${hemoglass[0]}]${AQUA}: ${RESET}${commafy(hemoglass[1])}`);
-            ChatLib.chat(`${AQUA}${BOLD}Hemobomb ${GRAY}${BOLD}[${hemobomb[0]}]${AQUA}: ${RESET}${commafy(hemobomb[1])}`);
-            ChatLib.chat(`${RED}${BOLD}Hyper Catalyst Cost: ${RESET}${commafy(vampCost)}`);
-            ChatLib.chat(`${GREEN}${BOLD}Total Profit: ${RESET}${commafy(vampProfit)}\n${PSA}`);
+            ChatLib.chat(`\n${GOLD + BOLD}Drops for ${minions} Vampire Minion(s) t${tier}`);
+            ChatLib.chat(`${AQUA + BOLD}Hemovibe ${GRAY + BOLD}[${hemovibe[0]}]${AQUA}: ${RESET + commafy(hemovibe[1])}`);
+            ChatLib.chat(`${AQUA + BOLD}Hemoglass ${GRAY + BOLD}[${hemoglass[0]}]${AQUA}: ${RESET + commafy(hemoglass[1])}`);
+            ChatLib.chat(`${AQUA + BOLD}Hemobomb ${GRAY + BOLD}[${hemobomb[0]}]${AQUA}: ${RESET + commafy(hemobomb[1])}`);
+            ChatLib.chat(`${RED + BOLD}Hyper Catalyst Cost: ${RESET + commafy(vampCost)}`);
+            ChatLib.chat(`${GREEN + BOLD}Total Profit: ${RESET + commafy(vampProfit)}\n${PSA}`);
             break;
     }
 }

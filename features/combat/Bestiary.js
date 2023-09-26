@@ -23,7 +23,7 @@ export function updateBestiary(profileId) {
         bestiaryApi = response.profile.members[getPlayerUUID()]?.bestiary?.kills;
     }).catch((err) => {
         // If there is an error, display the error message in the Minecraft chat.
-        ChatLib.chat(`${LOGO} ${RED}${err.cause ?? err}`);
+        ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
         if (err.cause === "Invalid API key") {
             settings.api = "";
             ChatLib.chat(`${GREEN}API key cleared!`);
@@ -343,9 +343,9 @@ function sortBestiary(val, amount) {
     }, {});
 
     // Displaying the sorted bestiary information in chat
-    ChatLib.chat(`\n${LOGO} ${WHITE}${BOLD}Leftover Bestiary: `);
+    ChatLib.chat(`\n${LOGO + WHITE + BOLD}Leftover Bestiary: `);
     Object.keys(sortedBestiary).forEach((key) => {
-        ChatLib.chat(`${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${sortedBestiary[key].next} ${GREEN}kills! (${RED}${getTime(sortedBestiary[key].nextTime)}${GREEN})`);
+        ChatLib.chat(`${GOLD + BOLD + key}: ${GREEN}Needs ${RED + sortedBestiary[key].next + GREEN} kills! (${RED + getTime(sortedBestiary[key].nextTime) + GREEN})`);
     });
 }
   
@@ -372,9 +372,9 @@ export function getBestiary(args) {
             const key = args.slice(1).map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
             const mob = bestiary[key];
             if (mob === undefined)
-                ChatLib.chat(`${LOGO} ${RED}Please input as /va be <mobName OR bracket [1-7] OR <kill, time> [amount]>!`);
+                ChatLib.chat(`${LOGO + RED}Please input as /va be <mobName OR bracket [1-7] OR <kill, time> [amount]>!`);
             else
-                ChatLib.chat(`${LOGO} ${GOLD}${BOLD}${key}: ${GREEN}Needs ${RED}${mob.next} ${GREEN}kills! (${RED}${getTime(mob.nextTime)}${GREEN})`);
+                ChatLib.chat(`${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${RED + getTime(mob.nextTime) + GREEN})`);
             break;
     }
 }

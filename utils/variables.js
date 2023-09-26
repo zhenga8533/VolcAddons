@@ -106,7 +106,7 @@ export function registerWhen(trigger, dependency) {
 // Updates trigger registrations based on world or GUI changes
 export function setRegisters(off = false) {
     registers.forEach(trigger => {
-        if (off === true || (!trigger[1]() && trigger[2])) {
+        if (off || (!trigger[1]() && trigger[2])) {
             trigger[0].unregister();
             trigger[2] = false;
         } else if (trigger[1]() && !trigger[2]) {
@@ -145,39 +145,39 @@ export function updateList(args, list, listName) {
         case ("add"): // ADD TO LIST
             if (isArray && !list.includes(item)) {
                 list.push(item);
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully added [${WHITE}${item}${GREEN}] to the ${listName}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully added [${WHITE + item + GREEN}] to the ${listName}!`);
             } else if (!isArray && !(key in list)) {
                 list[key] = value;
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully linked [${WHITE}${value}${GREEN}] to [${WHITE}${key}${GREEN}]!`);
-            } else ChatLib.chat(`${LOGO} ${RED}[${WHITE}${isArray ? item : key}${RED}] is already in the ${listName}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully linked [${WHITE + value + GREEN}] to [${WHITE + key + GREEN}]!`);
+            } else ChatLib.chat(`${LOGO + RED}[${WHITE + isArray ? item : key + RED}] is already in the ${listName}!`);
             break;
         case ("remove"): // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
                 list.splice(list.indexOf(item), 1);
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${item}${GREEN}] from the ${listName}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully removed [${WHITE + item + GREEN}] from the ${listName}!`);
             } else if (!isArray && key in list) {
                 delete list[key];
-                ChatLib.chat(`${LOGO} ${GREEN}Successfully removed [${WHITE}${key}${GREEN}] from the ${listName}!`);
-            } else ChatLib.chat(`${LOGO} ${RED}[${WHITE}${item}${RED}] is not in the ${listName}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully removed [${WHITE + key + GREEN}] from the ${listName}!`);
+            } else ChatLib.chat(`${LOGO + RED}[${WHITE + item + RED}] is not in the ${listName}!`);
             break;
         case ("clear"): // CLEAR LIST
         case ("reset"):
             if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
-            ChatLib.chat(`${LOGO} ${GREEN}Successfully cleared the ${listName}!`);
+            ChatLib.chat(`${LOGO + GREEN}Successfully cleared the ${listName}!`);
             break;
         case ("view"): // DISPLAY LIST
         case ("list"):
             if (isArray) {
-                ChatLib.chat(`${GOLD}${BOLD}${list.length} Items in ${listName}:${RESET}`);
+                ChatLib.chat(`${GOLD + BOLD + list.length} Items in ${listName}:${RESET}`);
                 list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
             } else {
-                ChatLib.chat(`${GOLD}${BOLD}${Object.keys(list).length} Items in ${listName}:${RESET}`);
+                ChatLib.chat(`${GOLD + BOLD + Object.keys(list).length} Items in ${listName}:${RESET}`);
                 Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key} => ${list[key]}`) });
             }
             break;
         default:
-            ChatLib.chat(`${LOGO} ${AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
+            ChatLib.chat(`${LOGO + AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
             break;
     }
     
@@ -202,7 +202,7 @@ const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "VolcAddons");
 pauseKey.registerKeyPress(() => {
     paused = !paused;
     const message = paused ? `${RED}Paused` : `${GREEN}Resumed`;
-    ChatLib.chat(`${LOGO} ${GOLD}Tracker ${message}!`);
+    ChatLib.chat(`${LOGO + GOLD}Tracker ${message}!`);
 });
 register("gameUnload", () => {
     data.pauseKey = pauseKey.getKeyCode();
