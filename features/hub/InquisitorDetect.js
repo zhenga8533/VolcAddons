@@ -83,11 +83,11 @@ register("command", () => {
 /**
  * Announce inquisitor spawn on chat message appears.
  */
-registerWhen(register("chat", (mob) => {
+registerWhen(register("chat", (wow, mob) => {
     if (mob === "Minos Inquisitor") {
         if (settings.inqAlert !== 0) announceMob(settings.inqAlert, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
         else if (settings.inqCounter !== 0) updateInqCounter(true);
-    } else updateInqCounter(false);
+    } else if (settings.inqCounter !== 0) updateInqCounter(false);
 }).setCriteria("${wow}! You dug out a ${mob}!"), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual"));
 
 /**

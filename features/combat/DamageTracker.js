@@ -12,19 +12,17 @@ const damaged = [];
 /**
  * Tracks any instance of damage around the player and displays it in chat.
  */
+
 registerWhen(register("step", () => {
     const player = Player.asPlayerMP().getEntity();
-    World.getWorld()
-        .func_72839_b(player, player.func_174813_aQ().func_72314_b(16, 16, 16)).forEach(stand => {
-            ChatLib.chat(stand.func_95999_t())
-        })
     const stands = World.getWorld()
         .func_72839_b(player, player.func_174813_aQ().func_72314_b(16, 16, 16))
         .filter(entity => entity instanceof EntityArmorStand);
     const damage = stands.filter(stand => {
         const name = stand.func_95999_t();
         return name.startsWith("§f✧") || 
-            (name.startsWith("§7") && !isNaN(name.removeFormatting()));
+            name.startsWith("§f✯") ||
+            (name.startsWith("§7") && !isNaN(name.removeFormatting().replace(/,/g, '')));
     });
 
     damage.forEach(num => {

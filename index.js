@@ -1,5 +1,5 @@
 // Utility Modules
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_RED, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { formatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import "./utils/player";
@@ -86,7 +86,7 @@ import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
-if (!FileLib.exists("VolcAddons", "data/contract")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
+if (!FileLib.exists("VolcAddons", "data/contract.txt")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
 
 const once = register("worldLoad", () => {
     // FIRST RUN - Display welcome message for new users
@@ -218,8 +218,8 @@ register ("command", (...args) => {
             }
 
             data.vision = !data.vision;
-            if (data.vision) ChatLib.chat(`${LOGO} ${WHITE}The white eye has been activated.`);
-            else ChatLib.chat(`${LOGO} ${GREEN}See no evil, hear no evil, speak no evil...`);
+            if (data.vision) ChatLib.chat(`${LOGO} ${GREEN}The white eye has been activated.`);
+            else ChatLib.chat(`${LOGO} ${RED}See no evil, hear no evil, speak no evil...`);
             break;
         // Move GUI
         case "gui":

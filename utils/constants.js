@@ -44,7 +44,7 @@ ${WHITE}Made By Volcaronitee
 `;
 export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}]`;
 export const CONTRACT =
-`VolcAddons Module User Agreement
+`VolcAddons Module User Agreement & Terms of Service
 
 This Agreement ("Agreement") is entered into between VolcAddons and user, collectively referred to as the "Parties," with respect to the use of the Minecraft modification created by The Pirate King.
 
@@ -97,7 +97,7 @@ User (Enter IGN below):
 
 _____________*
 
-*"The Parties agree that digital signatures and electronic acceptance of this Agreement shall have the same legal force and effect as traditional, ink-on-paper signatures."`;
+*The Parties agree that digital signatures and electronic acceptance of this Agreement shall have the same legal force and effect as traditional, ink-on-paper signatures.`;
 
 /**
  * Rift waypoints.

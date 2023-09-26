@@ -36,6 +36,7 @@ registerWhen(register("tick", () => {
         return;
     }
 
+    const player = Player.asPlayerMP().getEntity();
     const stands = World.getWorld()
         .func_72839_b(player, player.func_174813_aQ().func_72314_b(16, 16, 16))
         .filter(entity => entity instanceof EntityArmorStand);
@@ -44,9 +45,9 @@ registerWhen(register("tick", () => {
     if (!bossUUID) {
         const spawn = stands.find(stand => stand.func_95999_t().includes('03:59'));
         if (spawn === undefined) return;
-        bossUUID = spawn.getUniqueID();
+        bossUUID = spawn.persistentID;
     } else {
-        const boss = stands.find(stand => stand.getUniqueID() === bossUUID);
+        const boss = stands.find(stand => stand.persistentID === bossUUID);
         if (boss === undefined) return;
         dracula = boss;
         const name = boss.func_95999_t().split(" ");
@@ -81,18 +82,18 @@ registerWhen(register("tick", () => {
 
     // Ichor Nametag Shit
     if (ichorSpawn) {
-        if (ichorUUID) {
-            const ichor = stands.find(stand => stand.getUUID() === ichorUUID);
+        if (ichorUUID !== 0) {
+            const ichor = stands.find(stand => stand.persistentID === ichorUUID);
             if (ichor === undefined) {
                 ichorSpawn = false;
                 ichorUUID = 0;
                 return;
             }
-            vampireOverlay.message += `${DARK_AQUA}${BOLD}ICHOR: ${ichor.getName()}\n`;
+            vampireOverlay.message += `${DARK_AQUA}${BOLD}ICHOR: ${ichor.func_95999_t()}\n`;
         } else {
-            const ichor = stands.find(stand => stand.getName().includes('24.'));
+            const ichor = stands.find(stand => stand.func_95999_t().includes('24.'));
             if (ichor === undefined) return;
-            ichorUUID = ichor.getUUID();
+            ichorUUID = ichor.persistentID;
         }
     }
 }), () => getWorld() === "The Rift" && (settings.vampireAttack === true || settings.announceMania !== 0));
@@ -112,14 +113,6 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
 }), () => getWorld() === "The Rift" && settings.vampireImpel === true);
 
 /**
- * Draws an ESP box around player boss and highlights when low.
- */
-registerWhen(register("renderWorld", () => {
-    if (dracula === undefined) return;
-    RenderLib.drawEspBox(dracula.getX(), dracula.getY() - 2.5, dracula.getZ(), 1, 2, 1, 0, 0, 1, data.vision);
-}), () => settings.vampireHitbox === true && getWorld() === "The Rift");
-
-/**
  * Highlights vampire bosses with steakable HP.
  */
 let vamps = [];
@@ -127,19 +120,21 @@ registerWhen(register("step", () => {
     vamps = [];
     
     const player = Player.asPlayerMP().getEntity();
-    vamps = World.getWorld()?.func_72839_b(player, player.func_174813_aQ().func_72314_b(32, 32, 32))?.filter(entity => {
-        entity instanceof EntityArmorStand && entity?.func_95999_t()?.includes("Bloodfiend §e§l")
-    }) ?? [];
+    vamps = World.getWorld()?.func_72839_b(player, player.func_174813_aQ().func_72314_b(32, 32, 32))?.filter(entity => 
+        entity instanceof EntityArmorStand && entity?.func_95999_t()?.includes("Bloodfiend §e§l")) ?? [];
 }).setFps(2), () => getWorld() === "The Rift" && settings.vampireHitbox === true);
 
 /**
- * Render mob hitboxes
+ * Render boxx hitboxes
  */
 registerWhen(register("renderWorld", () => {
-    stands.forEach(stand => {
-        const x = stand.field_70142_S;
-        const y = stand.field_70137_T - 2;
-        const z = stand.field_70136_U;
+    if (dracula === undefined) return;
+    RenderLib.drawEspBox(dracula.field_70142_S, dracula.field_70137_T - 2.5, dracula.field_70136_U, 1, 2, 1, 0, 0, 1, data.vision);
+
+    vamps.forEach(vamp => {
+        const x = vamp.field_70142_S;
+        const y = vamp.field_70137_T - 2;
+        const z = vamp.field_70136_U;
 
         const distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
         Tessellator.drawString(`Medium Rare §b[${distance}]`, x, y + 3.5, z, 0xffffff, false);
