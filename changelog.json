@@ -1,12 +1,5 @@
 [
-    "- Added status ?commands",
-    "- Changed kill counter to detect specific mobs",
-    "- Changed some detections to be more optimized",
-    "- Changed `/va calc inferno` to use new odds",
-    "- Changed stand detection",
-    "- Changed damage tracker to track better",
-    "- Fixed bazaar item prices being off",
-    "- Fixed initial compost timer being off",
-    "- Fixed `/va apex`",
-    "- Fixed inq counter and announce"
+    "- Changed `/va apex` to take in <k, m, b> args",
+    "- Fixed jawbus announce",
+    "- Fixed update spam"
 ]

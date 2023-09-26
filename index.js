@@ -1,6 +1,6 @@
 // Utility Modules
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
-import { formatNumber } from "./utils/functions";
+import { formatNumber, unformatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import "./utils/player";
 import { openGUI } from "./utils/overlay";
@@ -103,9 +103,7 @@ const once = register("worldLoad", () => {
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`\n${LOGO} ${WHITE}${BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
-            JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => {
-                ChatLib.chat(change);
-            });
+            JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => ChatLib.chat(change));
             ChatLib.chat("");
         }
     }, 1000);
@@ -351,7 +349,7 @@ register ("command", (...args) => {
             break;
         // Set Apex Price
         case "apex":
-            data.apexPrice = isNaN(args[1]) ? data.apexPrice : args[1];
+            data.apexPrice = unformatNumber(args[1]) || data.apexPrice;
             ChatLib.chat(`${LOGO} ${GREEN}Successfully changed Apex price to ${formatNumber(data.apexPrice)}!`);
             break;
         // Configure enigma souls

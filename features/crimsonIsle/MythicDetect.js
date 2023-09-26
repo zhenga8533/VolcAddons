@@ -17,7 +17,7 @@ const GUARDIAN_CLASS = Java.type('net.minecraft.entity.monster.EntityGuardian').
  */
 registerWhen(register("chat", () => {
     announceMob(settings.mythicLavaAnnounce, "Lord Jawbus", Player.getX(), Player.getY(), Player.getZ());
-}).setCriteria("You have angered a legendary creature... Lord Jawbus has arrived"),
+}).setCriteria("You have angered a legendary creature... Lord Jawbus has arrived."),
 () => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
 registerWhen(register("chat", () => {
     announceMob(settings.mythicLavaAnnounce, "Thunder", Player.getX(), Player.getY(), Player.getZ());
