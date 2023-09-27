@@ -12,18 +12,18 @@ import { getWorld } from "./worlds";
  * @param {number} x - The x-coordinate where the text will be rendered.
  * @param {number} y - The y-coordinate where the text will be rendered.
  */
-function renderScale(scale, text, x, y) {
+function renderScale(scale, text, x, y, align) {
     Renderer.scale(scale);
-    Renderer.drawString(text, x, y);
-    // new Text(text, x, y).setAlign("right").draw();
+    if (align) {
+        new Text(text.replace(/&l/g, ''), x, y).setAlign("right").draw();
+    } else Renderer.drawString(text, x, y);
 }
 
 /**
  * Variables used to move all active GUIs.
  */
-const GUI_INSTRUCT = "Use +/- to scale, R to reset, or W to change view";
+const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, or W to change view";
 const gui = new Gui();
-export function openGUI() { gui.open() };
 const background = new Gui();
 
 let overlays = [];
@@ -34,9 +34,7 @@ let worldView = false;
 /**
  * Renders overlays on the GUI if it's open.
  */
-register("renderOverlay", () => {
-    if (!gui.isOpen()) return;
-    
+const moving = register("renderOverlay", () => {
     overlays.forEach(overlay => {
         if (!settings[overlay.setting]) return;
         // Draw example text
@@ -45,16 +43,16 @@ register("renderOverlay", () => {
             overlay.loc[0] - 3*overlay.loc[2], overlay.loc[1] - 3*overlay.loc[2],
             overlay.width + 6*overlay.loc[2], overlay.height + 6*overlay.loc[2]
         );
-        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y);
+        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y, overlay.align);
     });
 
     // GUI Instructions
     renderScale(
         1.2, GUI_INSTRUCT,
         Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
-        Renderer.screen.getHeight() / 2.4,
+        Renderer.screen.getHeight() / 2.4, false
     );
-});
+}).unregister();
 
 /**
  * Handles overlay selection when clicking on the screen.
@@ -64,8 +62,7 @@ register("renderOverlay", () => {
  * @param {number} button - Mouse button pressed during the interaction.
  * @param {object} screen - The screen object associated with the interaction.
  */
-register("guiMouseClick", (x, y, button, screen) => {
-    if (!gui.isOpen()) return;
+const clicking = register("guiMouseClick", (x, y, button, screen) => {
     currentOverlay = undefined;
 
     overlays.forEach(overlay => {
@@ -75,7 +72,7 @@ register("guiMouseClick", (x, y, button, screen) => {
             y < overlay.loc[1] + 3*overlay.loc[2] + overlay.height
         ) currentOverlay = overlay;
     });
-});
+}).unregister();
 
 /**
  * Handles movement of the selected overlay.
@@ -86,7 +83,7 @@ register("guiMouseClick", (x, y, button, screen) => {
  * @param {number} x - X-coordinate of mouse pointer during movement.
  * @param {number} y - Y-coordinate of mouse pointer during movement.
  */
-register("dragged", (dx, dy, x, y) => {
+const dragging = register("dragged", (dx, dy, x, y) => {
     if (currentOverlay === undefined || !gui.isOpen()) return;
 
     if (gui.isOpen()) {
@@ -96,7 +93,7 @@ register("dragged", (dx, dy, x, y) => {
         currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
         currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
     }
-});
+}).unregister();
 
 /**
  * Handles scaling of the selected overlay using key presses.
@@ -108,9 +105,7 @@ register("dragged", (dx, dy, x, y) => {
  * @param {object} currentGui - Current GUI object.
  * @param {object} event - Event object for key press.
  */
-register("guiKey", (char, keyCode, currentGui, event) => {
-    if (!gui.isOpen()) return;
-    
+const keying = register("guiKey", (char, keyCode, currentGui, event) => {
     // View Change
     if (keyCode === 17) {
         worldView = !worldView;
@@ -128,10 +123,14 @@ register("guiKey", (char, keyCode, currentGui, event) => {
             overlaid.length = 0;
             ChatLib.chat(`${LOGO + GREEN}Successfully changed to global view!`);
         }
+    } else if (keyCode === 1) {
+        moving.unregister();
+        clicking.unregister();
+        dragging.unregister();
+        keying.unregister();
     }
     
     if (currentOverlay === undefined) return;
-    
     if (keyCode === 13) {  // Increase Scale (+ key)
         currentOverlay.loc[2] += 0.05;
         currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
@@ -144,9 +143,21 @@ register("guiKey", (char, keyCode, currentGui, event) => {
         currentOverlay.loc[2] = 1;
         currentOverlay.X = currentOverlay.loc[0];
         currentOverlay.Y = currentOverlay.loc[1];
-    }
+    } else if (keyCode === 38) {  // Swap align (l key)
+        currentOverlay.align = !currentOverlay.align;
+    } else return;
+
     currentOverlay.setSize();
-});
+}).unregister();
+
+export function openGUI() {
+    gui.open();
+    moving.register();
+    clicking.register();
+    dragging.register();
+    keying.register();
+};
+
 
 export class Overlay {
     /**
@@ -167,48 +178,44 @@ export class Overlay {
         this.loc = loc;
         this.X = this.loc[0] / this.loc[2];
         this.Y = this.loc[1] / this.loc[2];
+        this.align = false;
         this.example = example;
         this.message = example;
         this.gui = new Gui();
         this.setSize();
 
-        // Register a command to open the GUI when executed.
-        register("command", () => {
-            this.gui.open();
-        }).setName(command);
-
         // Register a render function to display the overlay and GUI instructions.
         // The overlay is shown when the GUI is open or in requires specified in 'requires' array.'
+        this.moving = register("renderOverlay", () => {
+            // Coords and scale
+            renderScale(
+                this.loc[2],
+                `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`,
+                this.X, this.Y - 10, this.align
+            );
+            Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], Renderer.screen.getHeight(), 0.5);
+            Renderer.drawLine(Renderer.WHITE, Renderer.screen.getWidth(), this.loc[1], 1, this.loc[1], 0.5);
+
+            // Draw example text
+            renderScale(this.loc[2], this.example, this.X, this.Y, this.align);
+
+            // GUI Instructions
+            renderScale(
+                1.2, GUI_INSTRUCT,
+                Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+                Renderer.screen.getHeight() / 2.4, false
+            );
+        }).unregister();
+
         registerWhen(register(this.requires.has("misc") ? "postGuiRender" : "renderOverlay", () => {
-            if (this.gui.isOpen()) {
-                // Coords and scale
-                renderScale(
-                    this.loc[2],
-                    `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`,
-                    this.X, this.Y - 10
-                );
-                Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], Renderer.screen.getHeight(), 0.5);
-                Renderer.drawLine(Renderer.WHITE, Renderer.screen.getWidth(), this.loc[1], 1, this.loc[1], 0.5);
-
-                // Draw example text
-                renderScale(this.loc[2], this.example, this.X, this.Y);
-
-                // GUI Instructions
-                renderScale(
-                    1.2, GUI_INSTRUCT,
-                    Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
-                    Renderer.screen.getHeight() / 2.4,
-                );
-            } else if (settings[this.setting] && condition() && (this.requires.has(getWorld()) || this.requires.has("all")) && !gui.isOpen()) {
-                if (this.requires.has("misc")) {
-                    background.func_146278_c(0);
-                    renderScale(this.loc[2], this.message, this.X, this.Y);
-                } else  // Draw HUD
-                    renderScale(this.loc[2], this.message, this.X, this.Y);
+            if (condition() && !gui.isOpen() && !this.gui.isOpen()) {
+                if (this.requires.has("misc")) background.func_146278_c(0);
+                renderScale(this.loc[2], this.message, this.X, this.Y, this.align);
             }
-        }), () => true);
+        }), () => settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")));
 
-        register("dragged", (dx, dy, x, y) => {
+        // Register editing stuff
+        this.dragging = register("dragged", (dx, dy, x, y) => {
             if (this.gui.isOpen()) {
                 // Changes location of text
                 this.loc[0] = parseInt(x);
@@ -216,9 +223,9 @@ export class Overlay {
                 this.X = this.loc[0] / this.loc[2];
                 this.Y = this.loc[1] / this.loc[2];
             }
-        });
+        }).unregister();
         
-        register("guiKey", (char, keyCode, guiScreen, event) => {
+        this.keying = register("guiKey", (char, keyCode, guiScreen, event) => {
             if (this.gui.isOpen()) {
                 if (keyCode === 13) {  // Increase Scale (+ key)
                     this.loc[2] += 0.05;
@@ -232,9 +239,25 @@ export class Overlay {
                     this.loc[2] = 1;
                     this.X = this.loc[0];
                     this.Y = this.loc[1];
-                }
+                } else if (keyCode === 38) {  // Swap align (l key)
+                    this.align = !this.align;
+                } else if (keyCode === 1) {
+                    this.moving.unregister();
+                    this.dragging.unregister();
+                    this.keying.unregister();
+                } else return;
+
+                this.setSize();
             }
-        });
+        }).unregister();
+
+        // Register a command to open the GUI when executed.
+        register("command", () => {
+            this.gui.open();
+            this.moving.register();
+            this.dragging.register();
+            this.keying.register();
+        }).setName(command);
     }
 
     /**

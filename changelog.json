@@ -3,6 +3,10 @@
     "- Changed some interal logic",
     "- Changed formatting of some titles",
     "- Changed `/va apex` to take in <k, m, b> args",
+    "- Overlay class modifications:",
+    "   - Added ability to change text alignment",
+    "   - Changed GUI rendering to be more optimal",
+    "   - Fixed being unable to move postGuiRender GUIs",
     "- Fixed kill counter regex to actually work",
     "- Fixed jawbus announce",
     "- Fixed update spam"

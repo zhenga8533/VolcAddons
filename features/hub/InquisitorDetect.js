@@ -85,8 +85,8 @@ register("command", () => {
  */
 registerWhen(register("chat", (wow, mob) => {
     if (mob === "Minos Inquisitor") {
-        if (settings.inqAlert !== 0) announceMob(settings.inqAlert, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
-        else if (settings.inqCounter !== 0) updateInqCounter(true);
+        announceMob(settings.inqAlert, "Minos Inquisitor", inquisitor.getX(), inquisitor.getY(), inquisitor.getZ());
+        if (settings.inqCounter !== 0) updateInqCounter(true);
     } else if (settings.inqCounter !== 0) updateInqCounter(false);
 }).setCriteria("${wow}! You dug out a ${mob}!"), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual"));
 
