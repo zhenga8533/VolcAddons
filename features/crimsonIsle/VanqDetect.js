@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, DARK_PURPLE, WHITE } from "../../utils/constants";
+import { AMOGUS, BOLD, DARK_PURPLE, RED, WHITE } from "../../utils/constants";
 import { announceMob, playSound } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -37,7 +37,10 @@ registerWhen(register("step", () => {
     vanquishers = World.getAllEntitiesOfType(WITHER_CLASS).filter(entity => entity.getEntity().func_110138_aP() === 1024);
 
     if (vanquishers.length > 0) {
-        vanqOverlay.message = vanqExample;
+        if (vanquishers.find(vanquisher => vanquisher.getEntity().func_110143_aJ() === 0) !== undefined)
+            vanqOverlay.message = `${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`;
+        else vanqOverlay.message = vanqExample;
+        
         if (settings.vanqSound)playSound(AMOGUS, 10000);
         if (!data.moblist.includes("vanquisher")) vanquishers = [];
     } else vanqOverlay.message = "";

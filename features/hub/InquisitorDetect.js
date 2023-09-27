@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, GOLD, WHITE, RESET } from "../../utils/constants";
+import { BOLD, GOLD, WHITE, RESET, RED } from "../../utils/constants";
 import { announceMob } from "../../utils/functions";
 import { getPerks } from "../../utils/mayor";
 import { Overlay } from "../../utils/overlay";
@@ -99,7 +99,10 @@ registerWhen(register("step", () => {
     inquisitors = World.getAllEntitiesOfType(PLAYER_CLASS).filter(player => player.getName() === "Minos Inquisitor");
 
     if (inquisitors.length > 0) {
-        Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
+        if (inquisitors.find(inquisitor => inquisitor.getEntity().func_110143_aJ() === 0) !== undefined)
+            Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${RED}DEAD!`, "", 0, 50, 10);
+        else Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
+
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
 }).setFps(2), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
