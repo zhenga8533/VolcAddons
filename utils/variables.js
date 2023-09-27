@@ -1,4 +1,5 @@
 import PogObject from "../../PogData";
+import settings from "./settings";
 import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 import { delay } from "./thread";
 
@@ -115,11 +116,12 @@ export function setRegisters(off = false) {
         }
     });
 }
-delay(() => setRegisters(), 1000);
+delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().includes("SKYBLOCK")), 1000);
 
 // Event handler for GUI settings close.
 register("guiClosed", (event) => {
-    if (event.toString().includes("vigilance")) setRegisters();
+    if (event.toString().includes("vigilance"))
+        setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().includes("SKYBLOCK"));
 });
 
 

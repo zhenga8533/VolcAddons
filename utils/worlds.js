@@ -1,3 +1,4 @@
+import settings from "./settings";
 import { setPlayer } from "../features/combat/HealthAlert";
 import { delay } from "./thread";
 import { setRegisters } from "./variables";
@@ -75,7 +76,7 @@ register("worldLoad", () => {
 }).setPriority(Priority.LOWEST);
 register("worldUnload", () => {
     world = undefined;
-    setRegisters(off=true);
+    setRegisters(off=settings.skyblockToggle);
 }).setPriority(Priority.LOWEST);
 register("serverDisconnect", () => {
     world = undefined;

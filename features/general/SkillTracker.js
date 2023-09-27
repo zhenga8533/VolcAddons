@@ -3,6 +3,7 @@ import { BOLD, DARK_AQUA, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -24,7 +25,7 @@ const skillExample =
 ${DARK_AQUA + BOLD}XP Gained: ${WHITE}FI
 ${DARK_AQUA + BOLD}Time Passed: ${WHITE}FO
 ${DARK_AQUA + BOLD}Rate: ${WHITE}FUM`;
-const skillOverlay = new Overlay("skillTracker", ["all"], () => true, data.AL, "moveSkills", skillExample);
+const skillOverlay = new Overlay("skillTracker", ["all"], () => getWorld() !== undefined, data.AL, "moveSkills", skillExample);
 
 /**
  * Resets skill overlay to base state.

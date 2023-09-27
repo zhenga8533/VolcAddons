@@ -3,6 +3,7 @@ import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -17,7 +18,7 @@ const coinExample =
 `${GOLD + BOLD}Gained: ${WHITE}COUNTING
 ${GOLD + BOLD}Time Passed: ${WHITE}ME
 ${GOLD + BOLD}Rate: ${WHITE}MONEY`;
-const coinOverlay = new Overlay("coinTracker", ["all"], () => true, data.ML, "moveCoins", coinExample);
+const coinOverlay = new Overlay("coinTracker", ["all"], () => getWorld() !== undefined, data.ML, "moveCoins", coinExample);
 
 /**
  * Tracks Piggybank in Scoreboard for changes in coins and updates Coins Overlay every second.

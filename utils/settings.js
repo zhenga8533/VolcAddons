@@ -86,10 +86,18 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         protected: true
     })
     apiKey = "";
+
+    @SwitchProperty({
+        name: "Skyblock Toggle",
+        description: `Toggle ${GREEN}ON ${GRAY}for features to only function in Skyblock or ${RED}OFF ${GRAY}to function anywhere.`,
+        category: "General",
+        subcategory: "Essential"
+    })
+    skyblockToggle = true;
     
     @ButtonProperty({
         name: "Discord",
-        description: "Just posting releases here, don't expect too much :).",
+        description: `${RED}Please be mindful of Discord links in chat as they may pose a security risk! ${GRAY}Server very cool, much wow.`,
         category: "General",
         subcategory: "Essential",
         placeholder: "Yamete Kudasai"
