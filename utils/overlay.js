@@ -132,11 +132,11 @@ const keying = register("guiKey", (char, keyCode, currentGui, event) => {
     
     if (currentOverlay === undefined) return;
     if (keyCode === 13) {  // Increase Scale (+ key)
-        currentOverlay.loc[2] += 0.05;
+        currentOverlay.loc[2] = Math.round((currentOverlay.loc[2] + 0.05) * 100) / 100;
         currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
         currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
     } else if (keyCode === 12) {  // Decrease Scale (- key)
-        currentOverlay.loc[2] -= 0.05;
+        currentOverlay.loc[2] = Math.round((currentOverlay.loc[2] - 0.05) * 100) / 100;
         currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
         currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
     } else if (keyCode === 19) {  // Reset Scale (r key)
@@ -228,11 +228,11 @@ export class Overlay {
         this.keying = register("guiKey", (char, keyCode, guiScreen, event) => {
             if (this.gui.isOpen()) {
                 if (keyCode === 13) {  // Increase Scale (+ key)
-                    this.loc[2] += 0.05;
+                    this.loc[2] = Math.round((this.loc[2] + 0.05) * 100) / 100;
                     this.X = this.loc[0] / this.loc[2];
                     this.Y = this.loc[1] / this.loc[2];
                 } else if (keyCode === 12) {  // Decrease Scale (- key)
-                    this.loc[2] -= 0.05;
+                    this.loc[2] = Math.round((this.loc[2] - 0.05) * 100) / 100;
                     this.X = this.loc[0] / this.loc[2];
                     this.Y = this.loc[1] / this.loc[2];
                 } else if (keyCode === 19) {  // Reset Scale (r key)

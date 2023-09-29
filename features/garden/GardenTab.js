@@ -120,7 +120,7 @@ registerWhen(register("step", () => {
         return;
     }
 
-    if (emptyCompost === 0) {
+    if (emptyCompost <= 0) {
         // Composter Upgrades
         const costUpgrade = data.composterUpgrades["Cost Reduction"];
         const speed = (600 / (1 + data.composterUpgrades["Composter Speed"] * 0.2));

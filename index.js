@@ -204,7 +204,7 @@ register ("command", (...args) => {
         // Contract
         case "contract":
             const Desktop = Java.type('java.awt.Desktop');
-            const File = (Java.type("java.io.File"));
+            const File = Java.type("java.io.File");
             Desktop.getDesktop().open(new File(Config.modulesFolder + "/VolcAddons/data/contract.txt"));
             ChatLib.chat(`${LOGO + RED}My wealth and treasure? If you want it, I'll let you have it! Look for it! I left it all at that place!`);
             break;
