@@ -136,7 +136,7 @@ registerWhen(register("step", () => {
     }
 
     emptyCompost--;
-    const message = emptyCompost <= 0 ? `${RED}Composter Empty!` : `${WHITE + getTime(emptyCompost)}`;
+    const message = emptyCompost <= 100 ? `${RED}Composter Empty!` : `${WHITE + getTime(emptyCompost)}`;
     const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
     const next = !time ? `${RED}Inactive` :
         getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));

@@ -10,6 +10,6 @@
     "   - Changed default GUI locations",
     "   - Fixed being unable to move postGuiRender GUIs",
     "- Fixed kill counter regex to actually work",
-    "- Fixed jawbus announce",
+    "- Fixed Jawbus announce",
     "- Fixed update spam"
 ]
