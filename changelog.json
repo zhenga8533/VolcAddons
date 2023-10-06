@@ -3,8 +3,10 @@
     "- TODO: Added slayer miniboss highlight",
     "- TODO: Added no bits warning",
     "- Added simple analysis to damage tracker",
+    "- Added toggle for insta/order item prices",
     "- TODO: Added more stats to status display",
     "- TODO: Changed status display to be adjustable",
-    "- TODO: Changed inferno minion calc (again)",
+    "- Changed eyedrop craft cost in `/va calc inferno`",
+    "- Fixed small list bugs",
     "- TODO: Fixed `/va gui` right align box"
 ]

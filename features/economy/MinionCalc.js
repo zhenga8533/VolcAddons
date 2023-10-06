@@ -1,5 +1,6 @@
 import { AQUA, BOLD, DARK_AQUA, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/constants';
 import { commafy } from "../../utils/functions";
+import settings from '../../utils/settings';
 import { data } from '../../utils/variables';
 import { getBazaar } from './Economy';
 
@@ -110,15 +111,20 @@ export function calcMinions(args) {
                 "REAPER": (actions / (458182 / eyedrop)).toFixed(4)
             }
             const profit = {
-                "GABAGOOL": drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1],
-                "CHILI": drops.CHILI * bazaar.CHILI_PEPPER[1],
-                "VERTEX": drops.VERTEX * bazaar.INFERNO_VERTEX[1],
+                "GABAGOOL": drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1 - settings.priceType],
+                "CHILI": drops.CHILI * bazaar.CHILI_PEPPER[1 - settings.priceType],
+                "VERTEX": drops.VERTEX * bazaar.INFERNO_VERTEX[1 - settings.priceType],
                 "APEX": drops.APEX * data.apexPrice,
-                "REAPER": drops.REAPER * bazaar.REAPER_PEPPER[1]
+                "REAPER": drops.REAPER * bazaar.REAPER_PEPPER[1 - settings.priceType]
             };
 
-            // Fuel + Net Gain (Hydra Heads hard coded for now, I'll update once I get around to it :skull:)
-            const fuel = minions * (bazaar.HYPERGOLIC_GABAGOOL[0] + 6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * bazaar.INFERNO_FUEL_BLOCK[0] + 800000);
+            // Fuel + Net Gain
+            const fuel = minions * (
+                bazaar.HYPERGOLIC_GABAGOOL[settings.priceType] + 
+                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[settings.priceType] +
+                2 * bazaar.INFERNO_FUEL_BLOCK[settings.priceType] +
+                bazaar.CAPSAICIN_EYEDROPS_NO_CHARGES[settings.priceType]
+            );
             const net = Object.values(profit).reduce((a, c) => a + c, 0) - fuel;
 
             // ChatLib the values
@@ -135,14 +141,22 @@ export function calcMinions(args) {
         case "gaba":
             // Heavy 15x
             infernoAction /= 16;
-            const heavyGabagool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1];
-            const heavyPrice = minions * (bazaar.HEAVY_GABAGOOL[0] + 6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * bazaar.INFERNO_FUEL_BLOCK[0]);
+            const heavyGabagool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1 - settings.priceType];
+            const heavyPrice = minions * (
+                bazaar.HEAVY_GABAGOOL[settings.priceType] +
+                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[settings.priceType] +
+                2 * bazaar.INFERNO_FUEL_BLOCK[settings.priceType]
+            );
             const heavyProfit = heavyGabagool - heavyPrice;
 
             // Fuel 10x
             infernoAction *= 1.6;
-            const fuelGabgool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1];
-            const fuelPrice = minions * (bazaar.FUEL_GABAGOOL[0] + 6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[0] + 2 * bazaar.INFERNO_FUEL_BLOCK[0]);
+            const fuelGabgool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1 - settings.priceType];
+            const fuelPrice = minions * (
+                bazaar.FUEL_GABAGOOL[settings.priceType] +
+                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[settings.priceType] +
+                2 * bazaar.INFERNO_FUEL_BLOCK[settings.priceType]
+            );
             const fuelProfit = fuelGabgool - fuelPrice;
 
             // Format ChatLib.chat
@@ -156,10 +170,10 @@ export function calcMinions(args) {
             break;
         case "vampire":
         case "vamp":
-            const hemovibe = [(vampAction).toFixed(4), vampAction*bazaar.HEMOVIBE[1]];
-            const hemoglass = [(hemovibe[0]/160).toFixed(4), hemovibe[0]/160*bazaar.HEMOGLASS[1]];
-            const hemobomb = [(hemoglass[0]/15).toFixed(4), hemoglass[0]/15*bazaar.HEMOBOMB[1]];
-            const vampCost = bazaar.HYPER_CATALYST[0] * 4 * minions;
+            const hemovibe = [(vampAction).toFixed(4), vampAction*bazaar.HEMOVIBE[1 - settings.priceType]];
+            const hemoglass = [(hemovibe[0]/160).toFixed(4), hemovibe[0]/160*bazaar.HEMOGLASS[1 - settings.priceType]];
+            const hemobomb = [(hemoglass[0]/15).toFixed(4), hemoglass[0]/15*bazaar.HEMOBOMB[1 - settings.priceType]];
+            const vampCost = bazaar.HYPER_CATALYST[settings.priceType] * 4 * minions;
             const vampProfit = hemovibe[1] - vampCost;
             
             ChatLib.chat(`\n${GOLD + BOLD}Drops for ${minions} Vampire Minion(s) t${tier}`);

@@ -140,7 +140,7 @@ export function updateList(args, list, listName) {
     const command = args[1]
     const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
     const value = listName === "cdlist" ? args[2] : args.slice(3).join(' ');
-    const key = listName === "cdlist" ? Player.getHeldItem().getName() : args[2];
+    const key = listName === "cdlist" ? Player?.getHeldItem()?.getName() : args[2];
 
     switch (command) {
         case ("add"): // ADD TO LIST

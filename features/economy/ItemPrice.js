@@ -173,7 +173,7 @@ export function getItemValue(item) {
 
                 crimsonEssence += upgradeArray.slice(0, crimsonStars + 1).reduce((acc, value) => acc + value, 0);
             }
-            const crimsonValue = crimsonEssence * (bazaar?.ESSENCE_CRIMSON?.[0] ?? 1);
+            const crimsonValue = crimsonEssence * (bazaar?.ESSENCE_CRIMSON?.[settings.priceType] ?? 1);
             value += crimsonValue;
             valueMessage += `- ${AQUA}Essence Upgrades: ${GREEN}+${formatNumber(crimsonValue)}\n`;
         } else {
@@ -184,7 +184,7 @@ export function getItemValue(item) {
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
                 value = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
             } else {  // Bazaar Value
-                value = (bazaar?.[itemID]?.[0] ?? 0) * item.getStackSize();
+                value = (bazaar?.[itemID]?.[settings.priceType] ?? 0) * item.getStackSize();
             }
             return value;
         }
@@ -199,20 +199,20 @@ export function getItemValue(item) {
     }
 
     // Reforge Value
-    const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[0] ?? 0;
+    const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[settings.priceType] ?? 0;
     if (reforgeValue !== 0) {
         value += reforgeValue;
         valueMessage += `- ${AQUA}Reforge: ${GREEN}+${formatNumber(reforgeValue)}\n`;
     }
     // Master Star Values
     let starValue = 0;
-    for (let i = 0; i < Math.max(itemData?.dungeon_item_level - 5, 0); i++) starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[0];
+    for (let i = 0; i < Math.max(itemData?.dungeon_item_level - 5, 0); i++) starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[settings.priceType];
     if (starValue !== 0) {
         value += reforgeValue;
         valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;
     }
     // Recomb Value
-    const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar["RECOMBOBULATOR_3000"]?.[0];
+    const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar?.RECOMBOBULATOR_3000?.[settings.priceType];
     if (recombValue !== 0) {
         value += recombValue;
         valueMessage += `- ${AQUA}Recomb: ${GREEN}+${formatNumber(recombValue)}\n`;
@@ -231,24 +231,24 @@ export function getItemValue(item) {
     // Potato Book Values
     const potatoCount = itemData?.hot_potato_count;
     const hotPotatoCount = potatoCount === undefined ? 0 : Math.min(potatoCount, 10);
-    const hotPotatoValue = hotPotatoCount * bazaar["HOT_POTATO_BOOK"][0];
+    const hotPotatoValue = hotPotatoCount * bazaar?.HOT_POTATO_BOOK?.[settings.priceType];
     if (hotPotatoValue !== 0) {
         valueMessage += `\n- ${GOLD + BOLD}Books:\n`;
         valueMessage += `   - ${YELLOW}HPB (${hotPotatoCount}/10): ${GREEN}+${formatNumber(hotPotatoValue)}\n`;
         const fumingPotatoCount = Math.max(potatoCount - 10, 0);
-        const fumingPotatoValue = fumingPotatoCount * bazaar["FUMING_POTATO_BOOK"][0];
+        const fumingPotatoValue = fumingPotatoCount * bazaar?.FUMING_POTATO_BOOK?.[settings.priceType];
         if (fumingPotatoValue !== 0)
         valueMessage += `   - ${YELLOW}FPB (${fumingPotatoCount}/5): ${GREEN}+${formatNumber(fumingPotatoValue)}\n`;
         value += hotPotatoValue + fumingPotatoValue;
     }
     // Art of War Value
-    const tzuValue = itemData?.art_of_war_count === undefined ? 0 : bazaar["THE_ART_OF_WAR"]?.[0];
+    const tzuValue = itemData?.art_of_war_count === undefined ? 0 : bazaar?.THE_ART_OF_WAR?.[settings.priceType];
     if (tzuValue !== 0) {
         value += tzuValue;
         valueMessage += `   - ${YELLOW}Sun Tzu: ${GREEN}+${formatNumber(tzuValue)}\n`;
     }
     // Art of Peace Value
-    const peaceValue = itemData?.artOfPeaceApplied === undefined ? 0 : bazaar["THE_ART_OF_PEACE"]?.[0];
+    const peaceValue = itemData?.artOfPeaceApplied === undefined ? 0 : bazaar?.THE_ART_OF_PEACE?.[settings.priceType];
     if (peaceValue !== 0) {
         value += peaceValue;
         valueMessage += `   - ${YELLOW}Moon Tzu: ${GREEN}+${formatNumber(peaceValue)}\n`;
@@ -292,11 +292,11 @@ export function getItemValue(item) {
         if (gemstoneType[0] in GEMSTONE_SLOTS) {
             gemstoneName = `${gemstoneTier}_${gemstoneType?.[0]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[gemstoneType[0]];
-            gemstoneValue = bazaar[gemstoneName]?.[0] ?? 0;
+            gemstoneValue = bazaar[gemstoneName]?.[settings.priceType] ?? 0;
         } else if (MULTIUSE_SLOTS.has(gemstoneType?.[0]) && gemstoneType?.[gemstoneType.length - 1] !== "gem") {
             gemstoneName = `${gemstoneTier}_${itemData.gems?.[gemstone + "_gem"]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[itemData.gems?.[gemstone + "_gem"]];
-            gemstoneValue = bazaar[gemstoneName]?.[0] ?? 0;
+            gemstoneValue = bazaar[gemstoneName]?.[settings.priceType] ?? 0;
         }
         
         if (gemstoneValue !== 0) {
@@ -319,7 +319,7 @@ export function getItemValue(item) {
     const witherScrolls = itemData?.ability_scroll ?? [];
     if (witherScrolls.length !== 0) valueMessage += `\n- ${GOLD + BOLD}Wither Scrolls:\n`;
     witherScrolls.forEach(scroll => {
-        const scrollValue = bazaar[scroll][0];
+        const scrollValue = bazaar?.[scroll]?.[settings.priceType];
         if (scrollValue !== 0) {
             valueMessage += `   - ${DARK_GRAY + convertToTitleCase(scroll)}: ${GREEN}+${formatNumber(scrollValue)}\n`;
             value += scrollValue;

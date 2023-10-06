@@ -393,6 +393,15 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     itemPrice = 0;
 
+    @SelectorProperty({
+        name: "Price Type",
+        description: `${DARK_RED}NEW! ${GRAY}Choose the type of bazaar pricing used in item calculations.`,
+        category: "Economy",
+        subcategory: "Pricing",
+        options: ["Order", "Insta"]
+    })
+    priceType = 0;
+
 
     // ████████████████████████████████████████████████████ COMBAT ████████████████████████████████████████████████████
 
