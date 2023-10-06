@@ -65,9 +65,7 @@ import "./features/hub/InquisitorDetect";
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
 import "./features/crimsonIsle/TrophyCounter";
-import "./features/crimsonIsle/VanqCounter";
-import "./features/crimsonIsle/VanqDetect";
-import "./features/crimsonIsle/VanqWarp";
+import "./features/crimsonIsle/VanqFeatures";
 // Dungeon Features
 import "./features/dungeon/StarDetect";
 // Kuudra Features
