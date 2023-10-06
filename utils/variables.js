@@ -59,29 +59,29 @@ export let data = new PogObject("VolcAddons", {
     "dianaKey": 0,
     "pauseKey": 0,
     "devKey": 0,
-    "QL": [250, 225, 4], // Vanquisher Location
-    "GL": [10, 140, 1.2], // Gyro Location
-    "SL": [10, 180, 1.2], // Splits Location
-    "CL": [10, 180, 1.2], // Counter Location
-    "VL": [10, 180, 1.2], // Visitors Location
-    "NL": [10, 160, 1.2], // Next Visitors Location
-    "TL": [10, 130, 1.2], // Golden Fish Timer Location
-    "AL": [780, 430, 1.2], // Skill Tracker Location
-    "BL": [10, 120, 1.2], // Vampire Location
-    "ML": [780, 390, 1.2], // Coins Location
-    "PL": [10, 180, 1.2], // Powder Location
-    "IL": [10, 180, 1.2], // Inq Location
-    "KL": [600, 220, 1.2], // Kuudra Profit Location
-    "ZL": [780, 330, 1.2], // Kuudra Profit Tracker Location
-    "LL": [870, 130, 1.2], // Server Status Location
-    "RL": [600, 175, 1], // Container Value Location
-    "EL": [100, 150, 1.1], // Advanced Value Location
-    "WL": [730, 130, 1.2], // Wolf Combo Location
-    "HL": [10, 240, 1.2], // Powder Chest Location
-    "DL": [10, 180, 1.2], // Broodmother Location
-    "JL": [150, 180, 1.2], // Kill Counter Location
-    "FL": [220, 10, 1.2], // Trophy Fish Location
-    "OL": [10, 130, 1.2], // Composter Location
+    "QL": [250, 225, 4, false], // Vanquisher Location
+    "GL": [10, 140, 1.2, false], // Gyro Location
+    "SL": [10, 180, 1.2, false], // Splits Location
+    "CL": [10, 180, 1.2, false], // Counter Location
+    "VL": [10, 180, 1.2, false], // Visitors Location
+    "NL": [10, 160, 1.2, false], // Next Visitors Location
+    "TL": [10, 130, 1.2, false], // Golden Fish Timer Location
+    "AL": [780, 430, 1.2, false], // Skill Tracker Location
+    "BL": [10, 120, 1.2, false], // Vampire Location
+    "ML": [780, 390, 1.2, false], // Coins Location
+    "PL": [10, 180, 1.2, false], // Powder Location
+    "IL": [10, 180, 1.2, false], // Inq Location
+    "KL": [600, 220, 1.2, false], // Kuudra Profit Location
+    "ZL": [780, 330, 1.2, false], // Kuudra Profit Tracker Location
+    "LL": [870, 130, 1.2, false], // Server Status Location
+    "RL": [600, 175, 1, false], // Container Value Location
+    "EL": [100, 150, 1.1, false], // Advanced Value Location
+    "WL": [730, 130, 1.2, false], // Wolf Combo Location
+    "HL": [10, 240, 1.2, false], // Powder Chest Location
+    "DL": [10, 180, 1.2, false], // Broodmother Location
+    "JL": [150, 180, 1.2, false], // Kill Counter Location
+    "FL": [220, 10, 1.2, false], // Trophy Fish Location
+    "OL": [10, 130, 1.2, false], // Composter Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

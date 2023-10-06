@@ -37,13 +37,17 @@ let worldView = false;
 const moving = register("renderOverlay", () => {
     overlays.forEach(overlay => {
         if (!settings[overlay.setting]) return;
-        // Draw example text
+        // Draw example text and box
+        const scale = overlay.loc[2];
+        const x = overlay.loc[0] - (overlay.loc[3] ? overlay.width - 3*scale : 0);
+        const y = overlay.loc[1];
+
         Renderer.drawRect(
             Renderer.color(69, 69, 69, 169),
-            overlay.loc[0] - 3*overlay.loc[2], overlay.loc[1] - 3*overlay.loc[2],
-            overlay.width + 6*overlay.loc[2], overlay.height + 6*overlay.loc[2]
+            x - 3*scale, y - 3*scale,
+            overlay.width + 6*scale, overlay.height + 6*scale
         );
-        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y, overlay.align);
+        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y, overlay.loc[3]);
     });
 
     // GUI Instructions
@@ -66,10 +70,14 @@ const clicking = register("guiMouseClick", (x, y, button, screen) => {
     currentOverlay = undefined;
 
     overlays.forEach(overlay => {
-        if (x > overlay.loc[0] - 3*overlay.loc[2] &&
-            x < overlay.loc[0] + 3*overlay.loc[2] + overlay.width &&
-            y > overlay.loc[1] - 3*overlay.loc[2] &&
-            y < overlay.loc[1] + 3*overlay.loc[2] + overlay.height
+        const scale = overlay.loc[2];
+        const oX = overlay.loc[0] - (overlay.loc[3] ? overlay.width - 3*scale : 0);
+        const oY = overlay.loc[1];
+
+        if (x > oX - 3*scale &&
+            x < oX + 3*scale + overlay.width &&
+            y > oY - 3*scale &&
+            y < oY + 3*scale + overlay.height
         ) currentOverlay = overlay;
     });
 }).unregister();
@@ -144,7 +152,7 @@ const keying = register("guiKey", (char, keyCode, currentGui, event) => {
         currentOverlay.X = currentOverlay.loc[0];
         currentOverlay.Y = currentOverlay.loc[1];
     } else if (keyCode === 38) {  // Swap align (l key)
-        currentOverlay.align = !currentOverlay.align;
+        currentOverlay.loc[3] = !currentOverlay.loc[3];
     } else return;
 
     currentOverlay.setSize();
@@ -178,7 +186,11 @@ export class Overlay {
         this.loc = loc;
         this.X = this.loc[0] / this.loc[2];
         this.Y = this.loc[1] / this.loc[2];
-        this.align = false;
+        this.loc[3] = this.loc[3];
+        if (this.loc[3] === undefined) {
+            this.loc[3] = false;
+            this.loc = [...this.loc, false];
+        }
         this.example = example;
         this.message = example;
         this.gui = new Gui();
@@ -191,13 +203,13 @@ export class Overlay {
             renderScale(
                 this.loc[2],
                 `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`,
-                this.X, this.Y - 10, this.align
+                this.X, this.Y - 10, this.loc[3]
             );
             Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], Renderer.screen.getHeight(), 0.5);
             Renderer.drawLine(Renderer.WHITE, Renderer.screen.getWidth(), this.loc[1], 1, this.loc[1], 0.5);
 
             // Draw example text
-            renderScale(this.loc[2], this.example, this.X, this.Y, this.align);
+            renderScale(this.loc[2], this.example, this.X, this.Y, this.loc[3]);
 
             // GUI Instructions
             renderScale(
@@ -210,7 +222,7 @@ export class Overlay {
         registerWhen(register(this.requires.has("misc") ? "postGuiRender" : "renderOverlay", () => {
             if (condition() && !gui.isOpen() && !this.gui.isOpen()) {
                 if (this.requires.has("misc")) background.func_146278_c(0);
-                renderScale(this.loc[2], this.message, this.X, this.Y, this.align);
+                renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3]);
             }
         }), () => settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")));
 
@@ -240,7 +252,7 @@ export class Overlay {
                     this.X = this.loc[0];
                     this.Y = this.loc[1];
                 } else if (keyCode === 38) {  // Swap align (l key)
-                    this.align = !this.align;
+                    this.loc[3] = !this.loc[3];
                 } else if (keyCode === 1) {
                     this.moving.unregister();
                     this.dragging.unregister();
