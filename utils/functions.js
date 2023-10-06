@@ -100,7 +100,7 @@ export function formatNumber(num) {
     if (num < 1) return num.toFixed(2);
 
     const absNum = Math.abs(num);
-    const abbrev = ["", "k", "m", "b"];
+    const abbrev = ["", "k", "m", "b", "t", "q", "Q"];
     const index = Math.floor(Math.log10(absNum) / 3);
   
     return (num / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];

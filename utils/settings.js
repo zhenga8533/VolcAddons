@@ -430,13 +430,14 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     comboDisplay = false;
     
-    @SwitchProperty({
-        name: "Damage Tracker",
-        description: `Spams chat with every damage tick ${BLUE}(this is meant for training dummies)${GRAY}.`,
+    @SelectorProperty({
+        name: "Damage Tracer",
+        description: `Spams chat with unique damage ticks ${BLUE}(this is meant for training dummies)${GRAY}.`,
         category: "Combat",
-        subcategory: "Combat"
+        subcategory: "Combat",
+        options: ["OFF", "Simple", "Analytical"]
     })
-    damageTracker = false;
+    damageTracker = 0;
     
     @PercentSliderProperty({
         name: "Low Health Alert",

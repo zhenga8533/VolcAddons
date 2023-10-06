@@ -1,15 +1,10 @@
 [
-    "- Added Skyblock toggle",
-    "- Changed some interal logic",
-    "- Changed formatting of some titles",
-    "- Changed `/va apex` to take in <k, m, b> args",
-    "- Changed some mob detects to say if dead",
-    "- Overlay class modifications:",
-    "   - Added ability to change text alignment",
-    "   - Changed GUI rendering to be more optimal",
-    "   - Changed default GUI locations",
-    "   - Fixed being unable to move postGuiRender GUIs",
-    "- Fixed kill counter regex to actually work",
-    "- Fixed Jawbus announce",
-    "- Fixed update spam"
+    "- TODO: Added side armor rendering",
+    "- TODO: Added slayer miniboss highlight",
+    "- TODO: Added no bits warning",
+    "- Added simple analysis to damage tracker",
+    "- TODO: Added more stats to status display",
+    "- TODO: Changed status display to be adjustable",
+    "- TODO: Changed inferno minion calc (again)",
+    "- TODO: Fixed `/va gui` right align box"
 ]
