@@ -207,7 +207,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @SwitchProperty({
         name: "Hide All Particles",
-        description: "Prevents any particle from rendering including those not in settings.",
+        description: "Prevents any particle from rendering, including those not in settings.",
         category: "General",
         subcategory: "Server"
     })
@@ -228,6 +228,16 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         subcategory: "Server"
     })
     serverStatus = false;
+
+    @ButtonProperty({
+        name: "Open Status Toggles",
+        description: "Press button to open toggles control panel.",
+        category: "General",
+        subcategory: "Server"
+    })
+    openStatus() {
+        toggles.openGUI();
+    }
 
     // --- Timer ---
     @SwitchProperty({

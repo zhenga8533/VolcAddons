@@ -9,7 +9,7 @@ import {
 @Vigilant("VolcAddons/data", "VolcAddons' Toggles", {
     // Function to compare categories for sorting settings
     getCategoryComparator: () => (a, b) => {
-        const categories = ["Leader Commands", "Party Commands", "Kuudra Alerts", "Webhook Chats"];
+        const categories = ["Server Status", "Leader Commands", "Party Commands", "Kuudra Alerts", "Webhook Chats"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -17,6 +17,7 @@ class Settings {
     constructor() {
         this.initialize(this);
         
+        this.setCategoryDescription("Server Status", `${HEADER}\n\nServer Status Control Panel...`);
         this.setCategoryDescription("Leader Commands", `${HEADER}\n\nLeader Commands Control Panel...`);
         this.setCategoryDescription("Party Commands", `${HEADER}\n\nParty Commands Control Panel...`);
         this.setCategoryDescription("Kuudra Alerts", `${HEADER}\n\nKuudra Alerts Control Panel...`);

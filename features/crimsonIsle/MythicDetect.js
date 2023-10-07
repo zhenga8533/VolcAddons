@@ -50,7 +50,7 @@ registerWhen(register("step", () => {
         if (!data.moblist.includes("thunder")) thunders = [];
     }
 }).setFps(2), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
-registerWhen(register("step", () => {
+registerWhen(register("renderWorld", () => {
     renderEntities(jawbussy, 0.55, 0, 0);
     renderEntities(thunders, 0, 0, 0.55);
 }).setFps(2), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
