@@ -223,7 +223,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @SwitchProperty({
         name: "Server Status",
-        description: `Tracks and displays user ping, TPS, and FPS.\nMove GUI with ${AQUA}/moveStatus${GRAY}.`,
+        description: `Tracks various server/player statistics.\nMove GUI with ${AQUA}/moveStatus${GRAY}.`,
         category: "General",
         subcategory: "Server"
     })

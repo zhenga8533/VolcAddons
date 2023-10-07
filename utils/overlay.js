@@ -14,9 +14,8 @@ import { getWorld } from "./worlds";
  */
 function renderScale(scale, text, x, y, align) {
     Renderer.scale(scale);
-    if (align) {
-        new Text(text.replace(/&l/g, ''), x, y).setAlign("right").draw();
-    } else Renderer.drawString(text, x, y);
+    if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").draw();
+    else Renderer.drawString(text, x, y);
 }
 
 /**

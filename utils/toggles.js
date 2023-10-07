@@ -24,6 +24,32 @@ class Settings {
         this.setCategoryDescription("Webhook Chats", `${HEADER}\n\nWebhook Chats Control Panel...`);
     }
 
+    // --- STATUS COMMANDS ---
+    @CheckboxProperty({
+        name: `Ping Display`,
+        category: "Server Status",
+        subcategory: "Server Status"
+    })
+    pingDisplay = true;
+    @CheckboxProperty({
+        name: `FPS Display`,
+        category: "Server Status",
+        subcategory: "Server Status"
+    })
+    fpsDisplay = true;
+    @CheckboxProperty({
+        name: `TPS Display`,
+        category: "Server Status",
+        subcategory: "Server Status"
+    })
+    tpsDisplay = true;
+    @CheckboxProperty({
+        name: `CPS Display`,
+        category: "Server Status",
+        subcategory: "Server Status"
+    })
+    cpsDisplay = true;
+
     // --- LEADER COMMANDS ---
     @CheckboxProperty({
         name: `Allinvite Command ${DARK_AQUA}?<allinvite, allinv>`,

@@ -242,6 +242,7 @@ register ("command", (...args) => {
         case "ping":
         case "tps":
         case "fps":
+        case "cps":
             getStatus(command);
             break;
         // Waypoint

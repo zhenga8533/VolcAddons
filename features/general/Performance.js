@@ -100,9 +100,10 @@ const setFps = register("worldLoad", () => {
 /**
  * Variables used to represent and display player status.
  */
-const statusExample = `${DARK_AQUA + BOLD}Ping: ${WHITE}Peek
-${DARK_AQUA + BOLD}TPS: ${WHITE}A
-${DARK_AQUA + BOLD}FPS: ${WHITE}Boo`;
+const statusExample = `${DARK_AQUA + BOLD}Ping: ${GREEN}420 ${AQUA}ms
+${DARK_AQUA + BOLD}TPS: ${GREEN}666 ${AQUA}tps
+${DARK_AQUA + BOLD}FPS: ${GREEN}510 ${AQUA}fps
+${DARK_AQUA + BOLD}CPS: ${GREEN}6 ${AQUA}: ${GREEN}9`;
 const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
 
 /**
@@ -110,27 +111,55 @@ const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, 
  * Constructs a formatted message containing the ping in milliseconds, TPS in ticks per second,
  * and FPS (frames per second) using the values from the `ping`, `tps`, and `Client.getFPS()` respectively.
  */
-registerWhen(register('step', () => {
-    const pingColor = ping < 100 ? GREEN :
-        ping < 200 ? DARK_GREEN :
-        ping < 300 ? YELLOW :
-        ping < 400 ? GOLD : RED;
-    const tpsColor = tps > 19 ? GREEN :
-        tps > 16 ? DARK_GREEN :
-        tps > 13 ? YELLOW :
-        tps > 10 ? GOLD : RED;
-    const fps = Client.getFPS();
-    const fpsRatio = fps / maxFps;
-    const fpsColor = fpsRatio > 0.9 ? GREEN :
-        fpsRatio > 0.8 ? DARK_GREEN :
-        fpsRatio > 0.7 ? YELLOW :
-        fpsRatio > 0.6 ? GOLD : RED;
+registerWhen(register('tick', () => {
+    statusOverlay.message = "";
 
-    statusOverlay.message = 
-`${DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms
-${DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps
-${DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps`;
-}).setDelay(1), () => settings.serverStatus || toggles.statusCommand);
+    // Ping
+    if (toggles.pingDisplay) {
+        const pingColor = ping < 100 ? GREEN :
+            ping < 200 ? DARK_GREEN :
+            ping < 300 ? YELLOW :
+            ping < 400 ? GOLD : RED;
+        statusOverlay.message += `${DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms\n`;
+    }
+
+    // FPS
+    if (toggles.fpsDisplay) {
+        const fps = Client.getFPS();
+        const fpsRatio = fps / maxFps;
+        const fpsColor = fpsRatio > 0.9 ? GREEN :
+            fpsRatio > 0.8 ? DARK_GREEN :
+            fpsRatio > 0.7 ? YELLOW :
+            fpsRatio > 0.6 ? GOLD : RED;
+        statusOverlay.message += `${DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps\n`;
+    }
+
+    // TPS
+    if (toggles.tpsDisplay) {
+        const tpsColor = tps > 19 ? GREEN :
+            tps > 16 ? DARK_GREEN :
+            tps > 13 ? YELLOW :
+            tps > 10 ? GOLD : RED;
+
+        statusOverlay.message += `${DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps\n`;
+    }
+
+    // CPS
+    if (toggles.cpsDisplay) {
+        const leftCPS = CPS.getLeftClicks();
+        const leftColor = leftCPS < 3 ? GREEN :
+            leftCPS < 7 ? DARK_GREEN :
+            leftCPS < 13 ? YELLOW :
+            leftCPS < 21 ? GOLD : RED;
+        const rightCPS = CPS.getRightClicks();
+        const rightColor = rightCPS < 3 ? GREEN :
+            rightCPS < 7 ? DARK_GREEN :
+            rightCPS < 13 ? YELLOW :
+            rightCPS < 21 ? GOLD : RED;
+
+        statusOverlay.message += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`;
+    }
+}), () => settings.serverStatus || toggles.statusCommand);
 
 export function getStatus(status) {
     switch (status) {
@@ -139,14 +168,14 @@ export function getStatus(status) {
                 ping < 200 ? DARK_GREEN :
                 ping < 300 ? YELLOW :
                 ping < 400 ? GOLD : RED;
-            ChatLib.chat(`${LOGO + DARK_AQUA}Ping: ${pingColor + ping + AQUA} ms`);
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms`);
             break;
         case "tps":
             const tpsColor = tps > 19 ? GREEN :
                 tps > 16 ? DARK_GREEN :
                 tps > 13 ? YELLOW :
                 tps > 10 ? GOLD : RED;
-            ChatLib.chat(`${LOGO + DARK_AQUA}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps`);
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps`);
             break;
         case "fps":
             const fps = Client.getFPS();
@@ -155,8 +184,21 @@ export function getStatus(status) {
                 fpsRatio > 0.8 ? DARK_GREEN :
                 fpsRatio > 0.7 ? YELLOW :
                 fpsRatio > 0.6 ? GOLD : RED;
-            ChatLib.chat(`${LOGO + DARK_AQUA}FPS: ${fpsColor + fps + AQUA} fps`);
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps`);
             break;
+        case "cps":
+            const leftCPS = CPS.getLeftClicks();
+            const leftColor = leftCPS < 3 ? GREEN :
+                leftCPS < 7 ? DARK_GREEN :
+                leftCPS < 13 ? YELLOW :
+                leftCPS < 21 ? GOLD : RED;
+            const rightCPS = CPS.getRightClicks();
+            const rightColor = rightCPS < 3 ? GREEN :
+                rightCPS < 7 ? DARK_GREEN :
+                rightCPS < 13 ? YELLOW :
+                rightCPS < 21 ? GOLD : RED;
+
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`);
     }
 }
 
