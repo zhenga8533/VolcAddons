@@ -42,7 +42,7 @@ const PSA = `${GRAY + ITALIC}Note that these calculations are done with max upgr
  */
 function calcHypergolic(type) {
     const bazaar = getBazaar();
-    return 2404 * bazaar.ENCHANTED_COAL[type] + 150.25 * bazaar.ENCHANTED_SULPHUR[type] + 13824 * bazaar.CRUDE_GABAGOOL[type];
+    return 1202 * bazaar.ENCHANTED_COAL[type] + 75.125 * bazaar.ENCHANTED_SULPHUR[type] + 6912 * bazaar.CRUDE_GABAGOOL[type];
 }
 
 /**

@@ -6,6 +6,7 @@
     "- TODO: Added more stats to status display",
     "- TODO: Changed status display to be adjustable",
     "- Changed eyedrop craft cost in `/va calc inferno`",
+    "- Changed `/va calc hg` to halve craft cost",
     "- Fixed small list bugs",
     "- Fixed `/va gui` right align box"
 ]
