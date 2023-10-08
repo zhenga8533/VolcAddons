@@ -143,7 +143,7 @@ export function updateList(args, list, listName) {
     const key = listName === "cdlist" ? Player?.getHeldItem()?.getName() : args[2];
 
     switch (command) {
-        case ("add"): // ADD TO LIST
+        case "add": // ADD TO LIST
             if (isArray && !list.includes(item)) {
                 list.push(item);
                 ChatLib.chat(`${LOGO + GREEN}Successfully added [${WHITE + item + GREEN}] to the ${listName}!`);
@@ -152,7 +152,7 @@ export function updateList(args, list, listName) {
                 ChatLib.chat(`${LOGO + GREEN}Successfully linked [${WHITE + value + GREEN}] to [${WHITE + key + GREEN}]!`);
             } else ChatLib.chat(`${LOGO + RED}[${WHITE + isArray ? item : key + RED}] is already in the ${listName}!`);
             break;
-        case ("remove"): // REMOVE FROM LIST
+        case "remove": // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
                 list.splice(list.indexOf(item), 1);
                 ChatLib.chat(`${LOGO + GREEN}Successfully removed [${WHITE + item + GREEN}] from the ${listName}!`);
@@ -161,14 +161,14 @@ export function updateList(args, list, listName) {
                 ChatLib.chat(`${LOGO + GREEN}Successfully removed [${WHITE + key + GREEN}] from the ${listName}!`);
             } else ChatLib.chat(`${LOGO + RED}[${WHITE + item + RED}] is not in the ${listName}!`);
             break;
-        case ("clear"): // CLEAR LIST
-        case ("reset"):
+        case "clear": // CLEAR LIST
+        case "reset":
             if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO + GREEN}Successfully cleared the ${listName}!`);
             break;
-        case ("view"): // DISPLAY LIST
-        case ("list"):
+        case "view": // DISPLAY LIST
+        case "list":
             if (isArray) {
                 ChatLib.chat(`${GOLD + BOLD + list.length} Items in ${listName}:${RESET}`);
                 list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
@@ -177,6 +177,15 @@ export function updateList(args, list, listName) {
                 Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key + GRAY} => ${WHITE + list[key]}`) });
             }
             break;
+        case "default":
+            if (listName === "moblist") {
+                list.length = 0;
+                list.push("vanquisher");
+                list.push("jawbus");
+                list.push("thunder");
+                ChatLib.chat(`${LOGO + GREEN}Successfully reset moblist to default!`);
+                break;
+            }
         default:
             ChatLib.chat(`${LOGO + AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
             break;

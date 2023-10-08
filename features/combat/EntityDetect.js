@@ -4,15 +4,18 @@ import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../u
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getServer, getWorld } from "../../utils/worlds";
-import { renderEntities } from "../../utils/waypoints";
+import { renderEntities, renderStands } from "../../utils/waypoints";
 
 
 /**
  * Variables used to track active entities.
  */
+const USED = new Set(["vanquisher", "jawbus", "thunder"]);
 let colorMap = {};
 let entityList = [];
 let entities = [];
+let standList = [];
+let stands = {};
 let x = 0;
 let y = 0;
 
@@ -42,6 +45,8 @@ export function updateEntityList() {
     colorMap = {};
     entityList = [];
     entities = [];
+    standList = [];
+    stands = {};
     x = 0;
     y = 0;
 
@@ -54,9 +59,18 @@ export function updateEntityList() {
         else if (testClass(`net.minecraft.entity.monster.Entity${PascalCaseMob}`, HP)) return;
         else if (testClass(`net.minecraft.entity.boss.Entity${PascalCaseMob}`, HP)) return;
         else if (testClass(`net.minecraft.entity.passive.Entity${PascalCaseMob}`, HP)) return;
-        else {
+        else if (!USED.has(mob)) {
+            // Check for bounds otherwise set as armor stand detection
             const remaining = parseInt(mob.substring(1));
-            if (isNaN(remaining)) return;
+
+            // Set armor stand names if not bound number
+            if (isNaN(remaining)) {
+                standList.push(mob);
+                colorMap[mob] = [Math.random(), Math.random(), Math.random()];
+                return;
+            }
+
+            // Set bounds
             const front = mob[0].toLowerCase();
             if (front === 'x') x = remaining;
             else if (front === 'y') y = remaining;
@@ -70,7 +84,9 @@ updateEntityList();
  * Determines color based on class and filters by HP if applicable.
  */
 let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
+const STAND_CLASS = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
 registerWhen(register("step", () => {
+    // Refresh entities every 0.5s
     entities = [];
     entityList.forEach(entityData => {
         // Match coloring
@@ -87,13 +103,32 @@ registerWhen(register("step", () => {
         if (filteredEntities.length === 0) return;
         entities.push([filteredEntities, color]);
     });
-}).setFps(2), () => entityList.length !== 0);
+
+    // Refresh stands every 0.5s
+    if (standList.length === 0) return;
+    stands = World.getAllEntitiesOfType(STAND_CLASS).reduce((result, stand) => {
+        standList.forEach(name => {
+            if (stand.getName().includes(name)) {
+                if (!result[name]) result[name] = [];
+                result[name].push(stand);
+            }
+        });
+        return result;
+    }, {});    
+}).setFps(2), () => entityList.length !== 0 || standList.length !== 0);
 registerWhen(register("renderWorld", () => {
     entities.forEach(entity => {
         const color = entity[1];
         renderEntities(entity[0], color[0], color[1], color[2]);
     });
-}), () => entityList.length !== 0);
+
+    standList.forEach(stand => {
+        const color = colorMap[stand];
+        stand = stands[stand];
+        if (stand === undefined || color === undefined) return;
+        renderStands(stand, color[0], color[1], color[2]);
+    })
+}), () => entityList.length !== 0 || standList.length !== 0);
 
 
 /**

@@ -126,7 +126,18 @@ export function renderEntities(entities, r, g, b) {
         const width = entity.field_70130_N;
         const height =  entity.field_70131_O;
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, data.vision);
-        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.5, data.vision);
+        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.25, data.vision);
+    });
+}
+export function renderStands(stands, r, g, b) {
+    stands.forEach(stand => {
+        stand = stand.getEntity() ?? stand;
+        const x = stand.field_70142_S;
+        const y = stand.field_70137_T;
+        const z = stand.field_70136_U;
+        
+        RenderLib.drawEspBox(x, y, z, 1, 2, r, g, b, 1, data.vision);
+        RenderLib.drawInnerEspBox(x, y, z, 1, 2, r, g, b, 0.25, data.vision);
     });
 }
 

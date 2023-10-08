@@ -6,6 +6,7 @@ import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../combat/SlayerDetect";
+import { renderStands } from "../../utils/waypoints";
 
 
 /**
@@ -130,15 +131,5 @@ registerWhen(register("step", () => {
 registerWhen(register("renderWorld", () => {
     if (dracula === undefined) return;
     RenderLib.drawEspBox(dracula.field_70142_S, dracula.field_70137_T - 2.5, dracula.field_70136_U, 1, 2, 1, 0, 0, 1, data.vision);
-
-    vamps.forEach(vamp => {
-        const x = vamp.field_70142_S;
-        const y = vamp.field_70137_T - 2;
-        const z = vamp.field_70136_U;
-
-        const distance = Math.hypot(Player.getX() - x, Player.getY() - y, Player.getZ() - z).toFixed(0) + "m";
-        Tessellator.drawString(`Medium Rare §b[${distance}]`, x, y + 3.5, z, 0xffffff, false);
-        RenderLib.drawEspBox(x, y, z, 1, 2, 1, 0, 0, 1, data.vision);
-        RenderLib.drawInnerEspBox(x, y, z, 1, 2, 1, 0, 0, 0.25, data.vision);
-    });
+    renderStands(vamps, 1, 0, 0);
 }), () => getWorld() === "The Rift" && settings.vampireHitbox);
