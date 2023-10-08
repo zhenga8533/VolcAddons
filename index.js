@@ -15,7 +15,7 @@ import { findZone, getTier, getWorld } from "./utils/worlds";
 data.autosave();
 const CHANGED_SETTINGS = new Set(["partyCommands", "itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
-
+settings.bitsAlert = 0;
 // General Features
 import "./features/general/AntiGhostParty";
 import "./features/general/ArmorDisplay";
@@ -33,6 +33,7 @@ import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
+import "./features/economy/BitsAlert";
 import "./features/economy/CoinTracker";
 import "./features/economy/ContainerValue";
 import "./features/economy/Economy";

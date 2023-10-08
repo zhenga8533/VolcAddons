@@ -362,6 +362,15 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
     // ████████████████████████████████████████████████████ ECONOMY ████████████████████████████████████████████████████
     
     // --- Economy ---
+    @SelectorProperty({
+        name: "Bits Alert",
+        description: `${DARK_RED}NEW! ${GRAY}Alerts player when they are no longer generating bits.`,
+        category: "Economy",
+        subcategory: "Economy",
+        options: ["OFF", "Chat", "Title", "Both"]
+    })
+    bitsAlert = 0;
+
     @SliderProperty({
         name: "Coin Tracker",
         description: `Tracks and displays purse's rate of gain. Set minutes until tracker resets or as 0 to turn ${RED}OFF${GRAY}.
