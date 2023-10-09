@@ -63,7 +63,6 @@ registerWhen(register("entityDeath", (death) => {
 
             if (match !== null && (registry.endsWith("hoe") || registry.endsWith("bow") || Player.asPlayerMP().distanceTo(death) <= 16)) {
                 const mobName = match[1];
-                ChatLib.chat(mobName);
                 if (mobName in mobs) mobs[mobName] += killsDiff;
                 else mobs[mobName] = killsDiff;
                 updateCounter();

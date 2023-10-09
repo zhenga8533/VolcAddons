@@ -1,5 +1,5 @@
 [
-    "- TODO: Added slayer miniboss highlight",
+    "- Added slayer miniboss highlight",
     "- Added no bits warning",
     "- Added simple analysis to damage tracker",
     "- Added toggle for insta/order item prices",
@@ -8,5 +8,6 @@
     "- Changed eyedrop craft cost in `/va calc inferno`",
     "- Changed `/va calc hg` to halve craft cost",
     "- Fixed small list bugs",
-    "- Fixed `/va gui` right align box"
+    "- Fixed `/va gui` right align box",
+    "- Removed kill counter debug message"
 ]

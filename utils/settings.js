@@ -517,6 +517,14 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     miniAlert = 0;
 
+    @SwitchProperty({
+        name: "Miniboss Highlight",
+        description: `${DARK_RED}NEW! ${GRAY}Shows colorful hitboxes around slayer minibosses.`,
+        category: "Combat",
+        subcategory: "Slayer"
+    })
+    miniHighlight = false;
+
     @SliderProperty({
         name: "Slayer Spawn Warning",
         description: `Warns player when slayer boss is about to spawn. Set warning percentage or as 0 to turn ${RED}OFF${GRAY}.`,

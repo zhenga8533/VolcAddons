@@ -1,9 +1,10 @@
 import settings from "../../utils/settings";
-import { announceMob } from "../../utils/functions";
+import { announceMob, romanToNum } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { BOLD, GREEN, RED, WHITE } from "../../utils/constants";
+import { renderEntities } from "../../utils/waypoints";
 
 
 /**
@@ -86,3 +87,58 @@ register("chat", () => {
     bossCD = false;
     warned = false;
 }).setCriteria("  SLAYER QUEST FAILED!");
+
+
+/**
+ * Miniboss highlighting.
+ * Varibles for different slayer mob classes.
+ */
+let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
+const MOB_CLASSES = {
+    "Revenant": Java.type("net.minecraft.entity.monster.EntityZombie").class,
+    "Tarantula": Java.type("net.minecraft.entity.monster.EntitySpider").class,
+    "Sven": Java.type("net.minecraft.entity.passive.EntityWolf").class,
+    "Voidgloom": Java.type("net.minecraft.entity.monster.EntityEnderman").class,
+    "Inferno": Java.type("net.minecraft.entity.monster.EntityBlaze").class
+};
+const MOB_HPS = {
+    "Revenant": [new Set([24_000]), new Set([90_000, 360_000]), new Set([600_000, 2_400_000])],
+    "Tarantula": [new Set([54_000]), new Set([144_000, 576_000])],
+    "Sven": [new Set([45_000]), new Set([120_000, 480_000])],
+    "Voidgloom": [new Set([12_000_000]), new Set([25_000_000, 75_000_000])],
+    "Inferno": [new Set([12_000_000]), new Set([25_000_000, 75_000_000])]
+};
+const SLAYER_COLORS = {
+    "Revenant": [0, 0.08, 0.05],
+    "Tarantula": [0.55, 0, 0],
+    "Sven": [255, 255, 255],
+    "Voidgloom": [0.58, 0, 0.83],
+    "Inferno": [0.55, 0, 0]
+}
+let minibosses = [];
+let rgb = [];
+
+/**
+ * Track world for mobs that match miniboss healths depending on slayer quest.
+ */
+register("step", () => {
+    minibosses = [];
+    const index = Scoreboard.getLines().findIndex(line => line.getName().startsWith("Slayer Quest")) - 1;
+    if (index === -2) return;
+
+    // Get slayer data
+    const quest = Scoreboard.getLineByIndex(index).getName().removeFormatting().split(' ');
+    const tier = romanToNum(quest[quest.length - 1]);
+    const type = quest[0];
+    const mobClass = MOB_CLASSES[type];
+    const hpSet = MOB_HPS[type]?.[tier - 3];
+    rgb = SLAYER_COLORS[type];
+    if (mobClass === undefined || hpSet === undefined) return;
+
+    // Check mobs
+    minibosses = World.getAllEntitiesOfType(mobClass).filter(mob => hpSet.has(mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b()));
+}).setFps(2);
+
+registerWhen(register("renderWorld", () => {
+    renderEntities(minibosses, rgb[0], rgb[1], rgb[2]);
+}), () => settings.miniHighlight);
