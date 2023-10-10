@@ -239,11 +239,13 @@ register ("command", (...args) => {
             } else
                 ChatLib.chat(`${LOGO + RED}Please input as /va api [key]!`);
             break;
-        // Server Status
+        // Server Status Commands
         case "ping":
         case "tps":
         case "fps":
         case "cps":
+        case "soulflow":
+        case "sf":
             getStatus(command);
             break;
         // Waypoint

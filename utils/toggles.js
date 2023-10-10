@@ -1,4 +1,4 @@
-import { DARK_AQUA, GRAY, HEADER, RED } from "./constants";
+import { BLUE, DARK_AQUA, GRAY, HEADER, RED } from "./constants";
 import {
     @Vigilant,
     @TextProperty,
@@ -26,29 +26,35 @@ class Settings {
 
     // --- STATUS COMMANDS ---
     @CheckboxProperty({
-        name: `Ping Display`,
+        name: "Ping Display",
         category: "Server Status",
         subcategory: "Server Status"
     })
     pingDisplay = true;
     @CheckboxProperty({
-        name: `FPS Display`,
+        name: "FPS Display",
         category: "Server Status",
         subcategory: "Server Status"
     })
     fpsDisplay = true;
     @CheckboxProperty({
-        name: `TPS Display`,
+        name: "TPS Display",
         category: "Server Status",
         subcategory: "Server Status"
     })
     tpsDisplay = true;
     @CheckboxProperty({
-        name: `CPS Display`,
+        name: "CPS Display",
         category: "Server Status",
         subcategory: "Server Status"
     })
     cpsDisplay = true;
+    @CheckboxProperty({
+        name: `Soulflow Display ${BLUE}(uses inventory)`,
+        category: "Server Status",
+        subcategory: "Server Status"
+    })
+    soulflowDisplay = true;
 
     // --- LEADER COMMANDS ---
     @CheckboxProperty({

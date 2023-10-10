@@ -4,6 +4,7 @@ import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, GOLD, GREEN, LOGO, RED, WHITE, YELLO
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import { formatNumber } from "../../utils/functions";
 
 
 /**
@@ -98,12 +99,30 @@ const setFps = register("worldLoad", () => {
 });
 
 /**
+ * Get soulflow amount using soulflow accessory in inventory
+ */
+let soulflow = 0;
+
+register("step", () => {
+    const container = Player.getContainer();
+    if (container === null) return;
+
+    container.getItems().forEach(item => {
+        if (item !== null && item.getName().includes("Soulflow")) {
+            const internal = item.getLore()[1].removeFormatting();
+            if (internal.startsWith("Internalized:")) soulflow = internal.replace(/[^0-9]/g, '');
+        }
+    });
+}).setFps(10);
+
+/**
  * Variables used to represent and display player status.
  */
 const statusExample = `${DARK_AQUA + BOLD}Ping: ${GREEN}420 ${AQUA}ms
 ${DARK_AQUA + BOLD}TPS: ${GREEN}666 ${AQUA}tps
 ${DARK_AQUA + BOLD}FPS: ${GREEN}510 ${AQUA}fps
-${DARK_AQUA + BOLD}CPS: ${GREEN}6 ${AQUA}: ${GREEN}9`;
+${DARK_AQUA + BOLD}CPS: ${GREEN}6 ${AQUA}: ${GREEN}9
+${DARK_AQUA + BOLD}SF: ${GREEN}995`;
 const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
 
 /**
@@ -157,7 +176,17 @@ registerWhen(register('tick', () => {
             rightCPS < 13 ? YELLOW :
             rightCPS < 21 ? GOLD : RED;
 
-        statusOverlay.message += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`;
+        statusOverlay.message += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}\n`;
+    }
+
+    // Soulflow
+    if (toggles.soulflowDisplay) {
+        const soulflowColor = soulflow > 100_000 ? GREEN :
+            soulflow > 50_000 ? DARK_GREEN :
+            soulflow > 25_000 ? YELLOW :
+            soulflow > 10_000 ? GOLD : RED;
+        
+        statusOverlay.message += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`;
     }
 }), () => settings.serverStatus || toggles.statusCommand);
 
@@ -199,6 +228,16 @@ export function getStatus(status) {
                 rightCPS < 21 ? GOLD : RED;
 
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`);
+            break;
+        case "soulflow":
+        case "sf":
+            const soulflowColor = soulflow > 100_000 ? GREEN :
+                soulflow > 50_000 ? DARK_GREEN :
+                soulflow > 25_000 ? YELLOW :
+                soulflow > 10_000 ? GOLD : RED;
+            
+            ChatLib.chat(`${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`);
+            break;
     }
 }
 
