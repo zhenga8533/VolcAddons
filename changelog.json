@@ -1,13 +1,9 @@
 [
-    "- Added slayer miniboss highlight",
-    "- Added no bits warning",
-    "- Added simple analysis to damage tracker",
-    "- Added toggle for insta/order item prices",
-    "- Added more stats to status display",
-    "- Changed status display to be adjustable",
-    "- Changed eyedrop craft cost in `/va calc inferno`",
-    "- Changed `/va calc hg` to halve craft cost",
-    "- Fixed small list bugs",
-    "- Fixed `/va gui` right align box",
-    "- Removed kill counter debug message"
+    "TODO: - Added `/va calc [crop]`",
+    "TODO: - Added soulflow to stats display",
+    "TODO: - Added side armor display",
+    "TODO: - Added `/va cd` compatibility with armor using ^",
+    "- Changed hitbox rendering to be more organized/efficient",
+    "- Changed hitboxes to use partial ticks",
+    "- Fixed some economy stuff not working until refresh/reload"
 ]

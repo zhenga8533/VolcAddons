@@ -5,7 +5,7 @@ import { getPerks } from "../../utils/mayor";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { renderEntities } from "../../utils/waypoints";
+import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
 /**
@@ -106,7 +106,7 @@ registerWhen(register("step", () => {
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
 }).setFps(2), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
-registerWhen(register("renderWorld", () => {
-    renderEntities(inquisitors, 1, 0.84, 0);
-}), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
+new Hitbox(() => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"), () => {
+    renderEntities(inquisitors, 1, 0.84, 0, pt);
+});
 register("worldUnload", () => inquisitors = []);

@@ -3,7 +3,7 @@ import { AMOGUS, BOLD, DARK_BLUE, DARK_RED, RED, WHITE } from "../../utils/const
 import { announceMob, playSound } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { renderEntities } from "../../utils/waypoints";
+import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
 /**
@@ -50,10 +50,10 @@ registerWhen(register("step", () => {
         if (!data.moblist.includes("thunder")) thunders = [];
     }
 }).setFps(2), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
-registerWhen(register("renderWorld", () => {
-    renderEntities(jawbussy, 0.55, 0, 0);
-    renderEntities(thunders, 0, 0, 0.55);
-}), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
+new Hitbox(() => getWorld() === "Crimson Isle" && settings.mythicLavaDetect, () => {
+    renderEntities(jawbussy, 0.55, 0, 0, pt);
+    renderEntities(thunders, 0, 0, 0.55, pt);
+});
 register("worldUnload", () => {
     jawbussy = [];
     thunders = [];

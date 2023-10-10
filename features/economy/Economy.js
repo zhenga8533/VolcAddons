@@ -25,7 +25,6 @@ function updateAuction() {
         console.error(error);
     });
 }
-updateAuction();
 function updateBazaar() {
     request({
         url: "https://volcaronitee.pythonanywhere.com/bazaar",
@@ -36,7 +35,11 @@ function updateBazaar() {
         console.error(error);
     });
 }
-updateBazaar();
+const load = register("worldLoad", () => {
+    updateAuction();
+    updateBazaar();
+    load.unregister();
+});
 
 /**
  * Calls for an auction house reloop every X minutes.

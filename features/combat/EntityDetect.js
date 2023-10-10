@@ -4,7 +4,7 @@ import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../u
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getServer, getWorld } from "../../utils/worlds";
-import { renderEntities, renderStands } from "../../utils/waypoints";
+import { Hitbox, renderEntities, renderStands } from "../../utils/waypoints";
 
 
 /**
@@ -116,19 +116,24 @@ registerWhen(register("step", () => {
         return result;
     }, {});    
 }).setFps(2), () => entityList.length !== 0 || standList.length !== 0);
-registerWhen(register("renderWorld", () => {
+
+/**
+ * Register hitbox rendering
+ */
+new Hitbox(() => entityList.length !== 0, (pt) => {
     entities.forEach(entity => {
         const color = entity[1];
-        renderEntities(entity[0], color[0], color[1], color[2]);
+        renderEntities(entity[0], color[0], color[1], color[2], pt);
     });
-
+});
+new Hitbox(() => standList.length !== 0, (pt) => {
     standList.forEach(stand => {
         const color = colorMap[stand];
         stand = stands[stand];
         if (stand === undefined || color === undefined) return;
         renderStands(stand, color[0], color[1], color[2]);
-    })
-}), () => entityList.length !== 0 || standList.length !== 0);
+    });
+});
 
 
 /**

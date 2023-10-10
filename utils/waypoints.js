@@ -117,18 +117,25 @@ function renderBeam(waypoints) {
  * @param {number} g - 0-1 green value
  * @param {number} b - 0-1 blue value
  */
-export function renderEntities(entities, r, g, b) {
+export function renderEntities(entities, r, g, b, pt) {
     entities.forEach(entity => {
         entity = entity.getEntity() ?? entity;
-        const x = entity.field_70142_S;
-        const y = entity.field_70137_T;
-        const z = entity.field_70136_U;
+        const x = entity.field_70165_t * pt - entity.field_70142_S * (pt - 1);
+        const y = entity.field_70163_u * pt - entity.field_70137_T * (pt - 1);
+        const z = entity.field_70161_v * pt - entity.field_70136_U * (pt - 1);
         const width = entity.field_70130_N;
         const height =  entity.field_70131_O;
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, data.vision);
         RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.25, data.vision);
     });
 }
+/**
+ * 
+ * @param {Array} stands - list of entities to draw hitboxes around
+ * @param {number} r - 0-1 red value
+ * @param {number} g - 0-1 green value
+ * @param {number} b - 0-1 blue value
+ */
 export function renderStands(stands, r, g, b) {
     stands.forEach(stand => {
         stand = stand.getEntity() ?? stand;
@@ -149,4 +156,24 @@ register("renderWorld", () => {
     renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma
     renderSimple(getCat(), 0, 0, 1, true); // Blue Cat
     renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder
+});
+
+
+/**
+ * Hitbox rendering stuff
+ */
+const hitboxes = [];
+
+export class Hitbox {
+    constructor(condition, render) {
+        this.condition = condition;
+        this.render = render;
+        hitboxes.push(this);
+    }
+}
+
+register("renderWorld", (pt) => {
+    hitboxes.forEach(hitbox => {
+        if (hitbox.condition()) hitbox.render(pt);
+    });
 });

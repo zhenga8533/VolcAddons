@@ -4,7 +4,7 @@ import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { BOLD, GREEN, RED, WHITE } from "../../utils/constants";
-import { renderEntities } from "../../utils/waypoints";
+import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
 /**
@@ -121,7 +121,7 @@ let rgb = [];
 /**
  * Track world for mobs that match miniboss healths depending on slayer quest.
  */
-register("step", () => {
+registerWhen(register("step", () => {
     minibosses = [];
     const index = Scoreboard.getLines().findIndex(line => line.getName().startsWith("Slayer Quest")) - 1;
     if (index === -2) return;
@@ -137,8 +137,8 @@ register("step", () => {
 
     // Check mobs
     minibosses = World.getAllEntitiesOfType(mobClass).filter(mob => hpSet.has(mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b()));
-}).setFps(2);
+}).setFps(2), () => settings.miniHighlight);
 
-registerWhen(register("renderWorld", () => {
-    renderEntities(minibosses, rgb[0], rgb[1], rgb[2]);
-}), () => settings.miniHighlight);
+new Hitbox(() => settings.miniHighlight, (pt) => {
+    renderEntities(minibosses, rgb[0], rgb[1], rgb[2], pt);
+});

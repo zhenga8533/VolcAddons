@@ -1,6 +1,7 @@
 import RenderLib from "../../../RenderLib";
 import settings from "../../utils/settings";
 import { data, registerWhen } from "../../utils/variables";
+import { Hitbox } from "../../utils/waypoints";
 import { getWorld } from "../../utils/worlds";
 
 
@@ -43,7 +44,7 @@ registerWhen(register("step", () => {
 /**
  * Rendering for box and outline of star mobs.
  */
-registerWhen(register("renderWorld", () => {
+new Hitbox(() => getWorld() === "Catacombs" && (settings.starDetect === 2 || settings.starDetect === 3), () => {
     const c = settings.starColor;
     Object.keys(starMobs).forEach(key => {
         // Check dead
@@ -60,8 +61,8 @@ registerWhen(register("renderWorld", () => {
         RenderLib.drawEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 1, data.vision);
         if (settings.starDetect === 2)
             RenderLib.drawInnerEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 0.5, data.vision);
-    })
-}), () => getWorld() === "Catacombs" && (settings.starDetect === 2 || settings.starDetect === 3));
+    });
+});
 
 /**
  * Rendering for colored star mobs.
