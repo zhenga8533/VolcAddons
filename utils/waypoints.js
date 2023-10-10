@@ -1,5 +1,6 @@
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index.js";
+import settings from "./settings";
 import { getBurrow, getTheory } from "../features/hub/DianaWaypoint";
 import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
@@ -125,8 +126,9 @@ export function renderEntities(entities, r, g, b, pt) {
         const z = entity.field_70161_v * pt - entity.field_70136_U * (pt - 1);
         const width = entity.field_70130_N;
         const height =  entity.field_70131_O;
+
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, data.vision);
-        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, 0.25, data.vision);
+        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, settings.hitboxColor.alpha/510, data.vision);
     });
 }
 /**

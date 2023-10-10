@@ -364,7 +364,7 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
     // --- Economy ---
     @SelectorProperty({
         name: "Bits Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Alerts player when they are no longer generating bits.`,
+        description: "Alerts player when they are no longer generating bits.",
         category: "Economy",
         subcategory: "Economy",
         options: ["OFF", "Chat", "Title", "Both"]
@@ -414,7 +414,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     @SelectorProperty({
         name: "Price Type",
-        description: `${DARK_RED}NEW! ${GRAY}Choose the type of bazaar pricing used in item calculations.`,
+        description: "Choose the type of bazaar pricing used in item calculations.",
         category: "Economy",
         subcategory: "Pricing",
         options: ["Order", "Insta"]
@@ -440,6 +440,15 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
         subcategory: "Bestiary"
     })
     broodmotherDetect = false;
+
+    @ColorProperty({
+        name: "Hitbox Color",
+        description: `Set the seed and opacity used to randomize entity hitbox colors.`,
+        category: "Combat",
+        subcategory: "Bestiary",
+        hidden: !FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName())
+    })
+    hitboxColor = Color.BLACK;
     
     @SwitchProperty({
         name: "Scuffed Kill Counter",
@@ -519,7 +528,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     @SwitchProperty({
         name: "Miniboss Highlight",
-        description: `${DARK_RED}NEW! ${GRAY}Shows colorful hitboxes around slayer minibosses.`,
+        description: "Shows colorful hitboxes around slayer minibosses.",
         category: "Combat",
         subcategory: "Slayer"
     })

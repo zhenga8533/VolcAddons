@@ -30,8 +30,14 @@ function testClass(entity, HP) {
     try {
         mob = Java.type(entity).class;
         World.getAllEntitiesOfType(mob);
+        
+        const rgb = settings.hitboxColor;
+        const r = Math.random() * (255 - rgb.blue);
+        const g = Math.random() * (255 - rgb.red);
+        const b = Math.random() * (255 - rgb.green);
+        colorMap[mob.toString() + HP] = [r / 255, g / 255, b / 255];
+
         entityList.push([mob, HP]);
-        colorMap[mob.toString() + HP] = [Math.random(), Math.random(), Math.random()];
         return true;
     } catch(err) {
         return false;
@@ -65,8 +71,13 @@ export function updateEntityList() {
 
             // Set armor stand names if not bound number
             if (isNaN(remaining)) {
+                const rgb = settings.hitboxColor;
+                const r = Math.random() * (255 - rgb.blue);
+                const g = Math.random() * (255 - rgb.red);
+                const b = Math.random() * (255 - rgb.green);
+                colorMap[mob] = [r / 255, g / 255, b / 255];
+
                 standList.push(mob);
-                colorMap[mob] = [Math.random(), Math.random(), Math.random()];
                 return;
             }
 
