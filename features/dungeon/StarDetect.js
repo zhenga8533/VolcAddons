@@ -24,21 +24,20 @@ registerWhen(register("step", () => {
         const standEntity = stand.getEntity();
 
         // Find closest mob
-        let mob = undefined;
-        let closest = 20;
-        World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1)).filter(entity =>
-            entity && !(entity instanceof EntityArmorStand) && !(entity instanceof EntityWither) && entity !== Player.getPlayer()
-        ).forEach(entity => {
+        const closestEntity = World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1))
+        .filter(entity => {
+            return entity &&
+                !(entity instanceof EntityArmorStand) &&
+                !(entity instanceof EntityWither) &&
+                entity !== Player.getPlayer();
+        })
+        .reduce((closest, entity) => {
             const distance = stand.distanceTo(entity);
-            if (distance < closest) {
-                closest = distance;
-                mob = entity;
-            }
-        });
+            return distance < closest.distance ? { entity, distance } : closest;
+        }, { entity: undefined, distance: 20 });
 
-        if (mob === undefined) return;
-        starMobs[mob.func_145782_y()] = mob;
-    })
+        if (closestEntity.entity)starMobs[closestEntity.entity.func_145782_y()] = closestEntity.entity;
+    });
 }).setFps(2), () => getWorld() === "Catacombs" && settings.starDetect !== 0);
 
 /**

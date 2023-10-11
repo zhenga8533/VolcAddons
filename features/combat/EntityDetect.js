@@ -122,22 +122,17 @@ registerWhen(register("step", () => {
             if (stand.getName().includes(name)) {
                 // Find closest entity to armor stand
                 const standEntity = stand.getEntity();
-                let closest = 20;
-                let mob = standEntity;
 
-                World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1)).filter(entity =>
-                    entity && !(entity instanceof EntityArmorStand) && entity !== Player.getPlayer()
-                ).forEach(entity => {
+                const closestEntity = World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1))
+                .filter(entity => entity && !(entity instanceof EntityArmorStand) && entity !== Player.getPlayer())
+                .reduce((closest, entity) => {
                     const distance = stand.distanceTo(entity);
-                    if (distance < closest) {
-                        closest = distance;
-                        mob = entity;
-                    }
-                });
+                    return distance < closest.distance ? { entity, distance } : closest;
+                }, { entity: standEntity, distance: 20 });
 
                 // put into stands object
-                if (!stands.hasOwnProperty(name)) stands[name] = [];
-                stands[name].push(mob);
+                stands[name] = stands[name] ?? [];
+                stands[name].push(closestEntity).entity;
             }
         });
     });

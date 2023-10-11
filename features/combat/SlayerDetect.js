@@ -140,5 +140,5 @@ registerWhen(register("step", () => {
 }).setFps(2), () => settings.miniHighlight);
 
 new Hitbox(() => settings.miniHighlight, (pt) => {
-    renderEntities(minibosses, rgb[0], rgb[1], rgb[2], pt);
+    renderEntities(minibosses, rgb[0], rgb[1], rgb[2], pt, "Mini");
 });

@@ -151,7 +151,7 @@ registerWhen(register("step", () => {
     } else vanqOverlay.message = "";
 }).setFps(2), () => getWorld() === "Crimson Isle" && settings.vanqDetect);
 new Hitbox(() => getWorld() === "Crimson Isle" && settings.vanqDetect, (pt) => {
-    renderEntities(vanquishers, 0.5, 0, 0.5, pt);
+    renderEntities(vanquishers, 0.5, 0, 0.5, pt, "Vanquisher");
 });
 register("worldUnload", () => vanquishers = []);
 

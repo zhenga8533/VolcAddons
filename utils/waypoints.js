@@ -118,7 +118,7 @@ function renderBeam(waypoints) {
  * @param {number} g - 0-1 green value
  * @param {number} b - 0-1 blue value
  */
-export function renderEntities(entities, r, g, b, pt) {
+export function renderEntities(entities, r, g, b, pt, title) {
     entities.forEach(entity => {
         entity = entity?.getEntity() ?? entity;
         const x = entity.field_70165_t * pt - entity.field_70142_S * (pt - 1);
@@ -129,6 +129,8 @@ export function renderEntities(entities, r, g, b, pt) {
 
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, data.vision);
         RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, settings.hitboxColor.alpha/510, data.vision);
+        if (title !== undefined && data.vision)
+            Tessellator.drawString(`${title} §7[§b${Player.asPlayerMP().distanceTo(entity).toFixed(0)}m§7]`,x, y + height + 1, z, 0xffffff, true);
     });
 }
 /**
