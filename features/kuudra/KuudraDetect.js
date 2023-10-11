@@ -2,6 +2,7 @@ import settings from "../../utils/settings";
 import { BOLD, DARK_GREEN, DARK_RED, GREEN, RED } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";
+import { formatNumber } from "../../utils/functions";
 
 
 /**
@@ -10,7 +11,7 @@ import { getTier, getWorld } from "../../utils/worlds";
 const CUBE_CLASS = Java.type('net.minecraft.entity.monster.EntityMagmaCube').class;
 let cubes = undefined;
 let percentHP = new Text(`One Cycleable`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2, 10);
-let HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
+let HPDisplay = ["100k/100k ❤", 0, 0, 0];
 let currentHP = 0;
 export function getKuudraHP() { return currentHP };
 
@@ -27,7 +28,12 @@ registerWhen(register("tick", () => {
 
         if (settings.kuudraHP) {
             // Tesselator Display
-            HPDisplay = [`${currentHP.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}/100,000 ❤`, kuudra.getX(), kuudra.getY(), kuudra.getZ()];
+            const color = currentHP > 99_000 ? "§a" :
+                currentHP > 75_000 ? "§2" :
+                currentHP > 50_000 ? "§e" :
+                currentHP > 25_000 ? "§6" :
+                currentHP > 10_000 ? "§c" : "§4";
+            HPDisplay = [`${color + formatNumber(currentHP)}§7/§a100k §c❤`, kuudra.getX(), kuudra.getY(), kuudra.getZ()];
             
             // Boss Health Bar Percentage
             const percent = `${(currentHP / 100_000 * 100).toFixed(2)}%`;
@@ -48,7 +54,7 @@ registerWhen(register("tick", () => {
             else if (z < -132)
                 Client.Companion.showTitle(`${DARK_RED + BOLD}BACK!`, "", 0, 25, 5);
         }
-    } else HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
+    } else HPDisplay = ["100k/100k ❤", 0, 0, 0];
 }), () => getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
 
 /**
@@ -70,5 +76,5 @@ registerWhen(register('renderWorld', () => {
  */
 register('worldUnload', () => {
     percentHP = new Text(`One Cycleable`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2, 10);
-    HPDisplay = ["100,000/100,0000 ❤", 0, 0, 0];
+    HPDisplay = ["100k/100k ❤", 0, 0, 0];
 });

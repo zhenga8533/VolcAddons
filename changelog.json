@@ -7,5 +7,6 @@
     "- Changed some waypoints to have titles again",
     "- Changed hitbox rendering to be more organized/efficient",
     "- Changed hitboxes to use partial ticks",
+    "- Changed Kuudra marker to be colorful",
     "- Fixed some economy stuff not working until refresh/reload"
 ]
