@@ -120,7 +120,7 @@ function renderBeam(waypoints) {
  */
 export function renderEntities(entities, r, g, b, pt) {
     entities.forEach(entity => {
-        entity = entity.getEntity() ?? entity;
+        entity = entity?.getEntity() ?? entity;
         const x = entity.field_70165_t * pt - entity.field_70142_S * (pt - 1);
         const y = entity.field_70163_u * pt - entity.field_70137_T * (pt - 1);
         const z = entity.field_70161_v * pt - entity.field_70136_U * (pt - 1);

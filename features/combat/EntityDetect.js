@@ -4,7 +4,7 @@ import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../u
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getServer, getWorld } from "../../utils/worlds";
-import { Hitbox, renderEntities, renderStands } from "../../utils/waypoints";
+import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
 /**
@@ -15,7 +15,6 @@ let colorMap = {};
 let entityList = [];
 let entities = [];
 let standList = [];
-let stands = {};
 let x = 0;
 let y = 0;
 
@@ -52,7 +51,6 @@ export function updateEntityList() {
     entityList = [];
     entities = [];
     standList = [];
-    stands = {};
     x = 0;
     y = 0;
 
@@ -95,7 +93,8 @@ updateEntityList();
  * Determines color based on class and filters by HP if applicable.
  */
 let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
-const STAND_CLASS = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
+const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
+const STAND_CLASS = EntityArmorStand.class;
 registerWhen(register("step", () => {
     // Refresh entities every 0.5s
     entities = [];
@@ -117,32 +116,42 @@ registerWhen(register("step", () => {
 
     // Refresh stands every 0.5s
     if (standList.length === 0) return;
-    stands = World.getAllEntitiesOfType(STAND_CLASS).reduce((result, stand) => {
+    const stands = {};
+    World.getAllEntitiesOfType(STAND_CLASS).forEach(stand => {
         standList.forEach(name => {
             if (stand.getName().includes(name)) {
-                if (!result[name]) result[name] = [];
-                result[name].push(stand);
+                // Find closest entity to armor stand
+                const standEntity = stand.getEntity();
+                let closest = 20;
+                let mob = standEntity;
+
+                World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1)).filter(entity =>
+                    entity && !(entity instanceof EntityArmorStand) && entity !== Player.getPlayer()
+                ).forEach(entity => {
+                    const distance = stand.distanceTo(entity);
+                    if (distance < closest) {
+                        closest = distance;
+                        mob = entity;
+                    }
+                });
+
+                // put into stands object
+                if (!stands.hasOwnProperty(name)) stands[name] = [];
+                stands[name].push(mob);
             }
         });
-        return result;
-    }, {});    
+    });
+
+    for (let stand in stands) entities.push([stands[stand], colorMap[stand]]);
 }).setFps(2), () => entityList.length !== 0 || standList.length !== 0);
 
 /**
  * Register hitbox rendering
  */
-new Hitbox(() => entityList.length !== 0, (pt) => {
+new Hitbox(() => entityList.length !== 0 || standList.length !== 0, (pt) => {
     entities.forEach(entity => {
         const color = entity[1];
         renderEntities(entity[0], color[0], color[1], color[2], pt);
-    });
-});
-new Hitbox(() => standList.length !== 0, (pt) => {
-    standList.forEach(stand => {
-        const color = colorMap[stand];
-        stand = stands[stand];
-        if (stand === undefined || color === undefined) return;
-        renderStands(stand, color[0], color[1], color[2]);
     });
 });
 
