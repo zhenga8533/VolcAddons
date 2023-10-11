@@ -28,31 +28,36 @@ class Settings {
     @CheckboxProperty({
         name: "Ping Display",
         category: "Server Status",
-        subcategory: "Server Status"
+        subcategory: "Server Status",
+        description: "According to all known laws of aviation, there is no way a bee should be able to fly."
     })
     pingDisplay = true;
     @CheckboxProperty({
         name: "FPS Display",
         category: "Server Status",
-        subcategory: "Server Status"
+        subcategory: "Server Status",
+        description: "Its wings are too small to get its fat little body off the ground."
     })
     fpsDisplay = true;
     @CheckboxProperty({
         name: "TPS Display",
         category: "Server Status",
-        subcategory: "Server Status"
+        subcategory: "Server Status",
+        description: "The bee, of course, flies anyway because bees don't care what humans think is impossible."
     })
     tpsDisplay = true;
     @CheckboxProperty({
         name: "CPS Display",
         category: "Server Status",
-        subcategory: "Server Status"
+        subcategory: "Server Status",
+        description: "Yellow, black. Yellow, black. Yellow, black. Yellow, black."
     })
     cpsDisplay = true;
     @CheckboxProperty({
         name: `Soulflow Display ${BLUE}(uses inventory)`,
         category: "Server Status",
-        subcategory: "Server Status"
+        subcategory: "Server Status",
+        description: "Ooh, black and yellow! Let's shake it up a little."
     })
     soulflowDisplay = true;
 
@@ -60,43 +65,50 @@ class Settings {
     @CheckboxProperty({
         name: `Allinvite Command ${DARK_AQUA}?<allinvite, allinv>`,
         category: "Leader Commands",
-        subcategory: "Leader Commands"
+        subcategory: "Leader Commands",
+        description: "Once upon a time there was a lovely princess."
     })
     allinvCommand = true;
     @CheckboxProperty({
         name: `Demote Command ${DARK_AQUA}?demote`,
         category: "Leader Commands",
-        subcategory: "Leader Commands"
+        subcategory: "Leader Commands",
+        description: "But she had an enchantment upon her of a fearful sort which could only be broken by love's first kiss."
     })
     demoteCommand = true;
     @CheckboxProperty({
         name: `Instance Command ${DARK_AQUA}?<f, m, t>[1-7]`,
         category: "Leader Commands",
-        subcategory: "Leader Commands"
+        subcategory: "Leader Commands",
+        description: "She was locked away in a castle guarded by a terrible fire-breathing dragon."
     })
     instanceCommand = true;
     @CheckboxProperty({
         name: `Promote Command ${DARK_AQUA}?promote`,
         category: "Leader Commands",
-        subcategory: "Leader Commands"
+        subcategory: "Leader Commands",
+        description: "Many brave knigts had attempted to free her from this dreadful prison, but none prevailed."
     })
     promoteCommand = true;
     @CheckboxProperty({
         name: `Stream Command ${DARK_AQUA}?<streamopen, stream> [num]`,
         category: "Leader Commands",
-        subcategory: "Leader Commands"
+        subcategory: "Leader Commands",
+        description: "She waited in the dragon's keep in the highest room of the tallest tower for her true love and true love's first kiss."
     })
     streamCommand = true;
     @CheckboxProperty({
         name: `Transfer Command ${DARK_AQUA}?transfer`,
         category: "Leader Commands",
-        subcategory: "Leader Commands"
+        subcategory: "Leader Commands",
+        description: "Like that's ever gonna happen."
     })
     transferCommand = true;
     @CheckboxProperty({
         name: `Warp Command ${DARK_AQUA}?warp`,
         category: "Leader Commands",
-        subcategory: "Leader Commands"
+        subcategory: "Leader Commands",
+        description: "What a load of - "
     })
     warpCommand = true;
 
@@ -104,73 +116,85 @@ class Settings {
     @CheckboxProperty({
         name: `8ball Command ${DARK_AQUA}?8ball`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "Somebody once told me the world is gonna roll me"
     })
     ballCommand = true;
     @CheckboxProperty({
         name: `Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "I ain't the sharpest tool in the shed"
     })
     coinCommand = true;
     @CheckboxProperty({
         name: `Coords Command ${DARK_AQUA}?coords`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "She was lookin' kind of dumb with her finger and her thumb"
     })
     coordsCommand = true;
     @CheckboxProperty({
         name: `Dice Command ${DARK_AQUA}?<dice, roll>`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "In the shape of an \"L\" on her forehead"
     })
     diceCommand = true;
     @CheckboxProperty({
         name: `Help Command ${DARK_AQUA}?help`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "The years start comin' and they don't stop comin'"
     })
     helpCommand = true;
     @CheckboxProperty({
         name: `Invite Command ${DARK_AQUA}?invite`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "Fed to the rules and hit the ground runnin'"
     })
     inviteCommand = true;
     @CheckboxProperty({
         name: `Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "Didn't make sense not to live for fun"
     })
     limboCommand = false;
     @CheckboxProperty({
         name: `Leave Command ${DARK_AQUA}?leave`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "Your brain gets smart but your head gets dumb"
     })
     leaveCommand = false;
     @CheckboxProperty({
         name: `RPS Command ${DARK_AQUA}?rps`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "So much to do so much to see"
     })
     rpsCommand = true;
     @CheckboxProperty({
         name: `Slander Commands ${DARK_AQUA}(i plead the fifth.)`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "So what's wrong with takin' the backstreets"
     })
     slanderCommand = true;
     @CheckboxProperty({
         name: `Status Commands ${DARK_AQUA}?<fps, ping, tps>`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "You'll never know if you don't go"
     })
     statusCommand = true;
     @CheckboxProperty({
         name: `Women Command ${DARK_AQUA}?<w, waifu, women>`,
         category: "Party Commands",
-        subcategory: "Party Commands"
+        subcategory: "Party Commands",
+        description: "You'll never shine if you don't glow"
     })
     womenCommand = true;
 
@@ -179,75 +203,87 @@ class Settings {
     @CheckboxProperty({
         name: "No Key Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "Let's get down to business\nTo defeat the Huns"
     })
     keyAlert = true;
     @CheckboxProperty({
         name: "Unready Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "Did they send me daughters\nWhen I asked for sons?"
     })
     unreadyAlert = true;
     @CheckboxProperty({
         name: "Choose Route Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "You're the saddest bunch I ever met\nBut you can bet before we're through\nMister, I'll make a man out of you"
     })
     routeAlert = true;
     @CheckboxProperty({
         name: "Pickup Supply Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "Tranquil as a forest\nBut on fire within"
     })
     supplyAlert = true;
     @CheckboxProperty({
         name: "Building Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "Once you find your center\nYou are sure to win"
     })
     buildingAlert = true;
     @CheckboxProperty({
         name: "Fresh Tools Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "You're a spineless pale pathetic lot\nAnd you haven't got a clue"
     })
     freshAlert = true;
     @CheckboxProperty({
         name: "Fuel Percent Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "Somehow I'll make a man out of you"
     })
     fuelAlert = true;
     @CheckboxProperty({
         name: "Fresh Tools Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "I'm never gonna catch my breath\nSay goodbye to those who knew me"
     })
     freshAlert = true;
     @TextProperty({
         name: "Stunner Eaten Alert",
         description: "Tracks who is stunning Kuudra. Enter 'all' to track everyone or empty to turn off.",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "Why was I a fool in school for cutting gym?\nThis guy's got them scared to death!"
     })
     kuudraStunner = "all";
     @TextProperty({
         name: "Mount Cannon Alert",
         description: "Tracks who is shooting the ballista. Enter 'all' to track everyone or empty to turn off.",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "Hope he doesn't see right through me\nNow I really wish that I knew how to swim"
     })
     kuudraCannonear = "all";
     @CheckboxProperty({
         name: "Stun Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "We must be swift as the coursing river (Be a man)"
     })
     stunAlert = true;
     @CheckboxProperty({
         name: "Dropship Alert",
         category: "Kuudra Alerts",
-        subcategory: "Kuudra Alerts"
+        subcategory: "Kuudra Alerts",
+        description: "With all the force of a great typhoon (Be a man)"
     })
     dropshipAlert = true;
     @SliderProperty({
@@ -255,6 +291,7 @@ class Settings {
         description: `Set token threshold before alert appears or as 0 to turn ${RED}OFF${GRAY} (only alerts once per run).`,
         category: "Kuudra Alerts",
         subcategory: "Kuudra Alerts",
+        description: "With all the strength of a raging fire\nMysterious as the dark side of the moon",
         min: 0,
         max: 1000
     })
@@ -264,25 +301,52 @@ class Settings {
     @CheckboxProperty({
         name: "Public Chat",
         category: "Webhook Chats",
-        subcategory: "Webhook Chats"
+        subcategory: "Webhook Chats",
+        description: 
+`The snow glows white on the mountain tonight
+Not a footprint to be seen
+A kingdom of isolation
+And it looks like I'm the queen`
     })
     publicChat = false;
     @CheckboxProperty({
         name: "Party Chat",
         category: "Webhook Chats",
-        subcategory: "Webhook Chats"
+        subcategory: "Webhook Chats",
+        description: 
+`The wind is howling like this swirling storm inside
+Couldn't keep it in, heaven knows I tried
+Don't let them in, don't let them see
+Be the good girl you always have to be
+Conceal, don't feel, don't let them know
+Well, now they know`
     })
     partyChat = false;
     @CheckboxProperty({
         name: "Guild Chat",
         category: "Webhook Chats",
-        subcategory: "Webhook Chats"
+        subcategory: "Webhook Chats",
+        description: 
+`Let it go, let it go
+Can't hold it back anymore
+Let it go, let it go
+Turn away and slam the door
+I don't care what they're going to say
+Let the storm rage on
+The cold never bothered me anyway`
     })
     guildChat = false;
     @CheckboxProperty({
         name: "Private Chat",
         category: "Webhook Chats",
-        subcategory: "Webhook Chats"
+        subcategory: "Webhook Chats",
+        description:
+`It's funny how some distance makes everything seem small
+And the fears that once controlled me can't get to me at all
+It's time to see what I can do
+To test the limits and break through
+No right, no wrong, no rules for me
+I'm free`
     })
     privateChat = false;
 }

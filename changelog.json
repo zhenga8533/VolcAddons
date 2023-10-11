@@ -1,8 +1,9 @@
 [
     "TODO: - Added `/va calc [crop]`",
-    "TODO: - Added soulflow to stats display",
+    "- Added soulflow to stats display",
     "TODO: - Added side armor display",
     "TODO: - Added `/va cd` compatibility with armor using ^",
+    "- Laid some more eggs",
     "- Changed hitbox rendering to be more organized/efficient",
     "- Changed hitboxes to use partial ticks",
     "- Fixed some economy stuff not working until refresh/reload"
