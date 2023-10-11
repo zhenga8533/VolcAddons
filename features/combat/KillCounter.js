@@ -2,7 +2,7 @@ import settings from "../../utils/settings";
 import { BOLD, DARK_RED, GRAY, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, getPaused, registerWhen } from "../../utils/variables";
-import { getTime } from "../../utils/functions";
+import { formatNumber, getTime } from "../../utils/functions";
 
 
 /**
@@ -11,6 +11,7 @@ import { getTime } from "../../utils/functions";
 const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 let mobs = {};
 let items = {};
+let total = 0;
 let time = 0;
 const counterExample =
 `${RED + BOLD}Graveyard Zombie: ${RESET}this
@@ -22,6 +23,7 @@ counterOverlay.message = "";
 
 function resetCounter() {
     mobs = {}
+    total = 0;
     time = 0;
     counterOverlay.message = "";
 }
@@ -29,8 +31,9 @@ function resetCounter() {
 function updateCounter() {
     counterOverlay.message = "";
     for (let mob in mobs)
-        counterOverlay.message += `${RED + BOLD + mob}: ${RESET + mobs[mob] + GRAY} (${(mobs[mob]/time*3600).toFixed(0)}/hr)\n`;
-    counterOverlay.message += `${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`;
+        counterOverlay.message += `${RED + BOLD + mob}: ${RESET + formatNumber(mobs[mob]) + GRAY} (${formatNumber(mobs[mob]/time*3600)}/hr)\n`;
+    counterOverlay.message += `\n${DARK_RED + BOLD}Total Kills: ${RESET + formatNumber(total)}`;
+    counterOverlay.message += `\n${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`;
 }
 
 /**
@@ -51,20 +54,21 @@ registerWhen(register("entityDeath", (death) => {
 
         const killsDiff = Math.abs(newKills - items[heldItem]);
         if (killsDiff === 0) return;
-        items[heldItem] += killsDiff;
 
         // Update mob kill counter
         death = death.getEntity();
-        World.getWorld().func_72839_b(death, death.func_174813_aQ().func_72314_b(1, 5, 1)).filter(entity => 
+        World.getWorld().func_72839_b(death, death.func_174813_aQ().func_72314_b(0.5, 1, 0.5)).filter(entity => 
             entity instanceof EntityArmorStand
         ).forEach(entity => {
             const registry = Player.getHeldItem().getRegistryName();
-            const match = entity?.func_95999_t()?.removeFormatting().match(/\[Lv\d+\] ([\w\s]+) (\d+\/\d+[KkMmBb]?)❤/);
+            const title = entity?.func_95999_t()?.removeFormatting();
 
-            if (match !== null && (registry.endsWith("hoe") || registry.endsWith("bow") || Player.asPlayerMP().distanceTo(death) <= 16)) {
-                const mobName = match[1];
-                if (mobName in mobs) mobs[mobName] += killsDiff;
-                else mobs[mobName] = killsDiff;
+            if (title.endsWith("❤") && (registry.endsWith("hoe") || registry.endsWith("bow") || Player.asPlayerMP().distanceTo(death) <= 16)) {
+                const name = title.split(' ').slice(1, -1).join(' ');
+                if (name in mobs) mobs[name]++;
+                else mobs[name] = 1;
+                total++;
+                items[heldItem]++;
                 updateCounter();
             }
         });
@@ -82,4 +86,3 @@ registerWhen(register("step", () => {
  * Command to reset the stats for the overall counter.
  */
 register("command", resetCounter).setName("resetCounter");
-register("worldUnload", resetCounter)

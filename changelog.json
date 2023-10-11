@@ -8,5 +8,10 @@
     "- Changed hitbox rendering to be more organized/efficient",
     "- Changed hitboxes to use partial ticks",
     "- Changed Kuudra marker to be colorful",
+    "- Changed number formatting to be more compact",
+    "- Changed kill counter to be a little less scuffed",
+    "   - Tracks specific kills better",
+    "   - Displays total kills",
+    "   - No longer resets on world swap",
     "- Fixed some economy stuff not working until refresh/reload"
 ]

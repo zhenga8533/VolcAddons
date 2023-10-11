@@ -103,7 +103,14 @@ export function formatNumber(num) {
     const abbrev = ["", "k", "m", "b", "t", "q", "Q"];
     const index = Math.floor(Math.log10(absNum) / 3);
   
-    return (num / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
+    const formattedNumber = (num / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
+
+    // Check if the number is a whole number, and if so, remove the ".00"
+    if (Number.isInteger(num)) {
+        return String(parseInt(formattedNumber));
+    }
+
+    return formattedNumber;
 }
 
 /**

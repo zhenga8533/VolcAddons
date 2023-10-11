@@ -27,7 +27,7 @@ export function getSlayerBoss() { return bossCD };
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
     
-    if (settings.miniAlert === 3) Client.Companion.showTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 10, 50, 10);
+    if (settings.miniAlert === 3) Client.Companion.showTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5);
     else announceMob(settings.miniAlert, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
@@ -44,7 +44,7 @@ registerWhen(register("step", () => {
     
     bossCD = true;
     questStart = false;
-    if (settings.bossAlert === 3) Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 10, 50, 10);
+    if (settings.bossAlert === 3) Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
     else if (settings.bossAlert !== 0) announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
 }).setFps(5), () => settings.bossAlert !== 0 || settings.slayerSpawn !== 0 ||
 (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
@@ -58,7 +58,7 @@ registerWhen(register("step", () => {
 
     if (settings.slayerSpawn === 100) {
         if (Scoreboard?.getLines()?.find(line => line.getName().includes("Slay the boss!")) !== undefined) {
-            Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 10, 50, 10);
+            Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
             warned = true;
         }
         return;
@@ -70,7 +70,7 @@ registerWhen(register("step", () => {
     const percent = Math.round(c/t * 100);
 
     if (percent > settings.slayerSpawn) {
-        Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 10, 50, 10);
+        Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 5, 25, 5);
         warned = true;
     }
 }).setFps(1), () => settings.slayerSpawn !== 0);
