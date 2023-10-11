@@ -1,8 +1,5 @@
 [
-    "TODO: - Added `/va calc [crop]`",
     "- Added soulflow to stats display",
-    "TODO: - Added side armor display",
-    "TODO: - Added `/va cd` compatibility with armor using ^",
     "- Laid some more eggs",
     "- Changed some waypoints to have titles again",
     "- Changed hitbox rendering to be more organized/efficient",
@@ -13,5 +10,7 @@
     "   - Tracks specific kills better",
     "   - Displays total kills",
     "   - No longer resets on world swap",
+    "   - Sorts kills in descending order",
+    "   - Example and reset overlay fixes",
     "- Fixed some economy stuff not working until refresh/reload"
 ]

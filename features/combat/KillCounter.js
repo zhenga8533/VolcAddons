@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_RED, GRAY, RED, RESET } from "../../utils/constants";
+import { BOLD, DARK_RED, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, getPaused, registerWhen } from "../../utils/variables";
 import { formatNumber, getTime } from "../../utils/functions";
@@ -9,80 +9,102 @@ import { formatNumber, getTime } from "../../utils/functions";
  * Variables used to track and display item and vanquisher kill counts.
  */
 const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
+const stands = new Set();
 let mobs = {};
 let items = {};
 let total = 0;
 let time = 0;
 const counterExample =
-`${RED + BOLD}Graveyard Zombie: ${RESET}this
-${RED + BOLD}Zombie Villager: ${RESET}game
-${RED + BOLD}...: ${RESET}is
-${DARK_RED + BOLD}Time Passed: ${RESET}dead`;
+`${RED + BOLD}メリオダス: ${RESET}0/0
+${RED + BOLD}ディアンヌ: ${RESET}∞/∞
+${RED + BOLD}バン: ${RESET}0*∞
+${RED + BOLD}キング: ${RESET}1^∞
+${RED + BOLD}マーリン: ${RESET}∞^0
+${RED + BOLD}エスカノール: ${RESET}∞-∞
+${RED + BOLD}ゴウセル: ${RESET}0^0
+
+${DARK_RED + BOLD}Total Kills: ${RESET}∞^∞
+${DARK_RED + BOLD}Time Passed: ${RESET}-∞`;
 const counterOverlay = new Overlay("killCounter", ["all"], () => true, data.JL, "moveKills", counterExample);
 counterOverlay.message = "";
 
-function resetCounter() {
-    mobs = {}
-    total = 0;
-    time = 0;
-    counterOverlay.message = "";
-}
-
 function updateCounter() {
-    counterOverlay.message = "";
-    for (let mob in mobs)
-        counterOverlay.message += `${RED + BOLD + mob}: ${RESET + formatNumber(mobs[mob]) + GRAY} (${formatNumber(mobs[mob]/time*3600)}/hr)\n`;
-    counterOverlay.message += `\n${DARK_RED + BOLD}Total Kills: ${RESET + formatNumber(total)}`;
-    counterOverlay.message += `\n${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`;
+    // Sort the mobs object
+    const sortedMobs = Object.keys(mobs)
+        .sort((a, b) => mobs[b] - mobs[a]);
+
+    // Format overlay + change message
+    const messageLines = sortedMobs.map(mob => {
+        const kills = mobs[mob];
+        return `${RED + BOLD + mob}: ${RESET + formatNumber(kills) + GRAY} (${formatNumber(kills / time * 3600)}/hr)`;
+    });
+
+    counterOverlay.message = messageLines.join('\n') +
+        `\n\n${DARK_RED + BOLD}Total Kills: ${RESET + formatNumber(total) + GRAY} (${formatNumber(total / time * 3600)}/hr)` +
+        `\n${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`;
 }
 
 /**
  * Uses the "Book of Stats" to track whenever player mobs an entity and updates the Vanquisher Overlay.
  */
 registerWhen(register("entityDeath", (death) => {
-    if (Player.getHeldItem() === null) return;
+    // Check return
+    const held = Player.getHeldItem();
+    if (held === null) return;
+    const heldName = held.getRegistryName();
+    if (Player.asPlayerMP().distanceTo(death) > 16 && !heldName.endsWith("hoe") && !heldName.endsWith("bow")) return;
 
-    Client.scheduleTask(1, () => {
-        const ExtraAttributes = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
-        const heldItem = ExtraAttributes.getString("id");
-        const newKills = ExtraAttributes.getInteger("stats_book");
+    // Load held item stats (book of stats)
+    const extraAttributes = held.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
+    const heldItemId = extraAttributes.getString("id");
+    const newKills = extraAttributes.getInteger("stats_book");
 
-        if (!(heldItem in items)) {
-            items[heldItem] = newKills;
-            return;
-        }
+    if (!(heldItemId in items)) {
+        items[heldItemId] = newKills;
+        return;
+    }
 
-        const killsDiff = Math.abs(newKills - items[heldItem]);
-        if (killsDiff === 0) return;
+    const killsDiff = Math.abs(newKills - items[heldItemId]);
+    if (killsDiff === 0) return;
 
-        // Update mob kill counter
-        death = death.getEntity();
-        World.getWorld().func_72839_b(death, death.func_174813_aQ().func_72314_b(0.5, 1, 0.5)).filter(entity => 
-            entity instanceof EntityArmorStand
-        ).forEach(entity => {
-            const registry = Player.getHeldItem().getRegistryName();
-            const title = entity?.func_95999_t()?.removeFormatting();
+    // Get surrounding death to find title stand
+    const deathEntity = death.getEntity();
+    World.getWorld().func_72839_b(deathEntity, deathEntity.func_174813_aQ().func_72314_b(0.5, 1, 0.5)).filter(entity => 
+        entity instanceof EntityArmorStand &&
+        entity?.func_95999_t()?.removeFormatting().endsWith("❤") &&
+        !stands.has(entity.persistentID)
+    ).forEach(entity => {
+        const title = entity?.func_95999_t()?.removeFormatting();
+        const name = title.replace(/[^a-zA-Z ]/g, '').split(' ').slice(0, -1).join(' ').replace("Lv ", "");
 
-            if (title.endsWith("❤") && (registry.endsWith("hoe") || registry.endsWith("bow") || Player.asPlayerMP().distanceTo(death) <= 16)) {
-                const name = title.split(' ').slice(1, -1).join(' ');
-                if (name in mobs) mobs[name]++;
-                else mobs[name] = 1;
-                total++;
-                items[heldItem]++;
-                updateCounter();
-            }
-        });
+        if (name in mobs) mobs[name]++;
+        else mobs[name] = 1;
+
+        total++;
+        items[heldItemId]++;
+        updateCounter();
+        stands.add(entity.persistentID);
     });
 }), () => settings.killCounter);
 
+/**
+ * Track time and reset stand ids
+ */
 registerWhen(register("step", () => {
     if (Object.keys(mobs).length === 0 || getPaused()) return;
     
     time++;
     updateCounter();
+    stands.clear();
 }).setFps(1), () => settings.vanqCounter !== 0);
 
 /**
  * Command to reset the stats for the overall counter.
  */
-register("command", resetCounter).setName("resetCounter");
+register("command", () => {
+    mobs = {}
+    total = 0;
+    time = 0;
+    counterOverlay.message = "";
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset kill counter!`)
+}).setName("resetKills");
