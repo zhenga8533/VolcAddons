@@ -3,7 +3,7 @@ import { announceMob, romanToNum } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { BOLD, GREEN, RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_GREEN, GREEN, RED, WHITE } from "../../utils/constants";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
@@ -12,6 +12,7 @@ import { Hitbox, renderEntities } from "../../utils/waypoints";
  */
 let miniCD = false;
 let bossCD = false;
+let slainCD = false;
 let questStart = true;
 export function getSlayerBoss() { return bossCD };
 
@@ -37,16 +38,30 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
 /**
  * Uses scoreboard to detect if a slayer boss is active.
  */
-registerWhen(register("step", () => {
-    if (bossCD) return;
-    const bossLine = Scoreboard?.getLines()?.find(line => line.getName().includes("Slay the boss!"));
-    if (!questStart || bossLine === undefined) return;
+registerWhen(register("tick", () => {
+    if (bossCD) {
+        // Announce if boss is dead
+        if (!slainCD && Scoreboard?.getLines()?.find(line => line.getName().startsWith("§aBoss slain!")) !== undefined) {
+            slainCD = true;
+            if (settings.bossAlert === 3) Client.Companion.showTitle(`${DARK_GREEN + BOLD}SLAYER BOSS SLAIN!`, "", 5, 25, 5);
+            else if (settings.bossAlert === 2) ChatLib.command("pc Slayer Boss Slain!");
+            else if (settings.bossAlert === 1) {
+                const id = `@${(Math.random() + 1).toString(36).substring(6)} ${(Math.random() + 1).toString(36).substring(9)}`;
+                ChatLib.command("ac Slayer Boss Slain! " + id);
+            }
+        }
+        return;
+    }
+
+    // Check for slain boss line to reset tracker
+    if (!questStart || Scoreboard?.getLines()?.find(line => line.getName().startsWith("§eSlay the boss!")) === undefined) return;
     
     bossCD = true;
+    slainCD = false;
     questStart = false;
     if (settings.bossAlert === 3) Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
     else if (settings.bossAlert !== 0) announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
-}).setFps(5), () => settings.bossAlert !== 0 || settings.slayerSpawn !== 0 ||
+}), () => settings.bossAlert !== 0 || settings.slayerSpawn !== 0 ||
 (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
 
 /**
@@ -73,7 +88,7 @@ registerWhen(register("step", () => {
         Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 5, 25, 5);
         warned = true;
     }
-}).setFps(1), () => settings.slayerSpawn !== 0);
+}).setFps(2), () => settings.slayerSpawn !== 0);
 
 /**
  * Uses chat to track slayer quest state.
@@ -90,7 +105,7 @@ register("chat", () => {
 
 
 /**
- * Miniboss highlighting.
+ * Boss and miniboss highlighting.
  * Varibles for different slayer mob classes.
  */
 let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
@@ -101,7 +116,14 @@ const MOB_CLASSES = {
     "Voidgloom": Java.type("net.minecraft.entity.monster.EntityEnderman").class,
     "Inferno": Java.type("net.minecraft.entity.monster.EntityBlaze").class
 };
-const MOB_HPS = {
+const BOSS_HPS = {
+    "Revenant": [500, 20_000, 400_000, 1_500_000, 10_000_000],
+    "Tarantula": [750, 30_000, 900_000, 2_400_000],
+    "Sven": [2_000, 40_000, 750_000, 2_000_000],
+    "Voidgloom": [300_000, 12_000_000, 50_000_000, 210_000_000],
+    "Inferno": [2_500_000, 10_000_000, 75_000_000, 150_000_000]
+}
+const MINI_HPS = {
     "Revenant": [new Set([24_000]), new Set([90_000, 360_000]), new Set([600_000, 2_400_000])],
     "Tarantula": [new Set([54_000]), new Set([144_000, 576_000])],
     "Sven": [new Set([45_000]), new Set([120_000, 480_000])],
@@ -115,8 +137,9 @@ const SLAYER_COLORS = {
     "Voidgloom": [0.58, 0, 0.83],
     "Inferno": [0.55, 0, 0]
 }
+let bosses = [];
 let minibosses = [];
-let rgb = [];
+let rgb = [0, 0, 0];
 
 /**
  * Track world for mobs that match miniboss healths depending on slayer quest.
@@ -131,14 +154,19 @@ registerWhen(register("step", () => {
     const tier = romanToNum(quest[quest.length - 1]);
     const type = quest[0];
     const mobClass = MOB_CLASSES[type];
-    const hpSet = MOB_HPS[type]?.[tier - 3];
+    if (mobClass === undefined) return;
+
+    const bossHP = BOSS_HPS[type]?.[tier - 1];
+    const miniSet = MINI_HPS[type]?.[tier - 3];
     rgb = SLAYER_COLORS[type];
-    if (mobClass === undefined || hpSet === undefined) return;
 
     // Check mobs
-    minibosses = World.getAllEntitiesOfType(mobClass).filter(mob => hpSet.has(mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b()));
-}).setFps(2), () => settings.miniHighlight);
+    bosses = World.getAllEntitiesOfType(mobClass).filter(mob => bossHP == mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b());
+    minibosses = World.getAllEntitiesOfType(mobClass).filter(mob => miniSet.has(mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b()));
+}).setFps(2), () => settings.bossHighlight || settings.miniHighlight);
 
-new Hitbox(() => settings.miniHighlight, (pt) => {
-    renderEntities(minibosses, rgb[0], rgb[1], rgb[2], pt, "Mini");
-});
+/**
+ * Hitbox rendering
+ */
+new Hitbox(() => settings.bossHighlight, (pt) => { renderEntities(bosses, rgb[0], rgb[1], rgb[2], pt, "Boss") });
+new Hitbox(() => settings.miniHighlight, (pt) => { renderEntities(minibosses, 1 - rgb[0], 1 - rgb[1], 1 - rgb[2], pt, "Mini") });

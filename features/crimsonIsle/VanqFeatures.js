@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, DARK_PURPLE, RED, RESET, WHITE } from "../../utils/constants";
+import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE } from "../../utils/constants";
 import { announceMob, playSound } from "../../utils/functions";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
@@ -108,6 +108,7 @@ register("command", () => {
         "last": 0,
         "average": 0,
     };
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset Vanq Counter!`)
 }).setName("resetCounter");
 
 

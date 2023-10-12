@@ -528,6 +528,13 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     miniAlert = 0;
 
     @SwitchProperty({
+        name: "Boss Highlight",
+        description: "Shows colorful hitboxes around slayer bosses.",
+        category: "Combat",
+        subcategory: "Slayer"
+    })
+    bossHighlight = false;
+    @SwitchProperty({
         name: "Miniboss Highlight",
         description: "Shows colorful hitboxes around slayer minibosses.",
         category: "Combat",

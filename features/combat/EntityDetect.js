@@ -132,7 +132,7 @@ registerWhen(register("step", () => {
 
                 // put into stands object
                 stands[name] = stands[name] ?? [];
-                stands[name].push(closestEntity).entity;
+                stands[name].push(closestEntity.entity);
             }
         });
     });

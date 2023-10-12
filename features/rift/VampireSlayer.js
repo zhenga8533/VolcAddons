@@ -1,4 +1,3 @@
-import RenderLib from "../../../RenderLib";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, GOLD } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
@@ -6,7 +5,8 @@ import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../combat/SlayerDetect";
-import { renderStands } from "../../utils/waypoints";
+import { renderEntities } from "../../utils/waypoints";
+import { romanToNum } from "../../utils/functions";
 
 
 /**
@@ -18,7 +18,6 @@ const vampireExample =
 ${GOLD + BOLD}TWINCLAWS: ${AQUA}Mihawk
 ${DARK_AQUA + BOLD}ICHOR: ${AQUA}3,590,000,000`;
 const vampireOverlay = new Overlay("vampireAttack", ["The Rift"], () => true, data.BL, "moveVamp", vampireExample);
-let dracula = undefined;
 let bossUUID = 0;
 let ichorUUID = 0;
 let ichorSpawn = false;
@@ -31,7 +30,6 @@ let inMania = false;
 registerWhen(register("tick", () => {
     vampireOverlay.message = "";
     if (!getSlayerBoss()) {
-        dracula = undefined;
         bossUUID = 0;
         mania = 0;
         return;
@@ -50,7 +48,6 @@ registerWhen(register("tick", () => {
     } else {
         const boss = stands.find(stand => stand.persistentID === bossUUID);
         if (boss === undefined) return;
-        dracula = boss;
         const name = boss.func_95999_t().split(" ");
 
         // Mania Detect
@@ -116,20 +113,28 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
 /**
  * Highlights vampire bosses with steakable HP.
  */
+let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
+const PLAYER_CLASS = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP").class;
+const VAMP_HP = new Set([625, 1100, 1800, 2400, 3000]);
+let dracula = [];
 let vamps = [];
+
 registerWhen(register("step", () => {
-    vamps = [];
-    
-    const player = Player.asPlayerMP().getEntity();
-    vamps = World.getWorld()?.func_72839_b(player, player.func_174813_aQ().func_72314_b(32, 32, 32))?.filter(entity => 
-        entity instanceof EntityArmorStand && entity?.func_95999_t()?.includes("Bloodfiend §e§l")) ?? [];
+    dracula = World.getAllEntitiesOfType(PLAYER_CLASS).filter(entity => 
+        VAMP_HP.has(entity.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b())
+    );
+
+    vamps = World.getAllEntitiesOfType(PLAYER_CLASS).filter(entity => {
+        entity = entity.getEntity();
+        const max = entity.func_110148_a(SMA.field_111267_a).func_111125_b();
+        return max > 210 && entity.func_110143_aJ() / max <= 0.2;
+    });
 }).setFps(2), () => getWorld() === "The Rift" && settings.vampireHitbox);
 
 /**
  * Render boxx hitboxes
  */
-registerWhen(register("renderWorld", () => {
-    if (dracula === undefined) return;
-    RenderLib.drawEspBox(dracula.field_70142_S, dracula.field_70137_T - 2.5, dracula.field_70136_U, 1, 2, 1, 0, 0, 1, data.vision);
-    renderStands(vamps, 1, 0, 0);
+registerWhen(register("renderWorld", (pt) => {
+    renderEntities(dracula, 1, 0, 0, pt, undefined, false);
+    renderEntities(vamps, 1, 0, 0, pt);
 }), () => getWorld() === "The Rift" && settings.vampireHitbox);

@@ -118,7 +118,7 @@ function renderBeam(waypoints) {
  * @param {number} g - 0-1 green value
  * @param {number} b - 0-1 blue value
  */
-export function renderEntities(entities, r, g, b, pt, title) {
+export function renderEntities(entities, r, g, b, pt, title, fill = true) {
     entities.forEach(entity => {
         entity = entity?.getEntity() ?? entity;
         const x = entity.field_70165_t * pt - entity.field_70142_S * (pt - 1);
@@ -128,27 +128,9 @@ export function renderEntities(entities, r, g, b, pt, title) {
         const height =  entity.field_70131_O;
 
         RenderLib.drawEspBox(x, y, z, width, height, r, g, b, 1, data.vision);
-        RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, settings.hitboxColor.alpha/510, data.vision);
+        if (fill) RenderLib.drawInnerEspBox(x, y, z, width, height, r, g, b, settings.hitboxColor.alpha/510, data.vision);
         if (title !== undefined && data.vision)
             Tessellator.drawString(`${title} §7[§b${Player.asPlayerMP().distanceTo(entity).toFixed(0)}m§7]`,x, y + height + 1, z, 0xffffff, true);
-    });
-}
-/**
- * 
- * @param {Array} stands - list of entities to draw hitboxes around
- * @param {number} r - 0-1 red value
- * @param {number} g - 0-1 green value
- * @param {number} b - 0-1 blue value
- */
-export function renderStands(stands, r, g, b) {
-    stands.forEach(stand => {
-        stand = stand.getEntity() ?? stand;
-        const x = stand.field_70142_S;
-        const y = stand.field_70137_T;
-        const z = stand.field_70136_U;
-        
-        RenderLib.drawEspBox(x, y, z, 1, 2, r, g, b, 1, data.vision);
-        RenderLib.drawInnerEspBox(x, y, z, 1, 2, r, g, b, 0.25, data.vision);
     });
 }
 
