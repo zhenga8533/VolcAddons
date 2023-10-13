@@ -137,8 +137,8 @@ export function renderEntities(entities, r, g, b, pt, title, fill = true) {
 // Registering renderWorld event to render the waypoints and other entities
 register("renderWorld", () => {
     renderWaypoint(formattedWaypoints);
-    renderBeam(getCrates()); // White Crates
-    renderBeam(getBuilds()); // Red Builds
+    renderBeam(getCrates());
+    renderBeam(getBuilds());
     renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma
     renderSimple(getCat(), 0, 0, 1, true); // Blue Cat
     renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder

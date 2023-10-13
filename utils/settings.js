@@ -157,6 +157,14 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         subcategory: "General"
     })
     imageRatio = 0.0;
+    
+    @SwitchProperty({
+        name: "Recall Mouse",
+        description: `${DARK_RED}NEW! ${GRAY}Stops mouse from resetting when moving from GUI to GUI, but forgets mouse position when completely exitting GUI.`,
+        category: "General",
+        subcategory: "General"
+    })
+    mouseReset = false;
 
     @SwitchProperty({
         name: "Remove Selfie Mode",
@@ -446,7 +454,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
         description: `Set the seed and opacity used to randomize entity hitbox colors.`,
         category: "Combat",
         subcategory: "Bestiary",
-        hidden: !FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName())
+        hidden: !FileLib.read("./VolcAddons/data", "contract.txt")?.split("\n")?.[51]?.includes(Player.getName()) ?? false
     })
     hitboxColor = Color.BLACK;
     

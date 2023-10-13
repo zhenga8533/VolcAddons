@@ -13,10 +13,9 @@ let imgUrl = undefined;
 /**
  * Sets size of screen.
  */
-const setSize = register("worldLoad", () => {
+register("worldLoad", () => {
     SCREEN_WIDTH = Renderer.screen.getWidth();
     SCREEN_HEIGHT = Renderer.screen.getHeight();
-    setSize.unregister();
 });
 
 /**
