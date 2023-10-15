@@ -206,7 +206,7 @@ export function getItemValue(item) {
     }
     // Master Star Values
     let starValue = 0;
-    for (let i = 0; i < Math.max(itemData?.dungeon_item_level - 5, 0); i++) starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[settings.priceType];
+    for (let i = 0; i < Math.max(itemData?.upgrade_level - 5, 0); i++) starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[settings.priceType];
     if (starValue !== 0) {
         value += reforgeValue;
         valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;

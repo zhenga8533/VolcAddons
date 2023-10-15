@@ -1,20 +1,3 @@
 [
-    "- Added soulflow to stats display",
-    "- Added boss slain message to slayer announce",
-    "- Added slayer boss hitbox",
-    "- Added mouse recall",
-    "- Laid some more eggs",
-    "- Changed some waypoints to have titles again",
-    "- Changed hitbox rendering to be more organized/efficient",
-    "- Changed hitboxes to use partial ticks",
-    "- Changed Kuudra marker to be colorful",
-    "- Changed number formatting to be more compact",
-    "- Changed kill counter to be a little less scuffed",
-    "   - Tracks specific kills better",
-    "   - Displays total kills",
-    "   - No longer resets on world swap",
-    "   - Sorts kills in descending order",
-    "   - Example and reset counter fixes",
-    "- Changed vampire slayer detection (and fixed error)",
-    "- Fixed some economy stuff not working until refresh (hopefully)"
+    "- Fixed master stars not being calculated"
 ]
