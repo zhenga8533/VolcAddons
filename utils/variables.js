@@ -14,21 +14,22 @@ export let data = new PogObject("VolcAddons", {
     "tier": 0,
     "lastMsg": "joe",
     "vision": false,
+    // lists
     "whitelist": [],
     "blacklist": [],
-    // An array of default warp locations
     "warplist": ["hub", "da", "castle", "museum", "wizard"],
     "moblist": [],
+    "colorlist": {},
     "emotelist": {},
     "cooldownlist": {},
+    // kuudra splits stuff
     "files": [],
-    // Properties related to timing and split data
     "splits": {
         "last": [0, 0, 0, 0, 0],
         "best": [999, 999, 999, 999, 9999],
         "worst": [0, 0, 0, 0, 0],
     },
-    // Properties related to tracker session data
+    // tracker data
     "vanqSession": {
         "vanqs": 0,
         "kills": 0,
@@ -48,17 +49,18 @@ export let data = new PogObject("VolcAddons", {
         "time": 0,
         "rate": 0
     },
-    // Properties representing upgrades for the composter
+    // economy calculation stuff
     "composterUpgrades": {
         "Composter Speed": -1,
         "Multi Drop": -1,
         "Cost Reduction": -1
     },
-    // Various location properties used for displaying HUD elements
     "apexPrice": 2e9,
+    // control keys
     "dianaKey": 0,
     "pauseKey": 0,
     "devKey": 0,
+    // GUI locations
     "QL": [250, 225, 4, false], // Vanquisher Location
     "GL": [10, 140, 1.2, false], // Gyro Location
     "SL": [10, 180, 1.2, false], // Splits Location
@@ -139,6 +141,8 @@ export function updateList(args, list, listName) {
     const isArray = Array.isArray(list);
     const command = args[1]
     const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
+
+    // Object pairs
     const value = listName === "cdlist" ? args[2] : args.slice(3).join(' ');
     const key = listName === "cdlist" ? Player?.getHeldItem()?.getName() : args[2];
 
@@ -150,7 +154,7 @@ export function updateList(args, list, listName) {
             } else if (!isArray && !(key in list)) {
                 list[key] = value;
                 ChatLib.chat(`${LOGO + GREEN}Successfully linked [${WHITE + value + GREEN}] to [${WHITE + key + GREEN}]!`);
-            } else ChatLib.chat(`${LOGO + RED}[${WHITE + isArray ? item : key + RED}] is already in the ${listName}!`);
+            } else ChatLib.chat(`${LOGO + RED}[${WHITE + (isArray ? item : key + RED)}] is already in the ${listName}!`);
             break;
         case "remove": // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
@@ -187,11 +191,22 @@ export function updateList(args, list, listName) {
                 break;
             }
         default:
-            ChatLib.chat(`${LOGO + AQUA}Please enter as /va ${listName} <view, clear, <add, remove> [item]>`);
+            ChatLib.chat(`${LOGO + RED}Invalid argument: "${command}" was not found!`);
+            let base = `${LOGO + RED}Please enter as /va ${listName} <view, clear, add/remove `
+
+            if (listName === "cdlist") ChatLib.chat(`${base} [cd (in seconds)]>`);
+            else if (listName === "emotelist") base += "[key] [value]>";
+            else if (listName === "warplist") base += "<hub, castle, da, museum, crypt, wizard>>";
+            else if (listName === "moblist")
+                base += `<[MC Entity Class ${GRAY}(i.e. Creeper)${RED}], [Stand Name ${GRAY}(any portion)${RED}]> [health ${GRAY}(optional)${RED}]>`;
+            else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]>";
+            else base += "[item]>";
+            ChatLib.chat(base);
+
             break;
     }
     
-    if (args[0] === "ml" || args[0] === "mob" || args[0] === "moblist") updateEntityList();
+    if (listName === "moblist" || listName === "colorlist") updateEntityList();
     setRegisters();
 }
 

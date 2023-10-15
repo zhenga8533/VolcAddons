@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
+import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE, LOGO } from "../../utils/constants";
 import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -25,21 +25,26 @@ let y = 0;
  * @param {number} HP - Associated HP value.
  * @returns {boolean} - True if entity class is identified and added to the list.
  */
-function testClass(entity, HP) {
+const CLASS_TYPES = ["client.entity", "entity.monster", "entity.boss", "entity.passive"];
+function testClass(entity, HP, index) {
     try {
-        mob = Java.type(entity).class;
+        const type = `net.minecraft.${CLASS_TYPES[index]}.Entity${entity}`;
+        const mob = Java.type(type).class;
         World.getAllEntitiesOfType(mob);
         
+        // Set color map
+        const [uR, uG, uB] = data.colorlist[entity]?.split(' ') ?? [];
         const rgb = settings.hitboxColor;
-        const r = Math.random() * (255 - rgb.blue);
-        const g = Math.random() * (255 - rgb.red);
-        const b = Math.random() * (255 - rgb.green);
+        const r = isNaN(uR) ? Math.random() * (255 - rgb.blue) : uR;
+        const g = isNaN(uG) ? Math.random() * (255 - rgb.red) : uG;
+        const b = isNaN(uB) ? Math.random() * (255 - rgb.green) : uB;
         colorMap[mob.toString() + HP] = [r / 255, g / 255, b / 255];
 
         entityList.push([mob, HP]);
         return true;
     } catch(err) {
-        return false;
+        if (index === CLASS_TYPES.length) return;
+        return testClass(entity, HP, index + 1);
     }
 }
 
@@ -54,16 +59,13 @@ export function updateEntityList() {
     x = 0;
     y = 0;
 
+    // Update moblist objects
     data.moblist.forEach(mob => {
         const args = mob.split(' ');
         const HP = unformatNumber(args.pop());
         const PascalCaseMob = convertToPascalCase(HP === 0 ? mob : args.join(' '));
         
-        if (PascalCaseMob === "OtherPlayerMP" && testClass(`net.minecraft.client.entity.Entity${PascalCaseMob}`, HP)) return;
-        else if (testClass(`net.minecraft.entity.monster.Entity${PascalCaseMob}`, HP)) return;
-        else if (testClass(`net.minecraft.entity.boss.Entity${PascalCaseMob}`, HP)) return;
-        else if (testClass(`net.minecraft.entity.passive.Entity${PascalCaseMob}`, HP)) return;
-        else if (!USED.has(mob)) {
+        if (!testClass(PascalCaseMob, HP, 0) && !USED.has(mob)) {
             // Check for bounds otherwise set as armor stand detection
             const remaining = parseInt(mob.substring(1));
 

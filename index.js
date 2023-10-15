@@ -302,9 +302,14 @@ register ("command", (...args) => {
         case "ml":
             updateList(args, data.moblist, "moblist");
             break;
+        case "colorlist":
+        case "color":
+        case "cl":
+            updateList(args, data.colorlist, "colorlist");
+            break;
         case "warplist":
         case "warp":
-            updateList(args, data.warplist, "warp-list");
+            updateList(args, data.warplist, "warplist");
             setWarps();
             break;
         // Kuudra Splits
