@@ -26,7 +26,7 @@ registerWhen(register("guiClosed", () => {
 /**
  * Renders neon green box over unclaimed rewards.
  */
-registerWhen(register('guiRender', () => {
+registerWhen(register("guiRender", () => {
     if (unclaimed.length === 0) return;
     unclaimed.forEach(index => {
         // Credit to https://www.chattriggers.com/modules/v/ExperimentationTable

@@ -1,4 +1,5 @@
 [
     "- Added clearer args to list commands",
+    "- Fixed Skyblock toggle not working sometimes",
     "- Fixed master stars not being calculated"
 ]

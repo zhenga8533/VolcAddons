@@ -174,6 +174,15 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     })
     removeSelfie = false;
 
+    @SwitchProperty({
+        name: "Slot Binding",
+        description: `${DARK_RED}NEW! ${GRAY}Scuffed version of NEU's slot binding feature (you can swap using inventory slots but not hotbar slots :>).
+Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
+        category: "General",
+        subcategory: "General",
+    })
+    slotBinding = false;
+
     @SliderProperty({
         name: "Skill Tracker",
         description: `Tracks and displays skill XP's rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.

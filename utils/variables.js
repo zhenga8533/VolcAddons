@@ -60,6 +60,9 @@ export let data = new PogObject("VolcAddons", {
     "dianaKey": 0,
     "pauseKey": 0,
     "devKey": 0,
+    "bindKey": 0,
+    "slotBinds": {},
+    "bindPresets": {},
     // GUI locations
     "QL": [250, 225, 4, false], // Vanquisher Location
     "GL": [10, 140, 1.2, false], // Gyro Location
@@ -207,7 +210,7 @@ export function updateList(args, list, listName) {
     }
     
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
-    setRegisters();
+    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().includes("SKYBLOCK"));
 }
 
 
@@ -223,7 +226,7 @@ export function getPaused() {
 }
 
 // Key binding for pausing or unpausing trackers
-const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "VolcAddons");
+const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "./VolcAddons.xdd");
 pauseKey.registerKeyPress(() => {
     paused = !paused;
     const message = paused ? `${RED}Paused` : `${GREEN}Resumed`;

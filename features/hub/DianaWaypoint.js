@@ -180,7 +180,7 @@ registerWhen(register("tick", () => {
 /**
  * Key press to warp player to closest burrow.
  */
-const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "VolcAddons");
+const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() });
 dianaKey.registerKeyPress(() => {
     if (settings.dianaWarp && theory[0] !== undefined && theory[0] !== "warp player")

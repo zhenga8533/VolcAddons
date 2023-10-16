@@ -32,6 +32,7 @@ import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
+import "./features/general/SlotBinding";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
 import "./features/economy/BitsAlert";
@@ -133,7 +134,7 @@ function getHelp() {
 }
 
 // Dev Mode
-const devKey = new KeyBind("Dev Key", data.devKey, "VolcAddons");
+const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
 let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
 register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
 devKey.registerKeyPress(() => {

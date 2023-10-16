@@ -5,14 +5,15 @@ import { registerWhen } from "../../utils/variables";
 /**
  * Variables used to track and move pointer location.
  */
-const mouse = Java.type('org.lwjgl.input.Mouse');
+const MOUSE = Java.type("org.lwjgl.input.Mouse");
 const screen = Renderer.screen;
 let x = screen.getWidth();
 let y = screen.getHeight();
 
 registerWhen(register("guiOpened", () => {
     // Set mouse as old pos
-    mouse.setCursorPosition(x, screen.getHeight() * 2 - y);
+    const scale = screen.getScale();
+    MOUSE.setCursorPosition(x, screen.getHeight() * scale - y);
 }), () => settings.mouseReset);
 
 /**
@@ -20,14 +21,15 @@ registerWhen(register("guiOpened", () => {
  */
 function setMouse() {
     // Track current position if moving from gui => gui
-    x = Client.Companion.getMouseX() * 2;
-    y = Client.Companion.getMouseY() * 2;
+    const scale = screen.getScale();
+    x = Client.Companion.getMouseX() * scale;
+    y = Client.Companion.getMouseY() * scale;
 
     // Reset position a tick after closing gui
     Client.scheduleTask(1, () => {
         if (Client.isInGui()) return;
-        x = screen.getWidth();
-        y = screen.getHeight();
+        x = screen.getWidth() * scale / 2;
+        y = screen.getHeight() * scale / 2;
     });
 }
 registerWhen(register("guiMouseClick", setMouse), () => settings.mouseReset);
