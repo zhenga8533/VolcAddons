@@ -1,5 +1,12 @@
 [
+    "- Added scuffed slot binding",
     "- Added clearer args to list commands",
+    "TODO:- Added search bar",
+    "TODO:- Added SkyCrypt search",
+    "TODO:- Added XYZ to status",
+    "TODO:- Added pet to stats",
+    "TODO:- Changed server and skyblock stats to use different overlays",
+    "- Fixed recall mouse breaking for some gui scales",
     "- Fixed Skyblock toggle not working sometimes",
     "- Fixed master stars not being calculated"
 ]

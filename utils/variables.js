@@ -12,6 +12,7 @@ export let data = new PogObject("VolcAddons", {
     "lastID" : undefined,
     "world": "none",
     "tier": 0,
+    "pet": undefined,
     "lastMsg": "joe",
     "vision": false,
     // lists
@@ -87,6 +88,7 @@ export let data = new PogObject("VolcAddons", {
     "JL": [150, 180, 1.2, false], // Kill Counter Location
     "FL": [220, 10, 1.2, false], // Trophy Fish Location
     "OL": [10, 130, 1.2, false], // Composter Location
+    "YL": [1, 1, 1, false], // SkyBlock Stats Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

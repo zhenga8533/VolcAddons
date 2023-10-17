@@ -1,19 +1,19 @@
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { formatNumber } from "../../utils/functions";
 
 
 /**
  * Java packet types.
  */
-let S03PacketTimeUpdate = Java.type('net.minecraft.network.play.server.S03PacketTimeUpdate');
-let S37PacketStatistics = Java.type('net.minecraft.network.play.server.S37PacketStatistics');
-let C16PacketClientStatus = Java.type('net.minecraft.network.play.client.C16PacketClientStatus');
-let S01PacketJoinGame = Java.type('net.minecraft.network.play.server.S01PacketJoinGame');
+const SETTINGS = Client.settings.getSettings();
+let S03PacketTimeUpdate = Java.type("net.minecraft.network.play.server.S03PacketTimeUpdate");
+let S37PacketStatistics = Java.type("net.minecraft.network.play.server.S37PacketStatistics");
+let C16PacketClientStatus = Java.type("net.minecraft.network.play.client.C16PacketClientStatus");
+let S01PacketJoinGame = Java.type("net.minecraft.network.play.server.S01PacketJoinGame");
 
 /**
  * Variables used to represent TPS data.
@@ -38,7 +38,7 @@ function calcTPS() {
 }
 try {
     register('packetReceived', () => {
-        calcTPS()
+        calcTPS();
     }).setFilteredClass(S03PacketTimeUpdate);
 } catch (err) {
     register('packetReceived', (packet) => {
@@ -90,39 +90,14 @@ try {
 }
 
 /**
- * Set fps cap
- */
-let maxFps = Client.settings.getSettings().field_74350_i;
-const setFps = register("worldLoad", () => {
-    maxFps = Client.settings.getSettings().field_74350_i;
-    setFps.unregister();
-});
-
-/**
- * Get soulflow amount using soulflow accessory in inventory
- */
-let soulflow = 0;
-
-register("step", () => {
-    const container = Player.getContainer();
-    if (container === null) return;
-
-    container.getItems().forEach(item => {
-        if (item !== null && item.getName().includes("Soulflow")) {
-            const internal = item.getLore()[1].removeFormatting();
-            if (internal.startsWith("Internalized:")) soulflow = internal.replace(/[^0-9]/g, '');
-        }
-    });
-}).setFps(10);
-
-/**
  * Variables used to represent and display player status.
  */
-const statusExample = `${DARK_AQUA + BOLD}Ping: ${GREEN}420 ${AQUA}ms
+const statusExample = 
+`${DARK_AQUA + BOLD}XYZ: ${GREEN}7, 8, 9
+${DARK_AQUA + BOLD}Ping: ${GREEN}420 ${AQUA}ms
 ${DARK_AQUA + BOLD}TPS: ${GREEN}666 ${AQUA}tps
 ${DARK_AQUA + BOLD}FPS: ${GREEN}510 ${AQUA}fps
-${DARK_AQUA + BOLD}CPS: ${GREEN}6 ${AQUA}: ${GREEN}9
-${DARK_AQUA + BOLD}SF: ${GREEN}995`;
+${DARK_AQUA + BOLD}CPS: ${GREEN}6 ${AQUA}: ${GREEN}9`;
 const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
 
 /**
@@ -132,6 +107,14 @@ const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, 
  */
 registerWhen(register('tick', () => {
     statusOverlay.message = "";
+
+    // XYZ
+    if (toggles.xyzDisplay) {
+        const x = Math.round(Player.getX());
+        const y = Math.round(Player.getY());
+        const z = Math.round(Player.getZ());
+        statusOverlay.message += `${DARK_AQUA + BOLD}XYZ: ${GREEN + x}, ${y}, ${z}\n`;
+    }
 
     // Ping
     if (toggles.pingDisplay) {
@@ -145,7 +128,7 @@ registerWhen(register('tick', () => {
     // FPS
     if (toggles.fpsDisplay) {
         const fps = Client.getFPS();
-        const fpsRatio = fps / maxFps;
+        const fpsRatio = fps / SETTINGS.field_74350_i;
         const fpsColor = fpsRatio > 0.9 ? GREEN :
             fpsRatio > 0.8 ? DARK_GREEN :
             fpsRatio > 0.7 ? YELLOW :
@@ -178,18 +161,13 @@ registerWhen(register('tick', () => {
 
         statusOverlay.message += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}\n`;
     }
-
-    // Soulflow
-    if (toggles.soulflowDisplay) {
-        const soulflowColor = soulflow > 100_000 ? GREEN :
-            soulflow > 50_000 ? DARK_GREEN :
-            soulflow > 25_000 ? YELLOW :
-            soulflow > 10_000 ? GOLD : RED;
-        
-        statusOverlay.message += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`;
-    }
 }), () => settings.serverStatus || toggles.statusCommand);
 
+/**
+ * Output status to user chat when user requests via command args.
+ * 
+ * @param {String} status - Status type to retrieve.
+ */
 export function getStatus(status) {
     switch (status) {
         case "ping":
@@ -208,7 +186,7 @@ export function getStatus(status) {
             break;
         case "fps":
             const fps = Client.getFPS();
-            const fpsRatio = fps / maxFps;
+            const fpsRatio = fps / SETTINGS.field_74350_i;
             const fpsColor = fpsRatio > 0.9 ? GREEN :
                 fpsRatio > 0.8 ? DARK_GREEN :
                 fpsRatio > 0.7 ? YELLOW :
@@ -229,17 +207,9 @@ export function getStatus(status) {
 
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`);
             break;
-        case "soulflow":
-        case "sf":
-            const soulflowColor = soulflow > 100_000 ? GREEN :
-                soulflow > 50_000 ? DARK_GREEN :
-                soulflow > 25_000 ? YELLOW :
-                soulflow > 10_000 ? GOLD : RED;
-            
-            ChatLib.chat(`${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`);
-            break;
     }
 }
+
 
 /**
  * Check entity distance to player. Hide if too close or far.

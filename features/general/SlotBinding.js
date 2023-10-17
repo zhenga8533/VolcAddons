@@ -102,16 +102,16 @@ registerWhen(register("guiRender", (x, y, gui) => {
 register("command", () => {
     data.slotBinds = {};
     ChatLib.chat(`${LOGO + GREEN}Successfully reset slot bindings!`);
-}).setName("resetBinds");
+}).setName("resetBinds", true);
 
 register("command", (arg) => {
     data.bindPresets[arg] = data.slotBinds;
     ChatLib.chat(`${LOGO + GREEN}Successfully saved slot bindingds to key: "${arg}"`);
-}).setName("saveBinds");
+}).setName("saveBinds", true);
 
 register("command", (arg) => {
     if (data.bindPresets.hasOwnProperty(arg)) {
         data.slotBinds = data.bindPresets[arg];
         ChatLib.chat(`${LOGO + GREEN}Succesfully loaded slot bindings using key: "${arg}"`);
     } else ChatLib.chat(`${LOGO + RED}Invalid key: "${arg}"`);
-}).setName("loadBinds");
+}).setName("loadBinds", true);

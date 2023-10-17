@@ -33,6 +33,7 @@ import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
 import "./features/general/SlotBinding";
+import "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
 import "./features/economy/BitsAlert";

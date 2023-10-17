@@ -9,7 +9,7 @@ import {
 @Vigilant("VolcAddons/data", "VolcAddons' Toggles", {
     // Function to compare categories for sorting settings
     getCategoryComparator: () => (a, b) => {
-        const categories = ["Server Status", "Leader Commands", "Party Commands", "Kuudra Alerts", "Webhook Chats"];
+        const categories = ["Server Status", "Skyblock Stats", "Leader Commands", "Party Commands", "Kuudra Alerts", "Webhook Chats"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -17,6 +17,7 @@ class Settings {
     constructor() {
         this.initialize(this);
         
+        this.setCategoryDescription("Skyblock Stats", `${HEADER}\n\nSkyblock Stats Control Panel...`);
         this.setCategoryDescription("Server Status", `${HEADER}\n\nServer Status Control Panel...`);
         this.setCategoryDescription("Leader Commands", `${HEADER}\n\nLeader Commands Control Panel...`);
         this.setCategoryDescription("Party Commands", `${HEADER}\n\nParty Commands Control Panel...`);
@@ -24,7 +25,14 @@ class Settings {
         this.setCategoryDescription("Webhook Chats", `${HEADER}\n\nWebhook Chats Control Panel...`);
     }
 
-    // --- STATUS COMMANDS ---
+    // --- SERVER STATUS ---
+    @CheckboxProperty({
+        name: `XYZ Display`,
+        category: "Server Status",
+        subcategory: "Server Status",
+        description: "Ooh, black and yellow! Let's shake it up a little."
+    })
+    xyzDisplay = true;
     @CheckboxProperty({
         name: "Ping Display",
         category: "Server Status",
@@ -53,11 +61,29 @@ class Settings {
         description: "Yellow, black. Yellow, black. Yellow, black. Yellow, black."
     })
     cpsDisplay = true;
+
+    // --- SKYBLOCK STATS ---
     @CheckboxProperty({
-        name: `Soulflow Display ${BLUE}(uses inventory)`,
-        category: "Server Status",
-        subcategory: "Server Status",
-        description: "Ooh, black and yellow! Let's shake it up a little."
+        name: "Equipped Pet Name",
+        category: "Skyblock Stats",
+        subcategory: "Skyblock Stats",
+        description: "Nice guys finish last that's why I'll treat you like trash"
+    })
+    petDisplay = true;
+
+    @CheckboxProperty({
+        name: `Player Stats ${BLUE}(From Tab)`,
+        category: "Skyblock Stats",
+        subcategory: "Skyblock Stats",
+        description: "It's not what I really want to do"
+    })
+    statsDisplay = true;
+
+    @CheckboxProperty({
+        name: `Soulflow Display ${BLUE}(Requires Inventory)`,
+        category: "Skyblock Stats",
+        subcategory: "Skyblock Stats",
+        description: "But you only date bad guys, so I'll give it my best try to treat you the way you want me to"
     })
     soulflowDisplay = true;
 

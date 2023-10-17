@@ -173,16 +173,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         subcategory: "General"
     })
     removeSelfie = false;
-
-    @SwitchProperty({
-        name: "Slot Binding",
-        description: `${DARK_RED}NEW! ${GRAY}Scuffed version of NEU's slot binding feature (you can swap using inventory slots but not hotbar slots :>).
-Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
-        category: "General",
-        subcategory: "General",
-    })
-    slotBinding = false;
-
+    
     @SliderProperty({
         name: "Skill Tracker",
         description: `Tracks and displays skill XP's rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.
@@ -193,6 +184,15 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         max: 10
     })
     skillTracker = 0;
+
+    @SwitchProperty({
+        name: "Slot Binding",
+        description: `${DARK_RED}NEW! ${GRAY}Scuffed version of NEU's slot binding feature (you can swap using inventory slots but not hotbar slots :>).
+Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
+        category: "General",
+        subcategory: "General",
+    })
+    slotBinding = false;
 
     // --- Server ---
     @SliderProperty({
@@ -245,9 +245,17 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         subcategory: "Server"
     })
     serverStatus = false;
+    
+    @SwitchProperty({
+        name: "SkyBlock Stats Display",
+        description: `${DARK_RED}NEW! ${GRAY}Tracks various SkyBlock statistics.\nMove GUI with ${AQUA}/moveStats${GRAY}.`,
+        category: "General",
+        subcategory: "Server"
+    })
+    statsDisplay = false;
 
     @ButtonProperty({
-        name: "Open Status Toggles",
+        name: "Open Stats Toggles",
         description: "Press button to open toggles control panel.",
         category: "General",
         subcategory: "Server"
