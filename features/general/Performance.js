@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -121,7 +121,8 @@ registerWhen(register('tick', () => {
         const pingColor = ping < 100 ? GREEN :
             ping < 200 ? DARK_GREEN :
             ping < 300 ? YELLOW :
-            ping < 400 ? GOLD : RED;
+            ping < 420 ? GOLD : 
+            ping < 690 ? RED : DARK_RED;
         statusOverlay.message += `${DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms\n`;
     }
 
@@ -132,7 +133,8 @@ registerWhen(register('tick', () => {
         const fpsColor = fpsRatio > 0.9 ? GREEN :
             fpsRatio > 0.8 ? DARK_GREEN :
             fpsRatio > 0.7 ? YELLOW :
-            fpsRatio > 0.6 ? GOLD : RED;
+            fpsRatio > 0.6 ? GOLD : 
+            fpsRatio > 0.5 ? RED : DARK_RED;
         statusOverlay.message += `${DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps\n`;
     }
 
@@ -141,7 +143,8 @@ registerWhen(register('tick', () => {
         const tpsColor = tps > 19 ? GREEN :
             tps > 16 ? DARK_GREEN :
             tps > 13 ? YELLOW :
-            tps > 10 ? GOLD : RED;
+            tps > 10 ? GOLD : 
+            tps > 7 ? RED : DARK_RED;
 
         statusOverlay.message += `${DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps\n`;
     }
@@ -152,12 +155,14 @@ registerWhen(register('tick', () => {
         const leftColor = leftCPS < 3 ? GREEN :
             leftCPS < 7 ? DARK_GREEN :
             leftCPS < 13 ? YELLOW :
-            leftCPS < 21 ? GOLD : RED;
+            leftCPS < 21 ? GOLD : 
+            leftCPS < 30 ? RED : DARK_RED;
         const rightCPS = CPS.getRightClicks();
         const rightColor = rightCPS < 3 ? GREEN :
             rightCPS < 7 ? DARK_GREEN :
             rightCPS < 13 ? YELLOW :
-            rightCPS < 21 ? GOLD : RED;
+            rightCPS < 21 ? GOLD : 
+            rightCPS < 30 ? RED : DARK_RED;
 
         statusOverlay.message += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}\n`;
     }
@@ -174,36 +179,41 @@ export function getStatus(status) {
             const pingColor = ping < 100 ? GREEN :
                 ping < 200 ? DARK_GREEN :
                 ping < 300 ? YELLOW :
-                ping < 400 ? GOLD : RED;
+                ping < 420 ? GOLD : 
+                ping < 690 ? RED : DARK_RED;
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms`);
+            break;
+        case "fps":
+            const fps = Client.getFPS();
+            const fpsRatio = fps / SETTINGS.field_74350_i;
+            const fpsColor =  fpsRatio > 0.9 ? GREEN :
+                fpsRatio > 0.8 ? DARK_GREEN :
+                fpsRatio > 0.7 ? YELLOW :
+                fpsRatio > 0.6 ? GOLD : 
+                fpsRatio > 0.5 ? RED : DARK_RED;
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps`);
             break;
         case "tps":
             const tpsColor = tps > 19 ? GREEN :
                 tps > 16 ? DARK_GREEN :
                 tps > 13 ? YELLOW :
-                tps > 10 ? GOLD : RED;
+                tps > 10 ? GOLD : 
+                tps > 7 ? RED : DARK_RED;
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps`);
-            break;
-        case "fps":
-            const fps = Client.getFPS();
-            const fpsRatio = fps / SETTINGS.field_74350_i;
-            const fpsColor = fpsRatio > 0.9 ? GREEN :
-                fpsRatio > 0.8 ? DARK_GREEN :
-                fpsRatio > 0.7 ? YELLOW :
-                fpsRatio > 0.6 ? GOLD : RED;
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps`);
             break;
         case "cps":
             const leftCPS = CPS.getLeftClicks();
             const leftColor = leftCPS < 3 ? GREEN :
                 leftCPS < 7 ? DARK_GREEN :
                 leftCPS < 13 ? YELLOW :
-                leftCPS < 21 ? GOLD : RED;
+                leftCPS < 21 ? GOLD : 
+                leftCPS < 30 ? RED : DARK_RED;
             const rightCPS = CPS.getRightClicks();
             const rightColor = rightCPS < 3 ? GREEN :
                 rightCPS < 7 ? DARK_GREEN :
                 rightCPS < 13 ? YELLOW :
-                rightCPS < 21 ? GOLD : RED;
+                rightCPS < 21 ? GOLD : 
+                rightCPS < 30 ? RED : DARK_RED;
 
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`);
             break;

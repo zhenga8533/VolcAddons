@@ -27,13 +27,6 @@ class Settings {
 
     // --- SERVER STATUS ---
     @CheckboxProperty({
-        name: `XYZ Display`,
-        category: "Server Status",
-        subcategory: "Server Status",
-        description: "Ooh, black and yellow! Let's shake it up a little."
-    })
-    xyzDisplay = true;
-    @CheckboxProperty({
         name: "Ping Display",
         category: "Server Status",
         subcategory: "Server Status",
@@ -61,6 +54,13 @@ class Settings {
         description: "Yellow, black. Yellow, black. Yellow, black. Yellow, black."
     })
     cpsDisplay = true;
+    @CheckboxProperty({
+        name: `XYZ Display`,
+        category: "Server Status",
+        subcategory: "Server Status",
+        description: "Ooh, black and yellow! Let's shake it up a little."
+    })
+    xyzDisplay = true;
 
     // --- SKYBLOCK STATS ---
     @CheckboxProperty({
@@ -80,7 +80,7 @@ class Settings {
     statsDisplay = true;
 
     @CheckboxProperty({
-        name: `Soulflow Display ${BLUE}(Requires Inventory)`,
+        name: `Soulflow Display ${BLUE}(Uses Inventory)`,
         category: "Skyblock Stats",
         subcategory: "Skyblock Stats",
         description: "But you only date bad guys, so I'll give it my best try to treat you the way you want me to"

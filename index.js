@@ -33,7 +33,7 @@ import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
 import "./features/general/SlotBinding";
-import "./features/general/Statistics";
+import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
 import "./features/economy/BitsAlert";
@@ -242,15 +242,6 @@ register ("command", (...args) => {
             } else
                 ChatLib.chat(`${LOGO + RED}Please input as /va api [key]!`);
             break;
-        // Server Status Commands
-        case "ping":
-        case "tps":
-        case "fps":
-        case "cps":
-        case "soulflow":
-        case "sf":
-            getStatus(command);
-            break;
         // Waypoint
         case "coords":
         case "xyz":
@@ -329,19 +320,11 @@ register ("command", (...args) => {
         case "calculate":
         case "calc":
             try {
+                const MINION_ARGS = new Set(["hypergolic", "hg", "inferno", "gabagool", "gaba", "vampire", "vamp"]);
                 switch(args[1]) {
                     case "composter":
                     case "compost":
                         calcCompost(args);
-                        break;
-                    case "hypergolic":
-                    case "hg":
-                    case "inferno":
-                    case "gabagool":
-                    case "gaba":
-                    case "vampire":
-                    case "vamp":
-                        calcMinions(args);
                         break;
                     case "gdrag":
                         calcGdrag(isNaN(args[2]) ? 100 : args[2]);
@@ -350,7 +333,8 @@ register ("command", (...args) => {
                         calcTabasco(args);
                         break;
                     default:
-                        ChatLib.chat(`${LOGO + AQUA}Please enter as /va calc <gdrag, hypergolic, inferno, gabagool, tabasco, vampire, compost>`);
+                        if (MINION_ARGS.has(args[1])) calcMinions(args);
+                        else ChatLib.chat(`${LOGO + AQUA}Please enter as /va calc <gdrag, hypergolic, inferno, gabagool, tabasco, vampire, compost>`);
                         break;
                 }
             } catch (err) { ChatLib.chat(`${LOGO + RED + err}`); }
@@ -381,12 +365,19 @@ register ("command", (...args) => {
         // Party Commands and Else Case
         default:
             args = args.map(w => w.toLowerCase());
+            // Other args to check
             const PARTY_COMMANDS = new Set(
                 ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
                 "cf", "8ball", "rps", "waifu", "w", "women"]
             );
             const INSTANCES = new Set(["f", "m", "t"]);
+
+            const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps"]);
+            const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf"]);
+
             if (PARTY_COMMANDS.has(command) || (INSTANCES.has(command[0]) && !isNaN(command[1]))) executeCommand(Player.getName(), args, false);
+            else if (STATUS_ARGS.has(command)) getStatus(command);
+            else if (STAT_ARGS.has(command)) getStat(command);
             else {
                 ChatLib.chat(`${LOGO + RED}Unkown command: "${command}" was not found!`);
                 ChatLib.chat(`${LOGO + RED}Use '/va help' for a full list of commands.`);

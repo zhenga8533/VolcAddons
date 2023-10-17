@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_AQUA, GREEN } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { formatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
@@ -45,7 +45,7 @@ register("chat", (pet) => {
  * Tab stats
  */
 const stats = [];
-register("step", () => {
+registerWhen(register("step", () => {
     let tab = TabList?.getNames();
     if (tab === undefined) return;
     stats.length = 0;
@@ -57,7 +57,7 @@ register("step", () => {
         stats.push(stat);
         stat = tab[++index];
     }
-}).setDelay(1);
+}).setDelay(1), () => true);
 
 /**
  * Get soulflow using inventory
@@ -81,40 +81,52 @@ register("step", () => {
 registerWhen(register("tick", () => {
     statsOverlay.message = "";
 
+    // Pet
     if (toggles.petDisplay) {
         statsOverlay.message += `${DARK_AQUA + BOLD}Pet: ${data.pet}\n`;
     }
 
+    // Stats
     if (toggles.statsDisplay) {
         statsOverlay.message += `${DARK_AQUA + BOLD}Stats:\n`;
-        stats.forEach(stat => {
-            statsOverlay.message += `-${stat}\n`;
-        })
+        stats.forEach(stat => statsOverlay.message += `-${stat}\n` );
     }
 
+    // Soulflow
     if (toggles.soulflowDisplay) {
         const soulflowColor = soulflow > 100_000 ? GREEN :
-            soulflow > 50_000 ? DARK_GREEN :
-            soulflow > 25_000 ? YELLOW :
-            soulflow > 10_000 ? GOLD : RED;
+            soulflow > 75_000 ? DARK_GREEN :
+            soulflow > 50_000 ? YELLOW :
+            soulflow > 25_000 ? GOLD : 
+            soulflow > 10_000 ? RED : DARK_RED;
         
         statsOverlay.message += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`;
     }
 }), () => settings.statsDisplay);
 
-/* Soulflow
-
-case "soulflow":
-case "sf":
-    const soulflowColor = soulflow > 100_000 ? GREEN :
-        soulflow > 50_000 ? DARK_GREEN :
-        soulflow > 25_000 ? YELLOW :
-        soulflow > 10_000 ? GOLD : RED;
-    
-    ChatLib.chat(`${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`);
-    break;
-
 /**
- * Get soulflow amount using soulflow accessory in inventory
- *
-*/
+ * Output Stats to user chat when user requests via command args.
+ * 
+ * @param {String} stat - Status type to retrieve.
+ */
+export function getStat(stat) {
+    switch (stat) {
+        case "pet":
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Pet: ${data.pet}`);
+            break;
+        case "stats":
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Stats:`);
+            stats.forEach(stat => ChatLib.chat(`-${stat}`) );
+            break;
+        case "soulflow":
+        case "sf":
+            const soulflowColor = soulflow > 100_000 ? GREEN :
+                soulflow > 75_000 ? DARK_GREEN :
+                soulflow > 50_000 ? YELLOW :
+                soulflow > 25_000 ? GOLD : 
+                soulflow > 10_000 ? RED : DARK_RED;
+            
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`);
+            break;
+    }
+}
