@@ -30,6 +30,7 @@ import { executeCommand } from "./features/general/PartyCommands";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
+import "./features/general/Searchbar";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
 import "./features/general/SlotBinding";
@@ -371,7 +372,6 @@ register ("command", (...args) => {
                 "cf", "8ball", "rps", "waifu", "w", "women"]
             );
             const INSTANCES = new Set(["f", "m", "t"]);
-
             const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps"]);
             const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf"]);
 

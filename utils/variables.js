@@ -89,6 +89,7 @@ export let data = new PogObject("VolcAddons", {
     "FL": [220, 10, 1.2, false], // Trophy Fish Location
     "OL": [10, 130, 1.2, false], // Composter Location
     "YL": [1, 1, 1, false], // SkyBlock Stats Location
+    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false], // Searchbox location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

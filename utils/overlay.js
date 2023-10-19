@@ -202,7 +202,7 @@ export class Overlay {
             renderScale(
                 this.loc[2],
                 `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`,
-                this.X, this.Y - 10, this.loc[3]
+                this.X + 2, this.Y - 10, this.loc[3]
             );
             Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], Renderer.screen.getHeight(), 0.5);
             Renderer.drawLine(Renderer.WHITE, Renderer.screen.getWidth(), this.loc[1], 1, this.loc[1], 0.5);
