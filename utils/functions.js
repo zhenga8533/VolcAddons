@@ -329,20 +329,41 @@ export function numToRoman(num) {
     return ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][num - 1];
 };
 
-export function getSlotCoords(slot) {
-    if (slot > 4 && slot <= 9) {
-        const x = Renderer.screen.getWidth() / 2 - 80
-        const y = Renderer.screen.getHeight() / 3 + ((slot - 4) * 18) - 3;
-        return [x, y];
-    }
+/**
+ * Get x and y coords of top left of container index.
+ * 
+ * @param {number} slot - Slot index.
+ * @param {String} containerType - Container class name.
+ * @returns 
+ */
+export function getSlotCoords(slot, containerType) {
+    // Credit to https://www.chattriggers.com/modules/v/ExperimentationTable for baseline rendering
+    if (containerType === "ContainerPlayer") {
+        if (slot > 4 && slot <= 9) {
+            const x = Renderer.screen.getWidth() / 2 - 80
+            const y = Renderer.screen.getHeight() / 3 + ((slot - 4) * 18) - 3;
+            return [x, y];
+        }
 
-    const x = slot % 9;
-    const y = Math.floor(slot / 9);
+        const x = slot % 9;
+        const y = Math.floor(slot / 9);
+        
+        const renderX = Renderer.screen.getWidth() / 2 + ((x - 4) * 18) - 8;
+        const renderY = Renderer.screen.getHeight() / 2 + ((y - Player.getContainer().getSize() / 18) * 18) +  + (slot < 36 ? 27.5 : 32);
+
+        return [renderX, renderY];
+    } else if (containerType === "ContainerChest") {
+        const x = slot % 9;
+        const y = Math.floor(slot / 9);
+        const revPos = Player.getContainer().getSize() - slot;
+        const diff = revPos > 36 ? 0 :
+            revPos > 9 ? 13 : 17;
+
+        const renderX = Renderer.screen.getWidth() / 2 + ((x - 4) * 18) - 8;
+        const renderY = (Renderer.screen.getHeight() + 10) / 2 + ((y - Player.getContainer().getSize() / 18) * 18) - 8 + diff;
     
-    const renderX = Renderer.screen.getWidth() / 2 + ((x - 4) * 18) - 8;
-    const renderY = Renderer.screen.getHeight() / 2 + ((y - Player.getContainer().getSize() / 18) * 18) +  + (slot < 36 ? 27.5 : 32);
-
-    return [renderX, renderY];
+        return [renderX, renderY];
+    }
 }
 
 
