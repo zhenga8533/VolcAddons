@@ -174,6 +174,15 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     })
     removeSelfie = false;
     
+    @SwitchProperty({
+        name: "Searchbar",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||).
+Move GUI with ${AQUA}/moveSearch${GRAY}.`,
+        category: "General",
+        subcategory: "General"
+    })
+    searchbar = false;
+    
     @SliderProperty({
         name: "Skill Tracker",
         description: `Tracks and displays skill XP's rate of gain. Set minutes of inactivity required for tracker to reset or as 0 to turn ${RED}OFF${GRAY}.

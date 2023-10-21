@@ -103,8 +103,9 @@ let registers = [];
 
 /**
  * Adds a trigger with its associated dependency to the list of registered triggers.
+ * Credit to: https://www.chattriggers.com/modules/v/BloomCore for idea
  *
- * @param {Trigger} trigger - The trigger to be added.
+ * @param {Object} trigger - The trigger to be added.
  * @param {function} dependency - The function representing the dependency of the trigger.
  */
 export function registerWhen(trigger, dependency) {

@@ -1,6 +1,7 @@
 import { ITALIC } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions";
-import { data } from "../../utils/variables";
+import settings from "../../utils/settings";
+import { data, registerWhen } from "../../utils/variables";
 
 
 // Search bar parameters
@@ -35,7 +36,7 @@ function getHighlights() {
 }
 
 // Render item highlights and search bar
-register("guiRender", (x, y, gui) => {
+registerWhen(register("guiRender", (x, y, gui) => {
     if (!gui.class.getName().startsWith("net.minecraft.client.gui.inventory.")) return;
     searchbar.func_146194_f();
 
@@ -46,7 +47,7 @@ register("guiRender", (x, y, gui) => {
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(255, 255, 255, 255), x, y, 16, 16);
     });
-});
+}), () => settings.searchbar);
 
 /**
  * Stuff to move searchbox
@@ -67,38 +68,38 @@ register("command", () => {
 }).setName("moveSearchbox", true).setAliases("moveSearch");
 
 // Moving searchbox
-register("guiMouseDrag", (x, y) => {
+registerWhen(register("guiMouseDrag", (x, y) => {
     if (!gui.isOpen()) return;
 
     loc[0] = x;
     loc[1] = y;
     searchbar.field_146209_f = x;
     searchbar.field_146210_g = y;
-});
+}), () => settings.searchbar);
 
 // Detect mouse click on box
-register("guiMouseClick", (x, y, button) => {
+registerWhen(register("guiMouseClick", (x, y, button) => {
     searchbar.func_146192_a(x, y, button);
     Client.scheduleTask(1, () => getHighlights());
-});
+}), () => settings.searchbar);
 
 // Searchbox key detects
-register("guiKey", (char, keyCode, _, event) => {
+registerWhen(register("guiKey", (char, keyCode, _, event) => {
     if (!searchbar.func_146206_l()) return;
 
     searchbar.func_146201_a(char, keyCode);
     getHighlights();
     if (keyCode != 1) cancel(event);  // Cancel all but escape key
-});
+}), () => settings.searchbar);
 
 // Reset search when opening gui
-register("guiOpened", () => {
+registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, () => getHighlights());
-});
+}), () => settings.searchbar);
 
 // Exit search when closing gui
-register("guiClosed", () => {
+registerWhen(register("guiClosed", () => {
     if (gui.isOpen()) renderOverlay.unregister();
     searchbar.func_146195_b(false);
     indexes.length = 0;
-});
+}), () => settings.searchbar);
