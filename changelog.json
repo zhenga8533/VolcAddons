@@ -9,5 +9,6 @@
     "- Changed server and skyblock stats to use different overlays",
     "- Fixed recall mouse breaking for some gui scales",
     "- Fixed Skyblock toggle not working sometimes",
-    "- Fixed master stars not being calculated"
+    "- Fixed master stars not being calculated",
+    "- Fixed visitor ETA"
 ]

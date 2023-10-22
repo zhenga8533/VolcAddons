@@ -65,7 +65,7 @@ registerWhen(register("step", () => {
         next = nextVisit[0];
         if (nextVisit.length === 2) next = next * 60 + parseInt(nextVisit[1]);
         const estimated = next / (lastTick - next);
-        if (estimated > 0 && estimated !== next)
+        if (lastTick !== next && estimated > 0 && estimated !== next)
             nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${RESET + getTime(next)} ${GRAY}[ETA: ${getTime(estimated)}]`;
         lastTick = next;
     }

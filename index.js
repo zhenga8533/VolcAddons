@@ -33,6 +33,7 @@ import "./features/general/RemoveSelfie";
 import "./features/general/Searchbar";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
+import "./features/general/SkyCrypt";
 import "./features/general/SlotBinding";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
@@ -123,7 +124,8 @@ function getHelp() {
     ChatLib.chat(`${GRAY + BOLD}Waypoints: ${RESET}/va <coords, waypoint, clear, enigma, npc, zone>`);
     ChatLib.chat(`${GRAY + BOLD}Lists: ${RESET}/va <cd, whitelist, blacklist, emotelist, warplist>`);
     ChatLib.chat(`${GRAY + BOLD}Kuudra: ${RESET}/va splits`);
-    ChatLib.chat(`${GRAY + BOLD}Economy: ${RESET}/va <calc, apex>\n`);
+    ChatLib.chat(`${GRAY + BOLD}Economy: ${RESET}/va <calc, apex>`);
+    ChatLib.chat(`${GRAY + BOLD}Misc: ${RESET}/sk\n`);
 
     // General Features
     ChatLib.chat(`${AQUA + BOLD}GENERAL FEATURES:${RESET}`);
