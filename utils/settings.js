@@ -131,6 +131,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // --- General ---
     @SwitchProperty({
+        name: "Armor Display",
+        description: `Displays user's armor pieces as icons on an overlay.`,
+        category: "General",
+        subcategory: "General"
+    })
+    armorDisplay = false;
+
+    @SwitchProperty({
         name: "Custom Emotes",
         description: `Replaces parts of chat messages containing emotes in ${AQUA}/emotes${GRAY}.
 Add custom emotes with ${AQUA}/va emote${GRAY}.`,

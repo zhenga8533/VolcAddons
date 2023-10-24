@@ -1,14 +1,3 @@
 [
-    "- Added scuffed slot binding",
-    "- Added clearer args to list commands",
-    "- Added search bar",
-    "- Added SkyCrypt search",
-    "- Added XYZ to status display",
-    "- Added pet to stats display",
-    "- Added tab stats to stats display",
-    "- Changed server and skyblock stats to use different overlays",
-    "- Fixed recall mouse breaking for some gui scales",
-    "- Fixed Skyblock toggle not working sometimes",
-    "- Fixed master stars not being calculated",
-    "- Fixed visitor ETA"
+    "- Change mouse recall to be absolute"
 ]

@@ -12,8 +12,7 @@ let y = screen.getHeight();
 
 registerWhen(register("guiOpened", () => {
     // Set mouse as old pos
-    const scale = screen.getScale();
-    MOUSE.setCursorPosition(x, screen.getHeight() * scale - y);
+    MOUSE.setCursorPosition(x, y);
 }), () => settings.mouseReset);
 
 /**
@@ -22,8 +21,8 @@ registerWhen(register("guiOpened", () => {
 function setMouse() {
     // Track current position if moving from gui => gui
     const scale = screen.getScale();
-    x = Client.Companion.getMouseX() * scale;
-    y = Client.Companion.getMouseY() * scale;
+    x = MOUSE.getX();
+    y = MOUSE.getY();
 
     // Reset position a tick after closing gui
     Client.scheduleTask(1, () => {

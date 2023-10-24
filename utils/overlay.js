@@ -177,7 +177,7 @@ export class Overlay {
      * @param {string} command - The command name that will open the GUI.
      * @param {string} example - An example text to be displayed as an overlay.
      */
-    constructor(setting, requires, condition, loc, command, example) {
+    constructor(setting, requires, condition, loc, command, example, special = () => false) {
         overlays.push(this);
         // Store the inputs as instance variables.
         this.setting = setting;
@@ -219,7 +219,8 @@ export class Overlay {
         }).unregister();
 
         registerWhen(register(this.requires.has("misc") ? "postGuiRender" : "renderOverlay", () => {
-            if (condition() && !gui.isOpen() && !this.gui.isOpen()) {
+            if (special()) return;
+            else if (condition() && !gui.isOpen() && !this.gui.isOpen()) {
                 if (this.requires.has("misc")) background.func_146278_c(0);
                 renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3]);
             }

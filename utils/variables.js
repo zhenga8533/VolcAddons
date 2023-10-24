@@ -65,15 +65,19 @@ export let data = new PogObject("VolcAddons", {
     "slotBinds": {},
     "bindPresets": {},
     // GUI locations
+    "AL": [780, 430, 1.2, false], // Skill Tracker Location
+    "BL": [10, 120, 1.2, false], // Vampire Location
+    "CL": [10, 180, 1.2, false], // Counter Location
+    "DL": [10, 180, 1.2, false], // Broodmother Location
+    "EL": [100, 150, 1.1, false], // Advanced Value Location
+    "FL": [220, 10, 1.2, false], // Trophy Fish Location
+    "GL": [1, 1, 1, false], // Armor Display Location
     "QL": [250, 225, 4, false], // Vanquisher Location
     "GL": [10, 140, 1.2, false], // Gyro Location
     "SL": [10, 180, 1.2, false], // Splits Location
-    "CL": [10, 180, 1.2, false], // Counter Location
     "VL": [10, 180, 1.2, false], // Visitors Location
     "NL": [10, 160, 1.2, false], // Next Visitors Location
     "TL": [10, 130, 1.2, false], // Golden Fish Timer Location
-    "AL": [780, 430, 1.2, false], // Skill Tracker Location
-    "BL": [10, 120, 1.2, false], // Vampire Location
     "ML": [780, 390, 1.2, false], // Coins Location
     "PL": [10, 180, 1.2, false], // Powder Location
     "IL": [10, 180, 1.2, false], // Inq Location
@@ -81,12 +85,9 @@ export let data = new PogObject("VolcAddons", {
     "ZL": [780, 330, 1.2, false], // Kuudra Profit Tracker Location
     "LL": [870, 130, 1.2, false], // Server Status Location
     "RL": [600, 175, 1, false], // Container Value Location
-    "EL": [100, 150, 1.1, false], // Advanced Value Location
     "WL": [730, 130, 1.2, false], // Wolf Combo Location
     "HL": [10, 240, 1.2, false], // Powder Chest Location
-    "DL": [10, 180, 1.2, false], // Broodmother Location
     "JL": [150, 180, 1.2, false], // Kill Counter Location
-    "FL": [220, 10, 1.2, false], // Trophy Fish Location
     "OL": [10, 130, 1.2, false], // Composter Location
     "YL": [1, 1, 1, false], // SkyBlock Stats Location
     "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false], // Searchbox location
