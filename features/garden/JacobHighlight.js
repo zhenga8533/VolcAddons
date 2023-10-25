@@ -9,13 +9,27 @@ import { getWorld } from "../../utils/worlds";
  */
 let unclaimed = [];
 registerWhen(register("guiOpened", () => {
-    Client.scheduleTask(1, () => {
+    Client.scheduleTask(2, () => {
         const container = Player.getContainer();
         if (container.getName() !== "Your Contests") return;
+
+        const COLORS = {
+            "BRONZE": [205, 127, 50],
+            "SILVER": [192, 192, 192],
+            "GOLD": [255, 215, 0],
+            "a": [0, 0, 0]
+        }
+
         for (let i = 10; i <= 43; i++) {
-            let lore = container.getStackInSlot(i).getLore().pop();
-            if (lore === "§5§o§eClick to claim reward!") {
-                unclaimed.push(i);
+            let lore = container
+                .getStackInSlot(i)
+                .getLore()
+                .filter(line => line.startsWith("§5§o§7You ") || line === "§5§o§eClick to claim reward!"
+            );
+
+            if (lore[1] !== undefined) {
+                let medal = lore[0].split(' ')[3]?.removeFormatting();
+                unclaimed.push([i, COLORS[medal]]);
             }
         }        
     })
@@ -32,9 +46,10 @@ registerWhen(register("guiRender", () => {
     const containerType = Player.getContainer().getClassName();
 
     unclaimed.forEach(index => {
-        const [x, y] = getSlotCoords(index, containerType);
+        const [x, y] = getSlotCoords(index[0], containerType);
     
+        const color = index[1];
         Renderer.translate(0, 0, 100);
-        Renderer.drawRect(Renderer.color(57, 255, 20, 128), x, y, 16, 16);
+        Renderer.drawRect(Renderer.color(...color, 255), x, y, 16, 16);
     })
 }), () => getWorld() === "Garden" && settings.jacobReward);

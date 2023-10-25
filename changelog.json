@@ -1,5 +1,6 @@
 [
-    "TODO- Changed Jacob highlight color for different medals",
+    "- Changed Jacob highlight color for different medals",
     "- Changed mouse recall to be absolute",
-    "- Changed overlay rendering and settings"
+    "- Changed overlay rendering and settings",
+    "- Fixed Jacob highlight not picking up some rewards"
 ]
