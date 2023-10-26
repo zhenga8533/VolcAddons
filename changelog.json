@@ -1,4 +1,5 @@
 [
+    "- Changed `/va test` to have color",
     "- Changed Jacob highlight color for different medals",
     "- Changed mouse recall to be absolute",
     "- Changed overlay rendering and settings",

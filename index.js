@@ -3,8 +3,8 @@ import "./utils/player";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
-import { formatNumber, unformatNumber } from "./utils/functions";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { formatNumber, getTime, unformatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
@@ -253,13 +253,16 @@ register ("command", (...args) => {
             break;
         // Testing (please work)
         case "test":
-            ChatLib.chat("World: " + getWorld());
-            ChatLib.chat("Zone: " + findZone());
-            ChatLib.chat("Tier: " + getTier());
-            ChatLib.chat("Leader: " + getIsLeader());
-            ChatLib.chat("Party: " + getInParty());
-            if (getParty().size !== 0) ChatLib.chat("Members: " + getParty().join(' '));
-            ChatLib.chat("Garden: " + getNextVisitor());
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Important Values:`)
+            ChatLib.chat(`- ${AQUA + BOLD}World: ${WHITE + getWorld()}`);
+            ChatLib.chat(`- ${AQUA + BOLD}Zone: ${WHITE + findZone()}`);
+            const tier = getTier();
+            if (tier !== 0) ChatLib.chat(`- ${AQUA + BOLD}Tier: ${WHITE + getTier()}`);
+            ChatLib.chat(`- ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}`);
+            ChatLib.chat(`- ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
+            const party = getParty();
+            if (party.size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.join(' ')}`);
+            ChatLib.chat(`- ${AQUA + BOLD}Garden: ${WHITE + getTime(getNextVisitor())}`);
             break;
         // Bestiary Stuff
         case "be":
