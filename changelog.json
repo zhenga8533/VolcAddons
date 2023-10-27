@@ -1,4 +1,6 @@
 [
+    "- Added armor display",
+    "- Changed `/va cd` to work with armor using ^",
     "- Changed `/va test` to have color",
     "- Changed Jacob highlight color for different medals",
     "- Changed mouse recall to be absolute",

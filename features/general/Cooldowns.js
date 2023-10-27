@@ -13,23 +13,64 @@ import { data, registerWhen } from "../../utils/variables";
 let items = {};
 registerWhen(register("clicked", (x, y, button, down) => {
     const held = Player.getHeldItem();
-    if (Client.isInGui() || !down || button === 0 || held === null) return;
+    if (Client.isInGui() || !down || held === null) return;
     const heldName = held.getName();
     if (!(heldName in data.cooldownlist)) return;
+
     const cd = data.cooldownlist[heldName];
     if (isNaN(cd)) {
         const firstLetter = cd[0];
         const remaining = cd.substring(1);
-        if (firstLetter !== 'a' || isNaN(remaining)) return;
-        held.setStackSize(remaining);
-        items[heldName] = remaining;
-    } else if (heldName in items) return;
-    else {
+        if (isNaN(remaining)) return;
+
+        if (firstLetter === 'a' || (firstLetter === 'l' && !(heldName in items) && button === 0)) {
+            held.setStackSize(remaining);
+            items[heldName] = remaining;
+        }
+    } else if (button === 1 && !(heldName in items)) {
         held.setStackSize(cd);
         items[heldName] = cd;
     }
 }), () => data.cooldownlist.length !== 0);
 
+/**
+ * Handles shift to track ability.
+ */
+const shiftKey = new KeyBind(Client.getMinecraft().field_71474_y.field_74311_E);
+shiftKey.registerKeyPress(() => {
+    // Get armor pieces
+    const armor = Player.armor;
+    const pieces = [
+        armor.getHelmet(),
+        armor.getChestplate(),
+        armor.getLeggings(),
+        armor.getBoots()
+    ];
+    
+    // Loop through to check in cd list
+    pieces.forEach(piece => {
+        const pieceName = piece?.getName();
+        const cd = data.cooldownlist[pieceName];
+        if (cd === undefined) return;
+
+        // cooldown checks
+        if (pieceName in items) return;
+        const firstLetter = cd[0];
+        const remaining = cd.substring(1);
+
+        if (firstLetter === 's' && !isNaN(remaining)) {
+            piece.setStackSize(remaining);
+            items[pieceName] = remaining;
+        } else if (!isNaN(cd)) {
+            piece.setStackSize(cd);
+            items[pieceName] = cd;
+        }
+    });
+});
+
+/**
+ * Reset cooldowns on worldchange
+ */
 registerWhen(register("worldUnload", () => {
     items = {};
 }), () => data.cooldownlist.length !== 0);

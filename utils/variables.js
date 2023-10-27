@@ -202,7 +202,10 @@ export function updateList(args, list, listName) {
             ChatLib.chat(`${LOGO + RED}Invalid argument: "${command}" was not found!`);
             let base = `${LOGO + RED}Please enter as /va ${listName} <view, clear, add/remove `
 
-            if (listName === "cdlist") ChatLib.chat(`${base} [cd (in seconds)]>`);
+            if (listName === "cdlist") base += `[cd (in seconds)]> \n${GRAY}Special args (put in front, e.x 'a60'):
+- a = active
+- l = left click
+- s = shift`;
             else if (listName === "emotelist") base += "[key] [value]>";
             else if (listName === "warplist") base += "<hub, castle, da, museum, crypt, wizard>>";
             else if (listName === "moblist")
