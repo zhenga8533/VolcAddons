@@ -71,26 +71,26 @@ export let data = new PogObject("VolcAddons", {
     "DL": [10, 180, 1.2, false], // Broodmother Location
     "EL": [100, 150, 1.1, false], // Advanced Value Location
     "FL": [220, 10, 1.2, false], // Trophy Fish Location
-    "GL": [1, 1, 1, false], // Armor Display Location
-    "QL": [250, 225, 4, false], // Vanquisher Location
     "GL": [10, 140, 1.2, false], // Gyro Location
-    "SL": [10, 180, 1.2, false], // Splits Location
-    "VL": [10, 180, 1.2, false], // Visitors Location
-    "NL": [10, 160, 1.2, false], // Next Visitors Location
-    "TL": [10, 130, 1.2, false], // Golden Fish Timer Location
-    "ML": [780, 390, 1.2, false], // Coins Location
-    "PL": [10, 180, 1.2, false], // Powder Location
-    "IL": [10, 180, 1.2, false], // Inq Location
-    "KL": [600, 220, 1.2, false], // Kuudra Profit Location
-    "ZL": [780, 330, 1.2, false], // Kuudra Profit Tracker Location
-    "LL": [870, 130, 1.2, false], // Server Status Location
-    "RL": [600, 175, 1, false], // Container Value Location
-    "WL": [730, 130, 1.2, false], // Wolf Combo Location
     "HL": [10, 240, 1.2, false], // Powder Chest Location
+    "IL": [10, 180, 1.2, false], // Inq Location
     "JL": [150, 180, 1.2, false], // Kill Counter Location
+    "KL": [600, 220, 1.2, false], // Kuudra Profit Location
+    "LL": [870, 130, 1.2, false], // Server Status Location
+    "ML": [780, 390, 1.2, false], // Coins Location
+    "NL": [10, 160, 1.2, false], // Next Visitors Location
     "OL": [10, 130, 1.2, false], // Composter Location
-    "YL": [1, 1, 1, false], // SkyBlock Stats Location
+    "PL": [10, 180, 1.2, false], // Powder Location
+    "QL": [250, 225, 4, false], // Vanquisher Location
+    "RL": [600, 175, 1, false], // Container Value Location
+    "SL": [10, 180, 1.2, false], // Splits Location
+    "TL": [10, 130, 1.2, false], // Golden Fish Timer Location
+    "UL": [930, 65, 1.2, false], // Armor Display Location
+    "VL": [10, 180, 1.2, false], // Visitors Location
+    "WL": [730, 130, 1.2, false], // Wolf Combo Location
     "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false], // Searchbox location
+    "YL": [770, 125, 1.2, false], // SkyBlock Stats Location
+    "ZL": [780, 330, 1.2, false], // Kuudra Profit Tracker Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

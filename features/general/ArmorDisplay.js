@@ -6,19 +6,19 @@ import { data } from "../../utils/variables";
  * Render armor pieces as icons
  */
 const pieces = [null, null, null, null];
-new Overlay("armorDisplay", ["all"], () => true, data.GL, "moveArmor", "", () => {
-    let yDiff = -14 * data.GL[2];
+new Overlay("armorDisplay", ["all"], () => true, data.UL, "moveArmor", "", () => {
+    let yDiff = -14 * data.UL[2];
 
     pieces.forEach(piece => {
-        yDiff += 14 * data.GL[2];
+        yDiff += 14 * data.UL[2];
         if (piece === null) return;
 
         // Draw icon
-        piece.draw(data.GL[0], data.GL[1] + yDiff, data.GL[2]);
+        piece.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
 
         // Draw cd/stars
         const size = piece.getStackSize();
-        if (size > 1) Renderer.drawString(size, data.GL[0] -  Renderer.getStringWidth(size), data.GL[1] + yDiff);
+        if (size > 1) Renderer.drawString(size, data.UL[0] -  Renderer.getStringWidth(size), data.UL[1] + yDiff);
     });
 
     return true;
