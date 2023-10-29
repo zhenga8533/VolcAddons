@@ -1,6 +1,8 @@
 [
+    "TODO- Added auto correct commands",
     "- Added armor display",
     "- Changed `/va cd` to work with armor using ^",
+    "- Changed `/va attribute` to take in combo args",
     "- Changed `/va test` to have color",
     "- Changed Jacob highlight color for different medals",
     "- Changed mouse recall to be absolute",

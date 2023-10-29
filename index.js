@@ -38,6 +38,7 @@ import "./features/general/SlotBinding";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
+import { getAttributes } from "./features/economy/AttributePricing";
 import "./features/economy/BitsAlert";
 import "./features/economy/CoinTracker";
 import "./features/economy/ContainerValue";
@@ -75,7 +76,6 @@ import "./features/crimsonIsle/VanqFeatures";
 // Dungeon Features
 import "./features/dungeon/StarDetect";
 // Kuudra Features
-import { getAttributes } from "./features/kuudra/AttributePricing";
 import { calcTabasco } from "./features/kuudra/TabascoCalc";
 import "./features/kuudra/KuudraAlerts";
 import "./features/kuudra/KuudraCrates";
