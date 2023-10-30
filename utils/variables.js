@@ -1,6 +1,6 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
-import { AQUA, BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
+import { BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 import { delay } from "./thread";
 
 
@@ -9,6 +9,7 @@ export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
     "newUser": true,
     "version": "2.3.1",
+    "wordbank": {},
     "lastID" : undefined,
     "world": "none",
     "tier": 0,

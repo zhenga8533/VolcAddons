@@ -1,5 +1,7 @@
 [
-    "TODO- Added auto correct commands",
+    "- Added more setting subcategories (some settings may reset)",
+    "- Added auto correct commands",
+    "TODO: - Added auto complete commands",
     "- Added armor display",
     "- Changed `/va cd` to work with armor using ^",
     "- Changed `/va attribute` to take in combo args",

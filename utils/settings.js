@@ -14,9 +14,7 @@ import {
 } from '../../Vigilance/index';
 
 
-// Define the settings class using the @Vigilant decorator
 @Vigilant("VolcAddons", "VolcAddons", {
-    // Function to compare categories for sorting settings
     getCategoryComparator: () => (a, b) => {
         const categories = ["General", "Party", "Economy", "Combat", "Mining", "Farming", "Hub", "Crimson Isles", "Dungeon", "Kuudra", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
@@ -25,8 +23,6 @@ import {
 class Settings {
     constructor() {
         this.initialize(this);
-
-        // Set category descriptions for different groups of settings
 
         // General Category
         this.setCategoryDescription("General",
@@ -128,6 +124,37 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     moveGUI() {
         ChatLib.command("va gui", true);
     }
+    
+    // --- Yapping ---
+    @SliderProperty({
+        name: "Autocorrect Commands",
+        description: `${DARK_RED}NEW! ${GRAY}Attempts to correct invalid commands with valid ones. It will take
+time to collect enough data to be accurate. Set the # of
+transformations away a correction can be or as 0 to turn ${RED}OFF${GRAY}.`,
+        category: "General",
+        subcategory: "Yapping",
+        max: 2,
+        min: 0
+    })
+    autocorrect = 0;
+
+    @SwitchProperty({
+        name: "Custom Emotes",
+        description: `Replaces parts of chat messages containing emotes in ${AQUA}/emotes${GRAY}.
+Add custom emotes with ${AQUA}/va emote${GRAY}.`,
+        category: "General",
+        subcategory: "Yapping"
+    })
+    enableEmotes = false;
+
+    @PercentSliderProperty({
+        name: "Image Viewer",
+        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
+Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
+        category: "General",
+        subcategory: "Yapping"
+    })
+    imageRatio = 0.0;
 
     // --- General ---
     @SwitchProperty({
@@ -137,15 +164,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     armorDisplay = false;
-
-    @SwitchProperty({
-        name: "Custom Emotes",
-        description: `Replaces parts of chat messages containing emotes in ${AQUA}/emotes${GRAY}.
-Add custom emotes with ${AQUA}/va emote${GRAY}.`,
-        category: "General",
-        subcategory: "General"
-    })
-    enableEmotes = false;
 
     @SliderProperty({
         name: "Draw Waypoint",
@@ -157,23 +175,6 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
     })
     drawWaypoint = 0;
 
-    @PercentSliderProperty({
-        name: "Image Viewer",
-        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
-Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "General",
-        subcategory: "General"
-    })
-    imageRatio = 0.0;
-    
-    @SwitchProperty({
-        name: "Recall Mouse",
-        description: `${DARK_RED}NEW! ${GRAY}Stops mouse from resetting when moving from GUI to GUI, but forgets mouse position when completely exitting GUI.`,
-        category: "General",
-        subcategory: "General"
-    })
-    mouseReset = false;
-
     @SwitchProperty({
         name: "Remove Selfie Mode",
         description: "Removes selfie mode from perspective toggle.",
@@ -181,15 +182,6 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         subcategory: "General"
     })
     removeSelfie = false;
-    
-    @SwitchProperty({
-        name: "Searchbar",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||).
-Move GUI with ${AQUA}/moveSearch${GRAY}.`,
-        category: "General",
-        subcategory: "General"
-    })
-    searchbar = false;
     
     @SliderProperty({
         name: "Skill Tracker",
@@ -202,12 +194,30 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     })
     skillTracker = 0;
 
+    // --- Inventory ---
+    @SwitchProperty({
+        name: "Recall Mouse",
+        description: `${DARK_RED}NEW! ${GRAY}Stops mouse from resetting when moving from GUI to GUI, but forgets mouse position when completely exitting GUI.`,
+        category: "General",
+        subcategory: "Inventory"
+    })
+    mouseReset = false;
+    
+    @SwitchProperty({
+        name: "Searchbar",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||).
+Move GUI with ${AQUA}/moveSearch${GRAY}.`,
+        category: "General",
+        subcategory: "Inventory"
+    })
+    searchbar = false;
+    
     @SwitchProperty({
         name: "Slot Binding",
         description: `${DARK_RED}NEW! ${GRAY}Scuffed version of NEU's slot binding feature (you can swap using inventory slots but not hotbar slots :>).
 Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
         category: "General",
-        subcategory: "General",
+        subcategory: "Inventory",
     })
     slotBinding = false;
 
