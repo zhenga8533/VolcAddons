@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -124,37 +124,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     moveGUI() {
         ChatLib.command("va gui", true);
     }
-    
-    // --- Yapping ---
-    @SliderProperty({
-        name: "Autocorrect Commands",
-        description: `${DARK_RED}NEW! ${GRAY}Attempts to correct invalid commands with valid ones. It will take
-time to collect enough data to be accurate. Set the # of
-transformations away a correction can be or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "General",
-        subcategory: "Yapping",
-        max: 2,
-        min: 0
-    })
-    autocorrect = 0;
-
-    @SwitchProperty({
-        name: "Custom Emotes",
-        description: `Replaces parts of chat messages containing emotes in ${AQUA}/emotes${GRAY}.
-Add custom emotes with ${AQUA}/va emote${GRAY}.`,
-        category: "General",
-        subcategory: "Yapping"
-    })
-    enableEmotes = false;
-
-    @PercentSliderProperty({
-        name: "Image Viewer",
-        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
-Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "General",
-        subcategory: "Yapping"
-    })
-    imageRatio = 0.0;
 
     // --- General ---
     @SwitchProperty({
@@ -337,6 +306,45 @@ Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [k
     openWebhooks() {
         toggles.openGUI();
     }
+
+    // --- Yapping ---
+    @SwitchProperty({
+        name: "Autocomplete Commands",
+        description: `${DARK_RED}NEW! ${GRAY}Attempts to generate predications of incomplete commands when 
+user presses ${DARK_AQUA}TAB${GRAY}. It will take time to collect enough data to be accurate.`,
+        category: "General",
+        subcategory: "Yapping"
+    })
+    autocomplete = false;
+
+    @SliderProperty({
+        name: "Autocorrect Commands",
+        description: `${DARK_RED}NEW! ${GRAY}Attempts to correct invalid commands with valid ones. It will take
+time to collect enough data to be accurate. Set the # of transformations away a correction can be or as 0 to turn ${RED}OFF${GRAY}.`,
+        category: "General",
+        subcategory: "Yapping",
+        max: 2,
+        min: 0
+    })
+    autocorrect = 0;
+
+    @SwitchProperty({
+        name: "Custom Emotes",
+        description: `Replaces parts of chat messages containing emotes in ${AQUA}/emotes${GRAY}.
+Add custom emotes with ${AQUA}/va emote${GRAY}.`,
+        category: "General",
+        subcategory: "Yapping"
+    })
+    enableEmotes = false;
+
+    @PercentSliderProperty({
+        name: "Image Viewer",
+        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
+Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
+        category: "General",
+        subcategory: "Yapping"
+    })
+    imageRatio = 0.0;
 
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████

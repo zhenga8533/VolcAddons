@@ -46,11 +46,13 @@ register("chat", (pet) => {
  */
 const stats = [];
 registerWhen(register("step", () => {
+    if (!World.isLoaded()) return;
     let tab = TabList?.getNames();
     if (tab === undefined) return;
     stats.length = 0;
 
     let index = tab.findIndex(line => line.startsWith("§r§e§lSkills:")) + 1;
+    if (index === 0) return;
     let stat = tab[index];
 
     while (stat?.length > 5) {

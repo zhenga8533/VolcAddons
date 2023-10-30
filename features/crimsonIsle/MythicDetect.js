@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, DARK_BLUE, DARK_RED, RED, WHITE } from "../../utils/constants";
-import { announceMob, playSound } from "../../utils/functions";
+import { BOLD, DARK_BLUE, DARK_RED, RED, WHITE } from "../../utils/constants";
+import { announceMob } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
@@ -36,7 +36,6 @@ registerWhen(register("step", () => {
             Client.Companion.showTitle(`${DARK_RED + BOLD}LORD JAWBUS ${RED}DEAD!`, "", 0, 50, 10);
         else Client.Companion.showTitle(`${DARK_RED + BOLD}LORD JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5);
         
-        playSound(AMOGUS, 10000);
         if (!data.moblist.includes("jawbus")) jawbussy = [];
     }
     
@@ -46,7 +45,6 @@ registerWhen(register("step", () => {
             Client.Companion.showTitle(`${DARK_BLUE + BOLD}THUNDER ${RED}DEAD!`, "", 0, 50, 10);
         else Client.Companion.showTitle(`${DARK_BLUE + BOLD}THUNDER ${WHITE}DETECTED!`, "", 0, 25, 5);
 
-        playSound(AMOGUS, 10000);
         if (!data.moblist.includes("thunder")) thunders = [];
     }
 }).setFps(2), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect);

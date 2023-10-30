@@ -9,6 +9,7 @@ export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
     "newUser": true,
     "version": "2.3.1",
+    "commands": {},
     "wordbank": {},
     "lastID" : undefined,
     "world": "none",

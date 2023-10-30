@@ -1,7 +1,7 @@
 import { GREEN, LOGO, RED } from "../../utils/constants";
 import settings from "../../utils/settings";
 import { delay } from "../../utils/thread";
-import { data } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 
 /**
@@ -126,6 +126,7 @@ register("chat", (command, event) => {
         data.wordbank[word] -= 3;
         if (settings.autocorrect !== 0) corrected.push(correction(word));
     });
+    data.commands[command] -= 3;
     
     // Attempt to run new command
     if (settings.autocorrect === 0) return;
@@ -149,11 +150,17 @@ register("chat", (command, event) => {
  */
 register("messageSent", (message) => {
     if (!message.startsWith('/')) return;
-    const commands = data.wordbank;
+    
+    // Add to command count
+    const commands = data.commands;
+    if (message in commands) commands[message]++;
+    else commands[message] = 1;
 
+    // Add to wordbank count
+    const wordbank = data.wordbank;
     message.substring(1).split(' ').forEach(word => {
-        if (word in commands) commands[word]++;
-        else commands[word] = 1;
+        if (word in wordbank) wordbank[word]++;
+        else wordbank[word] = 1;
     });
 });
 
@@ -163,4 +170,29 @@ register("messageSent", (message) => {
 register("command", () => {
     data.wordbank = {};
     ChatLib.chat(`${LOGO + GREEN}Successfully reset commands' wordbank!`);
-}).setName("resetWordbank")
+}).setName("resetWordbank");
+
+
+/**
+ * Auto complete command
+ */
+registerWhen(register("guiKey", (c, keyCode) => {
+    if (keyCode !== 15) return;  // Detect tab key
+    
+    // Find most common occurrence
+    const commands = data.commands;
+    let maxKey = null;
+    let maxValue = 0;
+
+    const current = Client.getCurrentChatMessage();
+    Object.keys(commands).filter(command => command.startsWith(current)).forEach(command => {
+        if (commands[command] > maxValue) {
+            maxValue = commands[command];
+            maxKey = command;
+        }
+    });
+
+    // Set most common as user message
+    if (maxValue === 0) return;
+    Client.setCurrentChatMessage(maxKey);
+}), () => settings.autocomplete);
