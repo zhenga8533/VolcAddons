@@ -1,13 +1,3 @@
 [
-    "- Added more setting subcategories (some settings may reset)",
-    "- Added auto correct commands",
-    "- Added auto complete commands",
-    "- Added armor display",
-    "- Changed `/va cd` to work with armor using ^",
-    "- Changed `/va attribute` to take in combo args",
-    "- Changed `/va test` to have color",
-    "- Changed Jacob highlight color for different medals",
-    "- Changed mouse recall to be absolute",
-    "- Changed overlay rendering and settings",
-    "- Fixed Jacob highlight not picking up some rewards"
+    "- Fixed bit warning"
 ]
