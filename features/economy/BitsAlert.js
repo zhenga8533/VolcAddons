@@ -34,8 +34,8 @@ registerWhen(register("guiOpened", () => {
 
         const cookie = container.getStackInSlot(51).getLore();
         const active = cookie.find(line => line.includes("Not active!"));
-        const bits = cookie.find(line => line.startsWith("Bits Available:"))?.removeFormatting()?.replace(/[^0-9]/g, '');
-        if (active === undefined || bits === 0) return;
+        const bits = cookie.find(line => line === "§5§o§7Bits Available: §b0");
+        if (active === undefined && bits === undefined) return;
 
         if (settings.bitsAlert === 1 || settings.bitsAlert === 3) Client.Companion.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
         if (settings.bitsAlert === 2 || settings.bitsAlert === 3) ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}NO MO BITS!`);
