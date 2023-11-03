@@ -1,5 +1,5 @@
 import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
-import { formatNumber } from "../../utils/functions";
+import { formatNumber, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
@@ -75,7 +75,20 @@ register("step", () => {
             if (internal.startsWith("Internalized:")) soulflow = internal.replace(/[^0-9]/g, '');
         }
     });
-}).setFps(10);
+}).setDelay(5);
+
+/**
+ * Count daily playtime
+ */
+register("step", () => {
+    const today = new Date().getDay();
+    if (data.lastDay !== today) {
+        data.playtime = 0;
+        data.lastDay = today;
+    }
+
+    data.playtime++;
+}).setFps(1);
 
 /**
  * Update statsOverlay message
@@ -102,7 +115,18 @@ registerWhen(register("tick", () => {
             soulflow > 25_000 ? GOLD : 
             soulflow > 10_000 ? RED : DARK_RED;
         
-        statsOverlay.message += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`;
+        statsOverlay.message += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎\n`;
+    }
+
+    // Playtime
+    if (toggles.trackPlaytime) {
+        const ptColor = data.playtime < 3_600 ? GREEN :
+            data.playtime < 7_200 ? DARK_GREEN :
+            data.playtime < 10_800 ? YELLOW :
+            data.playtime < 18_000 ? GOLD : 
+            data.playtime < 28_800 ? RED : DARK_RED;
+        
+            statsOverlay.message += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + getTime(data.playtime)}`;
     }
 }), () => settings.statsDisplay);
 
@@ -129,6 +153,16 @@ export function getStat(stat) {
                 soulflow > 10_000 ? RED : DARK_RED;
             
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`);
+            break;
+        case "playtime":
+        case "pt":
+            const ptColor = data.playtime < 3_600 ? GREEN :
+                data.playtime < 7_200 ? DARK_GREEN :
+                data.playtime < 10_800 ? YELLOW :
+                data.playtime < 18_000 ? GOLD : 
+                data.playtime < 28_800 ? RED : DARK_RED;
+            
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${ptColor + getTime(data.playtime)}`);
             break;
     }
 }

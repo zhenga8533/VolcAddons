@@ -78,12 +78,20 @@ class Settings {
         description: "It's not what I really want to do"
     })
     statsDisplay = true;
+    
+    @CheckboxProperty({
+        name: `Playtime Tracker`,
+        category: "Skyblock Stats",
+        subcategory: "Skyblock Stats",
+        description: "But you only date bad guys, so I'll give it my best try to treat you the way you want me to"
+    })
+    trackPlaytime = true;
 
     @CheckboxProperty({
         name: `Soulflow Display ${BLUE}(Uses Inventory)`,
         category: "Skyblock Stats",
         subcategory: "Skyblock Stats",
-        description: "But you only date bad guys, so I'll give it my best try to treat you the way you want me to"
+        description: "I'll never open a door or pull out a chair, you can tell me how your day was but I don't really care"
     })
     soulflowDisplay = true;
 
