@@ -46,6 +46,7 @@ registerWhen(register("step", () => {
 /**
  * Checks tablist for the time until next visitor and updates the Next Visitor Overlay every second.
  */
+let eta = "";
 registerWhen(register("step", () => {
     // Update Next Visitor Message
     if (next > 0) next -= 1;
@@ -60,16 +61,19 @@ registerWhen(register("step", () => {
     if (!nextVisit) return;
 
     if (nextVisit !== undefined && !nextVisit.includes("Full")) {
+        // Get next visitor time in seconds
         nextVisit = nextVisit.removeFormatting().replace(/[^0-9. ]/g, '').trim().split(' ');
-
         next = nextVisit[0];
         if (nextVisit.length === 2) next = next * 60 + parseInt(nextVisit[1]);
+
+        // Get ETA (when actively farming)
         const estimated = next / (lastTick - next);
-        if (lastTick !== next && estimated > 0 && estimated !== next)
-            nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${RESET + getTime(next)} ${GRAY}[ETA: ${getTime(estimated)}]`;
+        if (lastTick !== next) eta = estimated > 0 && estimated !== next ? ` ${GRAY}[ETA: ${getTime(estimated)}]` : "";
+        
+        nextOverlay.message += eta;
         lastTick = next;
     }
-}).setFps(1), () => settings.nextVisitor || settings.warpGarden);
+}).setFps(2), () => settings.nextVisitor || settings.warpGarden);
 
 /**
  * Composter timers ...
