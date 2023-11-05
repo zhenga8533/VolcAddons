@@ -26,7 +26,6 @@ import "./features/general/ChatWebhook";
 import "./features/general/Cooldowns";
 import "./features/general/ImageViewer";
 import "./features/general/JoinParty";
-import "./features/general/MouseReset";
 import { executeCommand } from "./features/general/PartyCommands";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";

@@ -165,16 +165,8 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     // --- Inventory ---
     @SwitchProperty({
-        name: "Recall Mouse",
-        description: `${DARK_RED}NEW! ${GRAY}Stops mouse from resetting when moving from GUI to GUI, but forgets mouse position when completely exitting GUI.`,
-        category: "General",
-        subcategory: "Inventory"
-    })
-    mouseReset = false;
-    
-    @SwitchProperty({
         name: "Searchbar",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||).
+        description: `Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||).
 Move GUI with ${AQUA}/moveSearch${GRAY}.`,
         category: "General",
         subcategory: "Inventory"
@@ -183,7 +175,7 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
     
     @SwitchProperty({
         name: "Slot Binding",
-        description: `${DARK_RED}NEW! ${GRAY}Scuffed version of NEU's slot binding feature (you can swap using inventory slots but not hotbar slots :>).
+        description: `Scuffed version of NEU's slot binding feature (you can swap using inventory slots but not hotbar slots :>).
 Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
         category: "General",
         subcategory: "Inventory",
@@ -244,7 +236,7 @@ Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [k
     
     @SwitchProperty({
         name: "SkyBlock Stats Display",
-        description: `${DARK_RED}NEW! ${GRAY}Tracks various SkyBlock statistics.\nMove GUI with ${AQUA}/moveStats${GRAY}.`,
+        description: `Tracks various SkyBlock statistics.\nMove GUI with ${AQUA}/moveStats${GRAY}.`,
         category: "General",
         subcategory: "Server"
     })
@@ -310,7 +302,7 @@ Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [k
     // --- Yapping ---
     @SwitchProperty({
         name: "Autocomplete Commands",
-        description: `${DARK_RED}NEW! ${GRAY}Attempts to generate predications of incomplete commands when 
+        description: `Attempts to generate predications of incomplete commands when 
 user presses ${DARK_AQUA}TAB${GRAY}. It will take time to collect enough data to be accurate.`,
         category: "General",
         subcategory: "Yapping"
@@ -319,7 +311,7 @@ user presses ${DARK_AQUA}TAB${GRAY}. It will take time to collect enough data to
 
     @SliderProperty({
         name: "Autocorrect Commands",
-        description: `${DARK_RED}NEW! ${GRAY}Attempts to correct invalid commands with valid ones. It will take
+        description: `Attempts to correct invalid commands with valid ones. It will take
 time to collect enough data to be accurate. Set the # of transformations away a correction can be or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
         subcategory: "Yapping",
