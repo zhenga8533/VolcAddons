@@ -1,5 +1,6 @@
 [
     "- Added daily playtime to stats tracking",
+    "- Added equipment display",
     "- TODO: Changed Kuudra compass to not flash",
     "- Fixed visitor ETA part 2",
     "- Fixed bit warning",

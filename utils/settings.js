@@ -133,16 +133,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     armorDisplay = false;
-
-    @SliderProperty({
-        name: "Draw Waypoint",
-        description: `Creates waypoints out of patcher formated coords in chat. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
+    
+    @SwitchProperty({
+        name: "Equipment Display",
+        description: `Displays user's equipment pieces as icons on an overlay.`,
         category: "General",
-        subcategory: "General",
-        min: 0,
-        max: 120
+        subcategory: "General"
     })
-    drawWaypoint = 0;
+    equipDisplay = false;
 
     @SwitchProperty({
         name: "Remove Selfie Mode",
@@ -151,6 +149,16 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "General"
     })
     removeSelfie = false;
+
+    @SliderProperty({
+        name: "Render Waypoint",
+        description: `Creates waypoints out of patcher formated coords in chat. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
+        category: "General",
+        subcategory: "General",
+        min: 0,
+        max: 120
+    })
+    drawWaypoint = 0;
     
     @SliderProperty({
         name: "Skill Tracker",
