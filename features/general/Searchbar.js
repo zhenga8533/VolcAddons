@@ -80,7 +80,7 @@ registerWhen(register("guiMouseDrag", (x, y) => {
 // Detect mouse click on box
 registerWhen(register("guiMouseClick", (x, y, button) => {
     searchbar.func_146192_a(x, y, button);
-    Client.scheduleTask(1, () => getHighlights());
+    Client.scheduleTask(3, getHighlights);
 }), () => settings.searchbar);
 
 // Searchbox key detects
@@ -94,7 +94,7 @@ registerWhen(register("guiKey", (char, keyCode, _, event) => {
 
 // Reset search when opening gui
 registerWhen(register("guiOpened", () => {
-    Client.scheduleTask(1, () => getHighlights());
+    Client.scheduleTask(1, getHighlights);
 }), () => settings.searchbar);
 
 // Exit search when closing gui

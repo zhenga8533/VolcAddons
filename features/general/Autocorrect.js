@@ -112,11 +112,7 @@ function edits2(word) {
     return Array.from(results);
 }
 
-/**
- * Track invalid commands and attempt to correct them.
- */
-let cd = false;
-register("chat", (command, event) => {
+function correct(command, event) {
     if (cd) return;
 
     // Seperate command into args and correct wordbank
@@ -143,13 +139,28 @@ register("chat", (command, event) => {
             cd = false;
         }, 3000);
     }
-}).setCriteria("Unknown command. Type \"/help\" for help. ('${command}')");
+}
+
+/**
+ * Track invalid commands and attempt to correct them.
+ */
+let cd = false;
+register("chat", (command, event) => correct(command, event))
+.setCriteria("Unknown command. Type \"/help\" for help. ('${command}')");
+
+/**
+ * Track invalid warp commands
+ */
+let lastMessage = "";
+register("chat", (event) => correct(lastMessage, event))
+.setCriteria("Unknown destination! Check the Fast Travel menu to view options!");
 
 /**
  * Save words to wordbank.
  */
 register("messageSent", (message) => {
     if (!message.startsWith('/')) return;
+    lastMessage = message.replace('/', '');
     
     // Add to command count
     const commands = data.commands;
@@ -168,9 +179,9 @@ register("messageSent", (message) => {
  * Reset wordbank command.
  */
 register("command", () => {
-    data.wordbank = {};
-    ChatLib.chat(`${LOGO + GREEN}Successfully reset commands' wordbank!`);
-}).setName("resetWordbank");
+    data.commands = {};
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset commands!`);
+}).setName("resetCommands");
 
 
 /**
@@ -196,3 +207,11 @@ registerWhen(register("guiKey", (c, keyCode) => {
     if (maxValue === 0) return;
     Client.setCurrentChatMessage(maxKey);
 }), () => settings.autocomplete);
+
+/**
+ * Reset wordbank command.
+ */
+register("command", () => {
+    data.wordbank = {};
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset commands' wordbank!`);
+}).setName("resetWordbank");

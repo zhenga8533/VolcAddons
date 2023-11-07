@@ -292,11 +292,11 @@ export function getItemValue(item) {
         if (gemstoneType[0] in GEMSTONE_SLOTS) {
             gemstoneName = `${gemstoneTier}_${gemstoneType?.[0]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[gemstoneType[0]];
-            gemstoneValue = bazaar[gemstoneName]?.[settings.priceType] ?? 0;
+            gemstoneValue = bazaar?.[gemstoneName]?.[settings.priceType] ?? 0;
         } else if (MULTIUSE_SLOTS.has(gemstoneType?.[0]) && gemstoneType?.[gemstoneType.length - 1] !== "gem") {
             gemstoneName = `${gemstoneTier}_${itemData.gems?.[gemstone + "_gem"]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[itemData.gems?.[gemstone + "_gem"]];
-            gemstoneValue = bazaar[gemstoneName]?.[settings.priceType] ?? 0;
+            gemstoneValue = bazaar?.[gemstoneName]?.[settings.priceType] ?? 0;
         }
         
         if (gemstoneValue !== 0) {

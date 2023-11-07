@@ -2,6 +2,7 @@
     "- Added daily playtime to stats tracking",
     "- Added equipment display",
     "- TODO: Changed Kuudra compass to not flash",
+    "- Changed autocorrect to work for warp commands",
     "- Fixed visitor ETA part 2",
     "- Fixed bit warning",
     "- Removed mouse recall"
