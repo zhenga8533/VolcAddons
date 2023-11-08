@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { formatNumber, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
@@ -104,7 +104,7 @@ registerWhen(register("tick", () => {
     // Stats
     if (toggles.statsDisplay) {
         statsOverlay.message += `${DARK_AQUA + BOLD}Stats:\n`;
-        stats.forEach(stat => statsOverlay.message += `-${stat}\n` );
+        stats.forEach(stat => statsOverlay.message += `${GRAY}-${stat}\n` );
     }
 
     // Soulflow
@@ -142,7 +142,7 @@ export function getStat(stat) {
             break;
         case "stats":
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Stats:`);
-            stats.forEach(stat => ChatLib.chat(`-${stat}`) );
+            stats.forEach(stat => ChatLib.chat(`${GRAY}-${stat}`) );
             break;
         case "soulflow":
         case "sf":

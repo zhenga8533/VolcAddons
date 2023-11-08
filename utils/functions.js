@@ -72,8 +72,8 @@ export function getTime(seconds) {
   
     const timeString = [
         hours > 0 ? `${hours}hr` : '',
-        minutes > 0 ? `${minutes}m` : '',
-        `${remainingSeconds < 10 && (hours > 0 || minutes > 0) ? '0' : ""}${remainingSeconds.toFixed(hours > 0 || minutes > 0 ? 0 : 2)}s`
+        `${minutes < 10 && hours > 0 ? '0' : ''}${minutes > 0 || hours > 0 ? minutes + 'm' : ''}`,
+        `${remainingSeconds < 10 && (hours > 0 || minutes > 0) ? '0' : ''}${remainingSeconds.toFixed(hours > 0 || minutes > 0 ? 0 : 2)}s`
     ].join('');
   
     return timeString;

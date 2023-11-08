@@ -511,7 +511,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     hitboxColor = Color.BLACK;
     
     @SwitchProperty({
-        name: "Scuffed Kill Counter",
+        name: "Kill Counter",
         description: `Tracks average amount of specific mob kills an hour ${BLUE}(must have Book of Stats)${GRAY}.
 Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills${GRAY}.`,
         category: "Combat",

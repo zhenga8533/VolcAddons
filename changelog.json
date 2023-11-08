@@ -3,6 +3,7 @@
     "- Added equipment display",
     "- TODO: Changed Kuudra compass to not flash",
     "- Changed autocorrect to work for warp commands",
+    "- Changed some text formatting",
     "- Fixed visitor ETA part 2",
     "- Fixed bit warning",
     "- Removed mouse recall"
