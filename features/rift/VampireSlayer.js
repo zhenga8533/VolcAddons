@@ -64,7 +64,7 @@ registerWhen(register("tick", () => {
                 if (settings.announceMania === 1) {
                     const id = (Math.random() + 1).toString(36).substring(6);
                     ChatLib.command(`ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`);
-                } else if (getInParty())
+                } else if (getInParty() && settings.announceMania === 2)
                     ChatLib.command(`pc x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}!`);
             }
         } else inMania = false;

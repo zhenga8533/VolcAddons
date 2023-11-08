@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { formatNumber, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
@@ -10,7 +10,16 @@ import { data, registerWhen } from "../../utils/variables";
  * Stats display overlay variables
  */
 const statsExample = 
-`${DARK_AQUA + BOLD}Soulflow: ${GREEN}.-. .- - ${AQUA}⸎`;
+`${DARK_AQUA + BOLD}Pet: ${GOLD}-..-
+${DARK_AQUA + BOLD}Stats:
+${GRAY}- ${WHITE}Strength: ${RED}-1
+${GRAY}- ${WHITE}Dexterity: ${RED}-1
+${GRAY}- ${WHITE}Constitution: ${RED}-1
+${GRAY}- ${WHITE}Intelligence: ${RED}-1
+${GRAY}- ${WHITE}Wisdom: ${RED}-1
+${GRAY}- ${WHITE}Charisma: ${GREEN}999
+${DARK_AQUA + BOLD}SF: ${GREEN}/ -.. ${AQUA}⸎
+${DARK_AQUA + BOLD}Daily PT: ${GREEN}/ -..`;
 const statsOverlay = new Overlay("statsDisplay", ["all"], () => true, data.YL, "moveStats", statsExample);
 
 /**

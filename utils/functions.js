@@ -338,18 +338,19 @@ export function numToRoman(num) {
  */
 export function getSlotCoords(slot, containerType) {
     // Credit to https://www.chattriggers.com/modules/v/ExperimentationTable for baseline rendering
+    const screen = Renderer?.screen;
     if (containerType === "ContainerPlayer") {
         if (slot > 4 && slot <= 9) {
-            const x = Renderer.screen.getWidth() / 2 - 80
-            const y = Renderer.screen.getHeight() / 3 + ((slot - 4) * 18) - 3;
+            const x = screen?.getWidth() / 2 - 80
+            const y = screen?.getHeight() / 3 + ((slot - 4) * 18) - 3;
             return [x, y];
         }
 
         const x = slot % 9;
         const y = Math.floor(slot / 9);
         
-        const renderX = Renderer.screen.getWidth() / 2 + ((x - 4) * 18) - 8;
-        const renderY = Renderer.screen.getHeight() / 2 + ((y - Player.getContainer().getSize() / 18) * 18) +  + (slot < 36 ? 27.5 : 32);
+        const renderX = screen?.getWidth() / 2 + ((x - 4) * 18) - 8;
+        const renderY = screen?.getHeight() / 2 + ((y - Player.getContainer().getSize() / 18) * 18) +  + (slot < 36 ? 27.5 : 32);
 
         return [renderX, renderY];
     } else if (containerType === "ContainerChest") {
@@ -359,8 +360,8 @@ export function getSlotCoords(slot, containerType) {
         const diff = revPos > 36 ? 0 :
             revPos > 9 ? 13 : 17;
 
-        const renderX = Renderer.screen.getWidth() / 2 + ((x - 4) * 18) - 8;
-        const renderY = (Renderer.screen.getHeight() + 10) / 2 + ((y - Player.getContainer().getSize() / 18) * 18) - 8 + diff;
+        const renderX = screen?.getWidth() / 2 + ((x - 4) * 18) - 8;
+        const renderY = (screen?.getHeight() + 10) / 2 + ((y - Player.getContainer().getSize() / 18) * 18) - 8 + diff;
     
         return [renderX, renderY];
     }
@@ -377,7 +378,7 @@ let soundCD = false;
 export function playSound(sound, cd) {
     if (soundCD) return;
 
-    sound.play();
+    sound?.play();
     soundCD = true;
     delay(() => soundCD = false, cd);
 }

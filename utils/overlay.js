@@ -183,6 +183,7 @@ export class Overlay {
     constructor(setting, requires, condition, loc, command, example, special = () => false) {
         overlays.push(this);
         // Store the inputs as instance variables.
+        this.setting = setting;
         this.requires = new Set(requires);
         this.loc = loc;
         this.X = this.loc[0] / this.loc[2];
@@ -228,7 +229,7 @@ export class Overlay {
                 if (this.requires.has("misc")) background.func_146278_c(0);
                 renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3]);
             }
-        }), () => settings[setting] && (this.requires.has(getWorld()) || this.requires.has("all")));
+        }), () => settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")));
 
         // Register editing stuff
         this.dragging = register("dragged", (dx, dy, x, y) => {

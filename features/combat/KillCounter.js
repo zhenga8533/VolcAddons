@@ -69,7 +69,7 @@ registerWhen(register("entityDeath", (death) => {
 
     // Get surrounding death to find title stand
     const deathEntity = death.getEntity();
-    World.getWorld().func_72839_b(deathEntity, deathEntity.func_174813_aQ().func_72314_b(0.5, 1, 0.5)).filter(entity => 
+    World.getWorld().func_72839_b(deathEntity, deathEntity.func_174813_aQ().func_72314_b(1, 3, 1)).filter(entity => 
         entity instanceof EntityArmorStand &&
         entity?.func_95999_t()?.removeFormatting().endsWith("❤") &&
         !stands.has(entity.persistentID)
