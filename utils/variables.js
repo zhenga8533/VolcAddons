@@ -131,12 +131,12 @@ export function setRegisters(off = false) {
         }
     });
 }
-delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().includes("SKYBLOCK")), 1000);
+delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")), 1000);
 
 // Event handler for GUI settings close.
 register("guiClosed", (event) => {
     if (event.toString().includes("vigilance"))
-        setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().includes("SKYBLOCK"));
+        setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 });
 
 
@@ -224,7 +224,7 @@ export function updateList(args, list, listName) {
     }
     
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
-    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().includes("SKYBLOCK"));
+    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 }
 
 
