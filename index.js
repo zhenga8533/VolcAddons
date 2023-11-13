@@ -11,10 +11,7 @@ import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
 import { data, updateList } from "./utils/variables";
 import { findZone, getTier, getWorld } from "./utils/worlds";
-// Utility Variable Control
 data.autosave();
-const CHANGED_SETTINGS = new Set(["partyCommands", "itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
-for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
 
 // General Features
 import "./features/general/AntiGhostParty";
@@ -177,10 +174,22 @@ register("guiKey", (char, keyCode, gui) => {
     ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
 });
 
+// Open settings
+function openSettings() {
+    try {
+        settings.openGUI();
+    } catch (err) {
+        ChatLib.chat(`${LOGO + RED}Error opening settings... Please type "/ct reload" to fix this by wiping the current setting config!`);
+        register("gameUnload", () => {
+            FileLib.delete("VolcAddons", "config.toml");
+        }).setPriority(Priority.LOWEST);
+    }
+}
+
 // /va ...args
 register ("command", (...args) => {
     if (args === undefined) {
-        settings.openGUI();
+        openSettings();
         return;
     }
 
@@ -190,7 +199,7 @@ register ("command", (...args) => {
         // Settings
         case undefined:
         case "settings":
-            settings.openGUI();
+            openSettings();
             break;
         case "toggle":
         case "toggles":
@@ -228,15 +237,6 @@ register ("command", (...args) => {
         // Move GUI
         case "gui":
             openGUI();
-            break;
-        // Clear setting text properties
-        case "clear":
-            settings.vanqParty = "";
-            settings.kuudraRP = "";
-            settings.kuudraCannonear = "";
-            settings.kuudraStunner = "";
-            settings.reminderText = "";
-            ChatLib.chat(`${LOGO + GREEN}Successfully cleared all text property settings!`);
             break;
         // Set API key
         case "api": 

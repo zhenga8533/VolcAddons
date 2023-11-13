@@ -12,7 +12,7 @@ import { data, registerWhen } from "../../utils/variables";
  */
 let bestiaryApi = undefined;
 export function updateBestiary(profileId) {
-    if (settings.api === "" || profileId === undefined) return;
+    if (settings.apiKey === "" || profileId === undefined) return;
 
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
@@ -25,7 +25,7 @@ export function updateBestiary(profileId) {
         // If there is an error, display the error message in the Minecraft chat.
         ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
         if (err.cause === "Invalid API key") {
-            settings.api = "";
+            settings.apiKey = "";
             ChatLib.chat(`${GREEN}API key cleared!`);
         }
     });

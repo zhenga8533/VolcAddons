@@ -401,14 +401,13 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
         subcategory: "Party Commands"
     })
     leaderCommands = false;
-    @SelectorProperty({
+    @SwitchProperty({
         name: "Party Chat Commands",
         description: `Allows players to use party commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
         category: "Party",
-        subcategory: "Party Commands",
-        options: ["OFF", "All", "Party", "Guild", "DM"]
+        subcategory: "Party Commands"
     })
-    partyCommands = 0;
+    partyCommands = false;
     @ButtonProperty({
         name: "Open Command Toggles",
         description: "Press button to open toggles control panel.",
@@ -573,7 +572,7 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
 
     @SwitchProperty({
         name: "Primal Fear Timer",
-        description: "Tracks when you can spawn a primal fear.",
+        description: `Tracks when you can spawn a primal fear.\nMove GUI with ${AQUA}/moveFear${GRAY}.`,
         category: "Combat",
         subcategory: "Great Spook"
     })

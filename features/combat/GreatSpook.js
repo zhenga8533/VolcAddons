@@ -25,7 +25,7 @@ registerWhen(register("chat", () => {
  * Use eval to solve math teacher equation
  */
 registerWhen(register("chat", (equation, event) => {
-    ChatLib.chat(`${LOGO} &r&d&lQUICK MATHS! &r&7Solve: &r&e${equation + WHITE} = ${GREEN + eval(equation.replace(/[x]/g, '*'))}&r`);
+    ChatLib.chat(`${LOGO}&r&d&lQUICK MATHS! &r&7Solve: &r&e${equation + WHITE} = ${GREEN + eval(equation.replace(/[x]/g, '*'))}&r`);
     cancel(event);
 }).setCriteria("QUICK MATHS! Solve: ${equation}"), () => settings.mathSolver);
 
@@ -35,6 +35,6 @@ registerWhen(register("chat", (equation, event) => {
 export function getFear() {
     axios.get(`https://sky.shiiyu.moe/api/v2/profile/${Player.getName()}`).then(res => {
         const kills = res.data.profiles[data.lastID]?.raw?.stats?.kills_primal_fear;
-        ChatLib.chat(`${LOGO} ${RED + BOLD}Total Primal Fear Kills: ${WHITE + kills}`);
+        ChatLib.chat(`${LOGO + RED + BOLD}Total Primal Fear Kills: ${WHITE + kills}`);
     });
 }

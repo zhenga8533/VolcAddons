@@ -148,6 +148,28 @@ class Settings {
 
     // --- PARTY COMMANDS ---
     @CheckboxProperty({
+        name: "Party Chat",
+        category: "Party Commands",
+        subcategory: "Chat Options",
+        description: "Somebody once told me the world is gonna roll me"
+    })
+    partyCommands = true;
+    @CheckboxProperty({
+        name: "Guild Chat",
+        category: "Party Commands",
+        subcategory: "Chat Options",
+        description: "Somebody once told me the world is gonna roll me"
+    })
+    guildCommands = true;
+    @CheckboxProperty({
+        name: "DM Chat",
+        category: "Party Commands",
+        subcategory: "Chat Options",
+        description: "Somebody once told me the world is gonna roll me"
+    })
+    dmCommands = true;
+
+    @CheckboxProperty({
         name: `8ball Command ${DARK_AQUA}?8ball`,
         category: "Party Commands",
         subcategory: "Party Commands",

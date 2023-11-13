@@ -109,7 +109,7 @@ function updateMessage(trophyVar) {
  * @param {String} profileId - Profile ID of player.
  */
 export function updateTrophy(profileId) {
-    if (settings.api === "" || profileId === undefined) return;
+    if (settings.apiKey === "" || profileId === undefined) return;
 
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
