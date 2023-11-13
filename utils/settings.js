@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED, WHITE } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -39,6 +39,7 @@ ${ITALIC}Related Commands: /va <attribute, calc>`);
         this.setCategoryDescription("Combat",
         `${HEADER}
     ${ITALIC}Related Commands: /va be`);
+        this.setSubcategoryDescription("Combat", "Great Spook", `${WHITE + BOLD}Related Commands: ${GRAY}/va fear`);
 
         // Hub Category
         this.setCategoryDescription("Hub",
@@ -552,6 +553,31 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
         subcategory: "Combat"
     })
     ragDetect = true;
+
+    // --- Great Spook ---
+    @SwitchProperty({
+        name: "Math Teacher Solver",
+        description: "Solves the math equation for those with feeble minds.",
+        category: "Combat",
+        subcategory: "Great Spook"
+    })
+    mathSolver = false;
+    
+    @SwitchProperty({
+        name: "Primal Fear Highlight",
+        description: "Draws a colorful hitbox around any primal fears.",
+        category: "Combat",
+        subcategory: "Great Spook"
+    })
+    fearHighlight = false;
+
+    @SwitchProperty({
+        name: "Primal Fear Timer",
+        description: "Tracks when you can spawn a primal fear.",
+        category: "Combat",
+        subcategory: "Great Spook"
+    })
+    fearTimer = false;
 
     // --- Gyrokinetic Wand ---
     @SwitchProperty({

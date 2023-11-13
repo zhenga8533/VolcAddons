@@ -1,9 +1,11 @@
 [
+    "- Added Great Spook stuff (under Combat category)",
     "- Added daily playtime to stats tracking",
     "- Added equipment display",
     "- Changed Kuudra compass to not flash",
     "- Changed autocorrect to work for warp commands",
     "- Changed some text formatting",
+    "- Fixed slot binding rendering",
     "- Fixed `/va gui` not rendering",
     "- Fixed kill counter range to be more accurate",
     "- Fixed visitor ETA part 2",

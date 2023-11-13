@@ -90,7 +90,7 @@ registerWhen(register("guiRender", (x, y, gui) => {
     const bind = data.slotBinds[hover];
     if (bind !== undefined) {
         const [x, y] = getSlotCoords(hover, containerType);
-        const [dx, dy] = getSlotCoords(bind, );
+        const [dx, dy] = getSlotCoords(bind, containerType);
 
         Renderer.translate(0, 0, 100);
         Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);

@@ -31,9 +31,9 @@ const PSA = `${GRAY + ITALIC}Note that these calculations are done with max upgr
  * Hypergolic gabagool calculation.
  * 
  * HYPERGOLIC GABAGOOL:
- * 1202 Enchanted Coal
- * 75.125 Enchanted Sulphur
- * 6912 Crude Gabagool
+ * 1202 Enchanted Coal * 31 = 37262
+ * 75.125 Enchanted Sulphur * 31 = 2328.875
+ * 6912 Crude Gabagool * 31 = 214272
  *
  * Type 0 = Insta Buy
  * Type 1 = Buy Order

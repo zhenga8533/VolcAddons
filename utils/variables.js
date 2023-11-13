@@ -97,6 +97,7 @@ export let data = new PogObject("VolcAddons", {
     "YL": [770, 125, 1.2, false], // SkyBlock Stats Location
     "ZL": [780, 330, 1.2, false], // Kuudra Profit Tracker Location
     "AAL": [915, 65, 1.2, false], // Equipment Display Location
+    "PFL": [1, 1, 1.2, false], // Primal Fear Timer Location
     // Rift waypoint properties
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS

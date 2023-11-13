@@ -51,6 +51,7 @@ import { getBestiary } from "./features/combat/Bestiary";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
+import { getFear } from "./features/combat/GreatSpook";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/KillCounter";
@@ -367,6 +368,10 @@ register ("command", (...args) => {
         // Configure zone waypoints
         case "zone":
             riftWaypointEdit(args, "zone", RIFT_ZONES);
+            break;
+        // Great Spook
+        case "fear":
+            getFear();
             break;
         // Party Commands and Else Case
         default:

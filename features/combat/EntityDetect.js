@@ -87,6 +87,17 @@ export function updateEntityList() {
             else if (front === 'y') y = remaining;
         }
     });
+
+    // Update primal fear highlight
+    if (settings.fearHighlight) {
+        const rgb = settings.hitboxColor;
+        const r = Math.random() * (255 - rgb.blue);
+        const g = Math.random() * (255 - rgb.red);
+        const b = Math.random() * (255 - rgb.green);
+        colorMap["§c☠"] = [r / 255, g / 255, b / 255];
+
+        standList.push("§c☠");
+    }
 }
 updateEntityList();
 
