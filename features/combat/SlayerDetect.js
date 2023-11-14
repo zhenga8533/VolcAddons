@@ -28,7 +28,7 @@ export function getSlayerBoss() { return bossCD };
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
     
-    if (settings.miniAlert === 3) Client.Companion.showTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5);
+    if (settings.miniAlert === 3) Client.showTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5);
     else announceMob(settings.miniAlert, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
@@ -43,7 +43,7 @@ registerWhen(register("tick", () => {
         // Announce if boss is dead
         if (!slainCD && Scoreboard?.getLines()?.find(line => line.getName().startsWith("§aBoss slain!")) !== undefined) {
             slainCD = true;
-            if (settings.bossAlert === 3) Client.Companion.showTitle(`${DARK_GREEN + BOLD}SLAYER BOSS SLAIN!`, "", 5, 25, 5);
+            if (settings.bossAlert === 3) Client.showTitle(`${DARK_GREEN + BOLD}SLAYER BOSS SLAIN!`, "", 5, 25, 5);
             else if (settings.bossAlert === 2) ChatLib.command("pc Slayer Boss Slain!");
             else if (settings.bossAlert === 1) {
                 const id = `@${(Math.random() + 1).toString(36).substring(6)} ${(Math.random() + 1).toString(36).substring(9)}`;
@@ -59,7 +59,7 @@ registerWhen(register("tick", () => {
     bossCD = true;
     slainCD = false;
     questStart = false;
-    if (settings.bossAlert === 3) Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
+    if (settings.bossAlert === 3) Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
     else if (settings.bossAlert !== 0) announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
 }), () => settings.bossAlert !== 0 || settings.slayerSpawn !== 0 ||
 (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
@@ -73,7 +73,7 @@ registerWhen(register("step", () => {
 
     if (settings.slayerSpawn === 100) {
         if (Scoreboard?.getLines()?.find(line => line.getName().includes("Slay the boss!")) !== undefined) {
-            Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
+            Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
             warned = true;
         }
         return;
@@ -85,7 +85,7 @@ registerWhen(register("step", () => {
     const percent = Math.round(c/t * 100);
 
     if (percent > settings.slayerSpawn) {
-        Client.Companion.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 5, 25, 5);
+        Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 5, 25, 5);
         warned = true;
     }
 }).setFps(2), () => settings.slayerSpawn !== 0);

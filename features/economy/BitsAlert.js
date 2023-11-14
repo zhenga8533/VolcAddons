@@ -18,7 +18,7 @@ registerWhen(register("step", () => {
     // Check if current amount matches last
     const amount = bits.getName().removeFormatting().replace(/[^0-9]/g, '');
     if (amount === last) {
-        if (settings.bitsAlert === 1 || settings.bitsAlert === 3) Client.Companion.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
+        if (settings.bitsAlert === 1 || settings.bitsAlert === 3) Client.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
         if (settings.bitsAlert === 2 || settings.bitsAlert === 3) ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}NO MO BITS!`);
     }
     last = amount;
@@ -37,7 +37,7 @@ registerWhen(register("guiOpened", () => {
         const bits = cookie.find(line => line === "§5§o§7Bits Available: §b0");
         if (active === undefined && bits === undefined) return;
 
-        if (settings.bitsAlert === 1 || settings.bitsAlert === 3) Client.Companion.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
+        if (settings.bitsAlert === 1 || settings.bitsAlert === 3) Client.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
         if (settings.bitsAlert === 2 || settings.bitsAlert === 3) ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}NO MO BITS!`);
     });
 }), () => settings.bitsAlert !== 0);

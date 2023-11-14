@@ -11,7 +11,11 @@ import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
 import { data, updateList } from "./utils/variables";
 import { findZone, getTier, getWorld } from "./utils/worlds";
+// Utility Variable Control
 data.autosave();
+const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
+for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
+if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
 
 // General Features
 import "./features/general/AntiGhostParty";
@@ -48,7 +52,7 @@ import { getBestiary } from "./features/combat/Bestiary";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
-import { getFear } from "./features/combat/GreatSpook";
+import "./features/combat/GreatSpook";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/KillCounter";

@@ -39,7 +39,6 @@ ${ITALIC}Related Commands: /va <attribute, calc>`);
         this.setCategoryDescription("Combat",
         `${HEADER}
     ${ITALIC}Related Commands: /va be`);
-        this.setSubcategoryDescription("Combat", "Great Spook", `${WHITE + BOLD}Related Commands: ${GRAY}/va fear`);
 
         // Hub Category
         this.setCategoryDescription("Hub",
@@ -427,7 +426,7 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
         description: "Alerts player when they are no longer generating bits.",
         category: "Economy",
         subcategory: "Economy",
-        options: ["OFF", "Chat", "Title", "Both"]
+        options: ["OFF", "Chat", "Title", "All"]
     })
     bitsAlert = 0;
 
@@ -563,20 +562,20 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     mathSolver = false;
     
     @SwitchProperty({
+        name: "Primal Fear Alert",
+        description: "Plays a sound and shows title when a primal fear is able to be spawned.",
+        category: "Combat",
+        subcategory: "Great Spook"
+    })
+    fearAlert = false;
+    
+    @SwitchProperty({
         name: "Primal Fear Highlight",
         description: "Draws a colorful hitbox around any primal fears.",
         category: "Combat",
         subcategory: "Great Spook"
     })
     fearHighlight = false;
-
-    @SwitchProperty({
-        name: "Primal Fear Timer",
-        description: `Tracks when you can spawn a primal fear.\nMove GUI with ${AQUA}/moveFear${GRAY}.`,
-        category: "Combat",
-        subcategory: "Great Spook"
-    })
-    fearTimer = false;
 
     // --- Gyrokinetic Wand ---
     @SwitchProperty({

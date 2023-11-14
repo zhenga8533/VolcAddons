@@ -37,12 +37,14 @@ export function findZone() {
  * Identifies the current world the player is in based on the tab list.
  */
 function findWorld() {
+    if (!World.isLoaded()) return;
+
     // Infinite loop prevention
     if (noFind === 10) return;
     noFind++;
 
     // Get world from tab list
-    world = TabList?.getNames().find(tab => tab.includes("Area:") || tab.includes("Dungeon:"));
+    world = TabList.getNames().find(tab => tab.includes("Area:") || tab.includes("Dungeon:"));
     if (world === undefined) {
         // If the world is not found, try again after a delay
         delay(() => findWorld(), 1000);

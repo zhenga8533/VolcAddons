@@ -29,7 +29,7 @@ register("chat", () => {
 registerWhen(register("tick", () => {
     if (align > 0) {
         if (settings.gyroAlert && align > 0.5 && align < 1 && cd === 0)
-            Client.Companion.showTitle(`${DARK_RED + BOLD}USE ALIGN`, "", 0, 25, 5);
+            Client.showTitle(`${DARK_RED + BOLD}USE ALIGN`, "", 0, 25, 5);
         align = (align - 0.05).toFixed(2);
         gyroOverlay.message = `${GREEN + BOLD}Align Timer: ${RESET + align}s`;
     } else gyroOverlay.message = `${GREEN + BOLD}Align Timer: ${RED}NO ALIGN`;

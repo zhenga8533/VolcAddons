@@ -88,7 +88,7 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
     if (!dancing.includes(subtitle) || subtitle === last) return;
 
     const move = dancing.shift();
-    Client.Companion.showTitle(move, `NEXT: ${dancing[0]}`, 0, 50, 0);
+    Client.showTitle(move, `NEXT: ${dancing[0]}`, 0, 50, 0);
     last = subtitle;
     print(subtitle);
     cancel(event);

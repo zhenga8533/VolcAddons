@@ -143,8 +143,10 @@ export function getItemValue(item) {
     const itemUUID = itemData?.uuid;
 
     // Check if value is already calculated
-    const saved = savedValues?.[itemUUID]?.[0];
-    if (saved !== undefined) return saved;
+    if (itemUUID !== undefined) {
+        const saved = savedValues?.[itemUUID]?.[0];
+        if (saved !== undefined) return saved;
+    }
 
     // Start Price Checking
     const auction = getAuction();
@@ -384,6 +386,7 @@ registerWhen(register("itemTooltip", (lore, item) => {
     const itemUUID = itemTag.getCompoundTag("ExtraAttributes").getString("uuid");
     if (loreTag === null) return;
 
+    // Check if value already in tooltip
     const list = new NBTTagList(loreTag);
     for (let i = 0; i < list.getTagCount(); i++) {
         if (list.getStringTagAt(i).includes("Item Value:")) {

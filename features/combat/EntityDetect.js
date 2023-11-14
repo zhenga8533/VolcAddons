@@ -179,14 +179,14 @@ registerWhen(register("step", () => {
         const broodmother = World.getAllEntitiesOfType(SPIDER_CLASS)
             .find(spider => spider.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b() === 6_000 && spider.getY() > 150);
         if (broodmother === undefined) return;
-        Client.Companion.showTitle(`${DARK_RED + BOLD}Broodmother Spawned!`, "", 0, 25, 5);
+        Client.showTitle(`${DARK_RED + BOLD}Broodmother Spawned!`, "", 0, 25, 5);
         playSound(AMOGUS, 10000);
         nextSpawn = 600;
     } else {
         nextSpawn--;
         if (nextSpawn === 0) {
             broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${GREEN}Soon TM`;
-            Client.Companion.showTitle("", `${RED}Broodmother Spawning Soon!`, 0, 25, 5);
+            Client.showTitle("", `${RED}Broodmother Spawning Soon!`, 0, 25, 5);
             if (server in broodLobbies) delete broodLobbies[server];
         } else broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${WHITE + getTime(nextSpawn)}`;
     }

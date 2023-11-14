@@ -1,8 +1,10 @@
 [
     "TODO: - Added god roll min price slider",
-    "TODO: - Added subcategory headers for related commands",
     "- Changed party command options to toggles",
+    "- Changed some Diana shit to be less shit",
     "- Fixed some more Vigilance errors",
     "- Fixed API key error",
-    "- Fixed anti ghost party looping"
+    "- Fixed anti ghost party looping",
+    "- Fixed bazaar price discrepancy",
+    "- Fixed Diana burrow detection"
 ]

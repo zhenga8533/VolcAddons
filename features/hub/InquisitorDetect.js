@@ -106,7 +106,7 @@ registerWhen(register("step", () => {
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
 }).setFps(2), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
-new Hitbox(() => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"), () => {
+new Hitbox(() => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"), (pt) => {
     renderEntities(inquisitors, 1, 0.84, 0, pt, "Inspector Gadget");
 });
 register("worldUnload", () => inquisitors = []);

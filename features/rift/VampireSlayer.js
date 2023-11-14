@@ -106,7 +106,7 @@ registerWhen(register("tick", () => {
 registerWhen(register("renderTitle", (title, subtitle, event) => {
     if (subtitle.includes("Impel")) {
         cancel(event);
-        Client.Companion.showTitle(subtitle, "", 0, 20, 0);
+        Client.showTitle(subtitle, "", 0, 20, 0);
     }
 }), () => getWorld() === "The Rift" && settings.vampireImpel);
 

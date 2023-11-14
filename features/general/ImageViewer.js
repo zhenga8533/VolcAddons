@@ -28,7 +28,7 @@ registerWhen(register("renderOverlay", () => {
     const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) / settings.imageRatio;
     const width = imgWidth / ratio;
     const height = imgHeight / ratio;
-    img.draw(Math.min(Client.Companion.getMouseX(), SCREEN_WIDTH - width), Math.max(0, Client.Companion.getMouseY() - height), width, height);
+    img.draw(Math.min(Client.getMouseX(), SCREEN_WIDTH - width), Math.max(0, Client.getMouseY() - height), width, height);
 }).setPriority(Priority.LOWEST), () => settings.imageRatio !== 0);
 
 /**

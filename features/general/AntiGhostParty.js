@@ -2,6 +2,7 @@ import settings from "../../utils/settings";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
+import { GREEN, LOGO } from "../../utils/constants";
 
 
 /**
@@ -18,6 +19,7 @@ registerWhen(register("messageSent", (message, event) => {
     cd = true;
     delay(() => cd = false, 1000);
 
+    ChatLib.chat(`${LOGO + GREEN}Cancelling ghost party...`)
     cancel(event);
     ChatLib.command(`p ${args[1]}`);
     delay(() =>  ChatLib.command(`p ${args.splice(2).join(' ')}`), 500);

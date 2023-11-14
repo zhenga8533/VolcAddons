@@ -38,6 +38,7 @@ function getCoord(start, end) {
  * @param {Object} type - Particle name.
  */
 let closest = undefined;
+let lastBurrows = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 registerWhen(register("spawnParticle", (particle, type) => {
     const particlePos = particle.getPos();
     const xyz = [particlePos.getX(), particlePos.getY(), particlePos.getZ()];
@@ -56,6 +57,11 @@ registerWhen(register("spawnParticle", (particle, type) => {
         case ("FOOTSTEP"): // Loads burrow waypoints by footstep
             if (settings.dianaBurrow && !dig && World.getBlockAt(x, y, x).type.getName()) {
                 xyz.unshift("Treasure");
+                if (lastBurrows.find(lastBurrow => lastBurrow[0] === x && lastBurrow[1] === z) === undefined) {
+                    lastBurrows.shift();
+                    lastBurrows.push([x, z]);
+                    return;
+                }
 
                 closest = getClosest(xyz, burrows);
                 if (closest[1] > 3) {
@@ -184,7 +190,7 @@ const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() });
 dianaKey.registerKeyPress(() => {
     if (settings.dianaWarp && theory[0] !== undefined && theory[0] !== "warp player")
-        ChatLib.command(theory[0])
+        ChatLib.command(theory[0]);
 });
 
 /**
@@ -199,7 +205,8 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows)
     if (closest !== undefined);
         burrows.splice(burrows.indexOf(closest[0]), 1);
-}).setCriteria("${before}urrow${after}"), () => getWorld() === "Hub" && settings.dianaWaypoint && getPerks().has("Mythological Ritual"));
+}).setCriteria("${before}urrow${after}"),
+() => getWorld() === "Hub" && (settings.dianaWaypoint || settings.dianaBurrow) && getPerks().has("Mythological Ritual"));
 
 /**
  * Removes all burrows if player leaves world or dies.
@@ -210,4 +217,5 @@ register("worldUnload", () => {
 });
 registerWhen(register("chat", () => {
     burrows = [];
-}).setCriteria(" ☠ You ${died}."), () => getWorld() === "Hub" && settings.dianaWaypoint && getPerks().has("Mythological Ritual"));
+}).setCriteria(" ☠ You ${died}."),
+() => getWorld() === "Hub" && (settings.dianaWaypoint || settings.dianaBurrow) && getPerks().has("Mythological Ritual"));

@@ -33,8 +33,8 @@ registerWhen(register("step", () => {
     jawbussy = World.getAllEntitiesOfType(GOLEM_CLASS);
     if (jawbussy.length > 0) {
         if (jawbussy.find(jawbus => jawbus.getEntity().func_110143_aJ() === 0) !== undefined)
-            Client.Companion.showTitle(`${DARK_RED + BOLD}LORD JAWBUS ${RED}DEAD!`, "", 0, 50, 10);
-        else Client.Companion.showTitle(`${DARK_RED + BOLD}LORD JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5);
+            Client.showTitle(`${DARK_RED + BOLD}LORD JAWBUS ${RED}DEAD!`, "", 0, 50, 10);
+        else Client.showTitle(`${DARK_RED + BOLD}LORD JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5);
         
         if (!data.moblist.includes("jawbus")) jawbussy = [];
     }
@@ -42,8 +42,8 @@ registerWhen(register("step", () => {
     thunders = World.getAllEntitiesOfType(GUARDIAN_CLASS).filter(guardian => guardian.getEntity().func_175461_cl());
     if (thunders.length > 0) {
         if (thunders.find(thunder => thunder.getEntity().func_110143_aJ() === 0) !== undefined)
-            Client.Companion.showTitle(`${DARK_BLUE + BOLD}THUNDER ${RED}DEAD!`, "", 0, 50, 10);
-        else Client.Companion.showTitle(`${DARK_BLUE + BOLD}THUNDER ${WHITE}DETECTED!`, "", 0, 25, 5);
+            Client.showTitle(`${DARK_BLUE + BOLD}THUNDER ${RED}DEAD!`, "", 0, 50, 10);
+        else Client.showTitle(`${DARK_BLUE + BOLD}THUNDER ${WHITE}DETECTED!`, "", 0, 25, 5);
 
         if (!data.moblist.includes("thunder")) thunders = [];
     }

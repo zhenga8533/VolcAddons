@@ -15,7 +15,7 @@ let minutes = 0;
 registerWhen(register("step", () => {
     minutes++;
     if (minutes >= settings.reminderTime) {
-        Client.Companion.showTitle(`${GOLD + BOLD + settings.reminderText}`, "", 10, 50, 10);
+        Client.showTitle(`${GOLD + BOLD + settings.reminderText}`, "", 10, 50, 10);
         playSound(AMOGUS, 1000);
         minutes = 0;
     }

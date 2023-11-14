@@ -29,9 +29,11 @@ const nextOverlay = new Overlay("nextVisitor", ["all"], () => true, data.NL, "mo
  * Fetches the visitor data in tablist and updates the Visitors Overlay every second.
  */
 registerWhen(register("step", () => {
-    tablist = TabList?.getNames();
+    if (!World.isLoaded()) return;
+
+    tablist = TabList.getNames();
     gardenOverlay.message = "";
-    visitors = tablist?.findIndex(tab => tab.includes("Visitors:"));
+    visitors = tablist.findIndex(tab => tab.includes("Visitors:"));
     if (visitors === undefined) return;
 
     if (visitors !== -1) {
@@ -54,7 +56,7 @@ registerWhen(register("step", () => {
         `${AQUA + BOLD}Next Visitor: ${RESET + getTime(next)}`:
         `${AQUA + BOLD}Next Visitor: ${RED}Shipment Received`;
 
-    if (getWorld() !== "Garden" || tablist === null) return;
+    if (getWorld() !== "Garden" || !World.isLoaded()) return;
 
     // Set Next Visitor
     nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") !== -1);
@@ -116,11 +118,11 @@ registerWhen(register("guiMouseClick", () => {
  * Update compost overlay.
  */
 registerWhen(register("step", () => {
-    if (tablist === null) return;
+    if (!World.isLoaded()) return;
 
     if (settings.gardenTab === 1) {
         if (tablist.find(tab => tab.includes("Time Left")) !== undefined)
-            Client.Companion.showTitle(`${DARK_RED + BOLD} ${WHITE}COMPOSTER INACTIVE!`, "", 0, 25, 5);
+            Client.showTitle(`${DARK_RED + BOLD} ${WHITE}COMPOSTER INACTIVE!`, "", 0, 25, 5);
         return;
     }
 

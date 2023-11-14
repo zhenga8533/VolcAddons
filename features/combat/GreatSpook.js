@@ -1,25 +1,20 @@
-import axios from "../../../axios";
 import settings from "../../utils/settings";
-import { BOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { data, registerWhen } from "../../utils/variables";
-import { Overlay } from "../../utils/overlay";
-import { getTime } from "../../utils/functions";
+import { AMOGUS, BOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { registerWhen } from "../../utils/variables";
+import { playSound } from "../../utils/functions";
 
 
 /**
- * Primal Fear Timer
+ * Primal Fear Tracker
  */
-const fearExample = `${RED + BOLD}Next Fear: ${WHITE}WHO DO WE CALL?`;
-const fearTimer = new Overlay("fearTimer", ["all"], () => true, data.PFL, "moveFear", fearExample);
-let time = 0;
-
 registerWhen(register("step", () => {
-    fearTimer.message = `${RED + BOLD}Next Fear: ${WHITE}${--time > 0 ? getTime(time) : "GHOST BUSTERS"}`;
-}).setFps(1), () => settings.fearTimer);
+    if (!World.isLoaded()) return;
 
-registerWhen(register("chat", () => {
-    time = 240;
-}).setCriteria("FEAR. A Primal Fear has been summoned!"), () => settings.fearTimer);
+    if (TabList.getNames().find(name => name === "§r §r§cPrimal Fears§r§7: §r§61s§r") !== undefined) {
+        Client.showTitle(`${RED + BOLD}FEAR UP`, '', 10, 50, 10);
+        playSound(AMOGUS, 10000);
+    }
+}).setFps(2), () => settings.fearAlert);
 
 /**
  * Use eval to solve math teacher equation
@@ -29,12 +24,3 @@ registerWhen(register("chat", (equation, event) => {
     cancel(event);
 }).setCriteria("QUICK MATHS! Solve: ${equation}"), () => settings.mathSolver);
 
-/**
- * Use SkyCrypt to know # of primal fear kills
- */
-export function getFear() {
-    axios.get(`https://sky.shiiyu.moe/api/v2/profile/${Player.getName()}`).then(res => {
-        const kills = res.data.profiles[data.lastID]?.raw?.stats?.kills_primal_fear;
-        ChatLib.chat(`${LOGO + RED + BOLD}Total Primal Fear Kills: ${WHITE + kills}`);
-    });
-}

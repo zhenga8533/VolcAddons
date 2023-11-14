@@ -45,14 +45,10 @@ registerWhen(register("tick", () => {
             x = kuudra.getX();
             z = kuudra.getZ();
 
-            if (x < -128)
-                Client.Companion.showTitle("§c§lRIGHT!", "", 0, 25, 5);
-            else if (z > -84)
-                Client.Companion.showTitle("§2§lFRONT!", "", 0, 25, 5);
-            else if (x > -72)
-                Client.Companion.showTitle("§a§lLEFT!", "", 0, 25, 5);
-            else if (z < -132)
-                Client.Companion.showTitle("§4§lBACK!", "", 0, 25, 5);
+            if (x < -128) Client.showTitle("§c§lRIGHT!", "", 0, 25, 5);
+            else if (z > -84) Client.showTitle("§2§lFRONT!", "", 0, 25, 5);
+            else if (x > -72) Client.showTitle("§a§lLEFT!", "", 0, 25, 5);
+            else if (z < -132) Client.showTitle("§4§lBACK!", "", 0, 25, 5);
         }
     } else HPDisplay = ["100k/100k ❤", 0, 0, 0];
 }), () => getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
