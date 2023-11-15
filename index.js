@@ -68,8 +68,9 @@ import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 import "./features/garden/JacobHighlight";
 // Hub Features
-import { setWarps } from "./features/hub/DianaWaypoint";
+import "./features/hub/BurrowDetect";
 import "./features/hub/InquisitorDetect";
+import "./features/hub/MythRitual";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
@@ -170,7 +171,7 @@ devKey.registerKeyPress(() => {
 });
 register("guiKey", (char, keyCode, gui) => {
     if (keyCode !== devKey.getKeyCode()) return;
-    const slot = gui.getSlotUnderMouse()?.field_75222_d;
+    const slot = gui?.getSlotUnderMouse()?.field_75222_d;
     if (slot === undefined) return;
     const item = Player.getContainer().getStackInSlot(slot);
     if (item === null) return;
@@ -314,7 +315,6 @@ register ("command", (...args) => {
         case "warplist":
         case "warp":
             updateList(args, data.warplist, "warplist");
-            setWarps();
             break;
         // Kuudra Splits
         case "splits": // Kuudra splits

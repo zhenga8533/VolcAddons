@@ -13,8 +13,11 @@ const ROBOT = Java.type("java.awt.Robot");
 const KEYEVENT = Java.type("java.awt.event.KeyEvent");
 
 const robot = new ROBOT();
-const press = []
-for (let i = 1; i <= 9; i++) press.push(KEYEVENT[`VK_${i}`]);
+const press = [];
+for (let i = 1; i <= 9; i++) {
+    let key = Client.getKeyBindFromDescription(`key.hotbar.${i}`).getKeyCode();
+    press.push(KEYEVENT[`VK_${Keyboard.getKeyName(key)}`]);
+}
 
 // Bind key
 const bindKey = new KeyBind("Slot Binding", data.bindKey, "./VolcAddons.xdd");

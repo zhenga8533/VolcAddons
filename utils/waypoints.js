@@ -1,12 +1,13 @@
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index.js";
 import settings from "./settings";
-import { getBurrow, getTheory } from "../features/hub/DianaWaypoint";
 import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { getPowderChests } from "../features/mining/PowderChest";
 import { data } from "./variables";
+import { getBurrows } from "../features/hub/BurrowDetect.js";
+import { getGuess } from "../features/hub/MythRitual.js";
 
 
 /**
@@ -18,10 +19,10 @@ let formattedWaypoints = [];
  * Functions to format waypoints into the above variables to reduce renderOverlay load.
  */
 function formatWaypoints(waypoints, r, g, b) {
-    if (!waypoints.length) return;
     let x, y, z, distance, xSign, zSign = 0;
 
     waypoints.forEach((waypoint) => {
+        if (waypoint === null) return;
         wp = [["", 0, 0, 0], [0, 0, 0], [r, g, b]];
         x = Math.round(waypoint[1]);
         y = Math.round(waypoint[2]);
@@ -57,8 +58,8 @@ register("tick", () => {
     formattedWaypoints = [];
     formatWaypoints(getChatWaypoints(), 0, 1, 1); // Cyan Waypoint
     formatWaypoints(getUserWaypoints(), 0, 1, 0); // Lime user
-    formatWaypoints(getTheory(), 1, 1, 0); // Yellow diana theory burrow
-    formatWaypoints(getBurrow(), 0, 0.5, 0); // Green burrows
+    formatWaypoints(getGuess(), 1, 1, 0); // Yellow diana theory burrow
+    formatWaypoints(getBurrows(), 0, 0.5, 0); // Green burrows
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies

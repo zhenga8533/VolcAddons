@@ -9,7 +9,6 @@ import { getWorld } from "../../utils/worlds";
 /**
  * Variables used to represent and display visitors.
  */
-let tablist = null;
 let visitors = 0;
 let next = 0;
 let lastTick = 0;
@@ -31,7 +30,7 @@ const nextOverlay = new Overlay("nextVisitor", ["all"], () => true, data.NL, "mo
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
 
-    tablist = TabList.getNames();
+    const tablist = TabList.getNames();
     gardenOverlay.message = "";
     visitors = tablist.findIndex(tab => tab.includes("Visitors:"));
     if (visitors === undefined) return;
@@ -59,6 +58,7 @@ registerWhen(register("step", () => {
     if (getWorld() !== "Garden" || !World.isLoaded()) return;
 
     // Set Next Visitor
+    const tablist = TabList.getNames();
     nextVisit = tablist.find((tab) => tab.indexOf("Next Visitor:") !== -1);
     if (!nextVisit) return;
 
@@ -119,6 +119,7 @@ registerWhen(register("guiMouseClick", () => {
  */
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
+    const tablist = TabList.getNames();
 
     if (settings.gardenTab === 1) {
         if (tablist.find(tab => tab.includes("Time Left")) !== undefined)

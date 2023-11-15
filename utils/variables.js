@@ -144,6 +144,7 @@ register("guiClosed", (event) => {
 
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
+import { setWarps } from "../features/hub/MythRitual";
 
 /**
  * Updates a list based on the provided arguments.
@@ -226,6 +227,7 @@ export function updateList(args, list, listName) {
     }
     
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
+    else if (listName === "warplist") setWarps();
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 }
 

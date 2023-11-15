@@ -25,7 +25,7 @@ registerWhen(register("tick", () => {
     const kuudra = cubes.find((cube) => cube.getWidth().toFixed(1) == 15.3 && cube.getEntity().func_110143_aJ() <= 100_000);
     if (kuudra !== undefined) {
         currentHP = kuudra.getEntity().func_110143_aJ().toFixed(0);
-
+        
         if (settings.kuudraHP) {
             // Tesselator Display
             const color = currentHP > 99_000 ? "§a" :

@@ -352,7 +352,7 @@ export function getItemValue(item) {
     });
     // Attribute combo value
     const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] ?? 0;
-    if (comboValue >= 50_000_000) {
+    if (comboValue >= settings.minGR * 1_000_000 && settings.minGR !== 0) {
         if (doubleCalc) {
             attributeMessage += `   - ${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
             attributesValue += comboValue;

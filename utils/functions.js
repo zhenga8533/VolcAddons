@@ -97,7 +97,7 @@ export function commafy(num) {
  */
 export function formatNumber(num) {
     if (isNaN(num) || num === 0) return 0;
-    if (num < 1) return num.toFixed(2);
+    if (num < 1) return num?.toFixed(2);
 
     const absNum = Math.abs(num);
     const abbrev = ["", "k", "m", "b", "t", "q", "Q"];
@@ -254,7 +254,9 @@ export function findFirstRomanNumeral(str) {
  *                    the closest position.
  */
 export function getClosest(origin, positions) {
-    let closestPosition = positions.length > 0 ? positions[0] : [0, 0, 0];
+    if (positions.length === 0) return [[], 999];
+
+    let closestPosition = origin;
     let closestDistance = 999;
     let distance = 999;
 

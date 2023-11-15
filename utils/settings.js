@@ -16,7 +16,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Party", "Economy", "Combat", "Mining", "Farming", "Hub", "Crimson Isles", "Dungeon", "Kuudra", "Rift"];
+        const categories = ["General", "Party", "Economy", "Combat", "Mining", "Farming", "Event", "Crimson Isles", "Dungeon", "Kuudra", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -40,8 +40,8 @@ ${ITALIC}Related Commands: /va <attribute, calc>`);
         `${HEADER}
     ${ITALIC}Related Commands: /va be`);
 
-        // Hub Category
-        this.setCategoryDescription("Hub",
+        // Event Category
+        this.setCategoryDescription("Event",
         `${HEADER}
 ${ITALIC}Related Commands: /va warplist`);
 
@@ -65,8 +65,6 @@ ${ITALIC}Related Commands: /va <attribute, splits>`);
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         // Etc
-        this.addDependency("Burrow Amogus Alert", "Burrow Detection");
-        this.addDependency("Burrow Chat Alert", "Burrow Detection");
         this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
     }
     
@@ -552,31 +550,6 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     })
     ragDetect = true;
 
-    // --- Great Spook ---
-    @SwitchProperty({
-        name: "Math Teacher Solver",
-        description: "Solves the math equation for those with feeble minds.",
-        category: "Combat",
-        subcategory: "Great Spook"
-    })
-    mathSolver = false;
-    
-    @SwitchProperty({
-        name: "Primal Fear Alert",
-        description: "Plays a sound and shows title when a primal fear is able to be spawned.",
-        category: "Combat",
-        subcategory: "Great Spook"
-    })
-    fearAlert = false;
-    
-    @SwitchProperty({
-        name: "Primal Fear Highlight",
-        description: "Draws a colorful hitbox around any primal fears.",
-        category: "Combat",
-        subcategory: "Great Spook"
-    })
-    fearHighlight = false;
-
     // --- Gyrokinetic Wand ---
     @SwitchProperty({
         name: "Cells Alignment Alert",
@@ -745,60 +718,45 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     webhookTimer = 0;
 
 
-    // ████████████████████████████████████████████████████ HUB ████████████████████████████████████████████████████
-
-    // --- Diana ---
+    // ████████████████████████████████████████████████████ EVENT ████████████████████████████████████████████████████
+    
+    // --- Great Spook ---
     @SwitchProperty({
-        name: "Diana Waypoint",
-        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
-Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
-        category: "Hub",
-        subcategory: "Diana"
+        name: "Math Teacher Solver",
+        description: "Solves the math equation for those with feeble minds.",
+        category: "Event",
+        subcategory: "Great Spook"
     })
-    dianaWaypoint = false;
+    mathSolver = false;
+    
     @SwitchProperty({
-        name: "Diana Warp",
-        description: `Press F ${BLUE}(change in controls) ${GRAY}to warp to location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
-        category: "Hub",
-        subcategory: "Diana"
+        name: "Primal Fear Alert",
+        description: "Plays a sound and shows title when a primal fear is able to be spawned.",
+        category: "Event",
+        subcategory: "Great Spook"
     })
-    dianaWarp = false;
-
-    // --- Griffin Burrow ---
+    fearAlert = false;
+    
     @SwitchProperty({
-        name: "Burrow Detection",
-        description: "Detects and creates waypoints to the burrow particles around you.",
-        category: "Hub",
-        subcategory: "Griffin Burrow"
+        name: "Primal Fear Highlight",
+        description: "Draws a colorful hitbox around any primal fears.",
+        category: "Event",
+        subcategory: "Great Spook"
     })
-    dianaBurrow = false;
-    @SwitchProperty({
-        name: "Burrow Amogus Alert",
-        description: "Calls an emergency meeting once a burrow is detected.",
-        category: "Hub",
-        subcategory: "Griffin Burrow"
-    })
-    dianaAmogus = false;
-    @SwitchProperty({
-        name: "Burrow Chat Alert",
-        description: "Sends a message in chat once a burrow is detected.",
-        category: "Hub",
-        subcategory: "Griffin Burrow"
-    })
-    dianaChat = false;
+    fearHighlight = false;
 
     // --- Inquisitor ---
     @SwitchProperty({
         name: "Detect Inquisitor",
         description: "Alerts player of nearby Inquisitors.",
-        category: "Hub",
+        category: "Event",
         subcategory: "Inquisitor"
     })
     detectInq = false;
     @SelectorProperty({
         name: "Announce Inquisitor Chat",
         description: "Sends coordinates of user Inquisitor spawns to chat.",
-        category: "Hub",
+        category: "Event",
         subcategory: "Inquisitor",
         options: ["OFF", "All Chat", "Party Chat", "Self"]
     })
@@ -807,12 +765,37 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
     @SelectorProperty({
         name: "Inquisitor Counter",
         description: `Tracks average kills of Inquisitor spawns.\nMove GUI with ${AQUA}/moveInq ${GRAY}or reset tracker with ${AQUA}/resetInq${GRAY}.`,
-        category: "Hub",
+        category: "Event",
         subcategory: "Inquisitor",
         options: ["OFF", "Overall View", "Session View"]
     })
     inqCounter = 0;
     
+    // --- Diana ---
+    @SwitchProperty({
+        name: "Diana Waypoint",
+        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
+Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
+        category: "Event",
+        subcategory: "Mythological Ritual"
+    })
+    dianaWaypoint = false;
+    @SwitchProperty({
+        name: "Diana Warp",
+        description: `Press F ${BLUE}(change in controls) ${GRAY}to warp to location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
+        category: "Event",
+        subcategory: "Mythological Ritual"
+    })
+    dianaWarp = false;
+
+    @SelectorProperty({
+        name: "Burrow Detection",
+        description: "Detects, alerts, and creates waypoints to nearby burrow particles.",
+        category: "Event",
+        subcategory: "Mythological Ritual",
+        options: ["OFF", "ON", "w/ Amogus Alert", "w/ Chat Alert", "w/ Both Alerts"]
+    })
+    burrowDetect = 0;
 
     // ████████████████████████████████████████████████████ CRIMSON ISLES ████████████████████████████████████████████████████
 
@@ -978,6 +961,15 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     }
     
     // --- Kuudra Profit ---
+    @SliderProperty({
+        name: "Minimum God Roll",
+        description: `Set the minimum amount a combo attribute may be to be tracked as a god roll or as 0 to turn ${RED}OFF ${BLUE}(in millions)${GRAY}.`,
+        category: "Kuudra",
+        subcategory: "Kuudra Profit",
+        min: 0,
+        max: 250
+    })
+    minGR = 50;
     @SwitchProperty({
         name: "Kuudra Profit",
         description: `Display overall profit of Kuudra chests.\nMove GUI with ${AQUA}/moveKP${GRAY}.`,
