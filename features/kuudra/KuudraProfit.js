@@ -42,6 +42,7 @@ register("command", () => {
         "time": 0,
         "rate": 0
     };
+    ChatLib.chat(`${GREEN}Successfully reset Kuudra Profit Tracker!`)
 }).setName("resetKPT");
 register("worldUnload", () => { chestOpened = false });
 

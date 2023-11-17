@@ -67,6 +67,7 @@ import "./features/garden/FarmingWebhook";
 import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 import "./features/garden/JacobHighlight";
+import "./features/garden/PestTracking";
 // Hub Features
 import "./features/hub/BurrowDetect";
 import "./features/hub/InquisitorDetect";

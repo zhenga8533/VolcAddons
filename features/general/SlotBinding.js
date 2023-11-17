@@ -16,7 +16,11 @@ const robot = new ROBOT();
 const press = [];
 for (let i = 1; i <= 9; i++) {
     let key = Client.getKeyBindFromDescription(`key.hotbar.${i}`).getKeyCode();
-    press.push(KEYEVENT[`VK_${Keyboard.getKeyName(key)}`]);
+    try {
+        press.push(KEYEVENT[`VK_${Keyboard.getKeyName(key)}`]);
+    } catch(_) {
+        press.push(KEYEVENT[`VK_${i}`]);
+    }
 }
 
 // Bind key

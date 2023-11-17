@@ -223,9 +223,8 @@ export class Overlay {
             );
         }).unregister();
 
-        registerWhen(register(this.requires.has("misc") ? "postGuiRender" : "renderOverlay", () => {
-            if (special()) return;
-            else if (condition() && !gui.isOpen() && !this.gui.isOpen()) {
+        registerWhen(register(this.requires.has("misc") ? "guiRender" : "renderOverlay", () => {
+            if (!special() && condition() && !gui.isOpen() && !this.gui.isOpen()) {
                 if (this.requires.has("misc")) background.func_146278_c(0);
                 renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3]);
             }

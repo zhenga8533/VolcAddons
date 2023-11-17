@@ -717,6 +717,31 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     webhookTimer = 0;
 
+    // --- Pests ---
+    @SwitchProperty({
+        name: "Pest Alert",
+        description: `${DARK_RED}NEW! ${GRAY}Displays a title on screen when any pests spawn.`,
+        category: "Farming",
+        subcategory: "Pests"
+    })
+    pestAlert = false;
+
+    @SwitchProperty({
+        name: "Plot Highlight",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights plots with pests in the desk menu.`,
+        category: "Farming",
+        subcategory: "Pests"
+    })
+    pestHighlight = false;
+
+    @SwitchProperty({
+        name: "Spray Display",
+        description: `${DARK_RED}NEW! ${GRAY}Tracks and warns when sprays on any plot in about to expire. Also highlights sprayed plots in the desk menu.\nMove GUI with ${AQUA}/moveSpray ${GRAY}.`,
+        category: "Farming",
+        subcategory: "Pests"
+    })
+    sprayDisplay = false;
+
 
     // ████████████████████████████████████████████████████ EVENT ████████████████████████████████████████████████████
     

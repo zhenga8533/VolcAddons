@@ -116,6 +116,13 @@ registerWhen(register('tick', () => {
         statusOverlay.message += `${DARK_AQUA + BOLD}XYZ: ${GREEN + x}, ${y}, ${z}\n`;
     }
 
+    // Yaw and Pitch
+    if (toggles.angleDisplay) {
+        const yaw = Player.getYaw();
+        const pitch = Player.getPitch();
+        statusOverlay.message += `${DARK_AQUA + BOLD}Y/P: ${AQUA + yaw.toFixed(2)} / ${AQUA + pitch.toFixed(2)}\n`
+    }
+
     // Ping
     if (toggles.pingDisplay) {
         const pingColor = ping < 100 ? GREEN :

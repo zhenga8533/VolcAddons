@@ -90,6 +90,8 @@ register("step", () => {
  * Count daily playtime
  */
 register("step", () => {
+    if (!World.isLoaded()) return;
+
     const today = new Date().getDay();
     if (data.lastDay !== today) {
         data.playtime = 0;

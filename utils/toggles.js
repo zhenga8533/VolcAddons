@@ -61,6 +61,13 @@ class Settings {
         description: "Ooh, black and yellow! Let's shake it up a little."
     })
     xyzDisplay = true;
+    @CheckboxProperty({
+        name: `Angle Display`,
+        category: "Server Status",
+        subcategory: "Server Status",
+        description: "Barry! Breakfast is ready!"
+    })
+    angleDisplay = true;
 
     // --- SKYBLOCK STATS ---
     @CheckboxProperty({
