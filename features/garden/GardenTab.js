@@ -49,10 +49,10 @@ registerWhen(register("step", () => {
     // Check tab case
     if (!World.isLoaded()) return;
     const visitors = TabList.getNames()
-        .find(tab => tab.startsWith("§r§b§lVisitors:"))
-        .removeFormatting()
-        .replace(/[^a-zA-Z0-9\s]/g, '')
-        .split(' ');
+        ?.find(tab => tab.startsWith("§r§b§lVisitors:"))
+        ?.removeFormatting()
+        ?.replace(/[^a-zA-Z0-9\s]/g, '')
+        ?.split(' ');
 
     let time = 0;
     for (let i = 1; i < visitors.length; i++) {
@@ -75,7 +75,7 @@ registerWhen(register("step", () => {
 
     // Decrement
     nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${WHITE + getTime(next--)}`;
-}).setFps(1), () => settings.nextVisitor || settings.warpGarden);
+}).setFps(1), () => getWorld() === "Garden" && (settings.nextVisitor || settings.warpGarden));
 
 // Set next visitor time (assuming with 20% visitor reduction)
 registerWhen(register("chat", () => {

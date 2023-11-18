@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, RED, YELLOW } from "../../utils/constants";
 import { getSlotCoords, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
@@ -135,3 +135,21 @@ registerWhen(register("chat", (_, plot) => {
 registerWhen(register("chat", (_, num, plot) => {
     Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`);
 }).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => getWorld() === "Garden" && settings.pestAlert);
+
+
+/**
+ * Pest swarm (more than 4 = loss farming fortune)
+ */
+const infested = register("step", () => {
+    Client.showTitle(`${DARK_GREEN}SPREADING PLAGUE`, '', 0, 25, 5);
+}).setFps(1).unregister();
+
+/**
+ * Track chat for pest fortune messages
+ */
+registerWhen(register("chat", () => {
+    infested.register();
+}).setCriteria("  ൠ ☘ Farming Fortune has been reduced by ${percent}%!"), () => getWorld() === "Garden" && settings.infestationAlert);
+registerWhen(register("chat", () => {
+    infested.unregister();
+}).setCriteria("Your Garden is no longer infested and your ☘ Farming Fortune has returned to normal!"), () => getWorld() === "Garden" && settings.infestationAlert);

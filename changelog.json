@@ -1,12 +1,3 @@
 [
-    "- Added pest features",
-    "- Added spray display",
-    "- Added yaw/pitch to stats display",
-    "- Fixed playtime tracking in game menu",
-    "- Fixed most Garden features",
-    "   - Fixed Visitor display",
-    "   - Fixed next visitor counter",
-    "   - Fixed Jacob Highlight",
-    "- Fixed slot binding crash",
-    "- Fixed container/item value rendering"
+    "- Added infestation alert"
 ]

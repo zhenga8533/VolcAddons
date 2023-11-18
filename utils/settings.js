@@ -719,8 +719,16 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     // --- Pests ---
     @SwitchProperty({
+        name: "Infestation Alert",
+        description: "Displays a title on screen when there are enough pests to cause a loss in farming fortune.",
+        category: "Farming",
+        subcategory: "Pests"
+    })
+    infestationAlert = false;
+
+    @SwitchProperty({
         name: "Pest Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Displays a title on screen when any pests spawn.`,
+        description: "Displays a title on screen when any pests spawn.",
         category: "Farming",
         subcategory: "Pests"
     })
@@ -728,7 +736,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Plot Highlight",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights plots with pests in the desk menu.`,
+        description: "Highlights plots with pests in the desk menu.",
         category: "Farming",
         subcategory: "Pests"
     })
@@ -736,7 +744,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Spray Display",
-        description: `${DARK_RED}NEW! ${GRAY}Tracks and warns when sprays on any plot in about to expire. Also highlights sprayed plots in the desk menu.\nMove GUI with ${AQUA}/moveSpray ${GRAY}.`,
+        description: `Tracks and warns when sprays on any plot in about to expire. Also highlights sprayed plots in the desk menu.\nMove GUI with ${AQUA}/moveSpray ${GRAY}.`,
         category: "Farming",
         subcategory: "Pests"
     })
