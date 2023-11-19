@@ -3,7 +3,7 @@ import "./utils/player";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { formatNumber, getTime, unformatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
@@ -97,25 +97,24 @@ if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers
 if (!FileLib.exists("VolcAddons", "data/contract.txt")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
 
 const once = register("worldLoad", () => {
-    // FIRST RUN - Display welcome message for new users
-    if (data.newUser) {
-        ChatLib.chat(`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}`);
-        ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
-        ChatLib.chat("Instruction manual (i think) => /va help or DM 'grapefruited' on Discord!\n");
-    
-        data.newUser = false; // Marking that the user is no longer new
-    }
-
-    // NEW UPDATE - Display update message when a new version is detected
+    once.unregister();
     delay(() => {
+        // NEW UPDATE - Display update message when a new version is detected
         if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`\n${LOGO + WHITE + BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => ChatLib.chat(change));
             ChatLib.chat("");
         }
+
+        // FIRST RUN - Display welcome message for new users
+        if (data.newUser) {
+            ChatLib.chat(`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}`);
+            ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
+            ChatLib.chat("Instruction manual (i think) => /va help\n");
+            data.newUser = false;
+        }
     }, 1000);
-    once.unregister();
 });
 
 // HELP - Display help message for available commands
@@ -123,22 +122,19 @@ function getHelp() {
     ChatLib.chat(`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}\n`);
     
     // General Commands
-    ChatLib.chat(`${AQUA + BOLD}GENERAL COMMANDS:${RESET}`);
-    ChatLib.chat(`${GRAY + BOLD}Settings: ${RESET}/va <help, settings, gui, clear ${ITALIC}(resets text settings)${RESET}>`);
-    ChatLib.chat(`${GRAY + BOLD}Waypoints: ${RESET}/va <coords, waypoint, clear, enigma, npc, zone>`);
-    ChatLib.chat(`${GRAY + BOLD}Lists: ${RESET}/va <cd, whitelist, blacklist, emotelist, warplist>`);
-    ChatLib.chat(`${GRAY + BOLD}Kuudra: ${RESET}/va splits`);
-    ChatLib.chat(`${GRAY + BOLD}Economy: ${RESET}/va <calc, apex>`);
-    ChatLib.chat(`${GRAY + BOLD}Misc: ${RESET}/sk\n`);
+    ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}`);
+    ChatLib.chat(`${AQUA + BOLD}Settings: ${GRAY}/va ${DARK_GRAY}<${GRAY}gui, settings, toggles, version, help${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Waypoints: ${GRAY}/va ${DARK_GRAY}<${GRAY}waypoint, enigma, npc, zone, cat${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Lists: ${GRAY}/va ${DARK_GRAY}<${GRAY}cd, whitelist, blacklist, emotelist, warplist${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Economy: ${GRAY}/va ${DARK_GRAY}<${GRAY}calc, apex, attribute, au${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Misc: ${GRAY}/va ${DARK_GRAY}<${GRAY}splits, be${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Etc: ${GRAY}/sk\n`);
 
-    // General Features
-    ChatLib.chat(`${AQUA + BOLD}GENERAL FEATURES:${RESET}`);
-    ChatLib.chat(`${GRAY + BOLD}Party Commands: ${RESET}?<warp, transfer, promote, demote, allinv>`);
-    ChatLib.chat(`${GRAY + BOLD}Other Commands: ${RESET}?<w, dice, flip, 8ball, rps, cringe, gay, racist, trans, transphobic, femboy>\n`);
-    
-    // Crimson Isle Features
-    ChatLib.chat(`${AQUA + BOLD}OTHER FEATURES:${RESET}`);
-    ChatLib.chat(`Should be self explanatory, DM 'grapefruited' on discord if any questions...`);
+    // Feature Commands
+    ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}`);
+    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${GRAY}/va ${DARK_GRAY}<${GRAY}ping, fps, tps, cps, xyz, yaw, pitch${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Stats Commands: ${GRAY}/va ${DARK_GRAY}<${GRAY}pet, stats, pt, sf${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Party Commands: ${GRAY}Refer to '/va toggles'`);
 }
 
 // Dev Mode
@@ -159,7 +155,7 @@ devKey.registerKeyPress(() => {
             pitch: entity.field_70125_A,
             yaw: entity.field_70177_z,
             ticksAlive: entity.field_70173_aa
-        }
+        };
         const textComponent = entity.func_145748_c_();
         let extraString = "";
         for (data in extraData) extraString += `${data}=${extraData[data]}, `;
@@ -170,7 +166,7 @@ devKey.registerKeyPress(() => {
         ChatLib.chat(`${LOGO + GREEN}Successfully copied block data!`);
     }
 });
-register("guiKey", (char, keyCode, gui) => {
+register("guiKey", (_, keyCode, gui) => {
     if (keyCode !== devKey.getKeyCode()) return;
     const slot = gui?.getSlotUnderMouse()?.field_75222_d;
     if (slot === undefined) return;
@@ -218,7 +214,6 @@ register ("command", (...args) => {
             break;
         // Update
         case "update":
-        case "upadtes":
         case "version":
             getLatestReleaseVersion();
             break;
@@ -244,15 +239,7 @@ register ("command", (...args) => {
         case "gui":
             openGUI();
             break;
-        // Set API key
-        case "api": 
-            if (args[1]) {
-                settings.apiKey = args[1]
-                ChatLib.chat(`${LOGO + GREEN}Succesfully set API key as ${settings.apiKey}!`);
-            } else
-                ChatLib.chat(`${LOGO + RED}Please input as /va api [key]!`);
-            break;
-        // Waypoint
+        // Send coords
         case "coords":
         case "xyz":
             const randID = '@' + (Math.random() + 1).toString(36).substring(5);
@@ -297,9 +284,9 @@ register ("command", (...args) => {
         case "el":
             updateList(args, data.emotelist, "emotelist");
             break;
-        case "cooldownlist":
         case "cdlist":
         case "cdl":
+        case "cooldown":
         case "cd":
             updateList(args, data.cooldownlist, "cdlist");
             break;
@@ -346,15 +333,23 @@ register ("command", (...args) => {
                         break;
                     default:
                         if (MINION_ARGS.has(args[1])) calcMinions(args);
-                        else ChatLib.chat(`${LOGO + AQUA}Please enter as /va calc <gdrag, hypergolic, inferno, gabagool, tabasco, vampire, compost>`);
+                        else {
+                            ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+                            ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va calc ${DARK_GRAY}<${GRAY}gdrag, hg, inferno, gaba, tabasco, vampire, compost${DARK_GRAY}>`);
+                        }
                         break;
                 }
             } catch (err) { ChatLib.chat(`${LOGO + RED + err}`); }
             break;
         // Set Apex Price
         case "apex":
-            data.apexPrice = unformatNumber(args[1]) || data.apexPrice;
-            ChatLib.chat(`${LOGO + GREEN}Successfully changed Apex price to ${formatNumber(data.apexPrice)}!`);
+            if (args[1] === undefined) {
+                ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+                ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va apex [value]${DARK_GRAY}>`);
+            } else {
+                data.apexPrice = unformatNumber(args[1]) || data.apexPrice;
+                ChatLib.chat(`${LOGO + GREEN}Successfully changed Apex price to ${formatNumber(data.apexPrice)}!`);
+            }
             break;
         // Configure enigma souls
         case "enigma":
@@ -373,10 +368,6 @@ register ("command", (...args) => {
         // Configure zone waypoints
         case "zone":
             riftWaypointEdit(args, "zone", RIFT_ZONES);
-            break;
-        // Great Spook
-        case "fear":
-            getFear();
             break;
         // Party Commands and Else Case
         default:

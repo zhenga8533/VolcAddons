@@ -125,24 +125,31 @@ class Settings {
     })
     instanceCommand = true;
     @CheckboxProperty({
+        name: `Invite Command ${DARK_AQUA}?invite`,
+        category: "Party Commands",
+        subcategory: "Party Commands",
+        description: "Many brave knigts had attempted to free her from this dreadful prison, but none prevailed."
+    })
+    inviteCommand = true;
+    @CheckboxProperty({
         name: `Promote Command ${DARK_AQUA}?promote`,
         category: "Leader Commands",
         subcategory: "Leader Commands",
-        description: "Many brave knigts had attempted to free her from this dreadful prison, but none prevailed."
+        description: "She waited in the dragon's keep in the highest room of the tallest tower for her true love and true love's first kiss."
     })
     promoteCommand = true;
     @CheckboxProperty({
         name: `Stream Command ${DARK_AQUA}?<streamopen, stream> [num]`,
         category: "Leader Commands",
         subcategory: "Leader Commands",
-        description: "She waited in the dragon's keep in the highest room of the tallest tower for her true love and true love's first kiss."
+        description: "Like that's ever gonna happen."
     })
     streamCommand = true;
     @CheckboxProperty({
         name: `Transfer Command ${DARK_AQUA}?transfer`,
         category: "Leader Commands",
         subcategory: "Leader Commands",
-        description: "Like that's ever gonna happen."
+        description: "{Paper Rusting, Toilet Flushes}"
     })
     transferCommand = true;
     @CheckboxProperty({
@@ -165,14 +172,14 @@ class Settings {
         name: "Guild Chat",
         category: "Party Commands",
         subcategory: "Chat Options",
-        description: "Somebody once told me the world is gonna roll me"
+        description: "I ain't the sharpest tool in the shed"
     })
     guildCommands = true;
     @CheckboxProperty({
         name: "DM Chat",
         category: "Party Commands",
         subcategory: "Chat Options",
-        description: "Somebody once told me the world is gonna roll me"
+        description: "She was lookin' kind of dumb with her finger and her thumb"
     })
     dmCommands = true;
 
@@ -180,84 +187,77 @@ class Settings {
         name: `8ball Command ${DARK_AQUA}?8ball`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Somebody once told me the world is gonna roll me"
+        description: "In the shape of an \"L\" on her forehead"
     })
     ballCommand = true;
     @CheckboxProperty({
         name: `Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "I ain't the sharpest tool in the shed"
+        description: "The years start comin' and they don't stop comin'"
     })
     coinCommand = true;
     @CheckboxProperty({
-        name: `Coords Command ${DARK_AQUA}?coords`,
+        name: `Coords Command ${DARK_AQUA}?<coords, xyz>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "She was lookin' kind of dumb with her finger and her thumb"
+        description: "Fed to the rules and hit the ground runnin'"
     })
     coordsCommand = true;
     @CheckboxProperty({
         name: `Dice Command ${DARK_AQUA}?<dice, roll>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "In the shape of an \"L\" on her forehead"
+        description: "Didn't make sense not to live for fun"
     })
     diceCommand = true;
     @CheckboxProperty({
         name: `Help Command ${DARK_AQUA}?help`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "The years start comin' and they don't stop comin'"
+        description: "Your brain gets smart but your head gets dumb"
     })
     helpCommand = true;
-    @CheckboxProperty({
-        name: `Invite Command ${DARK_AQUA}?invite`,
-        category: "Party Commands",
-        subcategory: "Party Commands",
-        description: "Fed to the rules and hit the ground runnin'"
-    })
-    inviteCommand = true;
     @CheckboxProperty({
         name: `Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Didn't make sense not to live for fun"
+        description: "So much to do so much to see"
     })
     limboCommand = false;
     @CheckboxProperty({
         name: `Leave Command ${DARK_AQUA}?leave`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Your brain gets smart but your head gets dumb"
+        description: "So what's wrong with takin' the backstreets"
     })
     leaveCommand = false;
     @CheckboxProperty({
         name: `RPS Command ${DARK_AQUA}?rps`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "So much to do so much to see"
+        description: "You'll never know if you don't go"
     })
     rpsCommand = true;
     @CheckboxProperty({
         name: `Slander Commands ${DARK_AQUA}(i plead the fifth.)`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "So what's wrong with takin' the backstreets"
+        description: "You'll never shine if you don't glow"
     })
     slanderCommand = true;
     @CheckboxProperty({
         name: `Status Commands ${DARK_AQUA}?<fps, ping, tps>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "You'll never know if you don't go"
+        description: "Hey, now You're an all-star"
     })
     statusCommand = true;
     @CheckboxProperty({
         name: `Women Command ${DARK_AQUA}?<w, waifu, women>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "You'll never shine if you don't glow"
+        description: "Get your game on, go play"
     })
     womenCommand = true;
 

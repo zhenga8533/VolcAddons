@@ -72,8 +72,9 @@ export function getAttributes(args) {
             .setHoverValue("Click me!")
         ).chat();
     } else {
-        ChatLib.chat(`${LOGO + RED}Please input as /va attribute <shard OR [armor piece] OR [equipment piece]> [tier]`);
-        ChatLib.chat(`${LOGO + RED}In order to check combo price, please input /va attribute [attribute_1] [attribute_2]`);
+        ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+        ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va attribute ${DARK_GRAY}<${GRAY}shard, [armor piece], [equipment piece]${DARK_GRAY}> ${GRAY}[tier]`);
+        ChatLib.chat(`${LOGO + RED}To check combo price, please input as: ${GRAY}/va attribute [attribute_1] [attribute_2]`);
     }
 }
 
@@ -86,3 +87,8 @@ register("command", () => {
     });
     worthless.length = 0;
 }).setName("clearWorthlessAttributes");
+
+
+/**
+ * Attribute upgrade command
+ */

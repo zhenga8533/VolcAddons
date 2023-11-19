@@ -1,6 +1,6 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
-import { BOLD, CAT_SOULS, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
+import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, WHITE } from "./constants";
 import { delay } from "./thread";
 
 
@@ -168,19 +168,19 @@ export function updateList(args, list, listName) {
         case "add": // ADD TO LIST
             if (isArray && !list.includes(item)) {
                 list.push(item);
-                ChatLib.chat(`${LOGO + GREEN}Successfully added [${WHITE + item + GREEN}] to the ${listName}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully added "${WHITE + item + GREEN}" to the ${listName}!`);
             } else if (!isArray && !(key in list)) {
                 list[key] = value;
-                ChatLib.chat(`${LOGO + GREEN}Successfully linked [${WHITE + value + GREEN}] to [${WHITE + key + GREEN}]!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${WHITE + key + GREEN}]!`);
             } else ChatLib.chat(`${LOGO + RED}[${WHITE + (isArray ? item : key + RED)}] is already in the ${listName}!`);
             break;
         case "remove": // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
                 list.splice(list.indexOf(item), 1);
-                ChatLib.chat(`${LOGO + GREEN}Successfully removed [${WHITE + item + GREEN}] from the ${listName}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully removed "${WHITE + item + GREEN}" from the ${listName}!`);
             } else if (!isArray && key in list) {
                 delete list[key];
-                ChatLib.chat(`${LOGO + GREEN}Successfully removed [${WHITE + key + GREEN}] from the ${listName}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully removed "${WHITE + key + GREEN}" from the ${listName}!`);
             } else ChatLib.chat(`${LOGO + RED}[${WHITE + item + RED}] is not in the ${listName}!`);
             break;
         case "clear": // CLEAR LIST
@@ -192,10 +192,10 @@ export function updateList(args, list, listName) {
         case "view": // DISPLAY LIST
         case "list":
             if (isArray) {
-                ChatLib.chat(`${GOLD + BOLD + list.length} Items in ${listName}:${RESET}`);
+                ChatLib.chat(`\n${GOLD + BOLD + list.length} Items in ${listName}:${RESET}`);
                 list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
             } else {
-                ChatLib.chat(`${GOLD + BOLD + Object.keys(list).length} Items in ${listName}:${RESET}`);
+                ChatLib.chat(`\n${GOLD + BOLD + Object.keys(list).length} Items in ${listName}:${RESET}`);
                 Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key + GRAY} => ${WHITE + list[key]}`) });
             }
             break;
@@ -205,25 +205,26 @@ export function updateList(args, list, listName) {
                 list.push("vanquisher");
                 list.push("jawbus");
                 list.push("thunder");
-                ChatLib.chat(`${LOGO + GREEN}Successfully reset moblist to default!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully set moblist to default!`);
                 break;
             }
         default:
-            ChatLib.chat(`${LOGO + RED}Invalid argument: "${command}" was not found!`);
-            let base = `${LOGO + RED}Please enter as /va ${listName} <view, clear, add/remove `
+            ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${command}"!`);
+            let base = `${LOGO + RED}Please input as: ${GRAY}/va ${listName} ${DARK_GRAY}<${GRAY}view, clear, add, remove${DARK_GRAY}> ${GRAY}`;
 
-            if (listName === "cdlist") base += `[cd (in seconds)]> \n${GRAY}Special args (put in front, e.x 'a60'):
-- a = active
-- l = left click
-- s = shift`;
-            else if (listName === "emotelist") base += "[key] [value]>";
-            else if (listName === "warplist") base += "<hub, castle, da, museum, crypt, wizard>>";
+            if (listName === "cdlist") base += `[cd]\n\n${DARK_AQUA}Special args (put in front, e.x 'a60'):
+- ${AQUA}none ${GRAY}=> ${GRAY}right click
+- ${AQUA}l ${GRAY}=> ${AQUA}left click
+- ${AQUA}a ${GRAY}=> ${AQUA}no cd (e.x Plasmaflux)
+- ${AQUA}s ${GRAY}=> ${AQUA}shift`;
+            else if (listName === "emotelist") base += "[key] [value]";
+            else if (listName === "warplist") base += `${DARK_GRAY}<${GRAY}hub, castle, da, museum, crypt, wizard${DARK_GRAY}>>`;
             else if (listName === "moblist")
-                base += `<[MC Entity Class ${GRAY}(i.e. Creeper)${RED}], [Stand Name ${GRAY}(any portion)${RED}]> [health ${GRAY}(optional)${RED}]>`;
-            else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]>";
-            else base += "[item]>";
+                base += `${DARK_GRAY}<${GRAY}[MC Entity Class], [Stand Name]${DARK_GRAY}>>`;
+            else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]";
+            else base += "[item]";
+            
             ChatLib.chat(base);
-
             break;
     }
     

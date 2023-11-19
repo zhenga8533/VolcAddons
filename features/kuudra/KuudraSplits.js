@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GREEN, GOLD, GREEN, ITALIC, LOGO, RED, RESET } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET } from "../../utils/constants";
 import { getPlayerName, getTime, isValidDate } from "../../utils/functions";
 import { getKuudraHP } from "./KuudraDetect";
 import { Overlay } from "../../utils/overlay";
@@ -260,66 +260,65 @@ function formatSplits(splits, color, runs) {
  * @param {string[]} args - Array of player input values.
  */
 export function getSplits(args){
-    if (args[1] !== undefined) {
-        switch (args[1]) {
-            case "last":
-                formatSplits(data.splits.last, AQUA, 0);
-                break;
-            case "best":
-                formatSplits(data.splits.best, GOLD, 0);
-                break;
-            case "worst":
-                formatSplits(data.splits.worst, RED, 0);
-                break;
-            case "today":
-                const today = true;
-            case "average":
-                // Gets file name
-                let fileName = "splits.txt";
-                if (args[6] !== undefined) fileName = [args[3], args[4], args[5], args[6]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
-                else if (args[5] !== undefined) fileName = [args[2], args[3], args[4], args[5]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
+    switch (args[1]) {
+        case "last":
+            formatSplits(data.splits.last, AQUA, 0);
+            return;
+        case "best":
+            formatSplits(data.splits.best, GOLD, 0);
+            return;
+        case "worst":
+            formatSplits(data.splits.worst, RED, 0);
+            return;
+        case "today":
+            const today = true;
+        case "average":
+            // Gets file name
+            let fileName = "splits.txt";
+            if (args[6] !== undefined) fileName = [args[3], args[4], args[5], args[6]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
+            else if (args[5] !== undefined) fileName = [args[2], args[3], args[4], args[5]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
 
-                const fileSplits = FileLib.read("./VolcAddons/data", fileName);
+            const fileSplits = FileLib.read("./VolcAddons/data", fileName);
 
-                // Get runs from file
-                if (fileSplits) {
-                    let runs = fileSplits.split("\n");
-                    runs.pop();
+            // Get runs from file
+            if (fileSplits) {
+                let runs = fileSplits.split("\n");
+                runs.pop();
 
-                    // Filter by date
-                    if (isValidDate(args[2]))
-                        runs = runs.filter((run) => run.split(", ")[5] === args[2]);
-                    if (today || args[2] === "today")
-                        runs = runs.filter((run) => run.split(", ")[5] === (mm+"/"+dd+"/"+yyyy));
-                    
-                    // Get # of runs to average
-                    let runsWanted = runs.length;
-                    if (!isNaN(args[2])) if (args[2] < runsWanted) runsWanted = args[2];
-
-                    // Average the runs
-                    let average = [0, 0, 0, 0, 0];
-                    let run = undefined;
-                    for (let i = runs.length - 1; i >= runs.length - runsWanted; i--) {
-                        run = runs[i].split(", ");
-                        if (run.length > 1) for (let j = 0; j < average.length; j++) average[j] += parseFloat(run[j]);
-                    }
-                    for (let i = 0; i < average.length; i++) average[i] = average[i] / runsWanted;
-
-                    formatSplits(average, GREEN, runsWanted);
-                } else ChatLib.chat(`${RED}File [${fileName + RED}] not found!`);
-                break;
-            case "clear":
-                // Clears every split
-                data.files.forEach(file => {
-                    FileLib.delete("./VolcAddons/data", file);
-                });
-                data.files = [];
+                // Filter by date
+                if (isValidDate(args[2]))
+                    runs = runs.filter((run) => run.split(", ")[5] === args[2]);
+                if (today || args[2] === "today")
+                    runs = runs.filter((run) => run.split(", ")[5] === (mm+"/"+dd+"/"+yyyy));
                 
-                ChatLib.chat(`${LOGO + GREEN}Succesfully cleared splits!`)
-                break;
-            default:
-                ChatLib.chat(`${LOGO + AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET + AQUA}, clear>!`);
-                break;
-        }
-    } else ChatLib.chat(`${LOGO + AQUA}Please enter as /va splits <last, best, today, average ${ITALIC}<[# of runs], [player members], [mm/dd/yyyy]>${RESET + AQUA}, clear>!`);
+                // Get # of runs to average
+                let runsWanted = runs.length;
+                if (!isNaN(args[2])) if (args[2] < runsWanted) runsWanted = args[2];
+
+                // Average the runs
+                let average = [0, 0, 0, 0, 0];
+                let run = undefined;
+                for (let i = runs.length - 1; i >= runs.length - runsWanted; i--) {
+                    run = runs[i].split(", ");
+                    if (run.length > 1) for (let j = 0; j < average.length; j++) average[j] += parseFloat(run[j]);
+                }
+                for (let i = 0; i < average.length; i++) average[i] = average[i] / runsWanted;
+
+                formatSplits(average, GREEN, runsWanted);
+            } else ChatLib.chat(`${RED}File [${fileName + RED}] not found!`);
+            return;
+        case "clear":
+            // Clears every split
+            data.files.forEach(file => {
+                FileLib.delete("./VolcAddons/data", file);
+            });
+            data.files = [];
+            
+            ChatLib.chat(`${LOGO + GREEN}Succesfully cleared splits!`)
+            return;
+    }
+
+    // Invalid command
+    ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+    ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va splits ${DARK_GRAY}<${GRAY}clear, last, best, today, average ${DARK_GRAY}<${GRAY}[# of runs], [player members], [mm/dd/yyyy]${DARK_GRAY}>${RESET + AQUA + DARK_GRAY}>`);
 };

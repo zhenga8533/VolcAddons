@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, GREEN, LOGO } from "../../utils/constants";
+import { DARK_GRAY, GRAY, GREEN, LOGO, RED } from "../../utils/constants";
 import { getPlayerName } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
@@ -64,6 +64,9 @@ export function createWaypoint(args) {
     } else if (!isNaN(args[2]) && !isNaN(args[3]) && !isNaN(args[4])) {
         userWaypoints.push([args[1], args[2], args[3], args[4]]);
         ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
-    } else ChatLib.chat(`${LOGO + AQUA}Please enter as /va waypoint [name] [x] [y] [z] | /va waypoint clear!`);
+    } else {
+        ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+        ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va waypoint ${DARK_GRAY}<${GRAY}[name] [x] [y] [z] OR clear${DARK_GRAY}>`);
+    }
 }
 register("worldUnload", () => { userWaypoints = [] });

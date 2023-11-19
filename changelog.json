@@ -1,5 +1,9 @@
 [
+    "- TODO: Added `/va au` (attribute upgrade)",
+    "- TOOD: Added new enchantments to value calc",
     "- Added infestation alert",
+    "- TODO: Added /va <yaw, pitch>",
     "- Changed next visitor to track 6th visitor",
+    "- Cleaned up help commands",
     "- Fixed spray tracking breaking for some regexes"
 ]
