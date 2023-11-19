@@ -224,6 +224,12 @@ export function getStatus(status) {
 
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`);
             break;
+        case "yaw":
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Yaw: ${AQUA + Player.getYaw()}°`);
+            break;
+        case "pitch":
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Pitch: ${AQUA + Player.getPitch()}°`);
+            break;
     }
 }
 

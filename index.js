@@ -132,7 +132,7 @@ function getHelp() {
 
     // Feature Commands
     ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}`);
-    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${GRAY}/va ${DARK_GRAY}<${GRAY}ping, fps, tps, cps, xyz, yaw, pitch${DARK_GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${GRAY}/va ${DARK_GRAY}<${GRAY}ping, fps, tps, xyz, yaw, pitch${DARK_GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Stats Commands: ${GRAY}/va ${DARK_GRAY}<${GRAY}pet, stats, pt, sf${DARK_GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Party Commands: ${GRAY}Refer to '/va toggles'`);
 }
@@ -378,7 +378,7 @@ register ("command", (...args) => {
                 "cf", "8ball", "rps", "waifu", "w", "women"]
             );
             const INSTANCES = new Set(["f", "m", "t"]);
-            const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps"]);
+            const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps", "yaw", "pitch"]);
             const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf", "playtime", "pt"]);
 
             if (PARTY_COMMANDS.has(command) || (INSTANCES.has(command[0]) && !isNaN(command[1]))) executeCommand(Player.getName(), args, false);
