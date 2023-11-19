@@ -1,3 +1,5 @@
 [
-    "- Added infestation alert"
+    "- Added infestation alert",
+    "- Changed next visitor to track 6th visitor",
+    "- Fixed spray tracking breaking for some regexes"
 ]

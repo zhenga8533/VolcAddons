@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/constants";
 import { getSlotCoords, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
@@ -91,15 +91,19 @@ const setPlots = register("guiRender", () => {
                 // Set stack size as amount of pests and push onto rendering array
                 plot.setStackSize(pest.removeFormatting().replace(/[^0-9]/g, ''));
                 pests.add(index);
-            } else if (spray !== undefined) {
+            }
+            
+            if (spray !== undefined) {
                 // Get time left on spray
-                let time = spray.removeFormatting().split(' ');
-                let minutes = time[3].replace(/[^0-9]/g, '');
-                let seconds = time[4].replace(/[^0-9]/g, '');
+                let time = spray.removeFormatting().match(/(?: (\d+)m)? (\d+)s/);
+                let minutes = time[1] ? parseInt(time[1], 10) : 0;
+                let seconds = parseInt(time[2], 10);
 
                 // Set stack size as amount of minutes left and push onto rendering array
-                plot.setStackSize(minutes);
-                plots.add(index);
+                if (pest === undefined) {
+                    plot.setStackSize(minutes);
+                    plots.add(index);
+                }
 
                 // Set time left on spray (backup)
                 sprays[plot.getName().removeFormatting().replace(/[^0-9]/g, '')] = minutes * 60 + parseInt(seconds);
@@ -141,7 +145,11 @@ registerWhen(register("chat", (_, num, plot) => {
  * Pest swarm (more than 4 = loss farming fortune)
  */
 const infested = register("step", () => {
-    Client.showTitle(`${DARK_GREEN}SPREADING PLAGUE`, '', 0, 25, 5);
+    const loc = Scoreboard.getLines().find(line => line.getName().startsWith(" §7⏣"));
+    if (loc === undefined) return;
+
+    const count = loc.getName().removeFormatting().replace(/[^0-9]/g, '');
+    Client.showTitle(`${DARK_GREEN + BOLD}SPREADING PLAGUE`, `${count} minions with ${BOLD}Taunt ${RESET}are in the way!`, 0, 25, 5);
 }).setFps(1).unregister();
 
 /**

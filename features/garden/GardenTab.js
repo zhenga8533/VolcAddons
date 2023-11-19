@@ -65,7 +65,7 @@ registerWhen(register("step", () => {
             time += parseInt(num);
         }
     }
-    if (time < next - 60 || time > next + 60 || next === 0) next = time;
+    if (time !== 0 && time < next - 60 || time > next + 60 || next === 0) next = time;
 
     // Return if 0
     if (next === 0) {
