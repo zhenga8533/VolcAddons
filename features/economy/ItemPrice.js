@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -29,7 +29,7 @@ const MAX_ENCHANTS = {
     "TURBO_CACTUS": 1, "TURBO_CANE": 1, "TURBO_CARROT": 1, "TURBO_MUSHROOMS": 1, "TURBO_POTATO": 1, "TURBO_WARTS": 1, "TURBO_WHEAT": 1,
     "SUNDER": 1, "TURBO_COCO": 1, "TURBO_MELON": 1, "TURBO_PUMPKIN": 1, "EXPERTISE": 1, "ULTIMATE_BOBBIN_TIME": 3, "ULTIMATE_FLASH": 1,
     // Equipment Enchantments
-    "CAYENNE": 1, "GREEN_THUMB": 1, "PROSPERITY": 1, "QUANTUM": 3, "ULTIMATE_THE_ONE": 4,
+    "CAYENNE": 1, "GREEN_THUMB": 1, "PROSPERITY": 1, "QUANTUM": 3, "ULTIMATE_THE_ONE": 4, "PESTERMINATOR": 1
 };
 const ENCHANTS = new Set(Object.keys(MAX_ENCHANTS));
 const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"]);
@@ -78,7 +78,7 @@ const REFORGES = {
     "empowered": "SADAN_BROOCH", "ancient": "PRECURSOR_GEAR", "undead": "PREMIUM_FLESH", "loving": "RED_SCARF", "RIDICULOUS": "red_nose",
     "bustling": "SKYMART_BROCHURE", "mossy": "OVERGROWN_GRASS", "festive": "FROZEN_BUBBLE", "glistening": "SHINY_PRISM",
     "strengthened": "SEARING_STONE", "waxed": "BLAZE_WAX", "fortified": "METEOR_SHARD", "rooted": "BURROWING_SPORES",
-    "blooming": "FLOWERING_BOUQUET", "snowy": "TERRY_SNOWGLOBE", "blood_soaked": "PRESUMED_GALLON_OF_RED_PAINT", "salty": "SALT_CUBE",
+    "blooming": "FLOWERING_BOUQUET", "snowy": "TERRY_SNOWGLOBE", "blood_soaked": "PRESUMED_GALLON_OF_RED_PAINT", "greater_spook": "BOO_STONE", "salty": "SALT_CUBE",
     "treacherous": "RUSTY_ANCHOR", "lucky": "LUCKY_DICE", "stiff": "HARDENED_WOOD", "chomp": "KUUDRA_MANDIBLE", "pitchin": "PITCHIN_KOI",
     "ambered": "AMBERED_MATERIAL", "auspicious": "ROCK_GEMSTONE", "fleet": "DIAMONITE", "heated": "HOT_STUFF", "magnetic": "LAPIS_CRYSTAL",
     "mithraic": "PURE_MITHRIL", "refined": "REFINED_AMBER", "stellar": "PETRIFIED_STARFALL", "fruitful": "ONYX", "moil": "MOIL_LOG",
@@ -140,7 +140,8 @@ export function getItemValue(item) {
     const itemData = itemTag.ExtraAttributes;
     let itemID = itemData?.id;
     if (itemID == undefined) return 0;
-    const itemUUID = itemData?.uuid;
+    const amount = item.getStackSize()
+    const itemUUID = (itemData?.uuid || item.getName()) + amount;
 
     // Check if value is already calculated
     if (itemUUID !== undefined) {
@@ -152,17 +153,21 @@ export function getItemValue(item) {
     const auction = getAuction();
     const bazaar = getBazaar();
     let auctionItem = auction?.[itemID];
-    let value = (auctionItem?.lbin ?? 0) * item.getStackSize();
+    let value = (auctionItem?.lbin ?? 0) * amount;
 
     // Base Value
-    valueMessage = `${DARK_AQUA + BOLD}Item: ${itemTag.display.Name}\n`;
-    if (value === 0) {  // Check for Edge Cases
+    let valueMessage = `${DARK_AQUA + BOLD}Item: ${itemTag.display.Name}`;
+    if (amount !== 1) valueMessage += ` ${GRAY}x${amount}\n`;
+    else valueMessage += "\n";
+
+    // Check for Edge Cases
+    if (value === 0) {
         const partsID = itemID.split('_');
         const pieceTier = partsID[0];
         if (pieceTier in KUUDRA_UPGRADES) {  // Kuudra Piece Upgrade Value
             itemID = partsID.slice(1).join('_');
             auctionItem = auction?.[itemID];
-            value = (auctionItem?.lbin ?? 0) * item.getStackSize();
+            value = (auctionItem?.lbin ?? 0) * amount;
             valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
 
             let crimsonEssence = 0;
@@ -185,8 +190,17 @@ export function getItemValue(item) {
                 savedValues[itemUUID] = [value, ""];
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
                 value = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
+                valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+                savedValues[itemUUID] = [value, valueMessage];
             } else {  // Bazaar Value
-                value = (bazaar?.[itemID]?.[settings.priceType] ?? 0) * item.getStackSize();
+                value = (bazaar?.[itemID]?.[settings.priceType] ?? 0) * amount;
+                const order = (bazaar?.[itemID]?.[0] ?? 0) * amount;
+                const insta = (bazaar?.[itemID]?.[1] ?? 0) * amount;
+                if (order !== 0 || insta !== 0) {
+                    valueMessage += `- ${AQUA}Insta Sell: ${GREEN}+${formatNumber(order)}\n`;
+                    valueMessage += `- ${AQUA}Sell Offer: ${GREEN}+${formatNumber(insta)}\n`;
+                    savedValues[itemUUID] = [value, valueMessage];
+                }
             }
             return value;
         }
@@ -383,7 +397,7 @@ registerWhen(register("itemTooltip", (lore, item) => {
     // Check item data to cancel lore append.
     const itemTag = item.getNBT().getCompoundTag("tag");
     const loreTag = itemTag.getCompoundTag("display").getTagMap().get("Lore");
-    const itemUUID = itemTag.getCompoundTag("ExtraAttributes").getString("uuid");
+    const itemUUID = (itemTag.getCompoundTag("ExtraAttributes").getString("uuid") || item.getName()) + item.getStackSize();
     if (loreTag === null) return;
 
     // Check if value already in tooltip
