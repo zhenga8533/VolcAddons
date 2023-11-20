@@ -16,7 +16,7 @@ export function updateBestiary(profileId) {
 
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
-        url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${profileId}`,
+        url: `https://api.hypixel.net/v2/skyblock/profile?key=${settings.apiKey}&profile=${profileId}`,
         json: true
     }).then((response) => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
@@ -122,6 +122,17 @@ const bestiary = {
     "Pig": new Mob(["farming_pig"], [1], 1, 5, 0.5),
     "Rabbit": new Mob(["farming_rabbit"], [1], 1, 5, 3),
     "Sheep": new Mob(["farming_sheep"], [1], 1, 5, 3),
+    // Garden
+    "Mosquito": new Mob(["pest_mosquito"], [1], 6, 15, 120),
+    "Rat": new Mob(["pest_rat"], [1], 6, 15, 120),
+    "Slug": new Mob(["pest_slug"], [1], 6, 15, 120),
+    "Locust": new Mob(["pest_locust"], [1], 6, 15, 120),
+    "Fly": new Mob(["pest_fly"], [1], 6, 15, 120),
+    "Worm": new Mob(["pest_worm"], [1], 6, 15, 120),
+    "Mite": new Mob(["pest_mite"], [1], 6, 15, 120),
+    "Moth": new Mob(["pest_moth"], [1], 6, 15, 120),
+    "Beetle": new Mob(["pest_beetle"], [1], 6, 15, 120),
+    "Cricket": new Mob(["pest_cricket"], [1], 6, 15, 120),
     // Spider's Den
     "Arachne": new Mob(["arachne"], [300, 500], 7, 20, 30),
     "Arachne's Brood": new Mob(["arachne_brood"], [100, 200], 4, 15, 3),
@@ -373,7 +384,7 @@ export function getBestiary(args) {
             const mob = bestiary[key];
             if (mob === undefined) {
                 ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-                ChatLib.chat(`${LOGO + RED}Please input as ${GRAY}/va be ${DARK_GRAY}<${GRAY}name, kill, time, bracket [1-7]${DARK_GRAY}> ${GRAY}[amount]`);
+                ChatLib.chat(`${LOGO + RED}Please input as ${GRAY}/va be ${DARK_GRAY}<${GRAY}[name], kill, time, bracket [1-7]${DARK_GRAY}> ${GRAY}[amount]`);
             } else
                 ChatLib.chat(`${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${RED + getTime(mob.nextTime) + GREEN})`);
             break;
@@ -390,7 +401,7 @@ const bestiaryData = [[], []];
 /**
  * Trigger to record and track bestiary menu levels.
  */
-const setLevels = register("tick", () => {
+const setLevels = register("guiRender", () => {
     const container = Player.getContainer();
 
     if (bestiaryData[0].length === 0) {

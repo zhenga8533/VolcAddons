@@ -74,7 +74,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // --- Essential ---
     @TextProperty({
         name: "API Key",
-        description: `Input your API key (this will be changed later).\nYou may need to run ${AQUA}/ct load ${GRAY}after inputting key.`,
+        description: `Input your API key ${BLUE}(only useful for "/va be")${GRAY}.\nYou may need to run ${AQUA}/ct load ${GRAY}after inputting key.`,
         category: "General",
         subcategory: "Essential",
         protected: true

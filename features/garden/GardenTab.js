@@ -31,7 +31,7 @@ registerWhen(register("step", () => {
 
     tab = tablist[index];
     while (tab.length > 3 && tab !== "§r       §r§6§lAccount Info§r") {
-        gardenOverlay.message += tab + '\n';
+        gardenOverlay.message += tab.split(' ').splice(0, 3).join(' ') + '\n';
         tab = tablist[++index];
     }
 }).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);

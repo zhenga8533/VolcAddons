@@ -1,8 +1,10 @@
 [
-    "- TODO: Added `/va au` (attribute upgrade)",
+    "- TODO: Added upgarde calc to '/va attribute'",
+    "- TODO: Added pesthunter bonus display",
     "- Added new enchantments to value calc",
     "- Added infestation alert",
     "- Added /va <yaw, pitch>",
+    "- Updated API and bestiary pathing",
     "- Changed next visitor to track 6th visitor",
     "- Changed item value overlay to work with bazaar products",
     "- Cleaned up help commands",
