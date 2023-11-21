@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
 import { getPlayerName, getTime, isValidDate } from "../../utils/functions";
 import { getKuudraHP } from "./KuudraDetect";
 import { Overlay } from "../../utils/overlay";
@@ -320,5 +320,5 @@ export function getSplits(args){
 
     // Invalid command
     ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-    ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va splits ${DARK_GRAY}<${GRAY}clear, last, best, today, average ${DARK_GRAY}<${GRAY}[# of runs], [player members], [mm/dd/yyyy]${DARK_GRAY}>${RESET + AQUA + DARK_GRAY}>`);
+    ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va splits ${GRAY}<${WHITE}clear, last, best, today, average ${GRAY}<${WHITE}[# of runs], [player members], [mm/dd/yyyy]${GRAY}>>`);
 };

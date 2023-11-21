@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { DARK_GRAY, GRAY, GREEN, LOGO, RED } from "../../utils/constants";
+import { GRAY, GREEN, LOGO, RED } from "../../utils/constants";
 import { getClosest } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -104,7 +104,7 @@ export function soulEdit(args, type, soul, base) {
             break;
         default:
             ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-            ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va ${type} ${DARK_GRAY}<${GRAY}reset, clear, pop${DARK_GRAY}>`);
+            ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va ${type} ${GRAY}<${WHITE}reset, clear, pop${GRAY}>`);
             break;
     }
 }
@@ -137,7 +137,7 @@ export function riftWaypointEdit(args, type, base) {
         ChatLib.chat(`${LOGO + GREEN}Succesfully loaded [${name}] waypoint!`);
     } else {
         ChatLib.chat(`\n${LOGO + RED}Error: ${type} [${name}] not found!`);
-        ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va ${type} ${DARK_GRAY}<${GRAY}[name], clear${DARK_GRAY}>`);
+        ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va ${type} ${GRAY}<${WHITE}[name], clear${GRAY}>`);
     }
 }
 

@@ -1,8 +1,8 @@
-import { GREEN, LOGO, RED } from "../../utils/constants";
+import { GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 
 register("command", (name) => {
     if (name === undefined) {
-        ChatLib.chat(`${LOGO + RED}Please enter as /sk [ign]`);
+        ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/sk [ign]`);
         return;
     }
 

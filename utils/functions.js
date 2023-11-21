@@ -369,7 +369,6 @@ export function getSlotCoords(slot, containerType) {
     }
 }
 
-
 /**
  * Plays a sound and sets cooldown
  * 
@@ -383,4 +382,20 @@ export function playSound(sound, cd) {
     sound?.play();
     soundCD = true;
     delay(() => soundCD = false, cd);
+}
+
+/**
+ * Decode Hypixel item NBT bytes
+ * Credit to https://www.chattriggers.com/modules/v/SBInvSee for decoding!
+ * 
+ * @param {String} bytes - Encoded hypixel item data.
+ * @returns {String} Decoded NBT data.
+ */
+const decoder = java.util.Base64.getDecoder();
+const compressor = net.minecraft.nbt.CompressedStreamTools;
+export function decode(bytes) {
+    const bytearray = decoder.decode(bytes);
+    const inputstream = new java.io.ByteArrayInputStream(bytearray);
+    const nbt = compressor.func_74796_a(inputstream);
+    return nbt.func_150295_c("i", 10).func_150305_b(0);
 }

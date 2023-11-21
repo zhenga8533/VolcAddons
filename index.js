@@ -12,7 +12,6 @@ import { getLatestReleaseVersion } from "./utils/updates";
 import { data, updateList } from "./utils/variables";
 import { findZone, getTier, getWorld } from "./utils/worlds";
 // Utility Variable Control
-data.autosave();
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
 if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
@@ -123,18 +122,18 @@ function getHelp() {
     
     // General Commands
     ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}`);
-    ChatLib.chat(`${AQUA + BOLD}Settings: ${GRAY}/va ${DARK_GRAY}<${GRAY}gui, settings, toggles, version, help${DARK_GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Waypoints: ${GRAY}/va ${DARK_GRAY}<${GRAY}waypoint, enigma, npc, zone, cat${DARK_GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Lists: ${GRAY}/va ${DARK_GRAY}<${GRAY}cd, whitelist, blacklist, emotelist, warplist${DARK_GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Economy: ${GRAY}/va ${DARK_GRAY}<${GRAY}calc, apex, attribute, au${DARK_GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Misc: ${GRAY}/va ${DARK_GRAY}<${GRAY}splits, be${DARK_GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Etc: ${GRAY}/sk\n`);
+    ChatLib.chat(`${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}cd, whitelist, blacklist, emotelist, warplist${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, apex, attribute${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Etc: ${WHITE}/sk\n`);
 
     // Feature Commands
     ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}`);
-    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${GRAY}/va ${DARK_GRAY}<${GRAY}ping, fps, tps, xyz, yaw, pitch${DARK_GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Stats Commands: ${GRAY}/va ${DARK_GRAY}<${GRAY}pet, stats, pt, sf${DARK_GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Party Commands: ${GRAY}Refer to '/va toggles'`);
+    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, xyz, yaw, pitch${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 }
 
 // Dev Mode
@@ -227,7 +226,7 @@ register ("command", (...args) => {
         case "wdr":
         case "sin":
             if (!FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName())) {
-                ChatLib.chat(`${LOGO + RED}The contract, signed it must be. Access granted, for you to see. ${GRAY}/va contract`);
+                ChatLib.chat(`${LOGO + RED}The contract, signed it must be. Access granted, for you to see. ${DARK_GRAY}/va contract`);
                 break;
             }
 
@@ -335,7 +334,7 @@ register ("command", (...args) => {
                         if (MINION_ARGS.has(args[1])) calcMinions(args);
                         else {
                             ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-                            ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va calc ${DARK_GRAY}<${GRAY}gdrag, hg, inferno, gaba, tabasco, vampire, compost${DARK_GRAY}>`);
+                            ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va calc ${GRAY}<${WHITE}gdrag, hg, inferno, gaba, tabasco, vampire, compost${GRAY}>`);
                         }
                         break;
                 }
@@ -345,10 +344,10 @@ register ("command", (...args) => {
         case "apex":
             if (args[1] === undefined) {
                 ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-                ChatLib.chat(`${LOGO + RED}Please input as: ${GRAY}/va apex [value]${DARK_GRAY}>`);
+                ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va apex [value]`);
             } else {
                 data.apexPrice = unformatNumber(args[1]) || data.apexPrice;
-                ChatLib.chat(`${LOGO + GREEN}Successfully changed Apex price to ${formatNumber(data.apexPrice)}!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully changed Apex value to ${formatNumber(data.apexPrice)}!`);
             }
             break;
         // Configure enigma souls

@@ -1,6 +1,6 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions";
 import { getPlayerUUID } from "../../utils/player";
 import { delay } from "../../utils/thread";
@@ -384,7 +384,7 @@ export function getBestiary(args) {
             const mob = bestiary[key];
             if (mob === undefined) {
                 ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-                ChatLib.chat(`${LOGO + RED}Please input as ${GRAY}/va be ${DARK_GRAY}<${GRAY}[name], kill, time, bracket [1-7]${DARK_GRAY}> ${GRAY}[amount]`);
+                ChatLib.chat(`${LOGO + RED}Please input as ${WHITE}/va be ${GRAY}<${WHITE}[name], kill, time, bracket [1-7]${GRAY}> ${WHITE}[amount]`);
             } else
                 ChatLib.chat(`${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${RED + getTime(mob.nextTime) + GREEN})`);
             break;

@@ -1,58 +1,7 @@
 import request from "../../../requestV2";
-import { BLUE, BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { formatNumber } from "../../utils/functions";
+import { BLUE, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { decode, formatNumber } from "../../utils/functions";
 
-
-/**
- * Java NBT tools.
- */
-const decoder = java.util.Base64.getDecoder();
-const compressor = net.minecraft.nbt.CompressedStreamTools;
-
-/**
- * Variable used to track Golden Dragons.
- * { uuid : [level, cost] }
- */
-let gdrags = {};
-
-/**
- * Calculates best 5 gdrags in object using level costs.
- * 
- * @param {number} minLvl - Minimum level of gdrag required to be calculated
- */
-export function calcGdrag(minLvl) {
-    if (Object.keys(gdrags).length === 0) {
-        findGdrag(0, minLvl);
-        return;
-    }
-
-    // Filter out gdrags with level < minLvl
-    const filteredDrags = {};
-    for (let gdrag in gdrags) {
-        if (gdrags[gdrag][0] >= minLvl && (!filteredDrags.hasOwnProperty(gdrag) || gdrags[gdrag][1] < filteredDrags[gdrag][1]))
-        filteredDrags[gdrag] = gdrags[gdrag];
-    }
-
-    // Find lowest level costs => { level cost : uuid }
-    const levelCosts = {};
-    for (let gdrag in filteredDrags) {
-        if (gdrag[0] <= 100) continue;
-        let levelPrice = (filteredDrags[gdrag][1] - 600_000_000) / (filteredDrags[gdrag][0] - 100);
-        levelCosts[levelPrice] = gdrag;
-    }
-
-    // Find X lowest
-    const sortedCosts = Object.keys(levelCosts).sort((a, b) => a - b).slice(0, 5);
-    ChatLib.chat(`${LOGO + GOLD + BOLD}Top ${5} Golden Dragons [${WHITE}lvl ${minLvl}+${GOLD}]:`);
-    for (let i = 0; i < 5; i++) {
-        let uuid = levelCosts[sortedCosts[i]];
-        if (uuid === undefined) return;
-        new Message(`${i+1}. `, new TextComponent(`${BLUE + uuid}`)
-            .setClick("run_command", `/viewauction ${uuid}`)
-            .setHoverValue(`Click to open auction #${i+1}!`),
-            `${GRAY} (CpL: ${formatNumber(sortedCosts[i])})`).chat();
-    }
-}
 
 /**
  * Loops through Auction api for all golden dragons and then calls calcGdrag function.
@@ -60,9 +9,10 @@ export function calcGdrag(minLvl) {
  * @param {number} page - Auction api page number,
  * @param {number} minLvl - Minimum levle of Golden Dragon to calculate
  */
+let gdrags = [];
 function findGdrag(page, minLvl) {
     request({
-        url: `https://api.hypixel.net/skyblock/auctions?page=${page}`,
+        url: `https://api.hypixel.net/v2/skyblock/auctions?page=${page}`,
         json: true
     }).then((response)=>{
         ChatLib.clearChat(888);
@@ -70,34 +20,62 @@ function findGdrag(page, minLvl) {
         
         response.auctions.forEach(auction => {
             const { uuid, item_name, bin, starting_bid, item_bytes } = auction;
-            const args = /^\[Lvl (\d+)] Golden Dragon$/.exec(item_name);
-            const level = args?.[1];
-            if (!bin || level === undefined) return; // Skip non-bin auctions
+            const level = parseInt(item_name.match(/\[Lvl (\d+)\] Golden Dragon/)?.[1]);
+            if (!bin || isNaN(level) || level < 100) return; // Skip non-bin auctions
 
-            // Credit to https://www.chattriggers.com/modules/v/SBInvSee for NBT data
             // Checks for pet candy.
-            const bytearray = decoder.decode(item_bytes);
-            const inputstream = new java.io.ByteArrayInputStream(bytearray);
-            const nbt = compressor.func_74796_a(inputstream);
-            const itemData = nbt.func_150295_c("i", 10).func_150305_b(0);
+            const itemData = decode(item_bytes);
             const petInfo = new NBTTagCompound(itemData).getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("petInfo");
             if (JSON.parse(petInfo).candyUsed !== 0) return;
             
-            gdrags[uuid] = [parseInt(level), starting_bid];
+            // Add to list
+            const levelPrice = (starting_bid - 600_000_000) / (level - 100);
+            gdrags.push([uuid, level, levelPrice]);
         });
 
         if (page + 1 < response.totalPages) findGdrag(page + 1, minLvl);
         else {
+            // Sort by level cost
+            gdrags.sort((a, b) => a[2] - b[2]);
+
             ChatLib.chat(`${LOGO + GREEN}Auction loop complete!`);
-            ChatLib.chat(`${GRAY}GDrag values saved, use \`/refreshGdrag\` to refresh data.`);
             if (minLvl != 0) calcGdrag(minLvl);
+            ChatLib.chat(`${DARK_GRAY}GDrag values saved, use '/refreshGdrag' to refresh auction data!`);
         }
     }).catch((error)=>{
         console.error(error);
     });
 }
-
 register("command", () => {
-    gdrags = {};
+    gdrags = [];
     findGdrag(0, 0);
 }).setName("refreshGdrag", true);
+
+/**
+ * Calculates best 5 gdrags in object using level costs.
+ * 
+ * @param {number} minLvl - Minimum level of gdrag required to be calculated
+ */
+export function calcGdrag(minLvl) {
+    // Check for gdrags variable
+    if (gdrags.length === 0) {
+        findGdrag(0, minLvl);
+        return;
+    }
+    const fDrag = gdrags.filter(drag => drag[1] >= minLvl);
+    const amount = Math.min(fDrag.length, 10);
+
+    // Clear chat
+    let chatID = 8008;
+    ChatLib.clearChat([8008]);
+    new Message(`\n${LOGO + GOLD + BOLD}Top ${amount} Golden Dragons [${WHITE}lvl ${minLvl}+${GOLD}]:`).setChatLineId(chatID++).chat();
+
+    // And print new values
+    for (let i = 0; i < amount; i++) {
+        new Message(`${i+1}. `, new TextComponent(`${BLUE + fDrag[i][0]}`)
+            .setClick("run_command", `/viewauction ${fDrag[i][0]}`)
+            .setHoverValue(`Click to open auction #${i+1}!`),
+            `${GRAY} [lvl ${fDrag[i][1]}: ${formatNumber(fDrag[i][2])}]`)
+            .setChatLineId(chatID++).chat();
+    }
+}

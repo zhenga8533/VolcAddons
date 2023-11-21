@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, romanToNum } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -36,7 +36,8 @@ export function calcCompost(args) {
     // Upgrades
     const testLevel = parseInt(args[2]);
     if (isNaN(testLevel) && data.composterUpgrades["Cost Reduction"] === -1) {
-        ChatLib.chat(`${LOGO + RED}Please input as /va calc compost [level] / open you composter upgrades menu!`);
+        ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va calc compost [level]!`);
+        ChatLib.chat(`${LOGO + DARK_GRAY}Please note that this means your composter upgrade menu has not yet been tracked!`);
         return;
     }
     const speedUpgrade = !isNaN(testLevel) ? testLevel : data.composterUpgrades["Composter Speed"];

@@ -1,6 +1,6 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
-import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, WHITE } from "./constants";
+import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 import { delay } from "./thread";
 
 
@@ -210,7 +210,7 @@ export function updateList(args, list, listName) {
             }
         default:
             ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${command}"!`);
-            let base = `${LOGO + RED}Please input as: ${GRAY}/va ${listName} ${DARK_GRAY}<${GRAY}view, clear, add, remove${DARK_GRAY}> ${GRAY}`;
+            let base = `${LOGO + RED}Please input as: ${WHITE}/va ${listName} ${GRAY}<${WHITE}view, clear, add, remove${GRAY}> ${WHITE}`;
 
             if (listName === "cdlist") base += `[cd]\n\n${DARK_AQUA}Special args (put in front, e.x 'a60'):
 - ${AQUA}none ${GRAY}=> ${GRAY}right click
@@ -218,9 +218,9 @@ export function updateList(args, list, listName) {
 - ${AQUA}a ${GRAY}=> ${AQUA}no cd (e.x Plasmaflux)
 - ${AQUA}s ${GRAY}=> ${AQUA}shift`;
             else if (listName === "emotelist") base += "[key] [value]";
-            else if (listName === "warplist") base += `${DARK_GRAY}<${GRAY}hub, castle, da, museum, crypt, wizard${DARK_GRAY}>>`;
+            else if (listName === "warplist") base += `${GRAY}<${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
             else if (listName === "moblist")
-                base += `${DARK_GRAY}<${GRAY}[MC Entity Class], [Stand Name]${DARK_GRAY}>>`;
+                base += `${GRAY}<${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
             else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]";
             else base += "[item]";
             
