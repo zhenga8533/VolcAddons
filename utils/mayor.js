@@ -4,7 +4,7 @@ import { request } from "../../requestV2";
 /**
  * Variables used to represent mayor data.
  */
-const MAYOR_API = "https://api.hypixel.net/resources/skyblock/election";
+const MAYOR_API = "https://api.hypixel.net/v2/resources/skyblock/election";
 let mayor = undefined;
 
 /**

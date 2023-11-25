@@ -743,6 +743,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     pestHighlight = false;
 
     @SwitchProperty({
+        name: "Pesthunter Display",
+        description: "Tracks and warns when the pesthunter bonus runs out.",
+        category: "Farming",
+        subcategory: "Pests"
+    })
+    pesthunterBonus = false;
+
+    @SwitchProperty({
         name: "Spray Display",
         description: `Tracks and warns when sprays on any plot in about to expire. Also highlights sprayed plots in the desk menu.\nMove GUI with ${AQUA}/moveSpray ${GRAY}.`,
         category: "Farming",

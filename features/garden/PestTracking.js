@@ -161,3 +161,12 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     infested.unregister();
 }).setCriteria("Your Garden is no longer infested and your ☘ Farming Fortune has returned to normal!"), () => getWorld() === "Garden" && settings.infestationAlert);
+
+
+/**
+ * Pesthunter bonus tracking
+ */
+registerWhen(register("chat", () => {
+    infested.register();
+}).setCriteria("[NPC] Phillip: In exchange for ${pests} Pests, I've given you +${fortune}☘ Farming Fortune for 30m!"),
+() => getWorld() === "Garden" && settings.infestationAlert);

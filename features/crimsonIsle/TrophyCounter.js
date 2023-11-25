@@ -113,7 +113,7 @@ export function updateTrophy(profileId) {
 
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
-        url: `https://api.hypixel.net/skyblock/profile?key=${settings.apiKey}&profile=${profileId}`,
+        url: `https://api.hypixel.net/v2/skyblock/profile?key=${settings.apiKey}&profile=${profileId}`,
         json: true
     }).then((response) => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
