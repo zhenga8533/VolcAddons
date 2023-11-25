@@ -65,7 +65,7 @@ export function calcCompost(args) {
     ChatLib.chat(`${AQUA}Organic Matter Cost [${WHITE}Box Of Seeds${AQUA}]: ${RED + commafy(organicCost)}`);
     ChatLib.chat(`${AQUA}Fuel Cost [${WHITE + fuelType + AQUA}]: ${RED + commafy(fuelCost)}`);
     ChatLib.chat(`${AQUA}Average Compost Profit: ${GREEN + commafy(compostPrice)}`);
-    ChatLib.chat(`${AQUA}Overall Profit: ${totalProfit > 0 ? GREEN : RED + commafy(totalProfit)}\n`);
-    ChatLib.chat(`${AQUA}Hourly Profit: ${hourlyProfit > 0 ? GREEN : RED + hourlyProfit}`);
-    ChatLib.chat(`${AQUA}Daily Profit: ${dailyProfit > 0 ? GREEN : RED + dailyProfit}\n`);
+    ChatLib.chat(`${AQUA}Overall Profit: ${(totalProfit > 0 ? GREEN : RED) + commafy(totalProfit)}\n`);
+    ChatLib.chat(`${AQUA}Hourly Profit: ${(hourlyProfit > 0 ? GREEN : RED) + hourlyProfit}`);
+    ChatLib.chat(`${AQUA}Daily Profit: ${(dailyProfit > 0 ? GREEN : RED) + dailyProfit}\n`);
 }

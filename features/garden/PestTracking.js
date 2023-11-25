@@ -43,7 +43,7 @@ register("step", () => {
             time > 600 ? YELLOW : RED;
         sprayOverlay.message += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + getTime(time) + DARK_GRAY})`
     });
-    if (keys.length === 0) sprayOverlay.message += `\n ${RED}None...`;
+    if (keys.length === 0) sprayOverlay.message += `\n ${RED + BOLD}None...`;
 }).setFps(1);
 
 /**
@@ -134,10 +134,10 @@ registerWhen(register("guiClosed", () => {
  * Alerts for pest spawns
  */
 registerWhen(register("chat", (_, plot) => {
-    Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`);
+    Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`, 10, 50, 10);
 }).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"), () => getWorld() === "Garden" && settings.pestAlert);
 registerWhen(register("chat", (_, num, plot) => {
-    Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`);
+    Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`, 10, 50, 10);
 }).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => getWorld() === "Garden" && settings.pestAlert);
 
 
@@ -164,9 +164,37 @@ registerWhen(register("chat", () => {
 
 
 /**
- * Pesthunter bonus tracking
+ * Pesthunter bonus tracking.
  */
-registerWhen(register("chat", () => {
-    infested.register();
+const bonuses = {};
+let remain = 0;
+function addPests(pests) {
+    if (pests in bonuses) addPests(pests.toString() + String.fromCharCode(Math.floor(Math.random() * 26) + 97));
+    else bonuses[pests] = 1800;
+}
+registerWhen(register("chat", (_, fortune) => {
+    remain = 1800;
+    addPests(fortune);
 }).setCriteria("[NPC] Phillip: In exchange for ${pests} Pests, I've given you +${fortune}☘ Farming Fortune for 30m!"),
-() => getWorld() === "Garden" && settings.infestationAlert);
+() => getWorld() === "Garden" && settings.pesthunterBonus);
+
+/**
+ * Track bonus timer
+ */
+const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
+const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "moveBonus", bonusExample);
+registerWhen(register("step", () => {
+    bonusOverlay.message = `${YELLOW + BOLD}Pest Bonus: `;
+    let fortune = 0;
+    Object.keys(bonuses).forEach(bonus => {
+        if (fortune === 0) time = bonuses[bonus];
+        if (--bonuses[bonus] === 0) delete bonuses[bonus];
+        else fortune += parseInt(bonus.replace(/[^0-9]/g, ''));
+    });
+    if (fortune === 0) bonusOverlay.message += `${RED + BOLD}Inactive!`;
+    else {
+        const bonusColor = remain > 1200 ? GREEN :
+        remain > 600 ? YELLOW : RED;
+        bonusOverlay.message += `${GOLD + fortune}☘ ${bonusColor}(${getTime(--remain)})`
+    }
+}).setFps(1), () => getWorld() === "Garden" && settings.pesthunterBonus);
