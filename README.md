@@ -59,6 +59,7 @@
 
 7. El Fin v2: Now just type /ct load and your job is done!
 </br>
+After you finish installing, go check out some other useful SkyBlock mods: https://sbmw.ca/mod-lists/skyblock-mod-list/!
 
 ## Commands
 - GENERAL COMMANDS:
