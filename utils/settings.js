@@ -372,6 +372,22 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         options: ["OFF", "On Transfer", "On Kick"]
     })
     autoTransfer = 0;
+    
+    @TextProperty({
+        name: "Guild Join Message",
+        description: `${DARK_RED}NEW! ${GRAY}Set the message to be sent to the guild once a user joins.`,
+        category: "Party",
+        subcategory: "Party"
+    })
+    guildMessage = "";
+    
+    @TextProperty({
+        name: "Party Join Message",
+        description: `${DARK_RED}NEW! ${GRAY}Set the message to be sent to the party once a user joins.`,
+        category: "Party",
+        subcategory: "Party"
+    })
+    partyMessage = "";
 
     @TextProperty({
         name: "Server Kick Announce",
