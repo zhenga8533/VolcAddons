@@ -1,3 +1,4 @@
 [
-    "- Added party/guild join messages"
+    "- Added party/guild join messages",
+    "- Fixed visitor timer not counting"
 ]

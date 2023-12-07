@@ -46,6 +46,13 @@ const nextExample = `${AQUA + BOLD}Next Visitor: ${WHITE}REVERT GARDEN`;
 const nextOverlay = new Overlay("nextVisitor", ["all"], () => true, data.NL, "moveNext", nextExample);
 
 registerWhen(register("step", () => {
+    // Decrement outside Garden
+    if (getWorld() !== "Garden") {
+        if (next === 0) nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${RED + BOLD}Shipment Received`;
+        else nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${WHITE + getTime(next--)}`;
+        return;
+    }
+
     // Check tab case
     if (!World.isLoaded()) return;
     const visitors = TabList.getNames()
@@ -75,7 +82,7 @@ registerWhen(register("step", () => {
 
     // Decrement
     nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${WHITE + getTime(next--)}`;
-}).setFps(1), () => getWorld() === "Garden" && (settings.nextVisitor || settings.warpGarden));
+}).setFps(1), () => settings.nextVisitor || settings.warpGarden);
 
 // Set next visitor time (assuming with 20% visitor reduction)
 registerWhen(register("chat", () => {
