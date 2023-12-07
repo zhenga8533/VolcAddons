@@ -1,4 +1,5 @@
 [
     "- Added party/guild join messages",
+    "- Changed command corrector to parse out uncommon commands",
     "- Fixed visitor timer not counting"
 ]
