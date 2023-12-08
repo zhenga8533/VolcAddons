@@ -163,7 +163,8 @@ export function updateList(args, list, listName) {
 
     // Object pairs
     const value = listName === "cdlist" ? args[2] : args.slice(3).join(' ');
-    const key = listName === "cdlist" ? Player?.getHeldItem()?.getName() : args[2];
+    const key = listName === "cdlist" ?
+        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : args[2];
 
     switch (command) {
         case "add": // ADD TO LIST

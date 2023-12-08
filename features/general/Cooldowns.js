@@ -1,6 +1,7 @@
 import settings from "../../utils/settings";
-import { BOLD, GREEN } from "../../utils/constants";
+import { BOLD, DARK_GREEN, GREEN } from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
+import { convertToTitleCase } from "../../utils/functions";
 
 
 /**
@@ -14,7 +15,7 @@ let items = {};
 registerWhen(register("clicked", (x, y, button, down) => {
     const held = Player.getHeldItem();
     if (Client.isInGui() || !down || held === null) return;
-    const heldName = held.getName();
+    const heldName = held?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
     if (!(heldName in data.cooldownlist)) return;
 
     const cd = data.cooldownlist[heldName];
@@ -25,11 +26,11 @@ registerWhen(register("clicked", (x, y, button, down) => {
 
         if (firstLetter === 'a' || (firstLetter === 'l' && !(heldName in items) && button === 0)) {
             held.setStackSize(remaining);
-            items[heldName] = remaining;
+            items[heldName] = [remaining, held.getName()];
         }
     } else if (button === 1 && !(heldName in items)) {
         held.setStackSize(cd);
-        items[heldName] = cd;
+        items[heldName] = [cd, held.getName()];
     }
 }), () => data.cooldownlist.length !== 0);
 
@@ -49,7 +50,7 @@ shiftKey.registerKeyPress(() => {
     
     // Loop through to check in cd list
     pieces.forEach(piece => {
-        const pieceName = piece?.getName();
+        const pieceName = piece?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
         const cd = data.cooldownlist[pieceName];
         if (cd === undefined) return;
 
@@ -60,10 +61,10 @@ shiftKey.registerKeyPress(() => {
 
         if (firstLetter === 's' && !isNaN(remaining)) {
             piece.setStackSize(remaining);
-            items[pieceName] = remaining;
+            items[pieceName] = [remaining, piece.getName()];
         } else if (!isNaN(cd)) {
             piece.setStackSize(cd);
-            items[pieceName] = cd;
+            items[pieceName] = [cd, piece.getName()];
         }
     });
 });
@@ -81,21 +82,23 @@ registerWhen(register("worldUnload", () => {
 let filteredItems = undefined;
 registerWhen(register("tick", () => {
     const dupe = new Set();
-    filteredItems = Player.getInventory().getItems().filter(item => item !== null && item.getName() in items);
+    filteredItems = Player.getInventory().getItems().filter(item =>
+        item !== null && item?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") in items);
     filteredItems.forEach(item => {
-        const itemName = item.getName();
-        if (!dupe.has(itemName)) {
-            items[itemName] -= 0.05;
-            dupe.add(itemName);
+        const itemID = item?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
+        const itemName = items[itemID][1];
+        if (!dupe.has(itemID)) {
+            items[itemID][0] -= 0.05;
+            dupe.add(itemID);
         }
 
-        const cd = Math.ceil(items[itemName]);
-        if (isNaN(cd)) delete items[itemName];
+        const cd = Math.ceil(items[itemID][0]);
+        if (isNaN(cd)) delete items[itemID];
         else if (cd <= 0) {
             if (settings.cooldownAlert)
-                Client.showTitle("", `${itemName.slice(0, 2) + BOLD + itemName.slice(2)} ${GREEN}is Ready!`, 5, 25, 5);
+                Client.showTitle(itemName, `${GREEN}is off cooldown!`, 5, 25, 5);
             item.setStackSize(1);
-            delete items[itemName];
+            delete items[itemID];
         }
     });
 }), () => data.cooldownlist.length !== 0);
@@ -106,12 +109,13 @@ registerWhen(register("tick", () => {
 registerWhen(register("renderHotbar", () => {
     if (filteredItems === undefined || filteredItems.length === 0) return;
     
-    filteredItems = Player.getInventory().getItems().filter(item => item !== null && item.getName() in items);
+    filteredItems = Player.getInventory().getItems().filter(item =>
+        item !== null && item?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") in items);
     filteredItems.forEach(item => {
-        const itemName = item.getName();
+        const itemID = item?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
 
-        const cd = Math.ceil(items[itemName]);
-        if (isNaN(cd)) delete items[itemName];
+        const cd = Math.ceil(items[itemID][0]);
+        if (isNaN(cd)) delete items[itemID];
         else item.setStackSize(cd);
     });
 }), () => data.cooldownlist.length !== 0);
