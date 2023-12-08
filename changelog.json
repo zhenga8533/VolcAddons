@@ -1,6 +1,10 @@
 [
+    "- TODO: Added '/va attribute upgrade'",
     "- Added party/guild join messages",
+    "- Changed API backend to track over weekly price",
+    "- TODO: Changed '/va cd' to use item base",
     "- Changed command corrector to parse out uncommon commands",
+    "- Changed some text formatting",
     "- Fixed master star value calc",
     "- Fixed visitor timer not counting"
 ]

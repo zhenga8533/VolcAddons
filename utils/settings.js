@@ -30,6 +30,11 @@ class Settings {
 ${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, whitelist, blacklist, blocklist>
 ${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at own risk!`);
 
+        // Party Category
+        this.setCategoryDescription("Party",
+        `${HEADER}
+        ${ITALIC}Related Commands: /va <wl, bl, toggles>`);
+
         // Economy Category
         this.setCategoryDescription("Economy",
         `${HEADER}
@@ -39,6 +44,12 @@ ${ITALIC}Related Commands: /va <attribute, calc>`);
         this.setCategoryDescription("Combat",
         `${HEADER}
     ${ITALIC}Related Commands: /va be`);
+    
+        // Mining Category
+        this.setCategoryDescription("Mining", HEADER);
+
+        // Farming Category
+        this.setCategoryDescription("Farming", HEADER);
 
         // Event Category
         this.setCategoryDescription("Event",
@@ -48,7 +59,10 @@ ${ITALIC}Related Commands: /va warplist`);
         // Crimson Isles Category
         this.setCategoryDescription("Crimson Isles",
         `${HEADER}
-${ITALIC}Related Commands: /va <calc, apex>`);
+${ITALIC}Related Commands: /va <apex, attribute, calc>`);
+
+        // Dungeon Category
+        this.setCategoryDescription("Dungeon", HEADER);
 
         // Kuudra Category
         this.setCategoryDescription("Kuudra",
@@ -375,7 +389,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     
     @TextProperty({
         name: "Guild Join Message",
-        description: `${DARK_RED}NEW! ${GRAY}Set the message to be sent to the guild once a user joins.`,
+        description: "Set the message to be sent to the guild once a user joins.",
         category: "Party",
         subcategory: "Party"
     })
@@ -383,7 +397,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     
     @TextProperty({
         name: "Party Join Message",
-        description: `${DARK_RED}NEW! ${GRAY}Set the message to be sent to the party once a user joins.`,
+        description: "Set the message to be sent to the party once a user joins.",
         category: "Party",
         subcategory: "Party"
     })
@@ -839,7 +853,7 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
     dianaWaypoint = false;
     @SwitchProperty({
         name: "Diana Warp",
-        description: `Press F ${BLUE}(change in controls) ${GRAY}to warp to location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
+        description: `Set keybind in controls to warp to the location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
         category: "Event",
         subcategory: "Mythological Ritual"
     })
