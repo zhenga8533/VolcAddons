@@ -1,6 +1,8 @@
 [
     "- TODO: Added '/va attribute upgrade'",
     "- Added party/guild join messages",
+    "- Added container functionality to multiple menus",
+    "- Changed container value to label enchanted books",
     "- Changed API backend to track over weekly price",
     "- Changed '/va cd' to track item id",
     "- Changed command corrector to parse out uncommon commands",
