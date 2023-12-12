@@ -118,7 +118,8 @@ let registers = [];
  * @param {function} dependency - The function representing the dependency of the trigger.
  */
 export function registerWhen(trigger, dependency) {
-    registers.push([trigger.unregister(), dependency, false]);
+    trigger.unregister();
+    registers.push([trigger, dependency, false]);
 }
 
 // Updates trigger registrations based on world or GUI changes
@@ -133,7 +134,6 @@ export function setRegisters(off = false) {
         }
     });
 }
-delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")), 1000);
 
 // Event handler for GUI settings close.
 register("guiClosed", (event) => {
@@ -146,7 +146,7 @@ register("guiClosed", (event) => {
 
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
-import { setWarps } from "../features/hub/MythRitual";
+import { setWarps } from "../features/event/MythRitual";
 
 /**
  * Updates a list based on the provided arguments.

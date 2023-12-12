@@ -24,7 +24,6 @@ export function getUserWaypoints() { return userWaypoints };
  */
 registerWhen(register("chat", (player, spacing, x, y, z) => {
     // Check blacklist
-    print(player);
     if (data.blacklist.includes(getPlayerName(player).toLowerCase())) return;
 
     // Gets colors and titles in name

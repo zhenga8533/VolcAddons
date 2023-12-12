@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, DARK_AQUA } from "../../utils/constants";
-import { convertToTitleCase, formatNumber, numToRoman } from "../../utils/functions";
+import { formatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getItemValue } from "./ItemPrice";
@@ -10,7 +10,7 @@ import { getBazaar } from "./Economy";
 /**
  * Variables used to track and display container value.
  */
-const VALID_CONTAINERS = new Set(["Chest", "Backpack", "Bag"]);
+const VALID_CONTAINERS = new Set(["Chest", "Backpack", "Bag", "Wardrobe", "Pets", "Vault", "Museum"]);
 const containerExample = 
 `${WHITE}Item 1${GRAY} - ${WHITE}Be
 ${GREEN}Item 2${GRAY} - ${WHITE}Extremely
@@ -27,25 +27,12 @@ const containerOverlay = new Overlay("containerValue", ["all", "misc"],
 containerOverlay.message = "";
 
 /**
- * Extracts the second word from a string if present, otherwise returns the first word.
+ * Set the message of the overlay given the items object and value.
  * 
- * @param {string} inputString - The input string to process.
- * @returns {string} The second word or the first word if no second word is present.
+ * @param {Object} itemValues - itemName: [count, value]
+ * @param {Number} totalValue - Total value of container
+ * @returns 
  */
-function getFirstSecondWord(inputString) {
-    if (inputString === undefined) return undefined;
-    let firstSpaceIndex = inputString.indexOf(' ');
-  
-    if (firstSpaceIndex !== -1) {
-        let secondSpaceIndex = inputString.indexOf(' ', firstSpaceIndex + 1);
-        return secondSpaceIndex !== -1 ?
-            inputString.substring(firstSpaceIndex + 1, secondSpaceIndex) :
-            inputString.substring(firstSpaceIndex + 1);
-    }
-  
-    return inputString;
-}
-
 function setMessage(itemValues, totalValue) {
     if (totalValue === 0) {
         containerOverlay.message = "";
@@ -76,6 +63,7 @@ function setMessage(itemValues, totalValue) {
 }
 
 /**
+ * Caclulate the value of a sack container (different stack size)
  * 
  * @param {Inventory} container - players currently opened container
  */
@@ -117,10 +105,11 @@ function updateContainerValue(remove) {
     Client.scheduleTask(3, () => {
         const container = Player.getContainer();
         const containerName = container.getName().removeFormatting();
+        const words = containerName.split(" ");
         if (containerName.endsWith("Sack")) {
             sackValue(container);
             return;
-        } else if (!VALID_CONTAINERS.has(getFirstSecondWord(containerName)) && remove !== 0) return;
+        } else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
 
         const items = container.getItems();
         const itemValues = {};

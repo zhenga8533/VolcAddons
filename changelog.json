@@ -1,12 +1,19 @@
 [
-    "- TODO: Added '/va attribute upgrade'",
+    "- TODO: Added Bal HP display",
+    "- TODO: Added wishing compass guestimator",
     "- Added party/guild join messages",
-    "- Added container functionality to multiple menus",
+    "- Added container functionality to some menus",
+    "   - Accessory Bag",
+    "   - Sacks",
+    "   - Wardrobe",
+    "   - Vault",
+    "   - Museum",
     "- Changed container value to label enchanted books",
     "- Changed API backend to track over weekly price",
     "- Changed '/va cd' to track item id",
     "- Changed command corrector to parse out uncommon commands",
     "- Changed some text formatting",
     "- Fixed master star value calc",
-    "- Fixed visitor timer not counting"
+    "- Fixed visitor timer not counting",
+    "- Fixed burrow detect spamming message twice"
 ]

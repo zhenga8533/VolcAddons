@@ -6,8 +6,8 @@ import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/r
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { getPowderChests } from "../features/mining/PowderChest";
 import { data } from "./variables";
-import { getBurrows } from "../features/hub/BurrowDetect.js";
-import { getGuess } from "../features/hub/MythRitual.js";
+import { getBurrows } from "../features/event/BurrowDetect.js";
+import { getGuess } from "../features/event/MythRitual.js";
 
 
 /**

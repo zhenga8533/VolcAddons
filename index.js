@@ -51,15 +51,16 @@ import { getBestiary } from "./features/combat/Bestiary";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
-import "./features/combat/GreatSpook";
 import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/KillCounter";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features
+import "./features/mining/BalDisplay";
 import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
+import "./features/mining/WishingCompass";
 // Farming Features
 import { calcCompost } from "./features/garden/ComposterCalc";
 import "./features/garden/FarmingWebhook";
@@ -67,10 +68,11 @@ import { getNextVisitor } from "./features/garden/GardenTab";
 import "./features/garden/GardenWarp";
 import "./features/garden/JacobHighlight";
 import "./features/garden/PestTracking";
-// Hub Features
-import "./features/hub/BurrowDetect";
-import "./features/hub/InquisitorDetect";
-import "./features/hub/MythRitual";
+// Event Features
+import "./features/event/BurrowDetect";
+import "./features/event/GreatSpook";
+import "./features/event/InquisitorDetect";
+import "./features/event/MythRitual";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
