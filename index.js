@@ -57,7 +57,6 @@ import "./features/combat/KillCounter";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features
-import "./features/mining/BalDisplay";
 import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
 import "./features/mining/WishingCompass";

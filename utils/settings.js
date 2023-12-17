@@ -642,6 +642,15 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
 
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
 
+    // --- Crystal Hollows ---
+    @SwitchProperty({
+        name: "Wishing Compass Locator",
+        description: `${DARK_RED}NEW! ${GRAY}Attempts to use 2 wishing compass uses to estimate important locations.`,
+        category: "Mining",
+        subcategory: "Crystal Hollows"
+    })
+    compassLocator = false;
+
     // --- Jinx ---
     @SwitchProperty({
         name: "2x Powder Alert",

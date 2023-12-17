@@ -6,8 +6,9 @@ import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/r
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { getPowderChests } from "../features/mining/PowderChest";
 import { data } from "./variables";
-import { getBurrows } from "../features/event/BurrowDetect.js";
-import { getGuess } from "../features/event/MythRitual.js";
+import { getBurrows } from "../features/event/BurrowDetect";
+import { getGuess } from "../features/event/MythRitual";
+import { getCompass } from "../features/mining/WishingCompass";
 
 
 /**
@@ -62,7 +63,8 @@ register("tick", () => {
     formatWaypoints(getBurrows(), 0, 0.5, 0); // Green burrows
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
-    formatWaypoints(getEffigies(), 0.75, 0.75, 0.75) // Silver effigies
+    formatWaypoints(getEffigies(), 0.75, 0.75, 0.75); // Silver effigies
+    formatWaypoints(getCompass(), 0.75, 0.17, 0.41); // Bright Purple Compass
 });
 
 /**
