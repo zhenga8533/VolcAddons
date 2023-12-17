@@ -12,7 +12,10 @@ let lastPath = [];
 let compass = [];
 let zone = undefined;
 export function getCompass() { return compass };
-register("worldUnload", () => { compass = [] });
+register("worldUnload", () => {
+    compass = [];
+    zone = undefined;
+});
 
 /**
  * Finds the intercept location between the dx, dz of two lines.
