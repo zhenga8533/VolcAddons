@@ -1,0 +1,16 @@
+{
+  "name": "VolcAddons",
+  "author": "Volcaronitee",
+  "creator": "Volcaronitee",
+  "description": "joe.",
+  "entry": "index.js",
+  "version": "2.8.4",
+  "requires": [
+    "axios",
+    "BeaconBeam",
+    "PogData",
+    "RenderLib",
+    "requestV2",
+    "Vigilance"
+  ]
+}
