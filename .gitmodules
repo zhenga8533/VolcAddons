@@ -1,0 +1,3 @@
+[submodule "beautiful-jekyll"]
+	path = beautiful-jekyll
+	url = https://github.com/daattali/beautiful-jekyll.git
