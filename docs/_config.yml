@@ -10,21 +10,18 @@
 ############################
 
 # Name of website
-title: My Website
+title: VolcAddons
 
 # Your name to show in the footer
-author: Some Person
+author: Volcaronitee
 
 ###############################################
 # --- List of links in the navigation bar --- #
 ###############################################
 
 navbar-links:
-  About Me: "aboutme"
-  Resources:
-    - Beautiful Jekyll: "https://beautifuljekyll.com"
-    - Learn markdown: "https://www.markdowntutorial.com/"
-  Author's home: "https://deanattali.com"
+  Download: "aboutme"
+  Releases: "https://github.com/zhenga8533/VolcAddons/releases"
 
 ################
 # --- Logo --- #
@@ -50,13 +47,13 @@ round-avatar: true
 # You can change the order that they show up on the page by changing the order here.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-  email: "someone@example.com"
+  email: "volcaronitee8533@gmail.com"
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
-  facebook: deanattali
-  github: daattali
-  twitter: daattali
-  patreon: DeanAttali
-  youtube: "@daattali"
+#  facebook: deanattali
+  github: zhenga8533
+#  twitter: daattali
+#  patreon: DeanAttali
+  youtube: "@RickAstleyYT"
 #  medium: yourname
 #  reddit: yourname
 #  linkedin: daattali
@@ -75,7 +72,7 @@ social-network-links:
 #  bluesky: yourname
 #  ORCID: your ORCID ID
 #  google-scholar: your google scholar
-#  discord: "invite_code" or "users/userid" or "invite/invite_code" 
+  discord: "ftxB4kG2tw"
 #  kaggle: yourname
 #  hackerrank: yourname
 #  gitlab: yourname
@@ -91,13 +88,12 @@ rss-description: This website is a virtual proof that I'm awesome
 # Select which social network share links to show in posts
 share-links-active:
   twitter: true
-  facebook: true
   linkedin: true
   vk: false
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "MyWebsite.com"
+url-pretty: "VolcAddons.com"
 
 # Excerpt word length - Truncate the excerpt of each post on the feed page to the specified number of words
 excerpt_length: 50
@@ -163,7 +159,7 @@ footer-hover-col: "#0085A1"
 #################################
 
 # Fill in your Google Analytics tag ID (or "Measurement ID") to track your website usage
-#gtag: "G-XXXXXXXXXX"
+gtag: "G-49ECFN88TM"
 
 # Fill in your Cloudflare Analytics beacon token to track your website using Cloudflare Analytics
 #cloudflare_analytics: ""
