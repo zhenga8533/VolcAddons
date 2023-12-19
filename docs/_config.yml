@@ -20,8 +20,8 @@ author: Volcaronitee
 ###############################################
 
 navbar-links:
-  Download: "aboutme"
-  Releases: "https://github.com/zhenga8533/VolcAddons/releases"
+  Setup: "https://github.com/zhenga8533/VolcAddons/blob/main/README.md"
+  Latest: "https://github.com/zhenga8533/VolcAddons/releases/latest"
 
 ################
 # --- Logo --- #
