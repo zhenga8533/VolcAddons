@@ -12,7 +12,7 @@
 # Website details
 title: VolcAddons
 author: Volcaronitee
-favicon: /favicon.png
+favicon: "/assets/img/favicon.png"
 
 ###############################################
 # --- List of links in the navigation bar --- #
