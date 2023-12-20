@@ -9,11 +9,10 @@
 # --- Required options --- #
 ############################
 
-# Name of website
+# Website details
 title: VolcAddons
-
-# Your name to show in the footer
 author: Volcaronitee
+favicon: /assets/img/favicon.ico
 
 ###############################################
 # --- List of links in the navigation bar --- #
