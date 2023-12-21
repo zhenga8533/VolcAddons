@@ -1,9 +1,9 @@
 ---
 layout: page
 title: Features
+subtitle: _and commands_
 ---
 
-## Features
 <u>GENERAL FEATURES</u>
 - General
     - Armor Display
