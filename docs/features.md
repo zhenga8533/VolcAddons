@@ -1,39 +1,39 @@
 ---
 layout: page
 title: Features
-subtitle: _and commands_
+subtitle: + commands...
 ---
 
-<u>GENERAL FEATURES</u>
-- General
+### <u>GENERAL FEATURES</u>
+- **General**
     - Armor Display
     - Equipment Display
     - Remove Selfie Mode
     - Render Waypoint
     - Skill Tracker
-- Inventory
+- **Inventory**
     - Searchbar
     - Slot Binding
-- Server
+- **Server**
     - Hide Far Entities
     - Hide Close Players
     - Hide All Particles
     - Server Alert
     - Server Status
     - SkyBlock Stats Display
-- Timer
+- **Timer**
     - Item Cooldown Alert
     - Reminder Text
     - Reminder Time
-- Yapping
+- **Yapping**
     - Autocomplete Commands
     - Autocorrect Commands
     - Custom Emotes
     - Discord Webhook
     - Image Viewer
 
-<u>PARTY FEATURES</u>
-- General
+### <u>PARTY FEATURES</u>
+- **General**
     - Anti Ghost Party
     - Auto Join Reparty
     - Auto Transfer
@@ -41,6 +41,6 @@ subtitle: _and commands_
     - Party Join Message
     - Server Kick Announce
     - Whitelist Rejoin
-- Party Commands
+- **Party Commands**
     - Leader Chat Commands
     - Party Chat Commands
