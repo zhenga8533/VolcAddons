@@ -9,6 +9,8 @@ subtitle: Installation Guide (2 methods)
 
 2. **Install ChatTriggers:** You'll need [ChatTriggers](https://www.chattriggers.com) installed for advanced in-game functionality.
 
+3. **Choices:** Choose one of the two options below to follow.
+
 
 ### <u>Forge Installation:</u>
 1. **Download:** Download the [VolcAddons-1.0.jar](https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar) file.
