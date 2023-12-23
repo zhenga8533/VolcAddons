@@ -33,36 +33,32 @@ subtitle: List of every non-gui related commands.
 
 ### <u>Feature Commands</u>
 - **Stats**
-    - `/va `: 
-    - `/va `: 
-    - `/va `: 
-    - `/va `: 
+    - `/va stats`: Prints out SkyBlock tab stats.
+    - `/va pet`: Prints out current pet.
+    - `/va pt`: Prints out daily playtime.
+    - `/va sf`: Prints out current soulflow *(requires accessory in inventory)*.
 - **Status**
-    - `/va `: 
-    - `/va `: 
-    - `/va `: 
-    - `/va `: 
-    - `/va `: 
-    - `/va `: 
+    - `/va fps`: Prints out client's FPS.
+    - `/va tps`: Prints out server's TPS.
+    - `/va ping`: Prints out client's ping.
+    - `/va pitch`: Prints out player's exact pitch.
+    - `/va yaw`: Prints out player's exact yaw.
 - **Leader** *(Used in party chat)*
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
+    - `?<allinv, allinv>`: Toggles party all invite.
+    - `?invite [ign]`: Invites a player to the party.
+    - `?demote`: Demotes the sender.
+    - `?promote`: Promotes the sender.
+    - `?<f, m, t>[1-7]`: Runs the specified join instance command.
+    - `?stream [num]`: Runs the stream command to open the party.
+    - `?transfer`: Transfers the party to sender.
+    - `?warp`: Warps party into lobby.
 - **Party** *(Used in party chat)*
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
-    - `?`:
+    - `?8ball`: Calls upon the Magic 8 Ball.
+    - `?<coin, flip, coinflip, cf>`: Flips a coin.
+    - `?<coords, xyz>`: Sends coordinates of players in patcher format.
+    - `?<dice, roll>`: Rolls a 6 sided dice.
+    - `?<fps, ping, tps>`: Sends specified stat to party.
+    - `?help`: Prints out all party commands to chat.
+    - `?<limbo, lobby, l>`: Forces users to go into main lobby.
+    - `?rps`: Jan, ken, pon.
+    - `?<w, waifu, women>`: I am very quirky.
