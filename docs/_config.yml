@@ -21,7 +21,6 @@ favicon: "/assets/img/favicon.png"
 navbar-links:
   Commands: "commands"
   Features: "features"
-  Installer: "https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar"
   Latest: "https://github.com/zhenga8533/VolcAddons/releases/latest"
   Setup: "setup"
 
