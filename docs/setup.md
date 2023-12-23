@@ -9,6 +9,7 @@ subtitle: Installation Guide (2 methods)
 
 2. **Install ChatTriggers:** You'll need [ChatTriggers](https://www.chattriggers.com) installed for advanced in-game functionality.
 
+
 ### <u>Forge Installation:</u>
 1. **Download:** Download the [VolcAddons-1.0.jar](https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar) file.
 
@@ -16,8 +17,9 @@ subtitle: Installation Guide (2 methods)
 
 3. **El Fin v1:** You should be good to go! The mod will alert you if there is ever a new release in which you can just run `/updateva`!
 
+
 ### <u>Manual Installation:</u>
-1. **Download:** Get the zip file, available either on our [Discord server](https://discord.gg/ftxB4kG2tw) or through [GitHub Releases](github.com/zhenga8533/VolcAddons/releases/latest).
+1. **Download:** Get the zip file, available either on our [Discord server](https://discord.gg/ftxB4kG2tw) or through [GitHub Releases](https://github.com/zhenga8533/VolcAddons/releases).
 
 2. **Unzip:** Extract the downloaded zip file. You should now see a folder named "VolcAddons".
 
