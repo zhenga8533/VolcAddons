@@ -1,34 +1,34 @@
 ---
 layout: page
 title: Features
-subtitle: + commands...
+subtitle: List of all features and their related commands.
 ---
 
 ### <u>General Features</u>
 - **General**
-    - Armor Display
+    - Armor Display (`/moveArmor`)
     - Equipment Display
     - Remove Selfie Mode
     - Render Waypoint
-    - Skill Tracker
+    - Skill Tracker (`/moveSkills`, `/resetSkills`)
 - **Inventory**
-    - Searchbar
-    - Slot Binding
+    - Searchbar (`/moveSearch`)
+    - Slot Binding (`/resetBinds`, `/saveBinds`, `/loadBinds`)
 - **Server**
     - Hide Far Entities
     - Hide Close Players
     - Hide All Particles
     - Server Alert
-    - Server Status
-    - SkyBlock Stats Display
+    - Server Status (`/moveStatus`)
+    - SkyBlock Stats Display (`/moveStats`)
 - **Timer**
-    - Item Cooldown Alert
+    - Item Cooldown Alert (`/va cd`)
     - Reminder Text
     - Reminder Time
 - **Yapping**
-    - Autocomplete Commands
+    - Autocomplete Commands (`/resetWords`)
     - Autocorrect Commands
-    - Custom Emotes
+    - Custom Emotes (`/va emote`)
     - Discord Webhook
     - Image Viewer
 
@@ -40,33 +40,32 @@ subtitle: + commands...
     - Guild Join Message
     - Party Join Message
     - Server Kick Announce
-    - Whitelist Rejoin
+    - Whitelist Rejoin (`/va wl`)
 - **Party Commands**
-    - Leader Chat Commands
+    - Leader Chat Commands (`/va bl`)
     - Party Chat Commands
 
 ### <u>Economy Features</u>
 - **General**
     - Bits Alert
-    - Coin Tracker
+    - Coin Tracker (`/moveCoins`, `/resetCoins`)
 - **Pricing**
-    - Container Value
-    - Item Price
-    - Price Type
+    - Container Value (`/moveContainer`)
+    - Item Price (`/moveValue`)
 
 ### <u>Combat Features</u>
 - **Bestiary**
     - Bestiary GUI
-    - Broodmother Detect
-    - Kill Counter
+    - Broodmother Detect (`/moveBrood`)
+    - Kill Counter (`/moveKills`, `/resetKills`)
 - **General**
-    - Combo Display
+    - Combo Display (`/moveCombo`)
     - Damage Tracker
     - Low Health Alert
     - Ragnarok Detection
 - **Gyrokinetic Wand**
     - Cell Alignment Alert
-    - Cell Alignment Timer
+    - Cell Alignment Timer (`/moveGyro`)
 - **Slayer**
     - Boss Announce
     - Miniboss Announce
@@ -79,25 +78,25 @@ subtitle: + commands...
     - Wishing Compass Locator
 - **Jinx**
     - 2x Powder Alert
-    - Powder Chest Detect
+    - Powder Chest Detect (`/moveChest`)
     - Powder Chest Hider
-    - Powder Tracker
+    - Powder Tracker (`/movePowder`, `/resetPowder`)
 
 ### <u>Farming Features</u>
 - **General**
     - Jacob Reward Highlight
     - Farming Discord Webhook
 - **Garden**
-    - Composter Display
+    - Composter Display (`/moveCompost`)
     - Garden Warp Override
-    - Garden Tab Display
-    - Next Visitor Display
+    - Garden Visitor Display (`/moveVisitors`)
+    - Next Visitor Display (`/moveNext`)
 - **Pests**
     - Infestation Alert
     - Pest Alert
     - Plot Highlight
-    - Pesthunter Display
-    - Spray Display
+    - Pesthunter Display (`/movePest`)
+    - Spray Display (`moveSpray`)
 
 ### <u>Event Features</u>
 - **Great Spook**
@@ -107,23 +106,23 @@ subtitle: + commands...
 - **Inquisitor**
     - Inquisitor Detect
     - Inquisitor Announce
-    - Inquisitor Counter
+    - Inquisitor Counter (`moveInq`, `/resetInq`)
 - **Mythological Ritual**
     - Diana Waypoint
-    - Diana Warp
+    - Diana Warp (`/va warplist`)
     - Burrow Detection
 
 ### <u>Crimson Isles</u>
 - **Fishing**
-    - Golden Fish Timer
+    - Golden Fish Timer (`/moveGolden`)
     - Mythic Creature Announce
     - Mythic Creature Detect
-    - Trophy Fish Counter
+    - Trophy Fish Counter (`/moveTrophy`, `/resetTrophy`)
 - **Vanquisher**
     - Vanquisher Announce
     - Vanquisher Auto-Warp
-    - Vanquisher Counter
-    - Vanquisher Detect
+    - Vanquisher Counter (`/moveCounter`, `/resetCounter`)
+    - Vanquisher Detect (`/moveVanq`)
 
 ### <u>Dungeons</u>
 - **Star Detect**
@@ -135,11 +134,11 @@ subtitle: + commands...
     - Kuudra Alerts
     - Kuudra HP Display
     - Kuudra Spawn Announce
-    - Kuudra Splits
+    - Kuudra Splits (`/moveSplits`, `/va splits`)
     - Supply Pile Highlight
 - **Profit**
-    - Kuudra Profit Display
-    - Kuudra Profit Tracker
+    - Kuudra Profit Display (`/moveKP`)
+    - Kuudra Profit Tracker (`/moveKPT`, `/resetKPT`)
 
 ### <u>Rift</u>
 - **General**
@@ -150,5 +149,5 @@ subtitle: + commands...
     - Announce Mania Phase
     - Effigy Waypoint
     - Enlarge Impel Message
-    - Vampire Attack Display
+    - Vampire Attack Display (`/moveVamp`)
     - Vampire Hitbox
