@@ -132,7 +132,7 @@ function getHelp() {
 
     // Feature Commands
     ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}`);
-    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, xyz, yaw, pitch${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 }

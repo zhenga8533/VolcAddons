@@ -221,11 +221,11 @@ register("command", () => {
  */
 register("gameUnload", () => {
     Object.keys(data.wordbank).forEach(word => {
-        data.wordbank[word] -= 3;
+        data.wordbank[word]--;
         if (data.wordbank[word] <= 0) delete data.wordbank[word];
     });
     Object.keys(data.commands).forEach(command => {
-        data.commands[command] -= 3;
+        data.commands[command]--;
         if (data.commands[command] <= 0) delete data.commands[command];
     });
     data.save();

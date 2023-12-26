@@ -182,7 +182,7 @@ registerWhen(register("chat", (_, fortune) => {
  * Track bonus timer
  */
 const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
-const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "moveBonus", bonusExample);
+const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "movePest", bonusExample);
 registerWhen(register("step", () => {
     bonusOverlay.message = `${YELLOW + BOLD}Pest Bonus: `;
     let fortune = 0;

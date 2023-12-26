@@ -126,8 +126,8 @@ class Settings {
     instanceCommand = true;
     @CheckboxProperty({
         name: `Invite Command ${DARK_AQUA}?invite`,
-        category: "Party Commands",
-        subcategory: "Party Commands",
+        category: "Leader Commands",
+        subcategory: "Leader Commands",
         description: "Many brave knigts had attempted to free her from this dreadful prison, but none prevailed."
     })
     inviteCommand = true;

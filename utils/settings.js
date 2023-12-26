@@ -645,7 +645,7 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     // --- Crystal Hollows ---
     @SwitchProperty({
         name: "Wishing Compass Locator",
-        description: `${DARK_RED}NEW! ${GRAY}Attempts to use 2 wishing compass uses to estimate important locations.`,
+        description: `Attempts to use 2 wishing compass uses to estimate important locations ${BLUE}(more accurate when used further apart)${GRAY},`,
         category: "Mining",
         subcategory: "Crystal Hollows"
     })

@@ -1,4 +1,6 @@
 [
     "- TODO: Changed API to track all attributes",
+    "- Changed uncommon command parsing to be less",
+    "- Change some GUI commands",
     "- Fixed compass locator not resetting on world change"
 ]
