@@ -187,8 +187,8 @@ register("command", () => {
 /**
  * Auto complete command
  */
-registerWhen(register("guiKey", (c, keyCode) => {
-    if (keyCode !== 15) return;  // Detect tab key
+registerWhen(register("guiKey", (c, keyCode, gui) => {
+    if (gui.class.getName() !== "net.optifine.gui.GuiChatOF" || keyCode !== 15) return;  // Detect tab key
     
     // Find most common occurrence
     const commands = data.commands;
