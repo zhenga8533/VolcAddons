@@ -204,9 +204,9 @@ export function executeCommand(name, args, sendTo) {
         case "help":
             if (!toggles.helpCommand || !sendTo) return;
 
-            ChatLib.command(`${sendTo} Party Commands: ?<slander was here, dice, coin, 8ball, rps, w, lobby, leave, help> ${randID}`);
+            ChatLib.command(`${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, xyz, help> ${randID}`);
             if (getIsLeader() && settings.leaderCommands)
-                delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream #> ${randID}`), 690);
+                delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream> ${randID}`), 690);
             break;
     } }, 690);
     

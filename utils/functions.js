@@ -256,12 +256,17 @@ export function findFirstRomanNumeral(str) {
 export function getClosest(origin, positions) {
     if (positions.length === 0) return [[], 999];
 
+    const n = origin.length;
+    const oX = origin[n - 3];
+    const oY = origin[n - 2];
+    const oZ = origin[n - 1];
     let closestPosition = origin;
     let closestDistance = 999;
     let distance = 999;
 
     positions.forEach(position => {
-        distance = Math.hypot(origin[1] - position[1], origin[2] - position[2], origin[3] - position[3]);
+        const m = position.length;
+        distance = Math.hypot(oX - position[m - 3], oY - position[m - 2], oZ - position[m - 1]);
         if (distance < closestDistance) {
             closestDistance = distance;
             closestPosition = position;

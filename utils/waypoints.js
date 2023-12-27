@@ -74,9 +74,10 @@ function renderSimple(waypoints, r, g, b, beacon) {
     if (!waypoints.length) return;
 
     waypoints.forEach(waypoint => {
-        x = waypoint[1];
-        y = waypoint[2];
-        z = waypoint[3];
+        const n = waypoint.length;
+        const x = waypoint[n - 3];
+        const y = waypoint[n - 2];
+        const z = waypoint[n - 1];
     
         RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, true);
         RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, true);
@@ -87,9 +88,9 @@ function renderSimpler(entities, r, g, b) {
     if (!entities.length) return;
 
     entities.forEach(entity => {
-        x = entity.getX();
-        y = entity.getY();
-        z = entity.getZ();
+        const x = entity.getX();
+        const y = entity.getY();
+        const z = entity.getZ();
     
         RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 1, data.vision);
         RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, r, g, b, 0.25, data.vision);
