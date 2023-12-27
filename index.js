@@ -24,6 +24,7 @@ import "./features/general/AutoTransfer";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
 import "./features/general/Cooldowns";
+import "./features/general/FairySouls";
 import "./features/general/ImageViewer";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";

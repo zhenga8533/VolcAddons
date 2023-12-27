@@ -17,21 +17,19 @@ export function getCat() { return settings.catWaypoint && getWorld() === "The Ri
  */
 registerWhen(register("chat", () => {
     // Delete closest soul
-    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
-    if (closest !== undefined)
-        data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
+    if (closest !== undefined) data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
 }).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => getWorld() === "The Rift");
 
 /**
  * Fail safe enigma soul remove in case player clicks on an unregistered soul.
  */
 registerWhen(register("chat", () => {
-    if (!data.enigmaSouls.length) return;
+    if (data.enigmaSouls.length === 0) return;
 
     // Delete duplicate soul
-    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
-    if (closest[1] < 5)
-        data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
+    if (closest !== undefined && closest[1] < 5) data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
 }).setCriteria("You have already found that Enigma Soul!"), () => getWorld() === "The Rift");
 
 /**
@@ -39,7 +37,7 @@ registerWhen(register("chat", () => {
  */
 registerWhen(register("step", () => {
     // Filters to closest souls
-    enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[1], Player.getZ() - enigma[3]) < settings.enigmaWaypoint);
+    enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[0], Player.getZ() - enigma[2]) < settings.enigmaWaypoint);
 }).setFps(1), () => getWorld() === "The Rift" && settings.enigmaWaypoint !== 0);
 
 /**
@@ -47,7 +45,7 @@ registerWhen(register("step", () => {
  */
 registerWhen(register("chat", () => {
     // Delete closest soul
-    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
     if (closest !== undefined)
         data.catSouls.splice(data.catSouls.indexOf(closest[0]), 1);
 }).setCriteria("You found a piece of Montezuma's soul!"), () => getWorld() === "The Rift");
@@ -59,7 +57,7 @@ registerWhen(register("chat", () => {
     if (!data.catSouls.length) return;
 
     // Delete duplicate soul
-    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data.catSouls);
     if (closest[1] < 5)
         data.catSouls.splice(data.catSouls.indexOf(closest[0]), 1);
 }).setCriteria("You have already found this Montezuma soul piece!"), () => getWorld() === "The Rift");
@@ -97,7 +95,7 @@ export function soulEdit(args, type, soul, base) {
                 return;
             } 
 
-            const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], data[soul]);
+            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data[soul]);
             if (closest !== undefined)
                 data[soul].splice(data[soul].indexOf(closest[0]), 1);
             ChatLib.chat(`${LOGO + GREEN}Succesfully popped closest ${type}!`);

@@ -204,6 +204,16 @@ Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [k
 
     // --- Server ---
     @SliderProperty({
+        name: "Fairy Soul Waypoints",
+        description: `${DARK_RED}NEW! ${GRAY}Set distance at which Fairy Soul waypoints will render or as 0 to turn ${RED}OFF${GRAY}.`,
+        category: "General",
+        subcategory: "Server",
+        min: 0,
+        max: 128
+    })
+    fairyWaypoint = 0;
+
+    @SliderProperty({
         name: "Hide Far Entities",
         description: `Set maximum distance away from player an entity can be or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
@@ -1087,11 +1097,11 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     @SliderProperty({
         name: "Enigma Soul Waypoints",
-        description: `Set distance at which Enigma Soul waypoints will register or as 0 to turn ${RED}OFF${GRAY}.`,
+        description: `Set distance at which Enigma Soul waypoints will render or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Rift",
         subcategory: "Rift",
         min: 0,
-        max: 1000
+        max: 128
     })
     enigmaWaypoint = 0;
     

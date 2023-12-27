@@ -9,6 +9,7 @@ import { data } from "./variables";
 import { getBurrows } from "../features/event/BurrowDetect";
 import { getGuess } from "../features/event/MythRitual";
 import { getCompass } from "../features/mining/WishingCompass";
+import { getFairy } from "../features/general/FairySouls.js";
 
 
 /**
@@ -143,9 +144,10 @@ register("renderWorld", () => {
     renderWaypoint(formattedWaypoints);
     renderBeam(getCrates());
     renderBeam(getBuilds());
-    renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma
-    renderSimple(getCat(), 0, 0, 1, true); // Blue Cat
-    renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder
+    renderSimple(getFairy(), 1, 0.08, 0.58, true); // Pink Fairy Souls
+    renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma Souls
+    renderSimple(getCat(), 0, 0, 1, true); // Blue Montezuma Fragments
+    renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder Chests
 });
 
 

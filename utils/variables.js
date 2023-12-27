@@ -1,7 +1,6 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
-import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, ENIGMA_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
-import { delay } from "./thread";
+import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
 
 
 // --- PERSISTENT DATA ---
@@ -100,6 +99,7 @@ export let data = new PogObject("VolcAddons", {
     "PHL": [170, 160, 1.2, false], // Pesthunter Location
     "SDL": [170, 180, 1.2, false], // Spray Display Location
     // Rift waypoint properties
+    "fairySouls": FAIRY_SOULS,
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
 }, "datitee.json");
