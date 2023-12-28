@@ -1,10 +1,10 @@
 [
-    "- TODO: Added fairy soul waypoints",
+    "- Added fairy soul waypoints",
     "- Created a website: https://zhenga8533.github.io/VolcAddons/ (prettier README)",
     "- TODO: Changed API to track all attributes",
     "- Changed uncommon command parsing to be less",
     "- Change some GUI commands",
-    "- TODO: Fixed some commands only printing 'Unknown Argument'",
+    "- Fixed some commands only printing 'Unknown Argument'",
     "- Fixed compass locator not resetting on world change",
     "- Fixed pressing tab opening chat"
 ]

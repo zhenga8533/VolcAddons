@@ -27,7 +27,7 @@ class Settings {
         // General Category
         this.setCategoryDescription("General",
         `${HEADER}
-${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, whitelist, blacklist, blocklist>
+${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, fairy, whitelist, blacklist, blocklist>
 ${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at own risk!`);
 
         // Party Category

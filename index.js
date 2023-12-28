@@ -3,7 +3,7 @@ import "./utils/player";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { formatNumber, getTime, unformatNumber } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
@@ -351,6 +351,11 @@ register ("command", (...args) => {
                 data.apexPrice = unformatNumber(args[1]) || data.apexPrice;
                 ChatLib.chat(`${LOGO + GREEN}Successfully changed Apex value to ${formatNumber(data.apexPrice)}!`);
             }
+            break;
+        // Configure fairy souls
+        case "fairy":
+        case "soul":
+            soulEdit(args, "fairy", "fairySouls", FAIRY_SOULS, getWorld());
             break;
         // Configure enigma souls
         case "enigma":

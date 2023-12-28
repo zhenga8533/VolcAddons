@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { GRAY, GREEN, LOGO, RED } from "../../utils/constants";
+import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -78,27 +78,28 @@ export function getZones() { return zones };
  * @param {string} type - Type of soul (Enigma/Montezuma).
  * @param {string} soul - Name of the soul.
  * @param {Array[]} base - Original array with all waypoints.
+ * @param {string} world - Current world name
  */
-export function soulEdit(args, type, soul, base) {
+export function soulEdit(args, type, soul, base, world) {
     switch (args[1]) {
         case "reset":
             data[soul] = base;
             ChatLib.chat(`${LOGO + GREEN}Succesfully reset ${type} waypoint!`);
             break;
         case "clear":
-            data[soul] = [];
+            data[soul] = world === undefined ? [] : {};
             ChatLib.chat(`${LOGO + GREEN}Succesfully cleared ${type} waypoint!`);
             break;
         case "pop":
-            if (data[soul].length === 0) {
+            const souls = data[soul][world];
+            if (souls === undefined || souls.length === 0) {
                 ChatLib.chat(`${LOGO + RED}There are no ${type} souls to pop!`);
                 return;
             } 
 
-            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data[soul]);
-            if (closest !== undefined)
-                data[soul].splice(data[soul].indexOf(closest[0]), 1);
-            ChatLib.chat(`${LOGO + GREEN}Succesfully popped closest ${type}!`);
+            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
+            if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
+            ChatLib.chat(`${LOGO + GREEN}Succesfully popped closest ${type} soul!`);
             break;
         default:
             ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
