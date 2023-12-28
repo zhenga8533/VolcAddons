@@ -12,8 +12,9 @@ subtitle: List of every non-gui related commands.
     - `/va toggles`: Opens the setting toggles' menu.
     - `/va version`: Checks if you are currently on latest version and prints out changelog.
 - **Waypoints**
-    - `/va cat`: Controls Montezuma Soul Piece location waypoints.
-    - `/va enigma`: Controls Enigma Soul location waypoints.
+    - `/va cat`: Controls Montezuma Soul Piece waypoints.
+    - `/va enigma`: Controls Enigma Soul waypoints.
+    - `/va fairy`: Controls Fairy Soul waypoints.
     - `/va npc`: Creates waypoints to user inputted rift NPCs.
     - `/va zone`: Creates waypoints to user inputted rift locations.
     - `/va waypoint`: Creates waypoints to user inputted coordinates.
