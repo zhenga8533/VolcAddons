@@ -7,7 +7,7 @@ subtitle: List of all features and their related commands.
 ### <u>General Features</u>
 - **General**
     - Armor Display (`/moveArmor`)
-    - Equipment Display
+    - Equipment Display (`/moveEq`)
     - Remove Selfie Mode
     - Render Waypoint
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
@@ -15,6 +15,7 @@ subtitle: List of all features and their related commands.
     - Searchbar (`/moveSearch`)
     - Slot Binding (`/resetBinds`, `/saveBinds`, `/loadBinds`)
 - **Server**
+    - Fairy Soul Waypoints
     - Hide Far Entities
     - Hide Close Players
     - Hide All Particles
@@ -108,7 +109,7 @@ subtitle: List of all features and their related commands.
     - Inquisitor Announce
     - Inquisitor Counter (`moveInq`, `/resetInq`)
 - **Mythological Ritual**
-    - Diana Waypoint
+    - Diana Waypoints
     - Diana Warp (`/va warplist`)
     - Burrow Detection
 
@@ -143,11 +144,11 @@ subtitle: List of all features and their related commands.
 ### <u>Rift</u>
 - **General**
     - DDR Helper
-    - Enigma Soul Waypoint
-    - Montezuma Soul Waypoint
+    - Enigma Soul Waypoints
+    - Montezuma Soul Waypoints
 - **Vampire**
     - Announce Mania Phase
-    - Effigy Waypoint
+    - Effigy Waypoints
     - Enlarge Impel Message
     - Vampire Attack Display (`/moveVamp`)
     - Vampire Hitbox
