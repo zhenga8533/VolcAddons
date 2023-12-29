@@ -1,6 +1,6 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
-import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE } from "./constants";
+import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE, YELLOW } from "./constants";
 
 
 // --- PERSISTENT DATA ---
@@ -146,6 +146,7 @@ register("guiClosed", (event) => {
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
+import { convertToTitleCase } from "./functions";
 
 /**
  * Updates a list based on the provided arguments.
@@ -155,6 +156,7 @@ import { setWarps } from "../features/event/MythRitual";
  * @param {string} listName - The name of the list for displaying messages.
  * @returns {Array|string} - The updated list.
  */
+let lines = [5858, 5859];
 export function updateList(args, list, listName) {
     const isArray = Array.isArray(list);
     const command = args[1]
@@ -192,13 +194,58 @@ export function updateList(args, list, listName) {
             break;
         case "view": // DISPLAY LIST
         case "list":
+            ChatLib.clearChat(lines);
+            lines = [5858, 5859];
+            let id = 5860;
+            const page = parseInt(args[2] ?? 1);
+            const length = isArray ? list.length : Object.keys(list).length;
+            const total = Math.ceil(length / 12) || 1;
+
+            // Print out header
+            new Message("&9&m-----------------------------------------------------").setChatLineId(5858).chat();
+            const lArrow = new TextComponent("&r&e&l<<&r&9")
+                .setClickAction("run_command")
+                .setClickValue(`/va ${listName} list ${page - 1}`)
+                .setHoverValue(`${YELLOW}Click to view page ${page - 1}.`);
+            const rArrow = new TextComponent("&r&e&l>>")
+                .setClickAction("run_command")
+                .setClickValue(`/va ${listName} list ${page + 1}`)
+                .setHoverValue(`${YELLOW}Click to view page ${page + 1}.`);
+            const header = new Message("&r&9                     ").setChatLineId(5859);
+
+            header.addTextComponent(page > 1 ? lArrow : "   ");
+            header.addTextComponent(` &6${convertToTitleCase(listName)} (Page ${page} of ${total}) `);
+            if (page < total) header.addTextComponent(rArrow);
+            header.addTextComponent("\n").chat();
+
+            // Loop through variables
+            const pageIndex = (page - 1) * 12;
             if (isArray) {
-                ChatLib.chat(`\n${GOLD + BOLD + list.length} Items in ${listName}:${RESET}`);
-                list.forEach(user => { ChatLib.chat(` ⁍ ${user}`) });
+                for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
+                    new Message(` ${DARK_GRAY}⁍ `, new TextComponent(`${AQUA + list[i]}`)
+                        .setClickAction("run_command")
+                        .setClickValue(`/va ${listName} remove ${list[i]}`)
+                        .setHoverValue(`${YELLOW}Click to remove ${AQUA + list[i] + YELLOW} from list.`)
+                    ).setChatLineId(++id).chat();
+                    lines.push(id);
+                }
             } else {
-                ChatLib.chat(`\n${GOLD + BOLD + Object.keys(list).length} Items in ${listName}:${RESET}`);
-                Object.keys(list).forEach((key) => { ChatLib.chat(` ⁍ ${key + GRAY} => ${WHITE + list[key]}`) });
+                const keys = Object.keys(list);
+                for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
+                    let key = keys[i];
+                    new Message(` ${DARK_GRAY}⁍ `, new TextComponent(`${AQUA + key}`)
+                        .setClickAction("run_command")
+                        .setClickValue(`/va ${listName} remove ${key}`)
+                        .setHoverValue(`${YELLOW}Click to remove ${AQUA + key + YELLOW} from list.`),
+                        `${GRAY} => ${YELLOW + list[key]}`
+                    ).setChatLineId(++id).chat();
+                    lines.push(id);
+                }
             }
+
+            // Footer
+            new Message("&r&9&m-----------------------------------------------------&r").setChatLineId(++id).chat();
+            lines.push(id);
             break;
         case "default":
             if (listName === "moblist") {
