@@ -114,7 +114,7 @@ export function calcMinions(args) {
                 "GABAGOOL": drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1 - settings.priceType],
                 "CHILI": drops.CHILI * bazaar.CHILI_PEPPER[1 - settings.priceType],
                 "VERTEX": drops.VERTEX * bazaar.INFERNO_VERTEX[1 - settings.priceType],
-                "APEX": drops.APEX * data.apexPrice,
+                "APEX": drops.APEX * bazaar.INFERNO_APEX[1 - settings.priceType],
                 "REAPER": drops.REAPER * bazaar.REAPER_PEPPER[1 - settings.priceType]
             };
 

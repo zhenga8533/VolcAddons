@@ -6,5 +6,7 @@
     "- Change some GUI commands",
     "- Fixed some commands only printing 'Unknown Argument'",
     "- Fixed compass locator not resetting on world change",
-    "- Fixed pressing tab opening chat"
+    "- Fixed pressing tab opening chat",
+    "- Fixed various smaller bugs",
+    "- Removed `/va apex`"
 ]

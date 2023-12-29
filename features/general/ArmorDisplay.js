@@ -41,7 +41,7 @@ registerWhen(register("tick", () => {
  * Render equipment pieces as icons
  */
 let equipment = [null, null, null, null];
-new Overlay("equipDisplay", ["all"], () => true, data.AAL, "moveEquip", "", () => {
+new Overlay("equipDisplay", ["all"], () => true, data.AAL, "moveEq", "", () => {
     let yDiff = -15 * data.AAL[2];
 
     equipment.forEach(piece => {

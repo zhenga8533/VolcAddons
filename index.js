@@ -127,7 +127,7 @@ function getHelp() {
     ChatLib.chat(`${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}cd, whitelist, blacklist, emotelist, warplist${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, apex, attribute${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Etc: ${WHITE}/sk\n`);
 
@@ -341,16 +341,6 @@ register ("command", (...args) => {
                         break;
                 }
             } catch (err) { ChatLib.chat(`${LOGO + RED + err}`); }
-            break;
-        // Set Apex Price
-        case "apex":
-            if (args[1] === undefined) {
-                ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-                ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va apex [value]`);
-            } else {
-                data.apexPrice = unformatNumber(args[1]) || data.apexPrice;
-                ChatLib.chat(`${LOGO + GREEN}Successfully changed Apex value to ${formatNumber(data.apexPrice)}!`);
-            }
             break;
         // Configure fairy souls
         case "fairy":

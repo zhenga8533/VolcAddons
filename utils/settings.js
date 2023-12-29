@@ -140,7 +140,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // --- General ---
     @SwitchProperty({
         name: "Armor Display",
-        description: `Displays user's armor pieces as icons on an overlay.`,
+        description: `Displays user's armor pieces as icons on an overlay. Move GUI with ${AQUA}/moveSkills${GRAY}.`,
         category: "General",
         subcategory: "General"
     })
@@ -148,7 +148,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     @SwitchProperty({
         name: "Equipment Display",
-        description: `Displays user's equipment pieces as icons on an overlay.`,
+        description: `Displays user's equipment pieces as icons on an overlay. Move GUI with ${AQUA}/moveSkills${GRAY}.`,
         category: "General",
         subcategory: "General"
     })
