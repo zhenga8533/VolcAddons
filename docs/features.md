@@ -7,7 +7,7 @@ subtitle: List of all features and their related commands.
 ### <u>General Features</u>
 - **General**
     - Armor Display (`/moveArmor`)
-    - Equipment Display
+    - Equipment Display (`/moveEq`)
     - Remove Selfie Mode
     - Render Waypoint
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
