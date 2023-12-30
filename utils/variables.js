@@ -202,7 +202,7 @@ export function updateList(args, list, listName) {
             const total = Math.ceil(length / 12) || 1;
 
             // Print out header
-            new Message("&9&m-----------------------------------------------------").setChatLineId(5858).chat();
+            new Message("\n&c&m-----------------------------------------------------").setChatLineId(5858).chat();
             const lArrow = new TextComponent("&r&e&l<<&r&9")
                 .setClickAction("run_command")
                 .setClickValue(`/va ${listName} list ${page - 1}`)
@@ -214,7 +214,7 @@ export function updateList(args, list, listName) {
             const header = new Message("&r&9                     ").setChatLineId(5859);
 
             header.addTextComponent(page > 1 ? lArrow : "   ");
-            header.addTextComponent(` &6${convertToTitleCase(listName)} (Page ${page} of ${total}) `);
+            header.addTextComponent(` §6${convertToTitleCase(listName)} §8(§fPage §7${page} §fof §7${total}§8) `);
             if (page < total) header.addTextComponent(rArrow);
             header.addTextComponent("\n").chat();
 
@@ -244,7 +244,7 @@ export function updateList(args, list, listName) {
             }
 
             // Footer
-            new Message("&r&9&m-----------------------------------------------------&r").setChatLineId(++id).chat();
+            new Message("&c&m-----------------------------------------------------&r").setChatLineId(++id).chat();
             lines.push(id);
             break;
         case "default":
