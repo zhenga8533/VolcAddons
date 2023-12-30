@@ -27,6 +27,7 @@ export let data = new PogObject("VolcAddons", {
     "colorlist": {},
     "emotelist": {},
     "cooldownlist": {},
+    "valuelist": {},
     // kuudra splits stuff
     "files": [],
     "splits": {
@@ -146,7 +147,7 @@ register("guiClosed", (event) => {
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
-import { convertToTitleCase } from "./functions";
+import { convertToTitleCase, unformatNumber } from "./functions";
 
 /**
  * Updates a list based on the provided arguments.
@@ -163,8 +164,9 @@ export function updateList(args, list, listName) {
     const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
 
     // Object pairs
-    const value = listName === "cdlist" ? args[2] : args.slice(3).join(' ');
-    const key = listName === "cdlist" ?
+    const value = listName === "cdlist" ? unformatNumber(args[2]) : 
+        listName === "valuelist" ? unformatNumber(args[3]) || unformatNumber(args[2]) : args.slice(3).join(' ');
+    const key = listName === "cdlist" || (listName === "valuelist" && !isNaN(unformatNumber(args[2]))) ?
         Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : args[2];
 
     switch (command) {
@@ -270,6 +272,7 @@ export function updateList(args, list, listName) {
             else if (listName === "moblist")
                 base += `${GRAY}<${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
             else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]";
+            else if (listName === "valuelist") base += "[ITEM_ID] [value]";
             else base += "[item]";
             
             ChatLib.chat(base);

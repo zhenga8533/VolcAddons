@@ -1,5 +1,6 @@
 [
     "- Added fairy soul waypoints",
+    "- Added `/va vl` (valuelist)",
     "- Created a website: https://zhenga8533.github.io/VolcAddons/ (prettier README)",
     "- Changed uncommon command parsing to be less",
     "- Changed some GUI commands",
