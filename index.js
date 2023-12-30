@@ -26,6 +26,7 @@ import "./features/general/ChatWebhook";
 import "./features/general/Cooldowns";
 import "./features/general/FairySouls";
 import "./features/general/ImageViewer";
+import "./features/general/JoinMessage";
 import "./features/general/JoinParty";
 import { executeCommand } from "./features/general/PartyCommands";
 import { getStatus } from "./features/general/Performance";

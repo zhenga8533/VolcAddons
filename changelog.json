@@ -4,9 +4,11 @@
     "- Changed uncommon command parsing to be less",
     "- Changed some GUI commands",
     "- Changed list printing",
+    "- Fixed party join message",
     "- Fixed some commands only printing 'Unknown Argument'",
     "- Fixed compass locator not resetting on world change",
     "- Fixed pressing tab opening chat",
     "- Fixed various smaller bugs",
+    "- Fixed symbols remaining in names when using commands",
     "- Removed `/va apex`"
 ]

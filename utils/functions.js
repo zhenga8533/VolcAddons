@@ -13,7 +13,7 @@ export function getPlayerName(player) {
         nameIndex = name.indexOf(']');
     }
 
-    return name;
+    return name.split(' ')[0];
 }
 
 /**

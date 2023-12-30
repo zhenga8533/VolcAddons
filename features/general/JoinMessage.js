@@ -1,10 +1,11 @@
 import settings from "../../utils/settings";
+import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 
 registerWhen(register("chat", () => {
-    ChatLib.command(`pc ${settings.partyMessage}`);
-}).setCriteria("${player} joined the party!"), () => settings.partyMessage !== "");
+    delay(() => ChatLib.command(`pc ${settings.partyMessage}`), 100);
+}).setCriteria("${player} joined the party."), () => settings.partyMessage !== "");
 
 registerWhen(register("chat", () => {
-    ChatLib.command(`gc ${settings.guildMessage}`);
+    delay(() => ChatLib.command(`gc ${settings.guildMessage}`), 100);
 }).setCriteria("${player} joined the guild!"), () => settings.guildMessage !== "");
