@@ -41,19 +41,19 @@ registerWhen(register("tick", () => {
  * Render equipment pieces as icons
  */
 let equipment = [null, null, null, null];
-new Overlay("equipDisplay", ["all"], () => true, data.AAL, "moveEq", "", () => {
-    let yDiff = -15 * data.AAL[2];
+new Overlay("equipDisplay", ["all"], () => true, data.EQL, "moveEq", "", () => {
+    let yDiff = -15 * data.EQL[2];
 
     equipment.forEach(piece => {
-        yDiff += 15 * data.AAL[2];
+        yDiff += 15 * data.EQL[2];
         if (piece === null) return;
 
         // Draw icon
-        piece.draw(data.AAL[0], data.AAL[1] + yDiff, data.AAL[2]);
+        piece.draw(data.EQL[0], data.EQL[1] + yDiff, data.EQL[2]);
 
         // Draw cd/stars
         const size = piece.getStackSize();
-        if (size > 1) Renderer.drawString(size, data.AAL[0] -  Renderer.getStringWidth(size), data.AAL[1] + yDiff);
+        if (size > 1) Renderer.drawString(size, data.EQL[0] -  Renderer.getStringWidth(size), data.EQL[1] + yDiff);
     });
 
     return true;

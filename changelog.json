@@ -1,15 +1,6 @@
 [
-    "- Added fairy soul waypoints",
-    "- Added `/va vl` (valuelist)",
-    "- Created a website: https://zhenga8533.github.io/VolcAddons/ (prettier README)",
-    "- Changed uncommon command parsing to be less",
-    "- Changed some GUI commands",
-    "- Changed list printing",
-    "- Fixed party join message",
-    "- Fixed some commands only printing 'Unknown Argument'",
-    "- Fixed compass locator not resetting on world change",
-    "- Fixed pressing tab opening chat",
-    "- Fixed various smaller bugs",
-    "- Fixed symbols remaining in names when using commands",
-    "- Removed `/va apex`"
+    "- TODO: Added blocklist",
+    "- TODO: Added spamlist",
+    "- TODO: Added pest warp",
+    "- TODO: Added /va nw"
 ]
