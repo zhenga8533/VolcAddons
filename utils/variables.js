@@ -22,7 +22,7 @@ export let data = new PogObject("VolcAddons", {
     // lists
     "whitelist": [],
     "blacklist": [],
-    "warplist": ["hub", "da", "castle", "museum", "wizard"],
+    "dianalist": ["hub", "da", "castle", "museum", "wizard"],
     "moblist": [],
     "colorlist": {},
     "emotelist": {},
@@ -276,7 +276,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
 - ${AQUA}a ${GRAY}=> ${AQUA}no cd (e.x Plasmaflux)
 - ${AQUA}s ${GRAY}=> ${AQUA}shift`;
             else if (listName === "emotelist") base += "[key] [value]";
-            else if (listName === "warplist") base += `${GRAY}<${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
+            else if (listName === "dianalist") base += `${GRAY}<${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
             else if (listName === "moblist")
                 base += `${GRAY}<${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
             else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]";
@@ -288,7 +288,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
     }
     
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
-    else if (listName === "warplist") setWarps();
+    else if (listName === "dianalist") setWarps();
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 }
 

@@ -21,7 +21,7 @@ dianaKey.registerKeyPress(() => {
 });
 
 /**
- * Populates the `warps` array with warp data from `WARPS` and `data.warplist`.
+ * Populates the `warps` array with warp data from `WARPS` and `data.dianalist`.
  */
 let warps = [];
 const WARPS = {
@@ -35,7 +35,7 @@ const WARPS = {
 export function setWarps() {
     warps = [["player", 0, 0, 0]];
 
-    data.warplist.forEach(loc => {
+    data.dianalist.forEach(loc => {
         if (loc in WARPS) warps.push([loc, WARPS[loc][0], WARPS[loc][1], WARPS[loc][2]])
     });
 }

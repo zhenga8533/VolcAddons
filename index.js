@@ -128,7 +128,7 @@ function getHelp() {
     ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}`);
     ChatLib.chat(`${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}cd, wl, bl, el, vl, warplist${GRAY}>`);
+    ChatLib.chat(`${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}cd, wl, bl, el, vl, dl, sl, il${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Etc: ${WHITE}/sk\n`);
@@ -303,9 +303,10 @@ register ("command", (...args) => {
         case "cl":
             updateList(args, data.colorlist, "colorlist");
             break;
-        case "warplist":
-        case "warp":
-            updateList(args, data.warplist, "warplist");
+        case "dianalist":
+        case "diana":
+        case "dl":
+            updateList(args, data.dianalist, "dianalist");
             break;
         case "valuelist":
         case "value":
