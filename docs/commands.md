@@ -19,12 +19,14 @@ subtitle: List of every non-gui related commands.
     - `/va zone`: Creates waypoints to user inputted rift locations.
     - `/va waypoint`: Creates waypoints to user inputted coordinates.
 - **Lists**
-    - `/va cd`: Tracks the cooldown of items using user inputted times.
-    - `/va blacklist`: Block users from using leader/party commands.
+    - `/va blacklist`: Set players to kick and ignore.
+    - `/va cd`: Set the cooldown of the currently held item.
+    - `/va dianalist`: Set locations in which Diana burrow warp uses.
     - `/va emotelist`: Set words to replace in user sent messages.
-    - `/va warplist`: Set locations in which Diana burrow warp uses.
+    - `/va ignorelist`: Set players to block from using leader/party commands.
+    - `/va spamlist`: Set chat messages to hide.
+    - `/va valuelist`: Set a constant value of the currently held item.
     - `/va whitelist`: Set player party invites to auto join.
-    - `/va valuelist`: Set a predetermined value for item calculations.
 - **Economy**
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
