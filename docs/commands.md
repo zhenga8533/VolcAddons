@@ -24,6 +24,7 @@ subtitle: List of every non-gui related commands.
     - `/va emotelist`: Set words to replace in user sent messages.
     - `/va warplist`: Set locations in which Diana burrow warp uses.
     - `/va whitelist`: Set player party invites to auto join.
+    - `/va valuelist`: Set a predetermined value for item calculations.
 - **Economy**
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
