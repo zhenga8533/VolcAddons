@@ -28,6 +28,7 @@ export let data = new PogObject("VolcAddons", {
     "emotelist": {},
     "cooldownlist": {},
     "valuelist": {},
+    "spamlist": [],
     // kuudra splits stuff
     "files": [],
     "splits": {
@@ -165,9 +166,9 @@ export function updateList(args, list, listName) {
     const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
 
     // Object pairs
-    const value = listName === "cdlist" ? unformatNumber(args[2]) : 
-        listName === "valuelist" ? unformatNumber(args[3]) || unformatNumber(args[2]) : args.slice(3).join(' ');
-    const key = listName === "cdlist" || (listName === "valuelist" && !isNaN(unformatNumber(args[2]))) ?
+    const value = listName === "cdlist" || listName === "valuelist" ? 
+        unformatNumber(args[2]) : args.slice(3).join(' ');
+    const key = listName === "cdlist" || listName === "valuelist" ?
         Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : args[2];
 
     switch (command) {
@@ -263,7 +264,10 @@ export function updateList(args, list, listName) {
             ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${command}"!`);
             let base = `${LOGO + RED}Please input as: ${WHITE}/va ${listName} ${GRAY}<${WHITE}view, clear, add, remove${GRAY}> ${WHITE}`;
 
-            if (listName === "cdlist") base += `[cd]\n\n${DARK_AQUA}Special args (put in front, e.x 'a60'):
+            if (listName === "cdlist") base += `[cd]
+${DARK_GRAY}This will set the cooldown of your currently held item.
+
+${DARK_AQUA}Special args (put in front, e.x 'a60'):
 - ${AQUA}none ${GRAY}=> ${GRAY}right click
 - ${AQUA}l ${GRAY}=> ${AQUA}left click
 - ${AQUA}a ${GRAY}=> ${AQUA}no cd (e.x Plasmaflux)
@@ -273,7 +277,7 @@ export function updateList(args, list, listName) {
             else if (listName === "moblist")
                 base += `${GRAY}<${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
             else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]";
-            else if (listName === "valuelist") base += "[ITEM_ID] [value]";
+            else if (listName === "valuelist") base += `[value]\n${DARK_GRAY}This will set the value of your currently held item.`;
             else base += "[item]";
             
             ChatLib.chat(base);

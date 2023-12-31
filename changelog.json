@@ -2,5 +2,7 @@
     "- TODO: Added blocklist",
     "- TODO: Added spamlist",
     "- TODO: Added pest warp",
-    "- TODO: Added /va nw"
+    "- TODO: Added /va nw",
+    "- TODO: Recoded skill and powder? tracker",
+    "- Changed valuelist to only register held item"
 ]
