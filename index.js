@@ -37,6 +37,7 @@ import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
 import "./features/general/SkyCrypt";
 import "./features/general/SlotBinding";
+import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
 // Economy Features
@@ -310,6 +311,11 @@ register ("command", (...args) => {
         case "value":
         case "vl":
             updateList(args, data.valuelist, "valuelist");
+            break;
+        case "spamlist":
+        case "spam":
+        case "sl":
+            updateList(args, data.spamlist, "spamlist");
             break;
         // Kuudra Splits
         case "splits": // Kuudra splits

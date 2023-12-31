@@ -1,6 +1,6 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
-import { AQUA, BOLD, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, WHITE, YELLOW } from "./constants";
+import { AQUA, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./constants";
 
 
 // --- PERSISTENT DATA ---
@@ -28,7 +28,7 @@ export let data = new PogObject("VolcAddons", {
     "emotelist": {},
     "cooldownlist": {},
     "valuelist": {},
-    "spamlist": [],
+    "spamlist": new Set(),
     // kuudra splits stuff
     "files": [],
     "splits": {
@@ -151,25 +151,27 @@ import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
 import { convertToTitleCase, unformatNumber } from "./functions";
 
+
+let lines = [5858, 5859];
 /**
  * Updates a list based on the provided arguments.
  *
- * @param {string[]} args - An array of arguments provided for the list update.
+ * @param {Array} args - An array of arguments provided for the list update.
  * @param {Array|string} list - The list to be updated.
  * @param {string} listName - The name of the list for displaying messages.
  * @returns {Array|string} - The updated list.
  */
-let lines = [5858, 5859];
 export function updateList(args, list, listName) {
     const isArray = Array.isArray(list);
     const command = args[1]
     const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
 
     // Object pairs
-    const value = listName === "cdlist" || listName === "valuelist" ? 
-        unformatNumber(args[2]) : args.slice(3).join(' ');
+    const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[2]) : 
+        listName === "spamlist" ? "消える" : args.slice(3).join(' ');
     const key = listName === "cdlist" || listName === "valuelist" ?
-        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : args[2];
+        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : 
+        listName === "spamlist" ? args.splice(2).join(' ') : args[2];
 
     switch (command) {
         case "add": // ADD TO LIST
@@ -178,7 +180,8 @@ export function updateList(args, list, listName) {
                 ChatLib.chat(`${LOGO + GREEN}Successfully added "${WHITE + item + GREEN}" to the ${listName}!`);
             } else if (!isArray && !(key in list)) {
                 list[key] = value;
-                ChatLib.chat(`${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${WHITE + key + GREEN}]!`);
+                if (listName === "spamlist") ChatLib.chat(`${LOGO + GREEN}Successfully added "${WHITE + key + GREEN}" to the ${listName}!`);
+                else ChatLib.chat(`${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${WHITE + key + GREEN}]!`);
             } else ChatLib.chat(`${LOGO + RED}[${WHITE + (isArray ? item : key + RED)}] is already in the ${listName}!`);
             break;
         case "remove": // REMOVE FROM LIST
