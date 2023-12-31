@@ -21,6 +21,7 @@ favicon: "/assets/img/favicon.png"
 navbar-links:
   Commands: "commands"
   Features: "features"
+  FAQ: "faq"
   Latest: "https://github.com/zhenga8533/VolcAddons/releases/latest"
   Setup: "setup"
 
