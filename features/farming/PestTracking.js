@@ -17,6 +17,17 @@ const sprayOverlay = new Overlay("sprayDisplay", ["Garden"], () => true, data.SD
 const sprays = {};
 const plots = new Set();
 const pests = new Set();
+let swarm = {};
+let hive = [];
+
+/**
+ * Sort the swarm dictionary into hive in descending pest order.
+ */
+function setHive() {
+    let entries = Object.entries(swarm);
+    entries.sort((a, b) => b[1] - a[1]);
+    hive = entries.map(entry => entry[0]);
+}
 
 /**
  * Track sprays using chat
@@ -89,8 +100,10 @@ const setPlots = register("guiRender", () => {
 
             if (pest !== undefined) {
                 // Set stack size as amount of pests and push onto rendering array
-                plot.setStackSize(pest.removeFormatting().replace(/[^0-9]/g, ''));
+                const amount = pest.removeFormatting().replace(/[^0-9]/g, '');
+                plot.setStackSize(amount);
                 pests.add(index);
+                swarm[plot.getName().split(' ')[2].removeFormatting()] = amount;
             }
             
             if (spray !== undefined) {
@@ -127,7 +140,19 @@ registerWhen(register("guiClosed", () => {
     setHighlight.unregister();
     pests.clear();
     plots.clear();
+    setHive();
 }), () => getWorld() === "Garden" && (settings.pestHighlight || settings.sprayDisplay));
+
+
+/**
+ * Pest warp command
+ */
+register("command", () => {
+    const plot = hive[0];
+    delete swarm[plot];
+    
+    ChatLib.command(`plottp ${plot}`);
+}).setName("pesttp");
 
 
 /**
@@ -135,9 +160,13 @@ registerWhen(register("guiClosed", () => {
  */
 registerWhen(register("chat", (_, plot) => {
     Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`, 10, 50, 10);
+    swarm[plot] = (swarm[plot] ?? 0) + 1;
+    setHive();
 }).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"), () => getWorld() === "Garden" && settings.pestAlert);
 registerWhen(register("chat", (_, num, plot) => {
     Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`, 10, 50, 10);
+    swarm[plot] = (swarm[plot] ?? 0) + num;
+    setHive();
 }).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => getWorld() === "Garden" && settings.pestAlert);
 
 

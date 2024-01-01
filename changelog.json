@@ -1,7 +1,7 @@
 [
     "- Added ignorelist (renamed blacklist)",
     "- Added spamlist",
-    "- TODO: Added pest warp",
+    "- Added pest warp",
     "- TODO: Added /va nw",
     "- Changed blacklist to auto kick",
     "- Changed warplist to dianalist",

@@ -196,7 +196,7 @@ export function updateList(args, list, listName) {
             if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO + GREEN}Successfully cleared the ${listName}!`);
-            break;
+            return;
         case "view": // DISPLAY LIST
         case "list":
             ChatLib.clearChat(lines);
@@ -251,7 +251,7 @@ export function updateList(args, list, listName) {
             // Footer
             new Message("&c&m-----------------------------------------------------&r").setChatLineId(++id).chat();
             lines.push(id);
-            break;
+            return;
         case "default":
             if (listName === "moblist") {
                 list.length = 0;
@@ -284,12 +284,13 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
             else base += "[item]";
             
             ChatLib.chat(base);
-            break;
+            return;
     }
     
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
     else if (listName === "dianalist") setWarps();
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+    ChatLib.command(`va ${listName} list`, true);
 }
 
 
