@@ -31,9 +31,10 @@ subtitle: List of every non-gui related commands.
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
 - **Misc**
-    - `/pestwarp`: Warps to plot with most pests.
     - `/va be`: Displays bestiary stats and closest milestones.
     - `/va splits`: Prints out Kuudra splits' stats.
+- **Etc**
+    - `/pestwarp`: Warps to plot with most pests.
     - `/sk`: Opens the SkyCrypt profile of inputted user.
 
 ### <u>Feature Commands</u>
