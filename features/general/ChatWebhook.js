@@ -3,7 +3,7 @@ import toggles from "../../utils/toggles";
 import { request } from "../../../axios";
 import { getGuildName, getPlayerName } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
-import { getWaifu } from "./party/PartyCommands";
+import { getWaifu } from "../party/PartyCommands";
 
 
 /**

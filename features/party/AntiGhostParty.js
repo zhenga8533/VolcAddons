@@ -1,8 +1,8 @@
-import settings from "../../../utils/settings";
-import { getInParty } from "../../../utils/party";
-import { delay } from "../../../utils/thread";
-import { registerWhen } from "../../../utils/variables";
-import { GREEN, LOGO } from "../../../utils/constants";
+import settings from "../../utils/settings";
+import { getInParty } from "../../utils/party";
+import { delay } from "../../utils/thread";
+import { registerWhen } from "../../utils/variables";
+import { GREEN, LOGO } from "../../utils/constants";
 
 
 /**

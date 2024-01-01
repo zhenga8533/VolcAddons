@@ -1,9 +1,9 @@
-import settings from "../../../utils/settings";
-import { getPlayerName } from "../../../utils/functions";
-import { delay } from "../../../utils/thread";
-import { registerWhen } from "../../../utils/variables";
-import { getWorld } from "../../../utils/worlds";
-import { getInParty, getIsLeader, getParty } from "../../../utils/party";
+import settings from "../../utils/settings";
+import { getPlayerName } from "../../utils/functions";
+import { delay } from "../../utils/thread";
+import { registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
+import { getInParty, getIsLeader, getParty } from "../../utils/party";
 
 
 /**

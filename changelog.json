@@ -5,6 +5,7 @@
     "- TODO: Added /va nw",
     "- Changed blacklist to auto kick",
     "- Changed warplist to dianalist",
+    "- Changed file pathing",
     "- TODO: Recoded skill and powder? tracker",
     "- Changed valuelist to only register held item"
 ]

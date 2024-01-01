@@ -3,8 +3,8 @@ import "./utils/player";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
-import { formatNumber, getTime, unformatNumber } from "./utils/functions";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { getTime } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
@@ -17,14 +17,8 @@ for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key
 if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
 
 // General Features
-import "./features/general/party/AntiGhostParty";
-import "./features/general/party/AutoKick";
-import "./features/general/party/JoinMessage";
-import "./features/general/party/JoinParty";
-import { executeCommand } from "./features/general/party/PartyCommands";
 import "./features/general/ArmorDisplay";
 import "./features/general/Autocorrect";
-import "./features/general/party/AutoTransfer";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
 import "./features/general/Cooldowns";
@@ -41,6 +35,13 @@ import "./features/general/SlotBinding";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
+// Party Features
+import "./features/party/AntiGhostParty";
+import "./features/party/AutoKick";
+import "./features/party/AutoTransfer";
+import "./features/party/JoinMessage";
+import "./features/party/JoinParty";
+import { executeCommand } from "./features/party/PartyCommands";
 // Economy Features
 import { getAttributes } from "./features/economy/AttributePricing";
 import "./features/economy/BitsAlert";
@@ -65,12 +66,12 @@ import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
 import "./features/mining/WishingCompass";
 // Farming Features
-import { calcCompost } from "./features/garden/ComposterCalc";
-import "./features/garden/FarmingWebhook";
-import { getNextVisitor } from "./features/garden/GardenTab";
-import "./features/garden/GardenWarp";
-import "./features/garden/JacobHighlight";
-import "./features/garden/PestTracking";
+import { calcCompost } from "./features/farming/ComposterCalc";
+import "./features/farming/FarmingWebhook";
+import { getNextVisitor } from "./features/farming/GardenTab";
+import "./features/farming/GardenWarp";
+import "./features/farming/JacobHighlight";
+import "./features/farming/PestTracking";
 // Event Features
 import "./features/event/BurrowDetect";
 import "./features/event/GreatSpook";

@@ -5,7 +5,7 @@ import { commafy, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { getWaifu } from "../general/party/PartyCommands";
+import { getWaifu } from "../party/PartyCommands";
 
 
 /**

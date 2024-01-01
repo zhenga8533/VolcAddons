@@ -1,13 +1,13 @@
-import axios from "../../../../axios";
-import settings from "../../../utils/settings";
-import toggles from "../../../utils/toggles";
-import { request } from "../../../../requestV2";
-import { AQUA, DARK_AQUA, DARK_GREEN, GRAY, GREEN, LOGO, RED, WHITE } from "../../../utils/constants";
-import { getGuildName, getPlayerName } from "../../../utils/functions";
-import { getIsLeader } from "../../../utils/party";
-import { delay } from "../../../utils/thread";
-import { data, registerWhen } from "../../../utils/variables";
-import { getPing, getTPS } from "../Performance";
+import axios from "../../../axios";
+import settings from "../../utils/settings";
+import toggles from "../../utils/toggles";
+import { request } from "../../../requestV2";
+import { AQUA, DARK_AQUA, DARK_GREEN, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { getGuildName, getPlayerName } from "../../utils/functions";
+import { getIsLeader } from "../../utils/party";
+import { delay } from "../../utils/thread";
+import { data, registerWhen } from "../../utils/variables";
+import { getPing, getTPS } from "../general/Performance";
 
 
 /**
