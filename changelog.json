@@ -7,5 +7,6 @@
     "- Changed warplist to dianalist",
     "- Changed file pathing",
     "- TODO: Recoded skill and powder? tracker",
-    "- Changed valuelist to only register held item"
+    "- Changed valuelist to only register held item",
+    "- Removed API key"
 ]

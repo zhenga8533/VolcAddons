@@ -37,14 +37,6 @@ request({
 });
 
 // Event handler for detecting the player's profile ID from a chat message and update API data.
-import { updateBestiary } from "../features/combat/Bestiary";
-import { updateTrophy } from "../features/crimsonIsle/TrophyCounter";
-let updatedTrophy = false;
 register("chat", (id) => {
     data.lastID = id;
-    updateBestiary(id);
-    if (!updatedTrophy) {
-        updateTrophy(id);
-        updatedTrophy = true;
-    }
 }).setCriteria("Profile ID: ${id}");

@@ -11,12 +11,12 @@ import { data, registerWhen } from "../../utils/variables";
  * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
  */
 let bestiaryApi = undefined;
-export function updateBestiary(profileId) {
-    if (settings.apiKey === "" || profileId === undefined) return;
+function updateBestiary(profileId) {
+    if (profileId === undefined) return;
 
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
-        url: `https://api.hypixel.net/v2/skyblock/profile?key=${settings.apiKey}&profile=${profileId}`,
+        url: `https://api.hypixel.net/v2/skyblock/profile?key=4e927d63a1c34f71b56428b2320cbf95&profile=${profileId}`,
         json: true
     }).then((response) => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
@@ -24,10 +24,6 @@ export function updateBestiary(profileId) {
     }).catch((err) => {
         // If there is an error, display the error message in the Minecraft chat.
         ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
-        if (err.cause === "Invalid API key") {
-            settings.apiKey = "";
-            ChatLib.chat(`${GREEN}API key cleared!`);
-        }
     });
 }
 updateBestiary(data.lastID);
@@ -389,6 +385,7 @@ export function getBestiary(args) {
                 ChatLib.chat(`${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${RED + getTime(mob.nextTime) + GREEN})`);
             break;
     }
+    updateBestiary(data.lastID);
 }
 
 

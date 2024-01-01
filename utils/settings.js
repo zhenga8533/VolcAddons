@@ -86,15 +86,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // ████████████████████████████████████████████████████ GENERAL FEATURES ████████████████████████████████████████████████████
 
     // --- Essential ---
-    @TextProperty({
-        name: "API Key",
-        description: `Input your API key ${BLUE}(only useful for "/va be")${GRAY}.\nYou may need to run ${AQUA}/ct load ${GRAY}after inputting key.`,
-        category: "General",
-        subcategory: "Essential",
-        protected: true
-    })
-    apiKey = "";
-
     @SwitchProperty({
         name: "Skyblock Toggle",
         description: `Toggle ${GREEN}ON ${GRAY}for features to only function in Skyblock or ${RED}OFF ${GRAY}to function anywhere.`,
