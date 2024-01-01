@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
-import { getPlayerName } from "../../utils/functions";
-import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import settings from "../../../utils/settings";
+import { getPlayerName } from "../../../utils/functions";
+import { delay } from "../../../utils/thread";
+import { data, registerWhen } from "../../../utils/variables";
 
 
 /**

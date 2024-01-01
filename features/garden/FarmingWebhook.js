@@ -4,7 +4,7 @@ import { formatNumber, getTime, unformatNumber } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";
-import { getWaifu } from "../general/PartyCommands";
+import { getWaifu } from "../general/party/PartyCommands";
 
 
 /**

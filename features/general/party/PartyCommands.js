@@ -1,13 +1,13 @@
-import axios from "../../../axios";
-import settings from "../../utils/settings";
-import toggles from "../../utils/toggles";
-import { request } from "../../../requestV2";
-import { AQUA, DARK_AQUA, DARK_GREEN, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { getGuildName, getPlayerName } from "../../utils/functions";
-import { getIsLeader } from "../../utils/party";
-import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
-import { getPing, getTPS } from "./Performance";
+import axios from "../../../../axios";
+import settings from "../../../utils/settings";
+import toggles from "../../../utils/toggles";
+import { request } from "../../../../requestV2";
+import { AQUA, DARK_AQUA, DARK_GREEN, GRAY, GREEN, LOGO, RED, WHITE } from "../../../utils/constants";
+import { getGuildName, getPlayerName } from "../../../utils/functions";
+import { getIsLeader } from "../../../utils/party";
+import { delay } from "../../../utils/thread";
+import { data, registerWhen } from "../../../utils/variables";
+import { getPing, getTPS } from "../Performance";
 
 
 /**
@@ -83,7 +83,7 @@ setWaifu(false);
  * @param {string} sendTo - Chat to send response to (/pc, /gc, /r)
  */
 export function executeCommand(name, args, sendTo) {
-    if (data.blacklist.includes(name.toLowerCase())) return;
+    if (data.ignorelist.includes(name.toLowerCase())) return;
     const command = args[0].toLowerCase();
 
     // PARTY COMMANDS

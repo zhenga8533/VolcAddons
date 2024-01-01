@@ -1,6 +1,6 @@
-import settings from "../../utils/settings";
-import { delay } from "../../utils/thread";
-import { registerWhen } from "../../utils/variables";
+import settings from "../../../utils/settings";
+import { delay } from "../../../utils/thread";
+import { registerWhen } from "../../../utils/variables";
 
 registerWhen(register("chat", () => {
     delay(() => ChatLib.command(`pc ${settings.partyMessage}`), 100);

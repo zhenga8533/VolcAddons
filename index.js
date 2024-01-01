@@ -17,18 +17,19 @@ for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key
 if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
 
 // General Features
-import "./features/general/AntiGhostParty";
+import "./features/general/party/AntiGhostParty";
+import "./features/general/party/AutoKick";
+import "./features/general/party/JoinMessage";
+import "./features/general/party/JoinParty";
+import { executeCommand } from "./features/general/party/PartyCommands";
 import "./features/general/ArmorDisplay";
 import "./features/general/Autocorrect";
-import "./features/general/AutoTransfer";
+import "./features/general/party/AutoTransfer";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
 import "./features/general/Cooldowns";
 import "./features/general/FairySouls";
 import "./features/general/ImageViewer";
-import "./features/general/JoinMessage";
-import "./features/general/JoinParty";
-import { executeCommand } from "./features/general/PartyCommands";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
