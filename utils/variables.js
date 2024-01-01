@@ -28,7 +28,8 @@ export let data = new PogObject("VolcAddons", {
     "emotelist": {},
     "cooldownlist": {},
     "valuelist": {},
-    "spamlist": new Set(),
+    "spamlist": [],
+    "ignorelist": [],
     // kuudra splits stuff
     "files": [],
     "splits": {
@@ -164,14 +165,12 @@ let lines = [5858, 5859];
 export function updateList(args, list, listName) {
     const isArray = Array.isArray(list);
     const command = args[1]
-    const item = listName === "moblist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
+    const item = listName === "moblist" || listName === "spamlist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
 
     // Object pairs
-    const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[2]) : 
-        listName === "spamlist" ? "消える" : args.slice(3).join(' ');
+    const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[2]) : args.slice(3).join(' ');
     const key = listName === "cdlist" || listName === "valuelist" ?
-        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : 
-        listName === "spamlist" ? args.splice(2).join(' ') : args[2];
+        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : args[2];
 
     switch (command) {
         case "add": // ADD TO LIST
@@ -180,8 +179,7 @@ export function updateList(args, list, listName) {
                 ChatLib.chat(`${LOGO + GREEN}Successfully added "${WHITE + item + GREEN}" to the ${listName}!`);
             } else if (!isArray && !(key in list)) {
                 list[key] = value;
-                if (listName === "spamlist") ChatLib.chat(`${LOGO + GREEN}Successfully added "${WHITE + key + GREEN}" to the ${listName}!`);
-                else ChatLib.chat(`${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${WHITE + key + GREEN}]!`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${WHITE + key + GREEN}]!`);
             } else ChatLib.chat(`${LOGO + RED}[${WHITE + (isArray ? item : key + RED)}] is already in the ${listName}!`);
             break;
         case "remove": // REMOVE FROM LIST
@@ -260,6 +258,7 @@ export function updateList(args, list, listName) {
                 list.push("vanquisher");
                 list.push("jawbus");
                 list.push("thunder");
+                list.push("inquisitor");
                 ChatLib.chat(`${LOGO + GREEN}Successfully set moblist to default!`);
                 break;
             }
@@ -281,6 +280,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
                 base += `${GRAY}<${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
             else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]";
             else if (listName === "valuelist") base += `[value]\n${DARK_GRAY}This will set the value of your currently held item.`;
+            else if (listName === "spamlist") base += "[phrase]\n§8Remember to add variables with ${var}, for example:\n §8`va sl add Guild > ${player} left.";
             else base += "[item]";
             
             ChatLib.chat(base);

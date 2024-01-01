@@ -318,6 +318,11 @@ register ("command", (...args) => {
         case "sl":
             updateList(args, data.spamlist, "spamlist");
             break;
+        case "ignorelist":
+        case "ignore":
+        case "il":
+            updateList(args, data.ignorelist, "ignorelist");
+            break;
         // Kuudra Splits
         case "splits": // Kuudra splits
         case "split":
