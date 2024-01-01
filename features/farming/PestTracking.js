@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET, YELLOW } from "../../utils/constants";
 import { getSlotCoords, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
@@ -148,10 +148,17 @@ registerWhen(register("guiClosed", () => {
  * Pest warp command
  */
 register("command", () => {
+    if (hive.length === 0) {
+        ChatLib.chat(`${LOGO + RED}No infested plots found...\n${DARK_GRAY}If there are pests, please open plots menu to track!`);
+        return;
+    }
+
+    // Warp to plot with most pests
     const plot = hive[0];
     delete swarm[plot];
     
     ChatLib.command(`plottp ${plot}`);
+    setHive();
 }).setName("pesttp");
 
 

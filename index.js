@@ -133,7 +133,7 @@ function getHelp() {
     ChatLib.chat(`${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}cd, wl, bl, el, vl, dl, sl, il${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute${GRAY}>`);
     ChatLib.chat(`${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Etc: ${WHITE}/sk\n`);
+    ChatLib.chat(`${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>\n`);
 
     // Feature Commands
     ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}`);

@@ -205,7 +205,7 @@ Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [k
     // --- Server ---
     @SliderProperty({
         name: "Fairy Soul Waypoints",
-        description: `${DARK_RED}NEW! ${GRAY}Set distance at which Fairy Soul waypoints will render or as 0 to turn ${RED}OFF${GRAY}.`,
+        description: `Set distance at which Fairy Soul waypoints will render or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "General",
         subcategory: "Server",
         min: 0,
