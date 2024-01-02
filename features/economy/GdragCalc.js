@@ -24,7 +24,7 @@ function findGdrag(page, minLvl) {
             if (!bin || isNaN(level) || level < 100) return; // Skip non-bin auctions
 
             // Checks for pet candy.
-            const itemData = decode(item_bytes);
+            const itemData = decode(item_bytes).func_150305_b(0);
             const petInfo = new NBTTagCompound(itemData).getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("petInfo");
             if (JSON.parse(petInfo).candyUsed !== 0) return;
             

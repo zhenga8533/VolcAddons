@@ -404,5 +404,5 @@ export function decode(bytes) {
     const bytearray = decoder.decode(bytes);
     const inputstream = new java.io.ByteArrayInputStream(bytearray);
     const nbt = compressor.func_74796_a(inputstream);
-    return nbt.func_150295_c("i", 10).func_150305_b(0);
+    return nbt.func_150295_c("i", 10);
 }

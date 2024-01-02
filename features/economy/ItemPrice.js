@@ -132,16 +132,17 @@ valueOverlay.message = "";
  * @returns {number} - Total value of item.
  */
 let savedValues = {}
-export function getItemValue(item) {
+export function getItemValue(item, save=true) {
     // Get Item statistics
     valueOverlay.message = "";
     if (item === null) return 0;
-    const itemTag = item.getNBT().getCompoundTag("tag").toObject();
-    const itemData = itemTag.ExtraAttributes;
+    const nbt = item?.getNBT() ?? item;
+    const itemTag = nbt?.getCompoundTag("tag")?.toObject();
+    const itemData = itemTag?.ExtraAttributes;
     let itemID = itemData?.id;
     if (itemID == undefined) return 0;
-    const amount = item.getStackSize()
-    const itemUUID = (itemData?.uuid || item.getName()) + amount;
+    const amount = item?.getStackSize() ?? 1;
+    const itemUUID = (itemData?.uuid || item?.getName()) + amount;
 
     // Check if value is already calculated
     if (itemUUID !== undefined) {
@@ -157,8 +158,8 @@ export function getItemValue(item) {
 
     // Base Value
     let valueMessage = `${DARK_AQUA + BOLD}Item: ${itemTag.display.Name}`;
-    if (amount !== 1) valueMessage += ` ${GRAY}x${amount}\n`;
-    else valueMessage += "\n";
+    if (amount !== 1 && save) valueMessage += ` ${GRAY}x${amount}\n`;
+    else if (save) valueMessage += "\n";
 
     // Check for Edge Cases
     if (value === 0) {
@@ -168,7 +169,7 @@ export function getItemValue(item) {
             itemID = partsID.slice(1).join('_');
             auctionItem = auction?.[itemID];
             value = (auctionItem?.lbin ?? 0) * amount;
-            valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+            if (save) valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
 
             let crimsonEssence = 0;
             const upgrades = Object.keys(KUUDRA_UPGRADES);
@@ -182,43 +183,47 @@ export function getItemValue(item) {
             }
             const crimsonValue = crimsonEssence * (bazaar?.ESSENCE_CRIMSON?.[settings.priceType] ?? 1);
             value += crimsonValue;
-            valueMessage += `- ${AQUA}Essence Upgrades: ${GREEN}+${formatNumber(crimsonValue)}\n`;
+            if (save) valueMessage += `- ${AQUA}Essence Upgrades: ${GREEN}+${formatNumber(crimsonValue)}\n`;
         } else {
             if (itemID === "PET") {  // Pet Value
                 const petInfo = JSON.parse(itemData?.petInfo);
                 value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
-                savedValues[itemUUID] = [value, ""];
+                if (save) savedValues[itemUUID] = [value, ""];
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
                 value = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
-                valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
-                savedValues[itemUUID] = [value, valueMessage];
+                if (save) {
+                    valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+                    savedValues[itemUUID] = [value, valueMessage];
+                }
             } else {  // Bazaar Value
                 value = (bazaar?.[itemID]?.[settings.priceType] ?? 0) * amount;
                 const order = (bazaar?.[itemID]?.[0] ?? 0) * amount;
                 const insta = (bazaar?.[itemID]?.[1] ?? 0) * amount;
-                if (order !== 0 || insta !== 0) {
-                    valueMessage += `- ${AQUA}Insta Sell: ${GREEN}+${formatNumber(order)}\n`;
-                    valueMessage += `- ${AQUA}Sell Offer: ${GREEN}+${formatNumber(insta)}\n`;
-                    savedValues[itemUUID] = [value, valueMessage];
+                if (order !== 0 || insta !== 0 && save) {
+                    if (save) {
+                        valueMessage += `- ${AQUA}Insta Sell: ${GREEN}+${formatNumber(order)}\n`;
+                        valueMessage += `- ${AQUA}Sell Offer: ${GREEN}+${formatNumber(insta)}\n`;
+                        savedValues[itemUUID] = [value, valueMessage];
+                    }
                 }
             }
             return value;
         }
     }
-    valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+    if (save) valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
     
     // Skin Value
     const skinValue = auction?.[itemData.skin]?.lbin ?? 0;
     if (skinValue !== 0) {
         value += skinValue;
-        valueMessage += `- ${AQUA}Skin: ${GREEN}+${formatNumber(skinValue)}\n`;
+        if (save) valueMessage += `- ${AQUA}Skin: ${GREEN}+${formatNumber(skinValue)}\n`;
     }
 
     // Reforge Value
     const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[settings.priceType] ?? 0;
     if (reforgeValue !== 0) {
         value += reforgeValue;
-        valueMessage += `- ${AQUA}Reforge: ${GREEN}+${formatNumber(reforgeValue)}\n`;
+        if (save) valueMessage += `- ${AQUA}Reforge: ${GREEN}+${formatNumber(reforgeValue)}\n`;
     }
     // Master Star Values
     let starValue = 0;
@@ -226,13 +231,13 @@ export function getItemValue(item) {
     for (let i = 0; i < Math.max(upgrade_level - 5, 0); i++)starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[settings.priceType];
     if (starValue !== 0) {
         value += starValue;
-        valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;
+        if (save) valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;
     }
     // Recomb Value
     const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar?.RECOMBOBULATOR_3000?.[settings.priceType];
     if (recombValue !== 0) {
         value += recombValue;
-        valueMessage += `- ${AQUA}Recomb: ${GREEN}+${formatNumber(recombValue)}\n`;
+        if (save) valueMessage += `- ${AQUA}Recomb: ${GREEN}+${formatNumber(recombValue)}\n`;
     }
     // Rune Value
     if (itemData?.runes !== undefined) {
@@ -240,7 +245,7 @@ export function getItemValue(item) {
         const [runeKey, runeLevel] = Object.entries(runes)[0];
         const runeValue = auction[`${runeKey}_${runeLevel}`]?.lbin ?? 0;
         if (runeValue !== 0) {
-            valueMessage += `- ${AQUA}Rune: ${GREEN}+${formatNumber(runeValue)}\n`;
+            if (save) valueMessage += `- ${AQUA}Rune: ${GREEN}+${formatNumber(runeValue)}\n`;
             value += runeValue
         }
     }
@@ -250,25 +255,25 @@ export function getItemValue(item) {
     const hotPotatoCount = potatoCount === undefined ? 0 : Math.min(potatoCount, 10);
     const hotPotatoValue = hotPotatoCount * bazaar?.HOT_POTATO_BOOK?.[settings.priceType];
     if (hotPotatoValue !== 0) {
-        valueMessage += `\n- ${GOLD + BOLD}Books:\n`;
-        valueMessage += `   - ${YELLOW}HPB (${hotPotatoCount}/10): ${GREEN}+${formatNumber(hotPotatoValue)}\n`;
+        if (save) valueMessage += `\n- ${GOLD + BOLD}Books:\n`;
+        if (save) valueMessage += `   - ${YELLOW}HPB (${hotPotatoCount}/10): ${GREEN}+${formatNumber(hotPotatoValue)}\n`;
         const fumingPotatoCount = Math.max(potatoCount - 10, 0);
         const fumingPotatoValue = fumingPotatoCount * bazaar?.FUMING_POTATO_BOOK?.[settings.priceType];
         if (fumingPotatoValue !== 0)
-        valueMessage += `   - ${YELLOW}FPB (${fumingPotatoCount}/5): ${GREEN}+${formatNumber(fumingPotatoValue)}\n`;
+        if (save) valueMessage += `   - ${YELLOW}FPB (${fumingPotatoCount}/5): ${GREEN}+${formatNumber(fumingPotatoValue)}\n`;
         value += hotPotatoValue + fumingPotatoValue;
     }
     // Art of War Value
     const tzuValue = itemData?.art_of_war_count === undefined ? 0 : bazaar?.THE_ART_OF_WAR?.[settings.priceType];
     if (tzuValue !== 0) {
         value += tzuValue;
-        valueMessage += `   - ${YELLOW}Sun Tzu: ${GREEN}+${formatNumber(tzuValue)}\n`;
+        if (save) valueMessage += `   - ${YELLOW}Sun Tzu: ${GREEN}+${formatNumber(tzuValue)}\n`;
     }
     // Art of Peace Value
     const peaceValue = itemData?.artOfPeaceApplied === undefined ? 0 : bazaar?.THE_ART_OF_PEACE?.[settings.priceType];
     if (peaceValue !== 0) {
         value += peaceValue;
-        valueMessage += `   - ${YELLOW}Moon Tzu: ${GREEN}+${formatNumber(peaceValue)}\n`;
+        if (save) valueMessage += `   - ${YELLOW}Moon Tzu: ${GREEN}+${formatNumber(peaceValue)}\n`;
     }
 
     // Drill Part Values
@@ -276,25 +281,28 @@ export function getItemValue(item) {
     const enginePart = itemData?.drill_part_engine;
     const modulePart = itemData?.drill_part_upgrade_module;
     if (tankPart !== undefined || enginePart !== undefined || modulePart !== undefined) {
-        valueMessage += `\n- ${GOLD + BOLD}Drill Parts:\n`;
+        if (save) valueMessage += `\n- ${GOLD + BOLD}Drill Parts:\n`;
         const tankValue = tankPart === undefined ? 0 : auction?.[tankPart.toUpperCase()]?.lbin ?? 0;
         const engineValue = enginePart === undefined ? 0 : auction?.[enginePart.toUpperCase()]?.lbin ?? 0;
         const moduleValue = modulePart === undefined ? 0 : auction?.[modulePart.toUpperCase()]?.lbin ?? 0;
-        if (tankValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(tankPart)}: ${GREEN}+${formatNumber(tankValue)}\n`;
-        if (engineValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(enginePart)}: ${GREEN}+${formatNumber(engineValue)}\n`;
-        if (moduleValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(modulePart)}: ${GREEN}+${formatNumber(moduleValue)}\n`;
+
+        if (save) {
+            if (tankValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(tankPart)}: ${GREEN}+${formatNumber(tankValue)}\n`;
+            if (engineValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(enginePart)}: ${GREEN}+${formatNumber(engineValue)}\n`;
+            if (moduleValue !== 0) valueMessage += `   - ${AQUA + convertToTitleCase(modulePart)}: ${GREEN}+${formatNumber(moduleValue)}\n`;
+        }
     }
     
     // Gem Values
     const gemsKeys = Object.keys(itemData?.gems ?? {});
     const powerScroll = itemData?.power_ability_scroll;
     if (gemsKeys.length !== 0 || powerScroll) {
-        valueMessage += `\n- ${GOLD + BOLD}Gemstones:\n`;
+        if (save) valueMessage += `\n- ${GOLD + BOLD}Gemstones:\n`;
 
         if (powerScroll) {
             const powerScrollValue = auction?.[powerScroll]?.lbin ?? 0;
             const scrollColor = GEMSTONE_SLOTS[powerScroll.split('_')[0]];
-            valueMessage += `   - ${scrollColor + convertToTitleCase(powerScroll)}: ${GREEN}+${formatNumber(powerScrollValue)}\n`;
+            if (save) valueMessage += `   - ${scrollColor + convertToTitleCase(powerScroll)}: ${GREEN}+${formatNumber(powerScrollValue)}\n`;
             value += powerScrollValue;
         }
     }
@@ -318,7 +326,7 @@ export function getItemValue(item) {
         
         if (gemstoneValue !== 0) {
             value += gemstoneValue;
-            valueMessage += `   - ${gemstoneColor + convertToTitleCase(gemstoneName)}: ${GREEN}+${formatNumber(gemstoneValue)}\n`;
+            if (save) valueMessage += `   - ${gemstoneColor + convertToTitleCase(gemstoneName)}: ${GREEN}+${formatNumber(gemstoneValue)}\n`;
         }
     });
     
@@ -327,18 +335,20 @@ export function getItemValue(item) {
     const enchantInstaValue = getEnchantmentValue(itemData?.enchantments, bazaar, 1);
     if (enchantOrderValue !== 0) {
         value += enchantOrderValue;
-        valueMessage += `\n- ${GOLD + BOLD}Enchantments:\n`;
-        valueMessage += `   - ${DARK_GREEN}Buy Order Value: ${GREEN}+${formatNumber(enchantOrderValue)}\n`;
-        valueMessage += `   - ${DARK_GREEN}Insta Buy Value: ${GREEN}+${formatNumber(enchantInstaValue)}\n`;
+        if (save) {
+            valueMessage += `\n- ${GOLD + BOLD}Enchantments:\n`;
+            valueMessage += `   - ${DARK_GREEN}Buy Order Value: ${GREEN}+${formatNumber(enchantOrderValue)}\n`;
+            valueMessage += `   - ${DARK_GREEN}Insta Buy Value: ${GREEN}+${formatNumber(enchantInstaValue)}\n`;
+        }
     }
   
     // Wither Impact Scroll Values
     const witherScrolls = itemData?.ability_scroll ?? [];
-    if (witherScrolls.length !== 0) valueMessage += `\n- ${GOLD + BOLD}Wither Scrolls:\n`;
+    if (witherScrolls.length !== 0 && save) valueMessage += `\n- ${GOLD + BOLD}Wither Scrolls:\n`;
     witherScrolls.forEach(scroll => {
         const scrollValue = bazaar?.[scroll]?.[settings.priceType];
         if (scrollValue !== 0) {
-            valueMessage += `   - ${DARK_GRAY + convertToTitleCase(scroll)}: ${GREEN}+${formatNumber(scrollValue)}\n`;
+            if (save) valueMessage += `   - ${DARK_GRAY + convertToTitleCase(scroll)}: ${GREEN}+${formatNumber(scrollValue)}\n`;
             value += scrollValue;
         }
     });
@@ -348,7 +358,7 @@ export function getItemValue(item) {
     let attributesValue = 0;
     let doubleCalc = false;
     let attributeMessage = "";
-    if (attributes.length) valueMessage += `\n- ${GOLD + BOLD}Attributes:\n`;
+    if (attributes.length && save) valueMessage += `\n- ${GOLD + BOLD}Attributes:\n`;
     attributes.forEach((attribute) => {
         const attributeLevel = itemData?.attributes[attribute];
         const attributeCount = 2 ** (attributeLevel - 1);
@@ -377,13 +387,13 @@ export function getItemValue(item) {
         }
     }
     // Final values
-    valueMessage += attributeMessage;
+    if (save) valueMessage += attributeMessage;
     value += attributesValue;
 
     // Total Value
-    valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN + formatNumber(value)}`;
+    if (save) valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN + formatNumber(value)}`;
   
-    savedValues[itemUUID] = [value, valueMessage];
+    if (save) savedValues[itemUUID] = [value, valueMessage];
     return value;
 }
 
