@@ -38,7 +38,7 @@ ${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at 
         // Economy Category
         this.setCategoryDescription("Economy",
         `${HEADER}
-${ITALIC}Related Commands: /va <attribute, calc>`);
+${ITALIC}Related Commands: /va <attribute, calc, nw>`);
 
         // Combat Category
         this.setCategoryDescription("Combat",

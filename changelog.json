@@ -2,7 +2,7 @@
     "- Added ignorelist (renamed blacklist)",
     "- Added spamlist",
     "- Added pest warp (`/pesttp`)",
-    "- TODO: Added /va nw",
+    "- Added /va nw",
     "- Changed blacklist to auto kick",
     "- Changed warplist to dianalist",
     "- Changed file pathing",

@@ -95,6 +95,7 @@ import { getSplits } from "./features/kuudra/KuudraSplits";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+import { getNetworth } from "./features/economy/Networth";
 
 
 // Launch Tests
@@ -263,9 +264,14 @@ register ("command", (...args) => {
             if (party.size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.join(' ')}`);
             ChatLib.chat(`- ${AQUA + BOLD}Garden: ${WHITE + getTime(getNextVisitor())}`);
             break;
+        // Networth
+        case "networth":
+        case "nw":
+            getNetworth(args[1] || Player.getName(), args[2]);
+            break;
         // Bestiary Stuff
-        case "be":
         case "bestiary":
+        case "be":
             getBestiary(args);
             break;
         // Attribute Pricing
