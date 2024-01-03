@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Comment Policy
-subtitle: List of all features and their related commands.
+subtitle: Creating a Positive Community Through Respectful Engagement.
 ---
 
 Welcome to VolcAddons! We value and appreciate your engagement with our content. To maintain a positive and respectful community, we have established the following comment policy. Please take a moment to read and adhere to these guidelines when participating in discussions.
@@ -40,5 +40,4 @@ If you come across a comment that violates our policy, please report it to our m
 
 By participating in the comments section, you agree to abide by this comment policy. We reserve the right to modify these guidelines as needed. Thank you for contributing to a positive and respectful community!
 
-VolcAddons
-[Contact Information or Link to Contact Page]
+VolcAddons *and sir GPT*
