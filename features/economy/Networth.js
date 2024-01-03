@@ -135,6 +135,10 @@ export function getNetworth(username, fruit) {
             // Bag values
             const bags = data.bag_contents;
             if (bags !== undefined) Object.keys(bags).forEach(bag => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
+            const sacks = data.sacks_counts;
+            let sacksValue = 0;
+            if (sacks !== undefined) Object.keys(sacks).forEach(product => sacksValue += (bazaar[product]?.[settings.priceType] ?? 0) * sacks[product]);
+            invValues.push([sacksValue, ` ${DARK_GRAY}- ${AQUA}Sacks Value: ${GREEN + formatNumber(sacksValue)}`]);
             total += setInv("Bag", invValues);
 
             // Pets values
@@ -148,7 +152,7 @@ export function getNetworth(username, fruit) {
                     tier === "EPIC" ? DARK_PURPLE :
                     tier === "RARE" ? BLUE :
                     tier === "UNCOMMON" ? GREEN : "WHITE";
-                invValues.push([lbin, `${color + convertToTitleCase(petName)} ${AQUA}Value: ${GREEN + formatNumber(lbin)}\n`]);
+                invValues.push([lbin, `${color + convertToTitleCase(petName) + DARK_GRAY}: ${GREEN + formatNumber(lbin)}\n`]);
             });
             invValues.sort((a, b) => b[0] - a[0]);
             total += setInv("Pet", invValues);
