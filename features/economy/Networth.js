@@ -1,8 +1,8 @@
 import request from "../../../requestV2";
-import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BLUE, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, YELLOW } from "../../utils/constants";
 import { convertToTitleCase, decode, formatNumber } from "../../utils/functions";
 import settings from "../../utils/settings";
-import { getBazaar } from "./Economy";
+import { getAuction, getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
 
 
@@ -33,7 +33,8 @@ function setInv(name, values) {
     if (values.length === 0) msg += ` ${DARK_GRAY}- ${RED}${name} API is turned off!`;
     for (let i = 0; i < values.length; i++) {
         value += values[i][0];
-        msg += values[i][1];
+        if (i < 48) msg += values[i][1];
+        else if (i === 48) msg += `${GRAY}and ${values.length - 48} more...`;
     }
 
     new TextComponent(` ${DARK_GRAY}- ${AQUA + name} Value: ${GREEN + formatNumber(value)}`).setHoverValue(msg.trim()).chat();
@@ -85,9 +86,8 @@ export function getNetworth(username, fruit) {
                 return;
             }
 
-            Object.keys(profile).forEach(key => print(key));
-
             // Otherwise calculate networth for inputted profile
+            const auction = getAuction();
             const bazaar = getBazaar();
             ChatLib.chat(`\n${LOGO + DARK_AQUA}${username}'s ${profile.cute_name} Networth:\n`);
             let total = 0;
@@ -129,7 +129,6 @@ export function getNetworth(username, fruit) {
                 let backpack = backpacks[i.toString()];
                 invValues.push(getInvValue(backpack?.data, `Backpack ${i + 1}`));
             }
-
             invValues.sort((a, b) => b[0] - a[0]);
             total += setInv("Backpack", invValues);
 
@@ -137,6 +136,22 @@ export function getNetworth(username, fruit) {
             const bags = data.bag_contents;
             if (bags !== undefined) Object.keys(bags).forEach(bag => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
             total += setInv("Bag", invValues);
+
+            // Pets values
+            const pets = player.pets_data.pets;
+            pets.forEach(pet => {
+                const tier = pet.tier;
+                const petName = `${tier}_${pet.type}`;
+                const lbin = auction[petName]?.lbin ?? 0;
+                const color = tier === "MYTHIC" ? LIGHT_PURPLE :
+                    tier === "LEGENDARY" ? GOLD :
+                    tier === "EPIC" ? DARK_PURPLE :
+                    tier === "RARE" ? BLUE :
+                    tier === "UNCOMMON" ? GREEN : "WHITE";
+                invValues.push([lbin, `${color + convertToTitleCase(petName)} ${AQUA}Value: ${GREEN + formatNumber(lbin)}\n`]);
+            });
+            invValues.sort((a, b) => b[0] - a[0]);
+            total += setInv("Pet", invValues);
 
             // Total
            ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
