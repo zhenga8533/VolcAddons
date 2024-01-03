@@ -124,7 +124,7 @@ function updateContainerValue(remove) {
                 itemName = item.getNBT().getCompoundTag("tag").getCompoundTag("display").toObject().Lore[0];
 
             // Get item value + item count
-            let value = getItemValue(item);
+            let value = getItemValue(item, false);
             if (value !== 0) {
                 let itemCount = item.getStackSize();
 

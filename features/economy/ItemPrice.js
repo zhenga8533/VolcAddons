@@ -159,7 +159,7 @@ export function getItemValue(item, save=true) {
     // Base Value
     let valueMessage = `${DARK_AQUA + BOLD}Item: ${itemTag.display.Name}`;
     if (amount !== 1 && save) valueMessage += ` ${GRAY}x${amount}\n`;
-    else if (save) valueMessage += "\n";
+    else if (save) valueMessage += `\n`;
 
     // Check for Edge Cases
     if (value === 0) {
@@ -188,7 +188,14 @@ export function getItemValue(item, save=true) {
             if (itemID === "PET") {  // Pet Value
                 const petInfo = JSON.parse(itemData?.petInfo);
                 value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
-                if (save) savedValues[itemUUID] = [value, ""];
+                valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+                const skinValue = auction["PET_SKIN_" + petInfo.skin]?.lbin ?? 0;
+                value += skinValue;
+                if (skinValue !== 0 && save) valueMessage += `- ${AQUA}Skin: ${GREEN}+${formatNumber(skinValue)}\n`;
+                if (save) {
+                    valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN + formatNumber(value)}`;
+                    savedValues[itemUUID] = [value, valueMessage];
+                }
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
                 value = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
                 if (save) {

@@ -25,7 +25,7 @@ function getInvValue(inv, type) {
     return [total, ` ${DARK_GRAY}- ${AQUA + type} Value: ${color + formatNumber(total)}\n`];
 }
 
-function setInv(name, values) {
+function setInv(name, values, extra=undefined) {
     let value = 0;
     let msg = `${DARK_AQUA + name} Value:\n`;
 
@@ -34,8 +34,9 @@ function setInv(name, values) {
     for (let i = 0; i < values.length; i++) {
         value += values[i][0];
         if (i < 48) msg += values[i][1];
-        else if (i === 48) msg += `${GRAY}and ${values.length - 48} more...`;
+        else if (i === 48) msg += `${GRAY}and ${values.length - 48} more!`;
     }
+    if (extra !== undefined) msg += extra;
 
     new TextComponent(` ${DARK_GRAY}- ${AQUA + name} Value: ${GREEN + formatNumber(value)}`).setHoverValue(msg.trim()).chat();
     values.length = 0;
@@ -143,19 +144,25 @@ export function getNetworth(username, fruit) {
 
             // Pets values
             const pets = player.pets_data.pets;
+            let mia = 0;
             pets.forEach(pet => {
                 const tier = pet.tier;
                 const petName = `${tier}_${pet.type}`;
-                const lbin = auction[petName]?.lbin ?? 0;
+                let lbin = auction[petName]?.lbin ?? 0;
                 const color = tier === "MYTHIC" ? LIGHT_PURPLE :
                     tier === "LEGENDARY" ? GOLD :
                     tier === "EPIC" ? DARK_PURPLE :
                     tier === "RARE" ? BLUE :
                     tier === "UNCOMMON" ? GREEN : "WHITE";
+                if (pet.skin !== null) {
+                    const skinValue = auction["PET_SKIN_" + pet.skin]?.lbin ?? 0;
+                    if (skinValue === 0) mia++;
+                    lbin += skinValue;
+                }
                 invValues.push([lbin, `${color + convertToTitleCase(petName) + DARK_GRAY}: ${GREEN + formatNumber(lbin)}\n`]);
             });
             invValues.sort((a, b) => b[0] - a[0]);
-            total += setInv("Pet", invValues);
+            total += setInv("Pet", invValues, mia === 0 ? undefined : `\n${DARK_GRAY}also ${mia} unaccounted skins...`);
 
             // Total
            ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
