@@ -1,15 +1,14 @@
 import request from "../../../requestV2";
 import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { convertToTitleCase, decode, formatNumber } from "../../utils/functions";
+import settings from "../../utils/settings";
+import { getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
 
 
 function getInvValue(inv, type) {
     // Check if API is on
-    if (inv === undefined) {
-        ChatLib.chat(` ${DARK_GRAY}- ${RED + type} API is turned off!`);
-        return 0;
-    }
+    if (inv === undefined) return [0, ` ${DARK_GRAY}- ${RED + type} API is turned off!\n`];
 
     // Decode inventory NBT
     let items = decode(inv);
@@ -29,13 +28,16 @@ function getInvValue(inv, type) {
 function setInv(name, values) {
     let value = 0;
     let msg = `${DARK_AQUA + name} Value:\n`;
+
+    // Add up category values
+    if (values.length === 0) msg += ` ${DARK_GRAY}- ${RED}${name} API is turned off!`;
     for (let i = 0; i < values.length; i++) {
         value += values[i][0];
         msg += values[i][1];
     }
+
     new TextComponent(` ${DARK_GRAY}- ${AQUA + name} Value: ${GREEN + formatNumber(value)}`).setHoverValue(msg.trim()).chat();
     values.length = 0;
-
     return value;
 }
 
@@ -76,15 +78,17 @@ export function getNetworth(username, fruit) {
                 ChatLib.chat(`${LOGO + RED + fruit} profile was not found!`);
                 return;
             }
-            const data = profile.members[res.id].inventory;
+            const player = profile.members[res.id];
+            const data = player.inventory;
             if (data === undefined) {
                 ChatLib.chat(`${LOGO + RED + username}'s inventory API is turned off!`);
                 return;
             }
 
-            Object.keys(data).forEach(key => print(key));
+            Object.keys(profile).forEach(key => print(key));
 
             // Otherwise calculate networth for inputted profile
+            const bazaar = getBazaar();
             ChatLib.chat(`\n${LOGO + DARK_AQUA}${username}'s ${profile.cute_name} Networth:\n`);
             let total = 0;
             let invValues = [];
@@ -93,17 +97,33 @@ export function getNetworth(username, fruit) {
             invValues.push(getInvValue(data.inv_contents?.data, "Inventory"));
             invValues.push(getInvValue(data.inv_armor?.data, "Armor"));
             invValues.push(getInvValue(data.equipment_contents?.data, "Equipment"));
-            total += setInv("Player's", invValues);
+            total += setInv("Player", invValues);
+
+            // Currency value
+            const currencies = player.currencies;
+            invValues.push([currencies?.coin_purse, ` ${DARK_GRAY}- ${AQUA}Purse Value: ${GREEN + formatNumber(currencies?.coin_purse)}\n`]);
+
+            if (profile.banking?.balance === undefined) invValues.push([0, ` ${DARK_GRAY}- ${RED}Bank API is turned off!\n`]);
+            else invValues.push([profile.banking?.balance, ` ${DARK_GRAY}- ${AQUA}Bank Value: ${GREEN + formatNumber(profile.banking?.balance)}\n`]);
+
+            const essences = currencies?.essence;
+            let essenceValue = 0;
+            if (essences !== undefined) Object.keys(essences).forEach(essence => {
+                essenceValue += bazaar["ESSENCE_" + essence][settings.priceType] * essences[essence].current;
+            });
+            invValues.push([essenceValue, ` ${DARK_GRAY}- ${AQUA}Essence Value: ${GREEN + formatNumber(essenceValue)}\n`]);
+
+            total += setInv("Currency", invValues);
 
             // Storage value
             invValues.push(getInvValue(data.wardrobe_contents?.data, "Wardrobe"));
             invValues.push(getInvValue(data.ender_chest_contents?.data, "Ender Chest"));
             invValues.push(getInvValue(data.personal_vault_contents?.data, "Vault"));
-            total += setInv("Storage's", invValues);
+            total += setInv("Storage", invValues);
 
             // Backpack values
             const backpacks = data.backpack_contents;
-            const packs = Object.keys(backpacks).length;
+            const packs = backpacks === undefined ? 0 : Object.keys(backpacks).length;
 
             for (let i = 0; i < packs; i++) {
                 let backpack = backpacks[i.toString()];
@@ -111,12 +131,12 @@ export function getNetworth(username, fruit) {
             }
 
             invValues.sort((a, b) => b[0] - a[0]);
-            total += setInv("Backpacks'", invValues);
+            total += setInv("Backpack", invValues);
 
             // Bag values
             const bags = data.bag_contents;
-            Object.keys(bags).forEach(bag => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
-            total += setInv("Bags'", invValues);
+            if (bags !== undefined) Object.keys(bags).forEach(bag => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
+            total += setInv("Bag", invValues);
 
             // Total
            ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
