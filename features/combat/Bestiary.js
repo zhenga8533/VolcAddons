@@ -11,8 +11,9 @@ import { data, registerWhen } from "../../utils/variables";
  * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
  */
 let bestiaryApi = undefined;
-function updateBestiary(profileId) {
+function updateBestiary(profileId, args) {
     if (profileId === undefined) return;
+    const callback = bestiaryApi === undefined;
 
     // Make an API request to Hypixel API to get the player's bestiary data from their profile.
     request({
@@ -21,12 +22,13 @@ function updateBestiary(profileId) {
     }).then((response) => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
         bestiaryApi = response.profile.members[getPlayerUUID()]?.bestiary?.kills;
+        Object.keys(bestiary).forEach(key => bestiary[key].updateKills());
+        if (callback) getBestiary(args);
     }).catch((err) => {
         // If there is an error, display the error message in the Minecraft chat.
         ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
     });
 }
-updateBestiary(data.lastID);
 
 /**
  * Variable and class to track mob bestiary data.
@@ -322,13 +324,6 @@ const bestiary = {
     "Wandering Blaze": new Mob(["wandering_blaze"], [100, 200, 300, 400, 500], 4, 20, 15),
     "Wither Sentry": new Mob(["wither_sentry"], [100, 200, 300, 400, 500], 4, 10, 30),
 };
-register("worldLoad", () => {
-    delay(() => {
-        Object.keys(bestiary).forEach(key => {
-            bestiary[key].updateKills();
-        });
-    }, 1000);
-});
 
 /**
  * Sorts and filters the bestiary based on the provided criteria and amount.
@@ -362,7 +357,7 @@ function sortBestiary(val, amount) {
  * @param {Array} args - An array of arguments containing information about the bestiary query.
  */
 export function getBestiary(args) {
-    switch(args[1]) {
+    if (bestiaryApi !== undefined) switch(args[1]) {
         case "kills":
         case "kill":
             sortBestiary("next", args[2] || 10);
@@ -385,7 +380,7 @@ export function getBestiary(args) {
                 ChatLib.chat(`${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${RED + getTime(mob.nextTime) + GREEN})`);
             break;
     }
-    updateBestiary(data.lastID);
+    updateBestiary(data.lastID, args);
 }
 
 

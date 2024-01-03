@@ -143,7 +143,7 @@ function updateTrophy(profileId) {
         }
     });
 }
-updateTrophy(data.lastID);
+if (settings.trophyCounter) updateTrophy(data.lastID);
 
 /**
  * Update counter variables.
