@@ -134,7 +134,6 @@ valueOverlay.message = "";
 let savedValues = {}
 export function getItemValue(item, save=true) {
     // Get Item statistics
-    valueOverlay.message = "";
     if (item === null) return 0;
     const nbt = item?.getNBT() ?? item;
     const itemTag = nbt?.getCompoundTag("tag")?.toObject();
@@ -162,7 +161,6 @@ export function getItemValue(item, save=true) {
     const bazaar = getBazaar();
     let auctionItem = auction?.[itemID];
     let value = (data.valuelist?.[itemID] ?? auctionItem?.lbin ?? 0) * amount;
-    ChatLib.chat(value);
 
     // Base Value
     let valueMessage = `${DARK_AQUA + BOLD}Item: ${itemName}`;

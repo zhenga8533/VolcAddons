@@ -37,6 +37,7 @@ ${GOLD + BOLD}Profit: ${(profit > 0 ? GREEN : RED) + formatNumber(profit)}`;
 
 const setTrade = register("guiClosed", () => {
     updateTrade.unregister();
+    tradeOverlay.message = "";
 }).unregister();
 
 register("guiOpened", () => {

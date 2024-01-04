@@ -61,7 +61,7 @@ export function getNetworth(username, fruit) {
             // Ask for desired profile
             const profiles = response.profiles;
             if (fruit === undefined) {
-                ChatLib.chat(`${LOGO + DARK_AQUA}Please select desired profile:`);
+                ChatLib.chat(`\n${LOGO + DARK_AQUA}Please select desired profile:`);
 
                 for (let i = 0; i < profiles.length; i++) {
                     fruit = profiles[i].cute_name;
