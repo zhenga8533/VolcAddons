@@ -138,9 +138,16 @@ export function getItemValue(item, save=true) {
     if (item === null) return 0;
     const nbt = item?.getNBT() ?? item;
     const itemTag = nbt?.getCompoundTag("tag")?.toObject();
+    const itemName = itemTag?.display?.Name;
     const itemData = itemTag?.ExtraAttributes;
-    let itemID = itemData?.id;
-    if (itemID == undefined) return 0;
+    const itemID = itemData?.id;
+
+    // Check for early return
+    if (itemName?.startsWith("§6") && itemName?.endsWith(" coins"))
+        return parseInt(tag?.display?.Lore[4]?.removeFormatting()?.replace(/[^0-9]/g, '')) ?? 0;
+    if (itemID === undefined) return 0;
+
+    // Get remaining statistics
     const amount = item?.getStackSize() ?? 1;
     const itemUUID = (itemData?.uuid || item?.getName()) + amount;
 
@@ -155,9 +162,10 @@ export function getItemValue(item, save=true) {
     const bazaar = getBazaar();
     let auctionItem = auction?.[itemID];
     let value = (data.valuelist?.[itemID] ?? auctionItem?.lbin ?? 0) * amount;
+    ChatLib.chat(value);
 
     // Base Value
-    let valueMessage = `${DARK_AQUA + BOLD}Item: ${itemTag.display.Name}`;
+    let valueMessage = `${DARK_AQUA + BOLD}Item: ${itemName}`;
     if (amount !== 1 && save) valueMessage += ` ${GRAY}x${amount}\n`;
     else if (save) valueMessage += `\n`;
 
@@ -166,8 +174,8 @@ export function getItemValue(item, save=true) {
         const partsID = itemID.split('_');
         const pieceTier = partsID[0];
         if (pieceTier in KUUDRA_UPGRADES) {  // Kuudra Piece Upgrade Value
-            itemID = partsID.slice(1).join('_');
-            auctionItem = auction?.[itemID];
+            const formatID = partsID.slice(1).join('_');
+            auctionItem = auction?.[formatID];
             value = (auctionItem?.lbin ?? 0) * amount;
             if (save) valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
 
