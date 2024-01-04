@@ -51,6 +51,7 @@ import "./features/economy/Economy";
 import { calcGdrag } from "./features/economy/GdragCalc";
 import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
+import "./features/economy/TradeValue";
 // Combat Features
 import { getBestiary } from "./features/combat/Bestiary";
 import "./features/combat/ComboDisplay";

@@ -508,6 +508,14 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
         options: ["Order", "Insta"]
     })
     priceType = 0;
+    
+    @SwitchProperty({
+        name: "Trade Value",
+        description: "Determines the value difference between two trades.",
+        category: "Economy",
+        subcategory: "Pricing"
+    })
+    tradeValue = false;
 
 
     // ████████████████████████████████████████████████████ COMBAT ████████████████████████████████████████████████████

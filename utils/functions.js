@@ -96,18 +96,20 @@ export function commafy(num) {
  * @returns {string} Formatted number if k, m, b notation
  */
 export function formatNumber(num) {
-    if (isNaN(num) || num == 0) return 0;
-    if (num < 1) return num?.toFixed(2);
-
+    if (isNaN(num) || num === 0) return "0";
+    
+    const sign = Math.sign(num);
     const absNum = Math.abs(num);
+
+    if (absNum < 1) return (sign === -1 ? '-' : '') + absNum.toFixed(2);
+
     const abbrev = ["", "k", "m", "b", "t", "q", "Q"];
     const index = Math.floor(Math.log10(absNum) / 3);
   
-    const formattedNumber = (num / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
+    const formattedNumber = ((sign === -1 ? -1 : 1) * absNum / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
 
     // Check if the number is a whole number, and if so, remove the ".00"
-    if (Number.isInteger(num) && num < 1_000) return String(parseInt(formattedNumber));
-
+    if (Number.isInteger(absNum) && absNum < 1_000) return String(parseInt(formattedNumber));
     return formattedNumber;
 }
 

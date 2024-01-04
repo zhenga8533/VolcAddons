@@ -101,6 +101,7 @@ export let data = new PogObject("VolcAddons", {
     "EQL": [905, 65, 1.2, false], // Equipment Location
     "PHL": [170, 160, 1.2, false], // Pesthunter Location
     "SDL": [170, 180, 1.2, false], // Spray Display Location
+    "TVL": [1, 1, 1.2, false], // Trade Value Location
     // Rift waypoint properties
     "fairySouls": FAIRY_SOULS,
     "enigmaSouls": ENIGMA_SOULS,
