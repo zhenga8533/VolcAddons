@@ -362,6 +362,31 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
 
+    // --- Message ---
+    @TextProperty({
+        name: "Guild Join Message",
+        description: "Set the message to be sent to the guild once a user joins.",
+        category: "Party",
+        subcategory: "Message"
+    })
+    guildMessage = "";
+    
+    @TextProperty({
+        name: "Party Join Message",
+        description: "Set the message to be sent to the party once a user joins.",
+        category: "Party",
+        subcategory: "Message"
+    })
+    partyMessage = "";
+
+    @SwitchProperty({
+        name: "Party Leader Only",
+        description: "Only sends above message when you are party leader.",
+        category: "Party",
+        subcategory: "Message"
+    })
+    partyMessageLeader = false;
+
     // --- Party ---
     @SwitchProperty({
         name: "Anti Ghost Party",
@@ -387,22 +412,6 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         options: ["OFF", "On Transfer", "On Kick"]
     })
     autoTransfer = 0;
-    
-    @TextProperty({
-        name: "Guild Join Message",
-        description: "Set the message to be sent to the guild once a user joins.",
-        category: "Party",
-        subcategory: "Party"
-    })
-    guildMessage = "";
-    
-    @TextProperty({
-        name: "Party Join Message",
-        description: "Set the message to be sent to the party once a user joins.",
-        category: "Party",
-        subcategory: "Party"
-    })
-    partyMessage = "";
 
     @TextProperty({
         name: "Server Kick Announce",

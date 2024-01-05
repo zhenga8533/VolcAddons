@@ -5,6 +5,7 @@
     "- Added /va nw",
     "- Added trade menu value",
     "- Added toggle for single/double attribute calc",
+    "- Added toggle for join message when leader",
     "- Changed blacklist to auto kick",
     "- Changed warplist to dianalist",
     "- Changed file pathing",
