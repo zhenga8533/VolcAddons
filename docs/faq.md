@@ -21,3 +21,8 @@ There will not be any rats (I think), but I am as trustworthy as the next person
 - Make sure you are using ChatTriggers v2.2.0
 
 - Run `/ct console js` and if there is red text please DM `grapefruited` on Discord
+
+
+**4. Where do I report bugs or suggest features**
+
+Please open a thread on the VolcAddons Discord server: [here](https://discord.gg/ftxB4kG2tw)
