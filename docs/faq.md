@@ -16,4 +16,8 @@ There will not be any rats (I think), but I am as trustworthy as the next person
 
 **3. Setup did not work**
 
-Check...
+- Check if you placed correct folder in correct location. Run `/ct files`, click modules, click VolcAddons, and verify you see multiple files and folders.
+
+- Make sure you are using ChatTriggers v2.2.0
+
+- Run `/ct console js` and if there is red text please DM `grapefruited` on Discord
