@@ -378,7 +378,7 @@ export function getItemValue(item, save=true) {
         const attributePiece = auctionItem?.attributes?.[attribute] ?? 0;
         const attributeValue = Math.min(attributePiece, auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? attributePiece) * attributeCount;
         
-        if (attributeLevel > 5) {
+        if (attributeLevel > 5 || !settings.singleAttribute) {
             attributesValue += attributeValue;
             attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
             doubleCalc = true;

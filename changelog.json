@@ -4,10 +4,10 @@
     "- Added pest warp (`/pesttp`)",
     "- Added /va nw",
     "- Added trade menu value",
+    "- Added toggle for single/double attribute calc",
     "- Changed blacklist to auto kick",
     "- Changed warplist to dianalist",
     "- Changed file pathing",
-    "- TODO: Recoded skill and powder? tracker",
     "- Changed valuelist to only register held item",
     "- Fixed negative number formatting",
     "- Removed API key"

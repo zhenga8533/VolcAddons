@@ -500,6 +500,14 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     itemPrice = 0;
 
+    @SwitchProperty({
+        name: "Single Attribute",
+        description: "Nullifies the value of the lower value attribute on items with T5 or lower attributes.",
+        category: "Economy",
+        subcategory: "Pricing",
+    })
+    singleAttribute = true;
+
     @SelectorProperty({
         name: "Price Type",
         description: "Choose the type of bazaar pricing used in item calculations.",
