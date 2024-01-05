@@ -2,8 +2,8 @@ import axios from "../../../axios";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { request } from "../../../requestV2";
-import { AQUA, DARK_AQUA, DARK_GREEN, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { getGuildName, getPlayerName } from "../../utils/functions";
+import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { getGuildName, getPlayerName, randIndex } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
@@ -55,7 +55,7 @@ function setWaifu(announce) {
     axios.get("https://api.waifu.pics/sfw/waifu").then((link) => {
         waifu = link.data.url;
         if (announce)
-            new Message(`${LOGO + DARK_GREEN}Uploading `,
+            new Message(`\n${LOGO + DARK_GREEN}Uploading `,
                 new TextComponent(waifu).setHoverValue(waifu),
                 ` ${DARK_GREEN}to Imgur!`).chat();
         upload(waifu).then(({ data: { link } }) => {
@@ -64,11 +64,28 @@ function setWaifu(announce) {
             new Message(`${LOGO + GREEN}Uploaded `,
                 new TextComponent(imgur).setHoverValue(imgur),
                 ` ${GREEN}to Imgur Successfully! `,
-                new TextComponent(`${GRAY}[click here to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
+                new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
         }).catch((err) => {
             const error = err.data.error;
-            const message = error?.message
-            if (announce) ChatLib.chat(`${LOGO + RED}Imgur Upload Failed: ${message ?? error}`);
+            if (announce) ChatLib.chat(`${LOGO + RED}Imgur Upload Failed: ${error?.message ?? error}`);
+
+            // Attempt to use base Imgur API
+            ChatLib.chat(`${LOGO + DARK_GRAY}Attempting to fetch using Imgur API...`);
+            const clientID = IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
+            request({
+                url: "https://api.imgur.com/3/gallery/t/waifu/viral/1?showViral=true",
+                method: "GET",
+                headers: {
+                    Authorization: `Client-ID ${clientID}`,
+                },
+                json: true
+            }).then(res => {
+                const items = res.data.items;
+                const images = items[randIndex(items)]?.images;
+                const id = images[randIndex(images)]?.id;
+
+                imgur = `https://i.imgur.com/${id}.png`;
+            }).catch(_ => ChatLib.chat(`${LOGO + DARK_RED}Imgur Fetch Failed :(`));
         });
     });
 }

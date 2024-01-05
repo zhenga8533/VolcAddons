@@ -10,5 +10,6 @@
     "- Changed file pathing",
     "- Changed valuelist to only register held item",
     "- Fixed negative number formatting",
+    "- Fixed waifu call fails (mostly?)",
     "- Removed API key"
 ]

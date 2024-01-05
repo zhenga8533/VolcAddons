@@ -369,7 +369,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Party",
         subcategory: "Party"
     })
-    antiGhostParty = true;
+    antiGhostParty = false;
 
     @SwitchProperty({
         name: "Auto Join Reparty",

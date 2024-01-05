@@ -408,3 +408,13 @@ export function decode(bytes) {
     const nbt = compressor.func_74796_a(inputstream);
     return nbt.func_150295_c("i", 10);
 }
+
+/**
+ * Returns a random index in array.
+ * 
+ * @param {Array} arr - Array to find the random index of.
+ * @returns {Number} Random number from 0 to arr.length - 1
+ */
+export function randIndex(arr) {
+    return Math.floor(Math.random() * (arr.length - 1));
+}
