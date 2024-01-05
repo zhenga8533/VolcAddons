@@ -3,7 +3,7 @@ import "./utils/player";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { getTime } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
@@ -367,7 +367,7 @@ register ("command", (...args) => {
                         }
                         break;
                 }
-            } catch (err) { ChatLib.chat(`${LOGO + RED + err}`); }
+            } catch (err) { ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`) }
             break;
         // Configure fairy souls
         case "fairy":

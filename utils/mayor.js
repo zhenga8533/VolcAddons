@@ -1,4 +1,5 @@
 import { request } from "../../requestV2";
+import { DARK_RED, LOGO } from "./constants";
 
 
 /**
@@ -38,7 +39,5 @@ register("worldLoad", () => {
     }).then((response)=>{
         mayor = response.mayor.name;
         perks = new Set([...response.mayor.perks.map(perk => perk.name)]);
-    }).catch((error)=>{
-        console.error(error);
-    });
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 });

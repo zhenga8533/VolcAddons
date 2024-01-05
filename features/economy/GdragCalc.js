@@ -1,5 +1,5 @@
 import request from "../../../requestV2";
-import { BLUE, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BLUE, BOLD, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { decode, formatNumber } from "../../utils/functions";
 
 
@@ -42,9 +42,7 @@ function findGdrag(page, minLvl) {
             if (minLvl != 0) calcGdrag(minLvl);
             ChatLib.chat(`${DARK_GRAY}GDrag values saved, use '/refreshGdrag' to refresh auction data!`);
         }
-    }).catch((error)=>{
-        console.error(error);
-    });
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
 register("command", () => {
     gdrags = [];

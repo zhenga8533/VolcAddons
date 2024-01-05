@@ -1,9 +1,8 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions";
 import { getPlayerUUID } from "../../utils/player";
-import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 
 
@@ -24,10 +23,7 @@ function updateBestiary(profileId, args) {
         bestiaryApi = response.profile.members[getPlayerUUID()]?.bestiary?.kills;
         Object.keys(bestiary).forEach(key => bestiary[key].updateKills());
         if (callback) getBestiary(args);
-    }).catch((err) => {
-        // If there is an error, display the error message in the Minecraft chat.
-        ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
-    });
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
 
 /**

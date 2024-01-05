@@ -49,7 +49,7 @@ new Hitbox(() => getWorld() === "Catacombs" && (settings.starDetect === 2 || set
         // Check dead
         const mob = starMobs[key];
         try { if (mob.func_110143_aJ() == 0) return; }
-        catch (err) { return; }
+        catch (err) { return }
 
         // Render Box
         const x = mob.field_70142_S;

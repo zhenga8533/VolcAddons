@@ -1,4 +1,5 @@
 import request from "../../requestV2";
+import { DARK_RED, LOGO } from "./constants";
 import { data } from "./variables";
 
 
@@ -32,9 +33,7 @@ request({
 }).then((response) => {
     // Update the 'uuid' variable with the player's UUID from the API response.
     uuid = response.id;
-}).catch((error) => {
-    console.error(error);
-});
+}).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 
 // Event handler for detecting the player's profile ID from a chat message and update API data.
 register("chat", (id) => {

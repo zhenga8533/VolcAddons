@@ -1,5 +1,5 @@
 import request from "../../../requestV2";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, convertToTitleCase, decode, formatNumber } from "../../utils/functions";
 import { getAuction } from "./Economy";
 
@@ -58,9 +58,7 @@ function findAttributes(page, command) {
             if (command !== undefined) getAttributes(command);
             ChatLib.chat(`${DARK_GRAY}Attribute values saved, use '/refreshAttr' to refresh auction data!`);
         }
-    }).catch((error)=>{
-        console.error(error);
-    });
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
 register("command", () => {
     attributesBin = {};

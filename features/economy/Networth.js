@@ -6,6 +6,13 @@ import { getAuction, getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
 
 
+/**
+ * Decodes inventory NBT into an array of items and add their value up.
+ * 
+ * @param {String} inv - NBT string of the inventory data
+ * @param {String} type - Name of the inventory
+ * @returns {Array} [total value, value String]
+ */
 function getInvValue(inv, type) {
     // Check if API is on
     if (inv === undefined) return [0, ` ${DARK_GRAY}- ${RED + type} API is turned off!\n`];
@@ -25,6 +32,14 @@ function getInvValue(inv, type) {
     return [total, ` ${DARK_GRAY}- ${AQUA + type} Value: ${color + formatNumber(total)}\n`];
 }
 
+/**
+ * Adds up values in a specific category to print out a message of total value with a hover value. Also returns total value.
+ * 
+ * @param {String} name - Name of the container
+ * @param {Array} values - Array of the value totals and strings
+ * @param {String} extra - Any extra details to add to the bottom of message hover value.
+ * @returns {Number} - Total value of all containers added together.
+ */
 function setInv(name, values, extra=undefined) {
     let value = 0;
     let msg = `${DARK_AQUA + name} Value:\n`;
@@ -43,9 +58,11 @@ function setInv(name, values, extra=undefined) {
     return value;
 }
 
-
 /**
+ * Fetches the networth of a player's Hypixel SkyBlock profile.
  * 
+ * @param {String} username - Minecraft username to fetch networth for.
+ * @param {String} fruit - Cute name (fruit) of the SkyBlock profile.
  */
 export function getNetworth(username, fruit) {
     // Get UUID of entered username
@@ -58,8 +75,14 @@ export function getNetworth(username, fruit) {
             url: `https://api.hypixel.net/v2/skyblock/profiles?key=4e927d63a1c34f71b56428b2320cbf95&uuid=${res.id}`,
             json: true
         }).then((response) => {
-            // Ask for desired profile
+            // Check if user exists
             const profiles = response.profiles;
+            if (profiles === null) {
+                ChatLib.chat(`${LOGO + RED}Player '${username}' does not exist...`);
+                return;
+            }
+
+            // Ask for desired profile
             if (fruit === undefined) {
                 ChatLib.chat(`\n${LOGO + DARK_AQUA}Please select desired profile:`);
 
@@ -167,12 +190,6 @@ export function getNetworth(username, fruit) {
             // Total
            ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
            ChatLib.chat(`\n${LOGO + DARK_AQUA}Total Networth: ${DARK_GREEN + formatNumber(total)}`);
-        }).catch((err) => {
-            // If there is an error, display the error message in the Minecraft chat.
-            ChatLib.chat(`${LOGO + DARK_RED + err.cause ?? err}`);
-        });
-    }).catch((err) => {
-        // If there is an error, display the error message in the Minecraft chat.
-        ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
-    });
+        }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }

@@ -1,6 +1,6 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { convertToTitleCase } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { getPlayerUUID } from "../../utils/player";
@@ -135,13 +135,7 @@ function updateTrophy(profileId) {
 
         // Sort by highest catches
         if (settings.trophyCounter === 1) updateMessage(totalTrophy);
-    }).catch((err) => {
-        ChatLib.chat(`${LOGO + RED + err.cause ?? err}`);
-        if (err.cause === "Invalid API key") {
-            settings.api = "";
-            ChatLib.chat(`${GREEN}API key cleared!`);
-        }
-    });
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
 if (settings.trophyCounter) updateTrophy(data.lastID);
 

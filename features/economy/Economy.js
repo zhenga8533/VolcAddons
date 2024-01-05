@@ -1,6 +1,6 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { GREEN, LOGO } from "../../utils/constants";
+import { DARK_RED, GREEN, LOGO } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
 
 
@@ -21,9 +21,7 @@ function updateAuction() {
         json: true
     }).then((response) => {
         items = response.items;
-    }).catch((error) => {
-        console.error(error);
-    });
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
 function updateBazaar() {
     request({
@@ -31,9 +29,7 @@ function updateBazaar() {
         json: true
     }).then((response) => {
         products = response.items;
-    }).catch((error) => {
-        console.error(error);
-    });
+    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
 const load = register("worldLoad", () => {
     updateAuction();
