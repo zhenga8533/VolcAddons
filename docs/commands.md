@@ -30,6 +30,7 @@ subtitle: List of every non-gui related commands.
 - **Economy**
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
+    - `/va nw`: Calculates the networth of a SkyBlock player's profile using custom API.
 - **Misc**
     - `/va be`: Displays bestiary stats and closest milestones.
     - `/va splits`: Prints out Kuudra splits' stats.
