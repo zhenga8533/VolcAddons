@@ -24,10 +24,15 @@
 
 ## Table of Contents
 
+- [Website](#website)
 - [Setup](#setup)
 - [Commands](#commands)
 - [Features](#features)
 </br>
+
+## Website
+
+You can also view this page on the VolcAddons [website](https://zhenga8533.github.io/VolcAddons/).
 
 ## Setup
 
