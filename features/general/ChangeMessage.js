@@ -40,6 +40,7 @@ const GIFT = {
     ":dj:": "ヽ(⌐■_■)ノ♬",
     ":cute:": "(✿ᴖ‿ᴖ)"
 };
+let nextMessage = undefined;
 
 /**
  * Replaces all user messages that contains desired emotes.
@@ -48,13 +49,15 @@ const GIFT = {
  * @param {Object} event - Message event.
  */
 registerWhen(register("messageSent", (message, event) => {
+    if (message === nextMessage) return;
     let contains = false;
 
     // MVP++ Emotes
     if (!getMVP()) {
         Object.keys(MVP).forEach((key) => {
             if (message.includes(key)) {
-                message = message.replace(key, MVP[key]);
+                const reg = new RegExp(key, 'g');
+                message = message.replace(reg, MVP[key]);
                 contains = true;
             }
         });
@@ -62,19 +65,22 @@ registerWhen(register("messageSent", (message, event) => {
     // Rank Gifting Emotes
     Object.keys(GIFT).forEach((key) => {
         if (message.includes(key)) {
-            message = message.replace(key, GIFT[key]);
+            const reg = new RegExp(key, 'g');
+            message = message.replace(reg, GIFT[key]);
             contains = true;
         }
     });
     // Custom Emotes
     Object.keys(data.emotelist).forEach((key) => {
         if (message.includes(key)) {
-            message = message.replace(key, data.emotelist[key]);
+            const reg = new RegExp(key, 'g');
+            message = message.replace(reg, data.emotelist[key]);
             contains = true;
         }
     });
 
     if (contains) {
+        nextMessage = message;
         ChatLib.say(message);
         cancel(event);
     }

@@ -12,5 +12,6 @@
     "- Changed valuelist to only register held item",
     "- Fixed negative number formatting",
     "- Fixed waifu call fails (mostly?)",
+    "- Fixed emote replace loop",
     "- Removed API key"
 ]
