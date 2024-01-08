@@ -94,6 +94,7 @@ After you finish installing, go check out some other useful SkyBlock mods: https
 - **Economy**
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
+    - `/va nw`: Calculates the networth of a SkyBlock profile using custom API.
 - **Misc**
     - `/va be`: Displays bestiary stats and closest milestones.
     - `/va splits`: Prints out Kuudra splits' stats.
