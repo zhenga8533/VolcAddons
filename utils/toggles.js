@@ -65,9 +65,16 @@ class Settings {
         name: `Angle Display`,
         category: "Server Status",
         subcategory: "Server Status",
-        description: "Barry! Breakfast is ready!"
+        description: "JANET BENSON: Barry! Breakfast is ready!"
     })
     angleDisplay = true;
+    @CheckboxProperty({
+        name: `Direction Display`,
+        category: "Server Status",
+        subcategory: "Server Status",
+        description: "BARRY: Coming!"
+    })
+    dirDisplay = true;
 
     // --- SKYBLOCK STATS ---
     @CheckboxProperty({

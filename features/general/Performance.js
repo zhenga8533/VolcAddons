@@ -120,7 +120,16 @@ registerWhen(register('tick', () => {
     if (toggles.angleDisplay) {
         const yaw = Player.getYaw();
         const pitch = Player.getPitch();
-        statusOverlay.message += `${DARK_AQUA + BOLD}Y/P: ${AQUA + yaw.toFixed(2)} / ${AQUA + pitch.toFixed(2)}\n`
+        statusOverlay.message += `${DARK_AQUA + BOLD}Y/P: ${AQUA + yaw.toFixed(2)} / ${AQUA + pitch.toFixed(2)}\n`;
+    }
+
+    // Direction
+    if (toggles.dirDisplay) {
+        const yaw = (Player.getYaw() + 360) % 360;
+        const direction = yaw >= 45 && yaw < 135 ? "West" :
+            yaw >= 135 && yaw < 255 ? "North" :
+            yaw >= 225 && yaw < 315 ? "East" : "South"
+        statusOverlay.message += `${DARK_AQUA + BOLD}Facing: ${AQUA + direction}\n`;
     }
 
     // Ping
