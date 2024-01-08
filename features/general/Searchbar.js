@@ -1,4 +1,4 @@
-import { ITALIC } from "../../utils/constants";
+import { DARK_GRAY, GRAY, ITALIC } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions";
 import settings from "../../utils/settings";
 import { data, registerWhen } from "../../utils/variables";
@@ -8,15 +8,20 @@ import { data, registerWhen } from "../../utils/variables";
 const loc = data.XL;
 const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
 const searchbar = new GuiTextField(0, Client.getMinecraft().field_71466_p, loc[0], loc[1], 192, 16);
+let calc = undefined;
 
 // Finds items to highlight based on user search
 const indexes = [];
 function getHighlights() {
     indexes.length = 0;
-    const text = searchbar.func_146179_b().replace(/[^a-zA-Z0-9&|]/g, "").toLowerCase();
-    if (text.length === 0) return;
+    const text = searchbar.func_146179_b();
+    if (text === "") return;
 
-    const contents = text.split('||').map(ors => ors.split('&&'));
+    // Find highlights
+    const search = text.replace(/[^a-zA-Z0-9&|]/g, "").toLowerCase();
+    if (search.length === 0) return;
+
+    const contents = search.split('||').map(ors => ors.split('&&'));
     Player.getContainer().getItems().forEach((item, index) => {
         if (item === null) return;
         const name = item.getName().removeFormatting().replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
@@ -47,6 +52,7 @@ registerWhen(register("guiRender", (x, y, gui) => {
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(255, 255, 255, 255), x, y, 16, 16);
     });
+    if(calc !== undefined) Renderer.drawString(DARK_GRAY + calc, loc[0] - Renderer.getStringWidth(calc) + 190, loc[1] + 4);
 }), () => settings.searchbar);
 
 /**
@@ -87,9 +93,23 @@ registerWhen(register("guiMouseClick", (x, y, button) => {
 registerWhen(register("guiKey", (char, keyCode, _, event) => {
     if (!searchbar.func_146206_l()) return;
 
+    // Update searchbar and highlights
     searchbar.func_146201_a(char, keyCode);
     getHighlights();
-    if (keyCode != 1) cancel(event);  // Cancel all but escape key
+
+    // Update calculation
+    calc = undefined;
+    try {
+        calc = eval(searchbar.func_146179_b());
+        if (!Number.isInteger(calc))
+            calc = Math.round(calc * 10000) / 10000;
+        calc = calc.toString();
+    } catch(err) {
+        calc = undefined;
+    }
+
+    // Cancel all but escape key
+    if (keyCode != 1) cancel(event);
 }), () => settings.searchbar);
 
 // Reset search when opening gui

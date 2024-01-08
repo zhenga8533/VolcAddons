@@ -177,7 +177,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     // --- Inventory ---
     @SwitchProperty({
         name: "Searchbar",
-        description: `Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||).
+        description: `Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||). Also can be used as a basic calculator.
 Move GUI with ${AQUA}/moveSearch${GRAY}.`,
         category: "General",
         subcategory: "Inventory"
