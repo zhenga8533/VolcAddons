@@ -129,7 +129,7 @@ registerWhen(register('tick', () => {
         const direction = yaw >= 45 && yaw < 135 ? "West" :
             yaw >= 135 && yaw < 255 ? "North" :
             yaw >= 225 && yaw < 315 ? "East" : "South"
-        statusOverlay.message += `${DARK_AQUA + BOLD}Facing: ${AQUA + direction}\n`;
+        statusOverlay.message += `${DARK_AQUA + BOLD}Dir: ${AQUA + direction}\n`;
     }
 
     // Ping
@@ -238,6 +238,14 @@ export function getStatus(status) {
             break;
         case "pitch":
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Pitch: ${AQUA + Player.getPitch()}°`);
+            break;
+        case "dir":
+        case "direction":
+            const yaw = (Player.getYaw() + 360) % 360;
+            const direction = yaw >= 45 && yaw < 135 ? "West" :
+                yaw >= 135 && yaw < 255 ? "North" :
+                yaw >= 225 && yaw < 315 ? "East" : "South"
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Dir: ${AQUA + direction}`)
             break;
     }
 }
