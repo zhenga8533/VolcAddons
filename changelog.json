@@ -1,17 +1,6 @@
 [
-    "- Added ignorelist (renamed blacklist)",
-    "- Added spamlist",
-    "- Added pest warp (`/pesttp`)",
-    "- Added /va nw",
-    "- Added trade menu value",
-    "- Added toggle for single/double attribute calc",
-    "- Added toggle for join message when leader",
-    "- Changed blacklist to auto kick",
-    "- Changed warplist to dianalist",
-    "- Changed file pathing",
-    "- Changed valuelist to only register held item",
-    "- Fixed negative number formatting",
-    "- Fixed waifu call fails (mostly?)",
-    "- Fixed emote replace loop",
-    "- Removed API key"
+    "- TODO: Added calculator to search bar",
+    "- TODO: Changed item value to include dye",
+    "- TODO: Changed yaw/pitch to include direction",
+    "- Fixed color syntax"
 ]

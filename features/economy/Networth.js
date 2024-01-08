@@ -1,5 +1,5 @@
 import request from "../../../requestV2";
-import { AQUA, BLUE, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BLUE, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { convertToTitleCase, decode, formatNumber } from "../../utils/functions";
 import settings from "../../utils/settings";
 import { getAuction, getBazaar } from "./Economy";
@@ -176,7 +176,7 @@ export function getNetworth(username, fruit) {
                     tier === "LEGENDARY" ? GOLD :
                     tier === "EPIC" ? DARK_PURPLE :
                     tier === "RARE" ? BLUE :
-                    tier === "UNCOMMON" ? GREEN : "WHITE";
+                    tier === "UNCOMMON" ? GREEN : WHITE;
                 if (pet.skin !== null) {
                     const skinValue = auction["PET_SKIN_" + pet.skin]?.lbin ?? 0;
                     if (skinValue === 0) mia++;
