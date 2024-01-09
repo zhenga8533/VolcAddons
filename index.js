@@ -332,6 +332,10 @@ register ("command", (...args) => {
         case "il":
             updateList(args, data.ignorelist, "ignorelist");
             break;
+        case "attributelist":
+        case "al":
+            updateList(args, data.attributelist, "attributelist");
+            break;
         // Kuudra Splits
         case "splits": // Kuudra splits
         case "split":
