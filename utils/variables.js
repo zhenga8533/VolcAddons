@@ -151,7 +151,7 @@ register("guiClosed", (event) => {
 // --- LIST CONTROL ---
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
-import { convertToTitleCase, unformatNumber } from "./functions";
+import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions";
 
 
 let lines = [5858, 5859];
@@ -171,7 +171,8 @@ export function updateList(args, list, listName) {
     // Object pairs
     const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[2]) : args.slice(3).join(' ');
     const key = listName === "cdlist" || listName === "valuelist" ?
-        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : args[2];
+        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : 
+        listName === "colorlist" ? convertToPascalCase(args[2]) : args[2];
 
     switch (command) {
         case "add": // ADD TO LIST
@@ -279,7 +280,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
             else if (listName === "dianalist") base += `${GRAY}<${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
             else if (listName === "moblist")
                 base += `${GRAY}<${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
-            else if (listName === "colorlist") base += "[moblist var] [r] [g] [b]";
+            else if (listName === "colorlist") base += "[mob] [r] [g] [b]";
             else if (listName === "valuelist") base += `[value]\n${DARK_GRAY}This will set the value of your currently held item.`;
             else if (listName === "spamlist") base += "[phrase]\n§8Remember to add variables with ${var}, for example:\n §8`va sl add Guild > ${player} left.";
             else base += "[item]";
