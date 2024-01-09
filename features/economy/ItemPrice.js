@@ -252,9 +252,15 @@ export function getItemValue(item, save=true) {
         value += recombValue;
         if (save) valueMessage += `- ${AQUA}Recomb: ${GREEN}+${formatNumber(recombValue)}\n`;
     }
+    // Dye Value
+    const dyeValue = auction?.[itemData?.dye_item]?.lbin ?? 0;
+    if (dyeValue !== 0) {
+        value += dyeValue;
+        if (save) valueMessage += `- ${AQUA}Dye: ${GREEN}+${formatNumber(dyeValue)}\n`;
+    }
     // Rune Value
-    if (itemData?.runes !== undefined) {
-        const runes = itemData?.runes
+    const runes = itemData?.runes;
+    if (runes !== undefined) {
         const [runeKey, runeLevel] = Object.entries(runes)[0];
         const runeValue = auction[`${runeKey}_${runeLevel}`]?.lbin ?? 0;
         if (runeValue !== 0) {

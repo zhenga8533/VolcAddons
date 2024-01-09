@@ -1,6 +1,7 @@
 [
     "- Added calculator to search bar",
     "- Added direction to status display",
-    "- TODO: Changed item value to include dye",
+    "- TODO: Added `/va attributelist`",
+    "- Changed item value to include dye",
     "- Fixed color syntax"
 ]
