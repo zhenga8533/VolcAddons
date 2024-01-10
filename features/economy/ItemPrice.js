@@ -375,15 +375,25 @@ export function getItemValue(item, save=true) {
     // Attribute Values
     const attributes = Object.keys(itemData?.attributes ?? {}).sort();
     let attributesValue = 0;
+    let comboCalc = true;
     let doubleCalc = false;
     let attributeMessage = "";
     if (attributes.length && save) valueMessage += `\n- ${GOLD + BOLD}Attributes:\n`;
-    attributes.forEach((attribute) => {
+    attributes.forEach(attribute => {
+        // Get attribute data
         const attributeLevel = itemData?.attributes[attribute];
         const attributeCount = 2 ** (attributeLevel - 1);
         const attributePiece = auctionItem?.attributes?.[attribute] ?? 0;
         const attributeValue = Math.min(attributePiece, auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? attributePiece) * attributeCount;
+
+        // Check if valid attribute to calc
+        if (data.attributelist.find(key => key === attribute) === undefined) {
+            attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${DARK_RED}Nullified\n`;
+            comboCalc = false;
+            return;
+        }
         
+        // Add value and message based on calced values
         if (attributeLevel > 5 || !settings.singleAttribute) {
             attributesValue += attributeValue;
             attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
@@ -396,7 +406,7 @@ export function getItemValue(item, save=true) {
     });
     // Attribute combo value
     const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] ?? 0;
-    if (comboValue >= settings.minGR * 1_000_000 && settings.minGR !== 0) {
+    if (comboCalc && comboValue >= settings.minGR * 1_000_000 && settings.minGR !== 0) {
         if (doubleCalc) {
             attributeMessage += `   - ${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
             attributesValue += comboValue;
