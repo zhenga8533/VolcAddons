@@ -1,7 +1,7 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
 import { DARK_RED, GREEN, LOGO } from "../../utils/constants";
-import { registerWhen } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 
 /**
@@ -15,12 +15,13 @@ export function getBazaar() { return products };
 /**
  * Makes a PULL request to update economy data.
  */
-function updateAuction() {
+export function updateAuction() {
     request({
         url: "https://volcaronitee.pythonanywhere.com/auction",
         json: true
     }).then((response) => {
         items = response.items;
+        Object.keys(data.valuelist).forEach(key => items[key] = {lbin: data.valuelist[key]});
     }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
 function updateBazaar() {
@@ -31,11 +32,8 @@ function updateBazaar() {
         products = response.items;
     }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
 }
-const load = register("worldLoad", () => {
-    updateAuction();
-    updateBazaar();
-    load.unregister();
-});
+updateAuction();
+updateBazaar();
 
 /**
  * Calls for an auction house reloop every X minutes.

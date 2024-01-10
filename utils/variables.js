@@ -156,6 +156,7 @@ register("guiClosed", (event) => {
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
 import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions";
+import { updateAuction } from "../features/economy/Economy";
 
 
 let lines = [5858, 5859];
@@ -173,10 +174,10 @@ export function updateList(args, list, listName) {
     const item = listName === "moblist" || listName === "spamlist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
 
     // Object pairs
-    const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[2]) : args.slice(3).join(' ');
-    const key = listName === "cdlist" || listName === "valuelist" ?
-        Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") : 
-        listName === "colorlist" ? convertToPascalCase(args[2]) : args[2];
+    const held = Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
+    const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[3] ?? args[2]) : args.slice(3).join(' ');
+    const key = listName === "colorlist" ? convertToPascalCase(args[2]) :
+        (listName === "cdlist" || listName === "valuelist") && held !== undefined ? held : args[2];
 
     switch (command) {
         case "add": // ADD TO LIST
@@ -277,6 +278,7 @@ export function updateList(args, list, listName) {
             if (listName === "attributelist") {
                 data.attributelist = ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran",
                     "blazing_fortune", "fishing_experience"];
+                ChatLib.chat(`${LOGO + GREEN}Successfully limited to valuable attributes!`);
                 break;
             }
         default:
@@ -295,7 +297,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
             else if (listName === "dianalist") base += `${GRAY}> <${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
             else if (listName === "moblist") base += `${GRAY}> <${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
             else if (listName === "colorlist") base += `${GRAY}> ${WHITE}[mob] [r] [g] [b]`;
-            else if (listName === "valuelist") base += `${GRAY}> ${WHITE}[value]\n${DARK_GRAY}This will set the value of your currently held item.`;
+            else if (listName === "valuelist") base += `${GRAY}> ${WHITE}*[item_id] [value]\n${DARK_GRAY}This will set the value of your currently held item.`;
             else if (listName === "spamlist")
                 base += `${GRAY}> ${WHITE}[phrase]\n${DARK_GRAY}Remember to add variables with ${"${var}"}, for example:\n ${DARK_GRAY}va sl add Guild > ${"${player}"} left.`;
             else if (listName === "attributelist") base += `, value> ${WHITE}[attribute_name]`
@@ -307,6 +309,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
     
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
     else if (listName === "dianalist") setWarps();
+    else if (listName === "valuelist") updateAuction();
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
     ChatLib.command(`va ${listName} list`, true);
 }

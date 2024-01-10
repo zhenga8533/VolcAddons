@@ -3,5 +3,6 @@
     "- Added direction to status display",
     "- Added `/va attributelist`",
     "- Changed item value to include dye",
+    "- Fixed valuelist only affecting base value",
     "- Fixed color syntax"
 ]

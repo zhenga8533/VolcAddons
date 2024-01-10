@@ -160,7 +160,7 @@ export function getItemValue(item, save=true) {
     const auction = getAuction();
     const bazaar = getBazaar();
     let auctionItem = auction?.[itemID];
-    let value = (data.valuelist?.[itemID] ?? auctionItem?.lbin ?? 0) * amount;
+    let value = (auctionItem?.lbin ?? 0) * amount;
 
     // Base Value
     let valueMessage = `${DARK_AQUA + BOLD}Item: ${itemName}`;
