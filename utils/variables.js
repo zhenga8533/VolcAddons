@@ -30,10 +30,8 @@ export let data = new PogObject("VolcAddons", {
     "valuelist": {},
     "spamlist": [],
     "ignorelist": [],
-    "attributelist": ["arachno", "attack_speed", "blazing", "combo", "elite", "ender", "ignition", "life_recovery", "mana_steal", "midas_touch", "undead", "warrior", 
-        "deadeye", "arachno_resistance", "blazing_resistance", "breeze", "dominance", "ender_resistance", "experience", "fortitude", "life_regeneration", "lifeline", 
-        "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "undead_resistance", "veteran", "blazing_fortune", "fishing_experience", "infection", 
-        "double_hook", "fisherman", "fishing_speed", "hunter", "trophy_hunter"],
+    "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune", 
+        "fishing_experience"],
     // kuudra splits stuff
     "files": [],
     "splits": {
@@ -209,6 +207,7 @@ export function updateList(args, list, listName) {
                 "mana_steal", "midas_touch", "undead", "warrior", "deadeye", "arachno_resistance", "blazing_resistance", "breeze", "dominance", "ender_resistance", 
                 "experience", "fortitude", "life_regeneration", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "undead_resistance", "veteran",
                 "blazing_fortune", "fishing_experience", "infection", "double_hook", "fisherman", "fishing_speed", "hunter", "trophy_hunter"];
+            else if (listName === "moblist") if (listName === "moblist") data.moblist = ["vanquisher", "jawbus", "thunder", "inquisitor"];
             else if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO + GREEN}Successfully reset the ${listName}!`);
@@ -268,12 +267,6 @@ export function updateList(args, list, listName) {
             new Message("&c&m-----------------------------------------------------&r").setChatLineId(++id).chat();
             lines.push(id);
             return;
-        case "default":
-            if (listName === "moblist") {
-                data.moblist = ["vanquisher", "jawbus", "thunder", "inquisitor"];
-                ChatLib.chat(`${LOGO + GREEN}Successfully set moblist to default!`);
-                break;
-            }
         case "value":
             if (listName === "attributelist") {
                 data.attributelist = ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran",
@@ -295,7 +288,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
 - ${AQUA}s ${GRAY}=> ${AQUA}shift`;
             else if (listName === "emotelist") base += `${GRAY}> ${WHITE}[key] [value]`;
             else if (listName === "dianalist") base += `${GRAY}> <${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
-            else if (listName === "moblist") base += `${GRAY}> <${WHITE}[MC Entity Class], [Stand Name]${GRAY}>>`;
+            else if (listName === "moblist") base += `${GRAY}> <${WHITE}[MCEntityClass], [Stand Name]${GRAY}>>`;
             else if (listName === "colorlist") base += `${GRAY}> ${WHITE}[mob] [r] [g] [b]`;
             else if (listName === "valuelist") base += `${GRAY}> ${WHITE}*[item_id] [value]\n${DARK_GRAY}This will set the value of your currently held item.`;
             else if (listName === "spamlist")
