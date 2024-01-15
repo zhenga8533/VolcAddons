@@ -2,7 +2,9 @@
     "- Added calculator to search bar",
     "- Added direction to status display",
     "- Added `/va attributelist`",
+    "- Added support for ${name} in join messages",
     "- Changed item value to include dye",
+    "- Recoded skill tracker",
     "- Fixed valuelist only affecting base value",
     "- Fixed color syntax"
 ]

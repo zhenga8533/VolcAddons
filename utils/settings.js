@@ -365,7 +365,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     // --- Message ---
     @TextProperty({
         name: "Guild Join Message",
-        description: "Set the message to be sent to the guild once a user joins.",
+        description: `Set the message to be sent to the guild once a user joins. Use ${AQUA + "${name}"} ${GRAY}in order say player name.`,
         category: "Party",
         subcategory: "Message"
     })
@@ -373,7 +373,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     
     @TextProperty({
         name: "Party Join Message",
-        description: "Set the message to be sent to the party once a user joins.",
+        description: `Set the message to be sent to the party once a user joins. Use ${AQUA + "${name}"} ${GRAY}in order say player name.`,
         category: "Party",
         subcategory: "Message"
     })
