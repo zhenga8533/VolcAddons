@@ -597,6 +597,14 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
         subcategory: "Combat"
     })
     healthAlert = 0.0;
+    
+    @SwitchProperty({
+        name: "Mana Drain Range",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights and displays number of players in mana drain range. Works only when holding End Stone Sword or fluxes.`,
+        category: "Combat",
+        subcategory: "Combat"
+    })
+    manaDrain = false;
 
     @SwitchProperty({
         name: "Ragnarok Detection",

@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE, LOGO } from "../../utils/constants";
+import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
 import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";

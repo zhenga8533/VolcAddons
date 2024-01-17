@@ -2,9 +2,11 @@
     "- Added calculator to search bar",
     "- Added direction to status display",
     "- Added `/va attributelist`",
+    "- Added mana drain range",
     "- Added support for ${name} in join messages",
+    "- TODO: Added legion to stats display",
     "- Changed item value to include dye",
-    "- Recoded skill tracker",
+    "- TODO: Recoded skill tracker",
     "- Fixed valuelist only affecting base value",
     "- Fixed color syntax"
 ]

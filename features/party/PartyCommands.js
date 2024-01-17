@@ -67,10 +67,12 @@ function setWaifu(announce) {
                 new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
         }).catch((err) => {
             const error = err.data.error;
-            if (announce) ChatLib.chat(`${LOGO + RED}Imgur Upload Failed: ${error?.message ?? error}`);
-
-            // Attempt to use base Imgur API
-            ChatLib.chat(`${LOGO + DARK_GRAY}Attempting to fetch using Imgur API...`);
+            if (announce) {
+                // Attempt to use base Imgur API
+                ChatLib.chat(`${LOGO + RED}Imgur Upload Failed: ${error?.message ?? error}`);
+                ChatLib.chat(`${LOGO + DARK_GRAY}Attempting to fetch using Imgur API...`);
+            }
+            
             const clientID = IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
             request({
                 url: "https://api.imgur.com/3/gallery/t/waifu/viral/1?showViral=true",
