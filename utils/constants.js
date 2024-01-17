@@ -35,6 +35,11 @@ export const AMOGUS = new Sound({source: "amogus.ogg"});
 export const MUSIC = new Sound({source: "music.ogg"});
 
 /**
+ * Minecraft Class Constants
+ */
+export const PLAYER_CLASS = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP").class;
+
+/**
  * VolcAddons setting constants.
  */
 export const HEADER = 

@@ -86,10 +86,18 @@ class Settings {
     petDisplay = true;
 
     @CheckboxProperty({
-        name: `Player Stats ${BLUE}(From Tab)`,
+        name: "Legion Display",
         category: "Skyblock Stats",
         subcategory: "Skyblock Stats",
         description: "It's not what I really want to do"
+    })
+    legionDisplay = true;
+
+    @CheckboxProperty({
+        name: `Player Stats ${BLUE}(From Tab)`,
+        category: "Skyblock Stats",
+        subcategory: "Skyblock Stats",
+        description: "But you only date bad guys, so I'll give it my best try to treat you the way you want me to"
     })
     statsDisplay = true;
     
@@ -97,7 +105,7 @@ class Settings {
         name: `Playtime Tracker`,
         category: "Skyblock Stats",
         subcategory: "Skyblock Stats",
-        description: "But you only date bad guys, so I'll give it my best try to treat you the way you want me to"
+        description: "I'll never open a door or pull out a chair, you can tell me how your day was but I don't really care"
     })
     trackPlaytime = true;
 
@@ -105,7 +113,7 @@ class Settings {
         name: `Soulflow Display ${BLUE}(Uses Inventory)`,
         category: "Skyblock Stats",
         subcategory: "Skyblock Stats",
-        description: "I'll never open a door or pull out a chair, you can tell me how your day was but I don't really care"
+        description: "And if you ever get cold, you'll just have to hack it 'cause I'll be cold too if I gave you my jacket"
     })
     soulflowDisplay = true;
 

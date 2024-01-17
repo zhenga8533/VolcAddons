@@ -407,7 +407,7 @@ register ("command", (...args) => {
             );
             const INSTANCES = new Set(["f", "m", "t"]);
             const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps", "yaw", "pitch", "dir", "direction"]);
-            const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf", "playtime", "pt"]);
+            const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf", "playtime", "pt", "legion"]);
 
             if (PARTY_COMMANDS.has(command) || (INSTANCES.has(command[0]) && !isNaN(command[1]))) executeCommand(Player.getName(), args, false);
             else if (STATUS_ARGS.has(command)) getStatus(command);

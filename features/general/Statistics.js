@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
 import { formatNumber, getTime } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
@@ -118,6 +118,19 @@ registerWhen(register("tick", () => {
         stats.forEach(stat => statsOverlay.message += `${GRAY}-${stat}\n` );
     }
 
+    // Legion
+    if (toggles.legionDisplay) {
+        const player = Player.asPlayerMP();
+        const legionCount = World.getAllEntitiesOfType(PLAYER_CLASS).filter(other => other.getEntity().func_110143_aJ() !== 20 && player.distanceTo(other) < 30).length - 1;
+        const legionPercent = Math.min(1, legionCount / 20).toFixed(2) * 100;
+        const legionColor = legionCount > 16 ? GREEN :
+            legionCount > 12 ? DARK_GREEN :
+            legionCount > 8 ? YELLOW :
+            legionCount > 4 ? GOLD :
+            legionColor > 0 ? RED : DARK_RED;
+        statsOverlay.message += `${DARK_AQUA + BOLD}Legion: ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)\n`;
+    }
+
     // Soulflow
     if (toggles.soulflowDisplay) {
         const soulflowColor = soulflow > 100_000 ? GREEN :
@@ -174,6 +187,17 @@ export function getStat(stat) {
                 data.playtime < 28_800 ? RED : DARK_RED;
             
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${ptColor + getTime(data.playtime)}`);
+            break;
+        case "legion":
+            const player = Player.asPlayerMP();
+            const legionCount = World.getAllEntitiesOfType(PLAYER_CLASS).filter(other => other.getEntity().func_110143_aJ() !== 20 && player.distanceTo(other) < 30).length - 1;
+            const legionPercent = Math.min(1, legionCount / 20).toFixed(2) * 100;
+            const legionColor = legionCount > 16 ? GREEN :
+                legionCount > 12 ? DARK_GREEN :
+                legionCount > 8 ? YELLOW :
+                legionCount > 4 ? GOLD :
+                legionColor > 0 ? RED : DARK_RED;
+            ChatLib.chat(`${DARK_AQUA + BOLD}Legion: ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)`);
             break;
     }
 }
