@@ -1,4 +1,5 @@
 import RenderLib from "../../../RenderLib";
+import { EntityArmorStand, EntityWither } from "../../utils/constants";
 import settings from "../../utils/settings";
 import { data, registerWhen } from "../../utils/variables";
 import { Hitbox } from "../../utils/waypoints";
@@ -8,8 +9,6 @@ import { getWorld } from "../../utils/worlds";
 /**
  * Variables used to detect and store star mob data.
  */
-const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
-const EntityWither = Java.type("net.minecraft.entity.boss.EntityWither");
 let starMobs = {};
 
 /**

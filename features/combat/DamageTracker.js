@@ -1,4 +1,4 @@
-import { BOLD, DARK_GRAY, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, EntityArmorStand, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { formatNumber, getTime } from "../../utils/functions";
 import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables";
@@ -7,7 +7,6 @@ import { registerWhen } from "../../utils/variables";
 /**
  * Variable used to track all damage ticks around the player.
  */
-const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const unique = new Set();
 const damages = [];
 const crits = [];

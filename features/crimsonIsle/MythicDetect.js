@@ -1,16 +1,10 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_BLUE, DARK_RED, RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_BLUE, DARK_RED, GOLEM_CLASS, GUARDIAN_CLASS, RED, WHITE } from "../../utils/constants";
 import { announceMob } from "../../utils/functions";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
-
-/**
- * Variables used to track world for mythic lava creatures.
- */
-const GOLEM_CLASS = Java.type('net.minecraft.entity.monster.EntityIronGolem').class;
-const GUARDIAN_CLASS = Java.type('net.minecraft.entity.monster.EntityGuardian').class;
 
 /**
  * Announce to party/all chat whenever player spawns a mythic lava creature.

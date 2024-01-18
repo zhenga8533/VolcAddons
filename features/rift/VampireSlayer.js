@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, GOLD } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
@@ -12,7 +12,6 @@ import { romanToNum } from "../../utils/functions";
 /**
  * Variables used to track and display vampire boss attacks.
  */
-const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const vampireExample =
 `${DARK_PURPLE + BOLD}MANIA: ${AQUA}Dracule
 ${GOLD + BOLD}TWINCLAWS: ${AQUA}Mihawk
@@ -113,8 +112,6 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
 /**
  * Highlights vampire bosses with steakable HP.
  */
-let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
-const PLAYER_CLASS = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP").class;
 const VAMP_HP = new Set([625, 1100, 1800, 2400, 3000]);
 let dracula = [];
 let vamps = [];

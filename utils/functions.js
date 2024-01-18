@@ -32,6 +32,16 @@ export function getGuildName(player) {
     return name;
 }
 
+/**
+ * Returns True if entity is player otherwise False.
+ * 
+ * @param {Entity} entity 
+ * @returns 
+ */
+export function isPlayer(entity) {
+    return World.getPlayerByName(entity.getName())?.getPing() === 1;
+}
+
 import { delay } from "./thread";
 import { getInParty } from "./party";
 

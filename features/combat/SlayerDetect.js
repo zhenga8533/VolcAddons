@@ -3,7 +3,7 @@ import { announceMob, romanToNum } from "../../utils/functions";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { BOLD, DARK_GREEN, GREEN, RED, WHITE } from "../../utils/constants";
+import { BLAZE_CLASS, BOLD, DARK_GREEN, ENDERMAN_CLASS, GREEN, RED, SMA, SPIDER_CLASS, WHITE, WOLF_CLASS, ZOMBIE_CLASS } from "../../utils/constants";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
@@ -108,13 +108,12 @@ register("chat", () => {
  * Boss and miniboss highlighting.
  * Varibles for different slayer mob classes.
  */
-let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
 const MOB_CLASSES = {
-    "Revenant": Java.type("net.minecraft.entity.monster.EntityZombie").class,
-    "Tarantula": Java.type("net.minecraft.entity.monster.EntitySpider").class,
-    "Sven": Java.type("net.minecraft.entity.passive.EntityWolf").class,
-    "Voidgloom": Java.type("net.minecraft.entity.monster.EntityEnderman").class,
-    "Inferno": Java.type("net.minecraft.entity.monster.EntityBlaze").class
+    "Revenant": ZOMBIE_CLASS,
+    "Tarantula": SPIDER_CLASS,
+    "Sven": WOLF_CLASS,
+    "Voidgloom": ENDERMAN_CLASS,
+    "Inferno": BLAZE_CLASS
 };
 const BOSS_HPS = {
     "Revenant": [500, 20_000, 400_000, 1_500_000, 10_000_000],

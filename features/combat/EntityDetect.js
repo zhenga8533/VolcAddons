@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
+import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE, SMA, SPIDER_CLASS, EntityArmorStand } from "../../utils/constants";
 import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -105,8 +105,6 @@ updateEntityList();
  * Creates colored entity list from entity data in `entityList`.
  * Determines color based on class and filters by HP if applicable.
  */
-let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
-const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const STAND_CLASS = EntityArmorStand.class;
 registerWhen(register("step", () => {
     // Refresh entities every 0.5s
@@ -167,7 +165,6 @@ new Hitbox(() => entityList.length !== 0 || standList.length !== 0, (pt) => {
 /**
  * Broodmother detection.
  */
-const SPIDER_CLASS = Java.type("net.minecraft.entity.monster.EntitySpider").class;
 let nextSpawn = 0;
 const broodmotherExample = `${GRAY + BOLD}Next Spawn: ${RED}???`;
 const broodmotherOverlay = new Overlay("broodmotherDetect", ["Spider's Den"], () => true, data.DL, "moveBrood", broodmotherExample);

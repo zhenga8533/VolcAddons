@@ -1,3 +1,4 @@
+import { GIANT_CLASS, STAND_CLASS } from "../../utils/constants";
 import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -7,8 +8,6 @@ import { getPhase } from "./KuudraSplits";
 /**
  * Variables used to track and display crate locations.
  */
-const STAND_CLASS = Java.type("net.minecraft.entity.item.EntityArmorStand").class;
-const GIANT_CLASS = Java.type("net.minecraft.entity.monster.EntityGiantZombie").class;
 let crates = [];
 export function getCrates() { return crates };
 let builds = [];

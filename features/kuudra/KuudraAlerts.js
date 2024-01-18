@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GRAY, GREEN, MUSIC, RED, WHITE} from "../../utils/constants";
+import {AQUA, BOLD, DARK_PURPLE, DARK_RED, GHAST_CLASS, GRAY, GREEN, MUSIC, RED, WHITE} from "../../utils/constants";
 import { playSound } from "../../utils/functions";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -120,7 +120,6 @@ registerWhen(register("chat", () => {
 /**
  * Warns player about dropship as they get close to center.
  */
-const GHAST_CLASS = Java.type('net.minecraft.entity.monster.EntityGhast').class;
 let alerted = false
 registerWhen(register("step", () => {
     const dropships = World.getAllEntitiesOfType(GHAST_CLASS).find(ghast => {

@@ -3,7 +3,7 @@ import "./utils/player";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, SMA, UNDERLINE, WHITE } from "./utils/constants";
 import { getTime } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
@@ -147,7 +147,6 @@ function getHelp() {
 
 // Dev Mode
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
-let SMA = Java.type('net.minecraft.entity.SharedMonsterAttributes');
 register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
 devKey.registerKeyPress(() => {
     const view = Player.lookingAt();

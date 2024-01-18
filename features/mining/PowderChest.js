@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_AQUA, WHITE } from "../../utils/constants";
+import { BOLD, CHEST_CLASS, DARK_AQUA, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -8,7 +8,6 @@ import { getWorld } from "../../utils/worlds";
 /**
  * Variables used to track and detect nearby chests.
  */
-const CHEST_CLASS = Java.type("net.minecraft.tileentity.TileEntityChest").class
 let nearbyChests = [];
 export function getPowderChests() { return nearbyChests };
 const powderExample = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE}dentge.`;

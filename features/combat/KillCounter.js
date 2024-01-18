@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_RED, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
+import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, getPaused, registerWhen } from "../../utils/variables";
 import { formatNumber, getTime } from "../../utils/functions";
@@ -8,7 +8,6 @@ import { formatNumber, getTime } from "../../utils/functions";
 /**
  * Variables used to track and display item and vanquisher kill counts.
  */
-const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 const stands = new Set();
 let mobs = {};
 let items = {};

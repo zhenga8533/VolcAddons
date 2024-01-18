@@ -1,4 +1,4 @@
-import { AQUA } from "../../utils/constants";
+import { AQUA, PLAYER_CLASS } from "../../utils/constants";
 import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
@@ -23,7 +23,6 @@ registerWhen(register("renderOverlay", () => {
 /**
  * Updates nearby players
  */
-const PLAYER_CLASS = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP").class;
 registerWhen(register("step", () => {
     const heldName = Player.getHeldItem()?.getName();
     render = heldName !== undefined && (heldName.includes("flux Power Orb") || heldName.endsWith("End Stone Sword"))

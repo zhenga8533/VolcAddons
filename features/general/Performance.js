@@ -4,6 +4,7 @@ import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YE
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import { isPlayer } from "../../utils/functions";
 
 
 /**
@@ -259,12 +260,11 @@ export function getStatus(status) {
  * @param {number} tick - The current tick.
  * @param {Event} event - The event being handled.
  */
-registerWhen(register("renderEntity", (entity, pos, tick, event) => {
+registerWhen(register("renderEntity", (entity, _, __, event) => {
     const distance = entity.distanceTo(Player.asPlayerMP());
     if (settings.hideFarEntity !== 0 && distance >= settings.hideFarEntity)
         cancel(event);
-    if (settings.hideCloseEntity !== 0 && distance <= settings.hideCloseEntity &&
-        entity.entity.class.toString() === "class net.minecraft.client.entity.EntityOtherPlayerMP" && entity.name !== Player.name)
+    if (settings.hideCloseEntity !== 0 && distance <= settings.hideCloseEntity && entity.name !== Player.name && isPlayer(entity))
         cancel(event);
 }).setPriority(Priority.LOWEST), () => {
     if (settings.hideFarEntity === 0 && settings.hideCloseEntity === 0) return false;

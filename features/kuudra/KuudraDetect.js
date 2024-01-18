@@ -2,12 +2,12 @@ import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";
 import { formatNumber } from "../../utils/functions";
+import { CUBE_CLASS } from "../../utils/constants";
 
 
 /**
  * Variables used to track and display Kuudra HP and entity.
  */
-const CUBE_CLASS = Java.type('net.minecraft.entity.monster.EntityMagmaCube').class;
 let cubes = undefined;
 let percentHP = new Text(`One Cycleable`, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2, 10);
 let HPDisplay = ["100k/100k ❤", 0, 0, 0];

@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE } from "../../utils/constants";
+import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/constants";
 import { announceMob, playSound } from "../../utils/functions";
 import { getInParty } from "../../utils/party";
 import { delay } from "../../utils/thread";
@@ -116,7 +116,6 @@ register("command", () => {
  * --- Vanquisher Detect ---
  * Vanquisher detection variables.
  */
-const WITHER_CLASS = Java.type('net.minecraft.entity.boss.EntityWither').class;
 let vanquishers = [];
 
 /**

@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -432,7 +432,6 @@ export function getItemValue(item, save=true) {
  * @param {string} lore - Item lore.
  * @param {Object} item - Item object.
  */
-let NBTTagString = Java.type("net.minecraft.nbt.NBTTagString");
 registerWhen(register("itemTooltip", (lore, item) => {
     // Check item data to cancel lore append.
     const itemTag = item.getNBT().getCompoundTag("tag");
