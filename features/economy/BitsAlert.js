@@ -30,12 +30,14 @@ registerWhen(register("step", () => {
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const container = Player.getContainer();
-        if (container.getName() !== "SkyBlock Menu") return;
-
-        const cookie = container.getStackInSlot(51).getLore();
-        const active = cookie.find(line => line.includes("Not active!"));
-        const bits = cookie.find(line => line === "§5§o§7Bits Available: §b0");
-        if (active === undefined && bits === undefined) return;
+        if (container.getName() === "SkyBlock Menu") {
+            const cookie = container.getStackInSlot(51).getLore();
+            if (!cookie[4].endsWith("Not active!") && cookie[5] !== "§5§o§7Bits Available: §b0") return;
+        } else if (container.getName() === "Booster Cookie") {
+            const bits = !container.getStackInSlot(11).getLore()[7].startsWith("§5§o§7Bits Available: §b960");
+            const active = !container.getStackInSlot(13).getLore()[20] === "§5§o§7§cYou do not currently have a";
+            if (bits && active) return;
+        } else return;
 
         if (settings.bitsAlert === 1 || settings.bitsAlert === 3) Client.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
         if (settings.bitsAlert === 2 || settings.bitsAlert === 3) ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}NO MO BITS!`);

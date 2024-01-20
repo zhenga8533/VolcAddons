@@ -8,8 +8,8 @@
     "- Changed some auction API logic",
     "- Changed godroll tracking to only detect Kuudra pieces",
     "- Changed item value to include dye",
-    "- TODO: Recoded skill tracker",
     "- Fixed Hide Close Players hiding NPCs",
     "- Fixed valuelist only affecting base value",
-    "- Fixed color syntax"
+    "- Fixed color syntax",
+    "- Fixed bits alert in cookie menu"
 ]
