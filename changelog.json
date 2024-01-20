@@ -1,15 +1,3 @@
 [
-    "- Added calculator to search bar",
-    "- Added direction to status display",
-    "- Added `/va attributelist`",
-    "- Added mana drain range",
-    "- Added support for ${name} in join messages",
-    "- Added legion to stats display",
-    "- Changed some auction API logic",
-    "- Changed godroll tracking to only detect Kuudra pieces",
-    "- Changed item value to include dye",
-    "- Fixed Hide Close Players hiding NPCs",
-    "- Fixed valuelist only affecting base value",
-    "- Fixed color syntax",
-    "- Fixed bits alert in cookie menu"
+    "- TODO: Recoded skill/coin tracker"
 ]
