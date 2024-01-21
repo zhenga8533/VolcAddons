@@ -333,19 +333,23 @@ register("gameUnload", () => {
 // Stats tracking class
 export class Stat {
     constructor() {
-        // Initializing properties for tracking statistics
         this.reset();
     }
 
-    // Method to reset stat properties
     reset() {
-        this.start = 0.00; // Starting Amount
-        this.now = 0.00; // Current Amount
-        this.gain = 0.00; // Current - Starting Amount
-        this.next = 0.00; // Next Level
+        this.start = 0.00; // Starting amount
+        this.now = 0.00; // Current amount
         this.time = 0.00; // Time passed
-        this.rate = 0.00; // Amount/hr
-        this.since = 600; // Time since last Amount earn
+        this.since = 600; // Time since last amount earn
+        this.level = 0; // Skill level
+    }
+
+    getGain() {
+        return this.now - this.start;
+    }
+
+    getRate() {
+        return this.getGain() / this.time * 3600;
     }
 }
 

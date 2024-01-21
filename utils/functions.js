@@ -259,6 +259,26 @@ export function findFirstRomanNumeral(str) {
 }
 
 /**
+ * Function to find the index of the largest value that is greater than a given target in a sorted array.
+ * @param {number[]} arr - The sorted array.
+ * @param {number} target - The target value.
+ * @returns {number} - The index of the largest value greater than the target.
+ */
+export function findGreaterIndex(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+  
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2);
+    
+        if (arr[mid] > target) right = mid - 1;
+        else left = mid + 1;
+    }
+  
+    return right;
+  }
+
+/**
  * Finds the closest position from an array of positions to a given origin position.
  *
  * @param {number[]} origin - The origin position [x, y, z] to which distances are measured.

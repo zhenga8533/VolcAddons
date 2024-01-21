@@ -39,13 +39,11 @@ registerWhen(register("step", () => {
     if (purse !== piggy.now && piggy.now) piggy.since = 0;
     piggy.time++;
     piggy.now = purse;
-    piggy.gain = piggy.now - piggy.start;
-    piggy.rate = piggy.gain / piggy.time * 3600;
     
     // Update GUI
     const timeDisplay = piggy.since < settings.coinTracker * 60 ? getTime(piggy.time) : `${RED}Inactive`;
     coinOverlay.message = 
-`${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.gain)} ¢
+`${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.getGain())} ¢
 ${GOLD + BOLD}Time Passed: ${WHITE + timeDisplay}
-${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.rate)} ¢/hr`;
+${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.getRate())} ¢/hr`;
 }).setFps(1), () => settings.coinTracker !== 0);

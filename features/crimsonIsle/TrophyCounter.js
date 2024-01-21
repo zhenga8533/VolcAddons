@@ -1,9 +1,7 @@
-import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LOGO, WHITE } from "../../utils/constants";
 import { convertToTitleCase } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
-import { getPlayerUUID } from "../../utils/player";
 import { data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 
@@ -106,38 +104,27 @@ function updateMessage(trophyVar) {
 /**
  * API PULL request to get player trophy fishing data.
  * 
- * @param {String} profileId - Profile ID of player.
+ * @param {Object} trophyData - Trophy fish data in Hypixel API
  */
-function updateTrophy(profileId) {
-    if (settings.apiKey === "" || profileId === undefined) return;
+export function updateTrophy(trophyData) {
+    if (trophyData === undefined) return;
+    
+    Object.keys(trophyData).forEach(fish => {
+        if (fish.endsWith("_gold") || fish.endsWith("_silver") || fish.endsWith("_bronze") || fish.endsWith("_diamond") ||
+            fish === "rewards" || fish === "total_caught") return;
 
-    // Make an API request to Hypixel API to get the player's bestiary data from their profile.
-    request({
-        url: `https://api.hypixel.net/v2/skyblock/profile?key=4e927d63a1c34f71b56428b2320cbf95&profile=${profileId}`,
-        json: true
-    }).then((response) => {
-        // Update the 'bestiary' variable with the bestiary data from the API response.
-        const trophyData = response.profile.members[getPlayerUUID()]?.trophy_fish;
-        if (trophyData === undefined) return;
-        
-        Object.keys(trophyData).forEach(fish => {
-            if (fish.endsWith("_gold") || fish.endsWith("_silver") || fish.endsWith("_bronze") || fish.endsWith("_diamond") ||
-                fish === "rewards" || fish === "total_caught") return;
+        totalTrophy[fish] = [
+            trophyData[fish],
+            trophyData[fish + "_bronze"] ?? 0,
+            trophyData[fish + "_silver"] ?? 0,
+            trophyData[fish + "_gold"] ?? 0,
+            trophyData[fish + "_diamond"] ?? 0
+        ];
+    });
 
-            totalTrophy[fish] = [
-                trophyData[fish],
-                trophyData[fish + "_bronze"] ?? 0,
-                trophyData[fish + "_silver"] ?? 0,
-                trophyData[fish + "_gold"] ?? 0,
-                trophyData[fish + "_diamond"] ?? 0
-            ];
-        });
-
-        // Sort by highest catches
-        if (settings.trophyCounter === 1) updateMessage(totalTrophy);
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    // Sort by highest catches
+    updateMessage(totalTrophy);
 }
-if (settings.trophyCounter) updateTrophy(data.lastID);
 
 /**
  * Update counter variables.
