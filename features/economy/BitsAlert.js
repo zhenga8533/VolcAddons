@@ -34,8 +34,8 @@ registerWhen(register("guiOpened", () => {
             const cookie = container.getStackInSlot(51).getLore();
             if (!cookie[4].endsWith("Not active!") && cookie[5] !== "§5§o§7Bits Available: §b0") return;
         } else if (container.getName() === "Booster Cookie") {
-            const bits = !container.getStackInSlot(11).getLore()[7].startsWith("§5§o§7Bits Available: §b960");
-            const active = !container.getStackInSlot(13).getLore()[20] === "§5§o§7§cYou do not currently have a";
+            const bits = !container.getStackInSlot(11).getLore()[7].startsWith("§5§o§7Bits Available: §b0");
+            const active = !(container.getStackInSlot(13).getLore()[20] === "§5§o§7§cYou do not currently have a");
             if (bits && active) return;
         } else return;
 
