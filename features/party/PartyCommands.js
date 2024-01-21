@@ -28,7 +28,7 @@ const IMGUR_KEYS = [
 /**
  * Makes a POST request to upload an image to Imgur.
  *
- * @param {string} image - Link of the image.
+ * @param {String} image - Link of the image.
  */
 function upload(image) {
     const clientID = IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
@@ -97,9 +97,9 @@ setWaifu(false);
 /**
  * Various party and leader commands.
  *
- * @param {string} name - IGN of player who sent the message.
- * @param {string[]} args - Message player sent split by " ".
- * @param {string} sendTo - Chat to send response to (/pc, /gc, /r)
+ * @param {String} name - IGN of player who sent the message.
+ * @param {String[]} args - Message player sent split by " ".
+ * @param {String} sendTo - Chat to send response to (/pc, /gc, /r)
  */
 export function executeCommand(name, args, sendTo) {
     if (data.ignorelist.includes(name.toLowerCase())) return;
@@ -305,9 +305,6 @@ export function executeCommand(name, args, sendTo) {
 
 /**
  * Detects when player inputs a ?command and set the chat 
- *
- * @param {string} player - "[rank] ign".
- * @param {string} message - Message sent by player following a "?"
  */
 registerWhen(register("chat", (player, message) => {
     if (onCD) return;

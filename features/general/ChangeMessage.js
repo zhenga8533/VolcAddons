@@ -44,9 +44,6 @@ let nextMessage = undefined;
 
 /**
  * Replaces all user messages that contains desired emotes.
- *
- * @param {string} message - User sent chat message.
- * @param {Object} event - Message event.
  */
 registerWhen(register("messageSent", (message, event) => {
     if (message === nextMessage) return;

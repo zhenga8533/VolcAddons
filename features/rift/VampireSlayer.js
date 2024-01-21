@@ -6,7 +6,7 @@ import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
-import { romanToNum } from "../../utils/functions";
+
 
 
 /**
@@ -97,10 +97,6 @@ registerWhen(register("tick", () => {
 
 /**
  * Replaces Hypixel's impel subtitle with a flashy title.
- *
- * @param {string} title - Message used for larger title.
- * @param {string} subtitle - Message used for smaller subtitle.
- * @param {Object} event - Title render event.
  */
 registerWhen(register("renderTitle", (title, subtitle, event) => {
     if (subtitle.includes("Impel")) {

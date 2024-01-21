@@ -34,8 +34,8 @@ register("command", () => {
 
 /**
  * Update the powder tracking values based on the current time.
- * @param {object} powder - The powder object to update.
- * @param {number} current - The current time.
+ * @param {Object} powder - The powder object to update.
+ * @param {Number} current - The current time.
  */
 function updatePowder(powder, current) {
     if (powder.now !== current && powder.now !== 0) powder.since = 0;

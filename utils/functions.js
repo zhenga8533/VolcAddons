@@ -1,8 +1,8 @@
 /**
  * Strips rank and tags off player name.
  * 
- * @param {string} player - Player name with rank and tags.
- * @returns {string} Base player ign.
+ * @param {String} player - Player name with rank and tags.
+ * @returns {String} Base player ign.
  */
 export function getPlayerName(player) {
     let name = player;
@@ -19,8 +19,8 @@ export function getPlayerName(player) {
 /**
  * Extracts and returns the guild name from a player's name string.
  *
- * @param {string} player - Player's name, possibly with guild tags and ranks.
- * @returns {string} - Extracted guild name from the player's name.
+ * @param {String} player - Player's name, possibly with guild tags and ranks.
+ * @returns {String} - Extracted guild name from the player's name.
  */
 export function getGuildName(player) {
     let name = player;
@@ -35,27 +35,31 @@ export function getGuildName(player) {
 /**
  * Returns True if entity is player otherwise False.
  * 
- * @param {Entity} entity 
- * @returns 
+ * @param {Entity} entity - OtherPlayerMP Minecraft Entity.
+ * @returns {Boolean} - Whether or not player is human.
  */
 export function isPlayer(entity) {
     return World.getPlayerByName(entity.getName())?.getPing() === 1;
 }
 
+
+/**
+ * Circular Imports :)
+ */
 import { delay } from "./thread";
 import { getInParty } from "./party";
+import { REFORGES } from "./constants";
 
 
 /**
  * Tracks chat for any powder gain messages.
  *
- * @param {boolean} toAll - /ac if true, /pc if false.
- * @param {string} mob - Name of the mob.
- * @param {number} x - X coordinate.
- * @param {number} y - Y coordinate.
- * @param {number} z - Z coordinate.
+ * @param {Boolean} toAll - /ac if true, /pc if false.
+ * @param {String} mob - Name of the mob.
+ * @param {Number} x - X coordinate.
+ * @param {Number} y - Y coordinate.
+ * @param {Number} z - Z coordinate.
  */
-const CHATS = ["OFF", "ac", "pc", `msg ${Player.getName()}`];
 export function announceMob(chat, mob, x, y ,z) {
     if ((chat === 2 && !getInParty()) || chat === 0) return;
     x = Math.round(x);
@@ -66,14 +70,15 @@ export function announceMob(chat, mob, x, y ,z) {
     const area = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
     
     const id = chat === 2 ? "" : ` @${(Math.random() + 1).toString(36).substring(6)} ${(Math.random() + 1).toString(36).substring(9)}`;
+    const CHATS = ["OFF", "ac", "pc", `msg ${Player.getName()}`];
     ChatLib.command(`${CHATS[chat]} x: ${x}, y: ${y}, z: ${z} | ${mob} spawned at [${area} ]!${id}`);
 }
 
 /**
  * Converts seconds to XXhrXXmXXs format.
  * 
- * @param {number} seconds - Total number of seconds to convert.
- * @returns {string} Formatted time in XXhrXXmXXs format.
+ * @param {Number} seconds - Total number of seconds to convert.
+ * @returns {String} Formatted time in XXhrXXmXXs format.
  */
 export function getTime(seconds) {
     const hours = Math.floor(seconds / 3600);
@@ -92,8 +97,8 @@ export function getTime(seconds) {
 /**
  * Rounds number and converts num to thousand seperator format.
  * 
- * @param {number} num - Base number to convert.
- * @returns {string} Number converted to thousand seperator format.
+ * @param {Number} num - Base number to convert.
+ * @returns {String} Number converted to thousand seperator format.
  */
 export function commafy(num) {
     return num.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -102,8 +107,8 @@ export function commafy(num) {
 /**
  * Converts a number to a string in k, m, b notation
  * 
- * @param {number} num 
- * @returns {string} Formatted number if k, m, b notation
+ * @param {Number} num - Base number to convert.
+ * @returns {String} Formatted number if k, m, b notation
  */
 export function formatNumber(num) {
     if (isNaN(num) || num === 0) return "0";
@@ -126,8 +131,8 @@ export function formatNumber(num) {
 /**
  * Converts formatted numbers with suffix notations into their numeric values.
  *
- * @param {string} str - Formatted number string with optional suffix notation (k, m, b).
- * @returns {number} - Numeric value represented by the input string, considering the notation.
+ * @param {String} str - Formatted number string with optional suffix notation (k, m, b).
+ * @returns {Number} - Numeric value represented by the input string, considering the notation.
  */
 export function unformatNumber(str) {
     if (str === undefined) return 0;
@@ -152,18 +157,19 @@ export function unformatNumber(str) {
 /**
  * Converts a string with underscores to title case format.
  * 
- * @param {string} input - Input string with underscores.
- * @returns {string} String in title case format.
+ * @param {String} input - Input string with underscores.
+ * @returns {String} String in title case format.
  */
 export function convertToTitleCase(input) {
     const args = input.includes('_') ? input.toLowerCase().split('_') : input.toLowerCase().split(' ');
     return args.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
+
 /**
  * Converts a string of words to pascal case format.
  * 
- * @param {string} input - Input string with underscores.
- * @returns {string} String in pascal case format.
+ * @param {String} input - Input string with underscores.
+ * @returns {String} String in pascal case format.
  */
 export function convertToPascalCase(input) {
     if (!input) return;
@@ -175,40 +181,11 @@ export function convertToPascalCase(input) {
 }
 
 /**
- * Removes any modifiers off item name.
- * 
- * @param {string} itemType - Item auction class.
- * @param {string} itemString - Item with any modifiers.
- * @returns {string} Base name of item.
- */
-const REFORGES = {
-    "weapon": new Set([
-        "Epic", "Fair", "Fast", "Gentle", "Heroic", "Legendary", "odd", "Sharp", "Spicy", "Coldfused", "Dirty", "Fabled", "Gilded", "Suspicious",
-        "Warped", "Withered", "Bulky", "Fanged",
-        "Awkward", "Deadly", "Fine", "Grand", "Hasty", "Neat", "Rapid", "Rich", "Unreal", "Precise", "Spiritual", "Headstrong",
-        "Great", "Rugged", "Lush", "Lumberjacks", "Double-Bit", "Moil", "Toil", "Blessed", "Earthy"
-    ]),
-    "armor": new Set([
-        "Clean", "Fierce", "Heavy", "Light", "Mythic", "Pure", "Titanic", "Smart", "Wise", "Candied", "Submerged", "Perfect", "Reinforced",
-        "Renowned", "Spiked", "Hyper", "Giant", "Jaded", "Cubic", "Necrotic", "Empowered", "Ancient", "Undead", "Loving", "Ridiculous",
-        "Bustling", "Mossy", "Festive",
-        "Very", "Highly", "Extremely", "Not so", "Thicc", "Absolutely", "Even More"
-    ]),
-    "misc": new Set([
-        "Glistening", "Strengthened", "Waxed", "Fortified", "Rooted", "Blooming", "Snowy", "Blood-Soaked",
-        "Salty", "Treacherous", "Lucky", "Stiff", "Dirty", "Chomp", "Pitchin",
-        "Ambered", "Auspicious", "Fleet", "Heated", "Magnetic", "Mithraic", "Refined", "Stellar", "Fruitful",
-        "Robust", "Zooming", "Peasants", "Green Thumb", "Blessed", "Bountiful",
-        "Lvl"
-    ])
-};
-
-/**
  * Removes specified reforges from an item string based on item type.
  *
- * @param {string} itemType - Type of item ("weapon", "armor", "misc", "all").
- * @param {string} itemString - Original item string with reforges and other words.
- * @returns {string} - Item string with specified reforges removed.
+ * @param {String} itemType - Type of item ("weapon", "armor", "misc", "all").
+ * @param {String} itemString - Original item string with reforges and other words.
+ * @returns {String} - Item string with specified reforges removed.
  */
 export function removeReforges(itemType, itemString) {
     // Get the corresponding reforges Set based on the item type
@@ -235,9 +212,9 @@ export function removeReforges(itemType, itemString) {
 /**
  * Finds words from an array that are present in a given string.
  *
- * @param {string} str - The input string to search for words.
- * @param {string[]} arr - An array of words to search for in the string.
- * @returns {string[]} - An array containing the words found in the string.
+ * @param {String} str - The input string to search for words.
+ * @param {String[]} arr - An array of words to search for in the string.
+ * @returns {String[]} - An array containing the words found in the string.
  */
 export function findWordsInString(str, arr) {
     const wordSet = new Set(arr);
@@ -248,8 +225,8 @@ export function findWordsInString(str, arr) {
 /**
  * Finds the first occurrence of a valid Roman numeral in a given string.
  *
- * @param {string} str - The input string to search for a Roman numeral.
- * @returns {string|null} - The first valid Roman numeral found in the string,
+ * @param {String} str - The input string to search for a Roman numeral.
+ * @returns {String} - The first valid Roman numeral found in the string,
  *                          or null if no valid Roman numerals are present.
  */
 export function findFirstRomanNumeral(str) {
@@ -260,9 +237,9 @@ export function findFirstRomanNumeral(str) {
 
 /**
  * Function to find the index of the largest value that is greater than a given target in a sorted array.
- * @param {number[]} arr - The sorted array.
- * @param {number} target - The target value.
- * @returns {number} - The index of the largest value greater than the target.
+ * @param {Number[]} arr - The sorted array.
+ * @param {Number} target - The target value.
+ * @returns {Number} - The index of the largest value greater than the target.
  */
 export function findGreaterIndex(arr, target) {
     let left = 0;
@@ -281,9 +258,9 @@ export function findGreaterIndex(arr, target) {
 /**
  * Finds the closest position from an array of positions to a given origin position.
  *
- * @param {number[]} origin - The origin position [x, y, z] to which distances are measured.
- * @param {number[][]} positions - An array containing positions to compare with the origin.
- * @returns {Array} - An array containing two elements: the closest position [x, y, z]
+ * @param {Number[]} origin - The origin position [x, y, z] to which distances are measured.
+ * @param {Array[Number[]]} positions - An array containing positions to compare with the origin.
+ * @returns {Type[]} - An array containing two elements: the closest position [x, y, z]
  *                    from the `positions` array and the distance between the origin and
  *                    the closest position.
  */
@@ -313,8 +290,8 @@ export function getClosest(origin, positions) {
 /**
  * Checks if a given date string is a valid date in the format "MM/DD/YYYY".
  *
- * @param {string} dateString - The date string to validate in the format "MM/DD/YYYY".
- * @returns {boolean} - True if the date is valid, false otherwise.
+ * @param {String} dateString - The date string to validate in the format "MM/DD/YYYY".
+ * @returns {Boolean} - True if the date is valid, false otherwise.
  */
 export function isValidDate(dateString) {
     // First check for the pattern
@@ -344,8 +321,8 @@ export function isValidDate(dateString) {
 /**
  * Converts a Roman numeral to an integer value.
  *
- * @param {string} str - The Roman numeral string to be converted.
- * @returns {number} - The integer representation of the given Roman numeral.
+ * @param {String} str - The Roman numeral string to be converted.
+ * @returns {Number} - The integer representation of the given Roman numeral.
  */
 export function romanToNum(str) {
     if (!isNaN(str)) return str;
@@ -363,8 +340,8 @@ export function romanToNum(str) {
 /**
  * Converts a number 1-10 to its roman numeral counterpart.
  *
- * @param {number} num - The integer representation of the Roman numeral.
- * @returns {string} - The roman numeral counterpart.
+ * @param {Number} num - The integer representation of the Roman numeral.
+ * @returns {String} - The roman numeral counterpart.
  */
 export function numToRoman(num) {
     return ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][num - 1];
@@ -373,7 +350,7 @@ export function numToRoman(num) {
 /**
  * Get x and y coords of top left of container index.
  * 
- * @param {number} slot - Slot index.
+ * @param {Number} slot - Slot index.
  * @param {String} containerType - Container class name.
  * @returns 
  */
@@ -408,13 +385,13 @@ export function getSlotCoords(slot, containerType) {
     }
 }
 
+let soundCD = false;
 /**
  * Plays a sound and sets cooldown
  * 
  * @param {Sound} sound - A sound ogg file from constants.js 
  * @param {Number} cd - Cooldown caused by sound play.
  */
-let soundCD = false;
 export function playSound(sound, cd) {
     if (soundCD) return;
 
@@ -423,6 +400,8 @@ export function playSound(sound, cd) {
     delay(() => soundCD = false, cd);
 }
 
+const decoder = java.util.Base64.getDecoder();
+const compressor = net.minecraft.nbt.CompressedStreamTools;
 /**
  * Decode Hypixel item NBT bytes
  * Credit to https://www.chattriggers.com/modules/v/SBInvSee for decoding!
@@ -430,8 +409,6 @@ export function playSound(sound, cd) {
  * @param {String} bytes - Encoded hypixel item data.
  * @returns {String} Decoded NBT data.
  */
-const decoder = java.util.Base64.getDecoder();
-const compressor = net.minecraft.nbt.CompressedStreamTools;
 export function decode(bytes) {
     const bytearray = decoder.decode(bytes);
     const inputstream = new java.io.ByteArrayInputStream(bytearray);
@@ -442,7 +419,7 @@ export function decode(bytes) {
 /**
  * Returns a random index in array.
  * 
- * @param {Array} arr - Array to find the random index of.
+ * @param {Type[]} arr - Array to find the random index of.
  * @returns {Number} Random number from 0 to arr.length - 1
  */
 export function randIndex(arr) {

@@ -43,11 +43,11 @@ const KILL_BRACKETS = [
  * Represents a Mob with multiple names and levels, used for tracking kills and progression.
  *
  * @class Mob
- * @param {Array} names - An array of names for the mob.
- * @param {Array} levels - An array of levels for the mob.
- * @param {number} bracket - The bracket number of the mob.
- * @param {number} maxLevel - The maximum level of the mob.
- * @param {number} time - The time required to kill the mob.
+ * @param {String[]} names - An array of names for the mob.
+ * @param {Number[]} levels - An array of levels for the mob.
+ * @param {Number} bracket - The bracket number of the mob.
+ * @param {Number} maxLevel - The maximum level of the mob.
+ * @param {Number} time - The time required to kill the mob.
  */
 class Mob {
     constructor(names, levels, bracket, maxLevel, time) {
@@ -325,7 +325,7 @@ const bestiary = {
  * Sorts and filters the bestiary based on the provided criteria and amount.
  *
  * @param {String} val - The criteria to sort and filter the bestiary. Possible values: "bracket" or any valid property name in the bestiary object.
- * @param {number} amount - The number of entries to include in the final sorted bestiary.
+ * @param {Number} amount - The number of entries to include in the final sorted bestiary.
  */
 function sortBestiary(val, amount) {
     // Filtering the bestiary based on the provided criteria and amount
@@ -350,7 +350,7 @@ function sortBestiary(val, amount) {
 /**
  * Gets the bestiary information based on the provided arguments and displays the result in chat.
  *
- * @param {Array} args - An array of arguments containing information about the bestiary query.
+ * @param {String[]} args - An array of arguments containing information about the bestiary query.
  */
 export function getBestiary(args) {
     if (bestiaryApi !== undefined) switch(args[1]) {

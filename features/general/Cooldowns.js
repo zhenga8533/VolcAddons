@@ -6,10 +6,6 @@ import { convertToTitleCase } from "../../utils/functions";
 
 /**
  * Callback for handling mouse button clicks and releases to track ability usage.
- * @param {number} x - The x-coordinate of the mouse pointer.
- * @param {number} y - The y-coordinate of the mouse pointer.
- * @param {number} button - The index of the clicked mouse button (0 for left, 1 for right, 2 for middle).
- * @param {boolean} down - Indicates whether the button was pressed (true) or released (false).
  */
 let items = {};
 registerWhen(register("clicked", (x, y, button, down) => {

@@ -18,12 +18,6 @@ export function getSlayerBoss() { return bossCD };
 
 /**
  * Uses sound name, volume, and pitch, to detect when slayer miniboss spawns.
- *
- * @param {number[]} pos - Array of x, y, z positions.
- * @param {string} name - Name of sound.
- * @param {string} vol - Volume of sound.
- * @param {string} pitch - pitch of sound.
- * @param {string} category - Sound category.
  */
 registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;

@@ -32,7 +32,7 @@ const counterOverlay = new Overlay("inqCounter", ["Hub"], () => getPerks().has("
 /**
  * Updates the inquisitor counter depending on if an inquisitor spawned.
  *
- * @param {boolean} inqSpawned - True if inquisitor spawned, false otherwise.
+ * @param {Boolean} inqSpawned - True if inquisitor spawned, false otherwise.
  */
 export function updateInqCounter(inqSpawned) {
     // Overall

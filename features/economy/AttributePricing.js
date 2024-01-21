@@ -4,13 +4,13 @@ import { commafy, convertToTitleCase, decode, formatNumber } from "../../utils/f
 import { getAuction } from "./Economy";
 
 
+let attributesBin = {};
 /**
  * Loops through Auction api for any item with attributes and then recalls getAttributes
  * 
- * @param {number} page - Auction api page number,
- * @param {Array[String]} command - User inputted command arguments
+ * @param {Number} page - Auction api page number,
+ * @param {String[]} command - User inputted command arguments
  */
-let attributesBin = {};
 function findAttributes(page, command) {
     request({
         url: `https://api.hypixel.net/v2/skyblock/auctions?page=${page}`,
@@ -65,12 +65,12 @@ register("command", () => {
     findAttributes(0, undefined);
 }).setName("refreshAttr", true).setAliases("refreshAttributes", "refreshAttribute");
 
+const worthless = [];
 /**
  * Displays prices of attributes for shards, armor, and equipment pieces sent by the player.
  *
- * @param {string[]} args - Arguments from player input values.
+ * @param {String[]} args - Arguments from player input values.
  */
-const worthless = [];
 export function getAttributes(args) {
     const validCategories = new Set([
         "shard", "shards", 

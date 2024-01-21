@@ -38,10 +38,10 @@ const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMP
  * This function calculates the value of enchantments on an item, taking into account
  * the provided enchantments, bazaar data, and enchantment type.
  *
- * @param {object} enchantments - The enchantments object containing enchantment names and levels.
- * @param {object} bazaar - The bazaar data containing enchantment value information.
- * @param {string} type - The type of value to calculate (e.g., "buy", "sell").
- * @returns {number} - The calculated value of the enchantments on the item.
+ * @param {Object} enchantments - The enchantments object containing enchantment names and levels.
+ * @param {Object} bazaar - The bazaar data containing enchantment value information.
+ * @param {String} type - The type of value to calculate (e.g., "buy", "sell").
+ * @returns {Number} - The calculated value of the enchantments on the item.
  */
 function getEnchantmentValue(enchantments, bazaar, type) {
     value = 0;
@@ -125,13 +125,13 @@ const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
 () => settings.itemPrice === 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
 valueOverlay.message = "";
 
+let savedValues = {};
 /**
  * Calculates the complete value of given item.
  * 
  * @param {Object} item - Item Object.
- * @returns {number} - Total value of item.
+ * @returns {Number} - Total value of item.
  */
-let savedValues = {}
 export function getItemValue(item, save=true) {
     // Get Item statistics
     if (item === null) return 0;
@@ -428,9 +428,6 @@ export function getItemValue(item, save=true) {
 
 /**
  * Adds enchantment value tag onto item over all items hovered over.
- * 
- * @param {string} lore - Item lore.
- * @param {Object} item - Item object.
  */
 registerWhen(register("itemTooltip", (lore, item) => {
     // Check item data to cancel lore append.

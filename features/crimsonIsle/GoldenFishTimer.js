@@ -32,11 +32,6 @@ ${GOLD + BOLD}Last Fish: ${RESET + getTime(lastCast > 270 ? 0 : lastFish)}`
 
 /**
  * Resets "lastCast" variable whenever player right clicks with a fishing rod in hand.
- *
- * @param {number} x - X position of mouse click.
- * @param {number} y - Y position of mouse click.
- * @param {boolean} button - True for right click, False for left click.
- * @param {boolean} state - True for key down, False for key up
  */
 registerWhen(register("clicked", (x, y, button, state) => {
     if (!button || !state || Player.getHeldItem() === null) return;

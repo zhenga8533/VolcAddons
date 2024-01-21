@@ -15,12 +15,6 @@ export function getUserWaypoints() { return userWaypoints };
 
 /**
  * Detects any patcher formatted coords sent in chat.
- *
- * @param {string} player - "[rank] ign"
- * @param {string} spacing - Useless spacing between message (needed for color).
- * @param {string} X - X coordinate.
- * @param {string} y - Y coordinate.
- * @param {string} z - Z coordinate.
  */
 registerWhen(register("chat", (player, spacing, x, y, z) => {
     // Check blacklist
@@ -51,7 +45,7 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
 /**
  * Allows user to create waypoints via command.
  *
- * @param {string[]} args - Array of user input needed for waypoint.
+ * @param {String[]} args - Array of user input needed for waypoint.
  */
 export function createWaypoint(args) {
     if (args[1] === "clear") {

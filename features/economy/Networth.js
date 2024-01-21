@@ -11,7 +11,7 @@ import { getItemValue } from "./ItemPrice";
  * 
  * @param {String} inv - NBT string of the inventory data
  * @param {String} type - Name of the inventory
- * @returns {Array} [total value, value String]
+ * @returns {Type[]} [total value, value String]
  */
 function getInvValue(inv, type) {
     // Check if API is on
@@ -36,7 +36,7 @@ function getInvValue(inv, type) {
  * Adds up values in a specific category to print out a message of total value with a hover value. Also returns total value.
  * 
  * @param {String} name - Name of the container
- * @param {Array} values - Array of the value totals and strings
+ * @param {Type[]} values - Array of the value totals and strings
  * @param {String} extra - Any extra details to add to the bottom of message hover value.
  * @returns {Number} - Total value of all containers added together.
  */

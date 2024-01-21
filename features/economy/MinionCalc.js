@@ -38,7 +38,7 @@ const PSA = `${GRAY + ITALIC}Note that these calculations are done with max upgr
  * Type 0 = Insta Buy
  * Type 1 = Buy Order
  *
- * @param {string} type - Sound category.
+ * @param {String} type - Sound category.
  */
 function calcHypergolic(type) {
     const bazaar = getBazaar();
@@ -48,7 +48,7 @@ function calcHypergolic(type) {
 /**
  * Displays different minion calculations depending on player input.
  *
- * @param {string[]} args - Array of player input values.
+ * @param {String[]} args - Array of player input values.
  */
 export function calcMinions(args) {
     // Update Prices

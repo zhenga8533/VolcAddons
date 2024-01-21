@@ -11,8 +11,6 @@ let invites = [];
 
 /**
  * Records disbanded parties for 60 seconds for auto join reparty.
- *
- * @param {string} player - "[rank] ign".
  */
 registerWhen(register("chat", (player) => {
     const name = getPlayerName(player).toLowerCase();
@@ -23,8 +21,6 @@ registerWhen(register("chat", (player) => {
 
 /**
  * Acceots oarty invite if party was disbanded in last 60 seconds or part of user whitelist.
- *
- * @param {string} player - "[rank] ign".
  */
 registerWhen(register("chat", (player) => {
     const name = getPlayerName(player).toLowerCase();

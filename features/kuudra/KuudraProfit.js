@@ -71,7 +71,7 @@ const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Is
 /**
  * Updates the profit tracker and metrics based on chest opening.
  *
- * @param {boolean} openedChest - Whether a chest was opened.
+ * @param {Boolean} openedChest - Whether a chest was opened.
  */
 function updateProfitTracker(openedChest) {
     if (openedChest) {
@@ -100,11 +100,6 @@ ${DARK_RED + BOLD}Rate: ${WHITE + formatNumber(profitView.rate.toFixed(0))} ¢/h
 
 /**
  * Handles interactions with the "Paid Chest" container and updates the profit tracker.
- * 
- * @param {number} x - The x-coordinate of the mouse click.
- * @param {number} y - The y-coordinate of the mouse click.
- * @param {number} button - The mouse button pressed.
- * @param {object} gui - The associated GUI object.
  */
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     if (Player.getContainer().getName() !== "Paid Chest" || gui?.getSlotUnderMouse()?.field_75222_d !== 31 || chestOpened) return;

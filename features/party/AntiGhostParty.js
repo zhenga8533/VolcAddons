@@ -7,9 +7,6 @@ import { GREEN, LOGO } from "../../utils/constants";
 
 /**
  * Handles redirection of party commands by intercepting and modifying chat messages.
- *
- * @param {string} message - The chat message to be intercepted and redirected.
- * @param {object} event - The event object representing the chat message event.
  */
 const partyCommands = new Set(["accept", "join", "kick", "promote", "demote"]);
 let cd = false;

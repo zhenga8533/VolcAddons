@@ -21,9 +21,9 @@ let y = 0;
 /**
  * Identifies entity class based on name and adds to list with associated HP value.
  *
- * @param {string} entity - Entity name to test class for.
- * @param {number} HP - Associated HP value.
- * @returns {boolean} - True if entity class is identified and added to the list.
+ * @param {String} entity - Entity name to test class for.
+ * @param {Number} HP - Associated HP value.
+ * @returns {Boolean} - True if entity class is identified and added to the list.
  */
 const CLASS_TYPES = ["client.entity", "entity.monster", "entity.boss", "entity.passive"];
 function testClass(entity, HP, index) {

@@ -6,8 +6,8 @@ import { decode, formatNumber } from "../../utils/functions";
 /**
  * Loops through Auction api for all golden dragons and then calls calcGdrag function.
  * 
- * @param {number} page - Auction api page number,
- * @param {number} minLvl - Minimum levle of Golden Dragon to calculate
+ * @param {Number} page - Auction api page number,
+ * @param {Number} minLvl - Minimum levle of Golden Dragon to calculate
  */
 let gdrags = [];
 function findGdrag(page, minLvl) {
@@ -52,7 +52,7 @@ register("command", () => {
 /**
  * Calculates best 5 gdrags in object using level costs.
  * 
- * @param {number} minLvl - Minimum level of gdrag required to be calculated
+ * @param {Number} minLvl - Minimum level of gdrag required to be calculated
  */
 export function calcGdrag(minLvl) {
     // Check for gdrags variable

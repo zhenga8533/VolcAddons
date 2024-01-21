@@ -28,7 +28,7 @@ registerWhen(register("guiOpened", () => {
 /**
  * Calculates composting profit and cost considering composter upgrades and bazaar prices.
  *
- * @param {Array} args - Array of composter upgrade levels.
+ * @param {String[]} args - Array of composter upgrade levels.
  */
 export function calcCompost(args) {
     const bazaar = getBazaar();

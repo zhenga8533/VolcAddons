@@ -7,27 +7,11 @@ import { DARK_RED, LOGO } from "./constants";
  */
 const MAYOR_API = "https://api.hypixel.net/v2/resources/skyblock/election";
 let mayor = undefined;
-
-/**
- * Gets the current mayor's name.
- *
- * @returns {string|undefined} - The name of the mayor, or undefined if not set yet.
- */
-export function getMayor() {
-    return mayor;
-}
+export function getMayor() { return mayor }
 
 // An array to store the names of the mayor's perks.
 let perks = new Set([]);
-
-/**
- * Gets the array of mayor's perks.
- *
- * @returns {string[]} - An array containing the names of the mayor's perks.
- */
-export function getPerks() {
-    return perks;
-}
+export function getPerks() { return perks }
 
 /**
  * Makes a PULL request to get mayor info from Hypixel API.

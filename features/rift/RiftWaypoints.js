@@ -74,11 +74,11 @@ export function getZones() { return zones };
 /**
  * /va edit command to directly change the waypoint arrays.
  * 
- * @param {string[]} args - Array of player input values.
- * @param {string} type - Type of soul (Enigma/Montezuma).
- * @param {string} soul - Name of the soul.
- * @param {Array[]} base - Original array with all waypoints.
- * @param {string} world - Current world name
+ * @param {String[]} args - Array of player input values.
+ * @param {String} type - Type of soul (Enigma/Montezuma).
+ * @param {String} soul - Name of the soul.
+ * @param {Type[]} base - Original array with all waypoints.
+ * @param {String} world - Current world name
  */
 export function soulEdit(args, type, soul, base, world) {
     switch (args[1]) {
@@ -111,9 +111,9 @@ export function soulEdit(args, type, soul, base, world) {
 /**
  * /va edit command to directly change the waypoint arrays.
  *
- * @param {string[]} args - Array of player input values.
- * @param {string} type - Type of waypoint (Zone/NPC).
- * @param {Array[]} base - Original array with all waypoints.
+ * @param {String[]} args - Array of player input values.
+ * @param {String} type - Type of waypoint (Zone/NPC).
+ * @param {Type[]} base - Original array with all waypoints.
  */
 export function riftWaypointEdit(args, type, base) {
     const waypoint = type === "npc" ? NPCs : zones;

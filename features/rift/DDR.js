@@ -78,10 +78,6 @@ let dancing = [...DANCES];
 
 /**
  * Replaces Hypixel dance room subtitles with larger, permanent titles.
- *
- * @param {string} title - Message used for the larger title.
- * @param {string} subtitle - Message used for the smaller subtitle.
- * @param {Object} event - Title and subtitle event.
  */
 registerWhen(register("renderTitle", (title, subtitle, event) => {
     if (title === "§aIt's happening!§r" || title === "§aKeep it up!§r") cancel(event);

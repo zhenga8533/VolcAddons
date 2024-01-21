@@ -13,8 +13,8 @@ const N = Object.values(data.wordbank).reduce((acc, val) => acc + val, 0);
 /**
  * Calculate the probability of a given word in a dictionary.
  * 
- * @param {string} word - The word to calculate the probability for.\
- * @returns {number} The probability of the word.
+ * @param {String} word - The word to calculate the probability for.\
+ * @returns {Number} The probability of the word.
  */
 function P(word) {
     if (memo[word]) return memo[word];
@@ -25,8 +25,8 @@ function P(word) {
 /**
  * Find the most probable spelling correction for a word.
  * 
- * @param {string} word - The word for which to find the correction.
- * @returns {string} The most probable spelling correction.
+ * @param {String} word - The word for which to find the correction.
+ * @returns {String} The most probable spelling correction.
  */
 function correction(word) {
     const candidatesList = candidates(word);
@@ -37,8 +37,8 @@ function correction(word) {
 /**
  * Generate possible spelling corrections for a given word.
  * 
- * @param {string} word - The word for which to generate corrections.
- * @returns {Array} An array of possible spelling corrections.
+ * @param {String} word - The word for which to generate corrections.
+ * @returns {String[]} An array of possible spelling corrections.
  */
 function candidates(word) {
     const t1 = known([word]);
@@ -58,8 +58,8 @@ function candidates(word) {
 /**
  * Filter a list of words to find those that appear in the dictionary.
  * 
- * @param {Array} words - An array of words to filter.
- * @returns {Array} A filtered array of words that exist in the dictionary.
+ * @param {String[]} words - An array of words to filter.
+ * @returns {String[]} A filtered array of words that exist in the dictionary.
  */
 function known(words) {
     return words.filter(w => {
@@ -71,8 +71,8 @@ function known(words) {
 /**
  * Generate all edits that are one edit away from a given word.
  * 
- * @param {string} word - The word for which to generate edits.
- * @returns {Array} An array of edits one step away from the word.
+ * @param {String} word - The word for which to generate edits.
+ * @returns {String[]} An array of edits one step away from the word.
  */
 function edits1(word) {
     const letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -98,8 +98,8 @@ function edits1(word) {
  * Currently extremely inefficient so not in use.
  * Generate all edits that are two edits away from a given word.
  * 
- * @param {string} word - The word for which to generate edits.
- * @returns {Array} An array of edits two steps away from the word.
+ * @param {String} word - The word for which to generate edits.
+ * @returns {String[]} An array of edits two steps away from the word.
  */
 function edits2(word) {
     const results = new Set();

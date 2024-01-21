@@ -20,9 +20,9 @@ register("worldUnload", () => {
 /**
  * Finds the intercept location between the dx, dz of two lines.
  * 
- * @param {Array[number]} line1 - Line numero uno
- * @param {Array[number]} line2 - Line numero dos
- * @returns {Array[number]} [x, z] of the intercept (or undefined if parallel)
+ * @param {Number[]} line1 - Line numero uno
+ * @param {Number[]} line2 - Line numero dos
+ * @returns {Number[]} [x, z] of the intercept (or undefined if parallel)
  */
 function findIntersection(line1, line2) {
     const [[x1, , z1], [x2, , z2]] = line1;

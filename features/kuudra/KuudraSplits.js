@@ -233,9 +233,9 @@ registerWhen(register("chat", (player, message) => {
 /**
  * Uses sound name and pitch to determine whenever Ragnarok Ability goes off.
  *
- * @param {int[]} splits - Splits category and values.
+ * @param {Number[]} splits - Splits category and values.
  * @param {Color} color - Color code for message.
- * @param {int} runs - Amount of runs to average.
+ * @param {Number} runs - Amount of runs to average.
  */
 function formatSplits(splits, color, runs) {
     if (color === GREEN) ChatLib.chat(`${DARK_GREEN + BOLD}Average for last ${runs} runs:`);
@@ -257,7 +257,7 @@ function formatSplits(splits, color, runs) {
 /**
  * /va command to fetch splits.
  *
- * @param {string[]} args - Array of player input values.
+ * @param {String[]} args - Array of player input values.
  */
 export function getSplits(args){
     switch (args[1]) {

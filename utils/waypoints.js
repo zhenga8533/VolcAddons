@@ -119,9 +119,9 @@ function renderBeam(waypoints) {
 /**
  * 
  * @param {Array} entities - list of entities to draw hitboxes around
- * @param {number} r - 0-1 red value
- * @param {number} g - 0-1 green value
- * @param {number} b - 0-1 blue value
+ * @param {Number} r - 0-1 red value
+ * @param {Number} g - 0-1 green value
+ * @param {Number} b - 0-1 blue value
  */
 export function renderEntities(entities, r, g, b, pt, title, fill = true) {
     entities.forEach(entity => {

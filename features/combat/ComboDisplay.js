@@ -28,11 +28,6 @@ function updateOverlay() {
 
 /**
  * Processes chat messages and updates statistics based on provided information.
- *
- * @param {string} color - Message color.
- * @param {string} kills - Number of kills.
- * @param {string} bonus - Bonus string with stat info.
- * @param {object} event - Chat message event.
  */
 registerWhen(register("chat", (color, kills, bonus, event) => {
     const stat = bonus.split(' ')[0].removeFormatting();
@@ -48,9 +43,6 @@ registerWhen(register("chat", (color, kills, bonus, event) => {
 
 /**
  * Updates overlay with formatted kill combo message.
- *
- * @param {string} color - Display message color.
- * @param {string} kills - Number of kills in combo.
  */
 registerWhen(register("chat", (color, kills) => {
     stats[0] = `${color + kills} Kill Combo:`;

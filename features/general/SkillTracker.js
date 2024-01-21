@@ -74,13 +74,6 @@ register("command", () => {
 
 /**
  * Uses action bar to detect skill xp gains for maxed out skills.
- *
- * @param {string} before - Use beginning of message.
- * @param {string} gain - Amount of xp gained.
- * @param {string} type - Type of skill xp gained.
- * @param {string} amount - Current amount of skill xp.
- * @param {string} next - Skill xp needed to level up (0 at max).
- * @param {string} after - Useless ending of message.
  */
 registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
     if (getPaused()) return;
@@ -98,13 +91,6 @@ registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
 
 /**
  * Uses action bar to detect skill xp gains for non maxed out skills.
- *
- * @param {string} before - Use beginning of message.
- * @param {string} gain - Amount of xp gained.
- * @param {string} type - Type of skill xp gained.
- * @param {string} amount - Current amount of skill xp.
- * @param {string} next - Skill xp needed to level up (0 at max).
- * @param {string} after - Useless ending of message.
  */
 registerWhen(register("actionBar", (health, gain, type, percent, mana) => {
     if (getPaused()) return;

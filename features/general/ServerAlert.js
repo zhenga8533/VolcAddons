@@ -12,9 +12,6 @@ let servers = {};
 
 /**
  * Replaces joining message if player has been in server in past X minutes.
- *
- * @param {string} server - Hypixel server id.
- * @param {Object} event - Chat message event.
  */
 registerWhen(register("chat", (server, event) => {
     const currentTime = Date.now();

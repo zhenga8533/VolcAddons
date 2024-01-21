@@ -254,11 +254,6 @@ export function getStatus(status) {
 
 /**
  * Check entity distance to player. Hide if too close or far.
- * 
- * @param {Entity} entity - The entity being checked.
- * @param {Position} pos - The entity's position.
- * @param {number} tick - The current tick.
- * @param {Event} event - The event being handled.
  */
 registerWhen(register("renderEntity", (entity, _, __, event) => {
     const distance = entity.distanceTo(Player.asPlayerMP());
@@ -276,10 +271,6 @@ registerWhen(register("renderEntity", (entity, _, __, event) => {
 
 /**
  * Prevents any particles from rendering.
- * 
- * @param {Particle} - The particle entity.
- * @param {MCTEnumParticleTypes} - Particle type name
- * @param {CancelableEvent} - Particle spawn event.
  */
 registerWhen(register("spawnParticle", (particle, type, event) => {
     cancel(event);

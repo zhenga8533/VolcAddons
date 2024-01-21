@@ -7,10 +7,10 @@ import { getWorld } from "./worlds";
 /**
  * Render scaled text on a graphical canvas or rendering context.
  *
- * @param {number} scale - The scale factor to apply to the text.
- * @param {string} text - The text to be rendered.
- * @param {number} x - The x-coordinate where the text will be rendered.
- * @param {number} y - The y-coordinate where the text will be rendered.
+ * @param {Number} scale - The scale factor to apply to the text.
+ * @param {String} text - The text to be rendered.
+ * @param {Number} x - The x-coordinate where the text will be rendered.
+ * @param {Number} y - The y-coordinate where the text will be rendered.
  */
 function renderScale(scale, text, x, y, align) {
     Renderer.scale(scale);
@@ -59,11 +59,6 @@ const moving = register("renderOverlay", () => {
 
 /**
  * Handles overlay selection when clicking on the screen.
- *
- * @param {number} x - X-coordinate of the mouse click.
- * @param {number} y - Y-coordinate of the mouse click.
- * @param {number} button - Mouse button pressed during the interaction.
- * @param {object} screen - The screen object associated with the interaction.
  */
 const clicking = register("guiMouseClick", (x, y, button, screen) => {
     currentOverlay = undefined;
@@ -84,11 +79,6 @@ const clicking = register("guiMouseClick", (x, y, button, screen) => {
 /**
  * Handles movement of the selected overlay.
  * Updates location and normalized coordinates based on delta coordinates.
- *
- * @param {number} dx - Change in x-coordinate during movement.
- * @param {number} dy - Change in y-coordinate during movement.
- * @param {number} x - X-coordinate of mouse pointer during movement.
- * @param {number} y - Y-coordinate of mouse pointer during movement.
  */
 const dragging = register("dragged", (dx, dy, x, y) => {
     if (currentOverlay === undefined || !gui.isOpen()) return;
@@ -106,11 +96,6 @@ const dragging = register("dragged", (dx, dy, x, y) => {
  * Handles scaling of the selected overlay using key presses.
  * Listens for specific keys: Enter (increase), Minus (decrease), r (reset).
  * Updates normalized coordinates and calls "setSize" after scaling.
- *
- * @param {string} char - Pressed key character.
- * @param {number} keyCode - Key code of the pressed key.
- * @param {object} currentGui - Current GUI object.
- * @param {object} event - Event object for key press.
  */
 const keying = register("guiKey", (char, keyCode, currentGui, event) => {
     // View Change
@@ -173,12 +158,12 @@ export class Overlay {
     /**
      * Creates an overlay with HUD elements and GUI functionality.
      *
-     * @param {string} setting - The setting key used to determine whether the overlay should be shown.
-     * @param {string[]} requires - An array of world names where the overlay should be displayed (or "all" for all requires).
-     * @param {function} condition - Function to check if condition is met before rendering.
-     * @param {number[]} loc - An array representing the x, y, and scale of the overlay.
-     * @param {string} command - The command name that will open the GUI.
-     * @param {string} example - An example text to be displayed as an overlay.
+     * @param {String} setting - The setting key used to determine whether the overlay should be shown.
+     * @param {String[]} requires - An array of world names where the overlay should be displayed (or "all" for all requires).
+     * @param {Function} condition - Function to check if condition is met before rendering.
+     * @param {Number[]} loc - An array representing the x, y, and scale of the overlay.
+     * @param {String} command - The command name that will open the GUI.
+     * @param {String} example - An example text to be displayed as an overlay.
      */
     constructor(setting, requires, condition, loc, command, example, special = () => false) {
         overlays.push(this);

@@ -121,7 +121,7 @@ let registers = [];
  * Credit to: https://www.chattriggers.com/modules/v/BloomCore for idea
  *
  * @param {Object} trigger - The trigger to be added.
- * @param {function} dependency - The function representing the dependency of the trigger.
+ * @param {Function} dependency - The function representing the dependency of the trigger.
  */
 export function registerWhen(trigger, dependency) {
     trigger.unregister();
@@ -162,9 +162,9 @@ let lines = [5858, 5859];
  * Updates a list based on the provided arguments.
  *
  * @param {Array} args - An array of arguments provided for the list update.
- * @param {Array|string} list - The list to be updated.
- * @param {string} listName - The name of the list for displaying messages.
- * @returns {Array|string} - The updated list.
+ * @param {String[]} list - The list to be updated.
+ * @param {String} listName - The name of the list for displaying messages.
+ * @returns {String[]} - The updated list.
  */
 export function updateList(args, list, listName) {
     const isArray = Array.isArray(list);

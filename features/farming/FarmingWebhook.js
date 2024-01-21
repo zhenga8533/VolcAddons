@@ -187,8 +187,6 @@ registerWhen(register("step", () => {
 /**
  * Updates crop statistics for a harvested crop block.
  * Calculates drop amounts, values, and updates cropStats.
- *
- * @param {object} block - The block object of the harvested crop.
  */
 registerWhen(register("blockBreak", (block) => {
     const blockName = block.type.getName();
@@ -229,11 +227,6 @@ registerWhen(register("chat", (visitor) => {
 /**
  * Handles mouse click interactions in a GUI related to trade offers.
  * Analyzes clicked items, lore, and interactions to update visitor statistics.
- *
- * @param {number} x - The x-coordinate of the mouse click.
- * @param {number} y - The y-coordinate of the mouse click.
- * @param {number} button - The mouse button pressed during the interaction.
- * @param {object} gui - The GUI object associated with the interaction.
  */
 registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     // Get clicked item

@@ -8,9 +8,9 @@ import { getWaifu } from "../party/PartyCommands";
 
 /**
  * Sends a webhook message to discord with message data and timestamp.
- * @param {string} player - The name of the player sending the message.
- * @param {string} msg - The content of the message.
- * @param {string} color - The color code for the embed.
+ * @param {String} player - The name of the player sending the message.
+ * @param {String} msg - The content of the message.
+ * @param {String} color - The color code for the embed.
  */
 function sendWebhook(player, msg, color) {
     request({

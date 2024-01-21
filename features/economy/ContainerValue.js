@@ -141,8 +141,6 @@ function updateContainerValue(remove) {
 
 /**
  * Handles GUI events in container GUIs, updating value overlay display if a chest GUI is involved.
- *
- * @param {object} event - The GUI event object.
  */
 registerWhen(register("guiOpened", (event) => {
     const guiName = event.gui.class.getName();
@@ -153,11 +151,6 @@ registerWhen(register("guiOpened", (event) => {
 /**
  * Handles mouse click interactions within container GUIs.
  * Invokes `updateContainerValue` to update value overlay display.
- *
- * @param {number} x - X-coordinate of mouse click.
- * @param {number} y - Y-coordinate of mouse click.
- * @param {number} button - Pressed mouse button.
- * @param {object} gui - Associated GUI object.
  */
 registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
     const guiName = gui.class.getName();

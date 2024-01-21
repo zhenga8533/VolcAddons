@@ -12,9 +12,6 @@ let warpTo = "";
 /**
  * Overwrites player warp commands with a garden warp whenever next visitor is ready.
  * Will send the player to the original destination once it detects the next visitor timer.
- * 
- * @param {string} message - User inputted command.
- * @param {Object} event - MessageSent event.
  */
 registerWhen(register("messageSent", (message, event) => {
     if (getNextVisitor() || warpTo) return;

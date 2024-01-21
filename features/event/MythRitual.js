@@ -44,9 +44,9 @@ setWarps();
 /**
  * Use linear regression to calculate a best-fit line using particle locations.
  * 
- * @param {Array[Number, Number, Number]} coordinates - xyz coordinates of Echo ability particles.
+ * @param {Array[Number[]]} coordinates - xyz coordinates of Echo ability particles.
  * @param {Number} distance - Wanted distance to be calculated using best fit line.
- * @returns {String, Number, Number, Number}
+ * @returns {[String, Number, Number, Number]} - [Title, X, Y, Z]
  */
 function guessBurrow(coordinates, distance) {
     const n = coordinates.length;
