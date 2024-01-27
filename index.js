@@ -149,6 +149,8 @@ function getHelp() {
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
 devKey.registerKeyPress(() => {
+    if (devKey.getKeyCode() === 0) return;
+
     const view = Player.lookingAt();
     if (view instanceof Entity) {
         // Get entity data

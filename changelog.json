@@ -1,5 +1,9 @@
 [
-    "- Fixed skill tracker",
+    "- TODO: Added /kv (Kuudra view)",
+    "- TODO: Added `/va todolist`",
+    "- TODO: Added time until next level to skill tracker",
+    "- Fixed dev key glitching out",
+    "- Fixed skill tracker for non-max skills",
     "- Fixed bits alert always shouting",
     "- Removed unnecessary comments"
 ]
