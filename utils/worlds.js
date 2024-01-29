@@ -63,7 +63,7 @@ function findWorld() {
 
         // Register/unregister features for the current world
         delay(() => {
-            setRegisters();
+            setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
             setPlayer();
         }, 1000);
     }
@@ -78,9 +78,9 @@ register("worldLoad", () => {
 }).setPriority(Priority.LOWEST);
 register("worldUnload", () => {
     world = undefined;
-    setRegisters(off=settings.skyblockToggle);
+    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 }).setPriority(Priority.LOWEST);
 register("serverDisconnect", () => {
     world = undefined;
-    setRegisters(off=true);
+    setRegisters(off = true);
 })

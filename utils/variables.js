@@ -1,6 +1,7 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
 import { AQUA, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./constants";
+import { delay } from "./thread";
 
 
 // --- PERSISTENT DATA ---
@@ -140,6 +141,7 @@ export function setRegisters(off = false) {
         }
     });
 }
+delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")), 1000);
 
 // Event handler for GUI settings close.
 register("guiClosed", (event) => {
