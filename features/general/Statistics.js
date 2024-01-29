@@ -1,5 +1,5 @@
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
-import { formatNumber, getTime } from "../../utils/functions";
+import { formatNumber, getTime, isPlayer } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
@@ -121,8 +121,8 @@ registerWhen(register("tick", () => {
     // Legion
     if (toggles.legionDisplay) {
         const player = Player.asPlayerMP();
-        const legionCount = World.getAllEntitiesOfType(PLAYER_CLASS).filter(other => other.getEntity().func_110143_aJ() !== 20 && player.distanceTo(other) < 30).length - 1;
-        const legionPercent = Math.min(1, legionCount / 20).toFixed(2) * 100;
+        const legionCount = World.getAllEntitiesOfType(PLAYER_CLASS).filter(other => isPlayer(other) && player.distanceTo(other) < 30).length;
+        const legionPercent = Math.round(Math.min(1, legionCount / 20) * 100);
         const legionColor = legionCount > 16 ? GREEN :
             legionCount > 12 ? DARK_GREEN :
             legionCount > 8 ? YELLOW :
