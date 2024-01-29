@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_AQUA, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_AQUA, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, convertToTitleCase, findGreaterIndex, getTime, unformatNumber } from "../../utils/functions";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
@@ -25,10 +25,11 @@ const skills = {
 }
 let current = "None";
 const skillExample =
-`${DARK_AQUA + BOLD}Skill: ${WHITE}FEE
-${DARK_AQUA + BOLD}XP Gained: ${WHITE}FI
-${DARK_AQUA + BOLD}Time Passed: ${WHITE}FO
-${DARK_AQUA + BOLD}Rate: ${WHITE}FUM`;
+`${DARK_AQUA + BOLD}Skill: ${WHITE}None
+${DARK_AQUA + BOLD}XP Gained: ${WHITE}0
+${DARK_AQUA + BOLD}Time Passed: ${RED}Inactive
+${DARK_AQUA + BOLD}Rate: ${WHITE}0 xp/hr
+${DARK_AQUA + BOLD}Level Up: ${GREEN}MAXED`;
 const skillOverlay = new Overlay("skillTracker", ["all"], () => getWorld() !== undefined, data.AL, "moveSkills", skillExample);
 
 const xpTable = [0, 50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925, 22425, 32425, 47425, 67425, 97425, 147425, 222425, 322425, 522425, 822425, 1222425, 
@@ -117,10 +118,12 @@ registerWhen(register("chat", (skill) => {
  * Updates skill tracker data every second.
  */
 registerWhen(register("step", () => {
-    if (getPaused()) return;
+    if (getPaused() || current === "None") return;
     
+    // Update tracker
     let skill = skills[current];
     if (skill === undefined) return;
+    const rate = skill.getRate();
 
     if (skill.since < settings.skillTracker * 60) {
         skill.since += 1;
@@ -128,10 +131,17 @@ registerWhen(register("step", () => {
     }
     
     // Set HUD
-    const timeDisplay = skills[current].since < settings.skillTracker * 60 ? getTime(skills[current].time) : `${RED}Inactive`;
+    const timeDisplay = skill.since < settings.skillTracker * 60 ? getTime(skill.time) : `${RED}Inactive`;
     skillOverlay.message = 
 `${DARK_AQUA + BOLD}Skill: ${WHITE + current}
-${DARK_AQUA + BOLD}XP Gained: ${WHITE + commafy(skills[current].getGain())} xp
+${DARK_AQUA + BOLD}XP Gained: ${WHITE + commafy(skill.getGain())} xp
 ${DARK_AQUA + BOLD}Time Passed: ${WHITE + timeDisplay}
-${DARK_AQUA + BOLD}Rate: ${WHITE + commafy(skills[current].getRate())} xp/hr`;
+${DARK_AQUA + BOLD}Rate: ${WHITE + commafy(rate)} xp/hr
+${DARK_AQUA + BOLD}Level Up: `;
+
+    // Set time until next
+    if (skill.level !== 60) {
+        const neededXP = xpTable[skill.level + 1] - skill.now;
+        skillOverlay.message += `${WHITE + getTime(neededXP / rate * 3600)}`;
+    } else skillOverlay.message += `${GREEN}MAXED`;
 }).setFps(1), () => settings.skillTracker !== 0);
