@@ -1,5 +1,5 @@
-import { getSlotCoords } from "../../utils/functions";
 import settings from "../../utils/settings";
+import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 

@@ -153,10 +153,10 @@ register("guiClosed", (event) => {
 
 
 // --- LIST CONTROL ---
+import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions/format";
+import { updateAuction } from "../features/economy/Economy";
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
-import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions";
-import { updateAuction } from "../features/economy/Economy";
 
 
 let lines = [5858, 5859];

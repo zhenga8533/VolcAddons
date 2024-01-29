@@ -1,4 +1,5 @@
-import { getPlayerName } from "./functions";
+
+import { getPlayerName } from "./functions/player";
 import { delay } from "./thread";
 
 

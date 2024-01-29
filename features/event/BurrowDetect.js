@@ -1,6 +1,7 @@
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
-import { getClosest, playSound } from "../../utils/functions";
+import { getClosest } from "../../utils/functions/find";
 import { getPerks } from "../../utils/mayor";
+import { playSound } from "../../utils/functions/misc";
 import settings from "../../utils/settings";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";

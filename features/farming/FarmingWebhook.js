@@ -1,6 +1,6 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { formatNumber, getTime, unformatNumber } from "../../utils/functions";
+import { formatNumber, getTime, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";

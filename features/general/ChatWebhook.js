@@ -1,7 +1,7 @@
+import { request } from "../../../axios";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { request } from "../../../axios";
-import { getGuildName, getPlayerName } from "../../utils/functions";
+import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/variables";
 import { getWaifu } from "../party/PartyCommands";
 

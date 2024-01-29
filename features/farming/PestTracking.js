@@ -1,7 +1,8 @@
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET, YELLOW } from "../../utils/constants";
-import { getSlotCoords, getTime } from "../../utils/functions";
-import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET, YELLOW } from "../../utils/constants";
+import { getSlotCoords } from "../../utils/functions/find";
+import { getTime } from "../../utils/functions/format";
+import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 

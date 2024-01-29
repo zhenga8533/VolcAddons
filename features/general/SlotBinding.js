@@ -1,5 +1,5 @@
 import { GREEN, LOGO, RED } from "../../utils/constants";
-import { getSlotCoords } from "../../utils/functions";
+import { getSlotCoords } from "../../utils/functions/find";
 import settings from "../../utils/settings";
 import { data, registerWhen } from "../../utils/variables";
 

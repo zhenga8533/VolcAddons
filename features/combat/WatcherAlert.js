@@ -1,6 +1,6 @@
 import settings from "../../settings";
 import { AMOGUS, BOLD, GOLD, GREEN } from "../../utils/constants";
-import { playSound } from "../../utils/functions";
+import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/variables";
 
 

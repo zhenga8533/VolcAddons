@@ -1,7 +1,6 @@
 import { AQUA, BOLD, DARK_AQUA, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/constants';
-import { commafy } from "../../utils/functions";
+import { commafy } from '../../utils/functions/format';
 import settings from '../../utils/settings';
-import { data } from '../../utils/variables';
 import { getBazaar } from './Economy';
 
 

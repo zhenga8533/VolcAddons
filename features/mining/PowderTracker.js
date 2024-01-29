@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
 import { request } from "../../../axios";
+import settings from "../../utils/settings";
 import { BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
-import { commafy, getTime } from "../../utils/functions";
+import { commafy, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";

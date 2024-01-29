@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { getPlayerName } from "../../utils/functions";
+import { getPlayerName } from "../../utils/functions/player";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 

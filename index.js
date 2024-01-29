@@ -4,7 +4,6 @@ import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, SMA, UNDERLINE, WHITE } from "./utils/constants";
-import { getTime } from "./utils/functions";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
@@ -98,6 +97,7 @@ import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 import { getNetworth } from "./features/economy/Networth";
+import { getTime } from "./utils/functions/format";
 
 
 // Launch Tests

@@ -1,6 +1,6 @@
-import { getGuildName, getPlayerName } from "../../utils/functions";
-import { getIsLeader } from "../../utils/party";
 import settings from "../../utils/settings";
+import { getIsLeader } from "../../utils/party";
+import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 

@@ -1,6 +1,7 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_AQUA, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { commafy, convertToTitleCase, findGreaterIndex, getTime, unformatNumber } from "../../utils/functions";
+import { findGreaterIndex } from "../../utils/functions/find";
+import { commafy, convertToTitleCase, getTime, unformatNumber } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";

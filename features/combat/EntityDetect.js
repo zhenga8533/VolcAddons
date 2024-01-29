@@ -1,6 +1,7 @@
 import settings from "../../utils/settings";
 import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE, SMA, SPIDER_CLASS, EntityArmorStand } from "../../utils/constants";
-import { convertToPascalCase, getTime, playSound, unformatNumber } from "../../utils/functions";
+import { convertToPascalCase, getTime, unformatNumber } from "../../utils/functions/format";
+import { playSound } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getServer, getWorld } from "../../utils/worlds";

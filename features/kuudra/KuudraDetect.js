@@ -1,8 +1,8 @@
 import settings from "../../utils/settings";
+import { CUBE_CLASS } from "../../utils/constants";
+import { formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";
-import { formatNumber } from "../../utils/functions";
-import { CUBE_CLASS } from "../../utils/constants";
 
 
 /**

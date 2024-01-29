@@ -1,11 +1,12 @@
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
-import { getPlayerName, getTime, isValidDate } from "../../utils/functions";
-import { getKuudraHP } from "./KuudraDetect";
+import { getTime, isValidDate } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
+import { getPlayerName } from "../../utils/functions/player";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 import { getTier, getWorld } from "../../utils/worlds";
+import { getKuudraHP } from "./KuudraDetect";
 
 
 /**

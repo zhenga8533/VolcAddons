@@ -1,5 +1,5 @@
 import { BOLD, DARK_GRAY, EntityArmorStand, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
-import { formatNumber, getTime } from "../../utils/functions";
+import { formatNumber, getTime } from "../../utils/functions/format";
 import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables";
 

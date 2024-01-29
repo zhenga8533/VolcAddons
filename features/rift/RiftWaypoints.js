@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { getClosest } from "../../utils/functions";
+import { getClosest } from "../../utils/functions/find";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 

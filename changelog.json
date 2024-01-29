@@ -4,6 +4,7 @@
     "- Added time until next level to skill tracker",
     "- Added setting to toggle text shadows",
     "- Changed auction API tracking",
+    "- Changed function file pathing",
     "- Fixed legion display",
     "- Fixed dev key glitching out",
     "- Fixed skill tracker for non-max skills",

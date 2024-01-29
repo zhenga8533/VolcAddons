@@ -1,8 +1,8 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
+import { formatNumber, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, getPaused, registerWhen } from "../../utils/variables";
-import { formatNumber, getTime } from "../../utils/functions";
 
 
 /**

@@ -1,6 +1,6 @@
-import { DARK_GRAY, GRAY, ITALIC } from "../../utils/constants";
-import { getSlotCoords } from "../../utils/functions";
 import settings from "../../utils/settings";
+import { DARK_GRAY, ITALIC } from "../../utils/constants";
+import { getSlotCoords } from "../../utils/functions/find";
 import { data, registerWhen } from "../../utils/variables";
 
 

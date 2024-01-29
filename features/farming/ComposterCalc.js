@@ -1,5 +1,5 @@
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { commafy, romanToNum } from "../../utils/functions";
+import { commafy, romanToNum } from "../../utils/functions/format";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";

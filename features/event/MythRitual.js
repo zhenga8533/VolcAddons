@@ -1,5 +1,5 @@
 import { GREEN, LOGO } from "../../utils/constants";
-import { getClosest } from "../../utils/functions";
+import { getClosest } from "../../utils/functions/find";
 import { getPerks } from "../../utils/mayor";
 import settings from "../../utils/settings";
 import { delay } from "../../utils/thread";

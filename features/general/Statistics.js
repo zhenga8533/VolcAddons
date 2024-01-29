@@ -1,8 +1,9 @@
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
-import { formatNumber, getTime, isPlayer } from "../../utils/functions";
-import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
+import { formatNumber, getTime } from "../../utils/functions/format";
+import { Overlay } from "../../utils/overlay";
+import { isPlayer } from "../../utils/functions/player";
 import { data, registerWhen } from "../../utils/variables";
 
 

@@ -1,7 +1,7 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { getTime, romanToNum } from "../../utils/functions";
+import { getTime, romanToNum } from "../../utils/functions/format";
 import { getPlayerUUID } from "../../utils/player";
 import { data, registerWhen } from "../../utils/variables";
 

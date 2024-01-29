@@ -1,9 +1,10 @@
 import request from "../../../requestV2";
 import { AQUA, BLUE, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
-import { convertToTitleCase, decode, formatNumber } from "../../utils/functions";
+import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
+import { decode } from "../../utils/functions/misc";
 import settings from "../../utils/settings";
-import { getAuction, getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
+import { getAuction, getBazaar } from "./Economy";
 
 
 /**

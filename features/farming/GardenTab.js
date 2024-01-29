@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GREEN, DARK_RED, GRAY, GREEN, RED, RESET, WHITE } from "../../utils/constants";
-import { getTime } from "../../utils/functions";
+import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
+import { getTime } from "../../utils/functions/format";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 

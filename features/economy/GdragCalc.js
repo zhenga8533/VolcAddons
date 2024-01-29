@@ -1,6 +1,7 @@
 import request from "../../../requestV2";
 import { BLUE, BOLD, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { decode, formatNumber } from "../../utils/functions";
+import { formatNumber } from "../../utils/functions/format";
+import { decode } from "../../utils/functions/misc";
 
 
 /**

@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS } from "../../utils/constants";
-import { announceMob } from "../../utils/functions";
 import { getPerks } from "../../utils/mayor";
+import { announceMob } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";

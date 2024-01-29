@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, WHITE } from "../../utils/constants";
-import { getTime } from "../../utils/functions";
+import { getTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/variables";
 import { getServer } from "../../utils/worlds";
 

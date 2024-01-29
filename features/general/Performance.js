@@ -2,9 +2,9 @@ import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
+import { isPlayer } from "../../utils/functions/player";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { isPlayer } from "../../utils/functions";
 
 
 /**

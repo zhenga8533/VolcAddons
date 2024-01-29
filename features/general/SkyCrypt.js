@@ -1,5 +1,9 @@
 import { GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 
+
+/**
+ * Opens the SkyCrypt page of inputted ign.
+ */
 register("command", (name) => {
     if (name === undefined) {
         ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/sk [ign]`);

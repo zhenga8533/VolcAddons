@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
-import { DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { getPlayerName } from "../../utils/functions";
+import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { getPlayerName } from "../../utils/functions/player";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 

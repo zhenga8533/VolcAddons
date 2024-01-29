@@ -1,7 +1,6 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_GREEN, GREEN } from "../../utils/constants";
+import { GREEN } from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
-import { convertToTitleCase } from "../../utils/functions";
 
 
 /**

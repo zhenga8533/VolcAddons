@@ -1,5 +1,5 @@
-import { getClosest } from "../../utils/functions";
 import settings from "../../utils/settings";
+import { getClosest } from "../../utils/functions/find";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 

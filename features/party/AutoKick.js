@@ -1,5 +1,5 @@
-import { getPlayerName } from "../../utils/functions";
 import { getIsLeader } from "../../utils/party";
+import { getPlayerName } from "../../utils/functions/player";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 
