@@ -1,5 +1,5 @@
 import settings from "./settings";
-import { GREEN, ITALIC, LOGO } from "./constants";
+import { DARK_GRAY, GREEN, ITALIC, LOGO } from "./constants";
 import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";
 
@@ -13,10 +13,9 @@ import { getWorld } from "./worlds";
  * @param {Number} y - The y-coordinate where the text will be rendered.
  */
 function renderScale(scale, text, x, y, align) {
-    Renderer.drawStringWithShadow("HELLO testing", 100, 100);
     Renderer.scale(scale);
-    if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(true).draw();
-    else Renderer.drawStringWithShadow(text, x, y);
+    if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(settings.textShadow).draw();
+    else Renderer.drawString(text, x, y, settings.textShadow);
 }
 
 /**

@@ -174,6 +174,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     })
     skillTracker = 0;
 
+    @SwitchProperty({
+        name: "Text Shadow Toggle",
+        description: "Sets if text shadow renders on any GUI elements.",
+        category: "General",
+        subcategory: "General"
+    })
+    textShadow = false;
+
     // --- Inventory ---
     @SwitchProperty({
         name: "Searchbar",
