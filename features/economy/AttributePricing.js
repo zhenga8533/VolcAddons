@@ -59,7 +59,7 @@ function findAttributes(page, command) {
             if (command !== undefined) getAttributes(command);
             ChatLib.chat(`${DARK_GRAY}Attribute values saved, use '/refreshAttr' to refresh auction data!`);
         }
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }
 register("command", () => {
     attributesBin = {};

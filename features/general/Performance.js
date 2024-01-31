@@ -37,6 +37,7 @@ function calcTPS() {
     }
     pastDate = Date.now();
 }
+// In case not CT 2.2.0
 try {
     register('packetReceived', () => {
         calcTPS();
@@ -79,6 +80,7 @@ function calculatePing() {
         lastPing = 0;
     }
 };
+// In case not CT 2.2.0
 try {
     register('packetReceived', () => {
         calculatePing();

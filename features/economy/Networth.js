@@ -191,6 +191,6 @@ export function getNetworth(username, fruit) {
             // Total
            ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
            ChatLib.chat(`\n${LOGO + DARK_AQUA}Total Networth: ${DARK_GREEN + formatNumber(total)}`);
-        }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+        }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
+    }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }

@@ -22,7 +22,7 @@ export function updateAuction() {
     }).then((response) => {
         items = response.items;
         Object.keys(data.valuelist).forEach(key => items[key] = {lbin: data.valuelist[key]});
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch((err) => console.error(`VolcAddons: ${(err.cause ?? err)}`));
 }
 function updateBazaar() {
     request({
@@ -30,7 +30,7 @@ function updateBazaar() {
         json: true
     }).then((response) => {
         products = response.items;
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch((err) => console.error(`$VolcAddons: ${(err.cause ?? err)}`));
 }
 updateAuction();
 updateBazaar();

@@ -23,5 +23,5 @@ register("worldLoad", () => {
     }).then((response)=>{
         mayor = response.mayor.name;
         perks = new Set([...response.mayor.perks.map(perk => perk.name)]);
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch((err) => console.error(`VolcAddons: ${(err.cause ?? err)}`));
 });

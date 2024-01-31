@@ -88,7 +88,7 @@ function setWaifu(announce) {
                 const id = images[randIndex(images)]?.id;
 
                 imgur = `https://i.imgur.com/${id}.png`;
-            }).catch(_ => ChatLib.chat(`${LOGO + DARK_RED}Imgur Fetch Failed :(`));
+            }).catch(_ => ChatLib.chat(`${LOGO + DARK_RED}Imgur fetch failed...`));
         });
     });
 }

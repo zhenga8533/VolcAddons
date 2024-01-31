@@ -190,7 +190,7 @@ function openSettings() {
     try {
         settings.openGUI();
     } catch (err) {
-        ChatLib.chat(`${LOGO + RED}Error opening settings... Please type "/ct reload" to fix this by wiping the current setting config!`);
+        ChatLib.chat(`${LOGO + RED}Error opening settings... Please run '/ct reload' to fix!`);
         register("gameUnload", () => {
             FileLib.delete("VolcAddons", "config.toml");
         }).setPriority(Priority.LOWEST);
@@ -373,7 +373,7 @@ register ("command", (...args) => {
                         }
                         break;
                 }
-            } catch (err) { ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`) }
+            } catch (err) { ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)) }
             break;
         // Configure fairy souls
         case "fairy":

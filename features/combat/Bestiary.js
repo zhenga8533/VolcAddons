@@ -23,7 +23,7 @@ function updateBestiary(profileId, args) {
         bestiaryApi = response.profile.members[getPlayerUUID()]?.bestiary?.kills;
         Object.keys(bestiary).forEach(key => bestiary[key].updateKills());
         if (callback) getBestiary(args);
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch((err) => console.error(`VolcAddons: ${(err.cause ?? err)}`));
 }
 
 /**

@@ -43,7 +43,7 @@ function findGdrag(page, minLvl) {
             if (minLvl != 0) calcGdrag(minLvl);
             ChatLib.chat(`${DARK_GRAY}GDrag values saved, use '/refreshGdrag' to refresh auction data!`);
         }
-    }).catch((err) => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }
 register("command", () => {
     gdrags = [];

@@ -71,7 +71,7 @@ register("command", () => {
         const data = response.profile.members[getPlayerUUID()];
         updateSkills(data?.player_data?.experience);
         ChatLib.chat(`${LOGO + GREEN}Successfully reset skill tracker!`);
-    }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
+    }).catch(err => console.error(`VolcAddons: ${(err.cause ?? err)}`));
 }).setName("resetSkills");
 
 /**

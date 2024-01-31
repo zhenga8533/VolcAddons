@@ -1,5 +1,5 @@
 import axios from "../../axios";
-import { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY, RED, DARK_RED } from "./constants";
+import { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY, DARK_RED } from "./constants";
 
 
 /**
@@ -12,7 +12,7 @@ function getCurrentVersion() {
         const metadataJson = FileLib.read("VolcAddons", "metadata.json");
         const metadata = JSON.parse(metadataJson);
         return metadata.version;
-    } catch(err) { ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`) }
+    } catch(err) { ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)) }
 }
 
 /**
@@ -80,5 +80,5 @@ export function getLatestReleaseVersion() {
             });
             ChatLib.chat("");
         }
-    }).catch(err => ChatLib.chat(`${LOGO + DARK_RED + (err.cause ?? err)}`));
+    }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }
