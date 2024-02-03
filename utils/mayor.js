@@ -20,8 +20,8 @@ register("worldLoad", () => {
     request({
         url: MAYOR_API,
         json: true
-    }).then((response)=>{
+    }).then(response => {
         mayor = response.mayor.name;
         perks = new Set([...response.mayor.perks.map(perk => perk.name)]);
-    }).catch((err) => console.error(`VolcAddons: ${(err.cause ?? err)}`));
+    }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
 });

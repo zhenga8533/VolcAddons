@@ -70,12 +70,12 @@ export function getNetworth(username, fruit) {
     request({
         url: `https://api.mojang.com/users/profiles/minecraft/${username}`,
         json: true
-    }).then((res) => {
+    }).then(res => {
         // Request profile data through hypixel API
         request({
             url: `https://api.hypixel.net/v2/skyblock/profiles?key=4e927d63a1c34f71b56428b2320cbf95&uuid=${res.id}`,
             json: true
-        }).then((response) => {
+        }).then(response => {
             // Check if user exists
             const profiles = response.profiles;
             if (profiles === null) {
@@ -191,6 +191,6 @@ export function getNetworth(username, fruit) {
             // Total
            ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
            ChatLib.chat(`\n${LOGO + DARK_AQUA}Total Networth: ${DARK_GREEN + formatNumber(total)}`);
-        }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
-    }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
+        }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
+    }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }

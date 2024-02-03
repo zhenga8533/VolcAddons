@@ -53,7 +53,7 @@ function upload(image) {
 let waifu = "";
 let imgur = "";
 function setWaifu(announce) {
-    axios.get("https://api.waifu.pics/sfw/waifu").then((link) => {
+    axios.get("https://api.waifu.pics/sfw/waifu").then(link => {
         waifu = link.data.url;
         if (announce)
             new Message(`\n${LOGO + DARK_GREEN}Uploading `,
@@ -66,7 +66,7 @@ function setWaifu(announce) {
                 new TextComponent(imgur).setHoverValue(imgur),
                 ` ${GREEN}to Imgur Successfully! `,
                 new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
-        }).catch((err) => {
+        }).catch(err => {
             const error = err.data.error;
             if (announce) {
                 // Attempt to use base Imgur API

@@ -92,6 +92,7 @@ import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
 import "./features/kuudra/KuudraProfit";
 import { getSplits } from "./features/kuudra/KuudraSplits";
+import "./features/kuudra/KuudraView";
 // Rift Features
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";

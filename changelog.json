@@ -1,6 +1,5 @@
 [
     "- TODO: Added /kv (Kuudra view)",
-    "- TODO: Added `/va todolist`",
     "- Added time until next level to skill tracker",
     "- Added setting to toggle text shadows",
     "- Changed auction API tracking",

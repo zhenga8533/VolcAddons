@@ -1,5 +1,4 @@
 import request from "../../requestV2";
-import { DARK_RED, LOGO } from "./constants";
 import { data } from "./variables";
 
 
@@ -36,7 +35,7 @@ request({
         updatePlayer(data.lastID);
         updated = true;
     }
-}).catch((err) => console.error(`VolcAddons: ${(err.cause ?? err)}`));
+}).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
 
 import { updateTrophy } from "../features/crimsonIsle/TrophyCounter";
 import { updateSkills } from "../features/general/SkillTracker";
@@ -53,7 +52,7 @@ export function updatePlayer(id) {
         const data = response.profile.members[getPlayerUUID()];
         updateTrophy(data?.trophy_fish);
         updateSkills(data?.player_data?.experience);
-    }).catch(err => console.error(`VolcAddons: ${(err.cause ?? err)}`));
+    }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
 }
 
 // Event handler for detecting the player's profile ID from a chat message and update API data.

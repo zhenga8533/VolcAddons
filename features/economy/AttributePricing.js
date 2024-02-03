@@ -16,7 +16,7 @@ function findAttributes(page, command) {
     request({
         url: `https://api.hypixel.net/v2/skyblock/auctions?page=${page}`,
         json: true
-    }).then((response)=>{
+    }).then(response => {
         const KUUDRA_PIECES = new Set(["FERVOR", "AURORA", "TERROR", "CRIMSON", "HOLLOW", "MOLTEN"]);
         ChatLib.clearChat(444);
         new Message(`${LOGO + RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(444).chat();
@@ -59,7 +59,7 @@ function findAttributes(page, command) {
             if (command !== undefined) getAttributes(command);
             ChatLib.chat(`${DARK_GRAY}Attribute values saved, use '/refreshAttr' to refresh auction data!`);
         }
-    }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
+    }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }
 register("command", () => {
     attributesBin = {};

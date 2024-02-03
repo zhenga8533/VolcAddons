@@ -1,6 +1,6 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { BOLD, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions/format";
 import { getPlayerUUID } from "../../utils/player";
 import { data, registerWhen } from "../../utils/variables";
@@ -18,12 +18,12 @@ function updateBestiary(profileId, args) {
     request({
         url: `https://api.hypixel.net/v2/skyblock/profile?key=4e927d63a1c34f71b56428b2320cbf95&profile=${profileId}`,
         json: true
-    }).then((response) => {
+    }).then(response => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
         bestiaryApi = response.profile.members[getPlayerUUID()]?.bestiary?.kills;
         Object.keys(bestiary).forEach(key => bestiary[key].updateKills());
         if (callback) getBestiary(args);
-    }).catch((err) => console.error(`VolcAddons: ${(err.cause ?? err)}`));
+    }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
 }
 
 /**

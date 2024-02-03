@@ -17,6 +17,8 @@ export let data = new PogObject("VolcAddons", {
     "pet": undefined,
     "lastMsg": "joe",
     "vision": false,
+    "uuid": undefined,
+    "ign": undefined,
     // playtime tracking
     "playtime": 0,
     "lastDay": 0,

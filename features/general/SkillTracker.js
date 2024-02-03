@@ -67,11 +67,11 @@ register("command", () => {
     request({
         url: `https://api.hypixel.net/v2/skyblock/profile?key=4e927d63a1c34f71b56428b2320cbf95&profile=${id}`,
         json: true
-    }).then((response) => {
+    }).then(response => {
         const data = response.profile.members[getPlayerUUID()];
         updateSkills(data?.player_data?.experience);
         ChatLib.chat(`${LOGO + GREEN}Successfully reset skill tracker!`);
-    }).catch(err => console.error(`VolcAddons: ${(err.cause ?? err)}`));
+    }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
 }).setName("resetSkills");
 
 /**

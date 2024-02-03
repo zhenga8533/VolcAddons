@@ -15,7 +15,7 @@ function findGdrag(page, minLvl) {
     request({
         url: `https://api.hypixel.net/v2/skyblock/auctions?page=${page}`,
         json: true
-    }).then((response)=>{
+    }).then(response => {
         ChatLib.clearChat(888);
         new Message(`${LOGO + RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(888).chat();
         
@@ -43,7 +43,7 @@ function findGdrag(page, minLvl) {
             if (minLvl != 0) calcGdrag(minLvl);
             ChatLib.chat(`${DARK_GRAY}GDrag values saved, use '/refreshGdrag' to refresh auction data!`);
         }
-    }).catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
+    }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }
 register("command", () => {
     gdrags = [];

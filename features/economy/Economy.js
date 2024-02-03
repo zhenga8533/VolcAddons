@@ -19,18 +19,18 @@ export function updateAuction() {
     request({
         url: "https://volcaronitee.pythonanywhere.com/auction",
         json: true
-    }).then((response) => {
+    }).then(response => {
         items = response.items;
         Object.keys(data.valuelist).forEach(key => items[key] = {lbin: data.valuelist[key]});
-    }).catch((err) => console.error(`VolcAddons: ${(err.cause ?? err)}`));
+    }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
 }
 function updateBazaar() {
     request({
         url: "https://volcaronitee.pythonanywhere.com/bazaar",
         json: true
-    }).then((response) => {
+    }).then(response => {
         products = response.items;
-    }).catch((err) => console.error(`$VolcAddons: ${(err.cause ?? err)}`));
+    }).catch(err => console.error(`$VolcAddons: ${err.cause ?? err}`));
 }
 updateAuction();
 updateBazaar();
