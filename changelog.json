@@ -9,5 +9,6 @@
     "- Fixed dev key glitching out",
     "- Fixed skill tracker for non-max skills",
     "- Fixed bits alert always shouting",
+    "- Fixed attribute commands",
     "- Removed unnecessary comments"
 ]

@@ -2,6 +2,7 @@ import request from "../../../requestV2";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
+import { data } from "../../utils/variables";
 import { getAuction } from "./Economy";
 
 
@@ -25,7 +26,7 @@ function findAttributes(page, command) {
             // Get item data
             const { uuid, bin, starting_bid, item_bytes } = auction;
             if (!bin) return;
-            const item_data = new NBTTagCompound(decode(item_bytes)).getCompoundTag("tag").getCompoundTag("ExtraAttributes");
+            const item_data = new NBTTagCompound(decode(item_bytes).func_150305_b(0)).getCompoundTag("tag").getCompoundTag("ExtraAttributes");
             let id = item_data.getString("id");
             const attributes = item_data.getCompoundTag("attributes").toObject();
             const keys = Object.keys(attributes);
@@ -91,8 +92,8 @@ export function getAttributes(args) {
         const attributes = auction[item]?.attributes || {};
 
         ChatLib.chat(`${LOGO + DARK_AQUA + BOLD + convertToTitleCase(item)} Attribute Prices (t${tier})`);
-
         Object.entries(attributes).forEach(([attributeName, attributeValue]) => {
+            if (!data.attributelist.includes(attributeName)) return;
             const adjustedValue = attributeValue * (2 ** (tier - 1));
             if (adjustedValue !== 0) {
                 ChatLib.chat(`-${AQUA + convertToTitleCase(attributeName)}: ${WHITE + commafy(adjustedValue)}`);
@@ -107,21 +108,16 @@ export function getAttributes(args) {
 
         // Check if valid attribute
         piece = piece?.toUpperCase();
-        if (!(piece in attributesBin)) {
-            ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${piece}"!`);
-            ChatLib.chat(`${DARK_GRAY}Remember to input as an item id seperated by underscores or a Kuudra piece category (i.e Chestplate or Necklace)!`);
-            return;
-        }
-        const attributeBin = attributesBin[piece];
-        if (!(attribute in attributeBin)) {
+        const attributeBin = attributesBin?.[piece]?.[attribute];
+        if (attributeBin === undefined) {
             ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${attribute}"!`);
-            ChatLib.chat(`${DARK_GRAY}Remember to input as an attribute seperated by underscores!`);
+            ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va attribute lbin [item] [attribute] *[min tier] *[amount]`);
             return;
         }
 
         // Set correct bin and values
         const min = isNaN(args[4]) ? 1 : parseInt(args[4]);
-        const bin = attributeBin[attribute].filter(piece => piece[2] >= min);
+        const bin = attributeBin.filter(piece => piece[2] >= min);
         const amount = isNaN(args[5]) ? Math.min(10, bin.length) : Math.min(parseInt(args[5]), bin.length);
 
         // Clear chat
