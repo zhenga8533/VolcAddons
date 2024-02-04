@@ -7,7 +7,7 @@ import { REFORGES } from "../constants.js";
  * @param {Number} seconds - Total number of seconds to convert.
  * @returns {String} Formatted time in XXhrXXmXXs format.
  */
-export function getTime(seconds) {
+export function getTime(seconds, fixed=0) {
     const days = Math.floor(seconds / 86400); // 86400 seconds in a day
     const hours = Math.floor((seconds % 86400) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -17,7 +17,7 @@ export function getTime(seconds) {
         days > 0 ? `${days}d` : '',
         hours > 0 || days > 0 ? `${hours}hr` : '',
         `${minutes < 10 && (hours > 0 || days > 0) ? '0' : ''}${minutes > 0 || hours > 0 || days > 0 ? minutes + 'm' : ''}`,
-        `${remainingSeconds < 10 && (hours > 0 || minutes > 0 || days > 0) ? '0' : ''}${remainingSeconds.toFixed(hours > 0 || minutes > 0 || days > 0 ? 0 : 2)}s`
+        `${remainingSeconds < 10 && (hours > 0 || minutes > 0 || days > 0) ? '0' : ''}${remainingSeconds.toFixed(hours > 0 || minutes > 0 || days > 0 ? 0 : fixed)}s`
     ].join('');
 
     return timeString;

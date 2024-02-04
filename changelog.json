@@ -1,5 +1,6 @@
 [
     "- TODO: Added `/va todo`",
     "- Changed rand ID generation",
+    "- Changed some time formatting",
     "- Fixed powder tracker"
 ]

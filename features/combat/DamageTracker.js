@@ -128,7 +128,7 @@ registerWhen(register("tick", () => {
             const { sum, max, min, range, mean, median, mode, lowerQ, upperQ, iqr, variance, stdDev } = statisticalAnalysis(damages);
             
             const time = Date.now()/1000 - start;
-            ChatLib.chat(`\n${LOGO + GOLD + BOLD}Damage Statistical Analysis ${GRAY}[${getTime(time)}]\n`);
+            ChatLib.chat(`\n${LOGO + GOLD + BOLD}Damage Statistical Analysis ${GRAY}[${getTime(time, 2)}]\n`);
             
             ChatLib.chat(`${RED + BOLD}Extremas:`);
             ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Max Damage: ${WHITE + formatNumber(max * 20)}`);
