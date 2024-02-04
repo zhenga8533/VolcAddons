@@ -107,7 +107,7 @@ export function executeCommand(name, args, sendTo) {
     const command = args[0].toLowerCase();
 
     // PARTY COMMANDS
-    const randID = sendTo === "pc" ? '' : '@' + (Math.random() + 1).toString(36).substring(5);
+    const randID = sendTo === "pc" ? '' : '@' + (Math.random() + 1).toString(36).substring(2);
 
     delay(() => { switch (command) {
         case "cringe": // Slander
