@@ -1,15 +1,3 @@
 [
-    "- Added /kv (Kuudra view)",
-    "- Added time until next level to skill tracker",
-    "- Added setting to toggle text shadows",
-    "- Changed auction API tracking",
-    "- Changed function file pathing",
-    "- Changed errors to print in console instead of chat",
-    "- Fixed legion display",
-    "- Fixed dev key glitching out",
-    "- Fixed skill tracker for non-max skills",
-    "- Fixed bits alert always shouting",
-    "- Fixed attribute commands",
-    "- Fixed master star on specific items",
-    "- Removed unnecessary comments"
+    "- TODO"
 ]
