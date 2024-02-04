@@ -239,12 +239,14 @@ export function getItemValue(item, save=true) {
         if (save) valueMessage += `- ${AQUA}Reforge: ${GREEN}+${formatNumber(reforgeValue)}\n`;
     }
     // Master Star Values
-    let starValue = 0;
-    const upgrade_level = itemData?.dungeon_item_level ?? 0;
-    for (let i = 0; i < Math.max(upgrade_level - 5, 0); i++)starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[settings.priceType];
-    if (starValue !== 0) {
-        value += starValue;
-        if (save) valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;
+    if (itemTag?.display?.Lore?.find(line => line.includes("DUNGEON")) !== undefined) {
+        let starValue = 0;
+        const upgrade_level = itemData?.upgrade_level ?? itemData?.dungeon_item_level ?? 0;
+        for (let i = 0; i < Math.max(upgrade_level - 5, 0); i++)starValue += bazaar[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[settings.priceType];
+        if (starValue !== 0) {
+            value += starValue;
+            if (save) valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;
+        }
     }
     // Recomb Value
     const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar?.RECOMBOBULATOR_3000?.[settings.priceType];

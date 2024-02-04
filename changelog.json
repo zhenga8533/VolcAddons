@@ -10,5 +10,6 @@
     "- Fixed skill tracker for non-max skills",
     "- Fixed bits alert always shouting",
     "- Fixed attribute commands",
+    "- Fixed master star on specific items",
     "- Removed unnecessary comments"
 ]
