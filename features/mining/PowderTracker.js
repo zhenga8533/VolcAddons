@@ -42,12 +42,10 @@ function updatePowder(powder, current) {
     if (powder.start === 0) powder.start = current;
     if (current < powder.now) powder.start -= powder.now - current; 
     powder.now = current;
-    powder.gain = powder.now - powder.start;
 
     if (powder.since < settings.powderTracker * 60) {
         powder.since += 1;
         powder.time += 1;
-        powder.rate = powder.gain / powder.time * 3600;
     }
 }
 
@@ -68,10 +66,10 @@ registerWhen(register("step", () => {
     const timeDisplay = powders.Mithril.since < settings.powderTracker * 60 ? getTime(powders.Mithril.time) : 
         powders.Gemstone.since < settings.powderTracker * 60 ? getTime(powders.Gemstone.time) : `${RED}Inactive`;
     powderOverlay.message = 
-`${DARK_GREEN + BOLD}Mithril Powder: ${WHITE + commafy(powders.Mithril.gain)} ᠅
-${DARK_GREEN + BOLD}Mithril Rate: ${WHITE + commafy(powders.Mithril.rate)} ᠅/hr
-${LIGHT_PURPLE + BOLD}Gemstone Powder: ${WHITE + commafy(powders.Gemstone.gain)} ᠅
-${LIGHT_PURPLE + BOLD}Gemstone Rate: ${WHITE + commafy(powders.Gemstone.rate)} ᠅/hr
+`${DARK_GREEN + BOLD}Mithril Powder: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
+${DARK_GREEN + BOLD}Mithril Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr
+${LIGHT_PURPLE + BOLD}Gemstone Powder: ${WHITE + commafy(powders.Gemstone.getGain())} ᠅
+${LIGHT_PURPLE + BOLD}Gemstone Rate: ${WHITE + commafy(powders.Gemstone.getRate())} ᠅/hr
 ${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`;
 }).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !==0);
 

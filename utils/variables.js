@@ -343,7 +343,7 @@ export class Stat {
     reset() {
         this.start = 0.00; // Starting amount
         this.now = 0.00; // Current amount
-        this.time = 0.00; // Time passed
+        this.time = 1; // Time passed
         this.since = 600; // Time since last amount earn
         this.level = 0; // Skill level
     }

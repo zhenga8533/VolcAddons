@@ -32,7 +32,7 @@ registerWhen(register("step", () => {
     // Get starting balance
     if (piggy.since >= settings.coinTracker * 60) {
         piggy.start = purse;
-        piggy.time = 0;
+        piggy.time = 1;
     }
 
     // Calculate changes
