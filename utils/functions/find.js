@@ -113,3 +113,31 @@ export function getSlotCoords(slot, containerType) {
         return [renderX, renderY];
     }
 }
+
+/**
+ * Recurse over an object to find the path of a key.
+ * 
+ * @param {Object} obj - JSON object to parse through.
+ * @param {String} targetKey - Key to locate in object.
+ * @returns {String} - Path string.
+ */
+export function findKeyPath(obj, targetKey) {
+    if (typeof obj !== "object") return undefined;
+
+    let result = undefined;
+
+    for (let key in obj) {
+        if (key !== targetKey) {
+            result = findKeyPath(obj[key], targetKey);
+            if (result !== undefined) {
+                result = key + '.' + result;
+                break;
+            }
+        } else {
+            result = key;
+            break;
+        }
+    }
+
+    return result;
+}
