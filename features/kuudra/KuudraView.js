@@ -1,5 +1,6 @@
 import request from "../../../requestV2";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE } from "../../utils/constants";
+import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
 
 
@@ -83,8 +84,8 @@ register("command", (name) => {
                 return;
             }
 
-            const profiles = response.profiles;
-            const data = profiles.find(profile => profile.selected).members[res.id];
+            const profile = response.profiles.find(prof => prof.selected);
+            const data = profile.members[res.id];
             ChatLib.chat(`\n${LOGO + DARK_RED + BOLD + name}'s Kuudra View:\n`);
 
             // Loop through inventory to check gear.
@@ -118,19 +119,25 @@ register("command", (name) => {
 
             // Check for Gdrag
             const pets = data?.pets_data?.pets;
-            let gdrag = `${RED}Not found!`;
-            pets.some(pet => {
-                if (pet.type !== "GOLDEN_DRAGON") return false;
+            let gdrag = [`${RED}Not found!`];
+            pets.forEach(pet => {
+                if (pet.type !== "GOLDEN_DRAGON") return;
 
                 if (pet.exp >= 210_255_385) {
-                    gdrag = `${GRAY}[Lvl 200] ${GOLD}Golden Dragon`;
-                    return true;
-                } else {
-                    gdrag = `${GRAY}[Lvl ${RED}< 200] ${GOLD}Golden Dragon`;
-                    return false;
-                }
+                    gdrag[0] = `${GRAY}[Lvl 200] ${GOLD}Golden Dragon`;
+                    gdrag.push(convertToTitleCase(pet.heldItem));
+                } else if (gdrag[0].startsWith(RED))
+                    gdrag[0] = `${GRAY}[Lvl ${RED}< 200] ${GOLD}Golden Dragon`;
             });
-            ChatLib.chat(`${DARK_GRAY}- ${AQUA}GDrag: ${gdrag}`);
+            new TextComponent(`${DARK_GRAY}- ${AQUA}GDrag: ${gdrag[0]}`).setHoverValue(gdrag.join('\n')).chat();
+
+            // Bank
+            let money = profile?.banking?.balance ?? 0;
+            if (money === 0) ChatLib.chat(`${DARK_GRAY}- ${RED}Bank API is OFF!`);
+            else {
+                money +=  data?.currencies?.coin_purse ?? 0;
+                ChatLib.chat(`${DARK_GRAY}- ${AQUA}Bank: ${WHITE + formatNumber(money)}`);
+            }
 
             // Check completions
             const tiers = data?.nether_island_player_data?.kuudra_completed_tiers;
@@ -151,5 +158,5 @@ register("command", (name) => {
             const mage = data?.nether_island_player_data?.mages_reputation ?? 0;
             ChatLib.chat(`${DARK_GRAY}- ${AQUA}Reputation: ${RED + barb} ${GRAY}| ${DARK_PURPLE + mage}`);
         }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
-    }).catch(err => ChatLib.chat(`${LOGO + RED + err.errorMessage}...`));
+    }).catch(_ => ChatLib.chat(`${LOGO + DARK_RED}API overloaded, please try again later!`));
 }).setName("kv", true).setAliases("kuudraView");
