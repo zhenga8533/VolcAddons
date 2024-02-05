@@ -2,6 +2,8 @@ import request from "../../../requestV2";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE } from "../../utils/constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
+import settings from "../../utils/settings";
+import { registerWhen } from "../../utils/variables";
 
 
 /**
@@ -209,3 +211,12 @@ register("command", (name) => {
         }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
     }).catch(_ => ChatLib.chat(`${LOGO + DARK_RED}API overloaded, please try again later!`));
 }).setName("kv", true).setAliases("kuudraView");
+
+/**
+ * Auto /kv on party finder join.
+ */
+registerWhen(register("chat", (player) => {
+    if (player === Player.getName()) return;
+
+    ChatLib.command(`kv ${player}`);
+}).setCriteria("Party Finder > ${player} joined the group! (${combat})"), () => settings.autoKV);

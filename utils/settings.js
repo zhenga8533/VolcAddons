@@ -67,7 +67,7 @@ ${ITALIC}Related Commands: /va <apex, attribute, calc>`);
         // Kuudra Category
         this.setCategoryDescription("Kuudra",
         `${HEADER}
-${ITALIC}Related Commands: /va <attribute, splits>`);
+${ITALIC}Related Commands: /va <attribute, splits>, /kv`);
 
         // Garden Category
         this.setCategoryDescription("Garden",
@@ -608,7 +608,7 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     
     @SwitchProperty({
         name: "Mana Drain Range",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights and displays number of players in mana drain range. Works only when holding End Stone Sword or fluxes.`,
+        description: "Highlights and displays number of players in mana drain range. Works only when holding End Stone Sword or fluxes.",
         category: "Combat",
         subcategory: "Combat"
     })
@@ -1025,8 +1025,16 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     // --- Kuudra ---
     @SwitchProperty({
+        name: "Auto /kv PF",
+        description: `${DARK_RED}NEW! ${GRAY}Automatically runs \`/kv\` command whenever a player joins using party finder.`,
+        category: "Kuudra",
+        subcategory: "Kuudra"
+    })
+    autoKV = false;
+
+    @SwitchProperty({
         name: "Crate Edit",
-        description: `Changes the location and size of crate pickup rendering.\nMove GUI with ${AQUA}/moveCrate${GRAY}.`,
+        description: `${DARK_RED}NEW! ${GRAY}Changes the location and size of crate pickup rendering.\nMove GUI with ${AQUA}/moveCrate${GRAY}.`,
         category: "Kuudra",
         subcategory: "Kuudra"
     })
