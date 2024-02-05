@@ -1,5 +1,6 @@
 [
     "- Added Kuudra crate edit",
+    "- TODO: Added `/va todo`",
     "- Added extra details to `/kv`",
     "- TODO Added auto `/kv`",
     "- Changed rand ID generation",
