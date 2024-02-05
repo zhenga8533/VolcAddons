@@ -19,6 +19,7 @@ subtitle: List of every non-gui related commands.
     - `/va zone`: Creates waypoints to user inputted rift locations.
     - `/va waypoint`: Creates waypoints to user inputted coordinates.
 - **Lists**
+    - `/va attributelist`: Set wanted attributes to calculate for.
     - `/va blacklist`: Set players to kick and ignore.
     - `/va cd`: Set the cooldown of the currently held item.
     - `/va dianalist`: Set locations in which Diana burrow warp uses.
@@ -31,11 +32,12 @@ subtitle: List of every non-gui related commands.
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
     - `/va nw`: Calculates the networth of a SkyBlock profile using custom API.
+- **Kuudra**
+    - `/va splits`: Prints out Kuudra splits' stats.
+    - `/kv`: Display important Kuudra stats for inputted player profile.
 - **Misc**
     - `/va be`: Displays bestiary stats and closest milestones.
-    - `/va splits`: Prints out Kuudra splits' stats.
-- **Etc**
-    - `/pestwarp`: Warps to plot with most pests.
+    - `/pesttp`: Warps to plot with most pests.
     - `/sk`: Opens the SkyCrypt profile of inputted user.
 
 ### <u>Feature Commands</u>

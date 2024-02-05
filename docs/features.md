@@ -53,6 +53,7 @@ subtitle: List of all features and their related commands.
 - **Pricing**
     - Container Value (`/moveContainer`)
     - Item Price (`/moveValue`)
+    - Trade Value
 
 ### <u>Combat Features</u>
 - **Bestiary**
@@ -63,6 +64,7 @@ subtitle: List of all features and their related commands.
     - Combo Display (`/moveCombo`)
     - Damage Tracker
     - Low Health Alert
+    - Mana Drain Range
     - Ragnarok Detection
 - **Gyrokinetic Wand**
     - Cell Alignment Alert
