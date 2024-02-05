@@ -1,7 +1,7 @@
 [
-    "- TODO: Added `/va todo`",
+    "- Added Kuudra crate edit",
     "- Added extra details to `/kv`",
-    "- Added auto `/kv`",
+    "- TODO Added auto `/kv`",
     "- Changed rand ID generation",
     "- Changed some time formatting",
     "- Fixed powder tracker"

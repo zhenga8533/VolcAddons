@@ -1025,6 +1025,14 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     // --- Kuudra ---
     @SwitchProperty({
+        name: "Crate Edit",
+        description: `Changes the location and size of crate pickup rendering.\nMove GUI with ${AQUA}/moveCrate${GRAY}.`,
+        category: "Kuudra",
+        subcategory: "Kuudra"
+    })
+    crateEdit = false;
+
+    @SwitchProperty({
         name: "Kuudra HP Display",
         description: "Displays Kuudra's HP as a percent and renders it on the boss.",
         category: "Kuudra",

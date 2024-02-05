@@ -86,13 +86,14 @@ import "./features/crimsonIsle/VanqFeatures";
 // Dungeon Features
 import "./features/dungeon/StarDetect";
 // Kuudra Features
-import { calcTabasco } from "./features/kuudra/TabascoCalc";
+import "./features/kuudra/CrateEdit";
 import "./features/kuudra/KuudraAlerts";
 import "./features/kuudra/KuudraCrates";
 import "./features/kuudra/KuudraDetect";
 import "./features/kuudra/KuudraProfit";
 import { getSplits } from "./features/kuudra/KuudraSplits";
 import "./features/kuudra/KuudraView";
+import { calcTabasco } from "./features/kuudra/TabascoCalc";
 // Rift Features
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
