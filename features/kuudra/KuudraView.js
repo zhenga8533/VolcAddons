@@ -1,5 +1,5 @@
-import request from "../../../requestV2";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE } from "../../utils/constants";
+import axios from "../../../axios";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
 import settings from "../../utils/settings";
@@ -103,113 +103,109 @@ register("command", (name) => {
         return;
     }
 
-    // Convert username to player UUID
-    request({
-        url: `https://api.mojang.com/users/profiles/minecraft/${name}`,
-        json: true
-    }).then(res => {
-        // Call Hypixel API
-        request({
-            url: `https://api.hypixel.net/v2/skyblock/profiles?key=4e927d63a1c34f71b56428b2320cbf95&uuid=${res.id}`,
-            json: true
-        }).then(response => {
-            if (response.profiles === null) {
-                ChatLib.chat(`${LOGO + RED}Couldn't find any profile with name ${name}...`);
-                return;
+    // Call Hypixel API
+    new Message(`${LOGO + YELLOW}Fetching API data...`).setChatLineId(3745).chat();
+    axios.get(`https://sky.shiiyu.moe/api/v2/profile/${name}`).then(response => {
+        ChatLib.clearChat(3745);
+
+        // Check if player profile exists
+        if (response.data.error !== undefined) {
+            ChatLib.chat(`${LOGO + RED}Couldn't find any profile with name ${name}...`);
+            return;
+        }
+
+        const profiles = response.data.profiles;
+        const selected = Object.keys(profiles).find(key => profiles[key].current);
+        const data = profiles[selected].raw;
+        ChatLib.chat(`\n${LOGO + DARK_RED + BOLD + name}'s Kuudra View:\n`);
+
+        // Loop through inventory to check gear.
+        ChatLib.chat(`${DARK_AQUA + BOLD}Gear:`);
+        const inventory = data?.inventory;
+        // Armor pieces [tier, stars, name, dom, ll]
+        const aurora = [[-1, -1, `${RED}Headless`], [-1, -1, `${RED}Heartless`], [-1, -1, `${RED}Pantsgrab`], [-1, -1, `${RED}Socksless`]];
+        const terror = [[-1, -1, `${RED}Headless`, 0, 0], [-1, -1, `${RED}Heartless`, 0, 0], [-1, -1, `${RED}Pantsgrab`, 0, 0], [-1, -1, `${RED}Socksless`, 0, 0]];
+        // Equip pieces [attribute level, name]
+        const dominance = [[0, `${RED}Neckless`], [0, `${RED}Cloakless`], [0, `${RED}Fatherless`], [0, `${RED}Handless`]];
+        const lifeline = [[0, `${RED}Neckless`], [0, `${RED}Cloakless`], [0, `${RED}Fatherless`], [0, `${RED}Handless`]];
+        if (inventory === undefined) ChatLib.chat(`${DARK_GRAY}- ${RED}Inventory API is OFF!`);
+        else {
+            containsGoods(inventory?.inv_contents?.data, "Inventory", aurora, terror, dominance, lifeline);
+            containsGoods(inventory?.inv_armor?.data, "Armor", aurora, terror, dominance, lifeline);
+            containsGoods(inventory?.ender_chest_contents?.data, "Ender Chest", aurora, terror, dominance, lifeline);
+            containsGoods(inventory?.wardrobe_contents?.data, "Wardrobe", aurora, terror, dominance, lifeline);
+
+            // Loop over backpacks
+            const backpacks = inventory.backpack_contents;
+            const packs = backpacks === undefined ? 0 : Object.keys(backpacks).length;
+            for (let i = 0; i < packs; i++) {
+                containsGoods(backpacks[i.toString()]?.data, "Backpack", aurora, terror, dominance, lifeline);
             }
+            if (packs === 0) ChatLib.chat(`${DARK_GRAY}- ${RED}Backpack API is OFF!`);
 
-            const profile = response.profiles.find(prof => prof.selected);
-            const data = profile.members[res.id];
-            ChatLib.chat(`\n${LOGO + DARK_RED + BOLD + name}'s Kuudra View:\n`);
+            // Chat out Aurora/Terror pieces in one message
+            ChatLib.chat(`${DARK_AQUA + BOLD}Armor:`);
+            new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Aurora Pieces`)
+                .setHoverValue(`${DARK_PURPLE}Aurora Pieces\n${aurora.map(inner => inner[2]).join('\n')}`).chat();
+            new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Terror Pieces`)
+                .setHoverValue(`${DARK_PURPLE}Terror Pieces\n${terror.map(inner => inner[2]).join('\n')}`).chat();
 
-            // Loop through inventory to check gear.
-            ChatLib.chat(`${DARK_AQUA + BOLD}Gear:`);
-            const inventory = data?.inventory;
-            // Armor pieces [tier, stars, name, dom, ll]
-            const aurora = [[-1, -1, `${RED}Headless`], [-1, -1, `${RED}Heartless`], [-1, -1, `${RED}Pantsgrab`], [-1, -1, `${RED}Socksless`]];
-            const terror = [[-1, -1, `${RED}Headless`, 0, 0], [-1, -1, `${RED}Heartless`, 0, 0], [-1, -1, `${RED}Pantsgrab`, 0, 0], [-1, -1, `${RED}Socksless`, 0, 0]];
-            // Equip pieces [attribute level, name]
-            const dominance = [[0, `${RED}Neckless`], [0, `${RED}Cloakless`], [0, `${RED}Fatherless`], [0, `${RED}Handless`]];
-            const lifeline = [[0, `${RED}Neckless`], [0, `${RED}Cloakless`], [0, `${RED}Fatherless`], [0, `${RED}Handless`]];
-            if (inventory === undefined) ChatLib.chat(`${DARK_GRAY}- ${RED}Inventory API is OFF!`);
-            else {
-                containsGoods(inventory?.inv_contents?.data, "Inventory", aurora, terror, dominance, lifeline);
-                containsGoods(inventory?.inv_armor?.data, "Armor", aurora, terror, dominance, lifeline);
-                containsGoods(inventory?.ender_chest_contents?.data, "Ender Chest", aurora, terror, dominance, lifeline);
-                containsGoods(inventory?.wardrobe_contents?.data, "Wardrobe", aurora, terror, dominance, lifeline);
+            // Equip pieces
+            const totalDom = dominance.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[0] : 0), 0) +
+                terror.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[3] : 0), 0);
+            const totolLL = lifeline.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[0] : 0), 0) +
+                terror.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[4] : 0), 0);;
+            new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Dominance Equips ${GRAY}[Total: ${totalDom}]`)
+                .setHoverValue(`${DARK_PURPLE}Dominance Equips\n${dominance.map(inner => inner[1]).join('\n')}`).chat();
+            new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Lifeline Equips ${GRAY}[Total: ${totolLL}]`)
+                .setHoverValue(`${DARK_PURPLE}Lifeline Equips\n${lifeline.map(inner => inner[1]).join('\n')}`).chat();
+        }
+        
+        // Check for accessory power
+        ChatLib.chat(`${DARK_AQUA + BOLD}Misc:`);
+        ChatLib.chat(`${DARK_GRAY}- ${AQUA}Magical Power: ${WHITE + (data?.accessory_bag_storage?.highest_magical_power ?? RED + "I NEED MORE POWER.")}`);
 
-                // Loop over backpacks
-                const backpacks = inventory.backpack_contents;
-                const packs = backpacks === undefined ? 0 : Object.keys(backpacks).length;
-                for (let i = 0; i < packs; i++) {
-                    containsGoods(backpacks[i.toString()]?.data, "Backpack", aurora, terror, dominance, lifeline);
-                }
-                if (packs === 0) ChatLib.chat(`${DARK_GRAY}- ${RED}Backpack API is OFF!`);
+        // Check for Gdrag
+        const pets = data?.pets_data?.pets;
+        let gdrag = [`${RED}Not found!`];
+        pets.forEach(pet => {
+            if (pet.type !== "GOLDEN_DRAGON") return;
 
-                // Chat out Aurora/Terror pieces in one message
-                ChatLib.chat(`${DARK_AQUA + BOLD}Armor:`);
-                new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Aurora Pieces`)
-                    .setHoverValue(`${DARK_PURPLE}Aurora Pieces\n${aurora.map(inner => inner[2]).join('\n')}`).chat();
-                new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Terror Pieces`)
-                    .setHoverValue(`${DARK_PURPLE}Terror Pieces\n${terror.map(inner => inner[2]).join('\n')}`).chat();
+            if (pet.exp >= 210_255_385) {
+                gdrag[0] = `${GRAY}[Lvl 200] ${GOLD}Golden Dragon`;
+                gdrag.push(convertToTitleCase(pet.heldItem));
+            } else if (gdrag[0].startsWith(RED))
+                gdrag[0] = `${GRAY}[Lvl ${RED}< 200] ${GOLD}Golden Dragon`;
+        });
+        new TextComponent(`${DARK_GRAY}- ${AQUA}GDrag: ${gdrag[0]}`).setHoverValue(gdrag.join('\n')).chat();
 
-                // Equip pieces
-                const totalDom = dominance.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[0] : 0), 0) +
-                    terror.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[3] : 0), 0);
-                const totolLL = lifeline.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[0] : 0), 0) +
-                    terror.reduce((sum, innerArray) => sum + (innerArray.length > 0 ? innerArray[4] : 0), 0);;
-                new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Dominance Equips ${GRAY}[Total: ${totalDom}]`)
-                    .setHoverValue(`${DARK_PURPLE}Dominance Equips\n${dominance.map(inner => inner[1]).join('\n')}`).chat();
-                new TextComponent(`${DARK_GRAY}- ${DARK_PURPLE}Lifeline Equips ${GRAY}[Total: ${totolLL}]`)
-                    .setHoverValue(`${DARK_PURPLE}Lifeline Equips\n${lifeline.map(inner => inner[1]).join('\n')}`).chat();
-            }
-            
-            // Check for accessory power
-            ChatLib.chat(`${DARK_AQUA + BOLD}Misc:`);
-            ChatLib.chat(`${DARK_GRAY}- ${AQUA}Magical Power: ${WHITE + (data?.accessory_bag_storage?.highest_magical_power ?? RED + "I NEED MORE POWER.")}`);
+        // Bank
+        let money = data?.currencies?.bank ?? 0;
+        if (money === 0) ChatLib.chat(`${DARK_GRAY}- ${RED}Bank API is OFF!`);
+        else {
+            money +=  data?.currencies?.coin_purse ?? 0;
+            ChatLib.chat(`${DARK_GRAY}- ${AQUA}Bank: ${WHITE + formatNumber(money)}`);
+        }
 
-            // Check for Gdrag
-            const pets = data?.pets_data?.pets;
-            let gdrag = [`${RED}Not found!`];
-            pets.forEach(pet => {
-                if (pet.type !== "GOLDEN_DRAGON") return;
+        // Check completions
+        const tiers = data?.nether_island_player_data?.kuudra_completed_tiers;
+        if (tiers !== undefined) {
+            let completions = `${DARK_GRAY}- ${AQUA}Completions: `;
+            const tiers_key = Object.keys(tiers);
+            if (tiers_key.length === 0) completions += `${RED}None........`
 
-                if (pet.exp >= 210_255_385) {
-                    gdrag[0] = `${GRAY}[Lvl 200] ${GOLD}Golden Dragon`;
-                    gdrag.push(convertToTitleCase(pet.heldItem));
-                } else if (gdrag[0].startsWith(RED))
-                    gdrag[0] = `${GRAY}[Lvl ${RED}< 200] ${GOLD}Golden Dragon`;
+            tiers_key.forEach(tier => {
+                if (tier.startsWith("highest")) return;
+                completions += `${WHITE + tiers[tier]} ${GRAY}| `;
             });
-            new TextComponent(`${DARK_GRAY}- ${AQUA}GDrag: ${gdrag[0]}`).setHoverValue(gdrag.join('\n')).chat();
+            ChatLib.chat(completions.slice(0, -5));
+        } else ChatLib.chat(`${DARK_GRAY}- ${AQUA}Completions: ${RED}None...`);
 
-            // Bank
-            let money = profile?.banking?.balance ?? 0;
-            if (money === 0) ChatLib.chat(`${DARK_GRAY}- ${RED}Bank API is OFF!`);
-            else {
-                money +=  data?.currencies?.coin_purse ?? 0;
-                ChatLib.chat(`${DARK_GRAY}- ${AQUA}Bank: ${WHITE + formatNumber(money)}`);
-            }
-
-            // Check completions
-            const tiers = data?.nether_island_player_data?.kuudra_completed_tiers;
-            if (tiers !== undefined) {
-                let completions = `${DARK_GRAY}- ${AQUA}Completions: `;
-                const tiers_key = Object.keys(tiers);
-                if (tiers_key.length === 0) completions += `${RED}None........`
-
-                tiers_key.forEach(tier => {
-                    if (tier.startsWith("highest")) return;
-                    completions += `${WHITE + tiers[tier]} ${GRAY}| `;
-                });
-                ChatLib.chat(completions.slice(0, -5));
-            } else ChatLib.chat(`${DARK_GRAY}- ${AQUA}Completions: ${RED}None...`);
-
-            // Reputation
-            const barb = data?.nether_island_player_data?.barbarians_reputation ?? 0;
-            const mage = data?.nether_island_player_data?.mages_reputation ?? 0;
-            ChatLib.chat(`${DARK_GRAY}- ${AQUA}Reputation: ${RED + barb} ${GRAY}| ${DARK_PURPLE + mage}`);
-        }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
-    }).catch(_ => ChatLib.chat(`${LOGO + DARK_RED}API overloaded, please try again later!`));
+        // Reputation
+        const barb = data?.nether_island_player_data?.barbarians_reputation ?? 0;
+        const mage = data?.nether_island_player_data?.mages_reputation ?? 0;
+        ChatLib.chat(`${DARK_GRAY}- ${AQUA}Reputation: ${RED + barb} ${GRAY}| ${DARK_PURPLE + mage}`);
+    }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }).setName("kv", true).setAliases("kuudraView");
 
 /**

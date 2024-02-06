@@ -1,4 +1,4 @@
-import request from "../../../requestV2";
+import axios from "../../../axios";
 import { AQUA, BLUE, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
@@ -67,130 +67,125 @@ function setInv(name, values, extra=undefined) {
  */
 export function getNetworth(username, fruit) {
     // Get UUID of entered username
-    request({
-        url: `https://api.mojang.com/users/profiles/minecraft/${username}`,
-        json: true
-    }).then(res => {
-        // Request profile data through hypixel API
-        request({
-            url: `https://api.hypixel.net/v2/skyblock/profiles?key=4e927d63a1c34f71b56428b2320cbf95&uuid=${res.id}`,
-            json: true
-        }).then(response => {
-            // Check if user exists
-            const profiles = response.profiles;
-            if (profiles === null) {
-                ChatLib.chat(`${LOGO + RED}Player '${username}' does not exist...`);
-                return;
-            }
+    new Message(`${LOGO + YELLOW}Fetching API data...`).setChatLineId(3745).chat();
+    axios.get(`https://sky.shiiyu.moe/api/v2/profile/${username}`).then(response => {
+        ChatLib.clearChat(3745);
 
-            // Ask for desired profile
-            if (fruit === undefined) {
-                ChatLib.chat(`\n${LOGO + DARK_AQUA}Please select desired profile:`);
+        // Check if user exists
+        if (response.data.error !== undefined) {
+            ChatLib.chat(`${LOGO + RED}Couldn't find any profile with name ${username}...`);
+            return;
+        }
 
-                for (let i = 0; i < profiles.length; i++) {
-                    fruit = profiles[i].cute_name;
-                    new Message(` ${GRAY + (i + 1)}. `, new TextComponent((profiles[i].selected ? GREEN : AQUA) + fruit)
-                        .setClickAction("run_command")
-                        .setClickValue(`/va nw ${username} ${fruit}`)
-                        .setHoverValue(`${YELLOW}Click to calculate networth for ${fruit} profile.`)
-                    ).chat();
-                }
-                return;
-            }
+        // Ask for desired profile
+        const profiles = response.data.profiles;
+        if (fruit === undefined) {
+            ChatLib.chat(`\n${LOGO + DARK_AQUA}Please select desired profile:`);
 
-            // Check for correct profile and API
-            const profile = profiles.find(prof => prof.cute_name.toLowerCase() === fruit.toLowerCase());
-            if (profile === undefined) {
-                ChatLib.chat(`${LOGO + RED + fruit} profile was not found!`);
-                return;
-            }
-            const player = profile.members[res.id];
-            const data = player.inventory;
-            if (data === undefined) {
-                ChatLib.chat(`${LOGO + RED + username}'s inventory API is turned off!`);
-                return;
-            }
-
-            // Otherwise calculate networth for inputted profile
-            const auction = getAuction();
-            const bazaar = getBazaar();
-            ChatLib.chat(`\n${LOGO + DARK_AQUA}${username}'s ${profile.cute_name} Networth:\n`);
-            let total = 0;
-            let invValues = [];
-
-            // Inventory value
-            invValues.push(getInvValue(data.inv_contents?.data, "Inventory"));
-            invValues.push(getInvValue(data.inv_armor?.data, "Armor"));
-            invValues.push(getInvValue(data.equipment_contents?.data, "Equipment"));
-            total += setInv("Player", invValues);
-
-            // Currency value
-            const currencies = player.currencies;
-            invValues.push([currencies?.coin_purse, ` ${DARK_GRAY}- ${AQUA}Purse Value: ${GREEN + formatNumber(currencies?.coin_purse)}\n`]);
-
-            if (profile.banking?.balance === undefined) invValues.push([0, ` ${DARK_GRAY}- ${RED}Bank API is turned off!\n`]);
-            else invValues.push([profile.banking?.balance, ` ${DARK_GRAY}- ${AQUA}Bank Value: ${GREEN + formatNumber(profile.banking?.balance)}\n`]);
-
-            const essences = currencies?.essence;
-            let essenceValue = 0;
-            if (essences !== undefined) Object.keys(essences).forEach(essence => {
-                essenceValue += bazaar["ESSENCE_" + essence][settings.priceType] * essences[essence].current;
+            let i = 1;
+            Object.keys(profiles).forEach(key => {
+                fruit = profiles[key].cute_name;
+                new Message(` ${GRAY + (i++)}. `, new TextComponent((profiles[key].current ? GREEN : AQUA) + fruit)
+                    .setClickAction("run_command")
+                    .setClickValue(`/va nw ${username} ${fruit}`)
+                    .setHoverValue(`${YELLOW}Click to calculate networth for ${fruit} profile.`)
+                ).chat();
             });
-            invValues.push([essenceValue, ` ${DARK_GRAY}- ${AQUA}Essence Value: ${GREEN + formatNumber(essenceValue)}\n`]);
+            return;
+        }
 
-            total += setInv("Currency", invValues);
+        // Check for correct profile and API
+        const selected = Object.keys(profiles).find(key => profiles[key].cute_name.toLowerCase() === fruit.toLowerCase());
+        const player = profiles[selected]?.raw;
+        if (player === undefined) {
+            ChatLib.chat(`${LOGO + RED + fruit} profile was not found!`);
+            return;
+        }
+        const inv = player.inventory;
+        if (inv === undefined) {
+            ChatLib.chat(`${LOGO + RED + username}'s inventory API is turned off!`);
+            return;
+        }
 
-            // Storage value
-            invValues.push(getInvValue(data.wardrobe_contents?.data, "Wardrobe"));
-            invValues.push(getInvValue(data.ender_chest_contents?.data, "Ender Chest"));
-            invValues.push(getInvValue(data.personal_vault_contents?.data, "Vault"));
-            total += setInv("Storage", invValues);
+        // Otherwise calculate networth for inputted profile
+        const auction = getAuction();
+        const bazaar = getBazaar();
+        ChatLib.chat(`\n${LOGO + DARK_AQUA}${username}'s ${fruit} Networth:\n`);
+        let total = 0;
+        let invValues = [];
 
-            // Backpack values
-            const backpacks = data.backpack_contents;
-            const packs = backpacks === undefined ? 0 : Object.keys(backpacks).length;
+        // Inventory value
+        invValues.push(getInvValue(inv.inv_contents?.data, "Inventory"));
+        invValues.push(getInvValue(inv.inv_armor?.data, "Armor"));
+        invValues.push(getInvValue(inv.equipment_contents?.data, "Equipment"));
+        total += setInv("Player", invValues);
 
-            for (let i = 0; i < packs; i++) {
-                let backpack = backpacks[i.toString()];
-                invValues.push(getInvValue(backpack?.data, `Backpack ${i + 1}`));
+        // Currency value
+        const currencies = player.currencies;
+        invValues.push([currencies?.coin_purse, ` ${DARK_GRAY}- ${AQUA}Purse Value: ${GREEN + formatNumber(currencies?.coin_purse)}\n`]);
+
+        if (currencies?.bank === undefined) invValues.push([0, ` ${DARK_GRAY}- ${RED}Bank API is turned off!\n`]);
+        else invValues.push([currencies?.bank, ` ${DARK_GRAY}- ${AQUA}Bank Value: ${GREEN + formatNumber(currencies?.bank)}\n`]);
+
+        const essences = currencies?.essence;
+        let essenceValue = 0;
+        if (essences !== undefined) Object.keys(essences).forEach(essence => {
+            essenceValue += bazaar["ESSENCE_" + essence][settings.priceType] * essences[essence].current;
+        });
+        invValues.push([essenceValue, ` ${DARK_GRAY}- ${AQUA}Essence Value: ${GREEN + formatNumber(essenceValue)}\n`]);
+
+        total += setInv("Currency", invValues);
+
+        // Storage value
+        invValues.push(getInvValue(inv.wardrobe_contents?.data, "Wardrobe"));
+        invValues.push(getInvValue(inv.ender_chest_contents?.data, "Ender Chest"));
+        invValues.push(getInvValue(inv.personal_vault_contents?.data, "Vault"));
+        total += setInv("Storage", invValues);
+
+        // Backpack values
+        const backpacks = inv.backpack_contents;
+        const packs = backpacks === undefined ? 0 : Object.keys(backpacks).length;
+
+        for (let i = 0; i < packs; i++) {
+            let backpack = backpacks[i.toString()];
+            invValues.push(getInvValue(backpack?.data, `Backpack ${i + 1}`));
+        }
+        invValues.sort((a, b) => b[0] - a[0]);
+        total += setInv("Backpack", invValues);
+
+        // Bag values
+        const bags = inv.bag_contents;
+        if (bags !== undefined) Object.keys(bags).forEach(bag => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
+        const sacks = inv.sacks_counts;
+        let sacksValue = 0;
+        if (sacks !== undefined) Object.keys(sacks).forEach(product => sacksValue += (bazaar[product]?.[settings.priceType] ?? 0) * sacks[product]);
+        invValues.push([sacksValue, ` ${DARK_GRAY}- ${AQUA}Sacks Value: ${GREEN + formatNumber(sacksValue)}`]);
+        total += setInv("Bag", invValues);
+
+        // Pets values
+        const pets = player.pets_data.pets;
+        let mia = 0;
+        pets.forEach(pet => {
+            const tier = pet.tier;
+            const petName = `${tier}_${pet.type}`;
+            let lbin = auction[petName]?.lbin ?? 0;
+            const color = tier === "MYTHIC" ? LIGHT_PURPLE :
+                tier === "LEGENDARY" ? GOLD :
+                tier === "EPIC" ? DARK_PURPLE :
+                tier === "RARE" ? BLUE :
+                tier === "UNCOMMON" ? GREEN : WHITE;
+            if (pet.skin !== null) {
+                const skinValue = auction["PET_SKIN_" + pet.skin]?.lbin ?? 0;
+                if (skinValue === 0) mia++;
+                lbin += skinValue;
             }
-            invValues.sort((a, b) => b[0] - a[0]);
-            total += setInv("Backpack", invValues);
+            invValues.push([lbin, `${color + convertToTitleCase(petName) + DARK_GRAY}: ${GREEN + formatNumber(lbin)}\n`]);
+        });
+        invValues.sort((a, b) => b[0] - a[0]);
+        total += setInv("Pet", invValues, mia === 0 ? undefined : `\n${DARK_GRAY}also ${mia} unaccounted skins...`);
 
-            // Bag values
-            const bags = data.bag_contents;
-            if (bags !== undefined) Object.keys(bags).forEach(bag => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
-            const sacks = data.sacks_counts;
-            let sacksValue = 0;
-            if (sacks !== undefined) Object.keys(sacks).forEach(product => sacksValue += (bazaar[product]?.[settings.priceType] ?? 0) * sacks[product]);
-            invValues.push([sacksValue, ` ${DARK_GRAY}- ${AQUA}Sacks Value: ${GREEN + formatNumber(sacksValue)}`]);
-            total += setInv("Bag", invValues);
-
-            // Pets values
-            const pets = player.pets_data.pets;
-            let mia = 0;
-            pets.forEach(pet => {
-                const tier = pet.tier;
-                const petName = `${tier}_${pet.type}`;
-                let lbin = auction[petName]?.lbin ?? 0;
-                const color = tier === "MYTHIC" ? LIGHT_PURPLE :
-                    tier === "LEGENDARY" ? GOLD :
-                    tier === "EPIC" ? DARK_PURPLE :
-                    tier === "RARE" ? BLUE :
-                    tier === "UNCOMMON" ? GREEN : WHITE;
-                if (pet.skin !== null) {
-                    const skinValue = auction["PET_SKIN_" + pet.skin]?.lbin ?? 0;
-                    if (skinValue === 0) mia++;
-                    lbin += skinValue;
-                }
-                invValues.push([lbin, `${color + convertToTitleCase(petName) + DARK_GRAY}: ${GREEN + formatNumber(lbin)}\n`]);
-            });
-            invValues.sort((a, b) => b[0] - a[0]);
-            total += setInv("Pet", invValues, mia === 0 ? undefined : `\n${DARK_GRAY}also ${mia} unaccounted skins...`);
-
-            // Total
-           ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
-           ChatLib.chat(`\n${LOGO + DARK_AQUA}Total Networth: ${DARK_GREEN + formatNumber(total)}`);
-        }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
-    }).catch(_ => ChatLib.chat(`${LOGO + DARK_RED}API overloaded, please try again later!`));
+        // Total
+        ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
+        ChatLib.chat(`\n${LOGO + DARK_AQUA}Total Networth: ${DARK_GREEN + formatNumber(total)}`);
+    }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }
