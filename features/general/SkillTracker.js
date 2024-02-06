@@ -44,10 +44,7 @@ const xpTable = [0, 50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925
  * @param {Object} data - Skill API data of current player profile.
  */
 export function updateSkills(data) {
-    if (data === undefined) {
-        if (settings.skillTracker !== 0) ChatLib.chat(`${LOGO + RED}Skill API not active, skill tracker may not work!`);
-        return;
-    }
+    if (data === undefined) return;
 
     Object.keys(data).forEach(key => {
         const skill = convertToTitleCase(key.split('_')[1]);
