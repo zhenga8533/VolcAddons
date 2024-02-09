@@ -58,14 +58,17 @@ function setWaifu(announce) {
         if (announce)
             new Message(`\n${LOGO + DARK_GREEN}Uploading `,
                 new TextComponent(waifu).setHoverValue(waifu),
-                ` ${DARK_GREEN}to Imgur!`).chat();
+                ` ${DARK_GREEN}to Imgur!`).setChatLineId(11997).chat();
         upload(waifu).then(({ data: { link } }) => {
+            ChatLib.clearChat(11997);
+
+            // Success
             imgur = link;
             if (announce)
-            new Message(`${LOGO + GREEN}Uploaded `,
-                new TextComponent(imgur).setHoverValue(imgur),
-                ` ${GREEN}to Imgur Successfully! `,
-                new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
+                new Message(`\n${LOGO + GREEN}Uploaded `,
+                    new TextComponent(imgur).setHoverValue(imgur),
+                    ` ${GREEN}to Imgur Successfully! `,
+                    new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
         }).catch(err => {
             const error = err.data.error;
             if (announce) {
