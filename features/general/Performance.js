@@ -148,8 +148,9 @@ registerWhen(register('tick', () => {
     // FPS
     if (toggles.fpsDisplay) {
         const fps = Client.getFPS();
-        const fpsRatio = fps / SETTINGS.field_74350_i;
-        const fpsColor = fpsRatio > 0.9 ? GREEN :
+        const fpsMax = SETTINGS.field_74350_i;
+        const fpsRatio = fps / fpsMax;
+        const fpsColor = fpsMax >= 260 || fpsRatio > 0.9 ? GREEN :
             fpsRatio > 0.8 ? DARK_GREEN :
             fpsRatio > 0.7 ? YELLOW :
             fpsRatio > 0.6 ? GOLD : 

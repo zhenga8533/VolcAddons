@@ -176,7 +176,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @SwitchProperty({
         name: "Text Shadow Toggle",
-        description: "Sets if text shadow renders on any GUI elements.",
+        description: "Sets if text shadow renders on any GUI elements. Make sure Patcher's `Disable Text Shadow` is turned off!",
         category: "General",
         subcategory: "General"
     })
