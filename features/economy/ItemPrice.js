@@ -389,7 +389,7 @@ export function getItemValue(item, save=true) {
         const attributeValue = Math.min(attributePiece, auction?.ATTRIBUTE_SHARD?.attributes?.[attribute] ?? attributePiece) * attributeCount;
 
         // Check if valid attribute to calc
-        if (data.attributelist.find(key => key === attribute) === undefined) {
+        if (!data.attributelist.includes(attribute)) {
             attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${DARK_RED}Nullified\n`;
             comboCalc = false;
             return;

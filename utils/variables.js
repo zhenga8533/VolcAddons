@@ -29,7 +29,7 @@ export let data = new PogObject("VolcAddons", {
     "moblist": [],
     "colorlist": {},
     "emotelist": {},
-    "cooldownlist": {},
+    "cdlist": {},
     "valuelist": {},
     "spamlist": [],
     "ignorelist": [],
@@ -171,7 +171,8 @@ let lines = [5858, 5859];
  * @param {String} listName - The name of the list for displaying messages.
  * @returns {String[]} - The updated list.
  */
-export function updateList(args, list, listName) {
+export function updateList(args, listName) {
+    const list = data[listName];
     const isArray = Array.isArray(list);
     const command = args[1]
     const item = listName === "moblist" || listName === "spamlist" ? args.slice(2).join(' ') : args.slice(2).join(' ').toLowerCase();
@@ -205,17 +206,6 @@ export function updateList(args, list, listName) {
             if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO + GREEN}Successfully cleared the ${listName}!`);
-            return;
-        case "reset":
-            if (listName === "dianalist") data.dianalist = ["hub", "da", "castle", "museum", "wizard"];
-            else if (listName === "attributelist") data.attributelist = ["arachno", "attack_speed", "blazing", "combo", "elite", "ender", "ignition", "life_recovery", 
-                "mana_steal", "midas_touch", "undead", "warrior", "deadeye", "arachno_resistance", "blazing_resistance", "breeze", "dominance", "ender_resistance", 
-                "experience", "fortitude", "life_regeneration", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "undead_resistance", "veteran",
-                "blazing_fortune", "fishing_experience", "infection", "double_hook", "fisherman", "fishing_speed", "hunter", "trophy_hunter"];
-            else if (listName === "moblist") if (listName === "moblist") data.moblist = ["vanquisher", "jawbus", "thunder", "inquisitor"];
-            else if (isArray) list.length = 0;
-            else Object.keys(list).forEach(key => delete list[key]);
-            ChatLib.chat(`${LOGO + GREEN}Successfully reset the ${listName}!`);
             return;
         case "view": // DISPLAY LIST
         case "list":
@@ -271,6 +261,17 @@ export function updateList(args, list, listName) {
             // Footer
             new Message("&c&m-----------------------------------------------------&r").setChatLineId(++id).chat();
             lines.push(id);
+            return;
+        case "reset": // RESET LIST TO DEFAULT
+            if (listName === "dianalist") data.dianalist = ["hub", "da", "castle", "museum", "wizard"];
+            else if (listName === "attributelist") data.attributelist = ["arachno", "attack_speed", "blazing", "combo", "elite", "ender", "ignition", "life_recovery", 
+                "mana_steal", "midas_touch", "undead", "warrior", "deadeye", "arachno_resistance", "blazing_resistance", "breeze", "dominance", "ender_resistance", 
+                "experience", "fortitude", "life_regeneration", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "undead_resistance", "veteran",
+                "blazing_fortune", "fishing_experience", "infection", "double_hook", "fisherman", "fishing_speed", "hunter", "trophy_hunter"];
+            else if (listName === "moblist") if (listName === "moblist") data.moblist = ["vanquisher", "jawbus", "thunder", "inquisitor"];
+            else if (isArray) list.length = 0;
+            else Object.keys(list).forEach(key => delete list[key]);
+            ChatLib.chat(`${LOGO + GREEN}Successfully reset the ${listName}!`);
             return;
         case "value":
             if (listName === "attributelist") {

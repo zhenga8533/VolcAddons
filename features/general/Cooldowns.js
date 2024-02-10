@@ -11,9 +11,9 @@ registerWhen(register("clicked", (x, y, button, down) => {
     const held = Player.getHeldItem();
     if (Client.isInGui() || !down || held === null) return;
     const heldName = held?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
-    if (!(heldName in data.cooldownlist)) return;
+    if (!(heldName in data.cdlist)) return;
 
-    const cd = data.cooldownlist[heldName];
+    const cd = data.cdlist[heldName];
     if (isNaN(cd)) {
         const firstLetter = cd[0];
         const remaining = cd.substring(1);
@@ -27,7 +27,7 @@ registerWhen(register("clicked", (x, y, button, down) => {
         held.setStackSize(cd);
         items[heldName] = [cd, held.getName()];
     }
-}), () => data.cooldownlist.length !== 0);
+}), () => data.cdlist.length !== 0);
 
 /**
  * Handles shift to track ability.
@@ -46,7 +46,7 @@ shiftKey.registerKeyPress(() => {
     // Loop through to check in cd list
     pieces.forEach(piece => {
         const pieceName = piece?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
-        const cd = data.cooldownlist[pieceName];
+        const cd = data.cdlist[pieceName];
         if (cd === undefined) return;
 
         // cooldown checks
@@ -69,7 +69,7 @@ shiftKey.registerKeyPress(() => {
  */
 registerWhen(register("worldUnload", () => {
     items = {};
-}), () => data.cooldownlist.length !== 0);
+}), () => data.cdlist.length !== 0);
 
 /**
  * Update function for handling cooldowns and item stack sizes.
@@ -96,7 +96,7 @@ registerWhen(register("tick", () => {
             delete items[itemID];
         }
     });
-}), () => data.cooldownlist.length !== 0);
+}), () => data.cdlist.length !== 0);
 
 /**
  * Change stack size during renderHotbar for smoother countdown.
@@ -113,4 +113,4 @@ registerWhen(register("renderHotbar", () => {
         if (isNaN(cd)) delete items[itemID];
         else item.setStackSize(cd);
     });
-}), () => data.cooldownlist.length !== 0);
+}), () => data.cdlist.length !== 0);

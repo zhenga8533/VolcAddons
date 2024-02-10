@@ -288,57 +288,57 @@ register ("command", (...args) => {
         case "whitelist":
         case "white":
         case "wl":
-            updateList(args, data.whitelist, "whitelist");
+            updateList(args, "whitelist");
             break;
         case "blacklist":
         case "black":
         case "bl":
-            updateList(args, data.blacklist, "blacklist");
+            updateList(args, "blacklist");
             break;
         case "emotelist":
         case "emote":
         case "el":
-            updateList(args, data.emotelist, "emotelist");
+            updateList(args, "emotelist");
             break;
         case "cdlist":
         case "cdl":
         case "cooldown":
         case "cd":
-            updateList(args, data.cooldownlist, "cdlist");
+            updateList(args, "cdlist");
             break;
         case "moblist":
         case "mob":
         case "ml":
-            updateList(args, data.moblist, "moblist");
+            updateList(args, "moblist");
             break;
         case "colorlist":
         case "color":
         case "cl":
-            updateList(args, data.colorlist, "colorlist");
+            updateList(args, "colorlist");
             break;
         case "dianalist":
         case "diana":
         case "dl":
-            updateList(args, data.dianalist, "dianalist");
+            updateList(args, "dianalist");
             break;
         case "valuelist":
         case "value":
         case "vl":
-            updateList(args, data.valuelist, "valuelist");
+            updateList(args, "valuelist");
             break;
         case "spamlist":
         case "spam":
         case "sl":
-            updateList(args, data.spamlist, "spamlist");
+            updateList(args, "spamlist");
             break;
         case "ignorelist":
         case "ignore":
         case "il":
-            updateList(args, data.ignorelist, "ignorelist");
+            updateList(args, "ignorelist");
             break;
         case "attributelist":
         case "al":
-            updateList(args, data.attributelist, "attributelist");
+            updateList(args, "attributelist");
             break;
         // Kuudra Splits
         case "splits": // Kuudra splits

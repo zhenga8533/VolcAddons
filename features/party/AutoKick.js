@@ -10,10 +10,7 @@ import { data, registerWhen } from "../../utils/variables";
 registerWhen(register("chat", (player) => {
     if (!getIsLeader()) return;
     
-    player = getPlayerName(player).toLowerCase();
-    if (data.blacklist.find(name => {
-        name === player;
-    }) === undefined) return;
-
-    delay(() => ChatLib.command(`p kick ${player}`));
+    const name = getPlayerName(player).toLowerCase();
+    if (!data.blacklist.includes(name))
+        delay(() => ChatLib.command(`p kick ${name}`));
 }).setCriteria("${player} joined the party."), () => data.blacklist.length !== 0);
