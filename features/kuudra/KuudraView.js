@@ -132,6 +132,7 @@ register("command", (name) => {
         else {
             containsGoods(inventory?.inv_contents?.data, "Inventory", aurora, terror, dominance, lifeline);
             containsGoods(inventory?.inv_armor?.data, "Armor", aurora, terror, dominance, lifeline);
+            containsGoods(inventory?.equipment_contents?.data, "Equipment", aurora, terror, dominance, lifeline);
             containsGoods(inventory?.ender_chest_contents?.data, "Ender Chest", aurora, terror, dominance, lifeline);
             containsGoods(inventory?.wardrobe_contents?.data, "Wardrobe", aurora, terror, dominance, lifeline);
 
