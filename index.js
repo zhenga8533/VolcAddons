@@ -104,6 +104,7 @@ import { getTime } from "./utils/functions/format";
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
+if (!FileLib.exists("VolcAddons", "data/api")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data/api").mkdir();
 if (!FileLib.exists("VolcAddons", "data/contract.txt")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
 
 const once = register("worldLoad", () => {

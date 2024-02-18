@@ -1,12 +1,14 @@
 [
     "- Added Kuudra crate edit",
-    "- TODO: Added `/va todo`",
     "- Added extra details to `/kv`",
     "- Added auto `/kv`",
+    "- Added API data caching",
+    "- TODO: Added Garden bounding box",
     "- Changed rand ID generation",
     "- Changed some time formatting",
     "- Changed Hypixel API call",
     "- Changed some smaller details :)",
     "- Changed some list details (some may have reset)",
-    "- Fixed powder tracker"
+    "- Fixed powder tracker",
+    "- TODO: Fixed pet display with Montezuma"
 ]

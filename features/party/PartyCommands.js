@@ -67,7 +67,7 @@ function setWaifu(announce) {
             if (announce)
                 new Message(`\n${LOGO + GREEN}Uploaded `,
                     new TextComponent(imgur).setHoverValue(imgur),
-                    ` ${GREEN}to Imgur Successfully! `,
+                    ` ${GREEN}to Imgur successfully! `,
                     new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
         }).catch(err => {
             const error = err.data.error;

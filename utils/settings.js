@@ -1025,7 +1025,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     // --- Kuudra ---
     @SwitchProperty({
-        name: "Auto /kv PF",
+        name: "Auto '/kv' PF",
         description: `${DARK_RED}NEW! ${GRAY}Automatically runs \`/kv\` command whenever a player joins using party finder.`,
         category: "Kuudra",
         subcategory: "Kuudra"
