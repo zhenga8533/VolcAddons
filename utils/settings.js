@@ -756,6 +756,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     compostTab = 0;
 
     @SwitchProperty({
+        name: "Garden Box Plot",
+        description: `${DARK_RED}NEW! ${GRAY}Draws a bounding box on the current garden plot player is in.`,
+        category: "Farming",
+        subcategory: "Garden"
+    })
+    gardenBox = false;
+
+    @SwitchProperty({
         name: "Garden Warp Override",
         description: `Overrides any warp command with a ${AQUA}/warp garden ${GRAY}if theres an awaiting visitor.`,
         category: "Farming",
