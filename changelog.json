@@ -2,7 +2,6 @@
     "- Added Kuudra crate edit",
     "- Added extra details to `/kv`",
     "- Added auto `/kv`",
-    "- Added API data caching",
     "- TODO: Added Garden bounding box",
     "- Changed rand ID generation",
     "- Changed some time formatting",
@@ -10,5 +9,5 @@
     "- Changed some smaller details :)",
     "- Changed some list details (some may have reset)",
     "- Fixed powder tracker",
-    "- TODO: Fixed pet display with Montezuma"
+    "- Fixed pet display with Montezuma"
 ]

@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
 import { formatNumber, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
@@ -50,6 +50,21 @@ register("chat", (pet) => {
 register("chat", (pet) => {
     data.pet = pet;
 }).setCriteria("&r&aYou summoned your ${pet}&r&a!&r");
+
+// Check for Montezuma
+let lastPet = data.pet;
+const revertPet = register("worldUnload", () => {
+    data.pet = lastPet;
+    revertPet.unregister();
+}).unregister();
+register("chat", () => {
+    const mont = TabList.getNames().find(name => name.startsWith("§r Montezuma:"));
+    if (mont !== undefined) {
+        lastPet = data.pet;
+        data.pet = (mont[18] >= 6 ? DARK_PURPLE : DARK_BLUE) + "Montezuma";
+        revertPet.register();
+    }
+}).setCriteria("  RIFT INSTABILITY WARNING");
 
 /**
  * Tab stats
