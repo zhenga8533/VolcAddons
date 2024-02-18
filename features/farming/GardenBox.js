@@ -1,5 +1,5 @@
 import RenderLib from "../../../RenderLib/index.js";
-import settings from "../../utils/settings.js";
+import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables.js";
 
 
