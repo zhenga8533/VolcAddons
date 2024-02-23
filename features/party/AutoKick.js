@@ -11,6 +11,6 @@ registerWhen(register("chat", (player) => {
     if (!getIsLeader()) return;
     
     const name = getPlayerName(player).toLowerCase();
-    if (!data.blacklist.includes(name))
+    if (data.blacklist.includes(name))
         delay(() => ChatLib.command(`p kick ${name}`));
 }).setCriteria("${player} joined the party."), () => data.blacklist.length !== 0);
