@@ -94,6 +94,7 @@ subtitle: List of all features and their related commands.
     - Garden Warp Override
     - Garden Visitor Display (`/moveVisitors`)
     - Next Visitor Display (`/moveNext`)
+    - Plot Bounding Box
 - **Pests**
     - Infestation Alert
     - Pest Alert
@@ -133,6 +134,8 @@ subtitle: List of all features and their related commands.
 
 ### <u>Kuudra</u>
 - **General**
+    - Auto `/kv`
+    - Crate GUI edit
     - Crate Waypoints
     - Kuudra Alerts
     - Kuudra HP Display
