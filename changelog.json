@@ -1,10 +1,10 @@
 [
     "- Added more toggles to `?w`",
-    "- TODO: Added control to stack overlay horizontally",
+    "- Added control to stack overlay horizontally",
     "- Changed `/kv` to parse out bad rags",
     "- Fixed overlay variable",
     "- Fixed auto `/kv`",
-    "- Fixed Garden box rendering outside",
+    "- Fixed Garden box always rendering",
     "- Fixed blacklist auto kick",
     "- Fixed trophy counter on session view",
     "- Fixed party join message"

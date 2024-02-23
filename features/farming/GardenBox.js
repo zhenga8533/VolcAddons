@@ -1,7 +1,7 @@
 import RenderLib from "../../../RenderLib/index.js";
 import settings from "../../utils/settings";
-import { registerWhen } from "../../utils/variables.js";
-import { getWorld } from "../../utils/worlds.js";
+import { registerWhen } from "../../utils/variables";
+import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -12,4 +12,4 @@ registerWhen(register("renderWorld", () => {
     const z = Math.floor((Player.getZ() + 240) / 96);
 
     RenderLib.drawEspBox(-192 + x * 96, 67, -192 + z * 96, 96, 10, 1, 1, 1, 1, true);
-}), () => settings.gardenBox && getWorld() === "Garden");
+}), () => getWorld() === "Garden" && settings.gardenBox);
