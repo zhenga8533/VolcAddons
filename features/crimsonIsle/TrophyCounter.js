@@ -10,7 +10,7 @@ import { getWorld } from "../../utils/worlds";
  * Variables used to format and display trophy fishes.
  */
 const trophyExample =
-`&6Trophy Fishing:
+`&6&lTrophy Fishing:
 &fBlobfish&f: &323477 &816649 &76249 &6518 &b61
 &fGusher&f: &39627 &86838 &72556 &6210 &b23
 &9Lava Horse&f: &36831 &84939 &71733 &6143 &b16
