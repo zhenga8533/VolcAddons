@@ -3,7 +3,7 @@
     "- Added control to stack overlay horizontally",
     "- Added day counter to server status",
     "- Changed `/kv` to parse out bad rags",
-    "- Fixed overlay variable",
+    "- Fixed broken overlays (maybe)",
     "- Fixed auto `/kv`",
     "- Fixed Garden box always rendering",
     "- Fixed blacklist auto kick",
