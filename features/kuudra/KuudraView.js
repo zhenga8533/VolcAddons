@@ -22,7 +22,7 @@ function containsGoods(inv, type, aurora, terror, dominance, lifeline) {
     }
 
     // Goods to be contained
-    const GOODS = new Set(["NECRON_BLADE", "HYPERION", "VALKYRIE", "ASTRAEA", "SCYLLA", "TERMINATOR", "RAGNAROCK_AXE"]);
+    const GOODS = new Set(["NECRON_BLADE", "HYPERION", "VALKYRIE", "ASTRAEA", "SCYLLA", "TERMINATOR"]);
     const TIERS = ["HOT", "BURNING", "FIERY", "INFERNAL"];
     const PIECE = ["HELMET", "CHESTPLATE", "LEGGINGS", "BOOTS"];
     const EQUIP = ["NECKLACE", "CLOAK", "BELT", "GAUNTLET", "GLOVES"]
@@ -44,8 +44,8 @@ function containsGoods(inv, type, aurora, terror, dominance, lifeline) {
         let display = tag.getCompoundTag("display");
         let name = display.getString("Name");
 
-        // Check if item is a good :)
-        if (GOODS.has(id)) {
+        // Check if item is a good one :)
+        if (GOODS.has(id) || (id === "RAGNAROCK_AXE" && extraAttributes.getInteger("rarity_upgrades") === 1)) {
             let data = name;
             let lore = display.toObject()["Lore"];
             lore.forEach(line => data += `\n${line}`);
