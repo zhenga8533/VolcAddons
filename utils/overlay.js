@@ -1,5 +1,5 @@
 import settings from "./settings";
-import { DARK_GRAY, GREEN, ITALIC, LOGO } from "./constants";
+import { GREEN, ITALIC, LOGO } from "./constants";
 import { registerWhen } from "./variables";
 import { getWorld } from "./worlds";
 
@@ -12,8 +12,9 @@ import { getWorld } from "./worlds";
  * @param {Number} x - The x-coordinate where the text will be rendered.
  * @param {Number} y - The y-coordinate where the text will be rendered.
  */
-function renderScale(scale, text, x, y, align) {
+function renderScale(scale, text, x, y, align, flex) {
     Renderer.scale(scale);
+    if (flex) text = text.replace(/\n/g, "  ");
     if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(settings.textShadow).draw();
     else Renderer.drawString(text, x, y, settings.textShadow);
 }
@@ -21,7 +22,7 @@ function renderScale(scale, text, x, y, align) {
 /**
  * Variables used to move all active GUIs.
  */
-const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, or W to change view";
+const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, H to swap flex, or W to change view";
 const gui = new Gui();
 const background = new Gui();
 
@@ -46,14 +47,14 @@ const moving = register("renderOverlay", () => {
             x - 3*scale, y - 3*scale,
             overlay.width + 6*scale, overlay.height + 6*scale
         );
-        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y, overlay.loc[3]);
+        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y, overlay.loc[3], overlay.loc[4]);
     });
 
     // GUI Instructions
     renderScale(
         1.2, GUI_INSTRUCT,
         Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
-        Renderer.screen.getHeight() / 2.4, false
+        Renderer.screen.getHeight() / 2.4, false, false
     );
 }).unregister();
 
@@ -137,6 +138,8 @@ const keying = register("guiKey", (char, keyCode, currentGui, event) => {
         currentOverlay.Y = currentOverlay.loc[1];
     } else if (keyCode === 38) {  // Swap align (l key)
         currentOverlay.loc[3] = !currentOverlay.loc[3];
+    } else if (keyCode === 35) {  // Swap flex (h key)
+        currentOverlay.loc[4] = !currentOverlay.loc[4];
     } else return;
 
     currentOverlay.setSize();
@@ -173,15 +176,14 @@ export class Overlay {
         this.loc = loc;
         this.X = this.loc[0] / this.loc[2];
         this.Y = this.loc[1] / this.loc[2];
-        this.loc[3] = this.loc[3];
-        if (this.loc[3] === undefined) {
-            this.loc[3] = false;
-            this.loc = [...this.loc, false];
-        }
         this.example = example;
         this.message = example;
         this.gui = new Gui();
         this.setSize();
+
+        // loc array changes for versions < 2.8.9
+        if (this.loc[3] === undefined) this.loc.push(false);
+        if (this.loc[4] === undefined) this.loc.push(false);
 
         // Register a render function to display the overlay and GUI instructions.
         // The overlay is shown when the GUI is open or in requires specified in 'requires' array.'
@@ -193,25 +195,25 @@ export class Overlay {
             const coords = `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`;
             const coordsWidth = Renderer.getStringWidth(coords);
             const aligning = this.loc[0] + coordsWidth > width;
-            renderScale(this.loc[2], coords, this.X + (aligning ? -2 : 2), this.Y - 10, aligning);
+            renderScale(this.loc[2], coords, this.X + (aligning ? -2 : 2), this.Y - 10, aligning, false);
             Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], height, 0.5);
             Renderer.drawLine(Renderer.WHITE, width, this.loc[1], 1, this.loc[1], 0.5);
 
             // Draw example text
-            renderScale(this.loc[2], this.example, this.X, this.Y, this.loc[3]);
+            renderScale(this.loc[2], this.example, this.X, this.Y, this.loc[3], this.loc[4]);
 
             // GUI Instructions
             renderScale(
                 1.2, GUI_INSTRUCT,
                 width / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
-                height / 2.4, false
+                height / 2.4, false, false
             );
         }).unregister();
 
         registerWhen(register(this.requires.has("misc") ? "guiRender" : "renderOverlay", () => {
             if (!special() && condition() && !gui.isOpen() && !this.gui.isOpen()) {
                 if (this.requires.has("misc")) background.func_146278_c(0);
-                renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3]);
+                renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3], this.loc[4]);
             }
         }), () => settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")));
 
@@ -242,6 +244,8 @@ export class Overlay {
                     this.Y = this.loc[1];
                 } else if (keyCode === 38) {  // Swap align (l key)
                     this.loc[3] = !this.loc[3];
+                } else if (keyCode === 35) {  // Swap flex (h key)
+                    this.loc[4] = !this.loc[4];
                 } else if (keyCode === 1) {
                     this.moving.unregister();
                     this.dragging.unregister();

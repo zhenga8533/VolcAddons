@@ -1,6 +1,8 @@
 [
     "- Added more toggles to `?w`",
+    "- TODO: Added control to stack overlay horizontally",
     "- Changed `/kv` to parse out bad rags",
+    "- Fixed overlay variable",
     "- Fixed auto `/kv`",
     "- Fixed Garden box rendering outside",
     "- Fixed blacklist auto kick",

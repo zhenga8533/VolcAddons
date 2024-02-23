@@ -77,37 +77,37 @@ export let data = new PogObject("VolcAddons", {
     "slotBinds": {},
     "bindPresets": {},
     // GUI locations
-    "AL": [780, 430, 1.2, false], // Skill Tracker Location
-    "BL": [10, 120, 1.2, false], // Vampire Location
-    "CL": [10, 180, 1.2, false], // Counter Location
-    "DL": [10, 180, 1.2, false], // Broodmother Location
-    "EL": [100, 150, 1.1, false], // Advanced Value Location
-    "FL": [220, 10, 1.2, false], // Trophy Fish Location
-    "GL": [10, 140, 1.2, false], // Gyro Location
-    "HL": [10, 240, 1.2, false], // Powder Chest Location
-    "IL": [10, 180, 1.2, false], // Inq Location
-    "JL": [150, 180, 1.2, false], // Kill Counter Location
-    "KL": [600, 220, 1.2, false], // Kuudra Profit Location
-    "LL": [870, 130, 1.2, false], // Server Status Location
-    "ML": [780, 390, 1.2, false], // Coins Location
-    "NL": [10, 160, 1.2, false], // Next Visitors Location
-    "OL": [10, 130, 1.2, false], // Composter Location
-    "PL": [10, 180, 1.2, false], // Powder Location
-    "QL": [250, 225, 4, false], // Vanquisher Location
-    "RL": [600, 175, 1, false], // Container Value Location
-    "SL": [10, 180, 1.2, false], // Splits Location
-    "TL": [10, 130, 1.2, false], // Golden Fish Timer Location
-    "UL": [930, 65, 1.2, false], // Armor Display Location
-    "VL": [10, 180, 1.2, false], // Visitors Location
-    "WL": [730, 130, 1.2, false], // Wolf Combo Location
-    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false], // Searchbox location
-    "YL": [770, 125, 1.2, false], // SkyBlock Stats Location
-    "ZL": [780, 330, 1.2, false], // Kuudra Profit Tracker Location
-    "CEL": [375, 275, 3, false], // Crate edit location
-    "EQL": [905, 65, 1.2, false], // Equipment Location
-    "PHL": [170, 160, 1.2, false], // Pesthunter Location
-    "SDL": [170, 180, 1.2, false], // Spray Display Location
-    "TVL": [600, 150, 1.2, false], // Trade Value Location
+    "AL": [780, 430, 1.2, false, "\n"], // Skill Tracker Location
+    "BL": [10, 120, 1.2, false, "\n"], // Vampire Location
+    "CL": [10, 180, 1.2, false, "\n"], // Counter Location
+    "DL": [10, 180, 1.2, false, "\n"], // Broodmother Location
+    "EL": [100, 150, 1.1, false, "\n"], // Advanced Value Location
+    "FL": [220, 10, 1.2, false, "\n"], // Trophy Fish Location
+    "GL": [10, 140, 1.2, false, "\n"], // Gyro Location
+    "HL": [10, 240, 1.2, false, "\n"], // Powder Chest Location
+    "IL": [10, 180, 1.2, false, "\n"], // Inq Location
+    "JL": [150, 180, 1.2, false, "\n"], // Kill Counter Location
+    "KL": [600, 220, 1.2, false, "\n"], // Kuudra Profit Location
+    "LL": [870, 130, 1.2, false, "\n"], // Server Status Location
+    "ML": [780, 390, 1.2, false, "\n"], // Coins Location
+    "NL": [10, 160, 1.2, false, "\n"], // Next Visitors Location
+    "OL": [10, 130, 1.2, false, "\n"], // Composter Location
+    "PL": [10, 180, 1.2, false, "\n"], // Powder Location
+    "QL": [250, 225, 4, false, "\n"], // Vanquisher Location
+    "RL": [600, 175, 1, false, "\n"], // Container Value Location
+    "SL": [10, 180, 1.2, false, "\n"], // Splits Location
+    "TL": [10, 130, 1.2, false, "\n"], // Golden Fish Timer Location
+    "UL": [930, 65, 1.2, false, "\n"], // Armor Display Location
+    "VL": [10, 180, 1.2, false, "\n"], // Visitors Location
+    "WL": [730, 130, 1.2, false, "\n"], // Wolf Combo Location
+    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, "\n"], // Searchbox location
+    "YL": [770, 125, 1.2, false, "\n"], // SkyBlock Stats Location
+    "ZL": [780, 330, 1.2, false, "\n"], // Kuudra Profit Tracker Location
+    "CEL": [375, 275, 3, false, "\n"], // Crate edit location
+    "EQL": [905, 65, 1.2, false, "\n"], // Equipment Location
+    "PHL": [170, 160, 1.2, false, "\n"], // Pesthunter Location
+    "SDL": [170, 180, 1.2, false, "\n"], // Spray Display Location
+    "TVL": [600, 150, 1.2, false, "\n"], // Trade Value Location
     // Rift waypoint properties
     "fairySouls": FAIRY_SOULS,
     "enigmaSouls": ENIGMA_SOULS,
