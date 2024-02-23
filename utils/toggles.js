@@ -56,26 +56,33 @@ class Settings {
     })
     cpsDisplay = true;
     @CheckboxProperty({
-        name: `XYZ Display`,
+        name: "XYZ Display",
         category: "Server Status",
         subcategory: "Server Status",
         description: "Ooh, black and yellow! Let's shake it up a little."
     })
     xyzDisplay = true;
     @CheckboxProperty({
-        name: `Angle Display`,
+        name: "Angle Display",
         category: "Server Status",
         subcategory: "Server Status",
         description: "JANET BENSON: Barry! Breakfast is ready!"
     })
     angleDisplay = true;
     @CheckboxProperty({
-        name: `Direction Display`,
+        name: "Direction Display",
         category: "Server Status",
         subcategory: "Server Status",
         description: "BARRY: Coming!"
     })
     dirDisplay = true;
+    @CheckboxProperty({
+        name: "Day Display",
+        category: "Server Status",
+        subcategory: "Server Status",
+        description: "Hang on a second."
+    })
+    dayDisplay = true;
 
     // --- SKYBLOCK STATS ---
     @CheckboxProperty({

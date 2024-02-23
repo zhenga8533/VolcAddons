@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { data, registerWhen } from "../../utils/variables";
@@ -186,6 +186,12 @@ registerWhen(register('tick', () => {
 
         statusOverlay.message += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}\n`;
     }
+
+    // Day
+    if (toggles.dayDisplay) {
+        const daytime = (World.getTime() / 24000).toFixed(2);
+        statusOverlay.message += `${DARK_AQUA + BOLD}Day: ${AQUA + daytime}`
+    }
 }), () => settings.serverStatus || toggles.statusCommand);
 
 /**
@@ -250,6 +256,10 @@ export function getStatus(status) {
                 yaw >= 135 && yaw < 255 ? "North" :
                 yaw >= 225 && yaw < 315 ? "East" : "South"
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Dir: ${AQUA + direction}`)
+            break;
+        case "day":
+            const daytime = (World.getTime() / 24000).toFixed(2);
+            ChatLib.chat(`${DARK_AQUA + BOLD}Day: ${AQUA + daytime}`);
             break;
     }
 }

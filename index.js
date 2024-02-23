@@ -102,7 +102,6 @@ import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 import { getNetworth } from "./features/economy/Networth";
 import { getTime } from "./utils/functions/format";
 
-
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
 if (!FileLib.exists("VolcAddons", "data/contract.txt")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
@@ -412,7 +411,7 @@ register ("command", (...args) => {
                 "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"
             ]);
             const INSTANCES = new Set(["f", "m", "t"]);
-            const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps", "yaw", "pitch", "dir", "direction"]);
+            const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps", "yaw", "pitch", "dir", "direction", "day"]);
             const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf", "playtime", "pt", "legion"]);
 
             if (PARTY_COMMANDS.has(command) || (INSTANCES.has(command[0]) && !isNaN(command[1]))) executeCommand(Player.getName(), args, false);
