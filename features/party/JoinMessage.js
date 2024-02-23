@@ -11,7 +11,7 @@ import { registerWhen } from "../../utils/variables";
 registerWhen(register("chat", (player) => {
     if (settings.partyMessageLeader && !getIsLeader()) return;
     const regex = new RegExp("\\$\\{name\\}", 'g');
-    delay(() => ChatLib.command(`gc ${settings.partyMessage.replace(regex, getPlayerName(player))}`), 250);
+    delay(() => ChatLib.command(`pc ${settings.partyMessage.replace(regex, getPlayerName(player))}`), 250);
 }).setCriteria("${player} joined the party."), () => settings.partyMessage !== "");
 
 /**
