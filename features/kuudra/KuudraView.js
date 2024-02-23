@@ -94,9 +94,11 @@ function containsGoods(inv, type, aurora, terror, dominance, lifeline) {
 }
 
 /**
- * /kv command to display useful information for Kuudar.
+ * Parse user API data and search for relevant Kuudra items.
+ * 
+ * @param {String} name - Username ign to get Kuudra data of.
  */
-register("command", (name) => {
+function kuudraView(name) {
     if (name === undefined) {
         ChatLib.chat(`${LOGO + RED}Couldn't find any profile with name undefined...`);
         ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/kv [ign]`);
@@ -207,6 +209,13 @@ register("command", (name) => {
         const mage = data?.nether_island_player_data?.mages_reputation ?? 0;
         ChatLib.chat(`${DARK_GRAY}- ${AQUA}Reputation: ${RED + barb} ${GRAY}| ${DARK_PURPLE + mage}`);
     }).catch(err => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
+}
+
+/**
+ * /kv command to display useful information for Kuudar.
+ */
+register("command", (name) => {
+    kuudraView(name);
 }).setName("kv", true).setAliases("kuudraView");
 
 /**
@@ -215,5 +224,5 @@ register("command", (name) => {
 registerWhen(register("chat", (player) => {
     if (player === Player.getName()) return;
 
-    ChatLib.command(`kv ${player}`);
+    kuudraView(player);
 }).setCriteria("Party Finder > ${player} joined the group! (${combat})"), () => settings.autoKV);

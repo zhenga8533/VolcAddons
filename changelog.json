@@ -1,6 +1,7 @@
 [
-    "- Added more toggles to ?w",
-    "- Changed /kv to parse out bad rags",
+    "- Added more toggles to `?w`",
+    "- Changed `/kv` to parse out bad rags",
+    "- Fixed auto `/kv`",
     "- Fixed Garden box rendering outside",
     "- Fixed blacklist auto kick",
     "- Fixed trophy counter on session view",
