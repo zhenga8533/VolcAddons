@@ -109,9 +109,10 @@ function updateMessage(trophyVar) {
 export function updateTrophy(trophyData) {
     if (trophyData === undefined) return;
     
+    // Convert API data and store it
     Object.keys(trophyData).forEach(fish => {
         if (fish.endsWith("_gold") || fish.endsWith("_silver") || fish.endsWith("_bronze") || fish.endsWith("_diamond") ||
-            fish === "rewards" || fish === "total_caught") return;
+            fish === "rewards" || fish.endsWith("caught")) return;
 
         totalTrophy[fish] = [
             trophyData[fish],
@@ -123,7 +124,7 @@ export function updateTrophy(trophyData) {
     });
 
     // Sort by highest catches
-    updateMessage(totalTrophy);
+    if (settings.trophyCounter === 1) updateMessage(totalTrophy);
 }
 
 /**
