@@ -18,6 +18,8 @@ let onCD = false;
 const RESPONSES = JSON.parse(FileLib.read("./VolcAddons/assets", "8ball.json"));
 const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
+const W = ["waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", "blush", "smile", "wave", "highfive", 
+    "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"];
 const IMGUR_KEYS = [
     "d30c6dc9941b52b",
     "b2e8519cbb7712a",
@@ -47,13 +49,18 @@ function upload(image) {
     });
 };
 
-/**
- * Makes a PULL request to get a random waifu image >.<
- */
 let waifu = "";
 let imgur = "";
-function setWaifu(announce) {
-    axios.get("https://api.waifu.pics/sfw/waifu").then(link => {
+/**
+ * Makes a PULL request to get a random waifu image >.<
+ * 
+ * @param {*} announce 
+ * @param {*} category 
+ */
+function setWaifu(announce, category=toggles.womenCommand) {
+    if (category === 1) category = W[Math.floor(Math.random() * (W.length - 1))];
+    else category = W[category - 2];
+    axios.get(`https://api.waifu.pics/sfw/${category}`).then(link => {
         waifu = link.data.url;
         if (announce)
             new Message(`\n${LOGO + DARK_GREEN}Uploading `,
@@ -183,7 +190,7 @@ export function executeCommand(name, args, sendTo) {
         case "waifu":
         case "women":
         case "w":
-            if (!toggles.womenCommand) return;
+            if (toggles.womenCommand === 0) return;
 
             if (sendTo !== false) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
             // Randomize end to avoid duplicate message ^
@@ -230,6 +237,15 @@ export function executeCommand(name, args, sendTo) {
             ChatLib.command(`${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, xyz, help> ${randID}`);
             if (getIsLeader() && settings.leaderCommands)
                 delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream> ${randID}`), 690);
+            break;
+        default:
+            // Check for unique ?w commands
+            const wIndex = W.indexOf(command)
+            if (toggles.womenCommand === 0 || wIndex === -1) return;
+
+            if (sendTo !== false) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
+            // Randomize end to avoid duplicate message ^
+            setWaifu(true, wIndex + 2);
             break;
     } }, 690);
     

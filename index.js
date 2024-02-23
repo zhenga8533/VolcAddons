@@ -405,10 +405,12 @@ register ("command", (...args) => {
         default:
             args = args.map(w => w.toLowerCase());
             // Other args to check
-            const PARTY_COMMANDS = new Set(
-                ["cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
-                "cf", "8ball", "rps", "waifu", "w", "women"]
-            );
+            const PARTY_COMMANDS = new Set([
+                "cringe", "gay", "racist", "femboy", "trans", "transphobic", "dice", "roll", "coin", "flip", "coinflip",
+                "cf", "8ball", "rps", "waifu", "w", "women", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", 
+                "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", "blush", "smile", "wave", "highfive", "handhold", "nom", 
+                "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"
+            ]);
             const INSTANCES = new Set(["f", "m", "t"]);
             const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps", "yaw", "pitch", "dir", "direction"]);
             const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf", "playtime", "pt", "legion"]);

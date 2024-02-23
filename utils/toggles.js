@@ -3,7 +3,8 @@ import {
     @Vigilant,
     @TextProperty,
     @CheckboxProperty,
-    @SliderProperty
+    @SliderProperty,
+    @SelectorProperty
 } from "../../Vigilance/index";
 
 @Vigilant("VolcAddons/data", "VolcAddons' Toggles", {
@@ -268,13 +269,15 @@ class Settings {
         description: "Hey, now You're an all-star"
     })
     statusCommand = true;
-    @CheckboxProperty({
-        name: `Women Command ${DARK_AQUA}?<w, waifu, women>`,
+    @SelectorProperty({
+        name: `Gyatt Command ${DARK_AQUA}?<w, waifu, women>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Get your game on, go play"
+        description: "The most important command deserves the only description. This will only control '?w', you can access any of the other commands by using '?<toggle>'. Note that it will only send on next command for speed purposes :)",
+        options: ["OFF", "random", "waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", "blush", 
+            "smile", "wave", "highfive", "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"]
     })
-    womenCommand = true;
+    womenCommand = 0;
 
     // --- KUUDRA ALERTS ---
     
