@@ -116,6 +116,10 @@ img {
 
 /* Comments */
 
+#disqus_thread {
+  margin: 0 2rem;
+}
+
 .disqus-comments {
   margin-top: 1.875rem;
 }
