@@ -8,5 +8,6 @@
     "- Fixed Garden box always rendering",
     "- Fixed blacklist auto kick",
     "- Fixed trophy counter on session view",
-    "- Fixed party join message"
+    "- Fixed party join message",
+    "- Fixed inquis announce"
 ]
