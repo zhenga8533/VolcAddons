@@ -53,10 +53,10 @@ function getEnchantmentValue(enchantments, bazaar, type) {
 
         const enchantName = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${enchantlvl}`;
         const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
-        const base = bazaar?.[enchantKey];
+        const base = bazaar?.[enchantKey] ?? 0;
         let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
         multiplier = STACKING_ENCHANTS.has(enchant) ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
-        value += Math.max(base?.[type] * multiplier, bazaar?.[enchantName]?.[type] ?? bazaar?.[enchantKey]?.[type] ?? 0);
+        value += Math.max((base?.[type] ?? 0) * multiplier, bazaar?.[enchantName]?.[type] ?? bazaar?.[enchantKey]?.[type] ?? 0);
     });
     return value;
 }
@@ -249,7 +249,7 @@ export function getItemValue(item, save=true) {
         }
     }
     // Recomb Value
-    const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar?.RECOMBOBULATOR_3000?.[settings.priceType];
+    const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar?.RECOMBOBULATOR_3000?.[settings.priceType] ?? 0;
     if (recombValue !== 0) {
         value += recombValue;
         if (save) valueMessage += `- ${AQUA}Recomb: ${GREEN}+${formatNumber(recombValue)}\n`;
@@ -272,16 +272,19 @@ export function getItemValue(item, save=true) {
     }
     
     // Potato Book Values
-    const potatoCount = itemData?.hot_potato_count;
-    const hotPotatoCount = potatoCount === undefined ? 0 : Math.min(potatoCount, 10);
-    const hotPotatoValue = hotPotatoCount * bazaar?.HOT_POTATO_BOOK?.[settings.priceType];
-    if (hotPotatoValue !== 0) {
+    const potatoCount = itemData?.hot_potato_count ?? 0;
+    if (potatoCount !== 0) {
+        // Get hot value
+        const hotPotatoCount = Math.min(potatoCount, 10);
+        const hotPotatoValue = hotPotatoCount * (bazaar?.HOT_POTATO_BOOK?.[settings.priceType] ?? 0);
         if (save) valueMessage += `\n- ${GOLD + BOLD}Books:\n`;
         if (save) valueMessage += `   - ${YELLOW}HPB (${hotPotatoCount}/10): ${GREEN}+${formatNumber(hotPotatoValue)}\n`;
+
+        // Get fuming value
         const fumingPotatoCount = Math.max(potatoCount - 10, 0);
-        const fumingPotatoValue = fumingPotatoCount * bazaar?.FUMING_POTATO_BOOK?.[settings.priceType];
-        if (fumingPotatoValue !== 0)
-        if (save) valueMessage += `   - ${YELLOW}FPB (${fumingPotatoCount}/5): ${GREEN}+${formatNumber(fumingPotatoValue)}\n`;
+        const fumingPotatoValue = fumingPotatoCount * (bazaar?.FUMING_POTATO_BOOK?.[settings.priceType] ?? 0);
+        if (fumingPotatoValue !== 0 && save)
+            if (save) valueMessage += `   - ${YELLOW}FPB (${fumingPotatoCount}/5): ${GREEN}+${formatNumber(fumingPotatoValue)}\n`;
         value += hotPotatoValue + fumingPotatoValue;
     }
     // Art of War Value

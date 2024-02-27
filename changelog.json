@@ -1,13 +1,3 @@
 [
-    "- Added more toggles to `?w`",
-    "- Added control to stack overlay horizontally",
-    "- Added day counter to server status",
-    "- Changed `/kv` to parse out bad rags",
-    "- Fixed overlay variable",
-    "- Fixed auto `/kv`",
-    "- Fixed Garden box always rendering",
-    "- Fixed blacklist auto kick",
-    "- Fixed trophy counter on session view",
-    "- Fixed party join message",
-    "- Fixed inquis announce"
+    "- Fixed item value when API is down"
 ]
