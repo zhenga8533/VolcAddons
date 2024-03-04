@@ -1,3 +1,4 @@
 [
-    "- Fixed item value when API is down"
+    "- Changed ?rps invalid message",
+    "- Fixed item value bricking when API is down"
 ]

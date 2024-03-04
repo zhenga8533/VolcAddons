@@ -161,7 +161,7 @@ export function executeCommand(name, args, sendTo) {
             if (!toggles.rpsCommand) return;
 
             const player = args[1] === undefined ? -1 : RPS.indexOf(args[1].toLowerCase());
-            let reply = player === -1 ? `Wtf is a(n) ${args[1]}? Are you from the jungle?` : "zzz...";
+            let reply = player === -1 ? `なんと、 ${args[1]}?` : "zzz...";
             // Plays game out if user inputs a correct symbol
             if (player !== -1) {
                 const choice = Math.floor(Math.random() * 3);
