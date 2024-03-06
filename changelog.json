@@ -1,5 +1,6 @@
 [
     "- Changed vanq warp (untested)",
     "- Changed ?rps invalid message",
-    "- Fixed item value bricking when API is down"
+    "- Fixed item value bricking when API is down",
+    "- Fixed server alert"
 ]
