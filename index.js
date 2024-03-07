@@ -20,6 +20,7 @@ import "./features/general/ArmorDisplay";
 import "./features/general/Autocorrect";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
+import "./features/general/ChunkBorders";
 import "./features/general/Cooldowns";
 import "./features/general/FairySouls";
 import "./features/general/ImageViewer";

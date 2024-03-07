@@ -74,6 +74,7 @@ export let data = new PogObject("VolcAddons", {
     "pauseKey": 0,
     "devKey": 0,
     "bindKey": 0,
+    "chunkey": 0,
     "slotBinds": {},
     "bindPresets": {},
     // GUI locations
