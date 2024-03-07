@@ -444,7 +444,7 @@ registerWhen(register("itemTooltip", (lore, item) => {
     // Check if value already in tooltip
     const list = new NBTTagList(loreTag);
     for (let i = 0; i < list.getTagCount(); i++) {
-        if (list.getStringTagAt(i).includes("Item Value:")) {
+        if (list.getStringTagAt(i).startsWith("§3§lItem Value:")) {
             valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
             return;
         }

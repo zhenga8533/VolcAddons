@@ -184,6 +184,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     // --- Inventory ---
     @SwitchProperty({
+        name: "Jyrre Time Display",
+        description: 'Adds time label to Bottle of Jyrre item description.',
+        category: "General",
+        subcategory: "Inventory"
+    })
+    jyrreTimer = true;
+
+    @SwitchProperty({
         name: "Searchbar",
         description: `Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||). Also can be used as a basic calculator.
 Move GUI with ${AQUA}/moveSearch${GRAY}.`,
@@ -757,7 +765,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Garden Box Plot",
-        description: `${DARK_RED}NEW! ${GRAY}Draws a bounding box on the current garden plot player is in.`,
+        description: "Draws a bounding box on the current garden plot player is in.",
         category: "Farming",
         subcategory: "Garden"
     })
@@ -1034,7 +1042,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     // --- Kuudra ---
     @SwitchProperty({
         name: "Auto '/kv' PF",
-        description: `${DARK_RED}NEW! ${GRAY}Automatically runs \`/kv\` command whenever a player joins using party finder.`,
+        description: "Automatically runs \`/kv\` command whenever a player joins using party finder.",
         category: "Kuudra",
         subcategory: "Kuudra"
     })
@@ -1042,7 +1050,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     @SwitchProperty({
         name: "Crate Edit",
-        description: `${DARK_RED}NEW! ${GRAY}Changes the location and size of crate pickup rendering.\nMove GUI with ${AQUA}/moveCrate${GRAY}.`,
+        description: `Changes the location and size of crate pickup rendering.\nMove GUI with ${AQUA}/moveCrate${GRAY}.`,
         category: "Kuudra",
         subcategory: "Kuudra"
     })
