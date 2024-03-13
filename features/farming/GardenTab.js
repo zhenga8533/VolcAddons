@@ -18,8 +18,8 @@ ${GREEN + BOLD} You
 ${GREEN + BOLD} Up`;
 const gardenOverlay = new Overlay("gardenTab", ["all"], () => true, data.VL, "moveVisitors", gardenExample);
 let nextVisitor = 0;
-let visitorCount = 0;
-let visitors = [];
+let visitorCount = 5;
+let visitors = [`${AQUA + BOLD}Visitors: ${WHITE}(5)`, ` ${RED}???`, ` ${RED}???`, ` ${RED}???`, ` ${RED}???`, ` ${RED}???`];
 
 /**
  * Fetches the visitor data in tablist and updates the Visitors Overlay every second.
@@ -66,9 +66,10 @@ registerWhen(register("step", () => {
     if (getWorld() === "Garden") return;
 
     // Update visitor display outside Garden
-    if (nextVisitor <= 0 && visitorCount < 6) {
+    if (nextVisitor <= 0 && visitorCount < 5) {
         visitorCount++;
-        visitors.push(' ???');
+        visitors[0] = `${AQUA + BOLD}Visitors: ${WHITE}(${visitorCount})`;
+        visitors.push(` ${RED}???`);
         nextVisitor = 720;
     }
 
