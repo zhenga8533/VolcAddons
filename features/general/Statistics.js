@@ -5,6 +5,7 @@ import { formatNumber, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { data, registerWhen } from "../../utils/variables";
+import { delay } from "../../utils/thread";
 
 
 /**
@@ -24,8 +25,20 @@ ${DARK_AQUA + BOLD}Daily PT: ${GREEN}/ -..`;
 const statsOverlay = new Overlay("statsDisplay", ["all"], () => true, data.YL, "moveStats", statsExample);
 
 /**
- * Get equipped pet through pet menu / autopet.
+ * Get equipped pet through tab widget, menu, or chat.
  */
+let petWidget = false;
+registerWhen(register("step", () => {
+    const tabNames = TabList.getNames();
+    const petIndex = tabNames.findIndex(tab => tab === "§r§e§lPet:§r");
+    if (petIndex !== -1) {
+        const petData = tabNames[petIndex + 1].split("] ");
+        data.pet = petData[petData.length - 1];
+        data.pet += `\n${petData[0]}] ${tabNames[petIndex + 2].split(' ')[1]} XP`;
+        petWidget = true;
+    } else petWidget = false;
+}).setFps(1), () => settings.statsDisplay && toggles.petDisplay);
+
 register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const container = Player.getContainer();
@@ -45,10 +58,10 @@ register("guiOpened", () => {
     });
 });
 register("chat", (pet) => {
-    data.pet = pet.substring(pet.indexOf(']') + 2);
+    if (!petWidget) data.pet = pet.substring(pet.indexOf(']') + 2);
 }).setCriteria("&cAutopet &eequipped your ${pet}&e! &a&lVIEW RULE&r");
 register("chat", (pet) => {
-    data.pet = pet;
+    if (!petWidget) data.pet = pet;
 }).setCriteria("&r&aYou summoned your ${pet}&r&a!&r");
 
 // Check for Montezuma
