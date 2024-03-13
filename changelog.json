@@ -3,9 +3,12 @@
     "- Added display chunk border hotkey",
     "- Changed vanq warp (untested)",
     "- Changed ?rps invalid message",
+    "- Changed visitor display to count to max",
     "- Fixed various features to work with tab widgets",
     "  - Pet display",
     "  - Stats display",
     "- Fixed item value bricking when API is down",
-    "- Fixed server alert"
+    "- Fixed server alert",
+    "- Removed garden visitor warp",
+    "- Removed next visitor display (merged)"
 ]

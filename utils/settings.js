@@ -786,14 +786,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         subcategory: "Garden"
     })
     gardenTab = false;
-
-    @SwitchProperty({
-        name: "Next Visitor Display",
-        description: `Displays the time until a visitor can arrive.\nMove GUI with ${AQUA}/moveNext${GRAY}.`,
-        category: "Farming",
-        subcategory: "Garden"
-    })
-    nextVisitor = false;
     
     // --- Garden Webhook ---
     @TextProperty({

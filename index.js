@@ -73,7 +73,6 @@ import { calcCompost } from "./features/farming/ComposterCalc";
 import "./features/farming/FarmingWebhook";
 import "./features/farming/GardenBox";
 import { getNextVisitor } from "./features/farming/GardenTab";
-import "./features/farming/GardenWarp";
 import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";
 // Event Features
