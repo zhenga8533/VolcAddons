@@ -772,14 +772,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     gardenBox = false;
 
     @SwitchProperty({
-        name: "Garden Warp Override",
-        description: `Overrides any warp command with a ${AQUA}/warp garden ${GRAY}if theres an awaiting visitor.`,
-        category: "Farming",
-        subcategory: "Garden"
-    })
-    warpGarden = false;
-
-    @SwitchProperty({
         name: "Garden Tab Display",
         description: `Displays garden visitors outside of tab menu.\nMove GUI with ${AQUA}/moveVisitors${GRAY}.`,
         category: "Farming",
