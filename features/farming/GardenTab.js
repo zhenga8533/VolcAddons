@@ -16,9 +16,10 @@ ${GREEN + BOLD} Gonna
 ${GREEN + BOLD} Give
 ${GREEN + BOLD} You
 ${GREEN + BOLD} Up`;
-const gardenOverlay = new Overlay("gardenTab", ["Garden"], () => true, data.VL, "moveVisitors", gardenExample);
-let next = 0;
+const gardenOverlay = new Overlay("gardenTab", ["all"], () => true, data.VL, "moveVisitors", gardenExample);
+let nextVisitor = 0;
 let visitorCount = 0;
+let visitors = [];
 
 /**
  * Fetches the visitor data in tablist and updates the Visitors Overlay every second.
@@ -31,11 +32,28 @@ registerWhen(register("step", () => {
     let visitorIndex = tablist.findIndex(tab => tab.startsWith("§r§b§lVisitors:"));
     if (visitorIndex === -1) return;
 
-    // Get total visitor count
+    // Get all visitors
     visitorCount = parseInt(tablist[visitorIndex].split(' ')[1].substring(5, 6));
-    for (let i = 0; i <= visitorCount + 1; i++) {
-        gardenOverlay.message += tablist[visitorIndex + i] + '\n';
+    visitors = [];
+    for (let i = 0; i <= visitorCount; i++) {
+        let visitor = tablist[visitorIndex + i];
+        gardenOverlay.message += visitor + '\n';
+        visitors.push(visitor);
     }
+
+    // Get next visitor timing
+    let tabTime = 0;
+    const visitorTime = tablist[visitorIndex + visitorCount + 1].removeFormatting().replace(/[^0-9ms\s]/g, '').trim().split(' ');
+    if (visitorTime.length === 3) tabTime = 60 * visitorTime[1].replace('m', '') + parseInt(visitorTime[2].replace('s', ''));
+    else if (visitorTime.length === 2) {
+        if (visitorTime[1].endsWith('m')) tabTime = 60 * visitorTime[1].replace('m', '');
+        else tabTime = parseInt(visitorTime[1].replace('s', ''));
+    }
+
+    // Update next display
+    if (tabTime !== 0 && tabTime < nextVisitor - 60 || tabTime > nextVisitor + 60 || nextVisitor === 0) nextVisitor = tabTime;
+    if (nextVisitor > 0) gardenOverlay.message += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    else gardenOverlay.message += ` Next Visitor: ${RED + BOLD}Queue Full!`;
 }).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);
 
 
@@ -43,46 +61,28 @@ registerWhen(register("step", () => {
  * Next Visitor stuff
  */
 registerWhen(register("step", () => {
-    // Decrement outside Garden
-    if (getWorld() !== "Garden") {
-        if (next === 0) {
-            visitorCount++;
-            next = 720;
-        }
-        return;
+    // Decrement visitor timer
+    nextVisitor--;
+    if (getWorld() === "Garden") return;
+
+    // Update visitor display outside Garden
+    if (nextVisitor <= 0 && visitorCount < 6) {
+        visitorCount++;
+        visitors.push(' ???');
+        nextVisitor = 720;
     }
 
-    // Check tab case
-    if (!World.isLoaded()) return;
-    const visitors = TabList.getNames()
-        ?.find(tab => tab.startsWith("§r§b§lVisitors:"))
-        ?.removeFormatting()
-        ?.replace(/[^a-zA-Z0-9\s]/g, '')
-        ?.split(' ');
-
-    let time = 0;
-    for (let i = 1; i < visitors.length; i++) {
-        let num = visitors[i].slice(0, -1);
-        let frame = visitors[i].slice(-1);
-        
-        if (frame === "m") time += parseInt(num) * 60 + 60;
-        else if (frame === "s") {
-            if (time != 0) time -= 60;
-            time += parseInt(num);
-        }
-    }
-    if (time !== 0 && time < next - 60 || time > next + 60 || next === 0) next = time;
-
-    // Return if 0
-    if (next === 0) {
-        
-        return;
-    }
+    gardenOverlay.message = "";
+    visitors.forEach(visitor => {
+        gardenOverlay.message += visitor + '\n';
+    });
+    if (nextVisitor > 0) gardenOverlay.message += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    else gardenOverlay.message += ` Next Visitor: ${RED + BOLD}Queue Full!`;
 }).setFps(1), () => settings.gardenTab);
 
 // Set next visitor time (assuming with 20% visitor reduction)
 registerWhen(register("chat", () => {
-    next = 720;
+    nextVisitor = 720;
 }).setCriteria("${npc} has arrived on your Garden!"), () => settings.gardenTab);
 
 
