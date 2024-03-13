@@ -5,6 +5,7 @@
     "- Changed ?rps invalid message",
     "- Fixed various features to work with tab widgets",
     "  - Pet display",
+    "  - Stats display",
     "- Fixed item value bricking when API is down",
     "- Fixed server alert"
 ]

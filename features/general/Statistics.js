@@ -32,10 +32,11 @@ registerWhen(register("step", () => {
     const tabNames = TabList.getNames();
     const petIndex = tabNames.findIndex(tab => tab === "§r§e§lPet:§r");
     if (petIndex !== -1) {
-        const petData = tabNames[petIndex + 1].split("] ");
-        data.pet = petData[petData.length - 1];
-        data.pet += `\n${petData[0]}] ${tabNames[petIndex + 2].split(' ')[1]} XP`;
         petWidget = true;
+        data.pet = tabNames[petIndex + 1].substring(3);
+
+        const petXP = tabNames[petIndex + 2].split(' ')[1];
+        if (petXP != "§r§b§lMAX") data.pet += `\n   ${petXP} XP`;
     } else petWidget = false;
 }).setFps(1), () => settings.statsDisplay && toggles.petDisplay);
 
@@ -89,7 +90,7 @@ registerWhen(register("step", () => {
     if (tab === undefined) return;
     stats.length = 0;
 
-    let index = tab.findIndex(line => line.startsWith("§r§e§lSkills:")) + 1;
+    let index = tab.findIndex(line => line.startsWith("§r§e§lStats:")) + 1;
     if (index === 0) return;
     let stat = tab[index];
 
