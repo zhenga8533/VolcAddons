@@ -72,7 +72,7 @@ import "./features/mining/WishingCompass";
 import { calcCompost } from "./features/farming/ComposterCalc";
 import "./features/farming/FarmingWebhook";
 import "./features/farming/GardenBox";
-import { getNextVisitor } from "./features/farming/GardenTab";
+import "./features/farming/GardenTab";
 import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";
 // Event Features
@@ -268,7 +268,6 @@ register ("command", (...args) => {
             ChatLib.chat(`- ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
             const party = getParty();
             if (party.size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.join(' ')}`);
-            ChatLib.chat(`- ${AQUA + BOLD}Garden: ${WHITE + getTime(getNextVisitor())}`);
             break;
         // Networth
         case "networth":

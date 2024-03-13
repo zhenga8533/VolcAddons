@@ -91,7 +91,6 @@ export let data = new PogObject("VolcAddons", {
     "KL": [600, 220, 1.2, false, "\n"], // Kuudra Profit Location
     "LL": [870, 130, 1.2, false, "\n"], // Server Status Location
     "ML": [780, 390, 1.2, false, "\n"], // Coins Location
-    "NL": [10, 160, 1.2, false, "\n"], // Next Visitors Location
     "OL": [10, 130, 1.2, false, "\n"], // Composter Location
     "PL": [10, 180, 1.2, false, "\n"], // Powder Location
     "QL": [250, 225, 4, false, "\n"], // Vanquisher Location

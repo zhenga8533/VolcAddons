@@ -17,6 +17,8 @@ ${GREEN + BOLD} Give
 ${GREEN + BOLD} You
 ${GREEN + BOLD} Up`;
 const gardenOverlay = new Overlay("gardenTab", ["Garden"], () => true, data.VL, "moveVisitors", gardenExample);
+let next = 0;
+let visitorCount = 0;
 
 /**
  * Fetches the visitor data in tablist and updates the Visitors Overlay every second.
@@ -26,13 +28,13 @@ registerWhen(register("step", () => {
 
     const tablist = TabList.getNames();
     gardenOverlay.message = "";
-    index = tablist.findIndex(tab => tab.includes("Visitors:"));
-    if (index === -1) return;
+    let visitorIndex = tablist.findIndex(tab => tab.startsWith("§r§b§lVisitors:"));
+    if (visitorIndex === -1) return;
 
-    tab = tablist[index];
-    while (tab.length > 3 && tab !== "§r       §r§6§lAccount Info§r") {
-        gardenOverlay.message += tab.split(' ').splice(0, 3).join(' ') + '\n';
-        tab = tablist[++index];
+    // Get total visitor count
+    visitorCount = parseInt(tablist[visitorIndex].split(' ')[1].substring(5, 6));
+    for (let i = 0; i <= visitorCount + 1; i++) {
+        gardenOverlay.message += tablist[visitorIndex + i] + '\n';
     }
 }).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);
 
@@ -40,16 +42,13 @@ registerWhen(register("step", () => {
 /**
  * Next Visitor stuff
  */
-let next = 0;
-export function getNextVisitor() { return next };
-const nextExample = `${AQUA + BOLD}Next Visitor: ${WHITE}REVERT GARDEN`;
-const nextOverlay = new Overlay("nextVisitor", ["all"], () => true, data.NL, "moveNext", nextExample);
-
 registerWhen(register("step", () => {
     // Decrement outside Garden
     if (getWorld() !== "Garden") {
-        if (next === 0) nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${RED + BOLD}Shipment Received`;
-        else nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${WHITE + getTime(next--)}`;
+        if (next === 0) {
+            visitorCount++;
+            next = 720;
+        }
         return;
     }
 
@@ -76,18 +75,15 @@ registerWhen(register("step", () => {
 
     // Return if 0
     if (next === 0) {
-        nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${RED + BOLD}Shipment Received`;
+        
         return;
     }
-
-    // Decrement
-    nextOverlay.message = `${AQUA + BOLD}Next Visitor: ${WHITE + getTime(next--)}`;
-}).setFps(1), () => settings.nextVisitor || settings.warpGarden);
+}).setFps(1), () => settings.gardenTab);
 
 // Set next visitor time (assuming with 20% visitor reduction)
 registerWhen(register("chat", () => {
     next = 720;
-}).setCriteria("${npc} has arrived on your Garden!"), () => settings.nextVisitor || settings.warpGarden);
+}).setCriteria("${npc} has arrived on your Garden!"), () => settings.gardenTab);
 
 
 /**
@@ -158,9 +154,9 @@ registerWhen(register("step", () => {
     emptyCompost--;
     const message = emptyCompost <= 100 ? `${RED + BOLD}Composter Empty!` : `${WHITE + getTime(emptyCompost)}`;
     const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
-    const next = !time ? `${RED + BOLD}Inactive` :
+    const nextCompost = !time ? `${RED + BOLD}Inactive` :
         getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
     compostOverlay.message =
 `${DARK_GREEN + BOLD}Empty Compost: ${message}
-${DARK_GREEN + BOLD}Next Compost: ${WHITE + next}`;
+${DARK_GREEN + BOLD}Next Compost: ${WHITE + nextCompost}`;
 }).setFps(1), () => getWorld() === "Garden" && settings.gardenTab !== 0);
