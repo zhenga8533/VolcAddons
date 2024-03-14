@@ -158,6 +158,7 @@ registerWhen(register("step", () => {
     const nextCompost = !time ? `${RED + BOLD}Inactive` :
         getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
     compostOverlay.message =
-`${DARK_GREEN + BOLD}Empty Compost: ${message}
-${DARK_GREEN + BOLD}Next Compost: ${WHITE + nextCompost}`;
+`${DARK_GREEN + BOLD}Composter:
+${GREEN}Empty: ${message}
+${GREEN}Next: ${WHITE + nextCompost}`;
 }).setFps(1), () => getWorld() === "Garden" && settings.gardenTab !== 0);

@@ -1,9 +1,10 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions/format";
 import { getPlayerUUID } from "../../utils/player";
 import { data, registerWhen } from "../../utils/variables";
+import { Overlay } from "../../utils/overlay";
 
 
 /**
@@ -449,3 +450,14 @@ registerWhen(register("guiClosed", () => {
     bestiaryData[0] = [];
     bestiaryData[1] = [];
 }), () => settings.bestiaryGUI);
+
+/**
+ * Bestiary tab display.
+ */
+const bestiaryExample =
+`${GOLD}Bestiary:
+${WHITE} But: ${AQUA}NAH
+${WHITE} would: ${AQUA},
+${WHITE} you: ${AQUA}I'D
+${WHITE} lose: ${AQUA}WIN`;
+const bestiaryDisplay = new Overlay("gardenTab", ["all"], () => true, data.BTL, "moveBestiary", bestiaryExample);

@@ -103,6 +103,7 @@ export let data = new PogObject("VolcAddons", {
     "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, "\n"], // Searchbox location
     "YL": [770, 125, 1.2, false, "\n"], // SkyBlock Stats Location
     "ZL": [780, 330, 1.2, false, "\n"], // Kuudra Profit Tracker Location
+    "BTL": [100, 100, 1.2, false, "\n"], // Bestiary Tab Location
     "CEL": [375, 275, 3, false, "\n"], // Crate edit location
     "EQL": [905, 65, 1.2, false, "\n"], // Equipment Location
     "PHL": [170, 160, 1.2, false, "\n"], // Pesthunter Location

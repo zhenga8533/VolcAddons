@@ -183,7 +183,7 @@ export class Overlay {
 
         // loc array changes for versions < 2.8.9
         if (this.loc[3] === undefined) this.loc.push(false);
-        if (this.loc[4] === undefined) this.loc.push(false);
+        if (this.loc[4] === undefined) this.loc.push('\n');
 
         // Register a render function to display the overlay and GUI instructions.
         // The overlay is shown when the GUI is open or in requires specified in 'requires' array.'

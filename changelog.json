@@ -1,6 +1,7 @@
 [
     "- Added true Jyrre time display",
     "- Added display chunk border hotkey",
+    "- Added bestiary display",
     "- Changed vanq warp (untested)",
     "- Changed ?rps invalid message",
     "- Changed visitor display to count to max",
@@ -10,6 +11,7 @@
     "  - Visitors display",
     "- Fixed item value bricking when API is down",
     "- Fixed server alert",
+    "- Fixed overlay defaulting to horizontal",
     "- Removed garden visitor warp",
     "- Removed next visitor display (merged)"
 ]
