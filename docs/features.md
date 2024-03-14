@@ -7,7 +7,9 @@ subtitle: List of all features and their related commands.
 ### <u>General Features</u>
 - **General**
     - Armor Display (`/moveArmor`)
+    - Chunk Borders
     - Equipment Display (`/moveEq`)
+    - Jyrre Timer
     - Remove Selfie Mode
     - Render Waypoint
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
@@ -57,6 +59,7 @@ subtitle: List of all features and their related commands.
 
 ### <u>Combat Features</u>
 - **Bestiary**
+    - Bestiary Display
     - Bestiary GUI
     - Broodmother Detect (`/moveBrood`)
     - Kill Counter (`/moveKills`, `/resetKills`)
