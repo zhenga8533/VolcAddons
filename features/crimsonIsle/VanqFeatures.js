@@ -160,24 +160,27 @@ register("worldUnload", () => vanquishers = []);
  * --- Vanquisher Warp ---
  * Variables used to track party and represent vanquisher spawn data.
  */
-let vanqCoords = [0, 0, 0, "None"];
 let vanqSpawned = false;
 let notInParty = 0;
+let vanqMessage = "";
 
 /**
  * Saves location data and invites every player in settings whenever player spawns a Vanquisher.
  */
 registerWhen(register("chat", () => {
-    if (vanqSpawned) return;
+    // Set message to copy and post
+    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${findZone()} ]!`;
+    ChatLib.command(`ct copy ${vanqMessage}`, true);
+    ChatLib.chat(`${LOGO + GREEN}Copied vanquisher waypoint to clipboard!`);
+
+    // Return if previous vanq still alive
+    if (vanqSpawned) {
+        ChatLib.command("pc " + vanqMessage);
+        return;
+    }
 
     vanqSpawned = true;
     notInParty = 0;
-
-    // PLAYER POSITION
-    vanqCoords[0] = Math.round(Player.getX());
-    vanqCoords[1] = Math.round(Player.getY());
-    vanqCoords[2] = Math.round(Player.getZ());
-    vanqCoords[3] = findZone();
 
     // INVITE PARTY
     delay(() => { if (getInParty()) ChatLib.command("p leave") }, 500);
@@ -189,6 +192,9 @@ registerWhen(register("chat", () => {
         timeout += 500;
     });
 }).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+registerWhen(register("chat", () => {
+    vanqSpawned = false;
+}).setCriteria("RARE DROP! Nether Star"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 
 /**
  * Tracks whenever a player joins/fails to join the party and warps party to lobby whenever all players have joined.
@@ -198,11 +204,10 @@ function warpParty() {
 
     notInParty--;
     if (notInParty <= 0 && getInParty()) {
-        vanqSpawned = false;
         notInParty = 0;
 
-        delay(() => { ChatLib.command('p warp') }, 500);
-        delay(() => { ChatLib.command(`pc x: ${vanqCoords[0]}, y: ${vanqCoords[1]}, z: ${vanqCoords[2]} | Vanquisher Spawned at [${vanqCoords[3]} ]!`) }, 1000);
+        delay(() => { ChatLib.command("p warp") }, 500);
+        delay(() => { ChatLib.command("pc" + vanqMessage) }, 1000);
         delay(() => { ChatLib.command("p disband") }, 1500);
     }
 }

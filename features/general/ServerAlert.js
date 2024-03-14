@@ -14,16 +14,13 @@ let servers = {};
  * Replaces joining message if player has been in server in past X minutes.
  */
 registerWhen(register("chat", (server, event) => {
-    const currentTime = Date.now();
-    const timeDiff = (currentTime - servers[server]) / 1000;
-    const timeThreshold = settings.serverAlert * 60;
+    if (servers?.[server] === undefined) return;
 
-    if (servers?.[server] !== undefined && timeDiff < timeThreshold) {
-        cancel(event);
-        ChatLib.chat(`${DARK_RED + BOLD}Recent Server: ${WHITE + server + DARK_RED + BOLD}!`);
-        ChatLib.chat(`${DARK_RED + BOLD}Last Joined: ${WHITE + getTime(timeDiff, 2)} ago!`);
-    }
-}).setCriteria("Sending to server ${server}..."), () => settings.serverAlert !== 0);
+    const timeDiff = (Date.now() - servers[server]) / 1000;
+    cancel(event);
+    ChatLib.chat(`${DARK_RED + BOLD}Recent Server: ${WHITE + server + DARK_RED + BOLD}!`);
+    ChatLib.chat(`${DARK_RED + BOLD}Last Joined: ${WHITE + getTime(timeDiff, 2)} ago!`);
+}).setCriteria("Sending to server ${server}..."), () => settings.serverAlert);
 
 /**
  * Clears server entry after X minutes when leaving it.
@@ -31,6 +28,5 @@ registerWhen(register("chat", (server, event) => {
 registerWhen(register("worldUnload", () => {
     const server = getServer();
     if (server === undefined) return;
-    const currentTime = Date.now();
-    servers[server] = currentTime;
-}), () => settings.serverAlert !== 0);
+    servers[server] = Date.now();
+}), () => settings.serverAlert);
