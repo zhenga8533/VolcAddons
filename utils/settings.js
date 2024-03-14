@@ -555,6 +555,14 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     // --- Bestiary ---
     @SwitchProperty({
+        name: "Bestiary Tab Display",
+        description: `${DARK_RED}NEW! ${GRAY}Renders the bestiary display in tab onto the screen as an overlay.`,
+        category: "Combat",
+        subcategory: "Bestiary"
+    })
+    bestiaryDisplay = false;
+
+    @SwitchProperty({
         name: "Bestiary GUI",
         description: "Shows bestiary level as stack size and highlight uncompleted bestiary milestones.",
         category: "Combat",
