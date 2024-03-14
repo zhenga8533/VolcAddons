@@ -8,6 +8,7 @@
     "- Fixed various features to work with tab widgets",
     "  - Pet display",
     "  - Stats display",
+    "  - Composter display",
     "  - Visitors display",
     "- Fixed item value bricking when API is down",
     "- Fixed server alert",

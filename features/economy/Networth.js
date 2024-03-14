@@ -59,6 +59,7 @@ function setInv(name, values, extra=undefined) {
     return value;
 }
 
+let networthIDs = [3745];
 /**
  * Fetches the networth of a player's Hypixel SkyBlock profile.
  * 
@@ -69,27 +70,32 @@ export function getNetworth(username, fruit) {
     // Get UUID of entered username
     new Message(`${LOGO + YELLOW}Fetching API data...`).setChatLineId(3745).chat();
     axios.get(`https://sky.shiiyu.moe/api/v2/profile/${username}`).then(response => {
-        ChatLib.clearChat(3745);
+        ChatLib.clearChat(networthIDs);
+        networthIDs = [3745];
+        let networthID = 3746;
 
         // Check if user exists
         if (response.data.error !== undefined) {
-            ChatLib.chat(`${LOGO + RED}Couldn't find any profile with name ${username}...`);
+            networthIDs.push(networthID);
+            new Message(`${LOGO + RED}Couldn't find any profile with name ${username}...`).setChatLineId(networthID++).chat();
             return;
         }
 
         // Ask for desired profile
         const profiles = response.data.profiles;
         if (fruit === undefined) {
-            ChatLib.chat(`\n${LOGO + DARK_AQUA}Please select desired profile:`);
+            networthIDs.push(networthID);
+            new Message(`\n${LOGO + DARK_AQUA}Please select desired profile:`).setChatLineId(networthID++).chat();
 
             let i = 1;
             Object.keys(profiles).forEach(key => {
                 fruit = profiles[key].cute_name;
+                networthIDs.push(networthID);
                 new Message(` ${GRAY + (i++)}. `, new TextComponent((profiles[key].current ? GREEN : AQUA) + fruit)
                     .setClickAction("run_command")
                     .setClickValue(`/va nw ${username} ${fruit}`)
                     .setHoverValue(`${YELLOW}Click to calculate networth for ${fruit} profile.`)
-                ).chat();
+                ).setChatLineId(networthID++).chat();
             });
             return;
         }
