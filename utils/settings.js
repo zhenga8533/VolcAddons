@@ -556,7 +556,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Bestiary ---
     @SwitchProperty({
         name: "Bestiary Tab Display",
-        description: `${DARK_RED}NEW! ${GRAY}Renders the bestiary display in tab onto the screen as an overlay.`,
+        description: "Renders the bestiary display in tab onto the screen as an overlay.",
         category: "Combat",
         subcategory: "Bestiary"
     })
