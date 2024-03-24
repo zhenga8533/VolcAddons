@@ -1,3 +1,4 @@
 [
-    "- Changed `/pesttp` to also track pest widget"
+    "- Changed `/pesttp` to also track pest widget",
+    "- Fixed settings listing incorrect commands"
 ]

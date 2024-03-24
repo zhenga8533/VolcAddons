@@ -33,7 +33,7 @@ ${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at 
         // Party Category
         this.setCategoryDescription("Party",
         `${HEADER}
-        ${ITALIC}Related Commands: /va <wl, bl, toggles>`);
+${ITALIC}Related Commands: /va <wl, bl, toggles>`);
 
         // Economy Category
         this.setCategoryDescription("Economy",
@@ -43,13 +43,15 @@ ${ITALIC}Related Commands: /va <attribute, calc, nw>`);
         // Combat Category
         this.setCategoryDescription("Combat",
         `${HEADER}
-    ${ITALIC}Related Commands: /va be`);
+${ITALIC}Related Commands: /va be`);
     
         // Mining Category
         this.setCategoryDescription("Mining", HEADER);
 
         // Farming Category
-        this.setCategoryDescription("Farming", HEADER);
+        this.setCategoryDescription("Farming", 
+        `${HEADER}
+${ITALIC}Realted Commands: /pesttp`);
 
         // Event Category
         this.setCategoryDescription("Event",
@@ -131,7 +133,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     // --- General ---
     @SwitchProperty({
         name: "Armor Display",
-        description: `Displays user's armor pieces as icons on an overlay. Move GUI with ${AQUA}/moveSkills${GRAY}.`,
+        description: `Displays user's armor pieces as icons on an overlay. Move GUI with ${AQUA}/moveArmor${GRAY}.`,
         category: "General",
         subcategory: "General"
     })
@@ -139,7 +141,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     @SwitchProperty({
         name: "Equipment Display",
-        description: `Displays user's equipment pieces as icons on an overlay. Move GUI with ${AQUA}/moveSkills${GRAY}.`,
+        description: `Displays user's equipment pieces as icons on an overlay. Move GUI with ${AQUA}/moveEq${GRAY}.`,
         category: "General",
         subcategory: "General"
     })
