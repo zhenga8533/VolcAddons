@@ -25,9 +25,13 @@ let hive = [];
  * Sort the swarm dictionary into hive in descending pest order.
  */
 function setHive() {
-    let entries = Object.entries(swarm);
-    entries.sort((a, b) => b[1] - a[1]);
-    hive = entries.map(entry => entry[0]);
+    const tablist = TabList.getNames();
+    const pestIndex = tablist.findIndex(tab => tab === "§r§4§lPests:§r");
+    if (pestIndex === -1) {
+        let entries = Object.entries(swarm);
+        entries.sort((a, b) => b[1] - a[1]);
+        hive = entries.map(entry => entry[0]);
+    } else hive = tablist[pestIndex + 2].split("§r§f, §r§b").map(plot => plot.replace(/\D/g, ''));
 }
 
 /**
@@ -148,17 +152,18 @@ registerWhen(register("guiClosed", () => {
 /**
  * Pest warp command
  */
+let lastPlot = undefined;
 register("command", () => {
-    if (hive.length === 0) {
+    setHive();
+    const plot = hive.find(p => p != lastPlot);
+    if (plot === undefined) {
         ChatLib.chat(`${LOGO + RED}No infested plots found...\n${DARK_GRAY}If there are pests, please open plots menu to track!`);
         return;
     }
 
-    // Warp to plot with most pests
-    const plot = hive[0];
     delete swarm[plot];
-    
     ChatLib.command(`plottp ${plot}`);
+    lastPlot = plot;
     setHive();
 }).setName("pesttp");
 
@@ -205,9 +210,9 @@ registerWhen(register("chat", () => {
  */
 const bonuses = {};
 let remain = 0;
-function addPests(pests) {
-    if (pests in bonuses) addPests(pests.toString() + String.fromCharCode(Math.floor(Math.random() * 26) + 97));
-    else bonuses[pests] = 1800;
+function addPests(pest) {
+    if (pest in bonuses) addPests(pest.toString() + String.fromCharCode(Math.floor(Math.random() * 26) + 97));
+    else bonuses[pest] = 1800;
 }
 registerWhen(register("chat", (_, fortune) => {
     remain = 1800;
