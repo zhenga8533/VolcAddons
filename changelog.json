@@ -1,5 +1,6 @@
 [
     "- Changed `/pesttp` to also track pest widget",
     "- Fixed settings listing incorrect commands",
-    "- Fixed vanq warp not sending coords"
+    "- Fixed vanq warp not sending coords",
+    "- Fixed error on server leave"
 ]

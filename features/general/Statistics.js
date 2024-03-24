@@ -29,6 +29,7 @@ const statsOverlay = new Overlay("statsDisplay", ["all"], () => true, data.YL, "
  */
 let petWidget = false;
 registerWhen(register("step", () => {
+    if (!World.isLoaded()) return;
     const tabNames = TabList.getNames();
     const petIndex = tabNames.findIndex(tab => tab === "§r§e§lPet:§r");
     if (petIndex !== -1) {
