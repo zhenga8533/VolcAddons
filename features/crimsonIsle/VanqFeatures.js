@@ -207,7 +207,7 @@ function warpParty() {
         notInParty = 0;
 
         delay(() => { ChatLib.command("p warp") }, 500);
-        delay(() => { ChatLib.command("pc" + vanqMessage) }, 1000);
+        delay(() => { ChatLib.command("pc " + vanqMessage) }, 1000);
         delay(() => { ChatLib.command("p disband") }, 1500);
     }
 }
