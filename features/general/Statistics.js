@@ -123,7 +123,7 @@ register("step", () => {
 register("step", () => {
     if (!World.isLoaded()) return;
 
-    const today = new Date().getDay();
+    const today = new Date().getDate();
     if (data.lastDay !== today) {
         data.playtime = 0;
         data.lastDay = today;
