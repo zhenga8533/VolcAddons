@@ -4,6 +4,41 @@ import { AQUA, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD,
 import { delay } from "./thread";
 
 
+const DEFAULT_GUI = {
+    "AL": [780, 430, 1.2, false, false], // Skill Tracker Location
+    "BL": [10, 120, 1.2, false, false], // Vampire Location
+    "CL": [10, 180, 1.2, false, false], // Counter Location
+    "DL": [10, 180, 1.2, false, false], // Broodmother Location
+    "EL": [100, 150, 1.1, false, false], // Advanced Value Location
+    "FL": [220, 10, 1.2, false, false], // Trophy Fish Location
+    "GL": [10, 140, 1.2, false, false], // Gyro Location
+    "HL": [10, 240, 1.2, false, false], // Powder Chest Location
+    "IL": [10, 180, 1.2, false, false], // Inq Location
+    "JL": [150, 180, 1.2, false, false], // Kill Counter Location
+    "KL": [600, 220, 1.2, false, false], // Kuudra Profit Location
+    "LL": [870, 130, 1.2, false, false], // Server Status Location
+    "ML": [780, 390, 1.2, false, false], // Coins Location
+    "OL": [10, 130, 1.2, false, false], // Composter Location
+    "PL": [10, 180, 1.2, false, false], // Powder Location
+    "QL": [250, 225, 4, false, false], // Vanquisher Location
+    "RL": [600, 175, 1, false, false], // Container Value Location
+    "SL": [10, 180, 1.2, false, false], // Splits Location
+    "TL": [10, 130, 1.2, false, false], // Golden Fish Timer Location
+    "UL": [930, 65, 1.2, false, false], // Armor Display Location
+    "VL": [10, 180, 1.2, false, false], // Visitors Location
+    "WL": [730, 130, 1.2, false, false], // Wolf Combo Location
+    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, false], // Searchbox location
+    "YL": [770, 125, 1.2, false, false], // SkyBlock Stats Location
+    "ZL": [780, 330, 1.2, false, false], // Kuudra Profit Tracker Location
+    "BCL": [180, 10, 1, false, false], // Bingo Card Location
+    "BTL": [110, 180, 1.2, false, false], // Bestiary Tab Location
+    "CEL": [375, 275, 3, false, false], // Crate edit location
+    "EQL": [905, 65, 1.2, false, false], // Equipment Location
+    "PHL": [170, 160, 1.2, false, false], // Pesthunter Location
+    "SDL": [170, 180, 1.2, false, false], // Spray Display Location
+    "TVL": [600, 150, 1.2, false, false], // Trade Value Location
+}
+
 // --- PERSISTENT DATA ---
 export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
@@ -78,44 +113,19 @@ export let data = new PogObject("VolcAddons", {
     "slotBinds": {},
     "bindPresets": {},
     // GUI locations
-    "AL": [780, 430, 1.2, false, false], // Skill Tracker Location
-    "BL": [10, 120, 1.2, false, false], // Vampire Location
-    "CL": [10, 180, 1.2, false, false], // Counter Location
-    "DL": [10, 180, 1.2, false, false], // Broodmother Location
-    "EL": [100, 150, 1.1, false, false], // Advanced Value Location
-    "FL": [220, 10, 1.2, false, false], // Trophy Fish Location
-    "GL": [10, 140, 1.2, false, false], // Gyro Location
-    "HL": [10, 240, 1.2, false, false], // Powder Chest Location
-    "IL": [10, 180, 1.2, false, false], // Inq Location
-    "JL": [150, 180, 1.2, false, false], // Kill Counter Location
-    "KL": [600, 220, 1.2, false, false], // Kuudra Profit Location
-    "LL": [870, 130, 1.2, false, false], // Server Status Location
-    "ML": [780, 390, 1.2, false, false], // Coins Location
-    "OL": [10, 130, 1.2, false, false], // Composter Location
-    "PL": [10, 180, 1.2, false, false], // Powder Location
-    "QL": [250, 225, 4, false, false], // Vanquisher Location
-    "RL": [600, 175, 1, false, false], // Container Value Location
-    "SL": [10, 180, 1.2, false, false], // Splits Location
-    "TL": [10, 130, 1.2, false, false], // Golden Fish Timer Location
-    "UL": [930, 65, 1.2, false, false], // Armor Display Location
-    "VL": [10, 180, 1.2, false, false], // Visitors Location
-    "WL": [730, 130, 1.2, false, false], // Wolf Combo Location
-    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, false], // Searchbox location
-    "YL": [770, 125, 1.2, false, false], // SkyBlock Stats Location
-    "ZL": [780, 330, 1.2, false, false], // Kuudra Profit Tracker Location
-    "BCL": [180, 10, 1, false, false], // Bingo Card Location
-    "BTL": [110, 180, 1.2, false, false], // Bestiary Tab Location
-    "CEL": [375, 275, 3, false, false], // Crate edit location
-    "EQL": [905, 65, 1.2, false, false], // Equipment Location
-    "PHL": [170, 160, 1.2, false, false], // Pesthunter Location
-    "SDL": [170, 180, 1.2, false, false], // Spray Display Location
-    "TVL": [600, 150, 1.2, false, false], // Trade Value Location
+    ...DEFAULT_GUI,
     // Rift waypoint properties
     "fairySouls": FAIRY_SOULS,
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
 }, "datitee.json");
 
+// --- GUI CONTROL ---
+export function resetGUI() {
+    Object.keys(DEFAULT_GUI).forEach(overlay => {
+        data[overlay] = DEFAULT_GUI[overlay];
+    });
+}
 
 // --- TRIGGER CONTROL ---
 

@@ -1,5 +1,6 @@
 [
     "- Added bingo card display",
+    "- Added `/va gui reset`",
     "- Changed `/pesttp` to also track pest widget",
     "- Fixed fairy soul popping too many from list",
     "- Fixed `/updateva` (50/50 it works or it doesn't)",
