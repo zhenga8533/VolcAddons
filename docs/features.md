@@ -106,6 +106,8 @@ subtitle: List of all features and their related commands.
     - Spray Display (`moveSpray`)
 
 ### <u>Event Features</u>
+- **Bingo**
+    - Bingo Card Overlay
 - **Great Spook**
     - Math Teacher Solver
     - Primal Fear Alert
