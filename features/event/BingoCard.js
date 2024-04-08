@@ -84,3 +84,7 @@ registerWhen(register("chat", (goal) => {
     if (goal in personal) delete personal[goal];
     updateBingo();
 }).setCriteria("BINGO GOAL COMPLETE! ${goal}"), () => settings.bingoCard !== 0);
+
+registerWhen(register("chat", () => {
+    bingoOverlay.message = "";
+}).setCriteria("Switching to profile ${profile}..."), () => settings.bingoCard !== 0);
