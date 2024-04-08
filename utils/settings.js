@@ -851,6 +851,16 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
 
     // ████████████████████████████████████████████████████ EVENT ████████████████████████████████████████████████████
+
+    // --- Bingo ---
+    @SelectorProperty({
+        name: "Bingo Card Overlay",
+        description: `${DARK_RED}NEW! ${GRAY}Displays bingo card goals on screen as an overlay.\nMove GUI with ${AQUA}/moveBingo${GRAY}.`,
+        category: "Event",
+        subcategory: "Bingo",
+        options: ["OFF", "All", "Personal", "Community"]
+    })
+    bingoCard = 0;
     
     // --- Great Spook ---
     @SwitchProperty({
