@@ -76,6 +76,7 @@ import "./features/farming/GardenTab";
 import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";
 // Event Features
+import "./features/event/BingoCard";
 import "./features/event/BurrowDetect";
 import "./features/event/GreatSpook";
 import "./features/event/InquisitorDetect";
@@ -101,7 +102,6 @@ import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 import { getNetworth } from "./features/economy/Networth";
-import { getTime } from "./utils/functions/format";
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();

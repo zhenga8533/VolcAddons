@@ -1,5 +1,7 @@
 [
+    "- Added bingo card display",
     "- Changed `/pesttp` to also track pest widget",
+    "- Fixed fairy soul popping too many from list",
     "- Fixed `/updateva` (50/50 it works or it doesn't)",
     "- Fixed settings listing incorrect commands",
     "- Fixed vanq warp not sending coords",

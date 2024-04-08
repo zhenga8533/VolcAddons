@@ -17,7 +17,7 @@ registerWhen(register("chat", () => {
     // Delete closest soul
     const souls = data.fairySouls[getWorld()];
     const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
-    if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
+    if (closest !== undefined && closest[1] < 10) souls.splice(souls.indexOf(closest[0]), 1);
 }).setCriteria("SOUL! You found a Fairy Soul!"), () => settings.fairyWaypoint !== 0);
 
 /**
