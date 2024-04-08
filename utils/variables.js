@@ -16,7 +16,7 @@ const DEFAULT_GUI = {
     "IL": [10, 180, 1.2, false, false], // Inq Location
     "JL": [150, 180, 1.2, false, false], // Kill Counter Location
     "KL": [600, 220, 1.2, false, false], // Kuudra Profit Location
-    "LL": [870, 130, 1.2, false, false], // Server Status Location
+    "LL": [770, 70, 1.2, false, false], // Server Status Location
     "ML": [780, 390, 1.2, false, false], // Coins Location
     "OL": [10, 130, 1.2, false, false], // Composter Location
     "PL": [10, 180, 1.2, false, false], // Powder Location
@@ -28,7 +28,7 @@ const DEFAULT_GUI = {
     "VL": [10, 180, 1.2, false, false], // Visitors Location
     "WL": [730, 130, 1.2, false, false], // Wolf Combo Location
     "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, false], // Searchbox location
-    "YL": [770, 125, 1.2, false, false], // SkyBlock Stats Location
+    "YL": [770, 170, 1.2, false, false], // SkyBlock Stats Location
     "ZL": [780, 330, 1.2, false, false], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false], // Bingo Card Location
     "BTL": [110, 180, 1.2, false, false], // Bestiary Tab Location

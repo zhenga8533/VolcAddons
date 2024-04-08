@@ -20,6 +20,7 @@ ${GRAY}- ${WHITE}Constitution: ${RED}-1
 ${GRAY}- ${WHITE}Intelligence: ${RED}-1
 ${GRAY}- ${WHITE}Wisdom: ${RED}-1
 ${GRAY}- ${WHITE}Charisma: ${GREEN}999
+${DARK_AQUA + BOLD}Legion: ${RED}0 ${DARK_GRAY}(0%)
 ${DARK_AQUA + BOLD}SF: ${GREEN}/ -.. ${AQUA}⸎
 ${DARK_AQUA + BOLD}Daily PT: ${GREEN}/ -..`;
 const statsOverlay = new Overlay("statsDisplay", ["all"], () => true, data.YL, "moveStats", statsExample);

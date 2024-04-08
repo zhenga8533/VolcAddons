@@ -96,11 +96,14 @@ try {
  * Variables used to represent and display player status.
  */
 const statusExample = 
-`${DARK_AQUA + BOLD}XYZ: ${GREEN}7, 8, 9
-${DARK_AQUA + BOLD}Ping: ${GREEN}420 ${AQUA}ms
-${DARK_AQUA + BOLD}TPS: ${GREEN}666 ${AQUA}tps
-${DARK_AQUA + BOLD}FPS: ${GREEN}510 ${AQUA}fps
-${DARK_AQUA + BOLD}CPS: ${GREEN}6 ${AQUA}: ${GREEN}9`;
+`${DARK_AQUA + BOLD}XYZ: ${GREEN}-195, 88, 58
+${DARK_AQUA + BOLD}Y/P: ${AQUA}-89.15 / 30.89
+${DARK_AQUA + BOLD}Dir: ${AQUA}East
+${DARK_AQUA + BOLD}Ping: ${GREEN}58 ${AQUA}ms
+${DARK_AQUA + BOLD}FPS: ${GREEN}60 ${AQUA}fps
+${DARK_AQUA + BOLD}TPS: ${GREEN}19.8 ${AQUA}tps
+${DARK_AQUA + BOLD}CPS: ${GREEN}0 ${AQUA}: ${GREEN}0
+${DARK_AQUA + BOLD}Day: ${AQUA}0.75`;
 const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
 
 /**

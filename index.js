@@ -251,7 +251,8 @@ register ("command", (...args) => {
         case "gui":
             if (args[1] === "reset") {
                 resetGUI();
-                ChatLib.chat(`${GREEN}Successfully reset ALL gui locations!`);
+                ChatLib.chat(`${GREEN}Successfully reset ALL gui location settings!`);
+                ChatLib.command("ct load", true);
             } else openGUI();
             break;
         // Send coords
