@@ -4,7 +4,7 @@
   "creator": "Volcaronitee",
   "description": "joe.",
   "entry": "index.js",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "requires": [
     "axios",
     "BeaconBeam",
