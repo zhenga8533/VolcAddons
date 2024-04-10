@@ -702,6 +702,23 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
 
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
 
+    // --- Commissions ---
+    @SwitchProperty({
+        name: "Commissions Display",
+        description: "Displays mining commissions from tab list onto screen as an overlay.",
+        category: "Mining",
+        subcategory: "Commissions"
+    })
+    commissionsDisplay = false;
+
+    @SwitchProperty({
+        name: "Commission Gemstones",
+        description: "Renders a text waypoint to any gemstone location needed for a commission.",
+        category: "Mining",
+        subcategory: "Commissions"
+    })
+    commissionGemstones = false;
+
     // --- Crystal Hollows ---
     @SwitchProperty({
         name: "Wishing Compass Locator",
@@ -750,15 +767,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         max: 10
     })
     powderTracker = 0;
-
-    // --- Mining ---
-    @SwitchProperty({
-        name: "Commissions Display",
-        description: "Displays mining commissions from tab list onto screen as an overlay.",
-        category: "Mining",
-        subcategory: "Mining"
-    })
-    commissionsDisplay = false;
 
 
     // ████████████████████████████████████████████████████ FARMING ████████████████████████████████████████████████████
