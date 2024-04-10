@@ -65,6 +65,7 @@ import "./features/combat/ManaDrain";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features
+import "./features/mining/CommissionsDisplay";
 import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
 import "./features/mining/WishingCompass";

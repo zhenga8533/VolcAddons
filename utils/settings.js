@@ -751,6 +751,15 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     powderTracker = 0;
 
+    // --- Mining ---
+    @SwitchProperty({
+        name: "Commissions Display",
+        description: "Displays mining commissions from tab list onto screen as an overlay.",
+        category: "Mining",
+        subcategory: "Mining"
+    })
+    commissionsDisplay = false;
+
 
     // ████████████████████████████████████████████████████ FARMING ████████████████████████████████████████████████████
 

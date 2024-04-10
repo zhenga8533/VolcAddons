@@ -32,6 +32,7 @@ const DEFAULT_GUI = {
     "ZL": [780, 330, 1.2, false, false], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false], // Bingo Card Location
     "BTL": [110, 180, 1.2, false, false], // Bestiary Tab Location
+    "CDL": [190, 115, 1.2, false, false], // Commission Display Location
     "CEL": [375, 275, 3, false, false], // Crate edit location
     "EQL": [905, 65, 1.2, false, false], // Equipment Location
     "PHL": [170, 160, 1.2, false, false], // Pesthunter Location
