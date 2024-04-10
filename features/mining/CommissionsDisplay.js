@@ -22,4 +22,4 @@ registerWhen(register("step", () => {
         commissionOverlay.message += `${tab[index]}\n`;
         index++;
     }
-}).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.commissionsDisplay);
+}).setFps(4), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.commissionsDisplay);
