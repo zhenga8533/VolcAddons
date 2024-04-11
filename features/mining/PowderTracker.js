@@ -55,10 +55,10 @@ function updatePowder(powder, current) {
 registerWhen(register("step", () => {
     if (getPaused() || !World.isLoaded()) return;
     const tablist = TabList.getNames();
-    const powderIndex = tablist.findIndex(line => line === "§r§9§l᠅ Powders§r");
+    const powderIndex = tablist.findIndex(line => line === "§r§9§lPowders:§r");
     if (powderIndex === undefined || powderIndex === -1) return;
-    const currentMithril = parseInt(tablist[powderIndex + 1].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
-    const currentGemstone = parseInt(tablist[powderIndex + 2].removeFormatting().trim().split(' ')[2].replace(/\D/g, ''));
+    const currentMithril = parseInt(tablist[powderIndex + 1].removeFormatting().trim().split(' ')[1].replace(/\D/g, ''));
+    const currentGemstone = parseInt(tablist[powderIndex + 2].removeFormatting().trim().split(' ')[1].replace(/\D/g, ''));
     updatePowder(powders.Mithril, currentMithril);
     updatePowder(powders.Gemstone, currentGemstone);
 
