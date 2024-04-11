@@ -702,23 +702,6 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
 
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
 
-    // --- Commissions ---
-    @SwitchProperty({
-        name: "Commissions Display",
-        description: "Displays mining commissions from tab list onto screen as an overlay.",
-        category: "Mining",
-        subcategory: "Commissions"
-    })
-    commissionsDisplay = false;
-
-    @SwitchProperty({
-        name: "Commission Gemstones",
-        description: "Renders a text waypoint to any gemstone location needed for a commission.",
-        category: "Mining",
-        subcategory: "Commissions"
-    })
-    commissionGemstones = false;
-
     // --- Crystal Hollows ---
     @SwitchProperty({
         name: "Wishing Compass Locator",
@@ -767,6 +750,31 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         max: 10
     })
     powderTracker = 0;
+
+    // --- Shaft ---
+    @SwitchProperty({
+        name: "Commissions Display",
+        description: "Displays mining commissions from tab list onto screen as an overlay.",
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    commissionsDisplay = false;
+
+    @SwitchProperty({
+        name: "Commission Gemstones",
+        description: "Renders a text waypoint to any gemstone location needed for a commission.",
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    commissionGemstones = false;
+
+    @SwitchProperty({
+        name: "Corpse Announce",
+        description: "Announces corpse locatino to party chat if it has yet to be announced.",
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    corpseAnnounce = false;
 
 
     // ████████████████████████████████████████████████████ FARMING ████████████████████████████████████████████████████
