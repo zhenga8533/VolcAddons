@@ -19,7 +19,7 @@ const DEFAULT_GUI = {
     "LL": [770, 70, 1.2, false, false], // Server Status Location
     "ML": [780, 390, 1.2, false, false], // Coins Location
     "OL": [10, 130, 1.2, false, false], // Composter Location
-    "PL": [10, 180, 1.2, false, false], // Powder Location
+    "PL": [10, 100, 1.2, false, false], // Powder Location
     "QL": [250, 225, 4, false, false], // Vanquisher Location
     "RL": [600, 175, 1, false, false], // Container Value Location
     "SL": [10, 180, 1.2, false, false], // Splits Location

@@ -1,6 +1,6 @@
 import { request } from "../../../axios";
 import settings from "../../utils/settings";
-import { BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
@@ -13,14 +13,17 @@ import { getWaifu } from "../party/PartyCommands";
  */
 const powders = {
     "Mithril": new Stat(),
-    "Gemstone": new Stat()
+    "Gemstone": new Stat(),
+    "Glacite": new Stat()
 }
 const powderExample =
-`${DARK_GREEN + BOLD}Mithril Powder: ${WHITE}Hello
-${DARK_GREEN + BOLD}Mithril Rate: ${WHITE}@
-${LIGHT_PURPLE + BOLD}Gemstone Powder: ${WHITE}Banana
-${LIGHT_PURPLE + BOLD}Gemstone Rate: ${WHITE}The
-${BLUE + BOLD}Time Passed: ${WHITE}Bot`;
+`${DARK_GREEN + BOLD}Mithril: ${WHITE}I
+${DARK_GREEN + BOLD}Rate: ${WHITE}wake
+${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE}up
+${LIGHT_PURPLE + BOLD}Rate: ${WHITE}to
+${AQUA + BOLD}Glacite: ${WHITE}the
+${AQUA + BOLD}Rate: ${WHITE}sounds
+${BLUE + BOLD}Time Passed: ${WHITE}of`;
 const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], () => true, data.PL, "movePowder", powderExample);
 
 /**
@@ -59,17 +62,21 @@ registerWhen(register("step", () => {
     if (powderIndex === undefined || powderIndex === -1) return;
     const currentMithril = parseInt(tablist[powderIndex + 1].removeFormatting().trim().split(' ')[1].replace(/\D/g, ''));
     const currentGemstone = parseInt(tablist[powderIndex + 2].removeFormatting().trim().split(' ')[1].replace(/\D/g, ''));
+    const currentGlacite = parseInt(tablist[powderIndex + 3].removeFormatting().trim().split(' ')[1].replace(/\D/g, ''));
     updatePowder(powders.Mithril, currentMithril);
     updatePowder(powders.Gemstone, currentGemstone);
+    updatePowder(powders.Glacite, currentGlacite);
 
     // Set HUD
     const timeDisplay = powders.Mithril.since < settings.powderTracker * 60 ? getTime(powders.Mithril.time) : 
         powders.Gemstone.since < settings.powderTracker * 60 ? getTime(powders.Gemstone.time) : `${RED}Inactive`;
     powderOverlay.message = 
-`${DARK_GREEN + BOLD}Mithril Powder: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
-${DARK_GREEN + BOLD}Mithril Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr
-${LIGHT_PURPLE + BOLD}Gemstone Powder: ${WHITE + commafy(powders.Gemstone.getGain())} ᠅
-${LIGHT_PURPLE + BOLD}Gemstone Rate: ${WHITE + commafy(powders.Gemstone.getRate())} ᠅/hr
+`${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
+${DARK_GREEN + BOLD}Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr
+${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain())} ᠅
+${LIGHT_PURPLE + BOLD}Rate: ${WHITE + commafy(powders.Gemstone.getRate())} ᠅/hr
+${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain())} ᠅
+${AQUA + BOLD}Rate: ${WHITE + commafy(powders.Glacite.getRate())} ᠅/hr
 ${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`;
 }).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !==0);
 
