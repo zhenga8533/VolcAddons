@@ -1190,7 +1190,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
         category: "Kuudra",
         subcategory: "Kuudra Profit"
     })
-    maxChili = false;
+    maxChili = true;
 
 
     // ████████████████████████████████████████████████████ RIFT ████████████████████████████████████████████████████
