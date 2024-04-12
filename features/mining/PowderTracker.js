@@ -103,10 +103,10 @@ registerWhen(register("chat", () => {
             "avatar_url": getWaifu(),
             "embeds": [{
                 "author": {
-                    "name": player,
-                    "icon_url": `https://www.mc-heads.net/avatar/${player}`
+                    "name": Player.getName(),
+                    "icon_url": `https://www.mc-heads.net/avatar/${Player.getName()}`
                 },
-                "color": color,
+                "color": 0,
                 "description": `${getWorld()}: ⚑ The 2x Powder event started!`,
                 "timestamp": new Date()
             }]

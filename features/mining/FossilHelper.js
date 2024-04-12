@@ -10,7 +10,7 @@ const FOSSILS = {
     "10%": [Image.fromAsset("Webbed.png")],
     "12.5%": [Image.fromAsset("Tusk.png")],
     "9.1%": [Image.fromAsset("Clubbed.png")],
-    "6.3%": [Image.fromAsset("Ugly.png")]
+    "6.2%": [Image.fromAsset("Ugly.png")]
 };
 let possible = [];
 const background = new Gui();
@@ -19,7 +19,7 @@ const renderFossil = register("guiRender", () => {
     background.func_146278_c(0);
     let y = 50;
 
-    possible.forEach(fossil => {
+    possible?.forEach(fossil => {
         fossil.draw(50, y, 300, 200);
         y += 250;
     });

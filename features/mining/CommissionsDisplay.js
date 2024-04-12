@@ -41,7 +41,7 @@ const commissionExample =
 §r §r§fCorpse Looter: §r§c0%§r
 §r §r§fScrap Collector: §r§c0%§r
 §r §r§fCitrine Gemstone Collector: §r§c0%§r`;
-const commissionOverlay = new Overlay("commissionsDisplay", ["Crystal Hollows", "Dwarven Mines"], () => true, data.CDL, "moveCommissions", commissionExample);
+const commissionOverlay = new Overlay("commissionsDisplay", ["Crystal Hollows", "Dwarven Mines", "Mineshaft"], () => true, data.CDL, "moveCommissions", commissionExample);
 
 registerWhen(register("renderWorld", () => {
     (commissionWaypoints.length === 0 ? ALL_WAYPOINTS : commissionWaypoints).forEach(gem => {
@@ -76,7 +76,8 @@ registerWhen(register("step", () => {
         // Set commission message
         index++;
     }
-}).setFps(4), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && (settings.commissionsDisplay || settings.commissionGemstones));
+}).setFps(4),
+() => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines" || getWorld() === "Mineshaft") && (settings.commissionsDisplay || settings.commissionGemstones));
 
 
 /**

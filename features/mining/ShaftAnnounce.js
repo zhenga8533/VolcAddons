@@ -19,9 +19,10 @@ const TRANSFER_COMMANDS = ["?transfer", "!ptme", "!pt", ".transfer", "Mineshaft,
  */
 function attemptTransfer(index) {
     delay(() => {
+        if (getIsLeader() || index > 4) return;
         ChatLib.command(`pc ${TRANSFER_COMMANDS[index]}`);
-        if (!getIsLeader() && index < 4) attemptTransfer(index + 1);
-    }, 1000);
+        attemptTransfer(index + 1);
+    }, 690);
 }
 
 registerWhen(register("chat", () => {
