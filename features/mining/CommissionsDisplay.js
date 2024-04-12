@@ -3,7 +3,7 @@ import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { Overlay } from "../../utils/overlay";
 import { getClosest } from "../../utils/functions/find";
-import { BOLD, UNDERLINE } from "../../utils/constants";
+import { BOLD, GOLD, UNDERLINE } from "../../utils/constants";
 
 
 const GEMSTONE_WAYPOINTS = {
@@ -67,10 +67,11 @@ registerWhen(register("step", () => {
             let closestCopy = [...closest];
             closestCopy[0] = `${BOLD + UNDERLINE}${closestCopy[0]}`;
             commissionWaypoints.push(closestCopy);
-        }
+
+            commissionOverlay.message += `${tab[index].replace("§f", GOLD)}\n`;
+        } else commissionOverlay.message += `${tab[index]}\n`;
 
         // Set commission message
-        commissionOverlay.message += `${tab[index]}\n`;
         index++;
     }
 }).setFps(4), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && (settings.commissionsDisplay || settings.commissionGemstones));
