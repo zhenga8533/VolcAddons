@@ -261,6 +261,8 @@ export function executeCommand(name, args, sendTo) {
                 ChatLib.command("p warp");
                 break;
             case "transfer":
+            case "ptme":
+            case "pt":
                 if (!toggles.transferCommand) return;
                 ChatLib.command("p transfer " + name);
                 break;

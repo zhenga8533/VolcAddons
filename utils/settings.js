@@ -776,6 +776,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     corpseAnnounce = false;
 
+    @SwitchProperty({
+        name: "Shaft Transfer",
+        description: "Attempts to use various party transfer chat commands if you discover a mineshaft.",
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    shaftTransfer = false;
+
 
     // ████████████████████████████████████████████████████ FARMING ████████████████████████████████████████████████████
 
