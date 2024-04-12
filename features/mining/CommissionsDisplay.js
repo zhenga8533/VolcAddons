@@ -10,7 +10,7 @@ const GEMSTONE_WAYPOINTS = {
     "Citrine": [
         ["Citrine", 0xe4d00a, -51.5, 129.5, 410.5],
         ["Citrine", 0xe4d00a, -94.5, 146.5, 259.5],
-        ["Citrine", 0xe4d00a, 38, 121.5, 386],
+        ["Citrine", 0xe4d00a, 38, 121.5, 387],
         ["Citrine", 0xe4d00a, -58, 146.5, 422]],
     "Aquamarine": [
         ["Aquamarine", 0x7fffd4, -1.5, 141.5, 437.5],
@@ -23,12 +23,14 @@ const GEMSTONE_WAYPOINTS = {
         ["Peridot", 0xb4c424, -73, 124.5, 458.5]],
     "Onyx": [
         ["Onyx", 0x000000, -68, 132.5, 407.5],
-        ["Onyx", 0x000000, 4.5, 134.5, 390.5],
-        ["Onyx", 0x000000, 79.5, 121.5, 411.5]],
+        ["Onyx", 0x000000, 79.5, 121.5, 411.5],
+        ["Onyx", 0x000000, -6.5, 134.5, 386.5]],
     "Tungsten": [
         ["Tungsten", 0x808080, 37.5, 155, 329.5]],
     "Umber": [
-        ["Umber", 0x917668, 32.5, 124.5, 359.5]]
+        ["Umber", 0x917668, 32.5, 124.5, 359.5]],
+    "Glacite": [
+        ["Glacite", 0xa5f2f3, 4.5, 134.5, 390.5]]
 };
 const ALL_WAYPOINTS = Object.values(GEMSTONE_WAYPOINTS).reduce((acc, val) => acc.concat(val), []);
 let commissionWaypoints = [];

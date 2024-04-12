@@ -182,7 +182,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         category: "General",
         subcategory: "General"
     })
-    textShadow = false;
+    textShadow = true;
 
     // --- Inventory ---
     @SwitchProperty({
@@ -754,7 +754,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     // --- Shaft ---
     @SwitchProperty({
         name: "Commissions Display",
-        description: "Displays mining commissions from tab list onto screen as an overlay.",
+        description: `${DARK_RED}New! ${GRAY}Displays mining commissions from tab list onto screen as an overlay.`,
         category: "Mining",
         subcategory: "Shaft"
     })
@@ -762,7 +762,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Commission Gemstones",
-        description: "Renders a text waypoint to any gemstone location needed for a commission.",
+        description: `${DARK_RED}New! ${GRAY}Renders a text waypoint to any gemstone location needed for a commission.`,
         category: "Mining",
         subcategory: "Shaft"
     })
@@ -770,15 +770,23 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Corpse Announce",
-        description: "Announces corpse locatino to party chat if it has yet to be announced.",
+        description: `${DARK_RED}New! ${GRAY}Announces corpse locatino to party chat if it has yet to be announced.`,
         category: "Mining",
         subcategory: "Shaft"
     })
     corpseAnnounce = false;
 
     @SwitchProperty({
+        name: "Fossil Helper",
+        description: `${DARK_RED}New! ${GRAY}Displays possible fossil patterns when a piece is uncovered. Credit to @ConnorBud2 for stolen images :).`,
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    fossilHelper = false;
+
+    @SwitchProperty({
         name: "Shaft Transfer",
-        description: "Attempts to use various party transfer chat commands if you discover a mineshaft.",
+        description: `${DARK_RED}New! ${GRAY}Attempts to use various party transfer chat commands if you discover a mineshaft.`,
         category: "Mining",
         subcategory: "Shaft"
     })
