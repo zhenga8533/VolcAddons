@@ -4,7 +4,7 @@ import { getInParty, getIsLeader } from "../../utils/party";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { delay } from "../../utils/thread";
-import { GREEN } from "../../utils/constants";
+import { AQUA, GREEN } from "../../utils/constants";
 
 
 /**

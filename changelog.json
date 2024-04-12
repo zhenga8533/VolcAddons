@@ -3,6 +3,7 @@
     "- Added commission gemstone waypoints",
     "- Added corpse announce",
     "- Added fossil helper",
+    "- Changed 2x webhook to also include Dwarven",
     "- Changed mana drain range to display a ryōiki tenkai",
     "- Changed powder tracker to also track Glacite",
     "- Fixed powder tracker"

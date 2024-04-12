@@ -3,7 +3,7 @@ import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { Overlay } from "../../utils/overlay";
 import { getClosest } from "../../utils/functions/find";
-import { BOLD, GOLD, UNDERLINE } from "../../utils/constants";
+import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/constants";
 
 
 const GEMSTONE_WAYPOINTS = {
@@ -77,3 +77,11 @@ registerWhen(register("step", () => {
         index++;
     }
 }).setFps(4), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && (settings.commissionsDisplay || settings.commissionGemstones));
+
+
+/**
+ * Commission Complete Annoucne
+ */
+registerWhen(register("chat", (commission) => {
+    Client.showTitle(GREEN + BOLD + commission, `${YELLOW}Commission Complete!`, 5, 25, 5);
+}).setCriteria("${commission} Commission Complete! Visit the King to claim your rewards!"), () => settings.commissionAnnounce);

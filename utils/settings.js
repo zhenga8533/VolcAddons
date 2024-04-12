@@ -753,6 +753,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     // --- Shaft ---
     @SwitchProperty({
+        name: "Commission Announce",
+        description: `${DARK_RED}New! ${GRAY}Alerts user whenever a commission is completed.`,
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    commissionAnnounce = false;
+
+    @SwitchProperty({
         name: "Commissions Display",
         description: `${DARK_RED}New! ${GRAY}Displays mining commissions from tab list onto screen as an overlay.`,
         category: "Mining",
