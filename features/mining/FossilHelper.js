@@ -33,7 +33,6 @@ const trackClicks = register("guiMouseClick", () => {
         
         // Determine possible fossil types
         let progress = fossil.getLore()[6].split(' ');
-        ChatLib.chat(progress[progress.length - 1].removeFormatting())
         possible = FOSSILS[progress[progress.length - 1].removeFormatting()];
 
         trackClicks.unregister();

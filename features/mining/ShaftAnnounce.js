@@ -22,7 +22,7 @@ function attemptTransfer(index) {
         if (getIsLeader() || index > 4) return;
         ChatLib.command(`pc ${TRANSFER_COMMANDS[index]}`);
         attemptTransfer(index + 1);
-    }, 690);
+    }, 420);
 }
 
 registerWhen(register("chat", () => {
@@ -51,25 +51,39 @@ register("chat", () => {
     delay(updateKeys, 3000);
 }).setCriteria(" ⛏ ${player} entered the mineshaft!");
 
-registerWhen(register("chat", () => {
+function announceCorpse(corpseType) {
     if (!getInParty()) return;
     const x = Math.round(Player.getX());
     const y = Math.round(Player.getY());
     const z = Math.round(Player.getZ());
-    if (getClosest([x, y, z], corpses)[1] < 10) return;
 
     // Determine corpse type
-    Client.scheduleTask(5, () => {
-        let tungsten = tung;
-        let umber = umb;
-        let skeleton = skele;
-        updateKeys();
-        const corpseType = tungsten > tung ? "Tungsten" :
-            umber > umb ? "Umber" :
-            skeleton > skele ? "Skeleton" : "Lapis";
+    Client.scheduleTask(4, () => {
+        if (getClosest([x, y, z], corpses)[1] < 10) return;
+        if (corpseType === undefined) {
+            let tungsten = tung;
+            let umber = umb;
+            let skeleton = skele;
+            updateKeys();
+            corpseType = tungsten > tung ? "Tungsten" :
+                umber > umb ? "Umber" :
+                skeleton > skele ? "Vanguard" : "Lapis";
+        }
         ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${corpseType} Corpse!`);
     });
+}
+registerWhen(register("chat", () => {
+    announceCorpse();
 }).setCriteria("  FROZEN CORPSE LOOT! "), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
+registerWhen(register("chat", () => {
+    announceCorpse("Tungsten");
+}).setCriteria("You need to be holding a Tungsten Key to unlock this corpse!"), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
+registerWhen(register("chat", () => {
+    announceCorpse("Umber");
+}).setCriteria("You need to be holding an Umber Key to unlock this corpse!"), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
+registerWhen(register("chat", () => {
+    announceCorpse("Vanguard");
+}).setCriteria("You need to be holding a Skeleton Key to unlock this corpse!"), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
 
 registerWhen(register("chat", (_, x, y, z) => {
     corpses.push([x, y, z.split(' ')[0]]);

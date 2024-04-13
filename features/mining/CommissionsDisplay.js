@@ -44,7 +44,7 @@ const commissionExample =
 const commissionOverlay = new Overlay("commissionsDisplay", ["Crystal Hollows", "Dwarven Mines", "Mineshaft"], () => true, data.CDL, "moveCommissions", commissionExample);
 
 registerWhen(register("renderWorld", () => {
-    (commissionWaypoints.length === 0 ? ALL_WAYPOINTS : commissionWaypoints).forEach(gem => {
+    commissionWaypoints.forEach(gem => {
         Tessellator.drawString(gem[0], gem[2], gem[3], gem[4], gem[1], true);
     });
 }), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.commissionGemstones);

@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_BLUE, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -719,7 +719,7 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
         subcategory: "Jinx"
     })
     powderAlert = true;
-
+    
     @SliderProperty({
         name: "Powder Chest Detect",
         description: `Highlights and counts nearby powder chests. Set block range of detection radius or as 0 to turn ${RED}OFF${GRAY}.
@@ -778,7 +778,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Corpse Announce",
-        description: `${DARK_RED}New! ${GRAY}Announces corpse locatino to party chat if it has yet to be announced.`,
+        description: `${DARK_RED}New! ${GRAY}Announces corpse location to party chat if it has yet to be announced. Only announces corpse you loot, so uses chat instead of ESP.`,
         category: "Mining",
         subcategory: "Shaft"
     })
