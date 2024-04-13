@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BLACK, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -66,9 +66,10 @@ function getEnchantmentValue(enchantments, bazaar, type) {
  */
 const STAR_PLACEMENT = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
 const GEMSTONE_SLOTS = {
-    "JADE": GREEN, "AMBER": GOLD, "TOPAZ": YELLOW, "SAPPHIRE": AQUA, "AMETHYST": DARK_PURPLE, "RUBY": RED, "JASPER": LIGHT_PURPLE, "OPAL": WHITE
+    "JADE": GREEN, "AMBER": GOLD, "TOPAZ": YELLOW, "SAPPHIRE": AQUA, "AMETHYST": DARK_PURPLE, "RUBY": RED, "JASPER": LIGHT_PURPLE, "OPAL": WHITE, "CITRINE": RED,
+    "AQUAMARINE": AQUA, "PERIDOT": DARK_GREEN, "ONYX": BLACK
 };
-const MULTIUSE_SLOTS = new Set(["COMBAT", "DEFENSIVE", "MINING", "UNIVERSAL"]);
+const MULTIUSE_SLOTS = new Set(["COMBAT", "DEFENSIVE", "MINING", "UNIVERSAL", "CHISEL"]);
 const REFORGES = {
     "coldfused": "ENTROPY_SUPPRESSOR", "dirty": "DIRT_BOTTLE", "fabled": "DRAGON_CLAW", "gilded": "MIDAS_JEWEL", "suspicious": "SUSPICIOUS_VIAL",
     "aote_stone": "AOTE_STONE", "withered": "WITHER_BLOOD", "bulky": "BULKY_STONE", "jerry_stone": "JERRY_STONE",
@@ -325,7 +326,7 @@ export function getItemValue(item, save=true) {
 
         if (powerScroll) {
             const powerScrollValue = auction?.[powerScroll]?.lbin ?? 0;
-            const scrollColor = GEMSTONE_SLOTS[powerScroll.split('_')[0]];
+            const scrollColor = GEMSTONE_SLOTS?.[powerScroll.split('_')[0]] ?? WHITE;
             if (save) valueMessage += `   - ${scrollColor + convertToTitleCase(powerScroll)}: ${GREEN}+${formatNumber(powerScrollValue)}\n`;
             value += powerScrollValue;
         }
