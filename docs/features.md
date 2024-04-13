@@ -83,7 +83,6 @@ subtitle: List of all features and their related commands.
 - **Crystal Hollows**
     - Wishing Compass Locator
 - **Jinx**
-    - 2x Powder Alert
     - Powder Chest Detect (`/moveChest`)
     - Powder Chest Hider
     - Powder Tracker (`/movePowder`, `/resetPowder`)

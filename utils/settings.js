@@ -712,14 +712,6 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     compassLocator = false;
 
     // --- Jinx ---
-    @SwitchProperty({
-        name: "2x Powder Alert",
-        description: "Posts a webhook to the VolcAddons Discord when 2x Powder Event starts.",
-        category: "Mining",
-        subcategory: "Jinx"
-    })
-    powderAlert = true;
-    
     @SliderProperty({
         name: "Powder Chest Detect",
         description: `Highlights and counts nearby powder chests. Set block range of detection radius or as 0 to turn ${RED}OFF${GRAY}.
