@@ -746,7 +746,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     // --- Shaft ---
     @SwitchProperty({
         name: "Commission Announce",
-        description: `${DARK_RED}New! ${GRAY}Alerts user whenever a commission is completed.`,
+        description: "Alerts user whenever a commission is completed.",
         category: "Mining",
         subcategory: "Shaft"
     })
@@ -754,7 +754,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Commissions Display",
-        description: `${DARK_RED}New! ${GRAY}Displays mining commissions from tab list onto screen as an overlay.`,
+        description: `Displays mining commissions from tab list onto screen as an overlay. Move GUI with ${AQUA}/moveCommissions${GRAY}.`,
         category: "Mining",
         subcategory: "Shaft"
     })
@@ -762,7 +762,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Commission Gemstones",
-        description: `${DARK_RED}New! ${GRAY}Renders a text waypoint to any gemstone location needed for a commission.`,
+        description: "Renders a text waypoint to any gemstone location needed for a commission.",
         category: "Mining",
         subcategory: "Shaft"
     })
@@ -770,7 +770,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Corpse Announce",
-        description: `${DARK_RED}New! ${GRAY}Announces corpse location to party chat if it has yet to be announced. Only announces corpse you loot, so uses chat instead of ESP.`,
+        description: "Announces corpse location to party chat if it has yet to be announced. Only announces corpse you loot, so uses chat instead of ESP.",
         category: "Mining",
         subcategory: "Shaft"
     })
@@ -778,7 +778,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Fossil Helper",
-        description: `${DARK_RED}New! ${GRAY}Displays possible fossil patterns when a piece is uncovered. Credit to @ConnorBud2 for stolen images :).`,
+        description: "Displays possible fossil patterns when a piece is uncovered. Credit to @ConnorBud2 for stolen images :).",
         category: "Mining",
         subcategory: "Shaft"
     })
@@ -786,7 +786,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Shaft Transfer",
-        description: `${DARK_RED}New! ${GRAY}Attempts to use various party transfer chat commands if you discover a mineshaft.`,
+        description: "Attempts to use various party transfer chat commands if you discover a mineshaft.",
         category: "Mining",
         subcategory: "Shaft"
     })
