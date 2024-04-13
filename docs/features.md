@@ -87,6 +87,11 @@ subtitle: List of all features and their related commands.
     - Powder Chest Detect (`/moveChest`)
     - Powder Chest Hider
     - Powder Tracker (`/movePowder`, `/resetPowder`)
+- **Shaft**
+    - Commissions Display (`/moveCommission`)
+    - Commission Waypoints
+    - Corpse Announce
+    - Fossil Helper
 
 ### <u>Farming Features</u>
 - **General**
