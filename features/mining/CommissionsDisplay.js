@@ -32,7 +32,6 @@ const GEMSTONE_WAYPOINTS = {
     "Glacite": [
         ["Glacite", 0xa5f2f3, 4.5, 134.5, 390.5]]
 };
-const ALL_WAYPOINTS = Object.values(GEMSTONE_WAYPOINTS).reduce((acc, val) => acc.concat(val), []);
 let commissionWaypoints = [];
 
 const commissionExample = 
@@ -55,9 +54,9 @@ registerWhen(register("step", () => {
     let index = tab.findIndex(name => name === "§r§9§lCommissions:§r");
     if (index === -1) return;
 
-    commissionOverlay.message = "";
+    commissionOverlay.message = tab[index++] + '\n';
     commissionWaypoints = [];
-    while (tab[index] !== "§r") {
+    while (tab[index].startsWith("§r §r§f")) {
         // Set waypoints
         let comm = tab[index].removeFormatting().trim().split(' ')[0];
         if (comm in GEMSTONE_WAYPOINTS) {
