@@ -31,8 +31,10 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     const spaceIndex = z.indexOf(' ');
     let time = 999;
     if (spaceIndex !== -1) {
-        if (z.includes('|'))
+        if (z.includes('|')) {
+            player = RED + z.split(' ')[2];
             time /= 3;
+        }
         z = z.substring(0, spaceIndex);
     }
     

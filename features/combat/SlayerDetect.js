@@ -24,7 +24,7 @@ registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
     
     if (settings.miniAlert === 3) Client.showTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5);
-    else announceMob(settings.miniAlert, "Slayer Miniboss", Player.getX(), Player.getY(), Player.getZ());
+    else announceMob(settings.miniAlert, "Miniboss Slayer", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
     delay(() => miniCD = false, 3000);
@@ -55,7 +55,7 @@ registerWhen(register("tick", () => {
     slainCD = false;
     questStart = false;
     if (settings.bossAlert === 3) Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
-    else if (settings.bossAlert !== 0) announceMob(settings.bossAlert, "Slayer Boss", Player.getX(), Player.getY(), Player.getZ());
+    else if (settings.bossAlert !== 0) announceMob(settings.bossAlert, "Boss Slayer", Player.getX(), Player.getY(), Player.getZ());
 }), () => settings.bossAlert !== 0 || settings.slayerSpawn !== 0 ||
 (getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
 
