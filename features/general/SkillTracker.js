@@ -1,3 +1,4 @@
+import request from "../../../requestV2";
 import settings from "../../utils/settings";
 import { BOLD, DARK_AQUA, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { findGreaterIndex } from "../../utils/functions/find";
@@ -5,6 +6,7 @@ import { commafy, convertToTitleCase, getTime, unformatNumber } from "../../util
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import { getPlayerUUID } from "../../utils/player";
 
 
 /**
@@ -62,7 +64,7 @@ export function updateSkills(data) {
  */
 register("command", () => {
     request({
-        url: `https://api.hypixel.net/v2/skyblock/profile?key=4e927d63a1c34f71b56428b2320cbf95&profile=${id}`,
+        url: `https://api.hypixel.net/v2/skyblock/profile?key=4e927d63a1c34f71b56428b2320cbf95&profile=${data.lastID}`,
         json: true
     }).then(response => {
         const data = response.profile.members[getPlayerUUID()];
