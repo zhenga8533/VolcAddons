@@ -82,6 +82,7 @@ import "./features/farming/PestTracking";
 import "./features/event/BingoCard";
 import "./features/event/BurrowDetect";
 import "./features/event/GreatSpook";
+import "./features/event/HippityHoppity";
 import "./features/event/InquisitorDetect";
 import "./features/event/MythRitual";
 // Crimson Isle Features

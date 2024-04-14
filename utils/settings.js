@@ -902,6 +902,15 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         options: ["OFF", "All", "Personal", "Community"]
     })
     bingoCard = 0;
+
+    // --- Chocolate Factory ---
+    @SwitchProperty({
+        name: "Worker Highlight",
+        description: `Highlights the worker with the best cost to production ratio.`,
+        category: "Event",
+        subcategory: "Chocolate Factory"
+    })
+    workerHighlight = false;
     
     // --- Great Spook ---
     @SwitchProperty({

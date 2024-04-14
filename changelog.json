@@ -1,6 +1,11 @@
 [
+    "- Added Hoppity event experimental features",
+    "- TBD: Added widget display",
+    "- TBD: Added `/missingSkins`",
+    "- TBD: Added museum value",
+    "- TBD: Changed Hypixel API usage",
     "- Changed fossil finder to the worst Leetcode algorithm",
     "- Changed chat waypoints to detect item",
     "- Fixed new Gemstone in value calc",
-    "- Fixed `/resetskills`"
+    "- Fixed `/resetSkills`"
 ]
