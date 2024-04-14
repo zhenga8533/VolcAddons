@@ -778,7 +778,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Fossil Helper",
-        description: "Displays possible fossil patterns when a piece is uncovered. Credit to @ConnorBud2 for stolen images :).",
+        description: "Highlights which slot has the highest probability of being a fossil piece. Sometimes bugs if server lags, but will update if you just click the side.",
         category: "Mining",
         subcategory: "Shaft"
     })

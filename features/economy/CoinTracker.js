@@ -24,6 +24,7 @@ const coinOverlay = new Overlay("coinTracker", ["all"], () => getWorld() !== und
  * Tracks Piggybank in Scoreboard for changes in coins and updates Coins Overlay every second.
  */
 registerWhen(register("step", () => {
+    if (!World.isLoaded()) return;
     // Get cha ching from purse
     let purse = Scoreboard?.getLines()?.find(line => line.getName().includes("Purse:"));
     if (getPaused() || purse === undefined) return;
