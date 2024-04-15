@@ -124,9 +124,10 @@ const once = register("worldLoad", () => {
 
         // FIRST RUN - Display welcome message for new users
         if (data.newUser) {
-            ChatLib.chat(`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}`);
-            ChatLib.chat("LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)");
-            ChatLib.chat("Instruction manual (i think) => /va help\n");
+            ChatLib.chat(
+`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}
+LF GRAPES! (P.S. do /volcaddons, /volc, /va, /itee)
+Instruction manual (i think) => /va help\n`);
             data.newUser = false;
         }
     }, 1000);
@@ -134,22 +135,21 @@ const once = register("worldLoad", () => {
 
 // HELP - Display help message for available commands
 function getHelp() {
-    ChatLib.chat(`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}\n`);
-    
-    // General Commands
-    ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}`);
-    ChatLib.chat(`${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}cd, wl, bl, el, vl, dl, sl, il${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute, nw${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>\n`);
+    ChatLib.chat(
+`\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}
 
-    // Feature Commands
-    ChatLib.chat(`${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}`);
-    ChatLib.chat(`${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>`);
-    ChatLib.chat(`${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
+${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}
+${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>
+${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>
+${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}lists, cd, wl, bl, el, vl, dl, sl, il${GRAY}>
+${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute, nw${GRAY}>
+${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>
+${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>
+    
+${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}
+${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch${GRAY}>
+${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>
+${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 }
 
 // Dev Mode
@@ -228,6 +228,20 @@ register ("command", (...args) => {
         case "help":
             getHelp();
             break;
+        case "list":
+        case "lists":
+            ChatLib.chat(
+`\n${GOLD + BOLD + UNDERLINE}VolcAddons Lists
+
+${DARK_GRAY}- ${AQUA + BOLD}cd: ${WHITE}cooldown-list
+${DARK_GRAY}- ${AQUA + BOLD}wl: ${WHITE}white-list
+${DARK_GRAY}- ${AQUA + BOLD}bl: ${WHITE}black-list
+${DARK_GRAY}- ${AQUA + BOLD}el: ${WHITE}emote-list
+${DARK_GRAY}- ${AQUA + BOLD}vl: ${WHITE}value-list
+${DARK_GRAY}- ${AQUA + BOLD}dl: ${WHITE}diana-list
+${DARK_GRAY}- ${AQUA + BOLD}sl: ${WHITE}spam-list
+${DARK_GRAY}- ${AQUA + BOLD}il: ${WHITE}ignore-list`);
+            break;
         // Update
         case "update":
         case "version":
@@ -267,13 +281,13 @@ register ("command", (...args) => {
             break;
         // Testing (please work)
         case "test":
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Important Values:`)
-            ChatLib.chat(`- ${AQUA + BOLD}World: ${WHITE + getWorld()}`);
-            ChatLib.chat(`- ${AQUA + BOLD}Zone: ${WHITE + findZone()}`);
-            const tier = getTier();
-            if (tier !== 0) ChatLib.chat(`- ${AQUA + BOLD}Tier: ${WHITE + getTier()}`);
-            ChatLib.chat(`- ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}`);
-            ChatLib.chat(`- ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
+            ChatLib.chat(
+`${LOGO + DARK_AQUA + BOLD}Important Values:
+- ${AQUA + BOLD}World: ${WHITE + getWorld()}
+- ${AQUA + BOLD}Zone: ${WHITE + findZone()}
+- ${AQUA + BOLD}Tier: ${WHITE + getTier()}
+- ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}
+- ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
             const party = getParty();
             if (party.size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.join(' ')}`);
             break;

@@ -170,12 +170,13 @@ export function getAttributes(args) {
             .setHoverValue("Click me!")
         ).chat();
     } else {
-        ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-        ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va attribute ${GRAY}<${WHITE}shard, [armor], [equipment]${GRAY}> ${WHITE}[tier]`);
-        ChatLib.chat(`${LOGO + RED}To check combo price, please input as: ${WHITE}/va attribute [attribute_1] [attribute_2]`);
-        ChatLib.chat(`${LOGO + RED}To fetch lbin attributes, please input as: ${WHITE}/va attribute lbin [item] [attribute] *[min tier] *[amount]`);
-        ChatLib.chat(`${LOGO + RED}To fetch piece upgrades, please input as: ${WHITE}/va attribute upgrade *[attribute] *[min tier] *[amount]`);
-        ChatLib.chat(`${DARK_GRAY + ITALIC}Please note that values with more than one word need to be seperated by an underscore. (* means optional)`);
+        ChatLib.chat(
+`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!
+${LOGO + RED}Please input as: ${WHITE}/va attribute ${GRAY}<${WHITE}shard, [armor], [equipment]${GRAY}> ${WHITE}[tier]
+${LOGO + RED}To check combo price, please input as: ${WHITE}/va attribute [attribute_1] [attribute_2]
+${LOGO + RED}To fetch lbin attributes, please input as: ${WHITE}/va attribute lbin [item] [attribute] *[min tier] *[amount]
+${LOGO + RED}To fetch piece upgrades, please input as: ${WHITE}/va attribute upgrade *[attribute] *[min tier] *[amount]
+${DARK_GRAY + ITALIC}Please note that values with more than one word need to be seperated by an underscore. (* means optional)`);
     }
 }
 

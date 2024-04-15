@@ -128,28 +128,25 @@ registerWhen(register("tick", () => {
             const { sum, max, min, range, mean, median, mode, lowerQ, upperQ, iqr, variance, stdDev } = statisticalAnalysis(damages);
             
             const time = Date.now()/1000 - start;
-            ChatLib.chat(`\n${LOGO + GOLD + BOLD}Damage Statistical Analysis ${GRAY}[${getTime(time, 2)}]\n`);
+            ChatLib.chat(
+`\n${LOGO + GOLD + BOLD}Damage Statistical Analysis ${GRAY}[${getTime(time, 2)}]
             
-            ChatLib.chat(`${RED + BOLD}Extremas:`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Max Damage: ${WHITE + formatNumber(max * 20)}`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Min Damage: ${WHITE + formatNumber(min * 20)}`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Range: ${WHITE + formatNumber(range * 20)}`);
-
-            ChatLib.chat(`${RED + BOLD}Central Tendency:`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Mean: ${WHITE + formatNumber(mean * 20)}`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Median: ${WHITE + formatNumber(median * 20)}`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Mode: ${WHITE + formatNumber(mode * 20)}`);
-
-            ChatLib.chat(`${RED + BOLD}Interquartiles:`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Upper Quartile ${GRAY}(75%): ${WHITE + formatNumber(upperQ * 20)}`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Lower Quartile ${GRAY}(25%): ${WHITE + formatNumber(lowerQ * 20)}`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Interquartile Range: ${WHITE + formatNumber(iqr * 20)}`);
-
-            ChatLib.chat(`${RED + BOLD}Dispersion:`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Variance: ${WHITE + formatNumber(variance)}`);
-            ChatLib.chat(`  ${DARK_GRAY}- ${YELLOW}Standard Deviation: ${WHITE + formatNumber(stdDev)}`);
-
-            ChatLib.chat(`\n${GOLD + BOLD}DPS: ${WHITE + formatNumber(sum / time)}\n`);
+${RED + BOLD}Extremas:
+  ${DARK_GRAY}- ${YELLOW}Max Damage: ${WHITE + formatNumber(max * 20)}
+  ${DARK_GRAY}- ${YELLOW}Min Damage: ${WHITE + formatNumber(min * 20)}
+  ${DARK_GRAY}- ${YELLOW}Range: ${WHITE + formatNumber(range * 20)}
+${RED + BOLD}Central Tendency:
+  ${DARK_GRAY}- ${YELLOW}Mean: ${WHITE + formatNumber(mean * 20)}
+  ${DARK_GRAY}- ${YELLOW}Median: ${WHITE + formatNumber(median * 20)}
+  ${DARK_GRAY}- ${YELLOW}Mode: ${WHITE + formatNumber(mode * 20)}
+${RED + BOLD}Interquartiles:
+  ${DARK_GRAY}- ${YELLOW}Upper Quartile ${GRAY}(75%): ${WHITE + formatNumber(upperQ * 20)}
+  ${DARK_GRAY}- ${YELLOW}Lower Quartile ${GRAY}(25%): ${WHITE + formatNumber(lowerQ * 20)}
+  ${DARK_GRAY}- ${YELLOW}Interquartile Range: ${WHITE + formatNumber(iqr * 20)}
+${RED + BOLD}Dispersion:
+  ${DARK_GRAY}- ${YELLOW}Variance: ${WHITE + formatNumber(variance)}
+  ${DARK_GRAY}- ${YELLOW}Standard Deviation: ${WHITE + formatNumber(stdDev)}
+\n${GOLD + BOLD}DPS: ${WHITE + formatNumber(sum / time)}\n`);
         }
 
         unique.clear();

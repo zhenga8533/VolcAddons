@@ -240,11 +240,12 @@ registerWhen(register("chat", (player, message) => {
  */
 function formatSplits(splits, color, runs) {
     if (color === GREEN) ChatLib.chat(`${DARK_GREEN + BOLD}Average for last ${runs} runs:`);
-    ChatLib.chat(`${color + BOLD}Supplies: ${RESET + getTime(splits[0], 2)}`);
-    ChatLib.chat(`${color + BOLD}Build: ${RESET + getTime(splits[1], 2)}`);
-    ChatLib.chat(`${color + BOLD}Fuel/Stun: ${RESET + getTime(splits[2], 2)}`);
-    ChatLib.chat(`${color + BOLD}Kuudra: ${RESET + getTime(splits[3], 2)}`);
-    ChatLib.chat(`${color + BOLD}Overall Run: ${RESET + getTime(splits[4], 2)}`);
+    ChatLib.chat(
+`${color + BOLD}Supplies: ${RESET + getTime(splits[0], 2)}
+${color + BOLD}Build: ${RESET + getTime(splits[1], 2)}
+${color + BOLD}Fuel/Stun: ${RESET + getTime(splits[2], 2)}
+${color + BOLD}Kuudra: ${RESET + getTime(splits[3], 2)}
+${color + BOLD}Overall Run: ${RESET + getTime(splits[4], 2)}`);
     if (color === GOLD) {
         const theory = (data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3]).toFixed(2);
         ChatLib.chat(`${color + BOLD}Theoretical Best: ${RESET + getTime(theory, 2)}`);
