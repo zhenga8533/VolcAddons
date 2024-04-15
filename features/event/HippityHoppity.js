@@ -31,7 +31,6 @@ register("step", () => {
     const chocoCalc = (now - data.chocoLast) * data.chocoProduction + data.chocolate;
     chocoOverlay.message = `${GOLD + BOLD}Chocolate: ${YELLOW + formatNumber(chocoCalc) + DARK_GRAY} (${formatNumber(data.chocoProduction)}/s)`;
     chocoOverlay.message += `\n${GOLD + BOLD}Time: ${YELLOW + formatTimeElapsed(data.chocoLast, now)}`;
-    print(chocoOverlay.message)
 }).setFps(1);
 
 

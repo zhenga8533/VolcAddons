@@ -184,6 +184,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     })
     textShadow = true;
 
+    @SwitchProperty({
+        name: "Widget Display",
+        description: `${DARK_RED}NEW! ${GRAY}Displays any widget in ${AQUA}/va wgl${GRAY}. Move GUI with ${AQUA}/move<widget>${GRAY}.`,
+        category: "General",
+        subcategory: "General"
+    })
+    widgetDisplay = true;
+
     // --- Inventory ---
     @SwitchProperty({
         name: "Jyrre Time Display",

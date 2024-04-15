@@ -36,6 +36,7 @@ import "./features/general/SlotBinding";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
+import "./features/general/WidgetDisplay";
 // Party Features
 import "./features/party/AntiGhostParty";
 import "./features/party/AutoKick";
@@ -141,7 +142,7 @@ function getHelp() {
 ${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}
 ${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>
 ${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>
-${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}lists, cd, wl, bl, el, vl, dl, sl, il${GRAY}>
+${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}lists, cd, wl, bl, el, vl, dl, sl, il, wgl${GRAY}>
 ${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute, nw${GRAY}>
 ${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>
 ${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>
@@ -240,7 +241,8 @@ ${DARK_GRAY}- ${AQUA + BOLD}el: ${WHITE}emote-list
 ${DARK_GRAY}- ${AQUA + BOLD}vl: ${WHITE}value-list
 ${DARK_GRAY}- ${AQUA + BOLD}dl: ${WHITE}diana-list
 ${DARK_GRAY}- ${AQUA + BOLD}sl: ${WHITE}spam-list
-${DARK_GRAY}- ${AQUA + BOLD}il: ${WHITE}ignore-list`);
+${DARK_GRAY}- ${AQUA + BOLD}il: ${WHITE}ignore-list
+${DARK_GRAY}- ${AQUA + BOLD}wgl: ${WHITE}widget-list`);
             break;
         // Update
         case "update":
@@ -361,6 +363,10 @@ ${DARK_GRAY}- ${AQUA + BOLD}il: ${WHITE}ignore-list`);
         case "attributelist":
         case "al":
             updateList(args, "attributelist");
+            break;
+        case "widgetlist":
+        case "wgl":
+            updateList(args, "widgetlist");
             break;
         // Kuudra Splits
         case "splits": // Kuudra splits

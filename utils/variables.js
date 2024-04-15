@@ -72,6 +72,8 @@ export let data = new PogObject("VolcAddons", {
     "ignorelist": [],
     "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune", 
         "fishing_experience"],
+    "widgetlist": [],
+    "WGL": {},
     // chocolate factory data
     "chocolate": 0,
     "chocoProduction": 0,
@@ -178,6 +180,7 @@ import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./funct
 import { updateAuction } from "../features/economy/Economy";
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
+import { updateWidgetList } from "../features/general/WidgetDisplay";
 
 
 let lines = [5858, 5859];
@@ -318,7 +321,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
             else if (listName === "spamlist")
                 base += `${GRAY}> ${WHITE}[phrase]\n${DARK_GRAY}Remember to add variables with ${"${var}"}, for example:\n ${DARK_GRAY}va sl add Guild > ${"${player}"} left.`;
             else if (listName === "attributelist") base += `, value> ${WHITE}[attribute_name]`
-            else base += "[item]";
+            else base += "> [item]";
             
             ChatLib.chat(base);
             return;
@@ -327,6 +330,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
     else if (listName === "dianalist") setWarps();
     else if (listName === "valuelist") updateAuction();
+    else if (listName === "widgetlist") updateWidgetList(); 
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
     ChatLib.command(`va ${listName} list`, true);
 }
