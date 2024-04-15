@@ -15,8 +15,9 @@ const updateChocolate = register("step", () => {
     data.chocolate = parseInt(chocoData.getName().removeFormatting().replace(/\D/g, ""));
     data.chocoProduction = parseFloat(chocoData.getLore().find(line => line.endsWith("§8per second")).removeFormatting().replace(/,/g, ""));
     data.chocoLast = Math.floor(Date.now() / 1000);
+    const allTime = chocoData.getLore().find(line => line.startsWith("§5§o§7All-time")).removeFormatting().split(' ');
+    data.chocoAll = parseFloat(allTime[allTime.length - 1].replace(/,/g, ""));
 }).setFps(2).unregister();
-
 
 /**
  * Chocolate overlay.
@@ -29,7 +30,9 @@ const chocoOverlay = new Overlay("chocoDisplay", ["all"], () => true, data.CFL, 
 register("step", () => {
     const now = Math.floor(Date.now() / 1000);
     const chocoCalc = (now - data.chocoLast) * data.chocoProduction + data.chocolate;
+    const chocoAll = chocoCalc + data.chocoAll;
     chocoOverlay.message = `${GOLD + BOLD}Chocolate: ${YELLOW + formatNumber(chocoCalc) + DARK_GRAY} (${formatNumber(data.chocoProduction)}/s)`;
+    chocoOverlay.message += `\n${GOLD + BOLD}Total: ${YELLOW + formatNumber(chocoAll)}`;
     chocoOverlay.message += `\n${GOLD + BOLD}Time: ${YELLOW + formatTimeElapsed(data.chocoLast, now)}`;
 }).setFps(1);
 

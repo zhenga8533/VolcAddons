@@ -78,6 +78,7 @@ export let data = new PogObject("VolcAddons", {
     "chocolate": 0,
     "chocoProduction": 0,
     "chocoLast": 0,
+    "chocoAll": 0,
     // kuudra splits stuff
     "files": [],
     "splits": {
