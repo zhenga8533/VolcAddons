@@ -53,6 +53,8 @@ import "./features/economy/Economy";
 import { calcGdrag } from "./features/economy/GdragCalc";
 import "./features/economy/ItemPrice";
 import { calcMinions } from "./features/economy/MinionCalc";
+import "./features/economy/MissingSkins";
+import { getNetworth } from "./features/economy/Networth";
 import "./features/economy/TradeValue";
 // Combat Features
 import { getBestiary } from "./features/combat/Bestiary";
@@ -106,7 +108,6 @@ import { calcTabasco } from "./features/kuudra/TabascoCalc";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
-import { getNetworth } from "./features/economy/Networth";
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();

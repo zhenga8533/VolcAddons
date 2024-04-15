@@ -1,7 +1,7 @@
 [
     "- Added Hoppity event experimental features",
     "- Added widget display (`va wgl`)",
-    "- TBD: Added `/missingSkins`",
+    "- Added `/missingSkins`",
     "- TBD: Added museum value",
     "- Compacted some chat messages to be 1 message",
     "- TBD: Changed Hypixel API usage",

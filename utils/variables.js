@@ -31,7 +31,7 @@ const DEFAULT_GUI = {
     "YL": [770, 170, 1.2, false, false], // SkyBlock Stats Location
     "ZL": [780, 330, 1.2, false, false], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false], // Bingo Card Location
-    "BTL": [110, 180, 1.2, false, false], // Bestiary Tab Location
+    "BTL": [140, 180, 1.2, false, false], // Bestiary Tab Location
     "CDL": [190, 115, 1.2, false, false], // Commission Display Location
     "CEL": [375, 275, 3, false, false], // Crate edit location
     "CFL": [10, 260, 1.2, false, false], // Chocolate factory location
@@ -56,6 +56,7 @@ export let data = new PogObject("VolcAddons", {
     "vision": false,
     "uuid": undefined,
     "ign": undefined,
+    "skins": [],
     // playtime tracking
     "playtime": 0,
     "lastDay": 0,
