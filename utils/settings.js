@@ -905,6 +905,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     // --- Chocolate Factory ---
     @SwitchProperty({
+        name: "Chocolate Overlay",
+        description: `Renders a GUI element that displays current chocolate production data.`,
+        category: "Event",
+        subcategory: "Chocolate Factory"
+    })
+    chocoDisplay = false;
+
+    @SwitchProperty({
         name: "Worker Highlight",
         description: `Highlights the worker with the best cost to production ratio.`,
         category: "Event",

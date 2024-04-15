@@ -34,6 +34,7 @@ const DEFAULT_GUI = {
     "BTL": [110, 180, 1.2, false, false], // Bestiary Tab Location
     "CDL": [190, 115, 1.2, false, false], // Commission Display Location
     "CEL": [375, 275, 3, false, false], // Crate edit location
+    "CFL": [10, 260, 1.2, false, false], // Chocolate factory location
     "EQL": [905, 65, 1.2, false, false], // Equipment Location
     "PHL": [170, 160, 1.2, false, false], // Pesthunter Location
     "SDL": [170, 180, 1.2, false, false], // Spray Display Location
@@ -71,6 +72,10 @@ export let data = new PogObject("VolcAddons", {
     "ignorelist": [],
     "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune", 
         "fishing_experience"],
+    // chocolate factory data
+    "chocolate": 0,
+    "chocoProduction": 0,
+    "chocoLast": 0,
     // kuudra splits stuff
     "files": [],
     "splits": {

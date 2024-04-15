@@ -24,6 +24,30 @@ export function getTime(seconds, fixed=0) {
 }
 
 /**
+ * Formats the elapsed time between two timestamps in seconds into a human-readable string.
+ * @param {number} startTimeInSeconds The starting timestamp in seconds.
+ * @param {number} endTimeInSeconds The ending timestamp in seconds.
+ * @returns {string} A string representing the elapsed time between the two timestamps.
+ */
+export function formatTimeElapsed(startTimeInSeconds, endTimeInSeconds) {
+    let elapsedTime = endTimeInSeconds - startTimeInSeconds;
+
+    let seconds = elapsedTime % 60;
+    let minutes = Math.floor((elapsedTime / 60) % 60);
+    let hours = Math.floor(elapsedTime / (60 * 60));
+    let days = Math.floor(elapsedTime / (60 * 60 * 24));
+
+    let timeString = '';
+
+    timeString += days.toString().padStart(2, '0') + ':';
+    timeString += hours.toString().padStart(2, '0') + ':';
+    timeString += minutes.toString().padStart(2, '0') + ':';
+    timeString += seconds.toString().padStart(2, '0');
+
+    return timeString;
+}
+
+/**
  * Rounds number and converts num to thousand seperator format.
  * 
  * @param {Number} num - Base number to convert.
