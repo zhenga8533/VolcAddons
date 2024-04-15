@@ -450,33 +450,3 @@ registerWhen(register("guiClosed", () => {
     bestiaryData[0] = [];
     bestiaryData[1] = [];
 }), () => settings.bestiaryGUI);
-
-/**
- * Bestiary tab display.
- */
-const bestiaryExample =
-`${GOLD + BOLD}Bestiary:
-${WHITE} But: ${AQUA}NAH
-${WHITE} would: ${AQUA},
-${WHITE} you: ${AQUA}I'D
-${WHITE} lose: ${AQUA}WIN`;
-const bestiaryDisplay = new Overlay("gardenTab", ["all"], () => true, data.BTL, "moveBestiary", bestiaryExample);
-bestiaryDisplay.message = '';
-
-registerWhen(register("step", () => {
-    if (!World.isLoaded()) return;
-
-    // Check for valid bestiary widget.
-    const tablist = TabList.getNames();
-    bestiaryDisplay.message = `${GOLD + BOLD}Bestiary:`;
-    let beIndex = tablist.findIndex(tab => tab.startsWith("§r§6§lBestiary:")) + 1;
-    if (beIndex === 0) {
-        bestiaryDisplay.message = '';
-        return;
-    }
-    
-    // Update bestiary display
-    while (tablist[beIndex].startsWith("§r ")) {
-        bestiaryDisplay.message += '\n' + tablist[beIndex++];
-    }
-}).setFps(1), () => settings.bestiaryDisplay);

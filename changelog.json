@@ -1,12 +1,11 @@
 [
     "- Added Hoppity event experimental features",
-    "- Added widget display (`va wgl`)",
+    "- Added widget display (`/va wgl`)",
     "- Added `/missingSkins`",
-    "- TBD: Added museum value",
     "- Compacted some chat messages to be 1 message",
-    "- TBD: Changed Hypixel API usage",
     "- Changed fossil finder to the worst Leetcode algorithm",
     "- Changed chat waypoints to detect item",
     "- Fixed new Gemstone in value calc",
-    "- Fixed `/resetSkills`"
+    "- Fixed `/resetSkills`",
+    "- Removed bestiary display (`/va wgl add bestiary`)"
 ]
