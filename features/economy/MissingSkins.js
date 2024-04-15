@@ -83,6 +83,13 @@ register("command", () => {
             parseSkins(backpack?.data)
         }
 
+        const icons = inv.backpack_icons;
+        const sacks = icons === undefined ? 0 : Object.keys(icons).length;
+        for (let i = 0; i < sacks; i++) {
+            let icon = icons[i.toString()];
+            parseSkins(icon?.data)
+        }
+
         // Pets values
         const pets = player.pets_data.pets;
         pets.forEach(pet => {
@@ -91,9 +98,9 @@ register("command", () => {
             if (index !== -1) missing.splice(index, 1);
         });
 
-        const miss = missing.join(`\n ${DARK_GRAY}-${AQUA}`);
+        const miss = missing.join(`\n ${DARK_GRAY}- ${AQUA}`);
         ChatLib.chat(
-`${LOGO + GREEN}\n${DARK_GRAY} -${AQUA + miss}
-${DARK_GRAY + ITALIC}This takes a while between updates, also does not track Taylor, backpack, barn, and rune cosmetics...`);
+`${LOGO + GREEN}\n${DARK_GRAY} - ${AQUA + miss}
+${DARK_GRAY + ITALIC}This takes a while between updates, also does not track Taylor, Museum, Barn, and Rune cosmetics...`);
     }).catch(err => ChatLib.chat(err));
 }).setName("missingSkins");
