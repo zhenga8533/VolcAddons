@@ -1,9 +1,11 @@
-import { BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, RED } from "../../utils/constants";
+import settings from "../../utils/settings";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, RED, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
+import { formatNumber } from "../../utils/functions/format";
 import { createMatrix, getAllFormations } from "../../utils/functions/matrix";
 import { Overlay } from "../../utils/overlay";
-import settings from "../../utils/settings";
 import { data, registerWhen } from "../../utils/variables";
+import { getAuction } from "../economy/Economy";
 
 
 const FOSSILS = {
@@ -77,7 +79,7 @@ let patterns = FOSSILS;
 let board = [];
 let bestTile = [2, 4];
 
-const fossilExample = `${DARK_AQUA + BOLD}Possible:
+const fossilExample = `${DARK_AQUA + BOLD}Fossil Probability:
  ${DARK_GRAY} - ${GOLD}Praise
  ${DARK_GRAY} - ${GOLD}Lord
  ${DARK_GRAY} - ${GOLD}Helix`;
@@ -95,7 +97,7 @@ function findTile() {
         formations[pattern] = getAllFormations(patterns[pattern]);
     });
     const possibilityBoard = createMatrix(6, 9);
-    const fossilPossibility = {
+    const fossilProbability = {
         "Spine": 0,
         "Helix": 0,
         "Footprint": 0,
@@ -114,7 +116,7 @@ function findTile() {
      * @param {Array} formation - The formation to be added to the possibility board.
      */
     function addFormation(i, j, fossil, formation) {
-        fossilPossibility[fossil]++;
+        fossilProbability[fossil]++;
         totalPossible++;
 
         for (let m = 0; m < formation.length; m++) {
@@ -191,19 +193,24 @@ function findTile() {
     }
 
     // Update fossil display
-    fossilOverlay.message = `${DARK_AQUA + BOLD}Fossil Possibility:`;
+    const auction = getAuction();
+    fossilOverlay.message = `${DARK_AQUA + BOLD}Fossil Probability:`;
     if (maxPos === 0) fossilOverlay.message += `\n ${RED}No possible fossils!`;
     else {
-        Object.keys(fossilPossibility).forEach(fossil => {
-            const possibility = fossilPossibility[fossil] / totalPossible * 100;
-            if (possibility !== 0) fossilOverlay.message += `\n ${DARK_GRAY}- ${GOLD + fossil} ${GRAY}(${possibility.toFixed(2)}%)`
+        let profit = 0;
+        Object.keys(fossilProbability).forEach(fossil => {
+            const possibility = fossilProbability[fossil] / totalPossible;
+            profit += possibility * (auction[fossil.toUpperCase() + "_FOSSIL"]?.lbin ?? 0);
+            if (possibility !== 0) fossilOverlay.message += `\n ${DARK_GRAY}- ${GOLD + fossil} ${GRAY}(${(possibility * 100).toFixed(2)}%)`;
         });
+        fossilOverlay.message += ` \n\n${AQUA + BOLD}Profit: ${YELLOW + formatNumber(profit)}`
     }
     
     return best;
 }
 
 const highlightTile = register("guiRender", () => {
+    if (bestTile[0] === -1) return;
     const containerType = Player.getContainer().getClassName();
     const [x, y] = getSlotCoords(bestTile[0] * 9 + bestTile[1], containerType);
 
@@ -212,7 +219,7 @@ const highlightTile = register("guiRender", () => {
 }).unregister();
 
 const trackClicks = register("guiMouseClick", () => {
-    Client.scheduleTask(2, () => {
+    Client.scheduleTask(3, () => {
         const container = Player.getContainer().getItems();
         const fossil = container.find(item => item?.getName() === "§6Fossil");
         
@@ -250,13 +257,14 @@ const untrackFossils = register("guiClosed", () => {
     trackClicks.unregister();
     untrackFossils.unregister();
     highlightTile.unregister();
+    fossilOverlay.message = fossilExample;
     patterns = FOSSILS;
     board = [];
     bestTile = [2, 4];
 }).unregister();
 
 registerWhen(register("guiOpened", () => {
-    Client.scheduleTask(2, () => {
+    Client.scheduleTask(3, () => {
         const container = Player.getContainer();
         if (container.getName() !== "Fossil Excavator" || container.getItems()[49].getName() === "§cClose") return;
         highlightTile.register();
