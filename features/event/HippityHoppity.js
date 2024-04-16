@@ -12,11 +12,14 @@ import { data, registerWhen } from "../../utils/variables";
 const updateChocolate = register("step", () => {
     if (Player?.getContainer()?.getName() !== "Chocolate Factory") return;
     const chocoData = Player.getContainer().getItems()[13];
+    if (chocoData === null) return;
+
     data.chocolate = parseInt(chocoData.getName().removeFormatting().replace(/\D/g, ""));
     data.chocoProduction = parseFloat(chocoData.getLore().find(line => line.endsWith("§8per second")).removeFormatting().replace(/,/g, ""));
     data.chocoLast = Math.floor(Date.now() / 1000);
-    const allTime = chocoData.getLore().find(line => line.startsWith("§5§o§7All-time")).removeFormatting().split(' ');
-    data.chocoAll = parseFloat(allTime[allTime.length - 1].replace(/,/g, ""));
+
+    const allTime = Player.getContainer().getItems()[28].getLore().find(line => line.startsWith("§5§o§7Chocolate this Prestige"))?.removeFormatting()?.split(' ');
+    data.chocoAll = parseFloat(allTime?.[allTime.length - 1]?.replace(/,/g, "") ?? 0);
 }).setFps(2).unregister();
 
 /**
