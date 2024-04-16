@@ -11,9 +11,11 @@ const searchbar = new GuiTextField(0, Client.getMinecraft().field_71466_p, loc[0
 let calc = undefined;
 
 // Finds items to highlight based on user search
-const indexes = [];
+let indexes = [];
+let darken = [];
 function getHighlights() {
-    indexes.length = 0;
+    indexes = [];
+    darken = [];
     const text = searchbar.func_146179_b();
     if (text === "") return;
 
@@ -37,6 +39,7 @@ function getHighlights() {
             }
         });
         if (toAdd !== 0) indexes.push(index);
+        else darken.push(index);
     });
 }
 
@@ -50,8 +53,15 @@ registerWhen(register("guiRender", (x, y, gui) => {
         const [x, y] = getSlotCoords(index, containerType);
     
         Renderer.translate(0, 0, 100);
-        Renderer.drawRect(Renderer.color(255, 255, 255, 255), x, y, 16, 16);
+        Renderer.drawRect(Renderer.color(255, 255, 255, 255), x - 1, y - 1, 18, 18);
     });
+    darken.forEach(index => {
+        const [x, y] = getSlotCoords(index, containerType);
+    
+        Renderer.translate(0, 0, 100);
+        Renderer.drawRect(Renderer.color(0, 0, 0, 255), x, y, 16, 16);
+    })
+
     if(calc !== undefined) Renderer.drawString(DARK_GRAY + calc, loc[0] - Renderer.getStringWidth(calc) + 190, loc[1] + 4);
 }), () => settings.searchbar);
 

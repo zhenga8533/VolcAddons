@@ -87,7 +87,7 @@ export function getSlotCoords(slot, containerType) {
     // Credit to https://www.chattriggers.com/modules/v/ExperimentationTable for baseline rendering
     const screen = Renderer?.screen;
     if (containerType === "ContainerPlayer") {
-        if (slot > 4 && slot <= 9) {
+        if (slot > 4 && slot < 9) {
             const x = screen?.getWidth() / 2 - 80
             const y = screen?.getHeight() / 3 + ((slot - 4) * 18) - 3;
             return [x, y];

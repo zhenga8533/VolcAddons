@@ -5,6 +5,7 @@
     "- Compacted some chat messages to be 1 message",
     "- Changed fossil finder to the worst Leetcode algorithm",
     "- Changed chat waypoints to detect item",
+    "- Changed searchbar highlighting to be more obvious",
     "- Fixed new Gemstone in value calc",
     "- Fixed `/resetSkills`",
     "- Fixed searchbar calculator showing NaN",
