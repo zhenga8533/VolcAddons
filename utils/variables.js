@@ -35,6 +35,7 @@ const DEFAULT_GUI = {
     "CEL": [375, 275, 3, false, false], // Crate edit location
     "CFL": [10, 260, 1.2, false, false], // Chocolate factory location
     "EQL": [905, 65, 1.2, false, false], // Equipment Location
+    "FHL": [580, 160, 1.2, false, false], // Fossil Helper Location
     "PHL": [170, 160, 1.2, false, false], // Pesthunter Location
     "SDL": [170, 180, 1.2, false, false], // Spray Display Location
     "TVL": [600, 150, 1.2, false, false], // Trade Value Location
