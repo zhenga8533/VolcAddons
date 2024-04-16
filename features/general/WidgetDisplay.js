@@ -22,6 +22,7 @@ export function updateWidgetList() {
     });
 
     Object.keys(widgetOverlays).forEach(widget => {
+        widgetOverlays[widget].message = "";
         if (!data.widgetlist.includes(widget)) delete widgetOverlays[widget];
     })
 }
