@@ -7,5 +7,6 @@
     "- Changed chat waypoints to detect item",
     "- Fixed new Gemstone in value calc",
     "- Fixed `/resetSkills`",
+    "- Fixed searchbar calculator showing NaN",
     "- Removed bestiary display (`/va wgl add bestiary`)"
 ]

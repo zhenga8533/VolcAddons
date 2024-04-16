@@ -101,9 +101,10 @@ registerWhen(register("guiKey", (char, keyCode, _, event) => {
     calc = undefined;
     try {
         calc = eval(searchbar.func_146179_b());
-        if (!Number.isInteger(calc))
-            calc = Math.round(calc * 10000) / 10000;
-        calc = calc.toString();
+        if (!isNaN(calc)) {
+            if (!Number.isInteger(calc)) calc = Math.round(calc * 10000) / 10000;
+            calc = calc.toString();
+        } else calc = "";
     } catch(err) {
         calc = undefined;
     }
