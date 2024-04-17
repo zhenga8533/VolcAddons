@@ -69,7 +69,8 @@ registerWhen(register("step", () => {
 
     // Set HUD
     const timeDisplay = powders.Mithril.since < settings.powderTracker * 60 ? getTime(powders.Mithril.time) : 
-        powders.Gemstone.since < settings.powderTracker * 60 ? getTime(powders.Gemstone.time) : `${RED}Inactive`;
+        powders.Gemstone.since < settings.powderTracker * 60 ? getTime(powders.Gemstone.time) : 
+        powders.Glacite.since < settings.powderTracker * 60 ? getTime(powders.Glacite.time) : `${RED}Inactive`;
     powderOverlay.message = 
 `${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
 ${DARK_GREEN + BOLD}Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr
