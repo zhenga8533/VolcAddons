@@ -10,6 +10,7 @@ import { getBurrows } from "../features/event/BurrowDetect";
 import { getGuess } from "../features/event/MythRitual";
 import { getCompass } from "../features/mining/WishingCompass";
 import { getFairy } from "../features/general/FairySouls.js";
+import { getCorpses } from "../features/mining/ShaftAnnounce.js";
 
 
 /**
@@ -23,7 +24,7 @@ let formattedWaypoints = [];
 function formatWaypoints(waypoints, r, g, b) {
     let x, y, z, distance, xSign, zSign = 0;
 
-    waypoints.forEach((waypoint) => {
+    waypoints.forEach(waypoint => {
         if (waypoint === null) return;
         wp = [["", 0, 0, 0], [0, 0, 0], [r, g, b]];
         x = Math.round(waypoint[1]);
@@ -66,6 +67,11 @@ register("tick", () => {
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75); // Silver effigies
     formatWaypoints(getCompass(), 0.75, 0.17, 0.41); // Bright Purple Compass
+    const corpses = getCorpses(); // Color coded corpses
+    formatWaypoints(corpses["Lapis"], 0.15, 0.38, 0.61);
+    formatWaypoints(corpses["Mineral"], 0.84, 0.82, 0.77);
+    formatWaypoints(corpses["Yog"], 1, 0.65, 0);
+    formatWaypoints(corpses["Vanguard"], 0, 1, 1);
 });
 
 /**

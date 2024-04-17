@@ -28,7 +28,7 @@ class Settings {
         this.setCategoryDescription("General",
         `${HEADER}
 ${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, fairy, whitelist, blacklist, blocklist>
-${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at own risk!`);
+${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at your own risk [UAYOR]!`);
 
         // Party Category
         this.setCategoryDescription("Party",
@@ -770,11 +770,20 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Corpse Announce",
-        description: "Announces corpse location to party chat if it has yet to be announced. Only announces corpse you loot, so uses chat instead of ESP.",
+        description: "Announces corpse location to party chat if it has yet to be announced. Only announces corpse you loot.",
         category: "Mining",
         subcategory: "Shaft"
     })
     corpseAnnounce = false;
+
+    @SwitchProperty({
+        name: "Corpse Waypoints",
+        description: `Display waypoints for nearby corpses. ${DARK_RED}Technically uses ESP so UAYOR!`,
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    corpseWaypoints = false;
+
 
     @SwitchProperty({
         name: "Fossil Helper",
@@ -1128,7 +1137,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     @SwitchProperty({
         name: "Kuudra Spawn",
-        description: `Displays a title for where Kuudra spawns in p4 ${BLUE}(requires animation skip, so don't fail @BananaTheBot)${GRAY}.`,
+        description: `Displays a title for where Kuudra spawns in p4 ${BLUE}(requires animation skip, so don't fail @BananaTheBot)${GRAY}. ${DARK_RED}Technically uses ESP so UAYOR!`,
         category: "Kuudra",
         subcategory: "Kuudra"
     })

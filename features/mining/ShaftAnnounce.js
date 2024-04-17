@@ -4,7 +4,7 @@ import { getInParty, getIsLeader } from "../../utils/party";
 import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { delay } from "../../utils/thread";
-import { AQUA, GREEN } from "../../utils/constants";
+import { AQUA, GREEN, STAND_CLASS } from "../../utils/constants";
 
 
 /**
@@ -72,9 +72,12 @@ function announceCorpse(corpseType) {
         ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${corpseType} Corpse!`);
     });
 }
+
+let looted = [];
 registerWhen(register("chat", () => {
-    announceCorpse();
-}).setCriteria("  FROZEN CORPSE LOOT! "), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
+    looted.push([Player.getX(), Player.getY(), Player.getZ()]);
+    if (settings.corpseAnnounce) announceCorpse();
+}).setCriteria("  FROZEN CORPSE LOOT! "), () => (settings.corpseAnnounce || settings.corpseWaypoints) && getWorld() === "Mineshaft");
 registerWhen(register("chat", () => {
     announceCorpse("Tungsten");
 }).setCriteria("You need to be holding a Tungsten Key to unlock this corpse!"), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
@@ -91,4 +94,54 @@ registerWhen(register("chat", (_, x, y, z) => {
 
 register("worldUnload", () => {
     corpses = [];
+    looted = [];
+});
+
+
+/**
+ * Corpse detection 
+ */
+const ARMOR_MATCH = {
+    "Lapis": "Lapis",
+    "Mineral": "Tungsten",
+    "Yog": "Umber",
+    "Vanguard": "Vanguard"
+};
+let corpseWaypoints = {
+    "Lapis": [],
+    "Mineral": [],
+    "Yog": [],
+    "Vanguard": []
+};
+export function getCorpses() { return corpseWaypoints };
+
+registerWhen(register("step", () => {
+    const stands = World.getAllEntitiesOfType(STAND_CLASS);
+    corpseWaypoints = {
+        "Lapis": [],
+        "Mineral": [],
+        "Yog": [],
+        "Vanguard": []
+    };
+
+    stands.forEach(stand => {
+        const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
+        if (helmet !== null) {
+            const type = helmet.func_82833_r().removeFormatting().split(' ')[0];  // getDisplayName
+            if (!(type in corpseWaypoints)) return;
+            
+            const corpsePos = [ARMOR_MATCH[type], stand.getX(), stand.getY() + 2, stand.getZ()];
+            if (getClosest(corpsePos, looted)[1] < 10) return;
+            corpseWaypoints[type].push([ARMOR_MATCH[type], stand.getX(), stand.getY() + 2, stand.getZ()]);
+        }
+    });
+}).setDelay(1), () => settings.corpseWaypoints && getWorld() === "Mineshaft");
+
+register("worldUnload", () => {
+    corpseWaypoints = {
+        "Lapis": [],
+        "Mineral": [],
+        "Yog": [],
+        "Vanguard": []
+    };
 });
