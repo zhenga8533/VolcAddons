@@ -1,7 +1,5 @@
-package com.volca.VolcAddons;
+package com.volcaddons.volcaddonsmod;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.util.ChatStyle;
@@ -15,28 +13,43 @@ import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 import java.io.*;
+import javax.net.ssl.*;
+import java.security.*;
 import java.net.HttpURLConnection;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipEntry;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.File;
 
-import net.minecraftforge.fml.common.network.FMLNetworkEvent;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Mod(modid = VolcAddons.MODID, version = VolcAddons.VERSION, clientSideOnly = true)
 public class VolcAddons {
     public static final String MODID = "VolcAddons";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.1";
     public static VolcAddons INSTANCE;
 
-    String modDir = System.getProperty("user.home");
+    private static final String separator = File.separator;
+    private static String modDir = System.getProperty("user.home");
+    private static String moduleDir = modDir + separator + "ChatTriggers" + separator + "modules" + separator + "VolcAddons";
     private static final String UPDATE_CHECK_URL = "https://api.github.com/repos/zhenga8533/VolcAddons/releases/latest";
     private boolean updateChecked = false;
-    private String latestVersion = "1.0.0";
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -45,6 +58,7 @@ public class VolcAddons {
         eventBus.register(this);
         ClientCommandHandler.instance.registerCommand(new CommandUpdateVA());
         modDir = event.getModConfigurationDirectory().getAbsolutePath();
+        moduleDir = modDir + separator + "ChatTriggers" + separator + "modules" + separator + "VolcAddons";
     }
 
     @SubscribeEvent
@@ -65,6 +79,45 @@ public class VolcAddons {
             // Shutdown the scheduler when it's no longer needed
             scheduler.shutdown();
         }
+    }
+
+    private String getCurrentVersion() {
+        try {
+            String metadataPath = moduleDir + separator + "metadata.json";
+            String line;
+            BufferedReader reader = new BufferedReader(new FileReader(metadataPath));
+            StringBuilder content = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                content.append(line);
+            }
+
+            reader.close();
+
+            JsonObject metadata = new JsonParser().parse(content.toString()).getAsJsonObject();
+            return metadata.get("version").getAsString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "1.0.0";
+        }
+    }
+
+    private boolean isNewerVersion(String version1, String version2) {
+        String[] splitVersion1 = version1.split("\\.");
+        String[] splitVersion2 = version2.split("\\.");
+
+        for (int i = 0; i < Math.min(splitVersion1.length, splitVersion2.length); i++) {
+            int v1 = Integer.parseInt(splitVersion1[i]);
+            int v2 = Integer.parseInt(splitVersion2[i]);
+
+            if (v1 > v2) {
+                return true;
+            } else if (v1 < v2) {
+                return false;
+            }
+        }
+
+        return splitVersion1.length > splitVersion2.length;
     }
 
     private void checkForUpdates(EntityPlayer player) {
@@ -89,26 +142,22 @@ public class VolcAddons {
                 String jsonResponse = response.toString();
                 JsonParser jsonParser = new JsonParser();
                 JsonObject releaseJson = jsonParser.parse(jsonResponse).getAsJsonObject();
-                latestVersion = releaseJson.get("tag_name").getAsString();
+                String latestVersion = releaseJson.get("tag_name").getAsString();
                 latestVersion = latestVersion.startsWith("v") ? latestVersion.substring(1) : latestVersion;
-
-                String metadataPath = modDir + File.separator + "ChatTriggers" + File.separator + "modules" +
-                        File.separator + "VolcAddons" + File.separator + "metadata.json";
-
-                String currentVersion = getCurrentVersion(metadataPath);
+                String currentVersion = getCurrentVersion();
 
                 if (isNewerVersion(latestVersion, currentVersion)) {
                     player.addChatMessage(new ChatComponentText(
                             EnumChatFormatting.GRAY + "\n[" +
-                                 EnumChatFormatting.GOLD + "VolcAddons" +
-                                 EnumChatFormatting.GRAY + "] " +
-                                 EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + "A new update is available: " +
-                                 EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "v" + latestVersion
+                                    EnumChatFormatting.GOLD + "VolcAddons" +
+                                    EnumChatFormatting.GRAY + "] " +
+                                    EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + "A new update is available: " +
+                                    EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "v" + latestVersion
                     ));
                     player.addChatMessage(new ChatComponentText(
                             EnumChatFormatting.GREEN + "Click here or run '" +
-                                 EnumChatFormatting.WHITE + "/updateva" +
-                                 EnumChatFormatting.GREEN + "' to update!\n"
+                                    EnumChatFormatting.WHITE + "/updateva" +
+                                    EnumChatFormatting.GREEN + "' to update!\n"
                     ).setChatStyle(new ChatStyle().setChatClickEvent(
                             new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/updateva") {
                                 @Override
@@ -122,163 +171,140 @@ public class VolcAddons {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            player.addChatMessage(new ChatComponentText(
+                    EnumChatFormatting.RED + "Error checking for updates: " + e.getMessage()
+            ));
         }
-    }
-
-    private boolean isNewerVersion(String version1, String version2) {
-        String[] splitVersion1 = version1.split("\\.");
-        String[] splitVersion2 = version2.split("\\.");
-
-        for (int i = 0; i < Math.min(splitVersion1.length, splitVersion2.length); i++) {
-            int v1 = Integer.parseInt(splitVersion1[i]);
-            int v2 = Integer.parseInt(splitVersion2[i]);
-
-            if (v1 > v2) {
-                return true;
-            } else if (v1 < v2) {
-                return false;
-            }
-        }
-
-        return splitVersion1.length > splitVersion2.length;
     }
 
     void downloadAndExtractUpdate(EntityPlayer player) {
-        try {
-            String releasesUrl = "https://api.github.com/repos/zhenga8533/VolcAddons/releases/latest";
+        ZipInputStream zipInputStream;
+        InputStream inputStream = null;
+        InputStream trustStoreInputStream;
 
-            URL url = new URL(releasesUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try {
+            // Load truststore from the classpath
+            trustStoreInputStream = VolcAddons.class.getResourceAsStream("/myCA.jks");
+            if (trustStoreInputStream == null) {
+                // Truststore not found in the classpath
+                throw new FileNotFoundException("Truststore file not found");
+            }
+
+            // Create and load the truststore
+            KeyStore trustStore = KeyStore.getInstance("JKS");
+            trustStore.load(trustStoreInputStream, "secret".toCharArray());
+
+            // Initialize TrustManagerFactory with the loaded truststore
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(trustStore);
+
+            // Initialize SSLContext with the trust managers from TrustManagerFactory
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+
+            // Set the default SSL socket factory
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+            // Fetch information about the latest release
+            URL apiUrl = new URL(UPDATE_CHECK_URL);
+            HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
             connection.setRequestMethod("GET");
-            connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
             connection.connect();
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line;
                 StringBuilder response = new StringBuilder();
+                String line;
 
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
-
                 reader.close();
-                connection.disconnect();
 
-                String jsonResponse = response.toString();
-                JsonParser parser = new JsonParser();
-                JsonObject releaseJson = parser.parse(jsonResponse).getAsJsonObject();
-                String downloadUrl = releaseJson.getAsJsonArray("assets")
-                        .get(0).getAsJsonObject()
-                        .get("browser_download_url").getAsString();
+                // Parse JSON response
+                JsonObject releaseJson = new JsonParser().parse(response.toString()).getAsJsonObject();
+                String latestVersion = releaseJson.get("tag_name").getAsString();
 
-                File modulesDir = new File(modDir + File.separator + "ChatTriggers" + File.separator + "modules");
-                modulesDir.mkdirs();
-
-                URL fileUrl = new URL(downloadUrl);
-                String fileName = fileUrl.getFile().substring(fileUrl.getFile().lastIndexOf('/') + 1);
-                File zipFile = new File(modulesDir, fileName);
-
-                InputStream inputStream = null;
-                OutputStream outputStream = null;
-                try {
-                    inputStream = fileUrl.openStream();
-                    outputStream = new FileOutputStream(zipFile);
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, bytesRead);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    if (outputStream != null) {
-                        outputStream.close();
+                // Extract URL of the zip file from the assets array
+                JsonArray assets = releaseJson.get("assets").getAsJsonArray();
+                String zipUrl = null;
+                for (int i = 0; i < assets.size(); i++) {
+                    JsonObject asset = assets.get(i).getAsJsonObject();
+                    if (asset.get("name").getAsString().equals("VolcAddons.zip")) {
+                        zipUrl = asset.get("browser_download_url").getAsString();
+                        break;
                     }
                 }
 
-                extractZipFile(zipFile, modulesDir);
-
-                zipFile.delete();
-
-                // Notify the player about the update status
-                player.addChatMessage(new ChatComponentText(
-                        EnumChatFormatting.GREEN + "Update successful: New version " +
-                             EnumChatFormatting.WHITE + "v" + latestVersion +
-                             EnumChatFormatting.GREEN + " downloaded!"
-                ));
-                player.addChatMessage(new ChatComponentText(
-                        "" + EnumChatFormatting.GRAY + EnumChatFormatting.ITALIC +
-                             "You may need to run '/ct load' for effects to take place!\n"
-                ));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void extractZipFile(File zipFile, File destinationDir) throws IOException {
-        FileInputStream fis = null;
-        ZipArchiveInputStream zipStream = null;
-
-        try {
-            fis = new FileInputStream(zipFile);
-            zipStream = new ZipArchiveInputStream(fis);
-            ZipArchiveEntry entry;
-
-            while ((entry = zipStream.getNextZipEntry()) != null) {
-                File entryFile = new File(destinationDir, entry.getName());
-
-                if (entry.isDirectory()) {
-                    entryFile.mkdirs();
-                } else {
-                    FileOutputStream outputStream = null;
-
+                if (zipUrl != null) {
                     try {
-                        outputStream = new FileOutputStream(entryFile);
+                        // Download the ZIP file
+                        inputStream = new URL(zipUrl).openStream();
+                        FileOutputStream fileOutputStream = new FileOutputStream("VolcAddons.zip");
                         byte[] buffer = new byte[1024];
                         int bytesRead;
+                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                            fileOutputStream.write(buffer, 0, bytesRead);
+                        }
+                        fileOutputStream.close();
+                        inputStream.close();
 
-                        while ((bytesRead = zipStream.read(buffer)) != -1) {
-                            outputStream.write(buffer, 0, bytesRead);
+                        // Extract the contents of the ZIP file
+                        zipInputStream = new ZipInputStream(new FileInputStream("VolcAddons.zip"));
+                        ZipEntry entry;
+                        while ((entry = zipInputStream.getNextEntry()) != null) {
+                            String entryName = entry.getName();
+                            String entryPath = moduleDir + separator + entryName;
+                            if (!entry.isDirectory()) {
+                                // Create directories if they don't exist
+                                File entryFile = new File(entryPath);
+                                File parentDir = new File(entryFile.getParent());
+                                if (!parentDir.exists()) {
+                                    parentDir.mkdirs();
+                                }
+
+                                // Copy entry contents to the destination directory
+                                FileOutputStream fileOutputStreamEntry = new FileOutputStream(entryFile);
+                                while ((bytesRead = zipInputStream.read(buffer)) != -1) {
+                                    fileOutputStreamEntry.write(buffer, 0, bytesRead);
+                                }
+                                fileOutputStreamEntry.close();
+                            }
                         }
-                    } finally {
-                        if (outputStream != null) {
-                            outputStream.close();
-                        }
+                        zipInputStream.close();
+
+                        // Inform the user about the successful update
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN +
+                                "Update successful: New version " + latestVersion + " downloaded!"
+                        ));
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                } else {
+                    // If the zipUrl is null, it means the VolcAddons.zip file was not found in the release assets
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
+                            "Error: VolcAddons.zip not found in the latest release assets!"
+                    ));
+                }
+            } else {
+                // If the connection to the GitHub API fails
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
+                        "Error fetching latest release information from GitHub API!"
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
+                    "Update failed: " + e
+            ));
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        } finally {
-            if (zipStream != null) {
-                zipStream.close();
-            }
-            if (fis != null) {
-                fis.close();
-            }
-        }
-    }
-
-    private String getCurrentVersion(String metadataPath) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(metadataPath));
-            String line;
-            StringBuilder content = new StringBuilder();
-
-            while ((line = reader.readLine()) != null) {
-                content.append(line);
-            }
-
-            reader.close();
-
-            JsonObject metadata = new JsonParser().parse(content.toString()).getAsJsonObject();
-            return metadata.get("version").getAsString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "1.0.0";
         }
     }
 }

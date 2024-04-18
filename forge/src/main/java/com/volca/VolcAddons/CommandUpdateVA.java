@@ -1,10 +1,11 @@
-package com.volca.VolcAddons;
+package com.volcaddons.volcaddonsmod;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
 
 public class CommandUpdateVA extends CommandBase {
     @Override
@@ -27,7 +28,7 @@ public class CommandUpdateVA extends CommandBase {
         if (sender instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) sender;
             player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Updating VolcAddons..."));
-            VolcAddons.INSTANCE.downloadAndExtractUpdate(player); // Call the update method from VolcAddons class
+            VolcAddons.INSTANCE.downloadAndExtractUpdate(player);
         }
     }
 }
