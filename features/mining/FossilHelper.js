@@ -219,7 +219,7 @@ const highlightTile = register("guiRender", () => {
 }).unregister();
 
 const trackClicks = register("guiMouseClick", () => {
-    Client.scheduleTask(1, () => {
+    Client.scheduleTask(2, () => {
         const container = Player.getContainer().getItems();
         const fossil = container.find(item => item?.getName() === "§6Fossil");
         
@@ -236,16 +236,16 @@ const trackClicks = register("guiMouseClick", () => {
         }
 
         // Set board
-        board = [];
         for (let i = 0; i < 6; i++) {
-            board.push([]);
             for (let j = 0; j < 9; j++) {
+                if (board[i][j] === 1) continue;
+
                 let index = i * 9 + j;
                 let slot = container[index]?.getName();
-                if (slot === undefined) board[i].push(-1);
-                else if (slot === "§6Dirt") board[i].push(0);
-                else if (slot === "§6Fossil") board[i].push(1);
-                else board[i].push(-1);
+                if (slot === undefined) board[i][j] = -1
+                else if (slot === "§6Dirt") board[i][j] = 0;
+                else if (slot === "§6Fossil") board[i][j] = 1;
+                else board[i][j] = -1;
             }
         }
 
@@ -259,14 +259,22 @@ const untrackFossils = register("guiClosed", () => {
     highlightTile.unregister();
     fossilOverlay.message = fossilExample;
     patterns = FOSSILS;
-    board = [];
-    bestTile = [2, 4];
+bestTile = [2, 4];
 }).unregister();
 
 registerWhen(register("guiOpened", () => {
-    Client.scheduleTask(1, () => {
+    Client.scheduleTask(2, () => {
         const container = Player.getContainer();
         if (container.getName() !== "Fossil Excavator" || container.getItems()[49].getName() === "§cClose") return;
+
+        board = [];
+        for (let i = 0; i < 6; i++) {
+            board.push([]);
+            for (let j = 0; j < 9; j++) {
+                board[i].push(0);
+            }
+        }
+
         highlightTile.register();
         trackClicks.register();
         untrackFossils.register();
