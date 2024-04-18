@@ -138,8 +138,18 @@ register("worldUnload", () => {
 
 
 /**
- * Announce vanquisher spawn on chat message appears.
+ * Announce egg location on roulette completion.
  */
+let chocoType = "";
+let chocoLoc = "";
+
+const announceOnClose = register("guiClosed", () => {
+    Client.scheduleTask(5, () => announceMob(settings.chocoAlert, chocoType, Player.getX(), Player.getY(), Player.getZ(), chocoLoc));
+    announceOnClose.unregister();
+}).unregister();
+
 registerWhen(register("chat", (type, loc) => {
-    announceMob(settings.chocoAlert, type + " Egg", Player.getX(), Player.getY(), Player.getZ(), convertToTitleCase(loc));
+    chocoType = type + " Egg";
+    chocoLoc = convertToTitleCase(loc);
+    announceOnClose.register();
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoAlert !== 0);

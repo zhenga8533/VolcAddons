@@ -156,7 +156,7 @@ export function registerWhen(trigger, dependency) {
 
 // Updates trigger registrations based on world or GUI changes
 export function setRegisters(off = false) {
-    Client.showTitle("Loading...", "", 0, 1 ,0);
+    Client.showTitle(`${RED}Loading...`, `${GRAY}Attempting to set registers!`, 0, 0 ,0);
     registers.forEach(trigger => {
         if (off || (!trigger[1]() && trigger[2])) {
             trigger[0].unregister();

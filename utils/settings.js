@@ -923,7 +923,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     
     @SelectorProperty({
         name: "Egg Announce",
-        description: "Sends coordinates of opened chocolate eggs to chat.",
+        description: `${DARK_RED}NEW! ${GRAY}Sends coordinates of opened chocolate eggs to chat.`,
         category: "Event",
         subcategory: "Chocolate Factory",
         options: ["OFF", "All Chat", "Party Chat", "Self"]
