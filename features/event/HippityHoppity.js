@@ -1,9 +1,10 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, STAND_CLASS, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { formatNumber, formatTimeElapsed } from "../../utils/functions/format";
+import { convertToTitleCase, formatNumber, formatTimeElapsed } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
+import { announceMob } from "../../utils/functions/misc";
 
 
 /**
@@ -105,3 +106,40 @@ registerWhen(register("guiOpened", () => {
         }
     });
 }), () => settings.workerHighlight);
+
+
+/**
+ * Egglocator
+ */
+let eggWaypoints = [];
+const EGGS = {
+    "015adc61-0aba-3d4d-b3d1-ca47a68a154b": "Breakfast",
+    "55ae5624-c86b-359f-be54-e0ec7c175403": "Lunch",
+    "e67f7c89-3a19-3f30-ada2-43a3856e5028": "Dinner"
+};
+export function getEggs() { return eggWaypoints };
+
+registerWhen(register("step", () => {
+    const stands = World.getAllEntitiesOfType(STAND_CLASS);
+    eggWaypoints = [];
+
+    stands.forEach(stand => {
+        const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
+        if (helmet !== null) {
+            const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id");  // getNBT() +> getNBTTagCompound() => getString()
+            if (id in EGGS) eggWaypoints.push([EGGS[id], stand.getX(), stand.getY() + 2, stand.getZ()]);
+        }
+    });
+}).setDelay(1), () => settings.chocoWaypoints);
+
+register("worldUnload", () => {
+    eggWaypoints = [];
+});
+
+
+/**
+ * Announce vanquisher spawn on chat message appears.
+ */
+registerWhen(register("chat", (type, loc) => {
+    announceMob(settings.chocoAlert, type + " Egg", Player.getX(), Player.getY(), Player.getZ(), convertToTitleCase(loc));
+}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoAlert !== 0);

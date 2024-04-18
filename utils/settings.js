@@ -186,7 +186,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @SwitchProperty({
         name: "Widget Display",
-        description: `${DARK_RED}NEW! ${GRAY}Displays any widget in ${AQUA}/va wgl${GRAY}. Move GUI with ${AQUA}/move<widget>${GRAY}.`,
+        description: "Displays any widget in ${AQUA}/va wgl${GRAY}. Move GUI with ${AQUA}/move<widget>${GRAY}.",
         category: "General",
         subcategory: "General"
     })
@@ -915,15 +915,32 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     // --- Chocolate Factory ---
     @SwitchProperty({
         name: "Chocolate Overlay",
-        description: `Renders a GUI element that displays current chocolate production data.`,
+        description: "Renders a GUI element that displays current chocolate production data.",
         category: "Event",
         subcategory: "Chocolate Factory"
     })
     chocoDisplay = false;
+    
+    @SelectorProperty({
+        name: "Egg Announce",
+        description: "Sends coordinates of opened chocolate eggs to chat.",
+        category: "Event",
+        subcategory: "Chocolate Factory",
+        options: ["OFF", "All Chat", "Party Chat", "Self"]
+    })
+    chocoAlert = 0;
+
+    @SwitchProperty({
+        name: "Egg Waypoints",
+        description: `${DARK_RED}NEW! ${GRAY}Display waypoints for nearby corpses. ${DARK_RED}Technically uses ESP so UAYOR!`,
+        category: "Event",
+        subcategory: "Chocolate Factory"
+    })
+    chocoWaypoints = false;
 
     @SwitchProperty({
         name: "Worker Highlight",
-        description: `Highlights the worker with the best cost to production ratio.`,
+        description: "Highlights the worker with the best cost to production ratio.",
         category: "Event",
         subcategory: "Chocolate Factory"
     })
@@ -962,6 +979,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         subcategory: "Inquisitor"
     })
     detectInq = false;
+
     @SelectorProperty({
         name: "Announce Inquisitor Chat",
         description: "Sends coordinates of user Inquisitor spawns to chat.",

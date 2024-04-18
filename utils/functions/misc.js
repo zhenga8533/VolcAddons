@@ -39,14 +39,16 @@ export function playSound(sound, cd) {
  * @param {Number} y - Y coordinate.
  * @param {Number} z - Z coordinate.
  */
-export function announceMob(chat, mob, x, y ,z) {
+export function announceMob(chat, mob, x, y, z, area) {
     if ((chat === 2 && !getInParty()) || chat === 0) return;
     x = Math.round(x);
     y = Math.round(y);
     z = Math.round(z);
-    const zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣")) ??
-        Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
-    const area = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
+    if (area === undefined) {
+        const zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣")) ??
+            Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
+        area = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
+    }
     
     const id = chat === 2 ? "" : ` @${(Math.random() + 1).toString(36).substring(2)}`;
     const CHATS = ["OFF", "ac", "pc", `msg ${Player.getName()}`];
