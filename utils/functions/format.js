@@ -34,7 +34,7 @@ export function formatTimeElapsed(startTimeInSeconds, endTimeInSeconds) {
 
     let seconds = elapsedTime % 60;
     let minutes = Math.floor((elapsedTime / 60) % 60);
-    let hours = Math.floor(elapsedTime / (60 * 60));
+    let hours = Math.floor(elapsedTime / (60 * 60) % 24);
     let days = Math.floor(elapsedTime / (60 * 60 * 24));
 
     let timeString = '';
