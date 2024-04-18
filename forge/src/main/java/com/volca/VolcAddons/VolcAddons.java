@@ -184,15 +184,21 @@ public class VolcAddons {
 
         try {
             // Load truststore from the classpath
-            trustStoreInputStream = VolcAddons.class.getResourceAsStream("/myCA.jks");
+            trustStoreInputStream = VolcAddons.class.getResourceAsStream("/skytilscacerts.jks");
             if (trustStoreInputStream == null) {
                 // Truststore not found in the classpath
                 throw new FileNotFoundException("Truststore file not found");
             }
 
-            // Create and load the truststore
+            /**
+             *
+             * Create and load the truststore.
+             * Tried for 6 hours to create my own CA certified jks but failed...
+             * Assuming I can use ST cert since it's open source :).
+             * LMK if this needs to be changed, bedge.
+             */
             KeyStore trustStore = KeyStore.getInstance("JKS");
-            trustStore.load(trustStoreInputStream, "secret".toCharArray());
+            trustStore.load(trustStoreInputStream, "skytilsontop".toCharArray());
 
             // Initialize TrustManagerFactory with the loaded truststore
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());

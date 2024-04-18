@@ -90,6 +90,7 @@ subtitle: List of all features and their related commands.
     - Commissions Display (`/moveCommission`)
     - Commission Waypoints
     - Corpse Announce
+    - Corpse Waypoints
     - Fossil Helper
 
 ### <u>Farming Features</u>
@@ -112,6 +113,9 @@ subtitle: List of all features and their related commands.
 ### <u>Event Features</u>
 - **Bingo**
     - Bingo Card Overlay
+- **Chocolate Factory**
+    - Chocolate Overlay
+    - Worker Highlight
 - **Great Spook**
     - Math Teacher Solver
     - Primal Fear Alert
