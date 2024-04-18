@@ -219,7 +219,7 @@ const highlightTile = register("guiRender", () => {
 }).unregister();
 
 const trackClicks = register("guiMouseClick", () => {
-    Client.scheduleTask(3, () => {
+    Client.scheduleTask(1, () => {
         const container = Player.getContainer().getItems();
         const fossil = container.find(item => item?.getName() === "§6Fossil");
         
@@ -264,7 +264,7 @@ const untrackFossils = register("guiClosed", () => {
 }).unregister();
 
 registerWhen(register("guiOpened", () => {
-    Client.scheduleTask(3, () => {
+    Client.scheduleTask(1, () => {
         const container = Player.getContainer();
         if (container.getName() !== "Fossil Excavator" || container.getItems()[49].getName() === "§cClose") return;
         highlightTile.register();

@@ -19,7 +19,7 @@ const TRANSFER_COMMANDS = ["?transfer", "!ptme", "!pt", ".transfer", "Mineshaft,
  */
 function attemptTransfer(index) {
     delay(() => {
-        if (getIsLeader() || index > 4) return;
+        if (getIsLeader() || index >= TRANSFER_COMMANDS.length) return;
         ChatLib.command(`pc ${TRANSFER_COMMANDS[index]}`);
         attemptTransfer(index + 1);
     }, 420);
@@ -92,12 +92,6 @@ registerWhen(register("chat", (_, x, y, z) => {
     corpses.push([x, y, z.split(' ')[0]]);
 }).setCriteria("${player}: x: ${x}, y: ${y}, z: ${z}"), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
 
-register("worldUnload", () => {
-    corpses = [];
-    looted = [];
-});
-
-
 /**
  * Corpse detection 
  */
@@ -127,9 +121,9 @@ registerWhen(register("step", () => {
     stands.forEach(stand => {
         const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
         if (helmet !== null) {
-            const type = helmet.func_82833_r().removeFormatting().split(' ')[0];  // getDisplayName
+            const type = helmet.func_82833_r().removeFormatting().split(' ')[0];  // getDisplayName for ItemStack
             if (!(type in corpseWaypoints)) return;
-            
+
             const corpsePos = [ARMOR_MATCH[type], stand.getX(), stand.getY() + 2, stand.getZ()];
             if (getClosest(corpsePos, looted)[1] < 10) return;
             corpseWaypoints[type].push([ARMOR_MATCH[type], stand.getX(), stand.getY() + 2, stand.getZ()]);
@@ -138,6 +132,8 @@ registerWhen(register("step", () => {
 }).setDelay(1), () => settings.corpseWaypoints && getWorld() === "Mineshaft");
 
 register("worldUnload", () => {
+    corpses = [];
+    looted = [];
     corpseWaypoints = {
         "Lapis": [],
         "Mineral": [],
