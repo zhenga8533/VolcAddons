@@ -14,7 +14,7 @@
     </a>
     <img src="https://img.shields.io/github/last-commit/zhenga8533/VolcAddons?style=flat-square" alt="Last Commit">
     </br>
-    <a href="https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar">
+    <a href="https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.1.jar">
         <img src="https://img.shields.io/badge/GitHub-Forge%20Download-blue?style=for-the-badge&logo=github">
     </a>
     <a href="https://discord.gg/ftxB4kG2tw">
@@ -45,7 +45,7 @@ You can also view this page on the VolcAddons [website](https://zhenga8533.githu
 
 
 ### <u>Forge Installation:</u>
-1. **Download:** Download the [VolcAddons-1.0.jar](https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.0.jar) file.
+1. **Download:** Download the [VolcAddons-1.1.jar](https://raw.githubusercontent.com/zhenga8533/VolcAddons/main/forge/VolcAddons-1.1.jar) file.
 
 2. **Integration:** Drag into Minecraft mods folder (NOT the CT modules folder).
 
