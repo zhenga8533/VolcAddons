@@ -33,9 +33,9 @@ const chocoOverlay = new Overlay("chocoDisplay", ["all"], () => true, data.CFL, 
 
 register("step", () => {
     const now = Math.floor(Date.now() / 1000);
-    const chocoCalc = (now - data.chocoLast) * data.chocoProduction + data.chocolate;
+    const chocoCalc = (now - data.chocoLast) * data.chocoProduction;
     const chocoAll = chocoCalc + data.chocoAll;
-    chocoOverlay.message = `${GOLD + BOLD}Chocolate: ${YELLOW + formatNumber(chocoCalc) + DARK_GRAY} (${formatNumber(data.chocoProduction)}/s)`;
+    chocoOverlay.message = `${GOLD + BOLD}Chocolate: ${YELLOW + formatNumber(chocoCalc + data.chocolate) + DARK_GRAY} (${formatNumber(data.chocoProduction)}/s)`;
     chocoOverlay.message += `\n${GOLD + BOLD}Total: ${YELLOW + formatNumber(chocoAll)}`;
     chocoOverlay.message += `\n${GOLD + BOLD}Time: ${YELLOW + formatTimeElapsed(data.chocoLast, now)}`;
 }).setFps(1);
