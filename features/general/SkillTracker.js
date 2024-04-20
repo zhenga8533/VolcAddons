@@ -63,14 +63,7 @@ export function updateSkills(data) {
  * Resets skill overlay to base state.
  */
 register("command", () => {
-    request({
-        url: `https://api.hypixel.net/v2/skyblock/profile?key=4e927d63a1c34f71b56428b2320cbf95&profile=${data.lastID}`,
-        json: true
-    }).then(response => {
-        const data = response.profile.members[getPlayerUUID()];
-        updateSkills(data?.player_data?.experience);
-        ChatLib.chat(`${LOGO + GREEN}Successfully reset skill tracker!`);
-    }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));
+    updateSkills();
 }).setName("resetSkills");
 
 /**
