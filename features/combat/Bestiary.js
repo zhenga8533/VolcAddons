@@ -1,10 +1,8 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { AQUA, BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions/format";
-import { getPlayerUUID } from "../../utils/player";
 import { data, registerWhen } from "../../utils/variables";
-import { Overlay } from "../../utils/overlay";
 
 
 /**
@@ -21,7 +19,7 @@ function updateBestiary(profileId, args) {
         json: true
     }).then(response => {
         // Update the 'bestiary' variable with the bestiary data from the API response.
-        bestiaryApi = response.profile.members[getPlayerUUID()]?.bestiary?.kills;
+        bestiaryApi = response.profile.members[data.lastID]?.bestiary?.kills;
         Object.keys(bestiary).forEach(key => bestiary[key].updateKills());
         if (callback) getBestiary(args);
     }).catch(err => console.error(`VolcAddons: ${err.cause ?? err}`));

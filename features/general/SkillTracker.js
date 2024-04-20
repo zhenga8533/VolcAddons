@@ -1,12 +1,10 @@
-import request from "../../../requestV2";
 import settings from "../../utils/settings";
 import { BOLD, DARK_AQUA, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { findGreaterIndex } from "../../utils/functions/find";
-import { commafy, convertToTitleCase, getTime, unformatNumber } from "../../utils/functions/format";
+import { commafy, convertToTitleCase, getTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
-import { getPlayerUUID } from "../../utils/player";
 
 
 /**
@@ -26,6 +24,7 @@ const skills = {
     "Carpentry": new Stat(),
     "Combat": new Stat()
 }
+let skillsTracked = false;
 let current = "None";
 const skillExample =
 `${DARK_AQUA + BOLD}Skill: ${WHITE}None
@@ -45,7 +44,7 @@ const xpTable = [0, 50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925
  * 
  * @param {Object} data - Skill API data of current player profile.
  */
-export function updateSkills(data) {
+function updateSkills(data) {
     if (data === undefined) return;
 
     Object.keys(data).forEach(key => {
@@ -59,17 +58,65 @@ export function updateSkills(data) {
     });
 }
 
+const trackSkills = register("guiOpened", () => {
+    Client.scheduleTask(3, () => {
+        if (Player.getContainer().getName() !== "Your Skills") return;
+
+        const items = Player.getContainer().getItems();
+        items.forEach(item => {
+            if (item === null) return;
+            const names = item.getName().removeFormatting().split(' ');
+            const skill = names[0];
+            const level = romanToNum(names[1]);
+            if (!(skill in skills) || isNaN(level)) return;
+
+            const lore = item.getLore();
+            const maxIndex = lore.findIndex(line => line === "§5§o§7§8Max Skill level reached!");
+            const progressIndex = lore.findIndex(line => line.startsWith("§5§o§7Progress"));
+            const xp = parseFloat(
+                maxIndex !== -1 ? lore[maxIndex + 1].split('§6')[1].replace(/,/g, '') : 
+                lore[progressIndex + 1].split('§e')[1].split('§6')[0].replace(/,/g, '')
+            ) + (maxIndex !== -1 ? xpTable[level - 1] : xpTable[level]);
+
+            skills[skill].level = level;
+            skills[skill].start = xp;
+            skills[skill].now = xp;
+            skills[skill].since = 600;
+        });
+
+        skillsTracked = true;
+        trackSkills.unregister();
+        ChatLib.chat(`${LOGO + GREEN}Skills tracked successfully!`);
+    });
+});
+
+registerWhen(register("chat", () => {
+    skillsTracked = false;
+    trackSkills.register();
+}).setCriteria("Switching to profile ${profile}..."), () => settings.skillTracker !== 0);
+
 /**
  * Resets skill overlay to base state.
  */
 register("command", () => {
-    updateSkills();
+    skillsTracked = false;
+    trackSkills.register();
+
+    Object.keys(skills).forEach(skill => {
+        skills[skill].time = 0;
+        skills[skill].since = 600;
+    });
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset skills, please open skills menu to re-track!`);
 }).setName("resetSkills");
 
 /**
  * Uses action bar to detect skill xp gains for maxed out skills.
  */
 registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
+    if (!skillsTracked) {
+        ChatLib.chat(`${LOGO + RED}Please open skills menu to begin skill tracking!`);
+        return;
+    }
     if (getPaused()) return;
 
     // Update info
@@ -79,7 +126,7 @@ registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
     
     // Update info
     amount = unformatNumber(amount);
-    skill.now = skill.level === 60 ? xpTable[60] + amount : xpTable[skill.level + 1] - unformatNumber(next) + amount;
+    skill.now = xpTable[skill.level] + amount;
     skill.since = 0;
 }).setCriteria("${health}+${gain} ${type} (${amount}/${next})${mana}"), () => settings.skillTracker !== 0);
 
@@ -87,6 +134,10 @@ registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
  * Uses action bar to detect skill xp gains for non maxed out skills.
  */
 registerWhen(register("actionBar", (health, gain, type, percent, mana) => {
+    if (!skillsTracked) {
+        ChatLib.chat(`${LOGO + RED}Please open skills menu to begin skill tracking!`);
+        return;
+    }
     if (getPaused()) return;
     
     // Update info;

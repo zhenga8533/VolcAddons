@@ -2,7 +2,7 @@
     "- Added chocolate egg waypoints",
     "- Added chocolate egg announce",
     "- Changed fossil helper to bug out less",
-    "- Changed skill tracker to not use API",
+    "- Changed skill tracker to use container menu",
     "- Fixed new enchants in value calc",
     "- Fixed chocolate timer and total",
     "- TBD: Removed total trophy fish overlay"
