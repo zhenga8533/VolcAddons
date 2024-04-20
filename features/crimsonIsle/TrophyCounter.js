@@ -72,7 +72,6 @@ const TIER_INDEX = {
 /**
  * Variables used to track trophy fishes/
  */
-let totalTrophy = {};
 let sessionTrophy = {};
 let timePassed = 0;
 register("command", () => {
@@ -84,47 +83,19 @@ register("command", () => {
 
 /**
  * Update trophyOverlay message using inputted trophy data.
- * 
- * @param {Object} trophyVar - "totalTrophy" or "sessionTrophy" depending on setting
  */
-function updateMessage(trophyVar) {
-    const sortedTrophy = Object.entries(trophyVar).sort((a, b) => b[1][0] - a[1][0]).reduce((sorted, [fish, fishData]) => {
+function updateMessage() {
+    const sortedTrophy = Object.entries(sessionTrophy).sort((a, b) => b[1][0] - a[1][0]).reduce((sorted, [fish, fishData]) => {
         if (fishData[0] !== 0) {
             const title = TROPHY_COLORS[fish] + convertToTitleCase(fish);
             const [total, bronze, silver, gold, diamond] = fishData;
-            const rate = settings.trophyCounter === 1 ? "" : `${GRAY}- ${WHITE + (total * 3600 / timePassed).toFixed(0)}/hr`;
+            const rate = `${GRAY}- ${WHITE + (total * 3600 / timePassed).toFixed(0)}/hr`;
             sorted.push(`${title + WHITE}: ${DARK_AQUA + total} ${DARK_GRAY + bronze} ${GRAY + silver} ${GOLD + gold} ${AQUA + diamond} ${rate}`);
         }
         return sorted;
     }, []);
   
     if (sortedTrophy.length != 0) trophyOverlay.message = `${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`;
-}  
-
-/**
- * API PULL request to get player trophy fishing data.
- * 
- * @param {Object} trophyData - Trophy fish data in Hypixel API
- */
-export function updateTrophy(trophyData) {
-    if (trophyData === undefined) return;
-    
-    // Convert API data and store it
-    Object.keys(trophyData).forEach(fish => {
-        if (fish.endsWith("_gold") || fish.endsWith("_silver") || fish.endsWith("_bronze") || fish.endsWith("_diamond") ||
-            fish === "rewards" || fish.endsWith("caught")) return;
-
-        totalTrophy[fish] = [
-            trophyData[fish],
-            trophyData[fish + "_bronze"] ?? 0,
-            trophyData[fish + "_silver"] ?? 0,
-            trophyData[fish + "_gold"] ?? 0,
-            trophyData[fish + "_diamond"] ?? 0
-        ];
-    });
-
-    // Sort by highest catches
-    if (settings.trophyCounter === 1) updateMessage(totalTrophy);
 }
 
 /**
@@ -138,18 +109,11 @@ function updateCounter(fish) {
     let type = args.join('_');
     if (type in TROPHY_ID) type = TROPHY_ID[type];
 
-    // Update Total
-    if (!(type in totalTrophy)) totalTrophy[type] = [0, 0, 0, 0, 0];
-    totalTrophy[type][0]++;
-    totalTrophy[type][TIER_INDEX[tier]]++;
-
     // Update Session
     if (!(type in sessionTrophy)) sessionTrophy[type] = [0, 0, 0, 0, 0];
     sessionTrophy[type][0]++;
     sessionTrophy[type][TIER_INDEX[tier]]++;
-
-    // Update Message
-    updateMessage(settings.trophyCounter === 1 ? totalTrophy : sessionTrophy);
+    updateMessage();
 }
 
 /**
@@ -157,11 +121,11 @@ function updateCounter(fish) {
  */
 registerWhen(register("chat", (fish) => {
     updateCounter(fish);
-}).setCriteria("TROPHY FISH! You caught a ${fish}."), () => getWorld() === "Crimson Isle" && settings.trophyCounter !== 0);
+}).setCriteria("TROPHY FISH! You caught a ${fish}."), () => getWorld() === "Crimson Isle" && settings.trophyCounter);
 
 registerWhen(register("chat", (fish) => {
     updateCounter(fish);
-}).setCriteria("NEW DISCOVERY: ${fish}"), () => getWorld() === "Crimson Isle" && settings.trophyCounter !== 0);
+}).setCriteria("NEW DISCOVERY: ${fish}"), () => getWorld() === "Crimson Isle" && settings.trophyCounter);
 
 /**
  * Update time for session view
@@ -169,5 +133,5 @@ registerWhen(register("chat", (fish) => {
 registerWhen(register("step", () => {
     if (getPaused()) return;
     if (Object.keys(sessionTrophy).length !== 0) timePassed++;
-    updateMessage(sessionTrophy);
-}).setFps(1), () => getWorld() === "Crimson Isle" && settings.trophyCounter === 2);
+    updateMessage();
+}).setFps(1), () => getWorld() === "Crimson Isle" && settings.trophyCounter);

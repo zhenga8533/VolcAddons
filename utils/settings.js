@@ -1052,15 +1052,14 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
     })
     goldenFishAlert = false;
 
-    @SelectorProperty({
-        name: "Trophy Fish Counter",
-        description: `Tracks number of trophy fishes caught and displays rates when on "Session View".
+    @SwitchProperty({
+        name: "Trophy Fish Overlay",
+        description: `Tracks number of trophy fishes caught and displays rates per hour.
 Move GUI with ${AQUA}/moveTrophy ${GRAY}or reset tracker with ${AQUA}/resetTrophy${GRAY}.`,
         category: "Crimson Isles",
-        subcategory: "Fishing",
-        options: ["OFF", "Overall View", "Session View"]
+        subcategory: "Fishing"
     })
-    trophyCounter = 0;
+    trophyCounter = false;
 
     // --- Vanquisher ---
     @SelectorProperty({
