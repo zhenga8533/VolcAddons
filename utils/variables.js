@@ -156,7 +156,7 @@ export function registerWhen(trigger, dependency) {
 
 // Updates trigger registrations based on world or GUI changes
 export function setRegisters(off = false) {
-    Client.showTitle(`${RED}Loading...`, `${GRAY}Attempting to set registers!`, 0, 0 ,0);
+    Client.showTitle("Loading Registers", "", 0, 1, 0);
     registers.forEach(trigger => {
         if (off || (!trigger[1]() && trigger[2])) {
             trigger[0].unregister();
@@ -168,6 +168,11 @@ export function setRegisters(off = false) {
     });
 }
 delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")), 1000);
+
+register("renderTitle", (title, sub, event) => {
+    if (title !== "Loading Registers") return;
+    cancel(event);
+});
 
 // Event handler for GUI settings close.
 register("guiClosed", (event) => {
