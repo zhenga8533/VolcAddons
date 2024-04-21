@@ -28,6 +28,7 @@ const updateChocolate = register("step", () => {
  */
 const chocoExample =
 `§6§lChocolate: §e3.95m§8 (1.49k/s)
+§6§lTotal: §e4.20m
 §6§lTime: §e00:00:11:03`;
 const chocoOverlay = new Overlay("chocoDisplay", ["all"], () => true, data.CFL, "moveChoco", chocoExample);
 
