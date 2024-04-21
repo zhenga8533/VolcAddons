@@ -1,7 +1,6 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_AQUA, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { findGreaterIndex } from "../../utils/functions/find";
-import { commafy, convertToTitleCase, getTime, romanToNum, unformatNumber } from "../../utils/functions/format";
+import { commafy, getTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
@@ -38,25 +37,6 @@ const xpTable = [0, 50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925
     1722425, 2322425, 3022425, 3822425, 4722425, 5722425, 6822425, 8022425, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425, 23322425, 
     25522425, 27822425, 30222425, 32722425, 35322425, 38072425, 40972425, 44072425, 47472425, 51172425, 55172425, 59472425, 64072425, 68972425, 74172425, 79672425, 
     85472425, 91572425, 97972425, 104672425, 111672425];
-
-/**
- * Sets the current skill level of player profile.
- * 
- * @param {Object} data - Skill API data of current player profile.
- */
-function updateSkills(data) {
-    if (data === undefined) return;
-
-    Object.keys(data).forEach(key => {
-        const skill = convertToTitleCase(key.split('_')[1]);
-        const xp = parseFloat(data[key]);
-        const index = findGreaterIndex(xpTable, xp);
-        skills[skill].level = index;
-        skills[skill].start = xp;
-        skills[skill].now = xp;
-        skills[skill].since = 600;
-    });
-}
 
 const trackSkills = register("guiOpened", () => {
     Client.scheduleTask(3, () => {
@@ -186,6 +166,7 @@ ${DARK_AQUA + BOLD}Level Up: `;
     // Set time until next
     if (skill.level !== 60) {
         const neededXP = xpTable[skill.level + 1] - skill.now;
-        skillOverlay.message += `${WHITE + getTime(neededXP / rate * 3600)}`;
+        if (neededXP > 0) skillOverlay.message += `${WHITE + getTime(neededXP / rate * 3600)}`;
+        else skillOverlay.message += `${GREEN}MAXED`;
     } else skillOverlay.message += `${GREEN}MAXED`;
 }).setFps(1), () => settings.skillTracker !== 0);
