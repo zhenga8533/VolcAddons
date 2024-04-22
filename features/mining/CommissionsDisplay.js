@@ -84,6 +84,7 @@ registerWhen(register("step", () => {
     (settings.commissionsDisplay || settings.commissionWaypoints !== 0));
 
 /* Render closest lines */
+const SKIP = new Set(["§l§nGlacite", "§l§nTungsten", "§l§nUmber"]);
 registerWhen(register("renderWorld", (pt) => {
     const player = Player.asPlayerMP().getEntity();
     const x = player.field_70165_t * pt - player.field_70142_S * (pt - 1);
@@ -91,10 +92,11 @@ registerWhen(register("renderWorld", (pt) => {
     const z = player.field_70161_v * pt - player.field_70136_U * (pt - 1);
     
     closestWaypoints.forEach(close => {
-        if (isLookingAway(x, y, z, Player.getYaw(), close[2], close[3], close[4])) return;
+        if (isLookingAway(x, y, z, Player.getYaw(), close[2], close[3], close[4]) || SKIP.has(close[0])) return;
+
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glLineWidth(3);
+        GL11.glLineWidth(5);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glDepthMask(true);
         GlStateManager.func_179094_E(); // pushMatrix()
