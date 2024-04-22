@@ -60,8 +60,9 @@ registerWhen(register("step", () => {
     closestWaypoints = [];
     while (tab[index].startsWith("§r §r§f")) {
         // Set waypoints
-        let comm = tab[index].removeFormatting().trim().split(' ')[0];
-        if (comm in GEMSTONE_WAYPOINTS) {
+        let parsed = tab[index].removeFormatting().trim().split(' ');
+        let comm = parsed[0];
+        if (comm in GEMSTONE_WAYPOINTS && parsed[1] !== "Walker") {
             let commWaypoints = GEMSTONE_WAYPOINTS[comm];
             let closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], commWaypoints)[0];
             commissionWaypoints = commissionWaypoints.concat(commWaypoints.filter(wp => wp != closest));
@@ -85,7 +86,7 @@ registerWhen(register("step", () => {
 registerWhen(register("renderWorld", (pt) => {
     const player = Player.asPlayerMP().getEntity();
     const x = player.field_70165_t * pt - player.field_70142_S * (pt - 1);
-    const y = player.field_70163_u * pt - player.field_70137_T * (pt - 1) + 1.62;
+    const y = player.field_70163_u * pt - player.field_70137_T * (pt - 1) + Player.asPlayerMP().getEyeHeight();
     const z = player.field_70161_v * pt - player.field_70136_U * (pt - 1);
     
     closestWaypoints.forEach(close => {

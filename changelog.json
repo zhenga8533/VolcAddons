@@ -7,5 +7,6 @@
     "- Fixed new enchants in value calc",
     "- Fixed chocolate timer and display",
     "- Fixed widget displays extending info",
+    "- Fixed first title sometimes not rendering",
     "- Removed total trophy fish overlay"
 ]
