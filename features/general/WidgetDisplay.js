@@ -40,7 +40,7 @@ registerWhen(register("step", () => {
         }
 
         let message = tablist[index++] + '\n';
-        while (tablist[index].startsWith("§r ")) message += tablist[index++] + '\n';
+        while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) message += tablist[index++] + '\n';
         widgetOverlays[widget].message = message;
     });
 }).setFps(1), () => settings.widgetDisplay);

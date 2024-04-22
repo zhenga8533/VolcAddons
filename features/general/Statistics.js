@@ -96,7 +96,7 @@ registerWhen(register("step", () => {
     if (index === 0) return;
     let stat = tab[index];
 
-    while (stat.startsWith("§r ")) {
+    while (stat.startsWith("§r ") && !stat.endsWith("§r§3§lInfo§r")) {
         stats.push(stat);
         stat = tab[++index];
     }
