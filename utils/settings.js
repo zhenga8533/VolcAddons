@@ -745,6 +745,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     // --- Shaft ---
     @SwitchProperty({
+        name: "Cold Display",
+        description: `${DARK_RED}NEW! ${GRAY}Displays reductions caused by cold as an overlay. Move GUI with ${AQUA}/moveCold${GRAY}.`,
+        category: "Mining",
+        subcategory: "Shaft"
+    })
+    coldDisplay = false;
+
+    @SwitchProperty({
         name: "Commission Announce",
         description: "Alerts user whenever a commission is completed.",
         category: "Mining",

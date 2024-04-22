@@ -68,6 +68,7 @@ import "./features/combat/ManaDrain";
 import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features
+import "./features/mining/ColdDisplay";
 import "./features/mining/CommissionsDisplay";
 import "./features/mining/FossilHelper";
 import "./features/mining/PowderChest";
