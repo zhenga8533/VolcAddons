@@ -94,7 +94,8 @@ register("command", () => {
  */
 registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
     if (!skillsTracked) {
-        ChatLib.chat(`${LOGO + RED}Please open skills menu to begin skill tracking!`);
+        ChatLib.clearChat(56194)
+        new Message(`${LOGO + RED}Please open skills menu to begin skill tracking!`).setChatLineId(56194).chat();
         return;
     }
     if (getPaused()) return;
