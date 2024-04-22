@@ -4,6 +4,7 @@ import { getWorld } from "../../utils/worlds";
 import { Overlay } from "../../utils/overlay";
 import { getClosest } from "../../utils/functions/find";
 import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/constants";
+import { isLookingAway } from "../../utils/functions/matrix";
 
 
 const GEMSTONE_WAYPOINTS = {
@@ -71,7 +72,7 @@ registerWhen(register("step", () => {
             let closestCopy = [...closest];
             closestWaypoints.push(closestCopy);
             closestCopy[0] = `${BOLD + UNDERLINE}${closestCopy[0]}`;
-            commissionWaypoints.push(closestCopy);
+            if (settings.commissionWaypoints !== 2) commissionWaypoints.push(closestCopy);
 
             commissionOverlay.message += `${tab[index].replace("§f", GOLD)}\n`;
         } else commissionOverlay.message += `${tab[index]}\n`;
@@ -90,6 +91,7 @@ registerWhen(register("renderWorld", (pt) => {
     const z = player.field_70161_v * pt - player.field_70136_U * (pt - 1);
     
     closestWaypoints.forEach(close => {
+        if (isLookingAway(x, y, z, Player.getYaw(), close[2], close[3], close[4])) return;
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glLineWidth(3);

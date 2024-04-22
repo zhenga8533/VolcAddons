@@ -49,3 +49,26 @@ export function createMatrix(rows, cols) {
     }
     return array;
 }
+
+/**
+ * Checks if a player is looking away from a target point.
+ * @param {number} x_p - The x-coordinate of the player's position.
+ * @param {number} y_p - The y-coordinate of the player's position.
+ * @param {number} z_p - The z-coordinate of the player's position.
+ * @param {number} yaw_p - The yaw angle (in degrees) of the player's direction.
+ * @param {number} x_target - The x-coordinate of the target point.
+ * @param {number} y_target - The y-coordinate of the target point.
+ * @param {number} z_target - The z-coordinate of the target point.
+ * @returns {boolean} - True if the player is looking away from the target point, false otherwise.
+ */
+export function isLookingAway(x_p, y_p, z_p, yaw_p, x_target, y_target, z_target) {
+    const dir_x = -Math.sin(yaw_p * Math.PI / 180);
+    const dir_z = Math.cos(yaw_p * Math.PI / 180);
+
+    const target_vec_x = x_target - x_p;
+    const target_vec_y = y_target - y_p;
+    const target_vec_z = z_target - z_p;
+    const dot_product = target_vec_x * dir_x + target_vec_y * 0 + target_vec_z * dir_z;
+
+    return dot_product < 0;
+}
