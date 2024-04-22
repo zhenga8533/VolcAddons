@@ -760,13 +760,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     commissionsDisplay = false;
 
-    @SwitchProperty({
-        name: "Commission Gemstones",
-        description: "Renders a text waypoint to any gemstone location needed for a commission.",
+    @SelectorProperty({
+        name: "Commission Waypoints",
+        description: "Renders a text waypoint to any gemstone location needed for a commission. Optionally draws line to closest waypoints.",
         category: "Mining",
-        subcategory: "Shaft"
+        subcategory: "Shaft",
+        options: ["OFF", "Waypoint", "Line", "Both"]
     })
-    commissionGemstones = false;
+    commissionWaypoints = 0;
 
     @SwitchProperty({
         name: "Corpse Announce",

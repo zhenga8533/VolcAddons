@@ -1,6 +1,7 @@
 [
     "- Added chocolate egg waypoints",
     "- Added chocolate egg announce",
+    "- Changed comm waypoint to optional show line",
     "- Changed fossil helper to bug out less",
     "- Changed skill tracker to use container menu",
     "- Fixed new enchants in value calc",

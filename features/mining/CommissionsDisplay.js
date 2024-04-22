@@ -33,6 +33,7 @@ const GEMSTONE_WAYPOINTS = {
         ["Glacite", 0xa5f2f3, 4.5, 134.5, 390.5]]
 };
 let commissionWaypoints = [];
+let closestWaypoints = [];
 
 const commissionExample = 
 `§r§9§lCommissions:§r
@@ -46,7 +47,7 @@ registerWhen(register("renderWorld", () => {
     commissionWaypoints.forEach(gem => {
         Tessellator.drawString(gem[0], gem[2], gem[3], gem[4], gem[1], true);
     });
-}), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.commissionGemstones);
+}), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.commissionWaypoints !== 0);
 
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
@@ -56,6 +57,7 @@ registerWhen(register("step", () => {
 
     commissionOverlay.message = tab[index++] + '\n';
     commissionWaypoints = [];
+    closestWaypoints = [];
     while (tab[index].startsWith("§r §r§f")) {
         // Set waypoints
         let comm = tab[index].removeFormatting().trim().split(' ')[0];
@@ -66,6 +68,7 @@ registerWhen(register("step", () => {
 
             // Change style for closest waypoint
             let closestCopy = [...closest];
+            closestWaypoints.push(closestCopy);
             closestCopy[0] = `${BOLD + UNDERLINE}${closestCopy[0]}`;
             commissionWaypoints.push(closestCopy);
 
@@ -75,8 +78,35 @@ registerWhen(register("step", () => {
         // Set commission message
         index++;
     }
-}).setFps(4),
-() => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines" || getWorld() === "Mineshaft") && (settings.commissionsDisplay || settings.commissionGemstones));
+}).setFps(4), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines" || getWorld() === "Mineshaft") && 
+    (settings.commissionsDisplay || settings.commissionWaypoints !== 0));
+
+/* Render closest lines */
+registerWhen(register("renderWorld", (pt) => {
+    const player = Player.asPlayerMP().getEntity();
+    const x = player.field_70165_t * pt - player.field_70142_S * (pt - 1);
+    const y = player.field_70163_u * pt - player.field_70137_T * (pt - 1) + 1.62;
+    const z = player.field_70161_v * pt - player.field_70136_U * (pt - 1);
+    
+    closestWaypoints.forEach(close => {
+        GL11.glBlendFunc(770, 771);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glLineWidth(3);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glDepthMask(true);
+        GlStateManager.func_179094_E(); // pushMatrix()
+    
+        const hex = close[1];
+        Tessellator.begin(3).colorize(((hex >> 16) & 0xff) / 255, ((hex >> 8) & 0xff) / 255, (hex & 0xff) / 255, 1);
+        Tessellator.pos(x, y, z);
+        Tessellator.pos(close[2], close[3], close[4]);
+        Tessellator.draw();
+    
+        GlStateManager.func_179121_F(); // popMatrix()
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+    })
+}), () => getWorld() === "Dwarven Mines" && (settings.commissionWaypoints === 2 || settings.commissionWaypoints === 3))
 
 
 /**
