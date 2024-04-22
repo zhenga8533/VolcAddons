@@ -57,7 +57,7 @@ registerWhen(register("step", () => {
     if (index === -1) return;
 
     commissionOverlay.message = tab[index++] + '\n';
-    commissionWaypoints = [];
+    commissionWaypoints = [["Base Camp", 0xffd700, 0.5, 129, 200.5]];
     closestWaypoints = [];
     while (tab[index].startsWith("§r §r§f")) {
         // Set waypoints
