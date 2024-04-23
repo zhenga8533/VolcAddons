@@ -3,6 +3,7 @@
     "- Added chocolate egg announce",
     "- Added cold display",
     "- Added wardrobe hotkeys",
+    "- Added `/va pl` (add party command prefixes)",
     "- Changed comm waypoint to optional show line",
     "- Changed fossil helper to bug out less",
     "- Changed skill tracker to use container menu",

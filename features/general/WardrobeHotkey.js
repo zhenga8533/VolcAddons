@@ -1,5 +1,6 @@
+import settings from "../../utils/settings";
 import { GREEN, RED } from "../../utils/constants";
-import { data } from "../../utils/variables";
+import { data, registerWhen } from "../../utils/variables";
 
 
 /**
@@ -9,18 +10,18 @@ const wardKey = new KeyBind("Wardrobe Set", data.wardKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.wardKey = wardKey.getKeyCode() });
 
 let instructions = "";
-register("guiRender", () => {
+registerWhen(register("guiRender", () => {
     Renderer.drawString(instructions, (Renderer.screen.getWidth() - Renderer.getStringWidth(instructions)) / 2 , 80, true);
-});
+}), () => settings.wardrobeBinding);
 
 let settingBind = false;
-register("guiClosed", () => {
+registerWhen(register("guiClosed", () => {
     instructions = "";
     settingBind = false;
-});
+}), () => settings.wardrobeBinding);
 
 const C0EPacketClickWindow = Java.type("net.minecraft.network.play.client.C0EPacketClickWindow");
-register("guiKey", (_, code, gui, event) => {
+registerWhen(register("guiKey", (_, code, gui, event) => {
     if (settingBind) {
         cancel(event);
         const slot = gui?.getSlotUnderMouse()?.field_75222_d - 35;
@@ -84,4 +85,4 @@ register("guiKey", (_, code, gui, event) => {
         settingBind = true;
         instructions = "Please hover over wardrobe slot and press hotkey to be binded (press escape to unbind).";
     }
-});
+}), () => settings.wardrobeBinding);

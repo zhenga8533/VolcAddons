@@ -72,6 +72,7 @@ export let data = new PogObject("VolcAddons", {
     "valuelist": {},
     "spamlist": [],
     "ignorelist": [],
+    "prefixlist": ["?"],
     "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune", 
         "fishing_experience"],
     "widgetlist": [],
@@ -239,7 +240,7 @@ export function updateList(args, listName) {
             if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO + GREEN}Successfully cleared the ${listName}!`);
-            return;
+            break;
         case "view": // DISPLAY LIST
         case "list":
             ChatLib.clearChat(lines);
@@ -305,7 +306,7 @@ export function updateList(args, listName) {
             else if (isArray) list.length = 0;
             else Object.keys(list).forEach(key => delete list[key]);
             ChatLib.chat(`${LOGO + GREEN}Successfully reset the ${listName}!`);
-            return;
+            break;
         case "value":
             if (listName === "attributelist") {
                 data.attributelist = ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran",
@@ -339,12 +340,14 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
             return;
     }
     
+    ChatLib.command(`va ${listName} list`, true);
+
     if (listName === "moblist" || listName === "colorlist") updateEntityList();
     else if (listName === "dianalist") setWarps();
     else if (listName === "valuelist") updateAuction();
     else if (listName === "widgetlist") updateWidgetList(); 
+    else if (listName === "prefixlist") ChatLib.chat(`${LOGO + GREEN}Please use ${AQUA}/ct load ${GREEN}to reload registers!`);
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-    ChatLib.command(`va ${listName} list`, true);
 }
 
 

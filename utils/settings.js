@@ -219,6 +219,14 @@ Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [k
     })
     slotBinding = false;
 
+    @SwitchProperty({
+        name: "Wardrobe Hotkey",
+        description: `${DARK_RED}NEW! ${GRAY}Allows linking between wardrobe slots and keys. Set key in MC controls to use in wardrobe menu, and follow the instruction provided there.`,
+        category: "General",
+        subcategory: "Inventory",
+    })
+    wardrobeBinding = false;
+
     // --- Server ---
     @SliderProperty({
         name: "Fairy Soul Waypoints",

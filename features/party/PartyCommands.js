@@ -328,15 +328,20 @@ export function executeCommand(name, args, sendTo) {
 /**
  * Detects when player inputs a ?command and set the chat 
  */
-registerWhen(register("chat", (player, message) => {
-    if (onCD) return;
-    executeCommand(getPlayerName(player), message.split(" "), "pc");
-}).setCriteria("Party > ${player}: ?${message}"), () => settings.partyCommands && toggles.partyCommands);
-registerWhen(register("chat", (player, message) => {
-    if (onCD) return;
-    executeCommand(getGuildName(player), message.split(" "), "gc");
-}).setCriteria("Guild > ${player}: ?${message}"), () => settings.partyCommands && toggles.guildCommands);
-registerWhen(register("chat", (player, message) => {
-    if (onCD) return;
-    executeCommand(getPlayerName(player), message.split(" "), "r");
-}).setCriteria("From ${player}: ?${message}"), () => settings.partyCommands && toggles.dmCommands);
+data.prefixlist.forEach(prefix => {
+    const playerRegex = "${player}";
+    const messageRegex = "${message}";
+
+    registerWhen(register("chat", (player, message) => {
+        if (onCD) return;
+        executeCommand(getPlayerName(player), message.split(" "), "pc");
+    }).setCriteria(`Party > ${playerRegex}: ${prefix + messageRegex}`), () => settings.partyCommands && toggles.partyCommands);
+    registerWhen(register("chat", (player, message) => {
+        if (onCD) return;
+        executeCommand(getGuildName(player), message.split(" "), "gc");
+    }).setCriteria(`Guild > ${playerRegex}: ${prefix + messageRegex}`), () => settings.partyCommands && toggles.guildCommands);
+    registerWhen(register("chat", (player, message) => {
+        if (onCD) return;
+        executeCommand(getPlayerName(player), message.split(" "), "r");
+    }).setCriteria(`From ${playerRegex}: ${prefix + messageRegex}`), () => settings.partyCommands && toggles.dmCommands);
+});
