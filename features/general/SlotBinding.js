@@ -1,27 +1,8 @@
-import { GREEN, LOGO, RED } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GREEN, LOGO, RED } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import settings from "../../utils/settings";
 import { data, registerWhen } from "../../utils/variables";
 
-
-// Sponsered by poe.com
-const KEYBOARD = Java.type("org.lwjgl.input.Keyboard");
-const LSHIFT = KEYBOARD.KEY_LSHIFT;
-
-// Inventory key press helper stuff
-const ROBOT = Java.type("java.awt.Robot");
-const KEYEVENT = Java.type("java.awt.event.KeyEvent");
-
-const robot = new ROBOT();
-const press = [];
-for (let i = 1; i <= 9; i++) {
-    let key = Client.getKeyBindFromDescription(`key.hotbar.${i}`).getKeyCode();
-    try {
-        press.push(KEYEVENT[`VK_${Keyboard.getKeyName(key)}`]);
-    } catch(_) {
-        press.push(KEYEVENT[`VK_${i}`]);
-    }
-}
 
 // Bind key
 const bindKey = new KeyBind("Slot Binding", data.bindKey, "./VolcAddons.xdd");
@@ -55,18 +36,14 @@ registerWhen(register("guiClosed", () => {
 
 // Swap binded items
 registerWhen(register("guiMouseClick", (x, y, button, gui, event) => {
-    if (button !== 0 || !KEYBOARD.isKeyDown(LSHIFT)) return;
+    if (button !== 0 || !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) return;
 
     const hover = gui?.getSlotUnderMouse()?.field_75222_d;
     const bind = data.slotBinds[hover];
-    if (bind === undefined) return;
+    if (hover >= 36 || bind === undefined) return;
 
-    // swap item positions
-    if (hover < 36) {
-        const key = press[bind - 36];
-        robot.keyPress(key);
-        Client.scheduleTask(1, () => robot.keyRelease(key));
-    }
+    // playerController.windowClick()
+    Client.getMinecraft().field_71442_b.func_78753_a(Player.getContainer().getWindowId(), hover, bind - 36, 2, Player.getPlayer());
 
     cancel(event);
 }), () => settings.slotBinding);
@@ -119,7 +96,21 @@ register("command", (arg) => {
 
 register("command", (arg) => {
     if (data.bindPresets.hasOwnProperty(arg)) {
+        delete data.bindPresets[arg];
+        ChatLib.chat(`${LOGO + GREEN}Succesfully deleted slot bindings using key: "${arg}"`);
+    } else ChatLib.chat(`${LOGO + RED}Invalid bind key: "${arg}"`);
+}).setName("deleteBinds", true);
+
+register("command", (arg) => {
+    if (data.bindPresets.hasOwnProperty(arg)) {
         data.slotBinds = data.bindPresets[arg];
         ChatLib.chat(`${LOGO + GREEN}Succesfully loaded slot bindings using key: "${arg}"`);
-    } else ChatLib.chat(`${LOGO + RED}Invalid key: "${arg}"`);
+    } else ChatLib.chat(`${LOGO + RED}Invalid bind key: "${arg}"`);
 }).setName("loadBinds", true);
+
+register("command", (arg) => {
+    const bindingKeys = Object.keys(data.bindPresets);
+    ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Slot Binding Presets:`);
+    bindingKeys.forEach(preset => ChatLib.chat(` ${DARK_GRAY}- ${AQUA + preset}`));
+    if (bindingKeys.length === 0) ChatLib.chat(` ${RED}No keys exist!`);
+}).setName("listBinds", true);

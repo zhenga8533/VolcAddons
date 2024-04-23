@@ -212,8 +212,9 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
     
     @SwitchProperty({
         name: "Slot Binding",
-        description: `Scuffed version of NEU's slot binding feature (you can swap using inventory slots but not hotbar slots :>).
-Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
+        description: `Scuffed version of NEU's slot binding feature (you can swap pressing inventory slots but not hotbar slots :>).
+Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, list binds with ${AQUA}/listBinds, delete binds with ${AQUA}/deleteBinds, \
+${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
         category: "General",
         subcategory: "Inventory",
     })
