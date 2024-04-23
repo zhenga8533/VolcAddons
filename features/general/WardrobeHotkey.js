@@ -73,11 +73,13 @@ register("guiKey", (_, code, gui, event) => {
         return;
     }
 
+    if (!Player.getContainer().getName().startsWith("Wardrobe")) return;
+
     if (data.wardBinds.hasOwnProperty(code)) {
         cancel(event);
         Client.sendPacket(new C0EPacketClickWindow(Player.getContainer().getWindowId(), data.wardBinds[code] + 35, 0, 0, null, 0));
         Client.scheduleTask(3, () => Client.sendPacket(new C0EPacketClickWindow(Player.getContainer().getWindowId(), 49, 0, 0, null, 0)));
-    } else if (Player.getContainer().getName().startsWith("Wardrobe") && code === wardKey.getKeyCode()) {
+    } else if (code === wardKey.getKeyCode()) {
         cancel(event);
         settingBind = true;
         instructions = "Please hover over wardrobe slot and press hotkey to be binded (press escape to unbind).";
