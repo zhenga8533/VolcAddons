@@ -121,8 +121,11 @@ export let data = new PogObject("VolcAddons", {
     "devKey": 0,
     "bindKey": 0,
     "chunkey": 0,
+    "wardKey": 0,
+    "wardBinds": {},
     "slotBinds": {},
     "bindPresets": {},
+    // Wardrobe binds
     // GUI locations
     ...DEFAULT_GUI,
     // Rift waypoint properties

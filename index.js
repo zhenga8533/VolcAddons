@@ -36,6 +36,7 @@ import "./features/general/SlotBinding";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
+import "./features/general/WardrobeHotkey";
 import "./features/general/WidgetDisplay";
 // Party Features
 import "./features/party/AntiGhostParty";
