@@ -263,6 +263,7 @@ export function executeCommand(name, args, sendTo) {
             case "transfer":
             case "ptme":
             case "pt":
+            case "pm":
                 if (!toggles.transferCommand) return;
                 ChatLib.command("p transfer " + name);
                 break;

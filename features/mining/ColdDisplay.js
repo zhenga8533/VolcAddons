@@ -23,5 +23,4 @@ register("step", () => {
     coldOverlay.message += cold >= 75 ? " -75% ✦" :
         cold >= 50 ? " -50% ✦" :
         cold >= 25 ? " -25% ✦" : "";
-    print(coldOverlay.message);
 }).setFps(1);
