@@ -47,18 +47,27 @@ register("guiKey", (_, code, gui, event) => {
             return;
         }
 
+        // Check if key is the wardrobe bind key
+        if (code === wardKey.getKeyCode()) {
+            instructions = `${RED}You cannot use the wardrobe set key as a hotkey.`;
+            return;
+        }
+
         // Check if key is already used
         if (data.wardBinds.hasOwnProperty(code)) {
             instructions = `${RED}Key #${code - 1} is already binded to slot ${data.wardBinds[code]}`;
             return;
         }
 
-        // Remove any key already bound
-        if (linkedKey !== undefined) delete data.wardBinds[linkedKey];
-
         // Set bind
         data.wardBinds[code] = slot;
         instructions = `${GREEN}Successfully binded slot ${slot} to key #${code - 1}.`;
+
+        // Remove any key already bound
+        if (linkedKey !== undefined) {
+            instructions += ` Unbound key #${linkedKey} from slot ${data.warpBinds[linkedKey]}.`;
+            delete data.wardBinds[linkedKey];
+        }
 
         settingBind = false;
         return;
