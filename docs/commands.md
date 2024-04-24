@@ -25,6 +25,7 @@ subtitle: List of every non-gui related commands.
     - `/va dianalist`: Set locations in which Diana burrow warp uses.
     - `/va emotelist`: Set words to replace in user sent messages.
     - `/va ignorelist`: Set players to block from using leader/party commands.
+    - `/va prefixlist`: Set prefixes that are detected for leader/party commands.
     - `/va spamlist`: Set chat messages to hide.
     - `/va valuelist`: Set a constant value of the currently held item.
     - `/va whitelist`: Set player party invites to auto join.

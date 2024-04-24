@@ -15,7 +15,8 @@ subtitle: List of all features and their related commands.
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
 - **Inventory**
     - Searchbar (`/moveSearch`)
-    - Slot Binding (`/resetBinds`, `/saveBinds`, `/loadBinds`)
+    - Slot Binding (`/<save, delete, list, load, reset>Binds [key]`)
+    - Wardrobe Hotkeys
 - **Server**
     - Fairy Soul Waypoints
     - Hide Far Entities
@@ -115,6 +116,8 @@ subtitle: List of all features and their related commands.
     - Bingo Card Overlay
 - **Chocolate Factory**
     - Chocolate Overlay
+    - Egg Announce
+    - Egg Waypoints
     - Worker Highlight
 - **Great Spook**
     - Math Teacher Solver
