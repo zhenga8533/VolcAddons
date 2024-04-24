@@ -9,9 +9,22 @@ import { data, registerWhen } from "../../utils/variables";
 const wardKey = new KeyBind("Wardrobe Set", data.wardKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.wardKey = wardKey.getKeyCode() });
 
+/**
+ * Sets wardrobe slot item stack size based on linked key.
+ */
+function setKeySize() {
+    const items = Player.getContainer().getItems();
+    Object.keys(data.wardBinds).forEach(key => {
+        const item = items[35 + data.wardBinds[key]];
+        if (item !== null) item.setStackSize(key - 1);
+    });
+}
+
 let instructions = "";
 registerWhen(register("guiRender", () => {
+    if (!Player.getContainer().getName().startsWith("Wardrobe")) return;
     Renderer.drawString(instructions, (Renderer.screen.getWidth() - Renderer.getStringWidth(instructions)) / 2 , 80, true);
+    setKeySize();
 }), () => settings.wardrobeBinding);
 
 let settingBind = false;
@@ -45,6 +58,7 @@ registerWhen(register("guiKey", (_, code, gui, event) => {
 
             instructions = `${GREEN}Succesfully unbound slot ${slot}.`;
             settingBind = false;
+            setKeySize();
             return;
         }
 
@@ -66,10 +80,11 @@ registerWhen(register("guiKey", (_, code, gui, event) => {
 
         // Remove any key already bound
         if (linkedKey !== undefined) {
-            instructions += ` Unbound key #${linkedKey} from slot ${data.warpBinds[linkedKey]}.`;
+            instructions += ` Unbound key #${linkedKey} from slot ${data.wardBinds[linkedKey]}.`;
             delete data.wardBinds[linkedKey];
         }
 
+        setKeySize();
         settingBind = false;
         return;
     }
