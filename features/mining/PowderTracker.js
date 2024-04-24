@@ -74,7 +74,7 @@ registerWhen(register("step", () => {
     });
 
     // Set HUD
-    const timeDisplay = displayTime !== 0 ? displayTime : `${RED}Inactive`;
+    const timeDisplay = displayTime !== 0 ? getTime(displayTime) : `${RED}Inactive`;
     powderOverlay.message = 
 `${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
 ${DARK_GREEN + BOLD}Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr

@@ -5,6 +5,7 @@ import { registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
 import { delay } from "../../utils/thread";
 import { AQUA, GREEN, STAND_CLASS } from "../../utils/constants";
+import { convertToTitleCase } from "../../utils/functions/format";
 
 
 /**
@@ -27,7 +28,6 @@ function attemptTransfer(index) {
 
 registerWhen(register("chat", () => {
     if (!getInParty()) return;
-    Client.showTitle(`${AQUA}Glacite Mineshaft!`, `${GREEN}Attempting transfer commands...`, 10, 50, 10);
     attemptTransfer(0);
 }).setCriteria("WOW! You found a Glacite Mineshaft portal!"), () => settings.shaftTransfer && getWorld() === "Dwarven Mines");
 
@@ -36,16 +36,6 @@ registerWhen(register("chat", () => {
  * Corpse Announce
  */
 let corpses = [];
-let tung = 0;
-let umb = 0;
-let skele = 0;
-
-function updateKeys() {
-    const inventory = Player.getInventory().getItems();
-    tung = inventory.find(item => item?.getName() === "§5Tungsten Key")?.getStackSize() ?? 0;
-    umb = inventory.find(item => item?.getName() === "§5Umber Key")?.getStackSize() ?? 0;
-    skele = inventory.find(item => item?.getName() === "§6Skeleton Key")?.getStackSize() ?? 0;
-}
 
 register("chat", () => {
     delay(updateKeys, 3000);
@@ -58,26 +48,15 @@ function announceCorpse(corpseType) {
     const z = Math.round(Player.getZ());
 
     // Determine corpse type
-    Client.scheduleTask(4, () => {
-        if (getClosest([x, y, z], corpses)[1] < 10) return;
-        if (corpseType === undefined) {
-            let tungsten = tung;
-            let umber = umb;
-            let skeleton = skele;
-            updateKeys();
-            corpseType = tungsten > tung ? "Tungsten" :
-                umber > umb ? "Umber" :
-                skeleton > skele ? "Vanguard" : "Lapis";
-        }
-        ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${corpseType} Corpse!`);
-    });
+    if (getClosest([x, y, z], corpses)[1] < 10) return;
+    ChatLib.command(`pc x: ${x}, y: ${y}, z: ${z} | ${corpseType} Corpse!`);
 }
 
 let looted = [];
-registerWhen(register("chat", () => {
+registerWhen(register("chat", (type) => {
     looted.push([Player.getX(), Player.getY(), Player.getZ()]);
-    if (settings.corpseAnnounce) announceCorpse();
-}).setCriteria("  FROZEN CORPSE LOOT! "), () => (settings.corpseAnnounce || settings.corpseWaypoints) && getWorld() === "Mineshaft");
+    if (settings.corpseAnnounce) announceCorpse(convertToTitleCase(type));
+}).setCriteria("  ${type} CORPSE LOOT! "), () => (settings.corpseAnnounce || settings.corpseWaypoints) && getWorld() === "Mineshaft");
 registerWhen(register("chat", () => {
     announceCorpse("Tungsten");
 }).setCriteria("You need to be holding a Tungsten Key to unlock this corpse!"), () => settings.corpseAnnounce && getWorld() === "Mineshaft");
