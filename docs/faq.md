@@ -20,14 +20,14 @@ There will not be any rats (I think), but I am as trustworthy as the next person
 
 - Make sure you are using ChatTriggers v2.2.0
 
-- Run `/ct console js` and if there is red text please DM `grapefruited` on Discord
+- Run `/ct console js` and if there is red text please open a discord thread [here](https://discord.gg/ftxB4kG2tw).
 
 
-**4. "Missing arguments! Usage: /viewauction &ltauction id&gt"**
+**4. `"Missing arguments! Usage: /viewauction <auction id>"`**
 
-- Another mod is turn `/va` into a shortcut for `/viewauction`. You should still be able to use `/volc`.
+- Another mod is turning `/va` into a shortcut for `/viewauction`. You should still be able to use `/volc`.
 
 
-**5. Where do I report bugs or suggest features**
+**5. Don't see your issue or want to report one?**
 
-Please open a thread on the VolcAddons Discord server: [here](https://discord.gg/ftxB4kG2tw)
+Please open a thread on the VolcAddons Discord server: [here](https://discord.gg/ftxB4kG2tw).
