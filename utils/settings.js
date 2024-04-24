@@ -222,7 +222,7 @@ ${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
 
     @SwitchProperty({
         name: "Wardrobe Hotkey",
-        description: `${DARK_RED}NEW! ${GRAY}Allows linking between wardrobe slots and keys. Set key in MC controls to use in wardrobe menu, and follow the instruction provided there.`,
+        description: "Allows linking between wardrobe slots and keys. Set key in MC controls to use in wardrobe menu, and follow the instruction provided there.",
         category: "General",
         subcategory: "Inventory",
     })
@@ -933,7 +933,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     
     @SelectorProperty({
         name: "Egg Announce",
-        description: `${DARK_RED}NEW! ${GRAY}Sends coordinates of opened chocolate eggs to chat.`,
+        description: "Sends coordinates of opened chocolate eggs to chat.",
         category: "Event",
         subcategory: "Chocolate Factory",
         options: ["OFF", "All Chat", "Party Chat", "Self"]
@@ -942,7 +942,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Egg Waypoints",
-        description: `${DARK_RED}NEW! ${GRAY}Display waypoints for nearby corpses. ${DARK_RED}Technically uses ESP so UAYOR!`,
+        description: `Display waypoints for nearby corpses. ${DARK_RED}Technically uses ESP so UAYOR!`,
         category: "Event",
         subcategory: "Chocolate Factory"
     })
