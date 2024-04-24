@@ -23,7 +23,7 @@ There will not be any rats (I think), but I am as trustworthy as the next person
 - Run `/ct console js` and if there is red text please DM `grapefruited` on Discord
 
 
-**4. "Missing arguments! Usage: /viewauction <auction id>"**
+**4. "Missing arguments! Usage: /viewauction &ltauction id&gt"**
 
 - Another mod is turn `/va` into a shortcut for `/viewauction`. You should still be able to use `/volc`.
 
