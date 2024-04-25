@@ -53,7 +53,7 @@ const moving = register("renderOverlay", () => {
     // GUI Instructions
     renderScale(
         1.2, GUI_INSTRUCT,
-        Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+        Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.4,
         Renderer.screen.getHeight() / 2.4, false, false
     );
 }).unregister();
@@ -275,14 +275,22 @@ export class Overlay {
         this.width = 0;
         this.height = lines.length * 9 * this.loc[2];
         lines.forEach(line => {
-            const regex = /&l(.*?)(?:&|$)/g;
-            const matches = [];
-            let match;
+            if (line.includes('§l')) {
+                const splitLine = line.split('§l');
+                let stringWidth = 0;
 
-            while ((match = regex.exec(line)) !== null) matches.push(match[1]);
+                for (let i = 0; i < splitLine.length; i++) {
+                    if (i % 2 === 0) stringWidth += Renderer.getStringWidth(splitLine[i]);
+                    else {
+                        let clearIndex = splitLine[i].indexOf("§");
+                        let boldedString = clearIndex !== -1 ? splitLine[i].substring(0, clearIndex) : splitLine[i];
+                        let unboldedString = clearIndex !== -1 ? splitLine[i].substring(clearIndex, splitLine[i].length) : "";
+                        stringWidth += Renderer.getStringWidth(boldedString) * 1.2 + Renderer.getStringWidth(unboldedString);
+                    }
+                }
 
-            const width = 1.1*Renderer.getStringWidth(matches.join('')) + Renderer.getStringWidth(line.replace(regex, ''));
-            this.width = Math.max(this.width, width * this.loc[2]);
+                this.width = Math.max(this.width, stringWidth * this.loc[2]);
+            } else this.width = Math.max(this.width, Renderer.getStringWidth(line) * this.loc[2]);
         });
     }
 }
