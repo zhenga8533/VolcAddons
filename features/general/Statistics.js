@@ -141,7 +141,8 @@ registerWhen(register("tick", () => {
 
     // Pet
     if (toggles.petDisplay) {
-        statsMessage += `${DARK_AQUA + BOLD}Pet: ${data.pet}\n`;
+        let pet = data.pet.length > 36 ? data.pet.split(' ').slice(2).join(' ') : data.pet;
+        statsMessage += `${DARK_AQUA + BOLD}Pet: ${pet}\n`;
     }
 
     // Stats
