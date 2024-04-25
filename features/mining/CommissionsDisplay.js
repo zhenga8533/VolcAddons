@@ -56,7 +56,7 @@ registerWhen(register("step", () => {
     let index = tab.findIndex(name => name === "§r§9§lCommissions:§r");
     if (index === -1) return;
 
-    commissionOverlay.message = tab[index++] + '\n';
+    let commissionMessage = tab[index++] + '\n';
     commissionWaypoints = [["Base Camp", 0xffd700, 0.5, 129, 200.5]];
     closestWaypoints = [];
     while (tab[index].startsWith("§r §r§f")) {
@@ -74,12 +74,14 @@ registerWhen(register("step", () => {
             closestCopy[0] = `${BOLD + UNDERLINE}${closestCopy[0]}`;
             if (settings.commissionWaypoints !== 2) commissionWaypoints.push(closestCopy);
 
-            commissionOverlay.message += `${tab[index].replace("§f", GOLD)}\n`;
-        } else commissionOverlay.message += `${tab[index]}\n`;
+            commissionMessage += `${tab[index].replace("§f", GOLD)}\n`;
+        } else commissionMessage += `${tab[index]}\n`;
 
         // Set commission message
         index++;
     }
+
+    commissionOverlay.setMessage(commissionMessage);
 }).setFps(4), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines" || getWorld() === "Mineshaft") && 
     (settings.commissionsDisplay || settings.commissionWaypoints !== 0));
 

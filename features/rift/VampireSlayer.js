@@ -27,7 +27,8 @@ let inMania = false;
  * Tracks player boss on spawn and updates vampire attack overlay every tick.
  */
 registerWhen(register("tick", () => {
-    vampireOverlay.message = "";
+    let vampireMessage = "";
+    vampireOverlay.setMessage("");
     if (!getSlayerBoss()) {
         bossUUID = 0;
         mania = 0;
@@ -52,7 +53,7 @@ registerWhen(register("tick", () => {
         // Mania Detect
         const maniaIndex = name.indexOf("§5§lMANIA");
         if (maniaIndex !== -1) {
-            vampireOverlay.message += `${name[maniaIndex]}: ${name[maniaIndex + 1]}\n`;
+            vampireMessage += `${name[maniaIndex]}: ${name[maniaIndex + 1]}\n`;
             if (!inMania) {
                 mania++;
                 inMania = true;
@@ -70,11 +71,13 @@ registerWhen(register("tick", () => {
 
         // Twinclaw Detect
         const clawIndex = name.indexOf("§6§lTWINCLAWS");
-        if (clawIndex !== -1) vampireOverlay.message += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
+        if (clawIndex !== -1) vampireMessage += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
 
         // Ichor Detect
         const ichorIndex = name.indexOf("§3§lICHOR");
         if (ichorIndex !== -1) ichorSpawn = true;
+
+        vampireOverlay.setMessage(vampireMessage);
     }
 
     // Ichor Nametag Shit
@@ -86,7 +89,7 @@ registerWhen(register("tick", () => {
                 ichorUUID = 0;
                 return;
             }
-            vampireOverlay.message += `${DARK_AQUA + BOLD}ICHOR: ${ichor.func_95999_t()}\n`;
+            vampireOverlay.setMessage(vampireMessage + `${DARK_AQUA + BOLD}ICHOR: ${ichor.func_95999_t()}\n`);
         } else {
             const ichor = stands.find(stand => stand.func_95999_t().includes('24.'));
             if (ichor === undefined) return;

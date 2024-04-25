@@ -9,7 +9,7 @@ import { getWorld } from "../../utils/worlds";
  */
 const crateExample = "§8[§a|||||||||||||§f|||||||§8] §b69%§r";
 const crateOverlay = new Overlay("crateEdit", ["all"], () => getWorld() === "Kuudra", data.CEL, "moveCrate", crateExample);
-crateOverlay.message = "";
+crateOverlay.setMessage("");
 
 /**
  * Cancel crate title render and replay with overlay render.
@@ -17,7 +17,7 @@ crateOverlay.message = "";
 registerWhen(register("renderTitle", (title, _, event) => {
     if (!title.startsWith("§8[") || !title.endsWith("%§r")) return;
 
-    crateOverlay.message = title;
+    crateOverlay.setMessage(title);
     cancel(event);
 }), () => settings.crateEdit && getWorld() === "Kuudra");
 
@@ -25,8 +25,8 @@ registerWhen(register("renderTitle", (title, _, event) => {
  * Reset on crate pickup/cancel
  */
 register("chat", () => {
-    Client.scheduleTask(20, () => crateOverlay.message = "");
+    Client.scheduleTask(20, () => crateOverlay.setMessage(""));
 }).setCriteria("You retrieved some of Elle's supplies from the Lava!");
 register("chat", () => {
-    Client.scheduleTask(20, () => crateOverlay.message = "");
+    Client.scheduleTask(20, () => crateOverlay.setMessage(""));
 }).setCriteria("You moved and the Chest slipped out of your hands!");

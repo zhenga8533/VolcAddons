@@ -9,11 +9,6 @@ import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
 /**
- * Inquisitor alert variables.
- */
-let inquisitor = undefined;
-
-/**
  * Variables used to track and display Inquisitor counter.
  */
 const session = {
@@ -54,7 +49,7 @@ export function updateInqCounter(inqSpawned) {
     if (session.inqs) session.average = Math.round(session.burrows / session.inqs);
 
     // Update HUD
-    counterOverlay.message = settings.inqCounter === 1 ?
+    counterOverlay.setMessage(settings.inqCounter === 1 ?
 `${GOLD + BOLD}Total Inqs: ${RESET + data.inqSession.inqs}
 ${GOLD + BOLD}Total Burrows: ${RESET + data.inqSession.burrows}
 ${GOLD + BOLD}Burrows Since: ${RESET + data.inqSession.last}
@@ -63,7 +58,7 @@ ${GOLD + BOLD}Average Burrows: ${RESET + data.inqSession.average}`
 `${GOLD + BOLD}Total Inqs: ${RESET + session.inqs}
 ${GOLD + BOLD}Total Burrows: ${RESET + session.burrows}
 ${GOLD + BOLD}Burrows Since: ${RESET + session.last}
-${GOLD + BOLD}Average Burrows: ${RESET + session.average}`;
+${GOLD + BOLD}Average Burrows: ${RESET + session.average}`);
 }
 
 /**
@@ -76,7 +71,7 @@ register("command", () => {
         "last": 0,
         "average": 0,
     };
-    counterOverlay.message = counterExample;
+    counterOverlay.setMessage(counterExample);
 }).setName("resetInq");
 
 /**

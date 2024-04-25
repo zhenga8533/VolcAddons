@@ -43,8 +43,8 @@ registerWhen(register("step", () => {
     
     // Update GUI
     const timeDisplay = piggy.since < settings.coinTracker * 60 ? getTime(piggy.time) : `${RED}Inactive`;
-    coinOverlay.message = 
+    coinOverlay.setMessage(
 `${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.getGain())} ¢
 ${GOLD + BOLD}Time Passed: ${WHITE + timeDisplay}
-${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.getRate())} ¢/hr`;
+${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.getRate())} ¢/hr`);
 }).setFps(1), () => settings.coinTracker !== 0);

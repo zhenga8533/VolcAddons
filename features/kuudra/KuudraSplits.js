@@ -185,11 +185,11 @@ registerWhen(register("step", () => {
     }
     
     // Draw Splits
-    splitsOverlay.message =
+    splitsOverlay.setMessage(
 `${AQUA + BOLD}Supplies: ${RESET + times[0]}
 ${AQUA + BOLD}Build: ${RESET + times[1]}
 ${AQUA + BOLD}Fuel/Stun: ${RESET + times[2]}
-${AQUA + BOLD}Kuudra: ${RESET + times[3]}` 
+${AQUA + BOLD}Kuudra: ${RESET + times[3]}`);
 }).setFps(19), () => getWorld() === "Kuudra" && settings.kuudraSplits);
 
 /**

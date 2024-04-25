@@ -27,31 +27,33 @@ ${DARK_GREEN}Bingo Goals
  ${GRAY + BOLD}楽しい時間${GREEN}、${GRAY + BOLD}ビンゴ${GREEN}！
  ${GRAY + BOLD}ビンゴをする時間です${GREEN}！`;
 const bingoOverlay = new Overlay("bingoCard", ["all"], () => true, data.BCL, "moveBingo", bingoExample);
-bingoOverlay.message = "";
+bingoOverlay.setMessage("");
 
 /**
  * Updates bingo overlay based on current uncompleted goals.
  */
 function updateBingo() {
-    bingoOverlay.message = "";
+    let bingoMessage = "";
 
     // Update community bingo goals
     if (settings.bingoCard === 1 || settings.bingoCard === 3) {
-        bingoOverlay.message += `${DARK_GREEN + BOLD}Community Goals\n`;
+        bingoMessage += `${DARK_GREEN + BOLD}Community Goals\n`;
         Object.keys(community).forEach(goal => {
-            bingoOverlay.message += ` ${community[goal]}\n`;
+            bingoMessage += ` ${community[goal]}\n`;
         });
     }
 
-    bingoOverlay.message += '\n';
+    bingoMessage += '\n';
 
     // Update peersonal bingo goals
     if (settings.bingoCard === 1 || settings.bingoCard === 2) {
-        bingoOverlay.message += `${DARK_GREEN + BOLD}Bingo Goals\n`;
+        bingoMessage += `${DARK_GREEN + BOLD}Bingo Goals\n`;
         Object.keys(personal).forEach(goal => {
-            bingoOverlay.message += ` ${personal[goal]}\n`;
+            bingoMessage += ` ${personal[goal]}\n`;
         });
     }
+
+    bingoOverlay.setMessage(bingoMessage);
 }
 
 registerWhen(register("guiOpened", () => {
@@ -86,5 +88,5 @@ registerWhen(register("chat", (goal) => {
 }).setCriteria("BINGO GOAL COMPLETE! ${goal}"), () => settings.bingoCard !== 0);
 
 registerWhen(register("chat", () => {
-    bingoOverlay.message = "";
+    bingoOverlay.setMessage("");
 }).setCriteria("Switching to profile ${profile}..."), () => settings.bingoCard !== 0);

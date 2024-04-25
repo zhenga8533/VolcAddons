@@ -25,9 +25,9 @@ registerWhen(register("step", () => {
     if (lastCast > 270)
         lastFish = 0;
     
-    fishOverlay.message = 
+    fishOverlay.setMessage( 
 `${GOLD + BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE + getTime(lastCast)}
-${GOLD + BOLD}Last Fish: ${RESET + getTime(lastCast > 270 ? 0 : lastFish)}`
+${GOLD + BOLD}Last Fish: ${RESET + getTime(lastCast > 270 ? 0 : lastFish)}`);
 }).setFps(1), () => getWorld() === "Crimson Isle" && settings.goldenFishAlert);
 
 /**

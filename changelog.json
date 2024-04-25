@@ -1,3 +1,4 @@
 [
+    "- Added option to render overlay background",
     "- Fixed overlay width being off on bold"
 ]

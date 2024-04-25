@@ -90,12 +90,12 @@ function updateProfitTracker(openedChest) {
     data.kuudraSession.rate = kuudraSession.profit / kuudraSession.time * 3600;
 
     const profitView = settings.kuudraProfitTracker === 1 ? data.kuudraSession : kuudraSession;
-    coinageOverlay.message =
+    coinageOverlay.setMessage(
 `${DARK_RED + BOLD}Profit: ${WHITE + formatNumber(profitView.profit.toFixed(0))} ¢
 ${DARK_RED + BOLD}Chests: ${WHITE + commafy(profitView.chests)} chests
 ${DARK_RED + BOLD}Average: ${WHITE + formatNumber(profitView.average.toFixed(0))} ¢/chest
 ${DARK_RED + BOLD}Time Passed: ${WHITE + getTime(profitView.time)}
-${DARK_RED + BOLD}Rate: ${WHITE + formatNumber(profitView.rate.toFixed(0))} ¢/hr`
+${DARK_RED + BOLD}Rate: ${WHITE + formatNumber(profitView.rate.toFixed(0))} ¢/hr`);
 }
 
 /**
@@ -141,13 +141,13 @@ registerWhen(register("guiOpened", () => {
         chestProfit = value - cost;
 
         const profitMessage = chestProfit >= 0 ? `${GREEN}+${commafy(chestProfit)}` : `${RED}-${commafy(chestProfit)}`;
-        profitOverlay.message = 
+        profitOverlay.setMessage( 
 `${GOLD + BOLD}Profit/Loss: ${profitMessage}
 
 ${AQUA + BOLD}Primary: ${GREEN}+${commafy(primary)}
 ${DARK_AQUA + BOLD}Secondary: ${GREEN}+${commafy(secondary)}
 ${DARK_PURPLE + BOLD}Teeth: ${GREEN}+${commafy(teeth)}
 ${RED + BOLD}Essence: ${GREEN}+${commafy(essence)}
-${DARK_RED + BOLD}Key: ${RED}-${commafy(cost)}`;
+${DARK_RED + BOLD}Key: ${RED}-${commafy(cost)}`);
     });
 }), () => getWorld() === "Kuudra");

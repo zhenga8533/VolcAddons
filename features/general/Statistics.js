@@ -137,17 +137,17 @@ register("step", () => {
  * Update statsOverlay message
  */
 registerWhen(register("tick", () => {
-    statsOverlay.message = "";
+    let statsMessage = "";
 
     // Pet
     if (toggles.petDisplay) {
-        statsOverlay.message += `${DARK_AQUA + BOLD}Pet: ${data.pet}\n`;
+        statsMessage += `${DARK_AQUA + BOLD}Pet: ${data.pet}\n`;
     }
 
     // Stats
     if (toggles.statsDisplay) {
-        statsOverlay.message += `${DARK_AQUA + BOLD}Stats:\n`;
-        stats.forEach(stat => statsOverlay.message += `${GRAY}-${stat}\n` );
+        statsMessage += `${DARK_AQUA + BOLD}Stats:\n`;
+        stats.forEach(stat => statsMessage += `${GRAY}-${stat}\n` );
     }
 
     // Legion
@@ -160,7 +160,7 @@ registerWhen(register("tick", () => {
             legionCount > 8 ? YELLOW :
             legionCount > 4 ? GOLD :
             legionColor > 0 ? RED : DARK_RED;
-        statsOverlay.message += `${DARK_AQUA + BOLD}Legion: ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)\n`;
+        statsMessage += `${DARK_AQUA + BOLD}Legion: ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)\n`;
     }
 
     // Soulflow
@@ -170,8 +170,7 @@ registerWhen(register("tick", () => {
             soulflow > 50_000 ? YELLOW :
             soulflow > 25_000 ? GOLD : 
             soulflow > 10_000 ? RED : DARK_RED;
-        
-        statsOverlay.message += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎\n`;
+        statsMessage += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎\n`;
     }
 
     // Playtime
@@ -181,9 +180,10 @@ registerWhen(register("tick", () => {
             data.playtime < 10_800 ? YELLOW :
             data.playtime < 18_000 ? GOLD : 
             data.playtime < 28_800 ? RED : DARK_RED;
-        
-            statsOverlay.message += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + getTime(data.playtime)}`;
+        statsMessage += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + getTime(data.playtime)}`;
     }
+
+    statsOverlay.setMessage(statsMessage);
 }), () => settings.statsDisplay);
 
 /**

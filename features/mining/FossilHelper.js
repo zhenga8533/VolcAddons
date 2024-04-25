@@ -194,17 +194,18 @@ function findTile() {
 
     // Update fossil display
     const auction = getAuction();
-    fossilOverlay.message = `${DARK_AQUA + BOLD}Fossil Probability:`;
-    if (maxPos === 0) fossilOverlay.message += `\n ${RED}No possible fossils!`;
+    let fossilMessage = `${DARK_AQUA + BOLD}Fossil Probability:`;
+    if (maxPos === 0) fossilMessage += `\n ${RED}No possible fossils!`;
     else {
         let profit = 0;
         Object.keys(fossilProbability).forEach(fossil => {
             const possibility = fossilProbability[fossil] / totalPossible;
             profit += possibility * (auction[fossil.toUpperCase() + "_FOSSIL"]?.lbin ?? 0);
-            if (possibility !== 0) fossilOverlay.message += `\n ${DARK_GRAY}- ${GOLD + fossil} ${GRAY}(${(possibility * 100).toFixed(2)}%)`;
+            if (possibility !== 0) fossilMessage += `\n ${DARK_GRAY}- ${GOLD + fossil} ${GRAY}(${(possibility * 100).toFixed(2)}%)`;
         });
-        fossilOverlay.message += ` \n\n${AQUA + BOLD}Profit: ${YELLOW + formatNumber(profit)}`
+        fossilMessage += ` \n\n${AQUA + BOLD}Profit: ${YELLOW + formatNumber(profit)}`
     }
+    fossilOverlay.setMessage(fossilMessage);
     
     return best;
 }
@@ -257,7 +258,7 @@ const untrackFossils = register("guiClosed", () => {
     trackClicks.unregister();
     untrackFossils.unregister();
     highlightTile.unregister();
-    fossilOverlay.message = fossilExample;
+    fossilOverlay.setMessage(fossilExample);
     patterns = FOSSILS;
 bestTile = [2, 4];
 }).unregister();

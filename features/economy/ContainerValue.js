@@ -24,7 +24,7 @@ ${RED}Item 9${GRAY} - ${WHITE}Formlessness
 ${DARK_RED}-Sun Tzu, The Art of War`;
 const containerOverlay = new Overlay("containerValue", ["all", "misc"],
 () => true, data.RL, "moveContainer", containerExample);
-containerOverlay.message = "";
+containerOverlay.setMessage("");
 
 /**
  * Set the message of the overlay given the items object and value.
@@ -35,7 +35,7 @@ containerOverlay.message = "";
  */
 function setMessage(itemValues, totalValue) {
     if (totalValue === 0) {
-        containerOverlay.message = "";
+        containerOverlay.setMessage("");
         return;
     }
 
@@ -59,7 +59,7 @@ function setMessage(itemValues, totalValue) {
         }
     }
 
-    containerOverlay.message = overlayMessage;
+    containerOverlay.setMessage(overlayMessage);
 }
 
 /**
@@ -162,5 +162,5 @@ registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
  * This function clears the content of the container overlay message, effectively removing it from display.
  */
 registerWhen(register("guiClosed", () => {
-    containerOverlay.message = "";
+    containerOverlay.setMessage("");
 }), () => settings.containerValue !== 0);

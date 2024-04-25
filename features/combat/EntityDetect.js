@@ -183,10 +183,10 @@ registerWhen(register("step", () => {
     } else {
         nextSpawn--;
         if (nextSpawn === 0) {
-            broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${GREEN}Soon TM`;
+            broodmotherOverlay.setMessage(`${GRAY + BOLD}Next Spawn: ${GREEN}Soon TM`);
             Client.showTitle("", `${RED}Broodmother Spawning Soon!`, 0, 25, 5);
             if (server in broodLobbies) delete broodLobbies[server];
-        } else broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${WHITE + getTime(nextSpawn)}`;
+        } else broodmotherOverlay.setMessage(`${GRAY + BOLD}Next Spawn: ${WHITE + getTime(nextSpawn)}`);
     }
 }).setFps(1), () => settings.broodmotherDetect);
 
@@ -196,5 +196,5 @@ registerWhen(register("step", () => {
 registerWhen(register("worldUnload", () => {
     broodLobbies[getServer()] = nextSpawn;
     nextSpawn = 0;
-    broodmotherOverlay.message = `${GRAY + BOLD}Next Spawn: ${RED}???`;
+    broodmotherOverlay.setMessage(`${GRAY + BOLD}Next Spawn: ${RED}???`);
 }), () => getWorld() === "Spider's Den" && settings.broodmotherDetect);

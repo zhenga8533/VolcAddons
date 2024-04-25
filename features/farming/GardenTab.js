@@ -28,7 +28,8 @@ registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
 
     const tablist = TabList.getNames();
-    gardenOverlay.message = "";
+    gardenOverlay.setMessage("");
+    let gardenMessage = "";
     let visitorIndex = tablist.findIndex(tab => tab.startsWith("§r§b§lVisitors:"));
     if (visitorIndex === -1) return;
 
@@ -37,7 +38,7 @@ registerWhen(register("step", () => {
     visitors = [];
     for (let i = 0; i <= visitorCount; i++) {
         let visitor = tablist[visitorIndex + i];
-        gardenOverlay.message += visitor + '\n';
+        gardenMessage += visitor + '\n';
         visitors.push(visitor);
     }
 
@@ -52,8 +53,10 @@ registerWhen(register("step", () => {
 
     // Update next display
     if (tabTime !== 0 && tabTime < nextVisitor - 60 || tabTime > nextVisitor + 60 || nextVisitor === 0) nextVisitor = tabTime;
-    if (nextVisitor > 0) gardenOverlay.message += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
-    else gardenOverlay.message += ` Next Visitor: ${RED + BOLD}Queue Full!`;
+    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
+
+    gardenOverlay.setMessage(gardenMessage);
 }).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);
 
 
@@ -73,12 +76,13 @@ registerWhen(register("step", () => {
         nextVisitor = 720;
     }
 
-    gardenOverlay.message = "";
+    let gardenMessage = "";
     visitors.forEach(visitor => {
-        gardenOverlay.message += visitor + '\n';
+        gardenMessage += visitor + '\n';
     });
-    if (nextVisitor > 0) gardenOverlay.message += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
-    else gardenOverlay.message += ` Next Visitor: ${RED + BOLD}Queue Full!`;
+    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
+    gardenOverlay.setMessage(gardenMessage);
 }).setFps(1), () => settings.gardenTab);
 
 // Set next visitor time (assuming with 20% visitor reduction)

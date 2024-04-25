@@ -45,7 +45,7 @@ register("chat", (plot) => {
  * Decrement spray timers every second
  */
 register("step", () => {
-    sprayOverlay.message = `${GREEN + BOLD}Sprays:`;
+    let sprayMessage = "";
 
     const keys = Object.keys(sprays)
     keys.forEach(plot => {
@@ -57,9 +57,10 @@ register("step", () => {
         const time = sprays[plot];
         const sprayColor = time > 1200 ? GREEN :
             time > 600 ? YELLOW : RED;
-        sprayOverlay.message += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + getTime(time) + DARK_GRAY})`
+            sprayMessage += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + getTime(time) + DARK_GRAY})`
     });
-    if (keys.length === 0) sprayOverlay.message += `\n ${RED + BOLD}None...`;
+    if (keys.length === 0) sprayMessage += `\n ${RED + BOLD}None...`;
+    sprayOverlay.setMessage(sprayMessage);
 }).setFps(1);
 
 /**
@@ -226,17 +227,19 @@ registerWhen(register("chat", (_, fortune) => {
 const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
 const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "movePest", bonusExample);
 registerWhen(register("step", () => {
-    bonusOverlay.message = `${YELLOW + BOLD}Pest Bonus: `;
+    let bonusMessage = `${YELLOW + BOLD}Pest Bonus: `;
     let fortune = 0;
     Object.keys(bonuses).forEach(bonus => {
         if (fortune === 0) time = bonuses[bonus];
         if (--bonuses[bonus] === 0) delete bonuses[bonus];
         else fortune += parseInt(bonus.replace(/[^0-9]/g, ''));
     });
-    if (fortune === 0) bonusOverlay.message += `${RED + BOLD}Inactive!`;
+    if (fortune === 0) bonusMessage += `${RED + BOLD}Inactive!`;
     else {
         const bonusColor = remain > 1200 ? GREEN :
         remain > 600 ? YELLOW : RED;
-        bonusOverlay.message += `${GOLD + fortune}☘ ${bonusColor}(${getTime(--remain)})`
+        bonusMessage += `${GOLD + fortune}☘ ${bonusColor}(${getTime(--remain)})`
     }
+
+    bonusOverlay.setMessage(bonusMessage);
 }).setFps(1), () => getWorld() === "Garden" && settings.pesthunterBonus);

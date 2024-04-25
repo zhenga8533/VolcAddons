@@ -157,7 +157,7 @@ registerWhen(register("step", () => {
     
     // Set HUD
     const timeDisplay = skill.since < settings.skillTracker * 60 ? getTime(skill.time) : `${RED}Inactive`;
-    skillOverlay.message = 
+    let skillMessage = 
 `${DARK_AQUA + BOLD}Skill: ${WHITE + current}
 ${DARK_AQUA + BOLD}XP Gained: ${WHITE + commafy(skill.getGain())} xp
 ${DARK_AQUA + BOLD}Time Passed: ${WHITE + timeDisplay}
@@ -167,7 +167,9 @@ ${DARK_AQUA + BOLD}Level Up: `;
     // Set time until next
     if (skill.level !== 60) {
         const neededXP = xpTable[skill.level + 1] - skill.now;
-        if (neededXP > 0) skillOverlay.message += `${WHITE + getTime(neededXP / rate * 3600)}`;
-        else skillOverlay.message += `${GREEN}MAXED`;
-    } else skillOverlay.message += `${GREEN}MAXED`;
+        if (neededXP > 0) skillMessage += `${WHITE + getTime(neededXP / rate * 3600)}`;
+        else skillMessage += `${GREEN}MAXED`;
+    } else skillMessage += `${GREEN}MAXED`;
+
+    skillOverlay.setMessage(skillMessage);
 }).setFps(1), () => settings.skillTracker !== 0);

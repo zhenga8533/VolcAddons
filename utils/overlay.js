@@ -22,7 +22,7 @@ function renderScale(scale, text, x, y, align, flex) {
 /**
  * Variables used to move all active GUIs.
  */
-const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, H to swap flex, or W to change view";
+const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, H to swap flex, B to show BG, or W to change view";
 const gui = new Gui();
 const background = new Gui();
 
@@ -39,13 +39,13 @@ const moving = register("renderOverlay", () => {
         if (!settings[overlay.setting]) return;
         // Draw example text and box
         const scale = overlay.loc[2];
-        const x = overlay.loc[0] - (overlay.loc[3] ? overlay.width - 3*scale : 0);
+        const x = overlay.loc[0] - (overlay.loc[3] ? overlay.eWidth - 3*scale : 0);
         const y = overlay.loc[1];
 
         Renderer.drawRect(
-            Renderer.color(69, 69, 69, 169),
+            Renderer.color(0, 0, 0, 128),
             x - 3*scale, y - 3*scale,
-            overlay.width + 6*scale, overlay.height + 6*scale
+            overlay.eWidth + 6*scale, overlay.eHeight + 6*scale
         );
         renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y, overlay.loc[3], overlay.loc[4]);
     });
@@ -53,7 +53,7 @@ const moving = register("renderOverlay", () => {
     // GUI Instructions
     renderScale(
         1.2, GUI_INSTRUCT,
-        Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.4,
+        Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) * 0.6,
         Renderer.screen.getHeight() / 2.4, false, false
     );
 }).unregister();
@@ -61,18 +61,18 @@ const moving = register("renderOverlay", () => {
 /**
  * Handles overlay selection when clicking on the screen.
  */
-const clicking = register("guiMouseClick", (x, y, button, screen) => {
+const clicking = register("guiMouseClick", (x, y) => {
     currentOverlay = undefined;
 
     overlays.forEach(overlay => {
         const scale = overlay.loc[2];
-        const oX = overlay.loc[0] - (overlay.loc[3] ? overlay.width - 3*scale : 0);
+        const oX = overlay.loc[0] - (overlay.loc[3] ? overlay.eWidth - 3*scale : 0);
         const oY = overlay.loc[1];
 
         if (x > oX - 3*scale &&
-            x < oX + 3*scale + overlay.width &&
+            x < oX + 3*scale + overlay.eWidth &&
             y > oY - 3*scale &&
-            y < oY + 3*scale + overlay.height
+            y < oY + 3*scale + overlay.eHeight
         ) currentOverlay = overlay;
     });
 }).unregister();
@@ -140,6 +140,8 @@ const keying = register("guiKey", (char, keyCode, currentGui, event) => {
         currentOverlay.loc[3] = !currentOverlay.loc[3];
     } else if (keyCode === 35) {  // Swap flex (h key)
         currentOverlay.loc[4] = !currentOverlay.loc[4];
+    } else if (keyCode === 48) {  // Set BG (b key)
+        currentOverlay.loc[5] = !currentOverlay.loc[5];
     } else return;
 
     currentOverlay.setSize();
@@ -179,11 +181,15 @@ export class Overlay {
         this.example = example;
         this.message = example;
         this.gui = new Gui();
-        this.setSize();
 
-        // loc array changes for versions < 2.8.9
+        // Set size for background rendering
+        this.setSize(this.message, "message");
+        this.setSize(this.example, "example");
+
+        // loc array changes for versions < 2.9.4
         if (this.loc[3] === undefined) this.loc.push(false);
         if (this.loc[4] === undefined) this.loc.push(false);
+        if (this.loc[5] === undefined) this.loc.push(false);
 
         // Register a render function to display the overlay and GUI instructions.
         // The overlay is shown when the GUI is open or in requires specified in 'requires' array.'
@@ -200,6 +206,12 @@ export class Overlay {
             Renderer.drawLine(Renderer.WHITE, width, this.loc[1], 1, this.loc[1], 0.5);
 
             // Draw example text
+            if (this.loc[5] && this.width !== 0)
+                Renderer.drawRect(
+                    Renderer.color(0, 0, 0, 128),
+                    this.loc[0] - 3*this.loc[2], this.loc[1] - 3*this.loc[2],
+                    this.eWidth + 6*this.loc[2], this.eHeight + 6*this.loc[2]
+                );
             renderScale(this.loc[2], this.example, this.X, this.Y, this.loc[3], this.loc[4]);
 
             // GUI Instructions
@@ -213,6 +225,12 @@ export class Overlay {
         registerWhen(register(this.requires.has("misc") ? "guiRender" : "renderOverlay", () => {
             if (!special() && condition() && !gui.isOpen() && !this.gui.isOpen()) {
                 if (this.requires.has("misc")) background.func_146278_c(0);
+                if (this.loc[5] && this.width !== 0)
+                    Renderer.drawRect(
+                        Renderer.color(0, 0, 0, 128),
+                        this.loc[0] - 3*this.loc[2], this.loc[1] - 3*this.loc[2],
+                        this.width + 6*this.loc[2], this.height + 6*this.loc[2]
+                    );
                 renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3], this.loc[4]);
             }
         }), () => settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")));
@@ -246,13 +264,15 @@ export class Overlay {
                     this.loc[3] = !this.loc[3];
                 } else if (keyCode === 35) {  // Swap flex (h key)
                     this.loc[4] = !this.loc[4];
+                } else if (keyCode === 48) {  // Swap flex (b key)
+                    this.loc[5] = !this.loc[5];
                 } else if (keyCode === 1) {
                     this.moving.unregister();
                     this.dragging.unregister();
                     this.keying.unregister();
                 } else return;
 
-                this.setSize();
+                this.setSize(this.message, "message");
             }
         }).unregister();
 
@@ -266,14 +286,27 @@ export class Overlay {
     }
 
     /**
-     * Calculates and sets overlay dimensions based on example text.
-     * Splits text into lines, calculates total height, and determines width for each line.
-     * Maximum width across lines is stored in `this.width`.
+     * Replaces current overlay message with provided message.
+     * 
+     * @param {String} message - Message to be updated to.
      */
-    setSize() {
-        const lines = this.example.split("\n");
-        this.width = 0;
-        this.height = lines.length * 9 * this.loc[2];
+    setMessage(message) {
+        this.message = message;
+        this.setSize(this.message, "message");
+    }
+
+    /**
+     * Sets width and height of overlay.
+     * Fixes getStringWidth not setting bolded size correctly.
+     */
+    setSize(message, type) {
+        const lines = message.split("\n");
+
+
+        if (type === "message") this.height = lines.length * 9 * this.loc[2];
+        else this.eHeight = lines.length * 9 * this.loc[2];
+
+        let maxWidth = 0;
         lines.forEach(line => {
             if (line.includes('§l')) {
                 const splitLine = line.split('§l');
@@ -289,8 +322,11 @@ export class Overlay {
                     }
                 }
 
-                this.width = Math.max(this.width, stringWidth * this.loc[2]);
-            } else this.width = Math.max(this.width, Renderer.getStringWidth(line) * this.loc[2]);
+                maxWidth = Math.max(maxWidth, stringWidth * this.loc[2]);
+            } else maxWidth = Math.max(maxWidth, Renderer.getStringWidth(line) * this.loc[2]);
         });
+
+        if (type === "message") this.width = maxWidth;
+        else this.eWidth = maxWidth;
     }
 }

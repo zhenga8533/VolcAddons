@@ -75,12 +75,12 @@ registerWhen(register("step", () => {
 
     // Set HUD
     const timeDisplay = displayTime !== 0 ? getTime(displayTime) : `${RED}Inactive`;
-    powderOverlay.message = 
+    powderOverlay.setMessage( 
 `${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
 ${DARK_GREEN + BOLD}Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr
 ${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain())} ᠅
 ${LIGHT_PURPLE + BOLD}Rate: ${WHITE + commafy(powders.Gemstone.getRate())} ᠅/hr
 ${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain())} ᠅
 ${AQUA + BOLD}Rate: ${WHITE + commafy(powders.Glacite.getRate())} ᠅/hr
-${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`;
+${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`);
 }).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !== 0);

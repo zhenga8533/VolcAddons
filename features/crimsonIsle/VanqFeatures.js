@@ -25,7 +25,7 @@ ${RED + BOLD}Total Kills: ${RESET}Hua
 ${RED + BOLD}Kills Since: ${RESET}Piao
 ${RED + BOLD}Average Kills: ${RESET}Piao`;
 const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], () => true, data.CL, "moveCounter", counterExample);
-counterOverlay.message = "";
+counterOverlay.setMessage("");
 
 /**
  * Uses the "Book of Stats" to track whenever player kills an entity and updates the Vanquisher Overlay.
@@ -64,7 +64,7 @@ registerWhen(register("entityDeath", (death) => {
         items[heldItem] = newKills;
 
         // Update HUD
-        counterOverlay.message = settings.vanqCounter === 1 ?
+        counterOverlay.setMessage(settings.vanqCounter === 1 ?
 `${RED + BOLD}Total Vanqs: ${RESET + data.vanqSession.vanqs}
 ${RED + BOLD}Total Kills: ${RESET + data.vanqSession.kills}
 ${RED + BOLD}Kills Since: ${RESET + data.vanqSession.last}
@@ -73,7 +73,7 @@ ${RED + BOLD}Average Kills: ${RESET + data.vanqSession.average}`
 `${RED + BOLD}Total Vanqs: ${RESET + session.vanqs}
 ${RED + BOLD}Total Kills: ${RESET + session.kills}
 ${RED + BOLD}Kills Since: ${RESET + session.last}
-${RED + BOLD}Average Kills: ${RESET + session.average}`;
+${RED + BOLD}Average Kills: ${RESET + session.average}`);
     });
 }), () => getWorld() === "Crimson Isle" && settings.vanqCounter !== 0);
 
@@ -137,18 +137,18 @@ registerWhen(register("chat", () => {
  */
 const vanqExample = `${DARK_PURPLE + BOLD}Vanquisher ${WHITE}Detected`;
 const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
-vanqOverlay.message = "";
+vanqOverlay.setMessage("");
 registerWhen(register("step", () => {
     vanquishers = World.getAllEntitiesOfType(WITHER_CLASS).filter(entity => entity.getEntity().func_110138_aP() === 1024);
 
     if (vanquishers.length > 0) {
         if (vanquishers.find(vanquisher => vanquisher.getEntity().func_110143_aJ() === 0) !== undefined)
-            vanqOverlay.message = `${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`;
-        else vanqOverlay.message = vanqExample;
+            vanqOverlay.setMessage(`${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`);
+        else vanqOverlay.setMessage(vanqExample);
         
         if (settings.vanqSound)playSound(AMOGUS, 10000);
         if (!data.moblist.includes("vanquisher")) vanquishers = [];
-    } else vanqOverlay.message = "";
+    } else vanqOverlay.setMessage("");
 }).setFps(2), () => getWorld() === "Crimson Isle" && settings.vanqDetect);
 new Hitbox(() => getWorld() === "Crimson Isle" && settings.vanqDetect, (pt) => {
     renderEntities(vanquishers, 0.5, 0, 0.5, pt, "Vanquisher");

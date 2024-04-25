@@ -19,7 +19,7 @@ const powderOverlay = new Overlay("powderChest", ["Crystal Hollows"], () => true
 registerWhen(register("tick", () => {
     nearbyChests = World.getAllTileEntitiesOfType(CHEST_CLASS)
         .filter(chest => Player.asPlayerMP().distanceTo(chest.getBlockPos()) <= settings.powderChest);
-    powderOverlay.message = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + nearbyChests.length}`;
+    powderOverlay.setMessage(`${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + nearbyChests.length}`);
 }), () => getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
 
 /**

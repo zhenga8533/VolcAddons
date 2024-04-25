@@ -30,7 +30,7 @@ const trophyExample =
 &5Soul Fish&f: &373 &850 &720 &61 &b2
 &5Moldfin&f: &360 &837 &721 &61 &b1`;
 const trophyOverlay = new Overlay("trophyCounter", ["Crimson Isle"], () => true, data.FL, "moveTrophy", trophyExample);
-trophyOverlay.message = "";
+trophyOverlay.setMessage("");
 
 /**
  * Variables used for formatting
@@ -77,7 +77,7 @@ let timePassed = 0;
 register("command", () => {
     sessionTrophy = {};
     timePassed = 0;
-    trophyOverlay.message = "";
+    trophyOverlay.setMessage("");
     ChatLib.chat(`${LOGO + GREEN}Successfully reset trophy fish counter!`);
 }).setName("resetTrophy");
 
@@ -95,7 +95,7 @@ function updateMessage() {
         return sorted;
     }, []);
   
-    if (sortedTrophy.length != 0) trophyOverlay.message = `${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`;
+    if (sortedTrophy.length != 0) trophyOverlay.setMessage(`${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`);
 }
 
 /**

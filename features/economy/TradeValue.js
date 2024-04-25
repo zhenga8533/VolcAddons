@@ -11,7 +11,7 @@ ${DARK_GREEN + BOLD}Receiving: ${GREEN}I'd
 ${GOLD + BOLD}Profit: ${GREEN}Win`;
 const tradeOverlay = new Overlay("tradeValue", ["all", "misc"],
 () => true, data.TVL, "moveTrade", tradeExample);
-tradeOverlay.message = "";
+tradeOverlay.setMessage("");
 
 const updateTrade = register("step", () => {
     const container = Player.getContainer();
@@ -29,14 +29,14 @@ const updateTrade = register("step", () => {
     }
 
     const profit = receiving - giving;
-    tradeOverlay.message = `${DARK_RED + BOLD}Giving: ${RED + formatNumber(giving)}
+    tradeOverlay.setMessage(`${DARK_RED + BOLD}Giving: ${RED + formatNumber(giving)}
 ${DARK_GREEN + BOLD}Receiving: ${GREEN + formatNumber(receiving)}
-${GOLD + BOLD}Profit: ${(profit > 0 ? GREEN : RED) + formatNumber(profit)}`;
+${GOLD + BOLD}Profit: ${(profit > 0 ? GREEN : RED) + formatNumber(profit)}`);
 }).setFps(1).unregister();
 
 const setTrade = register("guiClosed", () => {
     updateTrade.unregister();
-    tradeOverlay.message = "";
+    tradeOverlay.setMessage("");
 }).unregister();
 
 register("guiOpened", () => {
