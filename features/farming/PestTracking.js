@@ -45,7 +45,7 @@ register("chat", (plot) => {
  * Decrement spray timers every second
  */
 register("step", () => {
-    let sprayMessage = "";
+    let sprayMessage = `${GREEN + BOLD}Sprays:`;
 
     const keys = Object.keys(sprays)
     keys.forEach(plot => {
@@ -225,7 +225,7 @@ registerWhen(register("chat", (_, fortune) => {
  * Track bonus timer
  */
 const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
-const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "movePest", bonusExample);
+const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "moveBonus", bonusExample);
 registerWhen(register("step", () => {
     let bonusMessage = `${YELLOW + BOLD}Pest Bonus: `;
     let fortune = 0;

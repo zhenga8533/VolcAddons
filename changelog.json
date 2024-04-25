@@ -1,4 +1,5 @@
 [
     "- Added option to render overlay background",
-    "- Fixed overlay width being off on bold"
+    "- Fixed overlay width being off on bold",
+    "- Fixed some overlay settings/displays"
 ]

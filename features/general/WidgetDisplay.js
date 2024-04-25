@@ -39,8 +39,8 @@ registerWhen(register("step", () => {
             return;
         }
 
-        let message = tablist[index++] + '\n';
-        while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) message += tablist[index++] + '\n';
+        let message = tablist[index++];
+        while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) message += '\n' + tablist[index++];
         widgetOverlays[widget].setMessage(message);
     });
 }).setFps(1), () => settings.widgetDisplay);

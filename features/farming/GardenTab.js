@@ -95,8 +95,9 @@ registerWhen(register("chat", () => {
  * Composter timers
  */
 const compostExample =
-`${DARK_GREEN + BOLD}Empty Compost: ${WHITE}loading
-${DARK_GREEN + BOLD}Next Compost: ${WHITE}...`;
+`${DARK_GREEN + BOLD}Composter:
+${GREEN}Empty: ${WHITE}Loading
+${GREEN}Next: ${WHITE}...`;
 const compostOverlay = new Overlay("compostTab", ["Garden"], () => settings.compostTab === 2, data.OL, "moveCompost", compostExample);
 let emptyCompost = 0;
 
