@@ -74,8 +74,8 @@ registerWhen(register("step", () => {
             closestCopy[0] = `${BOLD + UNDERLINE}${closestCopy[0]}`;
             if (settings.commissionWaypoints !== 2) commissionWaypoints.push(closestCopy);
 
-            commissionMessage += `${tab[index].replace("§f", GOLD)}\n`;
-        } else commissionMessage += `${tab[index]}\n`;
+            commissionMessage += `\n${tab[index].replace("§f", GOLD)}`;
+        } else commissionMessage += `\n${tab[index]}`;
 
         // Set commission message
         index++;
