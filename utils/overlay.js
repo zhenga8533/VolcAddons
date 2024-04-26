@@ -23,6 +23,7 @@ function renderScale(scale, text, x, y, align, flex) {
  * Variables used to move all active GUIs.
  */
 const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, H to swap flex, B to show BG, or W to change view";
+const INSTRUCT_WIDTH = Renderer.getStringWidth(GUI_INSTRUCT);
 const gui = new Gui();
 const background = new Gui();
 
@@ -53,8 +54,8 @@ const moving = register("renderOverlay", () => {
     // GUI Instructions
     renderScale(
         1.2, GUI_INSTRUCT,
-        Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(GUI_INSTRUCT) * 0.65,
-        Renderer.screen.getHeight() * 0.65, false, false
+        (Renderer.screen.getWidth() - INSTRUCT_WIDTH * 1.4) / 2,
+        Renderer.screen.getHeight() * 0.6, false, false
     );
 }).unregister();
 
@@ -217,7 +218,7 @@ export class Overlay {
             // GUI Instructions
             renderScale(
                 1.2, GUI_INSTRUCT,
-                width / 2 - Renderer.getStringWidth(GUI_INSTRUCT) / 1.2,
+                (width - INSTRUCT_WIDTH * 1.4) / 2,
                 height / 2.4, false, false
             );
         }).unregister();
