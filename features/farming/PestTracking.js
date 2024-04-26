@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
@@ -157,15 +157,20 @@ registerWhen(register("guiClosed", () => {
 let lastPlot = undefined;
 register("command", () => {
     setHive();
-    const plot = hive.find(p => p != lastPlot);
-    if (plot === undefined) {
-        ChatLib.chat(`${LOGO + RED}No infested plots found...\n${DARK_GRAY}If there are pests, please open plots menu to track!`);
+    
+    // Check if currently standing in infested plot
+    if (Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"))?.getName()?.includes("§4§lൠ")) {
+        Client.showTitle(`${DARK_RED}Infested!`, "You are standing in a plot with pests!", 10, 50, 10);
         return;
     }
 
+    // Otherwise warp to plot with most pests
+    const plot = hive[0];
     delete swarm[plot];
-    ChatLib.command(`plottp ${plot}`);
     lastPlot = plot;
+
+    Client.showTitle(`${DARK_GREEN}Warping...`, `Teleporting to plot ${plot}!`, 10, 50, 10);
+    ChatLib.command(`plottp ${plot}`);
     setHive();
 }).setName("pesttp");
 
