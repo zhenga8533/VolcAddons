@@ -869,13 +869,15 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     webhookTimer = 0;
 
     // --- Pests ---
-    @SwitchProperty({
-        name: "Infestation Alert",
-        description: "Displays a title on screen when there are enough pests to cause a loss in farming fortune.",
+    @SliderProperty({
+        name: "Infested Alert",
+        description: "Select minimum amount of pests .",
         category: "Farming",
-        subcategory: "Pests"
+        subcategory: "Pests",
+        min: 0,
+        max: 8
     })
-    infestationAlert = false;
+    infestationAlert = 0;
 
     @SwitchProperty({
         name: "Pest Alert",

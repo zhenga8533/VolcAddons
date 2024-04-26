@@ -41,12 +41,12 @@ function setHive() {
 
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
-    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith(" §7⏣ §aPlot"));
-    plotZone = plotLine?.getName()?.removeFormatting()?.split(' ')?.[4]?.replace(/[^0-9]/g, '') ?? "0";
+    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"));
+    plotZone = plotLine?.getName()?.removeFormatting()?.trim()?.split(' ')?.[2]?.replace(/[^0-9]/g, '') ?? "0";
     setHive();
 }).setFps(2), () => getWorld() === "Garden" && settings.gardenBox);
 
-Scoreboard.getLines().forEach(line => print(line));
+
 /**
  * Track sprays using chat
  */
@@ -204,25 +204,13 @@ registerWhen(register("chat", (_, num, plot) => {
 
 
 /**
- * Pest swarm (more than 4 = loss farming fortune)
+ * Pest swarm
  */
-const infested = register("step", () => {
-    const loc = Scoreboard.getLines().find(line => line.getName().startsWith(" §7⏣"));
-    if (loc === undefined) return;
-
-    const count = loc.getName().removeFormatting().replace(/[^0-9]/g, '');
+registerWhen(register("step", () => {
+    const count = parseInt(TabList.getNames().find(name => name.startsWith("§r Alive:"))?.split(' ')?.[2]?.removeFormatting() ?? 0);
+    if (count < settings.infestationAlert) return;
     Client.showTitle(`${DARK_GREEN + BOLD}SPREADING PLAGUE`, `${count} minions with ${BOLD}Taunt ${RESET}are in the way!`, 0, 25, 5);
-}).setFps(1).unregister();
-
-/**
- * Track chat for pest fortune messages
- */
-registerWhen(register("chat", () => {
-    infested.register();
-}).setCriteria("  ൠ ☘ Farming Fortune has been reduced by ${percent}%!"), () => getWorld() === "Garden" && settings.infestationAlert);
-registerWhen(register("chat", () => {
-    infested.unregister();
-}).setCriteria("Your Garden is no longer infested and your ☘ Farming Fortune has returned to normal!"), () => getWorld() === "Garden" && settings.infestationAlert);
+}).setFps(1).unregister(), () => settings.infestationAlert !== 0 && getWorld() === "Garden");
 
 
 /**

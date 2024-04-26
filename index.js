@@ -204,7 +204,7 @@ register("guiKey", (_, keyCode, gui) => {
         // Check if item is null
         const item = Player.getContainer().getItems()[slot];
         if (item === null) {
-            ChatLib.chat(`${LOGO + RED}Cannot viewrecipe of nothing.`)
+            ChatLib.chat(`${LOGO + RED}Cannot viewrecipe of nothing.`);
             return;
         }
 
