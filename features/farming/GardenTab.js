@@ -162,8 +162,8 @@ registerWhen(register("step", () => {
     const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
     const nextCompost = !time ? `${RED + BOLD}Inactive` :
         getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
-    compostOverlay.message =
+    compostOverlay.setMessage(
 `${DARK_GREEN + BOLD}Composter:
 ${GREEN}Empty: ${message}
-${GREEN}Next: ${WHITE + nextCompost}`;
+${GREEN}Next: ${WHITE + nextCompost}`);
 }).setFps(1), () => getWorld() === "Garden" && settings.gardenTab !== 0);
