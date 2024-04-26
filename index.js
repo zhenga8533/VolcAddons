@@ -78,7 +78,6 @@ import "./features/mining/WishingCompass";
 // Farming Features
 import { calcCompost } from "./features/farming/ComposterCalc";
 import "./features/farming/FarmingWebhook";
-import "./features/farming/GardenBox";
 import "./features/farming/GardenTab";
 import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";

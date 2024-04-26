@@ -5,6 +5,7 @@ import { getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { getWorld } from "../../utils/worlds";
+import RenderLib from "../../../RenderLib";
 
 
 /**
@@ -243,3 +244,18 @@ registerWhen(register("step", () => {
 
     bonusOverlay.setMessage(bonusMessage);
 }).setFps(1), () => getWorld() === "Garden" && settings.pesthunterBonus);
+
+
+/**
+ * Garden box rendering.
+ */
+registerWhen(register("renderWorld", () => {
+    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"))?.getName();
+    const plot = plotLine?.removeFormatting()?.replace(/[^0-9]/g, '');
+    const color = plotLine?.includes("§4§lൠ") ? [1, 0, 0] : 
+        sprays.hasOwnProperty(plot) ? [0, 1, 0] : [1, 1, 1];
+    const x = Math.floor((Player.getX() + 240) / 96);
+    const z = Math.floor((Player.getZ() + 240) / 96);
+
+    RenderLib.drawEspBox(-192 + x * 96, 67, -192 + z * 96, 96, 10, ...color, 1, true);
+}), () => getWorld() === "Garden" && settings.gardenBox);
