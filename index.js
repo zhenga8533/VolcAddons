@@ -153,6 +153,10 @@ ${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GR
 ${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 }
 
+// `viewrecipe` GUI Button
+const recipeKey = new KeyBind("View Recipe", data.recipeKey, "./VolcAddons.xdd");
+register("gameUnload", () => { data.recipeKey = recipeKey.getKeyCode() });
+
 // Dev Mode
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
@@ -183,14 +187,34 @@ devKey.registerKeyPress(() => {
         ChatLib.chat(`${LOGO + GREEN}Successfully copied block data!`);
     }
 });
+
 register("guiKey", (_, keyCode, gui) => {
-    if (keyCode !== devKey.getKeyCode()) return;
-    const slot = gui?.getSlotUnderMouse()?.field_75222_d;
-    if (slot === undefined) return;
-    const item = Player.getContainer().getStackInSlot(slot);
-    if (item === null) return;
-    ChatLib.command(`ct copy ${item.getNBT()}`, true);
-    ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
+    if (keyCode === devKey.getKeyCode()) {
+        const slot = gui?.getSlotUnderMouse()?.field_75222_d;
+        if (slot === undefined) return;
+        const item = Player.getContainer().getStackInSlot(slot);
+        if (item === null) return;
+        ChatLib.command(`ct copy ${item.getNBT()}`, true);
+        ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
+    } else if (keyCode === recipeKey.getKeyCode()) {
+        // Check if hovering valid slot
+        const slot = gui?.getSlotUnderMouse()?.field_75222_d;
+        if (slot === undefined) {
+            ChatLib.chat(`${LOGO + RED}Cannot viewrecipe of nothing.`);
+            return;
+        }
+
+        // Check if item is null
+        const item = Player.getContainer().getItems()[slot];
+        if (item === null) {
+            ChatLib.chat(`${LOGO + RED}Cannot viewrecipe of nothing.`)
+            return;
+        }
+
+        // Viewrecipe using item NBT ID
+        const id = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
+        ChatLib.command(`viewrecipe ${id}`);
+    }
 });
 
 // Open settings

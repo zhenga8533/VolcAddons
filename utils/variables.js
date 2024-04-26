@@ -119,6 +119,7 @@ export let data = new PogObject("VolcAddons", {
     "dianaKey": 0,
     "pauseKey": 0,
     "devKey": 0,
+    "recipeKey": 0,
     "bindKey": 0,
     "chunkey": 0,
     "wardKey": 0,

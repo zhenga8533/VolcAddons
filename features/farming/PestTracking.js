@@ -173,7 +173,7 @@ register("command", () => {
         return;
     }
 
-    const plot = hive.find(p => p != lastPlot && p != plotZone);
+    const plot = hive.find(p => p != lastPlot || p != plotZone);
     if (plot === undefined) {
         Client.showTitle(`${DARK_RED}Infested!`, "You are standing in a plot with pests!", 10, 50, 10);
         return;

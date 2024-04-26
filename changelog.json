@@ -1,5 +1,6 @@
 [
     "- Added option to render overlay background",
+    "- Added `/viewrecipe` button in GUI",
     "- Changed `/pesttp` detection",
     "- Changed garden box to be red/green if pests/spray",
     "- Changed pest alert to be slider",
