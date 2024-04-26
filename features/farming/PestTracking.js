@@ -4,7 +4,7 @@ import { getSlotCoords } from "../../utils/functions/find";
 import { getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
+import { findZone, getWorld } from "../../utils/worlds";
 import RenderLib from "../../../RenderLib";
 
 
@@ -168,7 +168,7 @@ registerWhen(register("guiClosed", () => {
 let lastPlot = undefined;
 register("command", () => {
     setHive();
-    if (hive.length === 0) {
+    if (hive.length === 0 || !findZone().includes("ൠ")) {
         Client.showTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10);
         return;
     }
