@@ -199,10 +199,7 @@ register("guiKey", (_, keyCode, gui) => {
     } else if (keyCode === recipeKey.getKeyCode()) {
         // Check if hovering valid slot
         const slot = gui?.getSlotUnderMouse()?.field_75222_d;
-        if (slot === undefined) {
-            ChatLib.chat(`${LOGO + RED}Cannot viewrecipe of nothing.`);
-            return;
-        }
+        if (slot === undefined) return;
 
         // Check if item is null
         const item = Player.getContainer().getItems()[slot];
