@@ -41,11 +41,12 @@ function setHive() {
 
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
-    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"));
-    plotZone = plotLine?.getName()?.removeFormatting()?.split(' ')?.[5]?.replace(/[^0-9]/g, '') ?? "0";
+    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith(" §7⏣ §aPlot"));
+    plotZone = plotLine?.getName()?.removeFormatting()?.split(' ')?.[4]?.replace(/[^0-9]/g, '') ?? "0";
     setHive();
 }).setFps(2), () => getWorld() === "Garden" && settings.gardenBox);
 
+Scoreboard.getLines().forEach(line => print(line));
 /**
  * Track sprays using chat
  */
@@ -252,6 +253,7 @@ registerWhen(register("step", () => {
         if (--bonuses[bonus] === 0) delete bonuses[bonus];
         else fortune += parseInt(bonus.replace(/[^0-9]/g, ''));
     });
+
     if (fortune === 0) bonusMessage += `${RED + BOLD}Inactive!`;
     else {
         const bonusColor = remain > 1200 ? GREEN :
