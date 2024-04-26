@@ -66,7 +66,7 @@ const trackSkills = register("guiOpened", () => {
 
         skillsTracked = true;
         trackSkills.unregister();
-        ChatLib.chat(`${LOGO + GREEN}Skills tracked successfully!`);
+        Client.showTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 0, 50, 10);
     });
 });
 
@@ -86,7 +86,7 @@ register("command", () => {
         skills[skill].time = 0;
         skills[skill].since = 600;
     });
-    ChatLib.chat(`${LOGO + GREEN}Successfully reset skills, please open skills menu to re-track!`);
+    Client.showTitle(`${GREEN}Successfully reset skills!`, "Please open skills menu to retrack.", 10, 50, 10);
 }).setName("resetSkills");
 
 /**
@@ -94,8 +94,7 @@ register("command", () => {
  */
 registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
     if (!skillsTracked) {
-        ChatLib.clearChat(56194)
-        new Message(`${LOGO + RED}Please open skills menu to begin skill tracking!`).setChatLineId(56194).chat();
+        Client.showTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10);
         return;
     }
     if (getPaused()) return;
@@ -116,7 +115,7 @@ registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
  */
 registerWhen(register("actionBar", (health, gain, type, percent, mana) => {
     if (!skillsTracked) {
-        ChatLib.chat(`${LOGO + RED}Please open skills menu to begin skill tracking!`);
+        Client.showTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10);
         return;
     }
     if (getPaused()) return;
