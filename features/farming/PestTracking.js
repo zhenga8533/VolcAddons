@@ -21,6 +21,7 @@ const plots = new Set();
 const pests = new Set();
 let swarm = {};
 let hive = [];
+let plotZone = "0";
 
 /**
  * Sort the swarm dictionary into hive in descending pest order.
@@ -28,19 +29,29 @@ let hive = [];
 function setHive() {
     const tablist = TabList.getNames();
     const pestIndex = tablist.findIndex(tab => tab === "§r§4§lPests:§r");
+    hive = [];
+
     if (pestIndex === -1) {
         let entries = Object.entries(swarm);
         entries.sort((a, b) => b[1] - a[1]);
         hive = entries.map(entry => entry[0]);
-    } else hive = tablist[pestIndex + 2].split("§r§f, §r§b").map(plot => plot.replace(/\D/g, ''));
+    } else if (!tablist[pestIndex + 2].startsWith("§r Spray:"))
+        hive = tablist[pestIndex + 2].split("§r§f, §r§b").map(plot => plot.replace(/\D/g, ''));
 }
+
+registerWhen(register("step", () => {
+    if (!World.isLoaded()) return;
+    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"));
+    plotZone = plotLine?.getName()?.removeFormatting()?.split(' ')?.[5]?.replace(/[^0-9]/g, '') ?? "0";
+    setHive();
+}).setFps(2), () => getWorld() === "Garden" && settings.gardenBox);
 
 /**
  * Track sprays using chat
  */
-register("chat", (plot) => {
+registerWhen(register("chat", (plot) => {
     sprays[plot] = 1800;
-}).setCriteria("SPRAYONATOR! You sprayed Plot - ${plot} with ${material}!");
+}).setCriteria("SPRAYONATOR! You sprayed Plot - ${plot} with ${material}!"), () => getWorld() === "Garden");
 
 /**
  * Decrement spray timers every second
@@ -157,21 +168,22 @@ registerWhen(register("guiClosed", () => {
 let lastPlot = undefined;
 register("command", () => {
     setHive();
-    
-    // Check if currently standing in infested plot
-    if (Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"))?.getName()?.includes("§4§lൠ")) {
+    if (hive.length === 0) {
+        Client.showTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10);
+        return;
+    }
+
+    const plot = hive.find(p => p != lastPlot && p != plotZone);
+    if (plot === undefined) {
         Client.showTitle(`${DARK_RED}Infested!`, "You are standing in a plot with pests!", 10, 50, 10);
         return;
     }
 
-    // Otherwise warp to plot with most pests
-    const plot = hive[0];
-    delete swarm[plot];
-    lastPlot = plot;
-
     Client.showTitle(`${DARK_GREEN}Warping...`, `Teleporting to plot ${plot}!`, 10, 50, 10);
     ChatLib.command(`plottp ${plot}`);
-    setHive();
+    
+    lastPlot = plot;
+    delete swarm[plot];
 }).setName("pesttp");
 
 
@@ -255,10 +267,8 @@ registerWhen(register("step", () => {
  * Garden box rendering.
  */
 registerWhen(register("renderWorld", () => {
-    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"))?.getName();
-    const plot = plotLine?.removeFormatting()?.replace(/[^0-9]/g, '');
-    const color = plotLine?.includes("§4§lൠ") ? [1, 0, 0] : 
-        sprays.hasOwnProperty(plot) ? [0, 1, 0] : [1, 1, 1];
+    const color = hive.includes(plotZone) ? [1, 0, 0] : 
+        sprays.hasOwnProperty(plotZone) ? [0, 1, 0] : [1, 1, 1];
     const x = Math.floor((Player.getX() + 240) / 96);
     const z = Math.floor((Player.getZ() + 240) / 96);
 

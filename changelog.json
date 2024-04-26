@@ -2,6 +2,7 @@
     "- Added option to render overlay background",
     "- Changed `/pesttp` detection",
     "- Changed garden box to be red/green if pests/spray",
+    "- Changed pest alert to be slider",
     "- Fixed overlay width being off on bold",
     "- Fixed some overlay settings/displays"
 ]
