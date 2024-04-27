@@ -38,6 +38,7 @@ registerWhen(register("step", () => {
     visitors = [];
     for (let i = 0; i <= visitorCount; i++) {
         let visitor = tablist[visitorIndex + i];
+        if (visitor.length > 34) visitor = visitor.split(' ').splice(0, 3).join(' ');
         gardenMessage += visitor + '\n';
         visitors.push(visitor);
     }
