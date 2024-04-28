@@ -1,8 +1,8 @@
 import location from "../../utils/location";
+import mayor from "../../utils/mayor";
 import settings from "../../utils/settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
-import { getPerks } from "../../utils/mayor";
 import { playSound } from "../../utils/functions/misc";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
@@ -24,7 +24,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
 
     echo = true;
     delay(() => echo = false, 3000);
-}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
 
 /**
  * Detect for mytholigical burrows

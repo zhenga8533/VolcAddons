@@ -1,7 +1,7 @@
 import location from "../../utils/location";
+import mayor from "../../utils/mayor";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS } from "../../utils/constants";
-import { getPerks } from "../../utils/mayor";
 import { announceMob } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
@@ -22,7 +22,7 @@ const counterExample =
 ${GOLD + BOLD}Total Burrows: ${RESET}Let.
 ${GOLD + BOLD}Burrows Since: ${RESET}Him.
 ${GOLD + BOLD}Average Burrows: ${RESET}Cook.`
-const counterOverlay = new Overlay("inqCounter", ["Hub"], () => getPerks().has("Mythological Ritual"), data.IL, "moveInq", counterExample);
+const counterOverlay = new Overlay("inqCounter", ["Hub"], () => mayor.getPerks().has("Mythological Ritual"), data.IL, "moveInq", counterExample);
 
 /**
  * Updates the inquisitor counter depending on if an inquisitor spawned.
@@ -82,7 +82,7 @@ registerWhen(register("chat", (wow, mob) => {
         announceMob(settings.inqAlert, "Minos Inquisitor", Player.getX(), Player.getY(), Player.getZ());
         if (settings.inqCounter !== 0) updateInqCounter(true);
     } else if (settings.inqCounter !== 0) updateInqCounter(false);
-}).setCriteria("${wow}! You dug out a ${mob}!"), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual"));
+}).setCriteria("${wow}! You dug out a ${mob}!"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual"));
 
 /**
  * Tracks world for any inquisitors near player.
@@ -99,8 +99,8 @@ registerWhen(register("step", () => {
 
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
-}).setFps(2), () => location.getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
-new Hitbox(() => location.getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"), (pt) => {
+}).setFps(2), () => location.getWorld() === "Hub" && settings.detectInq && mayor.getPerks().has("Mythological Ritual"));
+new Hitbox(() => location.getWorld() === "Hub" && settings.detectInq && mayor.getPerks().has("Mythological Ritual"), (pt) => {
     renderEntities(inquisitors, 1, 0.84, 0, pt, "Inspector Gadget");
 });
 register("worldUnload", () => inquisitors = []);

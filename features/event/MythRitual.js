@@ -1,8 +1,8 @@
 import settings from "../../utils/settings";
+import mayor from "../../utils/mayor";
 import location from "../../utils/location";
 import { GREEN, LOGO } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
-import { getPerks } from "../../utils/mayor";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
 
@@ -101,7 +101,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
     echo = true;
     delay(() => echo = false, 3000);
     path = [[Player.getX(), Player.getY(), Player.getZ()]];
-}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 let guess = [];
 export function getGuess() { return guess };
