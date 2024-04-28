@@ -1,10 +1,10 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -279,7 +279,7 @@ registerWhen(register("renderEntity", (entity, _, __, event) => {
         cancel(event);
 }).setPriority(Priority.LOWEST), () => {
     if (settings.hideFarEntity === 0 && settings.hideCloseEntity === 0) return false;
-    const world = getWorld()?.toLowerCase() ?? "";
+    const world = location.getWorld()?.toLowerCase() ?? "";
     const worlds = settings.hideWorlds.toLowerCase().split(", ");
     return worlds[0] === "" || worlds.includes(world);
 });

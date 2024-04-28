@@ -1,7 +1,7 @@
+import location from "./location";
 import settings from "./settings";
 import { GREEN, ITALIC, LOGO } from "./constants";
 import { registerWhen } from "./variables";
-import { getWorld } from "./worlds";
 
 
 /**
@@ -105,7 +105,7 @@ const keying = register("guiKey", (char, keyCode, currentGui, event) => {
         worldView = !worldView;
         if (worldView) {
             overlays = overlays.filter(overlay => {
-                if (!overlay.requires.has(getWorld()) && !overlay.requires.has("all")) {
+                if (!overlay.requires.has(location.getWorld()) && !overlay.requires.has("all")) {
                     overlaid.push(overlay);
                     return false;
                 }
@@ -234,7 +234,7 @@ export class Overlay {
                     );
                 renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3], this.loc[4]);
             }
-        }), () => settings[this.setting] && (this.requires.has(getWorld()) || this.requires.has("all")));
+        }), () => settings[this.setting] && (this.requires.has(location.getWorld()) || this.requires.has("all")));
 
         // Register editing stuff
         this.dragging = register("dragged", (dx, dy, x, y) => {

@@ -1,3 +1,4 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/constants";
 import { announceMob, playSound } from "../../utils/functions/misc";
@@ -6,7 +7,6 @@ import { delay } from "../../utils/thread";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
-import { findZone, getWorld } from "../../utils/worlds";
 
 
 /**
@@ -75,7 +75,7 @@ ${RED + BOLD}Total Kills: ${RESET + session.kills}
 ${RED + BOLD}Kills Since: ${RESET + session.last}
 ${RED + BOLD}Average Kills: ${RESET + session.average}`);
     });
-}), () => getWorld() === "Crimson Isle" && settings.vanqCounter !== 0);
+}), () => location.getWorld() === "Crimson Isle" && settings.vanqCounter !== 0);
 
 /**
  * Tracks whenever the player spawns a Vanquisher and updates the counter.
@@ -90,7 +90,7 @@ registerWhen(register("chat", () => {
     session.vanqs++;
     session.average = (session.kills / session.vanqs);
     session.last = 0;
-}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqCounter !== 0);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => location.getWorld() === "Crimson Isle" && settings.vanqCounter !== 0);
 
 /**
  * Command to reset the stats for the overall counter.
@@ -123,14 +123,14 @@ let vanquishers = [];
  */
 registerWhen(register("chat", () => {
     announceMob(settings.vanqAlert, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
-}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqAlert !== 0);
+}).setCriteria("A Vanquisher is spawning nearby!"), () => location.getWorld() === "Crimson Isle" && settings.vanqAlert !== 0);
 
 /**
  * Alerts player when another VA user posts coords.
  */
 registerWhen(register("chat", () => {
     playSound(AMOGUS, 10000);
-}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => getWorld() === "Crimson Isle" && settings.vanqSound);
+}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => location.getWorld() === "Crimson Isle" && settings.vanqSound);
 
 /**
  * Tracks world for any vanquishers near player.
@@ -149,8 +149,8 @@ registerWhen(register("step", () => {
         if (settings.vanqSound)playSound(AMOGUS, 10000);
         if (!data.moblist.includes("vanquisher")) vanquishers = [];
     } else vanqOverlay.setMessage("");
-}).setFps(2), () => getWorld() === "Crimson Isle" && settings.vanqDetect);
-new Hitbox(() => getWorld() === "Crimson Isle" && settings.vanqDetect, (pt) => {
+}).setFps(2), () => location.getWorld() === "Crimson Isle" && settings.vanqDetect);
+new Hitbox(() => location.getWorld() === "Crimson Isle" && settings.vanqDetect, (pt) => {
     renderEntities(vanquishers, 0.5, 0, 0.5, pt, "Vanquisher");
 });
 register("worldUnload", () => vanquishers = []);
@@ -169,7 +169,7 @@ let vanqMessage = "";
  */
 registerWhen(register("chat", () => {
     // Set message to copy and post
-    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${findZone()} ]!`;
+    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${location.findZone()} ]!`;
     ChatLib.command(`ct copy ${vanqMessage}`, true);
     ChatLib.chat(`${LOGO + GREEN}Copied vanquisher waypoint to clipboard!`);
 
@@ -191,10 +191,10 @@ registerWhen(register("chat", () => {
         notInParty++;
         timeout += 500;
     });
-}).setCriteria("A Vanquisher is spawning nearby!"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("A Vanquisher is spawning nearby!"), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 registerWhen(register("chat", () => {
     vanqSpawned = false;
-}).setCriteria("RARE DROP! Nether Star"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("RARE DROP! Nether Star"), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 
 /**
  * Tracks whenever a player joins/fails to join the party and warps party to lobby whenever all players have joined.
@@ -213,10 +213,10 @@ function warpParty() {
 }
 registerWhen(register("chat", () => {
     delay(warpParty(), 500);
-}).setCriteria("${player} joined the party."), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("${player} joined the party."), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 registerWhen(register("chat", () => {
     delay(warpParty(), 500);
-}).setCriteria("The party invite to ${player} has expired"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("The party invite to ${player} has expired"), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 
 /**
  * Fail safe for whenever a player goes offline or player inputs invalid username.
@@ -232,10 +232,10 @@ function noInvite() {
 }
 registerWhen(register("chat", () => {
     delay(noInvite(), 500);
-}).setCriteria("Couldn't find a player with that name!"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("Couldn't find a player with that name!"), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 registerWhen(register("chat", () => {
     delay(noInvite(), 500);
-}).setCriteria("You cannot invite that player since they're not online."), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("You cannot invite that player since they're not online."), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 
 /**
  * Fail safe in the event that two players spawn at same time or the Vanquisher you spawn dies before warp.
@@ -243,9 +243,9 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     vanqSpawned = false;
     notInParty = 0;
-}).setCriteria("You have joined ${player} party!"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("You have joined ${player} party!"), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 registerWhen(register("chat", () => {
     vanqSpawned = false;
     notInParty = 0;
-}).setCriteria("RARE DROP! Nether Star"), () => getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("RARE DROP! Nether Star"), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 

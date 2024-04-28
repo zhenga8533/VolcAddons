@@ -1,9 +1,10 @@
 import settings from "../../utils/settings";
+import location from "../../utils/location";
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getTime } from "../../utils/functions/format";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -58,7 +59,7 @@ registerWhen(register("step", () => {
     else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
 
     gardenOverlay.setMessage(gardenMessage);
-}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);
+}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab);
 
 
 /**
@@ -67,7 +68,7 @@ registerWhen(register("step", () => {
 registerWhen(register("step", () => {
     // Decrement visitor timer
     nextVisitor--;
-    if (getWorld() === "Garden") return;
+    if (location.getWorld() === "Garden") return;
 
     // Update visitor display outside Garden
     if (nextVisitor <= 0 && visitorCount < 5) {
@@ -125,10 +126,10 @@ function updateCompost() {
 }
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => getWorld() === "Garden" && settings.compostTab === 2);
+}), () => location.getWorld() === "Garden" && settings.compostTab === 2);
 registerWhen(register("guiMouseClick", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => getWorld() === "Garden" && settings.compostTab === 2);
+}), () => location.getWorld() === "Garden" && settings.compostTab === 2);
 
 /**
  * Update compost overlay.
@@ -167,4 +168,4 @@ registerWhen(register("step", () => {
 `${DARK_GREEN + BOLD}Composter:
 ${GREEN}Empty: ${message}
 ${GREEN}Next: ${WHITE + nextCompost}`);
-}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab !== 0);
+}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab !== 0);

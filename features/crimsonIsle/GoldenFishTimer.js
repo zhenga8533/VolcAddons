@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -28,7 +28,7 @@ registerWhen(register("step", () => {
     fishOverlay.setMessage( 
 `${GOLD + BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE + getTime(lastCast)}
 ${GOLD + BOLD}Last Fish: ${RESET + getTime(lastCast > 270 ? 0 : lastFish)}`);
-}).setFps(1), () => getWorld() === "Crimson Isle" && settings.goldenFishAlert);
+}).setFps(1), () => location.getWorld() === "Crimson Isle" && settings.goldenFishAlert);
 
 /**
  * Resets "lastCast" variable whenever player right clicks with a fishing rod in hand.
@@ -38,7 +38,7 @@ registerWhen(register("clicked", (x, y, button, state) => {
 
     if (Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id").includes("ROD"))
         lastCast = 0;
-}), () => getWorld() === "Crimson Isle" && settings.goldenFishAlert);
+}), () => location.getWorld() === "Crimson Isle" && settings.goldenFishAlert);
 
 /**
  * Resets "lastFish" variable whenever the Golden Fish message appears in chat.
@@ -46,4 +46,4 @@ registerWhen(register("clicked", (x, y, button, state) => {
 registerWhen(register("chat", () => {
     lastFish = 0;
 }).setCriteria("You spot a Golden Fish surface from beneath the lava!"),
-() => getWorld() === "Crimson Isle" && settings.goldenFishAlert);
+() => location.getWorld() === "Crimson Isle" && settings.goldenFishAlert);

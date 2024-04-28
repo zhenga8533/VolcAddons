@@ -1,9 +1,9 @@
 import RenderLib from "../../../RenderLib";
-import { EntityArmorStand, EntityWither } from "../../utils/constants";
+import location from "../../utils/location";
 import settings from "../../utils/settings";
+import { EntityArmorStand, EntityWither } from "../../utils/constants";
 import { data, registerWhen } from "../../utils/variables";
 import { Hitbox } from "../../utils/waypoints";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -37,12 +37,12 @@ registerWhen(register("step", () => {
 
         if (closestEntity.entity)starMobs[closestEntity.entity.func_145782_y()] = closestEntity.entity;
     });
-}).setFps(2), () => getWorld() === "Catacombs" && settings.starDetect !== 0);
+}).setFps(2), () => location.getWorld() === "Catacombs" && settings.starDetect !== 0);
 
 /**
  * Rendering for box and outline of star mobs.
  */
-new Hitbox(() => getWorld() === "Catacombs" && (settings.starDetect === 2 || settings.starDetect === 3), () => {
+new Hitbox(() => location.getWorld() === "Catacombs" && (settings.starDetect === 2 || settings.starDetect === 3), () => {
     const c = settings.starColor;
     Object.keys(starMobs).forEach(key => {
         // Check dead
@@ -69,4 +69,4 @@ registerWhen(register("renderEntity", (entity) => {
     if (!starMobs.hasOwnProperty(entity.getEntity().func_145782_y())) return;
     const c = settings.starColor;
     Tessellator.colorize(c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 1);
-}), () => getWorld() === "Catacombs" && settings.starDetect === 1);
+}), () => location.getWorld() === "Catacombs" && settings.starDetect === 1);

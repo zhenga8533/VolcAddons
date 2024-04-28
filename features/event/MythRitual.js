@@ -1,10 +1,10 @@
+import settings from "../../utils/settings";
+import location from "../../utils/location";
 import { GREEN, LOGO } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
 import { getPerks } from "../../utils/mayor";
-import settings from "../../utils/settings";
 import { delay } from "../../utils/thread";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -101,7 +101,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
     echo = true;
     delay(() => echo = false, 3000);
     path = [[Player.getX(), Player.getY(), Player.getZ()]];
-}), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 let guess = [];
 export function getGuess() { return guess };
@@ -121,14 +121,14 @@ registerWhen(register("spawnParticle", (particle, type) => {
     // Push to particles list and make a guess
     path.push([x, y, z]);
     guess = [guessBurrow(path, distance)];
-}), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 /**
  * Get distance using Echo note pitch.
  */
 registerWhen(register("soundPlay", (_, __, ___, pitch) => {
     distance = (Math.E / pitch) ** (Math.E + (1 - 2 * pitch)) - Math.E ** (1 - pitch ** 2) + Math.E ** (0.8 - Math.E * pitch);
-}).setCriteria("note.harp"), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}).setCriteria("note.harp"), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 /**
  * Remove guess on world unload.

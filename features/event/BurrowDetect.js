@@ -1,11 +1,11 @@
+import location from "../../utils/location";
+import settings from "../../utils/settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
 import { getPerks } from "../../utils/mayor";
 import { playSound } from "../../utils/functions/misc";
-import settings from "../../utils/settings";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -24,7 +24,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
 
     echo = true;
     delay(() => echo = false, 3000);
-}), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
 
 /**
  * Detect for mytholigical burrows
@@ -63,7 +63,7 @@ registerWhen(register("spawnParticle", (particle, type) => {
             if (closest[1] < 3) burrows[burrows.indexOf(closest[0])][0] = `§cMob`;
             break;
     }
-}), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
 
 /**
  * Events to remove burrows from list
@@ -72,7 +72,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows);
     if (closest !== undefined) Client.scheduleTask(2, () => burrows.splice(burrows.indexOf(closest[0]), 1));
 }).setCriteria("You ${completed} Griffin ${burrow}! (${x}/4)"),
-() => getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+() => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
 
 register("worldUnload", () => {
     burrows.length = 0;
@@ -81,4 +81,4 @@ register("worldUnload", () => {
 registerWhen(register("chat", () => {
     burrows.length = 0;
 }).setCriteria(" ☠ You ${died}."),
-() => getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+() => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);

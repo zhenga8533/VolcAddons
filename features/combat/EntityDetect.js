@@ -1,10 +1,10 @@
+import location from "../../utils/location"
 import settings from "../../utils/settings";
 import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE, SMA, SPIDER_CLASS, EntityArmorStand } from "../../utils/constants";
 import { convertToPascalCase, getTime, unformatNumber } from "../../utils/functions/format";
 import { playSound } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getServer, getWorld } from "../../utils/worlds";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
@@ -171,7 +171,7 @@ const broodmotherExample = `${GRAY + BOLD}Next Spawn: ${RED}???`;
 const broodmotherOverlay = new Overlay("broodmotherDetect", ["Spider's Den"], () => true, data.DL, "moveBrood", broodmotherExample);
 const broodLobbies = {};
 registerWhen(register("step", () => {
-    const server = getServer();
+    const server = location.getServer();
     if (nextSpawn === 0) {
         nextSpawn = broodLobbies[server] ?? 0;
         const broodmother = World.getAllEntitiesOfType(SPIDER_CLASS)
@@ -194,7 +194,7 @@ registerWhen(register("step", () => {
  * World timer of world leave.
  */
 registerWhen(register("worldUnload", () => {
-    broodLobbies[getServer()] = nextSpawn;
+    broodLobbies[location.getServer()] = nextSpawn;
     nextSpawn = 0;
     broodmotherOverlay.setMessage(`${GRAY + BOLD}Next Spawn: ${RED}???`);
-}), () => getWorld() === "Spider's Den" && settings.broodmotherDetect);
+}), () => location.getWorld() === "Spider's Den" && settings.broodmotherDetect);

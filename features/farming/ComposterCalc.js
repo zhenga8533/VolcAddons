@@ -1,7 +1,7 @@
+import location from "../../utils/location";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, romanToNum } from "../../utils/functions/format";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";
 
 
@@ -23,7 +23,7 @@ registerWhen(register("guiOpened", () => {
         data.composterUpgrades["Multi Drop"] = romanToNum(items[container.indexOf(293)].getName().removeFormatting().split(" ").pop());
         data.composterUpgrades["Cost Reduction"] = romanToNum(items[container.indexOf(266)].getName().removeFormatting().split(" ").pop());
     });
-}), () => getWorld() === "Garden");
+}), () => location.getWorld() === "Garden");
 
 /**
  * Calculates composting profit and cost considering composter upgrades and bazaar prices.

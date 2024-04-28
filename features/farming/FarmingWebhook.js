@@ -1,8 +1,9 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
+import location from "../../utils/location";
+import settings from "../../utils/settings";
 import { formatNumber, getTime, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { getBazaar } from "../economy/Economy";
 import { getWaifu } from "../party/PartyCommands";
 
@@ -182,7 +183,7 @@ registerWhen(register("step", () => {
     const fortune = tablist.find(line => line.includes("Farming Fortune"));
     if (fortune === undefined) return;
     farmingFortune = parseInt(fortune.substring(fortune.indexOf('☘') + 1));
-}).setDelay(10), () => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}).setDelay(10), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
 
 /**
  * Updates crop statistics for a harvested crop block.
@@ -200,7 +201,7 @@ registerWhen(register("blockBreak", (block) => {
     farmingStats.cropStats[blockName][0] += dropAmount;
     farmingStats.cropStats[blockName][1] += dropAmount * CROP_DROP[blockName][1];
     downtime = 0;
-}), () => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
 
 /**
  * Updates farm visitor statistics based on their arrival.
@@ -222,7 +223,7 @@ registerWhen(register("chat", (visitor) => {
             break;
     }
 }).setCriteria("&r&a&r${visitor} &r&ehas arrived on your &r&bGarden&r&e!&r"),
-() => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+() => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
 
 /**
  * Handles mouse click interactions in a GUI related to trade offers.
@@ -268,21 +269,21 @@ registerWhen(register("guiMouseClick", (x, y, button, gui) => {
         }
     }
     farmingStats.visitorStats.accepted++;
-}), () => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
 
 /**
  * Function handling for player statistics.
  */
 registerWhen(register("worldUnload", () => {
         farmingStats.playerStats.disconnects++;
-}), () => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
 registerWhen(register("chat", () => {
     farmingStats.playerStats.deaths++;
-}).setCriteria(" ☠ You ${death}."), () => getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
+}).setCriteria(" ☠ You ${death}."), () => location.getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
 registerWhen(register("chat", (medal, crop) => {
     farmingStats.playerStats[medal]++;
 }).setCriteria("[NPC] Jacob: You earned a ${medal} medal in the ${crop} contest!"),
-() => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+() => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
 
 /**
  * Manages time-based events and player downtime tracking.
@@ -298,4 +299,4 @@ registerWhen(register("step", () => {
 
     downtime++;
     if (downtime >= 10) farmingStats.playerStats.downtime++;
-}).setDelay(1), () => getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}).setDelay(1), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);

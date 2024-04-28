@@ -1,6 +1,6 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { Overlay } from "../../utils/overlay";
 import { getClosest } from "../../utils/functions/find";
 import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/constants";
@@ -48,7 +48,7 @@ registerWhen(register("renderWorld", () => {
     commissionWaypoints.forEach(gem => {
         Tessellator.drawString(gem[0], gem[2], gem[3], gem[4], gem[1], true);
     });
-}), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.commissionWaypoints !== 0);
+}), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && settings.commissionWaypoints !== 0);
 
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
@@ -82,7 +82,7 @@ registerWhen(register("step", () => {
     }
 
     commissionOverlay.setMessage(commissionMessage);
-}).setFps(4), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines" || getWorld() === "Mineshaft") && 
+}).setFps(4), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines" || location.getWorld() === "Mineshaft") && 
     (settings.commissionsDisplay || settings.commissionWaypoints !== 0));
 
 /* Render closest lines */
@@ -113,7 +113,7 @@ registerWhen(register("renderWorld", (pt) => {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
     })
-}), () => getWorld() === "Dwarven Mines" && (settings.commissionWaypoints === 2 || settings.commissionWaypoints === 3))
+}), () => location.getWorld() === "Dwarven Mines" && (settings.commissionWaypoints === 2 || settings.commissionWaypoints === 3))
 
 
 /**

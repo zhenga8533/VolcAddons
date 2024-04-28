@@ -1,8 +1,8 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/variables";
-import { getServer } from "../../utils/worlds";
 
 
 /**
@@ -26,7 +26,7 @@ registerWhen(register("chat", (server, event) => {
  * Clears server entry after X minutes when leaving it.
  */
 registerWhen(register("worldUnload", () => {
-    const server = getServer();
+    const server = location.getServer();
     if (server === undefined) return;
     servers[server] = Date.now();
 }), () => settings.serverAlert);

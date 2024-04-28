@@ -101,12 +101,11 @@ class Location {
         else {
             // Set season
             Scoreboard.getLines().find(line => {
-                this.#season = SEASONS.find(s => line.getName().includes(s)) ?? this.#season;
+                this.#season = this.SEASONS.find(s => line.getName().includes(s)) ?? this.#season;
             });
     
             // Get world formatted
             this.#world = world.removeFormatting().split(' ').splice(1).join(' ');
-            ChatLib.chat(this.#world)
     
             // Get tier for Kuudra
             if (this.#world === "Kuudra") {

@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { BOLD, DARK_AQUA, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_AQUA, GREEN, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -31,7 +31,7 @@ ${DARK_AQUA + BOLD}XP Gained: ${WHITE}0
 ${DARK_AQUA + BOLD}Time Passed: ${RED}Inactive
 ${DARK_AQUA + BOLD}Rate: ${WHITE}0 xp/hr
 ${DARK_AQUA + BOLD}Level Up: ${GREEN}MAXED`;
-const skillOverlay = new Overlay("skillTracker", ["all"], () => getWorld() !== undefined, data.AL, "moveSkills", skillExample);
+const skillOverlay = new Overlay("skillTracker", ["all"], () => location.getWorld() !== undefined, data.AL, "moveSkills", skillExample);
 
 const xpTable = [0, 50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925, 22425, 32425, 47425, 67425, 97425, 147425, 222425, 322425, 522425, 822425, 1222425, 
     1722425, 2322425, 3022425, 3822425, 4722425, 5722425, 6822425, 8022425, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425, 23322425, 

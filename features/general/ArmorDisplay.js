@@ -1,5 +1,5 @@
-import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
+import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 
 

@@ -1,8 +1,8 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { CUBE_CLASS } from "../../utils/constants";
 import { formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/variables";
-import { getTier, getWorld } from "../../utils/worlds";
 
 
 /**
@@ -40,7 +40,7 @@ registerWhen(register("tick", () => {
         }
 
         // KUUDRA SPAWN DETECT
-        if (settings.kuudraSpawn && getTier() === 5 && currentHP <= 25_000 && currentHP > 24_900) {
+        if (settings.kuudraSpawn && location.getTier() === 5 && currentHP <= 25_000 && currentHP > 24_900) {
             x = kuudra.getX();
             z = kuudra.getZ();
 
@@ -50,7 +50,7 @@ registerWhen(register("tick", () => {
             else if (z < -132) Client.showTitle("§4§lBACK!", "", 0, 25, 5);
         }
     } else HPDisplay = ["100k/100k ❤", 0, 0, 0];
-}), () => getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
+}), () => location.getWorld() === "Kuudra" && (settings.kuudraHP || settings.kuudraSpawn));
 
 /**
  * Cancel health rendering when announcing direction
@@ -60,21 +60,21 @@ registerWhen(register("renderTitle", (title, _, event) => {
     if (currentHP > 25_000 || currentHP <= 24_900 || DIRECTIONS.has(title)) return;
 
     cancel(event);
-}), () => getWorld() === "Kuudra" && settings.kuudraSpawn);
+}), () => location.getWorld() === "Kuudra" && settings.kuudraSpawn);
 
 /**
  * Renders Kuudra's percent HP.
  */
 registerWhen(register('renderOverlay', () => {
     percentHP.draw();
-}), () => getWorld() === "Kuudra" && settings.kuudraHP);
+}), () => location.getWorld() === "Kuudra" && settings.kuudraHP);
 
 /**
  * Draws Kuudra HP onto its physical body.
  */
 registerWhen(register('renderWorld', () => {
     if (HPDisplay[1]) Tessellator.drawString(HPDisplay[0], HPDisplay[1], HPDisplay[2] + 10, HPDisplay[3], 0xA7171A, true, 0.25, false);
-}), () => getWorld() === "Kuudra" && settings.kuudraHP);
+}), () => location.getWorld() === "Kuudra" && settings.kuudraHP);
 
 /**
  * Reset Kuudra's UUID on world exit.

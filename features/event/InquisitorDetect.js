@@ -1,10 +1,10 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS } from "../../utils/constants";
 import { getPerks } from "../../utils/mayor";
 import { announceMob } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
@@ -82,7 +82,7 @@ registerWhen(register("chat", (wow, mob) => {
         announceMob(settings.inqAlert, "Minos Inquisitor", Player.getX(), Player.getY(), Player.getZ());
         if (settings.inqCounter !== 0) updateInqCounter(true);
     } else if (settings.inqCounter !== 0) updateInqCounter(false);
-}).setCriteria("${wow}! You dug out a ${mob}!"), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual"));
+}).setCriteria("${wow}! You dug out a ${mob}!"), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual"));
 
 /**
  * Tracks world for any inquisitors near player.
@@ -99,8 +99,8 @@ registerWhen(register("step", () => {
 
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
-}).setFps(2), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
-new Hitbox(() => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"), (pt) => {
+}).setFps(2), () => location.getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
+new Hitbox(() => location.getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"), (pt) => {
     renderEntities(inquisitors, 1, 0.84, 0, pt, "Inspector Gadget");
 });
 register("worldUnload", () => inquisitors = []);

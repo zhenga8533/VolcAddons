@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
 
@@ -96,7 +96,7 @@ registerWhen(register("tick", () => {
             ichorUUID = ichor.persistentID;
         }
     }
-}), () => getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
+}), () => location.getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
 
 /**
  * Replaces Hypixel's impel subtitle with a flashy title.
@@ -106,7 +106,7 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
         cancel(event);
         Client.showTitle(subtitle, "", 0, 20, 0);
     }
-}), () => getWorld() === "The Rift" && settings.vampireImpel);
+}), () => location.getWorld() === "The Rift" && settings.vampireImpel);
 
 /**
  * Highlights vampire bosses with steakable HP.
@@ -125,7 +125,7 @@ registerWhen(register("step", () => {
         const max = entity.func_110148_a(SMA.field_111267_a).func_111125_b();
         return max > 210 && entity.func_110143_aJ() / max <= 0.2;
     });
-}).setFps(2), () => getWorld() === "The Rift" && settings.vampireHitbox);
+}).setFps(2), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
 
 /**
  * Render boxx hitboxes
@@ -133,4 +133,4 @@ registerWhen(register("step", () => {
 registerWhen(register("renderWorld", (pt) => {
     renderEntities(dracula, 1, 0, 0, pt, undefined, false);
     renderEntities(vamps, 1, 0, 0, pt);
-}), () => getWorld() === "The Rift" && settings.vampireHitbox);
+}), () => location.getWorld() === "The Rift" && settings.vampireHitbox);

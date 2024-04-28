@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/constants";
 import { commafy, formatNumber, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getTier, getWorld } from "../../utils/worlds";
 import { getItemValue } from "../economy/ItemPrice";
 import { getBazaar } from "../economy/Economy";
 
@@ -106,7 +106,7 @@ registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     downtime = 0;
     updateProfitTracker(true);
     chestOpened = true;
-}), () => getWorld() === "Kuudra" && settings.kuudraProfitTracker !== 0);
+}), () => location.getWorld() === "Kuudra" && settings.kuudraProfitTracker !== 0);
 
 /**
  * Track time and downtime of runs.
@@ -128,7 +128,7 @@ registerWhen(register("guiOpened", () => {
         const container = Player.getContainer();
         if (container.getName() !== "Paid Chest") return;
         const bazaar = getBazaar();
-        const tier = getTier();
+        const tier = location.getTier();
 
         const primary = getItemValue(container.getStackInSlot(11));
         let secondary = container.getStackInSlot(12);
@@ -150,4 +150,4 @@ ${DARK_PURPLE + BOLD}Teeth: ${GREEN}+${commafy(teeth)}
 ${RED + BOLD}Essence: ${GREEN}+${commafy(essence)}
 ${DARK_RED + BOLD}Key: ${RED}-${commafy(cost)}`);
     });
-}), () => getWorld() === "Kuudra");
+}), () => location.getWorld() === "Kuudra");

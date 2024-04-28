@@ -1,3 +1,4 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, DARK_GRAY, GOLD, LIGHT_PURPLE, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
@@ -5,7 +6,6 @@ import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "..
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { announceMob } from "../../utils/functions/misc";
-import { getSeason } from "../../utils/worlds";
 
 
 /**
@@ -69,11 +69,11 @@ registerWhen(register("step", () => {
  ${YELLOW}Breakfast: ${WHITE + getTime(breakfastTime / 20)}
  ${YELLOW}Lunch: ${WHITE + getTime(lunchTime / 20)}
  ${YELLOW}Dinner: ${WHITE + getTime(dinnerTime / 20)}`);
-}).setFps(2), () => settings.eggTimers && getSeason() === "Spring");
+}).setFps(2), () => settings.eggTimers && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg has spawned.`, 10, 50, 10);
-}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && getSeason() === "Spring");
+}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && location.getSeason() === "Spring");
 
 
 /**

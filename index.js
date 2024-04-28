@@ -1,5 +1,6 @@
 // Utility Modules
 import "./utils/player";
+import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
@@ -9,7 +10,6 @@ import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
 import { data, resetGUI, updateList } from "./utils/variables";
-import { findZone, getTier, getWorld } from "./utils/worlds";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
@@ -307,9 +307,9 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
         case "test":
             ChatLib.chat(
 `${LOGO + DARK_AQUA + BOLD}Important Values:
-- ${AQUA + BOLD}World: ${WHITE + getWorld()}
-- ${AQUA + BOLD}Zone: ${WHITE + findZone()}
-- ${AQUA + BOLD}Tier: ${WHITE + getTier()}
+- ${AQUA + BOLD}World: ${WHITE + location.getWorld()}
+- ${AQUA + BOLD}Zone: ${WHITE + location.findZone()}
+- ${AQUA + BOLD}Tier: ${WHITE + location.getTier()}
 - ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}
 - ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
             const party = getParty();
