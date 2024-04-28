@@ -1,6 +1,6 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, LIGHT_PURPLE, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
@@ -42,38 +42,6 @@ register("step", () => {
 ${GOLD + BOLD}Total: ${YELLOW + formatNumber(chocoAll)}
 ${GOLD + BOLD}Time: ${YELLOW + formatTimeElapsed(data.chocoLast, now)}`);
 }).setFps(1);
-
-
-/**
- * Egg timer overlay.
- * 
- * 18k = midnight
- * Breakfast- 7:00 am = 1_000
- * Lunch- 2:00 pm = 8_000
- * Dinner- 9:00 pm = 15_000
- */
-const eggExample = 
-`${GOLD + BOLD}Egg Timers:
- ${YELLOW}Breakfast: ${WHITE}bling
- ${YELLOW}Lunch: ${WHITE}bang
- ${YELLOW}Dinner: ${WHITE}bang`;
-const eggOverlay = new Overlay("eggTimers", ["all"], () => true, data.CGL, "moveEgg", eggExample);
-
-registerWhen(register("step", () => {
-    const time = World.getTime() % 24_000;
-    const breakfastTime = time > 1_000 ? 25_000 - time : 1_000 - time;
-    const lunchTime = time > 8_000 ? 32_000 - time : 8_000 - time;
-    const dinnerTime = time > 15_000 ? 39_000 - time : 15_000 - time;
-    eggOverlay.setMessage(
-`${GOLD + BOLD}Egg Timers:
- ${YELLOW}Breakfast: ${WHITE + getTime(breakfastTime / 20)}
- ${YELLOW}Lunch: ${WHITE + getTime(lunchTime / 20)}
- ${YELLOW}Dinner: ${WHITE + getTime(dinnerTime / 20)}`);
-}).setFps(2), () => settings.eggTimers && location.getSeason() === "Spring");
-
-registerWhen(register("chat", (type) => {
-    Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10);
-}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && location.getSeason() === "Spring");
 
 
 /**
@@ -152,7 +120,25 @@ const EGGS = {
     "55ae5624-c86b-359f-be54-e0ec7c175403": "Lunch",
     "e67f7c89-3a19-3f30-ada2-43a3856e5028": "Dinner"
 };
+let looted = {
+    "Breakfast": false,
+    "Lunch": false,
+    "Dinner": false
+};
 export function getEggs() { return eggWaypoints };
+
+// Track if egg was looted.
+registerWhen(register("chat", (type) => {
+    looted[type] = true;
+}).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"), () => settings.chocoWaypoints);
+
+registerWhen(register("chat", (type) => {
+    looted[type] = true;
+}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoWaypoints);
+
+registerWhen(register("chat", (type) => {
+    looted[type] = true;
+}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoWaypoints);
 
 registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
@@ -162,7 +148,7 @@ registerWhen(register("step", () => {
         const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
         if (helmet !== null) {
             const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id");  // getNBT() +> getNBTTagCompound() => getString()
-            if (id in EGGS) eggWaypoints.push([EGGS[id], stand.getX(), stand.getY() + 2, stand.getZ()]);
+            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], stand.getX(), stand.getY() + 2, stand.getZ()]);
         }
     });
 }).setDelay(1), () => settings.chocoWaypoints);
@@ -188,3 +174,36 @@ registerWhen(register("chat", (type, loc) => {
     chocoLoc = convertToTitleCase(loc);
     announceOnClose.register();
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoAlert !== 0);
+
+
+/**
+ * Egg timer overlay.
+ * 
+ * 18k = midnight
+ * Breakfast- 7:00 am = 1_000
+ * Lunch- 2:00 pm = 8_000
+ * Dinner- 9:00 pm = 15_000
+ */
+const eggExample = 
+`${GOLD + BOLD}Egg Timers:
+ ${YELLOW}Breakfast: ${WHITE}bling
+ ${YELLOW}Lunch: ${WHITE}bang
+ ${YELLOW}Dinner: ${WHITE}bang`;
+const eggOverlay = new Overlay("eggTimers", ["all"], () => true, data.CGL, "moveEgg", eggExample);
+eggOverlay.setMessage("");
+
+registerWhen(register("step", () => {
+    const time = World.getTime() % 24_000;
+    const breakfastTime = time > 1_000 ? 25_000 - time : 1_000 - time;
+    const lunchTime = time > 8_000 ? 32_000 - time : 8_000 - time;
+    const dinnerTime = time > 15_000 ? 39_000 - time : 15_000 - time;
+    eggOverlay.setMessage(
+`${GOLD + BOLD}Egg Timers:
+ ${YELLOW}Breakfast: ${WHITE + getTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"}
+ ${YELLOW}Lunch: ${WHITE + getTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"}
+ ${YELLOW}Dinner: ${WHITE + getTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"}`);
+}).setFps(2), () => settings.eggTimers && location.getSeason() === "Spring");
+
+registerWhen(register("chat", (type) => {
+    Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10);
+}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && location.getSeason() === "Spring");
