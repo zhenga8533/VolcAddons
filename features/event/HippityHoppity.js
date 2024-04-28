@@ -137,8 +137,8 @@ registerWhen(register("chat", (type) => {
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoWaypoints);
 
 registerWhen(register("chat", (type) => {
-    looted[type] = true;
-}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoWaypoints);
+    looted[type] = false;
+}).setCriteria("HOPPITY'S HUNT A Chocolate ${type} Egg has appeared!"), () => settings.chocoWaypoints);
 
 registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
