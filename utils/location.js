@@ -37,40 +37,45 @@ class Location {
     }
 
     /**
+     * Returns Location.#world
      * 
-     * @returns 
+     * @returns {String} - Current world name i.e. "Gold Mine".
      */
     getWorld() {
         return this.#world;
     }
 
     /**
+     * Returns Location.#tier
      * 
-     * @returns 
+     * @returns {String} - Current tier of Kuudra or 0 if not in Kuudra.
      */
     getTier() {
         return this.#tier;
     }
 
     /**
+     * Returns Location.#tier
      * 
-     * @returns 
+     * @returns {String} - Current server id i.e. "m188AJ".
      */
     getServer() {
         return this.#server;
     }
 
     /**
+     * Returns Location.#season
      * 
-     * @returns 
+     * @returns {String} - Current Skyblock season.
      */
     getSeason() {
         return this.#season;
     }
 
     /**
+     * Returns Location.#zone
      * 
-     * @returns 
+     * @returns {String} - Current zone player is standing in.
      */
     findZone() {
         let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣"));
@@ -78,6 +83,9 @@ class Location {
         return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
     }
 
+    /**
+     * Used to output current location data to chat for testing.
+     */
     test() {
         ChatLib.chat(
 `${LOGO + DARK_AQUA + BOLD}World Test:
