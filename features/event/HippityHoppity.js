@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, LIGHT_PURPLE, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
@@ -70,6 +70,10 @@ registerWhen(register("step", () => {
  ${YELLOW}Lunch: ${WHITE + getTime(lunchTime / 20)}
  ${YELLOW}Dinner: ${WHITE + getTime(dinnerTime / 20)}`);
 }).setFps(2), () => settings.eggTimers && getSeason() === "Spring");
+
+registerWhen(register("chat", (type) => {
+    Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg has spawned.`, 10, 50, 10);
+}).setCriteria("HOPPITY'S HUNT A ${type} Egg has appeared!"), () => settings.eggTimers && getSeason() === "Spring");
 
 
 /**
