@@ -73,7 +73,7 @@ registerWhen(register("step", () => {
 
 registerWhen(register("chat", (type) => {
     Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg has spawned.`, 10, 50, 10);
-}).setCriteria("HOPPITY'S HUNT A ${type} Egg has appeared!"), () => settings.eggTimers && getSeason() === "Spring");
+}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && getSeason() === "Spring");
 
 
 /**
