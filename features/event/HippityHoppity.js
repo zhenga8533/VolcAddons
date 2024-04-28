@@ -9,6 +9,10 @@ import { announceMob } from "../../utils/functions/misc";
 
 /**
  * Choco latte
+ * 
+ * Breakfast- 7:00 am
+ * Lunch- 2:00 pm
+ * Dinner- 9:00 pm
  */
 const updateChocolate = register("step", () => {
     if (Player?.getContainer()?.getName() !== "Chocolate Factory") return;

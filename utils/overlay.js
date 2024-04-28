@@ -301,8 +301,8 @@ export class Overlay {
      * Fixes getStringWidth not setting bolded size correctly.
      */
     setSize(message, type) {
-        if (message === "") return;
-        const lines = message.split("\n");
+        const lines = message?.split("\n");
+        if (!(lines?.length)) return;
 
         if (type === "message") this.height = lines.length * 9;
         else this.eHeight = lines.length * 9;
