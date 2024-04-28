@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, STAND_CLASS, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { convertToTitleCase, formatNumber, formatTimeElapsed } from "../../utils/functions/format";
+import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { announceMob } from "../../utils/functions/misc";
@@ -9,10 +9,6 @@ import { announceMob } from "../../utils/functions/misc";
 
 /**
  * Choco latte
- * 
- * Breakfast- 7:00 am
- * Lunch- 2:00 pm
- * Dinner- 9:00 pm
  */
 const updateChocolate = register("step", () => {
     if (Player?.getContainer()?.getName() !== "Chocolate Factory") return;
@@ -45,6 +41,34 @@ register("step", () => {
 ${GOLD + BOLD}Total: ${YELLOW + formatNumber(chocoAll)}
 ${GOLD + BOLD}Time: ${YELLOW + formatTimeElapsed(data.chocoLast, now)}`);
 }).setFps(1);
+
+
+/**
+ * Egg timer overlay.
+ * 
+ * 18k = midnight
+ * Breakfast- 7:00 am = 1_000
+ * Lunch- 2:00 pm = 8_000
+ * Dinner- 9:00 pm = 15_000
+ */
+const eggExample = 
+`${GOLD + BOLD}Egg Timers:
+ ${YELLOW}Breakfast: ${WHITE}bling
+ ${YELLOW}Lunch: ${WHITE}bang
+ ${YELLOW}Dinner: ${WHITE}bang`;
+const eggOverlay = new Overlay("eggTimers", ["all"], () => true, data.CGL, "moveEgg", eggExample);
+
+registerWhen(register("step", () => {
+    const time = World.getTime() % 24_000;
+    const breakfastTime = time > 1_000 ? 25_000 - time : 1_000 - time;
+    const lunchTime = time > 8_000 ? 32_000 - time : 8_000 - time;
+    const dinnerTime = time > 15_000 ? 39_000 - time : 15_000 - time;
+    eggOverlay.setMessage(
+`${GOLD + BOLD}Egg Timers:
+ ${YELLOW}Breakfast: ${WHITE + getTime(breakfastTime / 20)}
+ ${YELLOW}Lunch: ${WHITE + getTime(lunchTime / 20)}
+ ${YELLOW}Dinner: ${WHITE + getTime(dinnerTime / 20)}`);
+}).setFps(2), () => settings.eggTimers);
 
 
 /**

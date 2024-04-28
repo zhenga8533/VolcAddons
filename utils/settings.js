@@ -943,6 +943,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     chocoAlert = 0;
 
     @SwitchProperty({
+        name: "Egg Timers",
+        description: `${DARK_RED}NEW! ${GRAY}Displays overlay off how long until an egg spawns. Also shows title whenever an egg spawns.`,
+        category: "Event",
+        subcategory: "Chocolate Factory"
+    })
+    eggTimers = false;
+
+    @SwitchProperty({
         name: "Egg Waypoints",
         description: `Display waypoints for nearby corpses. ${DARK_RED}Technically uses ESP so UAYOR!`,
         category: "Event",

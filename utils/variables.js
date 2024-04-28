@@ -34,6 +34,7 @@ const DEFAULT_GUI = {
     "CDL": [190, 115, 1.2, false, false, false], // Commission Display Location
     "CEL": [375, 275, 3, false, false, false], // Crate edit location
     "CFL": [10, 260, 1.2, false, false, false], // Chocolate factory location
+    "CGL": [10, 115, 1.2, false, false, false], // Chocolate egg location
     "EQL": [905, 65, 1.2, false, false, false], // Equipment Location
     "FHL": [580, 160, 1.2, false, false, false], // Fossil Helper Location
     "PHL": [170, 160, 1.2, false, false, false], // Pesthunter Location
