@@ -5,6 +5,7 @@ import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "..
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
 import { announceMob } from "../../utils/functions/misc";
+import { getSeason } from "../../utils/worlds";
 
 
 /**
@@ -68,7 +69,7 @@ registerWhen(register("step", () => {
  ${YELLOW}Breakfast: ${WHITE + getTime(breakfastTime / 20)}
  ${YELLOW}Lunch: ${WHITE + getTime(lunchTime / 20)}
  ${YELLOW}Dinner: ${WHITE + getTime(dinnerTime / 20)}`);
-}).setFps(2), () => settings.eggTimers);
+}).setFps(2), () => settings.eggTimers && getSeason() === "Spring");
 
 
 /**

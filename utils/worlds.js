@@ -15,6 +15,10 @@ let server = undefined;
 export function getServer() { return server };
 let noFind = 0;
 
+let season = undefined;
+export function getSeason() { return season };
+const SEASONS = ["Spring", "Summer", "Autumn", "Winter"];
+
 /**
  * Load server ID on chat message
  */
@@ -33,6 +37,10 @@ export function findZone() {
     return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
 }
 
+Scoreboard.getLines().forEach(line => {
+    print(line.getName());
+});
+
 /**
  * Identifies the current world the player is in based on the tab list.
  */
@@ -49,6 +57,11 @@ function findWorld() {
         // If the world is not found, try again after a delay
         delay(() => findWorld(), 1000);
     } else {
+        // Set season
+        Scoreboard.getLines().find(line => {
+            season = SEASONS.find(s => line.getName().includes(s)) ?? season;
+        });
+
         // Get world formatted
         world = world.removeFormatting();
         world = world.substring(world.indexOf(': ') + 2);
