@@ -1,7 +1,7 @@
-import { GRAY, GREEN, LOGO } from "../../utils/constants";
+import location from "../../utils/location";
 import settings from "../../utils/settings";
+import { GRAY, GREEN, LOGO } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
-import { findZone, getWorld } from "../../utils/worlds";
 
 
 /**
@@ -42,12 +42,12 @@ function findIntersection(line1, line2) {
  * Uses wishing compass shattered chat message to update path logic.
  */
 registerWhen(register("chat", () => {
-    if (zone === findZone()) lastPath = path;
+    if (zone === location.findZone()) lastPath = path;
     else lastPath = [];
 
-    zone = findZone();
+    zone = location.findZone();
     path = [];
-}).setCriteria("Your Wishing Compass shattered into pieces!"), () => getWorld() === "Crystal Hollows" && settings.compassLocator);
+}).setCriteria("Your Wishing Compass shattered into pieces!"), () => location.getWorld() === "Crystal Hollows" && settings.compassLocator);
 
 /**
  * Uses compass particles to track and estimate compass location.
@@ -79,4 +79,4 @@ registerWhen(register("spawnParticle", (particle, type) => {
         const close = Math.hypot(origin[0] - lastPath[0][0], origin[2] - lastPath[0][2]);
         if (close < 16) ChatLib.chat(`${LOGO + GRAY}Location may be incorrect due to proximity of compass uses...`);
     }
-}), () => getWorld() === "Crystal Hollows" && settings.compassLocator);
+}), () => location.getWorld() === "Crystal Hollows" && settings.compassLocator);

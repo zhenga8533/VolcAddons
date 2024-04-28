@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -62,7 +62,7 @@ registerWhen(register("step", () => {
     const currentGemstone = parseInt(tablist[powderIndex + 2].removeFormatting().trim().split(' ')[1].replace(/\D/g, ''));
     updatePowder(powders.Mithril, currentMithril);
     updatePowder(powders.Gemstone, currentGemstone);
-    if (getWorld() === "Dwarven Mines") {
+    if (location.getWorld() === "Dwarven Mines") {
         const currentGlacite = parseInt(tablist[powderIndex + 3].removeFormatting().trim().split(' ')[1]?.replace(/\D/g, ''));
         updatePowder(powders.Glacite, currentGlacite);
     }
@@ -75,12 +75,12 @@ registerWhen(register("step", () => {
 
     // Set HUD
     const timeDisplay = displayTime !== 0 ? getTime(displayTime) : `${RED}Inactive`;
-    powderOverlay.message = 
+    powderOverlay.setMessage( 
 `${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
 ${DARK_GREEN + BOLD}Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr
 ${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain())} ᠅
 ${LIGHT_PURPLE + BOLD}Rate: ${WHITE + commafy(powders.Gemstone.getRate())} ᠅/hr
 ${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain())} ᠅
 ${AQUA + BOLD}Rate: ${WHITE + commafy(powders.Glacite.getRate())} ᠅/hr
-${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`;
-}).setFps(1), () => (getWorld() === "Crystal Hollows" || getWorld() === "Dwarven Mines") && settings.powderTracker !== 0);
+${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`);
+}).setFps(1), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && settings.powderTracker !== 0);

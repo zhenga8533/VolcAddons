@@ -14,6 +14,7 @@ subtitle: List of all features and their related commands.
     - Render Waypoint
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
 - **Inventory**
+    - Recipe Hotkey
     - Searchbar (`/moveSearch`)
     - Slot Binding (`/<save, delete, list, load, reset>Binds [key]`)
     - Wardrobe Hotkeys
@@ -117,6 +118,7 @@ subtitle: List of all features and their related commands.
 - **Chocolate Factory**
     - Chocolate Overlay
     - Egg Announce
+    - Egg Timers
     - Egg Waypoints
     - Worker Highlight
 - **Great Spook**

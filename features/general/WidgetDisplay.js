@@ -22,7 +22,7 @@ export function updateWidgetList() {
     });
 
     Object.keys(widgetOverlays).forEach(widget => {
-        widgetOverlays[widget].message = "";
+        widgetOverlays[widget].setMessage("");
         if (!data.widgetlist.includes(widget)) delete widgetOverlays[widget];
     })
 }
@@ -35,12 +35,12 @@ registerWhen(register("step", () => {
     Object.keys(widgetOverlays).forEach(widget => {
         let index = tablist.findIndex(line => line.removeFormatting().toLowerCase() === `${widget.toLowerCase()}:`);
         if (index === -1) {
-            widgetOverlays[widget].message = "";
+            widgetOverlays[widget].setMessage("");
             return;
         }
 
-        let message = tablist[index++] + '\n';
-        while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) message += tablist[index++] + '\n';
-        widgetOverlays[widget].message = message;
+        let message = tablist[index++];
+        while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) message += '\n' + tablist[index++];
+        widgetOverlays[widget].setMessage(message);
     });
 }).setFps(1), () => settings.widgetDisplay);

@@ -126,7 +126,7 @@ const valueExample =
 &3Total Value: &aKATSU.`;
 const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
 () => settings.itemPrice === 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
-valueOverlay.message = "";
+valueOverlay.setMessage("");
 
 let savedValues = {};
 /**
@@ -448,14 +448,14 @@ registerWhen(register("itemTooltip", (lore, item) => {
     const list = new NBTTagList(loreTag);
     for (let i = 0; i < list.getTagCount(); i++) {
         if (list.getStringTagAt(i).startsWith("§3§lItem Value:")) {
-            valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
+            valueOverlay.setMessage(savedValues?.[itemUUID]?.[1] ?? "");
             return;
         }
     }
 
     // Add to item lore.
     const value = getItemValue(item);
-    valueOverlay.message = savedValues?.[itemUUID]?.[1] ?? "";
+    valueOverlay.setMessage(savedValues?.[itemUUID]?.[1] ?? "");
     if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
 }), () => settings.itemPrice !== 0);
@@ -463,5 +463,5 @@ registerWhen(register("itemTooltip", (lore, item) => {
 /**
  * Reset data on data transfers.
  */
-register("guiClosed", () => { valueOverlay.message = "" });
+register("guiClosed", () => { valueOverlay.setMessage("") });
 register("worldUnload", () => { savedValues = {} });

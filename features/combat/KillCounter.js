@@ -25,7 +25,7 @@ ${RED + BOLD}ゴウセル: ${RESET}0^0
 ${DARK_RED + BOLD}Total Kills: ${RESET}∞^∞
 ${DARK_RED + BOLD}Time Passed: ${RESET}-∞`;
 const counterOverlay = new Overlay("killCounter", ["all"], () => true, data.JL, "moveKills", counterExample);
-counterOverlay.message = "";
+counterOverlay.setMessage("");
 
 function updateCounter() {
     // Sort the mobs object
@@ -38,9 +38,9 @@ function updateCounter() {
         return `${RED + BOLD + mob}: ${RESET + formatNumber(kills) + GRAY} (${formatNumber(kills / time * 3600)}/hr)`;
     });
 
-    counterOverlay.message = messageLines.join('\n') +
+    counterOverlay.setMessage(messageLines.join('\n') +
         `\n\n${DARK_RED + BOLD}Total Kills: ${RESET + formatNumber(total) + GRAY} (${formatNumber(total / time * 3600)}/hr)` +
-        `\n${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`;
+        `\n${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`);
 }
 
 /**
@@ -104,6 +104,6 @@ register("command", () => {
     mobs = {}
     total = 0;
     time = 0;
-    counterOverlay.message = "";
+    counterOverlay.setMessage("");
     ChatLib.chat(`${LOGO + GREEN}Successfully reset kill counter!`)
 }).setName("resetKills");

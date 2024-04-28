@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
 
@@ -27,7 +27,8 @@ let inMania = false;
  * Tracks player boss on spawn and updates vampire attack overlay every tick.
  */
 registerWhen(register("tick", () => {
-    vampireOverlay.message = "";
+    let vampireMessage = "";
+    vampireOverlay.setMessage("");
     if (!getSlayerBoss()) {
         bossUUID = 0;
         mania = 0;
@@ -52,7 +53,7 @@ registerWhen(register("tick", () => {
         // Mania Detect
         const maniaIndex = name.indexOf("§5§lMANIA");
         if (maniaIndex !== -1) {
-            vampireOverlay.message += `${name[maniaIndex]}: ${name[maniaIndex + 1]}\n`;
+            vampireMessage += `${name[maniaIndex]}: ${name[maniaIndex + 1]}\n`;
             if (!inMania) {
                 mania++;
                 inMania = true;
@@ -70,11 +71,13 @@ registerWhen(register("tick", () => {
 
         // Twinclaw Detect
         const clawIndex = name.indexOf("§6§lTWINCLAWS");
-        if (clawIndex !== -1) vampireOverlay.message += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
+        if (clawIndex !== -1) vampireMessage += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
 
         // Ichor Detect
         const ichorIndex = name.indexOf("§3§lICHOR");
         if (ichorIndex !== -1) ichorSpawn = true;
+
+        vampireOverlay.setMessage(vampireMessage);
     }
 
     // Ichor Nametag Shit
@@ -86,14 +89,14 @@ registerWhen(register("tick", () => {
                 ichorUUID = 0;
                 return;
             }
-            vampireOverlay.message += `${DARK_AQUA + BOLD}ICHOR: ${ichor.func_95999_t()}\n`;
+            vampireOverlay.setMessage(vampireMessage + `${DARK_AQUA + BOLD}ICHOR: ${ichor.func_95999_t()}\n`);
         } else {
             const ichor = stands.find(stand => stand.func_95999_t().includes('24.'));
             if (ichor === undefined) return;
             ichorUUID = ichor.persistentID;
         }
     }
-}), () => getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
+}), () => location.getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
 
 /**
  * Replaces Hypixel's impel subtitle with a flashy title.
@@ -103,7 +106,7 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
         cancel(event);
         Client.showTitle(subtitle, "", 0, 20, 0);
     }
-}), () => getWorld() === "The Rift" && settings.vampireImpel);
+}), () => location.getWorld() === "The Rift" && settings.vampireImpel);
 
 /**
  * Highlights vampire bosses with steakable HP.
@@ -122,7 +125,7 @@ registerWhen(register("step", () => {
         const max = entity.func_110148_a(SMA.field_111267_a).func_111125_b();
         return max > 210 && entity.func_110143_aJ() / max <= 0.2;
     });
-}).setFps(2), () => getWorld() === "The Rift" && settings.vampireHitbox);
+}).setFps(2), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
 
 /**
  * Render boxx hitboxes
@@ -130,4 +133,4 @@ registerWhen(register("step", () => {
 registerWhen(register("renderWorld", (pt) => {
     renderEntities(dracula, 1, 0, 0, pt, undefined, false);
     renderEntities(vamps, 1, 0, 0, pt);
-}), () => getWorld() === "The Rift" && settings.vampireHitbox);
+}), () => location.getWorld() === "The Rift" && settings.vampireHitbox);

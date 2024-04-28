@@ -1,8 +1,8 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, CHEST_CLASS, DARK_AQUA, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -19,15 +19,15 @@ const powderOverlay = new Overlay("powderChest", ["Crystal Hollows"], () => true
 registerWhen(register("tick", () => {
     nearbyChests = World.getAllTileEntitiesOfType(CHEST_CLASS)
         .filter(chest => Player.asPlayerMP().distanceTo(chest.getBlockPos()) <= settings.powderChest);
-    powderOverlay.message = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + nearbyChests.length}`;
-}), () => getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
+    powderOverlay.setMessage(`${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + nearbyChests.length}`);
+}), () => location.getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
 
 /**
  * Removes chest waypoints on world leave.
  */
 registerWhen(register("worldUnload", () => {
     nearbyChests = [];
-}), () => getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
+}), () => location.getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
 
 /**
  * Remove powder chest spam.

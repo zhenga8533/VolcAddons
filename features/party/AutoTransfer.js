@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { getInParty, getIsLeader, getParty } from "../../utils/party";
 import { getPlayerName } from "../../utils/functions/player";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -23,7 +23,7 @@ registerWhen(register("chat", (player1, player2) => {
  */
 let transferred = false;
 registerWhen(register("chat", (player1, player2) => {
-    if (getWorld() !== undefined && !transferred) return;
+    if (location.getWorld() !== undefined && !transferred) return;
     const name1 = getPlayerName(player1).toLowerCase();
     const name2 = getPlayerName(player2).toLowerCase();
 

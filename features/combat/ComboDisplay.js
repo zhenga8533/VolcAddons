@@ -13,17 +13,20 @@ const comboExample =
   ${DARK_GRAY}+${GOLD}420 coins per kill
   ${DARK_AQUA}+911☯ Combat Wisdom`;
 const comboOverlay = new Overlay("comboDisplay", ["all"], () => true, data.WL, "moveCombo", comboExample);
-comboOverlay.message = "";
+comboOverlay.setMessage("");
 let stats = ["", 0, 0, 0];
 
 /**
  * Resets and updates overlay message to match stats.
  */
 function updateOverlay() {
-    comboOverlay.message = stats[0];
-    if (stats[1] !== 0) comboOverlay.message += `\n${AQUA}+${stats[1]}✯ Magic Find`;
-    if (stats[2] !== 0) comboOverlay.message += `\n${DARK_AQUA}+${stats[2]}☯ Combat Wisdom`;
-    if (stats[3] !== 0) comboOverlay.message += `\n${DARK_GRAY}+${GOLD + stats[3]} coins per kill`;
+    let comboMessage = '';
+    comboMessage = stats[0];
+    if (stats[1] !== 0) comboMessage += `\n${AQUA}+${stats[1]}✯ Magic Find`;
+    if (stats[2] !== 0) comboMessage += `\n${DARK_AQUA}+${stats[2]}☯ Combat Wisdom`;
+    if (stats[3] !== 0) comboMessage += `\n${DARK_GRAY}+${GOLD + stats[3]} coins per kill`;
+
+    comboOverlay.setMessage(comboMessage);
 }
 
 /**
@@ -54,9 +57,9 @@ registerWhen(register("chat", (color, kills) => {
  */
 registerWhen(register("chat", () => {
     stats = ["", 0, 0, 0];
-    comboOverlay.message = "";
+    comboOverlay.setMessage("");
 }).setCriteria("Your Kill Combo has expired! You reached a ${kills} Kill Combo!"), () => settings.comboDisplay);
 registerWhen(register("worldUnload", () => {
     stats = ["", 0, 0, 0];
-    comboOverlay.message = "";
+    comboOverlay.setMessage("");
 }), () => settings.comboDisplay);

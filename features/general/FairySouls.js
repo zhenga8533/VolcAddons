@@ -1,13 +1,13 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { getClosest } from "../../utils/functions/find";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
  * Variables used to represent soul waypoints.
  */
-let fairyClose = data.fairySouls[getWorld()] ?? [];
+let fairyClose = data.fairySouls[location.getWorld()] ?? [];
 export function getFairy() { return settings.fairyWaypoint ? fairyClose : [] };
 
 /**
@@ -15,7 +15,7 @@ export function getFairy() { return settings.fairyWaypoint ? fairyClose : [] };
  */
 registerWhen(register("chat", () => {
     // Delete closest soul
-    const souls = data.fairySouls[getWorld()];
+    const souls = data.fairySouls[location.getWorld()];
     const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
     if (closest !== undefined && closest[1] < 10) souls.splice(souls.indexOf(closest[0]), 1);
 }).setCriteria("SOUL! You found a Fairy Soul!"), () => settings.fairyWaypoint !== 0);
@@ -24,7 +24,7 @@ registerWhen(register("chat", () => {
  * Fail safe fairy soul remove in case player clicks on an unregistered soul.
  */
 registerWhen(register("chat", () => {
-    const souls = data.fairySouls[getWorld()];
+    const souls = data.fairySouls[location.getWorld()];
     if (souls.length === 0) return;
 
     // Delete duplicate soul
@@ -37,5 +37,5 @@ registerWhen(register("chat", () => {
  */
 registerWhen(register("step", () => {
     // Filters to closest souls
-    fairyClose = data.fairySouls[getWorld()]?.filter((fairy) => Math.hypot(Player.getX() - fairy[0], Player.getZ() - fairy[2]) < settings.fairyWaypoint) ?? [];
+    fairyClose = data.fairySouls[location.getWorld()]?.filter((fairy) => Math.hypot(Player.getX() - fairy[0], Player.getZ() - fairy[2]) < settings.fairyWaypoint) ?? [];
 }).setFps(1), () => settings.fairyWaypoint !== 0);

@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { BOLD, DARK_AQUA, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_AQUA, GREEN, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -31,7 +31,7 @@ ${DARK_AQUA + BOLD}XP Gained: ${WHITE}0
 ${DARK_AQUA + BOLD}Time Passed: ${RED}Inactive
 ${DARK_AQUA + BOLD}Rate: ${WHITE}0 xp/hr
 ${DARK_AQUA + BOLD}Level Up: ${GREEN}MAXED`;
-const skillOverlay = new Overlay("skillTracker", ["all"], () => getWorld() !== undefined, data.AL, "moveSkills", skillExample);
+const skillOverlay = new Overlay("skillTracker", ["all"], () => location.getWorld() !== undefined, data.AL, "moveSkills", skillExample);
 
 const xpTable = [0, 50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925, 22425, 32425, 47425, 67425, 97425, 147425, 222425, 322425, 522425, 822425, 1222425, 
     1722425, 2322425, 3022425, 3822425, 4722425, 5722425, 6822425, 8022425, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425, 23322425, 
@@ -66,7 +66,7 @@ const trackSkills = register("guiOpened", () => {
 
         skillsTracked = true;
         trackSkills.unregister();
-        ChatLib.chat(`${LOGO + GREEN}Skills tracked successfully!`);
+        Client.showTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10);
     });
 });
 
@@ -86,7 +86,7 @@ register("command", () => {
         skills[skill].time = 0;
         skills[skill].since = 600;
     });
-    ChatLib.chat(`${LOGO + GREEN}Successfully reset skills, please open skills menu to re-track!`);
+    Client.showTitle(`${GREEN}Successfully reset skills!`, "Please open skills menu to retrack.", 10, 50, 10);
 }).setName("resetSkills");
 
 /**
@@ -94,8 +94,7 @@ register("command", () => {
  */
 registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
     if (!skillsTracked) {
-        ChatLib.clearChat(56194)
-        new Message(`${LOGO + RED}Please open skills menu to begin skill tracking!`).setChatLineId(56194).chat();
+        Client.showTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10);
         return;
     }
     if (getPaused()) return;
@@ -116,7 +115,7 @@ registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
  */
 registerWhen(register("actionBar", (health, gain, type, percent, mana) => {
     if (!skillsTracked) {
-        ChatLib.chat(`${LOGO + RED}Please open skills menu to begin skill tracking!`);
+        Client.showTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10);
         return;
     }
     if (getPaused()) return;
@@ -157,7 +156,7 @@ registerWhen(register("step", () => {
     
     // Set HUD
     const timeDisplay = skill.since < settings.skillTracker * 60 ? getTime(skill.time) : `${RED}Inactive`;
-    skillOverlay.message = 
+    let skillMessage = 
 `${DARK_AQUA + BOLD}Skill: ${WHITE + current}
 ${DARK_AQUA + BOLD}XP Gained: ${WHITE + commafy(skill.getGain())} xp
 ${DARK_AQUA + BOLD}Time Passed: ${WHITE + timeDisplay}
@@ -167,7 +166,9 @@ ${DARK_AQUA + BOLD}Level Up: `;
     // Set time until next
     if (skill.level !== 60) {
         const neededXP = xpTable[skill.level + 1] - skill.now;
-        if (neededXP > 0) skillOverlay.message += `${WHITE + getTime(neededXP / rate * 3600)}`;
-        else skillOverlay.message += `${GREEN}MAXED`;
-    } else skillOverlay.message += `${GREEN}MAXED`;
+        if (neededXP > 0) skillMessage += `${WHITE + getTime(neededXP / rate * 3600)}`;
+        else skillMessage += `${GREEN}MAXED`;
+    } else skillMessage += `${GREEN}MAXED`;
+
+    skillOverlay.setMessage(skillMessage);
 }).setFps(1), () => settings.skillTracker !== 0);

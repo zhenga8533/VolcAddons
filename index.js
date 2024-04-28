@@ -1,5 +1,6 @@
 // Utility Modules
 import "./utils/player";
+import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
@@ -9,7 +10,6 @@ import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
 import { data, resetGUI, updateList } from "./utils/variables";
-import { findZone, getTier, getWorld } from "./utils/worlds";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
@@ -78,7 +78,6 @@ import "./features/mining/WishingCompass";
 // Farming Features
 import { calcCompost } from "./features/farming/ComposterCalc";
 import "./features/farming/FarmingWebhook";
-import "./features/farming/GardenBox";
 import "./features/farming/GardenTab";
 import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";
@@ -154,6 +153,10 @@ ${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GR
 ${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 }
 
+// `viewrecipe` GUI Button
+const recipeKey = new KeyBind("View Recipe", data.recipeKey, "./VolcAddons.xdd");
+register("gameUnload", () => { data.recipeKey = recipeKey.getKeyCode() });
+
 // Dev Mode
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
@@ -184,14 +187,31 @@ devKey.registerKeyPress(() => {
         ChatLib.chat(`${LOGO + GREEN}Successfully copied block data!`);
     }
 });
+
 register("guiKey", (_, keyCode, gui) => {
-    if (keyCode !== devKey.getKeyCode()) return;
-    const slot = gui?.getSlotUnderMouse()?.field_75222_d;
-    if (slot === undefined) return;
-    const item = Player.getContainer().getStackInSlot(slot);
-    if (item === null) return;
-    ChatLib.command(`ct copy ${item.getNBT()}`, true);
-    ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
+    if (keyCode === devKey.getKeyCode()) {
+        const slot = gui?.getSlotUnderMouse()?.field_75222_d;
+        if (slot === undefined) return;
+        const item = Player.getContainer().getStackInSlot(slot);
+        if (item === null) return;
+        ChatLib.command(`ct copy ${item.getNBT()}`, true);
+        ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
+    } else if (keyCode === recipeKey.getKeyCode()) {
+        // Check if hovering valid slot
+        const slot = gui?.getSlotUnderMouse()?.field_75222_d;
+        if (slot === undefined) return;
+
+        // Check if item is null
+        const item = Player.getContainer().getItems()[slot];
+        if (item === null) {
+            ChatLib.chat(`${LOGO + RED}Cannot viewrecipe of nothing.`);
+            return;
+        }
+
+        // Viewrecipe using item NBT ID
+        const id = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
+        ChatLib.command(`viewrecipe ${id}`);
+    }
 });
 
 // Open settings
@@ -287,9 +307,9 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
         case "test":
             ChatLib.chat(
 `${LOGO + DARK_AQUA + BOLD}Important Values:
-- ${AQUA + BOLD}World: ${WHITE + getWorld()}
-- ${AQUA + BOLD}Zone: ${WHITE + findZone()}
-- ${AQUA + BOLD}Tier: ${WHITE + getTier()}
+- ${AQUA + BOLD}World: ${WHITE + location.getWorld()}
+- ${AQUA + BOLD}Zone: ${WHITE + location.findZone()}
+- ${AQUA + BOLD}Tier: ${WHITE + location.getTier()}
 - ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}
 - ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
             const party = getParty();

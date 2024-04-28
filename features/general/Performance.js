@@ -1,10 +1,10 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -112,21 +112,21 @@ const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, 
  * and FPS (frames per second) using the values from the `ping`, `tps`, and `Client.getFPS()` respectively.
  */
 registerWhen(register('tick', () => {
-    statusOverlay.message = "";
+    let statusMessage = "";
 
     // XYZ
     if (toggles.xyzDisplay) {
         const x = Math.round(Player.getX());
         const y = Math.round(Player.getY());
         const z = Math.round(Player.getZ());
-        statusOverlay.message += `${DARK_AQUA + BOLD}XYZ: ${GREEN + x}, ${y}, ${z}\n`;
+        statusMessage += `${DARK_AQUA + BOLD}XYZ: ${GREEN + x}, ${y}, ${z}\n`;
     }
 
     // Yaw and Pitch
     if (toggles.angleDisplay) {
         const yaw = Player.getYaw();
         const pitch = Player.getPitch();
-        statusOverlay.message += `${DARK_AQUA + BOLD}Y/P: ${AQUA + yaw.toFixed(2)} / ${AQUA + pitch.toFixed(2)}\n`;
+        statusMessage += `${DARK_AQUA + BOLD}Y/P: ${AQUA + yaw.toFixed(2)} / ${AQUA + pitch.toFixed(2)}\n`;
     }
 
     // Direction
@@ -135,7 +135,7 @@ registerWhen(register('tick', () => {
         const direction = yaw >= 45 && yaw < 135 ? "West" :
             yaw >= 135 && yaw < 255 ? "North" :
             yaw >= 225 && yaw < 315 ? "East" : "South"
-        statusOverlay.message += `${DARK_AQUA + BOLD}Dir: ${AQUA + direction}\n`;
+        statusMessage += `${DARK_AQUA + BOLD}Dir: ${AQUA + direction}\n`;
     }
 
     // Ping
@@ -145,7 +145,7 @@ registerWhen(register('tick', () => {
             ping < 300 ? YELLOW :
             ping < 420 ? GOLD : 
             ping < 690 ? RED : DARK_RED;
-        statusOverlay.message += `${DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms\n`;
+        statusMessage += `${DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms\n`;
     }
 
     // FPS
@@ -158,7 +158,7 @@ registerWhen(register('tick', () => {
             fpsRatio > 0.7 ? YELLOW :
             fpsRatio > 0.6 ? GOLD : 
             fpsRatio > 0.5 ? RED : DARK_RED;
-        statusOverlay.message += `${DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps\n`;
+        statusMessage += `${DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps\n`;
     }
 
     // TPS
@@ -168,8 +168,7 @@ registerWhen(register('tick', () => {
             tps > 13 ? YELLOW :
             tps > 10 ? GOLD : 
             tps > 7 ? RED : DARK_RED;
-
-        statusOverlay.message += `${DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps\n`;
+        statusMessage += `${DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps\n`;
     }
 
     // CPS
@@ -186,15 +185,16 @@ registerWhen(register('tick', () => {
             rightCPS < 13 ? YELLOW :
             rightCPS < 21 ? GOLD : 
             rightCPS < 30 ? RED : DARK_RED;
-
-        statusOverlay.message += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}\n`;
+        statusMessage += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}\n`;
     }
 
     // Day
     if (toggles.dayDisplay) {
         const daytime = (World.getTime() / 24000).toFixed(2);
-        statusOverlay.message += `${DARK_AQUA + BOLD}Day: ${AQUA + daytime}`
+        statusMessage += `${DARK_AQUA + BOLD}Day: ${AQUA + daytime}`
     }
+
+    statusOverlay.setMessage(statusMessage);
 }), () => settings.serverStatus || toggles.statusCommand);
 
 /**
@@ -279,7 +279,7 @@ registerWhen(register("renderEntity", (entity, _, __, event) => {
         cancel(event);
 }).setPriority(Priority.LOWEST), () => {
     if (settings.hideFarEntity === 0 && settings.hideCloseEntity === 0) return false;
-    const world = getWorld()?.toLowerCase() ?? "";
+    const world = location.getWorld()?.toLowerCase() ?? "";
     const worlds = settings.hideWorlds.toLowerCase().split(", ");
     return worlds[0] === "" || worlds.includes(world);
 });

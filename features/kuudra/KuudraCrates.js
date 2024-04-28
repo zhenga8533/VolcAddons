@@ -1,7 +1,7 @@
-import { GIANT_CLASS, STAND_CLASS } from "../../utils/constants";
+import location from "../../utils/location";
 import settings from "../../utils/settings";
+import { GIANT_CLASS, STAND_CLASS } from "../../utils/constants";
 import { registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { getPhase } from "./KuudraSplits";
 
 
@@ -30,7 +30,7 @@ registerWhen(register("tick", () => {
         const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180));
         return [x, 75, z, distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0];
     });
-}), () => getWorld() === "Kuudra" && settings.kuudraCrates);
+}), () => location.getWorld() === "Kuudra" && settings.kuudraCrates);
 
 /**
  * Marks build piles that are not completed.
@@ -42,7 +42,7 @@ registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
-}).setFps(2), () => getWorld() === "Kuudra" && settings.kuudraBuild);
+}).setFps(2), () => location.getWorld() === "Kuudra" && settings.kuudraBuild);
 
 /**
  * Marks build piles that are not completed.

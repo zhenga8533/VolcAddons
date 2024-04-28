@@ -1,9 +1,10 @@
 import settings from "../../utils/settings";
+import location from "../../utils/location";
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getTime } from "../../utils/functions/format";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -28,7 +29,8 @@ registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
 
     const tablist = TabList.getNames();
-    gardenOverlay.message = "";
+    gardenOverlay.setMessage("");
+    let gardenMessage = "";
     let visitorIndex = tablist.findIndex(tab => tab.startsWith("§r§b§lVisitors:"));
     if (visitorIndex === -1) return;
 
@@ -37,7 +39,8 @@ registerWhen(register("step", () => {
     visitors = [];
     for (let i = 0; i <= visitorCount; i++) {
         let visitor = tablist[visitorIndex + i];
-        gardenOverlay.message += visitor + '\n';
+        if (visitor.length > 34) visitor = visitor.split(' ').splice(0, 3).join(' ');
+        gardenMessage += visitor + '\n';
         visitors.push(visitor);
     }
 
@@ -52,9 +55,11 @@ registerWhen(register("step", () => {
 
     // Update next display
     if (tabTime !== 0 && tabTime < nextVisitor - 60 || tabTime > nextVisitor + 60 || nextVisitor === 0) nextVisitor = tabTime;
-    if (nextVisitor > 0) gardenOverlay.message += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
-    else gardenOverlay.message += ` Next Visitor: ${RED + BOLD}Queue Full!`;
-}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab);
+    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
+
+    gardenOverlay.setMessage(gardenMessage);
+}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab);
 
 
 /**
@@ -63,7 +68,7 @@ registerWhen(register("step", () => {
 registerWhen(register("step", () => {
     // Decrement visitor timer
     nextVisitor--;
-    if (getWorld() === "Garden") return;
+    if (location.getWorld() === "Garden") return;
 
     // Update visitor display outside Garden
     if (nextVisitor <= 0 && visitorCount < 5) {
@@ -73,12 +78,13 @@ registerWhen(register("step", () => {
         nextVisitor = 720;
     }
 
-    gardenOverlay.message = "";
+    let gardenMessage = "";
     visitors.forEach(visitor => {
-        gardenOverlay.message += visitor + '\n';
+        gardenMessage += visitor + '\n';
     });
-    if (nextVisitor > 0) gardenOverlay.message += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
-    else gardenOverlay.message += ` Next Visitor: ${RED + BOLD}Queue Full!`;
+    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
+    gardenOverlay.setMessage(gardenMessage);
 }).setFps(1), () => settings.gardenTab);
 
 // Set next visitor time (assuming with 20% visitor reduction)
@@ -91,8 +97,9 @@ registerWhen(register("chat", () => {
  * Composter timers
  */
 const compostExample =
-`${DARK_GREEN + BOLD}Empty Compost: ${WHITE}loading
-${DARK_GREEN + BOLD}Next Compost: ${WHITE}...`;
+`${DARK_GREEN + BOLD}Composter:
+${GREEN}Empty: ${WHITE}Loading
+${GREEN}Next: ${WHITE}...`;
 const compostOverlay = new Overlay("compostTab", ["Garden"], () => settings.compostTab === 2, data.OL, "moveCompost", compostExample);
 let emptyCompost = 0;
 
@@ -119,10 +126,10 @@ function updateCompost() {
 }
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => getWorld() === "Garden" && settings.compostTab === 2);
+}), () => location.getWorld() === "Garden" && settings.compostTab === 2);
 registerWhen(register("guiMouseClick", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => getWorld() === "Garden" && settings.compostTab === 2);
+}), () => location.getWorld() === "Garden" && settings.compostTab === 2);
 
 /**
  * Update compost overlay.
@@ -157,8 +164,8 @@ registerWhen(register("step", () => {
     const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
     const nextCompost = !time ? `${RED + BOLD}Inactive` :
         getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
-    compostOverlay.message =
+    compostOverlay.setMessage(
 `${DARK_GREEN + BOLD}Composter:
 ${GREEN}Empty: ${message}
-${GREEN}Next: ${WHITE + nextCompost}`;
-}).setFps(1), () => getWorld() === "Garden" && settings.gardenTab !== 0);
+${GREEN}Next: ${WHITE + nextCompost}`);
+}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab !== 0);

@@ -1,3 +1,4 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BLAZE_CLASS, BOLD, DARK_GREEN, ENDERMAN_CLASS, GREEN, RED, SMA, SPIDER_CLASS, WHITE, WOLF_CLASS, ZOMBIE_CLASS } from "../../utils/constants";
 import { romanToNum } from "../../utils/functions/format";
@@ -5,7 +6,6 @@ import { announceMob } from "../../utils/functions/misc";
 import { delay } from "../../utils/thread";
 import { registerWhen } from "../../utils/variables";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -57,7 +57,7 @@ registerWhen(register("tick", () => {
     if (settings.bossAlert === 3) Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
     else if (settings.bossAlert !== 0) announceMob(settings.bossAlert, "Boss Slayer", Player.getX(), Player.getY(), Player.getZ());
 }), () => settings.bossAlert !== 0 || settings.slayerSpawn !== 0 ||
-(getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
+(location.getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania)));
 
 /**
  * Close to spawn alert

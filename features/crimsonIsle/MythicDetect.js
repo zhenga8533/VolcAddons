@@ -1,9 +1,9 @@
+import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, DARK_BLUE, DARK_RED, GOLEM_CLASS, GUARDIAN_CLASS, RED, WHITE } from "../../utils/constants";
 import { announceMob } from "../../utils/functions/misc";
 import { data, registerWhen } from "../../utils/variables";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -12,11 +12,11 @@ import { getWorld } from "../../utils/worlds";
 registerWhen(register("chat", () => {
     announceMob(settings.mythicLavaAnnounce, "Lord Jawbus", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("You have angered a legendary creature... Lord Jawbus has arrived."),
-() => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
+() => location.getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
 registerWhen(register("chat", () => {
     announceMob(settings.mythicLavaAnnounce, "Thunder", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("You hear a massive rumble as Thunder emerges."),
-() => getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
+() => location.getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
 
 /**
  * Detects if any mythic lava creatures are near the player.
@@ -41,8 +41,8 @@ registerWhen(register("step", () => {
 
         if (!data.moblist.includes("thunder")) thunders = [];
     }
-}).setFps(2), () => getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
-new Hitbox(() => getWorld() === "Crimson Isle" && settings.mythicLavaDetect, (pt) => {
+}).setFps(2), () => location.getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
+new Hitbox(() => location.getWorld() === "Crimson Isle" && settings.mythicLavaDetect, (pt) => {
     renderEntities(jawbussy, 0.55, 0, 0, pt, "Jawbussy");
     renderEntities(thunders, 0, 0, 0.55, pt, "T1 Zeus");
 });

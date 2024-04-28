@@ -1,17 +1,12 @@
+import location from "../../utils/location";
+import mayor from "../../utils/mayor";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS } from "../../utils/constants";
-import { getPerks } from "../../utils/mayor";
 import { announceMob } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
-
-/**
- * Inquisitor alert variables.
- */
-let inquisitor = undefined;
 
 /**
  * Variables used to track and display Inquisitor counter.
@@ -27,7 +22,7 @@ const counterExample =
 ${GOLD + BOLD}Total Burrows: ${RESET}Let.
 ${GOLD + BOLD}Burrows Since: ${RESET}Him.
 ${GOLD + BOLD}Average Burrows: ${RESET}Cook.`
-const counterOverlay = new Overlay("inqCounter", ["Hub"], () => getPerks().has("Mythological Ritual"), data.IL, "moveInq", counterExample);
+const counterOverlay = new Overlay("inqCounter", ["Hub"], () => mayor.getPerks().has("Mythological Ritual"), data.IL, "moveInq", counterExample);
 
 /**
  * Updates the inquisitor counter depending on if an inquisitor spawned.
@@ -54,7 +49,7 @@ export function updateInqCounter(inqSpawned) {
     if (session.inqs) session.average = Math.round(session.burrows / session.inqs);
 
     // Update HUD
-    counterOverlay.message = settings.inqCounter === 1 ?
+    counterOverlay.setMessage(settings.inqCounter === 1 ?
 `${GOLD + BOLD}Total Inqs: ${RESET + data.inqSession.inqs}
 ${GOLD + BOLD}Total Burrows: ${RESET + data.inqSession.burrows}
 ${GOLD + BOLD}Burrows Since: ${RESET + data.inqSession.last}
@@ -63,7 +58,7 @@ ${GOLD + BOLD}Average Burrows: ${RESET + data.inqSession.average}`
 `${GOLD + BOLD}Total Inqs: ${RESET + session.inqs}
 ${GOLD + BOLD}Total Burrows: ${RESET + session.burrows}
 ${GOLD + BOLD}Burrows Since: ${RESET + session.last}
-${GOLD + BOLD}Average Burrows: ${RESET + session.average}`;
+${GOLD + BOLD}Average Burrows: ${RESET + session.average}`);
 }
 
 /**
@@ -76,7 +71,7 @@ register("command", () => {
         "last": 0,
         "average": 0,
     };
-    counterOverlay.message = counterExample;
+    counterOverlay.setMessage(counterExample);
 }).setName("resetInq");
 
 /**
@@ -87,7 +82,7 @@ registerWhen(register("chat", (wow, mob) => {
         announceMob(settings.inqAlert, "Minos Inquisitor", Player.getX(), Player.getY(), Player.getZ());
         if (settings.inqCounter !== 0) updateInqCounter(true);
     } else if (settings.inqCounter !== 0) updateInqCounter(false);
-}).setCriteria("${wow}! You dug out a ${mob}!"), () => getWorld() === "Hub" && getPerks().has("Mythological Ritual"));
+}).setCriteria("${wow}! You dug out a ${mob}!"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual"));
 
 /**
  * Tracks world for any inquisitors near player.
@@ -104,8 +99,8 @@ registerWhen(register("step", () => {
 
         if (!data.moblist.includes("inquisitor")) inquisitors = [];
     }
-}).setFps(2), () => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"));
-new Hitbox(() => getWorld() === "Hub" && settings.detectInq && getPerks().has("Mythological Ritual"), (pt) => {
+}).setFps(2), () => location.getWorld() === "Hub" && settings.detectInq && mayor.getPerks().has("Mythological Ritual"));
+new Hitbox(() => location.getWorld() === "Hub" && settings.detectInq && mayor.getPerks().has("Mythological Ritual"), (pt) => {
     renderEntities(inquisitors, 1, 0.84, 0, pt, "Inspector Gadget");
 });
 register("worldUnload", () => inquisitors = []);

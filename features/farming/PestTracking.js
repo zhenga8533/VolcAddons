@@ -1,10 +1,11 @@
+import RenderLib from "../../../RenderLib";
+import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { data, registerWhen } from "../../utils/variables";
-import { getWorld } from "../../utils/worlds";
 
 
 /**
@@ -20,6 +21,7 @@ const plots = new Set();
 const pests = new Set();
 let swarm = {};
 let hive = [];
+let plotZone = "0";
 
 /**
  * Sort the swarm dictionary into hive in descending pest order.
@@ -27,25 +29,36 @@ let hive = [];
 function setHive() {
     const tablist = TabList.getNames();
     const pestIndex = tablist.findIndex(tab => tab === "§r§4§lPests:§r");
+    hive = [];
+
     if (pestIndex === -1) {
         let entries = Object.entries(swarm);
         entries.sort((a, b) => b[1] - a[1]);
         hive = entries.map(entry => entry[0]);
-    } else hive = tablist[pestIndex + 2].split("§r§f, §r§b").map(plot => plot.replace(/\D/g, ''));
+    } else if (!tablist[pestIndex + 2].startsWith("§r Spray:"))
+        hive = tablist[pestIndex + 2].split("§r§f, §r§b").map(plot => plot.replace(/\D/g, ''));
 }
+
+registerWhen(register("step", () => {
+    if (!World.isLoaded()) return;
+    const plotLine = Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot"));
+    plotZone = plotLine?.getName()?.removeFormatting()?.trim()?.split(' ')?.[2]?.replace(/[^0-9]/g, '') ?? "0";
+    setHive();
+}).setFps(2), () => location.getWorld() === "Garden" && settings.gardenBox);
+
 
 /**
  * Track sprays using chat
  */
-register("chat", (plot) => {
+registerWhen(register("chat", (plot) => {
     sprays[plot] = 1800;
-}).setCriteria("SPRAYONATOR! You sprayed Plot - ${plot} with ${material}!");
+}).setCriteria("SPRAYONATOR! You sprayed Plot - ${plot} with ${material}!"), () => location.getWorld() === "Garden");
 
 /**
  * Decrement spray timers every second
  */
 register("step", () => {
-    sprayOverlay.message = `${GREEN + BOLD}Sprays:`;
+    let sprayMessage = `${GREEN + BOLD}Sprays:`;
 
     const keys = Object.keys(sprays)
     keys.forEach(plot => {
@@ -57,9 +70,10 @@ register("step", () => {
         const time = sprays[plot];
         const sprayColor = time > 1200 ? GREEN :
             time > 600 ? YELLOW : RED;
-        sprayOverlay.message += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + getTime(time) + DARK_GRAY})`
+            sprayMessage += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + getTime(time) + DARK_GRAY})`
     });
-    if (keys.length === 0) sprayOverlay.message += `\n ${RED + BOLD}None...`;
+    if (keys.length === 0) sprayMessage += `\n ${RED + BOLD}None...`;
+    sprayOverlay.setMessage(sprayMessage);
 }).setFps(1);
 
 /**
@@ -139,14 +153,14 @@ registerWhen(register("guiOpened", () => {
         setPlots.register();
         setHighlight.register();
     })
-}), () => getWorld() === "Garden" && (settings.pestHighlight || settings.sprayDisplay));
+}), () => location.getWorld() === "Garden" && (settings.pestHighlight || settings.sprayDisplay));
 registerWhen(register("guiClosed", () => {
     setPlots.unregister();
     setHighlight.unregister();
     pests.clear();
     plots.clear();
     setHive();
-}), () => getWorld() === "Garden" && (settings.pestHighlight || settings.sprayDisplay));
+}), () => location.getWorld() === "Garden" && (settings.pestHighlight || settings.sprayDisplay));
 
 
 /**
@@ -155,16 +169,22 @@ registerWhen(register("guiClosed", () => {
 let lastPlot = undefined;
 register("command", () => {
     setHive();
-    const plot = hive.find(p => p != lastPlot);
-    if (plot === undefined) {
-        ChatLib.chat(`${LOGO + RED}No infested plots found...\n${DARK_GRAY}If there are pests, please open plots menu to track!`);
+    if (hive.length === 0 || !location.findZone().includes("ൠ")) {
+        Client.showTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10);
         return;
     }
 
-    delete swarm[plot];
+    const plot = hive.find(p => p != lastPlot || p != plotZone);
+    if (plot === undefined) {
+        Client.showTitle(`${DARK_RED}Infested!`, "You are standing in a plot with pests!", 10, 50, 10);
+        return;
+    }
+
+    Client.showTitle(`${DARK_GREEN}Warping...`, `Teleporting to plot ${plot}!`, 10, 50, 10);
     ChatLib.command(`plottp ${plot}`);
+    
     lastPlot = plot;
-    setHive();
+    delete swarm[plot];
 }).setName("pesttp");
 
 
@@ -175,34 +195,22 @@ registerWhen(register("chat", (_, plot) => {
     Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`, 10, 50, 10);
     swarm[plot] = (swarm[plot] ?? 0) + 1;
     setHive();
-}).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"), () => getWorld() === "Garden" && settings.pestAlert);
+}).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"), () => location.getWorld() === "Garden" && settings.pestAlert);
 registerWhen(register("chat", (_, num, plot) => {
     Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`, 10, 50, 10);
     swarm[plot] = (swarm[plot] ?? 0) + num;
     setHive();
-}).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => getWorld() === "Garden" && settings.pestAlert);
+}).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => location.getWorld() === "Garden" && settings.pestAlert);
 
 
 /**
- * Pest swarm (more than 4 = loss farming fortune)
+ * Pest swarm
  */
-const infested = register("step", () => {
-    const loc = Scoreboard.getLines().find(line => line.getName().startsWith(" §7⏣"));
-    if (loc === undefined) return;
-
-    const count = loc.getName().removeFormatting().replace(/[^0-9]/g, '');
+registerWhen(register("step", () => {
+    const count = parseInt(TabList.getNames().find(name => name.startsWith("§r Alive:"))?.split(' ')?.[2]?.removeFormatting() ?? 0);
+    if (count < settings.infestationAlert) return;
     Client.showTitle(`${DARK_GREEN + BOLD}SPREADING PLAGUE`, `${count} minions with ${BOLD}Taunt ${RESET}are in the way!`, 0, 25, 5);
-}).setFps(1).unregister();
-
-/**
- * Track chat for pest fortune messages
- */
-registerWhen(register("chat", () => {
-    infested.register();
-}).setCriteria("  ൠ ☘ Farming Fortune has been reduced by ${percent}%!"), () => getWorld() === "Garden" && settings.infestationAlert);
-registerWhen(register("chat", () => {
-    infested.unregister();
-}).setCriteria("Your Garden is no longer infested and your ☘ Farming Fortune has returned to normal!"), () => getWorld() === "Garden" && settings.infestationAlert);
+}).setFps(1).unregister(), () => settings.infestationAlert !== 0 && location.getWorld() === "Garden");
 
 
 /**
@@ -218,25 +226,41 @@ registerWhen(register("chat", (_, fortune) => {
     remain = 1800;
     addPests(fortune);
 }).setCriteria("[NPC] Phillip: In exchange for ${pests} Pests, I've given you +${fortune}☘ Farming Fortune for 30m!"),
-() => getWorld() === "Garden" && settings.pesthunterBonus);
+() => location.getWorld() === "Garden" && settings.pesthunterBonus);
 
 /**
  * Track bonus timer
  */
 const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
-const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "movePest", bonusExample);
+const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "moveBonus", bonusExample);
 registerWhen(register("step", () => {
-    bonusOverlay.message = `${YELLOW + BOLD}Pest Bonus: `;
+    let bonusMessage = `${YELLOW + BOLD}Pest Bonus: `;
     let fortune = 0;
     Object.keys(bonuses).forEach(bonus => {
         if (fortune === 0) time = bonuses[bonus];
         if (--bonuses[bonus] === 0) delete bonuses[bonus];
         else fortune += parseInt(bonus.replace(/[^0-9]/g, ''));
     });
-    if (fortune === 0) bonusOverlay.message += `${RED + BOLD}Inactive!`;
+
+    if (fortune === 0) bonusMessage += `${RED + BOLD}Inactive!`;
     else {
         const bonusColor = remain > 1200 ? GREEN :
         remain > 600 ? YELLOW : RED;
-        bonusOverlay.message += `${GOLD + fortune}☘ ${bonusColor}(${getTime(--remain)})`
+        bonusMessage += `${GOLD + fortune}☘ ${bonusColor}(${getTime(--remain)})`
     }
-}).setFps(1), () => getWorld() === "Garden" && settings.pesthunterBonus);
+
+    bonusOverlay.setMessage(bonusMessage);
+}).setFps(1), () => location.getWorld() === "Garden" && settings.pesthunterBonus);
+
+
+/**
+ * Garden box rendering.
+ */
+registerWhen(register("renderWorld", () => {
+    const color = hive.includes(plotZone) ? [1, 0, 0] : 
+        sprays.hasOwnProperty(plotZone) ? [0, 1, 0] : [1, 1, 1];
+    const x = Math.floor((Player.getX() + 240) / 96);
+    const z = Math.floor((Player.getZ() + 240) / 96);
+
+    RenderLib.drawEspBox(-192 + x * 96, 67, -192 + z * 96, 96, 10, ...color, 1, true);
+}), () => location.getWorld() === "Garden" && settings.gardenBox);

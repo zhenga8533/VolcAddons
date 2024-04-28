@@ -1,8 +1,8 @@
 import axios from "../../../axios";
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
-import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/variables";
 
 
