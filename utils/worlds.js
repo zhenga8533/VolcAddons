@@ -2,98 +2,126 @@ import settings from "./settings";
 import { setPlayer } from "../features/combat/HealthAlert";
 import { delay } from "./thread";
 import { setRegisters } from "./variables";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, LOGO, WHITE } from "./constants";
 
 
-/**
- * Variables used to store world data.
- */
-let world = undefined;
-export function getWorld() { return world };
-let tier = 0;
-export function getTier() { return tier };
-let server = undefined;
-export function getServer() { return server };
-let noFind = 0;
+class Location {
+    #world = undefined;
+    #tier = 0;
+    #server = undefined
+    #season = undefined;
 
-let season = undefined;
-export function getSeason() { return season };
-const SEASONS = ["Spring", "Summer", "Autumn", "Winter"];
+    constructor() {
+        this.SEASONS = ["Spring", "Summer", "Autumn", "Winter"];
+        
+        /**
+         * Set registers.
+         */
+        register("chat", (id) => {
+            this.#server = id;
+        }).setCriteria("Sending to server ${id}...");
+        
+        register("worldLoad", () => {
+            this.findWorld();
+        }).setPriority(Priority.LOWEST);
 
-/**
- * Load server ID on chat message
- */
-register("chat", (serv) => {
-    server = serv;
-}).setCriteria("Sending to server ${serv}...");
+        register("worldUnload", () => {
+            this.#world = undefined;
+            setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+        }).setPriority(Priority.LOWEST);
 
-/**
- * Searches for the current zone based on the scoreboard lines.
- * @returns {string} - The name of the current zone or "None" if not identified.
- */
-export function findZone() {
-    let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣"));
-    // Rift has a different symbol
-    if (zoneLine === undefined) zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
-    return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
-}
-
-Scoreboard.getLines().forEach(line => {
-    print(line.getName());
-});
-
-/**
- * Identifies the current world the player is in based on the tab list.
- */
-function findWorld() {
-    if (!World.isLoaded()) return;
-
-    // Infinite loop prevention
-    if (noFind === 10) return;
-    noFind++;
-
-    // Get world from tab list
-    world = TabList.getNames().find(tab => tab.includes("Area:") || tab.includes("Dungeon:"));
-    if (world === undefined) {
-        // If the world is not found, try again after a delay
-        delay(() => findWorld(), 1000);
-    } else {
-        // Set season
-        Scoreboard.getLines().find(line => {
-            season = SEASONS.find(s => line.getName().includes(s)) ?? season;
+        register("serverDisconnect", () => {
+            this.#world = undefined;
+            setRegisters(off = true);
         });
+    }
 
-        // Get world formatted
-        world = world.removeFormatting();
-        world = world.substring(world.indexOf(': ') + 2);
+    /**
+     * 
+     * @returns 
+     */
+    getWorld() {
+        return this.#world;
+    }
 
-        // Get tier (for Kuudra and Dungeons)
-        if (world === "Kuudra") {
+    /**
+     * 
+     * @returns 
+     */
+    getTier() {
+        return this.#tier;
+    }
+
+    /**
+     * 
+     * @returns 
+     */
+    getServer() {
+        return this.#server;
+    }
+
+    /**
+     * 
+     * @returns 
+     */
+    getSeason() {
+        return this.#season;
+    }
+
+    /**
+     * 
+     * @returns 
+     */
+    findZone() {
+        let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣"));
+        if (zoneLine === undefined) zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
+        return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
+    }
+
+    test() {
+        ChatLib.chat(
+`${LOGO + DARK_AQUA + BOLD}World Test:
+ ${DARK_GRAY} - ${AQUA}World: ${WHITE + this.#world}
+ ${DARK_GRAY} - ${AQUA}Tier: ${WHITE + this.#tier}
+ ${DARK_GRAY} - ${AQUA}Server: ${WHITE + this.#server}
+ ${DARK_GRAY} - ${AQUA}Season: ${WHITE + this.#season}`
+        );
+    }
+
+    /**
+     * Private.
+     */
+    findWorld = (noFind = 0) => {
+        // Make sure Hypixel world is loaded
+        if (!World.isLoaded() || noFind > 9) return;
+    
+        // Get world from tab list
+        let world = TabList.getNames()?.find(tab => tab.startsWith("§r§b§lArea:") || tab.startsWith("§r§b§lDungeon:"));
+        if (world === undefined) Client.scheduleTask(20, () => this.findWorld(noFind + 1));
+        else {
+            // Set season
+            Scoreboard.getLines().find(line => {
+                this.#season = SEASONS.find(s => line.getName().includes(s)) ?? this.#season;
+            });
+    
+            // Get world formatted
+            this.#world = world.removeFormatting().split(' ').splice(1).join(' ');
+            ChatLib.chat(this.#world)
+    
+            // Get tier for Kuudra
+            if (this.#world === "Kuudra") {
+                delay(() => {
+                    const zone = this.findZone();
+                    this.#tier = parseInt(zone.charAt(zone.length - 2));
+                }, 1000);
+            }
+    
+            // Call functions when world is loaded
             delay(() => {
-                const zone = findZone();
-                tier = parseInt(zone.charAt(zone.length - 2));
+                setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+                setPlayer();
             }, 1000);
         }
-
-        // Register/unregister features for the current world
-        delay(() => {
-            setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-            setPlayer();
-        }, 1000);
     }
 }
-
-/**
- * Set and reset world on world change.
- */
-register("worldLoad", () => {
-    noFind = 0;
-    findWorld();
-}).setPriority(Priority.LOWEST);
-register("worldUnload", () => {
-    world = undefined;
-    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-}).setPriority(Priority.LOWEST);
-register("serverDisconnect", () => {
-    world = undefined;
-    setRegisters(off = true);
-})
+export default new Location;
