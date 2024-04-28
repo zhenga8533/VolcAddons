@@ -1,13 +1,3 @@
 [
-    "- Added option to render overlay background",
-    "- Added choco egg timers",
-    "- Added `/viewrecipe` button in GUI",
-    "- Changed egg waypoints to dissapear on loot",
-    "- Changed `/pesttp` detection",
-    "- Changed garden box to be red/green if pests/spray",
-    "- Changed pest alert to be slider",
-    "- Changed some utils",
-    "- Fixed overlay width being off on bold",
-    "- Fixed some overlay settings/displays",
-    "- Fixed overlay death"
+    "- TBD"
 ]
