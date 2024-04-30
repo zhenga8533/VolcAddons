@@ -26,6 +26,7 @@ import "./features/general/Cooldowns";
 import "./features/general/FairySouls";
 import "./features/general/ImageViewer";
 import "./features/general/JyrreTimer";
+import "./features/general/LevelTitle";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";

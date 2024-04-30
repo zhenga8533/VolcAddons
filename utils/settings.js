@@ -175,6 +175,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         max: 10
     })
     skillTracker = 0;
+    
+    @SwitchProperty({
+        name: "Skyblock XP Alert",
+        description: `${DARK_RED}NEW! ${GRAY}Displays a title on screen whenever Skyblock XP is gained.`,
+        category: "General",
+        subcategory: "General"
+    })
+    levelTitle = false;
 
     @SwitchProperty({
         name: "Text Shadow Toggle",
