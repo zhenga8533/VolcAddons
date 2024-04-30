@@ -2,7 +2,7 @@ import request from "../../../requestV2";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getAuction } from "./Economy";
 
 

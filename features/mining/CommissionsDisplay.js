@@ -5,7 +5,7 @@ import { getClosest } from "../../utils/functions/find";
 import { isLookingAway } from "../../utils/functions/matrix";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 const GEMSTONE_WAYPOINTS = {

@@ -3,7 +3,7 @@ import settings from "../../utils/settings";
 import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

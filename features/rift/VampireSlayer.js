@@ -4,7 +4,7 @@ import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLAS
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
 

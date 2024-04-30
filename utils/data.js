@@ -1,5 +1,5 @@
 import PogObject from "../../PogData";
-import { CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GREEN, LOGO, RED } from "./constants";
+import { CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
 
 
 const DEFAULT_GUI = {

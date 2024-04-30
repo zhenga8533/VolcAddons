@@ -2,7 +2,7 @@ import request from "../../../requestV2";
 import settings from "../../utils/settings";
 import { GREEN, LOGO } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

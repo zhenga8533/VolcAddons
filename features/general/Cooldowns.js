@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { GREEN } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

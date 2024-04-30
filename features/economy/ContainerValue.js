@@ -3,7 +3,7 @@ import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED
 import { formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
 

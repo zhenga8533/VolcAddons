@@ -6,7 +6,7 @@ import { getInParty } from "../../utils/party";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 

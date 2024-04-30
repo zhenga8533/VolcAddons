@@ -5,7 +5,7 @@ import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YE
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

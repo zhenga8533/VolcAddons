@@ -3,7 +3,7 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { EntityArmorStand, EntityWither } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { Hitbox } from "../../utils/waypoints";
 
 

@@ -5,7 +5,7 @@ import { convertToPascalCase, getTime, unformatNumber } from "../../utils/functi
 import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 

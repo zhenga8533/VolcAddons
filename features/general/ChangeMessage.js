@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { getMVP } from "../../utils/player";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

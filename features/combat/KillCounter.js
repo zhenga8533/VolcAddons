@@ -4,7 +4,7 @@ import { formatNumber, getTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { getPaused } from "../../utils/stat";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

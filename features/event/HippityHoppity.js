@@ -5,7 +5,7 @@ import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { announceMob } from "../../utils/functions/misc";
 
 //DUPLICATE RABBIT! +69,401 Chocolate

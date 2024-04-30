@@ -5,7 +5,7 @@ import { formatNumber, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

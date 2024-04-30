@@ -2,7 +2,7 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

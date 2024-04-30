@@ -2,7 +2,7 @@ import settings from "../../utils/settings";
 import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 let community = {};

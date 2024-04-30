@@ -1,8 +1,8 @@
 /**
  * Circular Imports :)
  */
-import { delay } from "../thread.js";
-import { getInParty } from "../party.js";
+import { delay } from "../thread";
+import { getInParty } from "../party";
 
 
 /**

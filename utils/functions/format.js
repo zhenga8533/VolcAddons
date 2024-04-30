@@ -1,4 +1,4 @@
-import { REFORGES } from "../constants.js";
+import { REFORGES } from "../constants";
 
 
 /**

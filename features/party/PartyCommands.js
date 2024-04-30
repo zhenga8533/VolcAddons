@@ -8,7 +8,7 @@ import { getIsLeader } from "../../utils/party";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getPing, getTPS } from "../general/Performance";
 
 

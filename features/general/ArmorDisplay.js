@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

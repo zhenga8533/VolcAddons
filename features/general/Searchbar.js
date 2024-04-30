@@ -2,7 +2,7 @@ import settings from "../../utils/settings";
 import { DARK_GRAY, ITALIC } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 // Search bar parameters

@@ -2,7 +2,7 @@ import settings from "../../utils/settings";
 import { AQUA, BOLD, GREEN } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 const widgetOverlays = {};

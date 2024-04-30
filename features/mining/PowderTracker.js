@@ -5,7 +5,7 @@ import { commafy, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
 import { Stat, getPaused } from "../../utils/stat";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

@@ -4,7 +4,7 @@ import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE }
 import { commafy, formatNumber, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getItemValue } from "../economy/ItemPrice";
 import { getBazaar } from "../economy/Economy";
 

@@ -1,7 +1,7 @@
 import axios from "../../../axios";
 import { AQUA, DARK_GRAY, GREEN, ITALIC, LOGO, RED } from "../../utils/constants";
 import { decode } from "../../utils/functions/misc";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 register("guiOpened", () => {

@@ -6,7 +6,7 @@ import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
 import { updateWidgetList } from "../features/general/WidgetDisplay";
 import { setRegisters } from "./register";
-import { data } from "./variables";
+import { data } from "./data";
 
 
 let lines = [5858, 5859];

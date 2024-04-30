@@ -3,7 +3,7 @@ import settings from "../../utils/settings";
 import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

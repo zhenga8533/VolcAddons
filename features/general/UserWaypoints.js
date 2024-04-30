@@ -3,7 +3,7 @@ import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

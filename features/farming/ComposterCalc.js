@@ -2,7 +2,7 @@ import location from "../../utils/location";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, romanToNum } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getBazaar } from "../economy/Economy";
 
 

@@ -3,7 +3,7 @@ import { AQUA, BLACK, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getAuction, getBazaar } from "./Economy";
 
 
