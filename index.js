@@ -5,11 +5,12 @@ import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import "./utils/waypoints";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, SMA, UNDERLINE, WHITE } from "./utils/constants";
+import { updateList } from "./utils/list";
 import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
-import { data, resetGUI, updateList } from "./utils/variables";
+import { data, resetGUI } from "./utils/variables";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
