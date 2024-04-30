@@ -17,7 +17,7 @@ export function registerWhen(trigger, callback) {
 }
 
 /**
- * 
+ * Registers and unregisters all registers that need a world or setting to be active.
  * 
  * @param {Boolean} off - Unregisters all registers if true.
  */
