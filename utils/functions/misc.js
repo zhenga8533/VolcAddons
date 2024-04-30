@@ -1,8 +1,5 @@
-/**
- * Circular Imports :)
- */
+import party from "../party";
 import { delay } from "../thread";
-import { getInParty } from "../party";
 
 
 /**
@@ -40,7 +37,7 @@ export function playSound(sound, cd) {
  * @param {Number} z - Z coordinate.
  */
 export function announceMob(chat, mob, x, y, z, area) {
-    if ((chat === 2 && !getInParty()) || chat === 0) return;
+    if ((chat === 2 && !party.getIn()) || chat === 0) return;
     x = Math.round(x);
     y = Math.round(y);
     z = Math.round(z);

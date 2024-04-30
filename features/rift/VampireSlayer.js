@@ -1,13 +1,12 @@
 import location from "../../utils/location";
+import party from "../../utils/party";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
-import { getInParty } from "../../utils/party";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
-
 
 
 /**
@@ -65,7 +64,7 @@ registerWhen(register("tick", () => {
                 if (settings.announceMania === 1) {
                     const id = (Math.random() + 1).toString(36).substring(6);
                     ChatLib.command(`ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`);
-                } else if (getInParty() && settings.announceMania === 2)
+                } else if (party.getIn() && settings.announceMania === 2)
                     ChatLib.command(`pc x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}!`);
             }
         } else inMania = false;

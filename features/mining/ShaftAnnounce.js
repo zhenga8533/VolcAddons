@@ -1,9 +1,9 @@
 import location from "../../utils/location";
+import party from "../../utils/party";
 import settings from "../../utils/settings";
 import { STAND_CLASS } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
 import { convertToTitleCase } from "../../utils/functions/format";
-import { getInParty, getIsLeader } from "../../utils/party";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 
@@ -20,14 +20,14 @@ const TRANSFER_COMMANDS = ["?transfer", "!ptme", "!pt", ".transfer", "Mineshaft,
  */
 function attemptTransfer(index) {
     delay(() => {
-        if (getIsLeader() || index >= TRANSFER_COMMANDS.length) return;
+        if (party.getLeader() || index >= TRANSFER_COMMANDS.length) return;
         ChatLib.command(`pc ${TRANSFER_COMMANDS[index]}`);
         attemptTransfer(index + 1);
     }, 420);
 }
 
 registerWhen(register("chat", () => {
-    if (!getInParty()) return;
+    if (!party.getIn()) return;
     attemptTransfer(0);
 }).setCriteria("WOW! You found a Glacite Mineshaft portal!"), () => settings.shaftTransfer && location.getWorld() === "Dwarven Mines");
 
@@ -42,7 +42,7 @@ register("chat", () => {
 }).setCriteria(" ⛏ ${player} entered the mineshaft!");
 
 function announceCorpse(corpseType) {
-    if (!getInParty()) return;
+    if (!party.getIn()) return;
     const x = Math.round(Player.getX());
     const y = Math.round(Player.getY());
     const z = Math.round(Player.getZ());

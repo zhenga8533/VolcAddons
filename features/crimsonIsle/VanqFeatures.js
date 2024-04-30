@@ -1,8 +1,8 @@
 import location from "../../utils/location";
+import party from "../../utils/party";
 import settings from "../../utils/settings";
 import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/constants";
 import { announceMob, playSound } from "../../utils/functions/misc";
-import { getInParty } from "../../utils/party";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 import { Overlay } from "../../utils/overlay";
@@ -184,7 +184,7 @@ registerWhen(register("chat", () => {
     notInParty = 0;
 
     // INVITE PARTY
-    delay(() => { if (getInParty()) ChatLib.command("p leave") }, 500);
+    delay(() => { if (party.getIn()) ChatLib.command("p leave") }, 500);
 
     let timeout = 1000
     settings.vanqParty.split(", ").forEach(ign => {
@@ -204,7 +204,7 @@ function warpParty() {
     if (!vanqSpawned) return;
 
     notInParty--;
-    if (notInParty <= 0 && getInParty()) {
+    if (notInParty <= 0 && party.getIn()) {
         notInParty = 0;
 
         delay(() => { ChatLib.command("p warp") }, 500);

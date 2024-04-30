@@ -1,12 +1,12 @@
 // Utility Modules
 import "./utils/player";
+import "./utils/waypoints";
 import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
-import "./utils/waypoints";
+import party from "./utils/party";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, SMA, UNDERLINE, WHITE } from "./utils/constants";
 import { updateList } from "./utils/list";
-import { getInParty, getIsLeader, getParty } from "./utils/party";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
@@ -311,10 +311,9 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
 - ${AQUA + BOLD}World: ${WHITE + location.getWorld()}
 - ${AQUA + BOLD}Zone: ${WHITE + location.getZone()}
 - ${AQUA + BOLD}Tier: ${WHITE + location.getTier()}
-- ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}
-- ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
-            const party = getParty();
-            if (party.size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.join(' ')}`);
+- ${AQUA + BOLD}Leader: ${WHITE + party.getLeader()}
+- ${AQUA + BOLD}Party: ${WHITE + party.getIn()}`);
+            if (party.getMembers().size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.getMembers().join(' ')}`);
             break;
         // Networth
         case "networth":
