@@ -4,7 +4,8 @@ import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN,
 import { convertToTitleCase } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, getPaused } from "../../utils/variables";
+import { getPaused } from "../../utils/stat";
+import { data } from "../../utils/variables";
 
 
 /**

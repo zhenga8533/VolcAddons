@@ -4,7 +4,8 @@ import { AQUA, BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } f
 import { commafy, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
-import { Stat, data, getPaused } from "../../utils/variables";
+import { Stat, getPaused } from "../../utils/stat";
+import { data } from "../../utils/variables";
 
 
 /**

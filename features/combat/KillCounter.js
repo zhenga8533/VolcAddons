@@ -3,7 +3,8 @@ import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from 
 import { formatNumber, getTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, getPaused } from "../../utils/variables";
+import { getPaused } from "../../utils/stat";
+import { data } from "../../utils/variables";
 
 
 /**

@@ -4,7 +4,8 @@ import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { Stat, data, getPaused } from "../../utils/variables";
+import { Stat, getPaused } from "../../utils/stat";
+import { data } from "../../utils/variables";
 
 
 /**

@@ -141,52 +141,6 @@ export function resetGUI() {
     });
 }
 
-
-// --- ETC ---
-/**
- * Returns the current paused state.
- *
- * @returns {boolean} - The current paused state.
- */
-let paused = false;
-export function getPaused() {
-    return paused;
-}
-
-// Key binding for pausing or unpausing trackers
-const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "./VolcAddons.xdd");
-pauseKey.registerKeyPress(() => {
-    paused = !paused;
-    const message = paused ? `${RED}Paused` : `${GREEN}Resumed`;
-    ChatLib.chat(`${LOGO + GOLD}Tracker ${message}!`);
-});
-register("gameUnload", () => {
-    data.pauseKey = pauseKey.getKeyCode();
-});
-
-// Stats tracking class
-export class Stat {
-    constructor() {
-        this.reset();
-    }
-
-    reset() {
-        this.start = 0.00; // Starting amount
-        this.now = 0.00; // Current amount
-        this.time = 1; // Time passed
-        this.since = 600; // Time since last amount earn
-        this.level = 0; // Skill level
-    }
-
-    getGain() {
-        return this.now - this.start;
-    }
-
-    getRate() {
-        return this.getGain() / this.time * 3600;
-    }
-}
-
 // Saving data to persistent storage upon game unload
 register("gameUnload", () => {
     data.save();
