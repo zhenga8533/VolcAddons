@@ -8,11 +8,11 @@ class Location {
     #world = undefined;
     #zone = undefined;
     #tier = 0;
-    #server = undefined
+    #server = undefined;
+    #season = undefined;
+    #time = 0;
 
     constructor() {
-        this.SEASONS = ["Spring", "Summer", "Autumn", "Winter"];
-        
         /**
          * Set registers.
          */
@@ -28,6 +28,18 @@ class Location {
             this.#zone = zoneLine === undefined ? "None" :
                 zoneLine.getName().removeFormatting().substring(3);
         });
+
+        register("step", () => {
+            const now = new Date().getTime() / 1_000;
+            this.#time = (now - 107_704) % 446_400;
+            // const sbMonth = this.#time / 37_200;
+            // const sbDay = (this.#time % 37_200) / 1_200;
+            const ratio = this.#time / 446_400;
+    
+            this.#season = ratio < 0.25 ? "Spring" :
+                ratio < 0.5 ? "Summer" :
+                ratio < 0.75 ? "Autumn" : "Winter";
+        }).setDelay(10);
         
         register("worldLoad", () => {
             this.findWorld();
@@ -42,6 +54,10 @@ class Location {
             this.#world = undefined;
             setRegisters(off = true);
         });
+
+        register("command", () => {
+            this.test();
+        }).setName("worldTest");
     }
 
     /**
@@ -81,16 +97,12 @@ class Location {
     }
 
     /**
-     * Calculates Skyblock season using epoch time and offset.
+     * Returns Location.#season
      * 
      * @returns {String} - Current Skyblock season.
      */
     getSeason() {
-        const now = new Date().getTime() / 1_000;
-        const sbYear = ((now - 5_866_500) % 8_928_000) / 8_928_000;
-        return sbYear < 0.25 ? "Spring" :
-            sbYear < 0.5 ? "Summer" :
-            sbYear < 0.75 ? "Autumn" : "Winter";
+        return this.#season;
     }
 
     /**
@@ -101,6 +113,7 @@ class Location {
 `${LOGO + DARK_AQUA + BOLD}World Test:
  ${DARK_GRAY} - ${AQUA}World: ${WHITE + this.#world}
  ${DARK_GRAY} - ${AQUA}Tier: ${WHITE + this.#tier}
+ ${DARK_GRAY} - ${AQUA}Season: ${WHITE + this.#season}
  ${DARK_GRAY} - ${AQUA}Server: ${WHITE + this.#server}`
         );
     }
