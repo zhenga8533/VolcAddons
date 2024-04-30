@@ -169,7 +169,7 @@ let vanqMessage = "";
  */
 registerWhen(register("chat", () => {
     // Set message to copy and post
-    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${location.findZone()} ]!`;
+    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${location.getZone()} ]!`;
     ChatLib.command(`ct copy ${vanqMessage}`, true);
     ChatLib.chat(`${LOGO + GREEN}Copied vanquisher waypoint to clipboard!`);
 

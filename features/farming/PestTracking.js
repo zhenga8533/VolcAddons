@@ -169,7 +169,7 @@ registerWhen(register("guiClosed", () => {
 let lastPlot = undefined;
 register("command", () => {
     setHive();
-    if (hive.length === 0 || !location.findZone().includes("ൠ")) {
+    if (hive.length === 0 || !location.getZone().includes("ൠ")) {
         Client.showTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10);
         return;
     }

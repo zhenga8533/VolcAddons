@@ -308,7 +308,7 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
             ChatLib.chat(
 `${LOGO + DARK_AQUA + BOLD}Important Values:
 - ${AQUA + BOLD}World: ${WHITE + location.getWorld()}
-- ${AQUA + BOLD}Zone: ${WHITE + location.findZone()}
+- ${AQUA + BOLD}Zone: ${WHITE + location.getZone()}
 - ${AQUA + BOLD}Tier: ${WHITE + location.getTier()}
 - ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}
 - ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);

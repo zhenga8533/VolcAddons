@@ -1,5 +1,4 @@
 import settings from "./settings";
-import { setPlayer } from "../features/combat/HealthAlert";
 import { delay } from "./thread";
 import { setRegisters } from "./variables";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, LOGO, WHITE } from "./constants";
@@ -7,9 +6,9 @@ import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, LOGO, WHITE } from "./constants";
 
 class Location {
     #world = undefined;
+    #zone = undefined;
     #tier = 0;
     #server = undefined
-    #season = undefined;
 
     constructor() {
         this.SEASONS = ["Spring", "Summer", "Autumn", "Winter"];
@@ -20,6 +19,15 @@ class Location {
         register("chat", (id) => {
             this.#server = id;
         }).setCriteria("Sending to server ${id}...");
+
+        register("tick", () => {
+            if (!World.isLoaded()) return;
+
+            let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().startsWith(" §7⏣")) ??
+                Scoreboard?.getLines()?.find((line) => line.getName().startsWith(" §5ф"));
+            this.#zone = zoneLine === undefined ? "None" :
+                zoneLine.getName().removeFormatting().substring(3);
+        });
         
         register("worldLoad", () => {
             this.findWorld();
@@ -46,6 +54,15 @@ class Location {
     }
 
     /**
+     * Returns Location.#zone
+     * 
+     * @returns {String} - Current world name i.e. "Plot - 1".
+     */
+    getZone() {
+        return this.#zone;
+    }
+
+    /**
      * Returns Location.#tier
      * 
      * @returns {String} - Current tier of Kuudra or 0 if not in Kuudra.
@@ -55,7 +72,7 @@ class Location {
     }
 
     /**
-     * Returns Location.#tier
+     * Returns Location.#server
      * 
      * @returns {String} - Current server id i.e. "m188AJ".
      */
@@ -64,23 +81,16 @@ class Location {
     }
 
     /**
-     * Returns Location.#season
+     * Calculates Skyblock season using epoch time and offset.
      * 
      * @returns {String} - Current Skyblock season.
      */
     getSeason() {
-        return this.#season;
-    }
-
-    /**
-     * Returns Location.#zone
-     * 
-     * @returns {String} - Current zone player is standing in.
-     */
-    findZone() {
-        let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣"));
-        if (zoneLine === undefined) zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
-        return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
+        const now = new Date().getTime() / 1_000;
+        const sbYear = ((now - 5_866_500) % 8_928_000) / 8_928_000;
+        return sbYear < 0.25 ? "Spring" :
+            sbYear < 0.5 ? "Summer" :
+            sbYear < 0.75 ? "Autumn" : "Winter";
     }
 
     /**
@@ -91,8 +101,7 @@ class Location {
 `${LOGO + DARK_AQUA + BOLD}World Test:
  ${DARK_GRAY} - ${AQUA}World: ${WHITE + this.#world}
  ${DARK_GRAY} - ${AQUA}Tier: ${WHITE + this.#tier}
- ${DARK_GRAY} - ${AQUA}Server: ${WHITE + this.#server}
- ${DARK_GRAY} - ${AQUA}Season: ${WHITE + this.#season}`
+ ${DARK_GRAY} - ${AQUA}Server: ${WHITE + this.#server}`
         );
     }
 
@@ -107,18 +116,13 @@ class Location {
         let world = TabList.getNames()?.find(tab => tab.startsWith("§r§b§lArea:") || tab.startsWith("§r§b§lDungeon:"));
         if (world === undefined) Client.scheduleTask(20, () => this.findWorld(noFind + 1));
         else {
-            // Set season
-            Scoreboard.getLines().find(line => {
-                this.#season = this.SEASONS.find(s => line.getName().includes(s)) ?? this.#season;
-            });
-    
             // Get world formatted
             this.#world = world.removeFormatting().split(' ').splice(1).join(' ');
     
             // Get tier for Kuudra
             if (this.#world === "Kuudra") {
                 delay(() => {
-                    const zone = this.findZone();
+                    const zone = this.getZone();
                     this.#tier = parseInt(zone.charAt(zone.length - 2));
                 }, 1000);
             }
@@ -126,7 +130,6 @@ class Location {
             // Call functions when world is loaded
             delay(() => {
                 setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-                setPlayer();
             }, 1000);
         }
     }
