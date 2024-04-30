@@ -1,7 +1,8 @@
-import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/constants";
-import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
-import { data, registerWhen } from "../../utils/variables";
+import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
+import { Overlay } from "../../utils/overlay";
+import { data } from "../../utils/variables";
 
 
 let community = {};

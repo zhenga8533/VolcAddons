@@ -2,8 +2,8 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { getInParty, getIsLeader, getParty } from "../../utils/party";
 import { getPlayerName } from "../../utils/functions/player";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { registerWhen } from "../../utils/variables";
 
 
 /**

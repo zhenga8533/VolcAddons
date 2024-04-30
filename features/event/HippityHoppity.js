@@ -3,8 +3,9 @@ import settings from "../../utils/settings";
 import { BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/variables";
 import { announceMob } from "../../utils/functions/misc";
 
 //DUPLICATE RABBIT! +69,401 Chocolate

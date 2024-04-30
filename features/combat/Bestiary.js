@@ -2,7 +2,8 @@ import request from "../../../requestV2";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getTime, romanToNum } from "../../utils/functions/format";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/variables";
 
 
 /**

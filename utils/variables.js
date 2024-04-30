@@ -1,7 +1,6 @@
 import PogObject from "../../PogData";
 import settings from "./settings";
 import { AQUA, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./constants";
-import { delay } from "./thread";
 
 
 const DEFAULT_GUI = {
@@ -143,51 +142,6 @@ export function resetGUI() {
     });
 }
 
-// --- TRIGGER CONTROL ---
-
-// An array to store registered triggers and their dependencies
-let registers = [];
-
-/**
- * Adds a trigger with its associated dependency to the list of registered triggers.
- * Credit to: https://www.chattriggers.com/modules/v/BloomCore for idea
- *
- * @param {Object} trigger - The trigger to be added.
- * @param {Function} dependency - The function representing the dependency of the trigger.
- */
-export function registerWhen(trigger, dependency) {
-    trigger.unregister();
-    registers.push([trigger, dependency, false]);
-}
-
-// Updates trigger registrations based on world or GUI changes
-export function setRegisters(off = false) {
-    Client.showTitle("Loading Registers", "", 0, 1, 0);
-    registers.forEach(trigger => {
-        if (off || (!trigger[1]() && trigger[2])) {
-            trigger[0].unregister();
-            trigger[2] = false;
-        } else if (trigger[1]() && !trigger[2]) {
-            trigger[0].register();
-            trigger[2] = true;
-        }
-    });
-}
-delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")), 1000);
-
-register("renderTitle", (title, sub, event) => {
-    if (title !== "Loading Registers") return;
-    cancel(event);
-});
-
-// Event handler for GUI settings close.
-register("guiClosed", (event) => {
-    if (!event.toString().includes("vigilance")) return;
-
-    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-    updateEntityList();
-});
-
 
 // --- LIST CONTROL ---
 import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions/format";
@@ -195,6 +149,7 @@ import { updateAuction } from "../features/economy/Economy";
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
 import { updateWidgetList } from "../features/general/WidgetDisplay";
+import { setRegisters } from "./register";
 
 
 let lines = [5858, 5859];

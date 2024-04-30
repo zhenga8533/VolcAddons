@@ -1,11 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { getClosest } from "../../utils/functions/find";
-import { getInParty, getIsLeader } from "../../utils/party";
-import { registerWhen } from "../../utils/variables";
-import { delay } from "../../utils/thread";
 import { STAND_CLASS } from "../../utils/constants";
+import { getClosest } from "../../utils/functions/find";
 import { convertToTitleCase } from "../../utils/functions/format";
+import { getInParty, getIsLeader } from "../../utils/party";
+import { registerWhen } from "../../utils/register";
+import { delay } from "../../utils/thread";
 
 
 /**

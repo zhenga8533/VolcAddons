@@ -2,8 +2,9 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
+import { Stat, data, getPaused } from "../../utils/variables";
 
 
 /**

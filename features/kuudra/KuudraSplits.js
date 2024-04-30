@@ -4,8 +4,9 @@ import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../
 import { getTime, isValidDate } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { getPlayerName } from "../../utils/functions/player";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/variables";
 import { getKuudraHP } from "./KuudraDetect";
 
 

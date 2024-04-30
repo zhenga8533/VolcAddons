@@ -2,8 +2,9 @@ import location from "../../utils/location";
 import settings from "../../utils/settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/constants";
 import { getTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/variables";
 
 
 /**

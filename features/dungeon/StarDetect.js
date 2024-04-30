@@ -2,7 +2,8 @@ import RenderLib from "../../../RenderLib";
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { EntityArmorStand, EntityWither } from "../../utils/constants";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/variables";
 import { Hitbox } from "../../utils/waypoints";
 
 

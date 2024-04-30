@@ -1,8 +1,9 @@
 import settings from "../../utils/settings";
 import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, DARK_AQUA } from "../../utils/constants";
 import { formatNumber } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/variables";
 import { getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
 

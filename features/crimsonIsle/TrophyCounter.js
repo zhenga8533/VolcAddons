@@ -2,8 +2,9 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LOGO, WHITE } from "../../utils/constants";
 import { convertToTitleCase } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, getPaused, registerWhen } from "../../utils/variables";
+import { data, getPaused } from "../../utils/variables";
 
 
 /**

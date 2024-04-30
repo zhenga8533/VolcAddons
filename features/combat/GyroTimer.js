@@ -1,7 +1,8 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, GREEN, RED, RESET } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/variables";
 
 
 /**

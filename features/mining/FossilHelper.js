@@ -4,7 +4,8 @@ import { getSlotCoords } from "../../utils/functions/find";
 import { formatNumber } from "../../utils/functions/format";
 import { createMatrix, getAllFormations } from "../../utils/functions/matrix";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/variables";
 import { getAuction } from "../economy/Economy";
 
 

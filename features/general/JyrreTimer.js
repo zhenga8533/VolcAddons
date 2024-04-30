@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { NBTTagString } from "../../utils/constants";
-import { registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
 import { getTime } from "../../utils/functions/format";
 
 /**

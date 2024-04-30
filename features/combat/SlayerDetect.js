@@ -3,8 +3,8 @@ import settings from "../../utils/settings";
 import { BLAZE_CLASS, BOLD, DARK_GREEN, ENDERMAN_CLASS, GREEN, RED, SMA, SPIDER_CLASS, WHITE, WOLF_CLASS, ZOMBIE_CLASS } from "../../utils/constants";
 import { romanToNum } from "../../utils/functions/format";
 import { announceMob } from "../../utils/functions/misc";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { registerWhen } from "../../utils/variables";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 

@@ -2,7 +2,7 @@ import settings from "../../utils/settings";
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
 
 
 /**

@@ -1,7 +1,8 @@
+import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GREEN, LOGO, RED } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import settings from "../../utils/settings";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/variables";
 
 
 // Bind key

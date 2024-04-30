@@ -1,7 +1,8 @@
 import settings from "../../utils/settings";
 import { AQUA, BOLD, GREEN } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables"
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/variables";
 
 
 const widgetOverlays = {};

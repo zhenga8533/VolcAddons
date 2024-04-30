@@ -3,7 +3,8 @@ import settings from "../../utils/settings";
 import { AQUA, BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
-import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { Stat, data, getPaused } from "../../utils/variables";
 
 
 /**

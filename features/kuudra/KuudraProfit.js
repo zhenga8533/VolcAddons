@@ -3,7 +3,8 @@ import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/constants";
 import { commafy, formatNumber, getTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/variables";
 import { getItemValue } from "../economy/ItemPrice";
 import { getBazaar } from "../economy/Economy";
 

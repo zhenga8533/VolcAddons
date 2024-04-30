@@ -1,8 +1,9 @@
 import settings from "../../utils/settings";
 import { AQUA, BLACK, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/variables";
 import { getAuction, getBazaar } from "./Economy";
 
 

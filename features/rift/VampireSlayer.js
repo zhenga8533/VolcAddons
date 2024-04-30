@@ -3,7 +3,8 @@ import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { getInParty } from "../../utils/party";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/variables";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
 

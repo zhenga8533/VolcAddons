@@ -3,7 +3,7 @@ import settings from "../../utils/settings";
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { formatNumber, getTime, unformatNumber } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
 import { getBazaar } from "../economy/Economy";
 import { getWaifu } from "../party/PartyCommands";
 

@@ -1,7 +1,7 @@
 import settings from "./settings";
-import { delay } from "./thread";
-import { setRegisters } from "./variables";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, LOGO, WHITE } from "./constants";
+import { setRegisters } from "./register";
+import { delay } from "./thread";
 
 
 class Location {

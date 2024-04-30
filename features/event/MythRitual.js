@@ -3,8 +3,9 @@ import mayor from "../../utils/mayor";
 import location from "../../utils/location";
 import { GREEN, LOGO } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/variables";
 
 
 /**
