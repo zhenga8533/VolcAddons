@@ -1,3 +1,6 @@
+import settings from "./settings";
+
+
 const registers = [];
 
 /**

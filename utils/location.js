@@ -143,6 +143,7 @@ class Location {
             // Call functions when world is loaded
             delay(() => {
                 setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+                Client.showTitle(" ", "", 0, 1, 0);  // Fix first title not showing
             }, 1000);
         }
     }
