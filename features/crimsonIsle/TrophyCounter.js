@@ -31,7 +31,7 @@ const trophyExample =
 &fSteaming Hot Flounder&f: &3111 &879 &730 &61 &b1
 &5Soul Fish&f: &373 &850 &720 &61 &b2
 &5Moldfin&f: &360 &837 &721 &61 &b1`;
-const trophyOverlay = new Overlay("trophyCounter", ["Crimson Isle"], () => true, data.FL, "moveTrophy", trophyExample);
+const trophyOverlay = new Overlay("trophyCounter", data.FL, "moveTrophy", trophyExample, ["Crimson Isle"]);
 trophyOverlay.setMessage("");
 
 /**

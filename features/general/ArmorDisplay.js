@@ -8,7 +8,7 @@ import { data } from "../../utils/data";
  * Render armor pieces as icons
  */
 const pieces = [null, null, null, null];
-new Overlay("armorDisplay", ["all"], () => true, data.UL, "moveArmor", "", () => {
+new Overlay("armorDisplay", data.UL, "moveArmor", "Move", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.UL[2];
 
     pieces.forEach(piece => {
@@ -42,7 +42,7 @@ registerWhen(register("tick", () => {
  * Render equipment pieces as icons
  */
 let equipment = [null, null, null, null];
-new Overlay("equipDisplay", ["all"], () => true, data.EQL, "moveEq", "", () => {
+new Overlay("equipDisplay", data.EQL, "moveEq", "Move", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.EQL[2];
 
     equipment.forEach(piece => {

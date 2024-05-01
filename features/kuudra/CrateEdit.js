@@ -9,8 +9,7 @@ import { data } from "../../utils/data";
  * Crate overlay variables.
  */
 const crateExample = "§8[§a|||||||||||||§f|||||||§8] §b69%§r";
-const crateOverlay = new Overlay("crateEdit", ["all"], () => location.getWorld() === "Kuudra", data.CEL, "moveCrate", crateExample);
-crateOverlay.setMessage("");
+const crateOverlay = new Overlay("crateEdit", data.CEL, "moveCrate", crateExample, ["Kuudra"]);
 
 /**
  * Cancel crate title render and replay with overlay render.

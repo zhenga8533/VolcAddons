@@ -24,7 +24,7 @@ ${LIGHT_PURPLE + BOLD}Rate: ${WHITE}to
 ${AQUA + BOLD}Glacite: ${WHITE}the
 ${AQUA + BOLD}Rate: ${WHITE}sounds
 ${BLUE + BOLD}Time Passed: ${WHITE}of`;
-const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], () => true, data.PL, "movePowder", powderExample);
+const powderOverlay = new Overlay("powderTracker", data.PL, "movePowder", powderExample, ["Dwarven Mines", "Crystal Hollows"]);
 
 /**
  * Command to reset powder overlay.

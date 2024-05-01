@@ -9,8 +9,7 @@ const tradeExample =
 `${DARK_RED + BOLD}Giving: ${RED}Nah
 ${DARK_GREEN + BOLD}Receiving: ${GREEN}I'd
 ${GOLD + BOLD}Profit: ${GREEN}Win`;
-const tradeOverlay = new Overlay("tradeValue", ["all", "misc"],
-() => true, data.TVL, "moveTrade", tradeExample);
+const tradeOverlay = new Overlay("tradeValue", data.TVL, "moveTrade", tradeExample, ["all"], "guiRender");
 tradeOverlay.setMessage("");
 
 const updateTrade = register("step", () => {

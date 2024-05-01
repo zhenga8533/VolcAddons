@@ -1,3 +1,5 @@
 [
-    "- Changed utils be somewhat more organized"
+    "- Changed utils be somewhat more organized",
+    "- Fixed overlay flex box",
+    "- Removed Broodmother overlay"
 ]

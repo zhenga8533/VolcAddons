@@ -7,14 +7,21 @@ import { registerWhen } from "./register";
 /**
  * Render scaled text on a graphical canvas or rendering context.
  *
- * @param {Number} scale - The scale factor to apply to the text.
- * @param {String} text - The text to be rendered.
  * @param {Number} x - The x-coordinate where the text will be rendered.
  * @param {Number} y - The y-coordinate where the text will be rendered.
+ * @param {String} text - The text to be rendered.
+ * @param {Number} scale - The scale factor to apply to the text.
+ * @param {Boolean} align - True for right align, or false for left align.
+ * @param {Boolean} flex - True for vertical flex, or false for horizontal flex.
  */
-function renderScale(scale, text, x, y, align, flex) {
-    Renderer.scale(scale);
+function renderScale(x, y, text, scale=1, align=false, flex=false) {
+    // Apply parameters
+    x /= scale;
+    y /= scale;
     if (flex) text = text.replace(/\n/g, "  ");
+
+    // Scale and render
+    Renderer.scale(scale);
     if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(settings.textShadow).draw();
     else Renderer.drawString(text, x, y, settings.textShadow);
 }
@@ -36,27 +43,24 @@ let worldView = false;
  * Renders overlays on the GUI if it's open.
  */
 const moving = register("renderOverlay", () => {
-    overlays.forEach(overlay => {
-        if (!settings[overlay.setting]) return;
+    overlays.forEach(o => {
+        if (!settings[o.setting]) return;
+
         // Draw example text and box
-        const scale = overlay.loc[2];
-        const x = overlay.loc[0] - (overlay.loc[3] ? (overlay.eWidth - 3) * scale : 0);
-        const y = overlay.loc[1];
+        const scale = o.loc[2];
+        const x = o.loc[0] - (o.loc[3] ? o.ewidth * scale : 0);
+        const y = o.loc[1];
 
         Renderer.drawRect(
-            overlay.loc[5] ? Renderer.color(0, 0, 0, 128) : Renderer.color(128, 128, 128, 128),
-            x - 3*scale, y - 3*scale,
-            (overlay.eWidth + 6) * scale, (overlay.eHeight + 6) * scale
+            o.loc[5] ? Renderer.color(0, 0, 0, 128) : Renderer.color(128, 128, 128, 128),
+            x - 3 * scale, y - 3 * scale,
+            o.ewidth + 6 * scale, o.eheight + 6 * scale
         );
-        renderScale(overlay.loc[2], overlay.example, overlay.X, overlay.Y, overlay.loc[3], overlay.loc[4]);
+        renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4]);
     });
 
     // GUI Instructions
-    renderScale(
-        1.2, GUI_INSTRUCT,
-        (Renderer.screen.getWidth() - INSTRUCT_WIDTH * 1.4) / 2,
-        Renderer.screen.getHeight() * 0.6, false, false
-    );
+    renderScale((Renderer.screen.getWidth() - INSTRUCT_WIDTH) / 2, Renderer.screen.getHeight() / 2, GUI_INSTRUCT, 1);
 }).unregister();
 
 /**
@@ -65,47 +69,39 @@ const moving = register("renderOverlay", () => {
 const clicking = register("guiMouseClick", (x, y) => {
     currentOverlay = undefined;
 
-    overlays.forEach(overlay => {
-        const scale = overlay.loc[2];
-        const oX = overlay.loc[0] - (overlay.loc[3] ? (overlay.eWidth - 3) * scale : 0);
-        const oY = overlay.loc[1];
+    overlays.forEach(o => {
+        const scale = o.loc[2];
+        const oX = o.loc[0] - (o.loc[3] ? o.ewidth * scale : 0);
+        const oY = o.loc[1];
 
         if (x > oX - 3 * scale &&
-            x < oX + 3 * (scale + overlay.eWidth) &&
+            x < oX + 3 * (scale + o.ewidth) &&
             y > oY - 3 * scale &&
-            y < oY + 3 * (scale + overlay.eHeight)
-        ) currentOverlay = overlay;
+            y < oY + 3 * (scale + o.eheight)
+        ) currentOverlay = o;
     });
 }).unregister();
 
 /**
  * Handles movement of the selected overlay.
- * Updates location and normalized coordinates based on delta coordinates.
  */
-const dragging = register("dragged", (dx, dy, x, y) => {
+const dragging = register("dragged", (_, __, x, y) => {
     if (currentOverlay === undefined || !gui.isOpen()) return;
 
-    if (gui.isOpen()) {
-        // Changes location of text
-        currentOverlay.loc[0] += dx;
-        currentOverlay.loc[1] += dy;
-        currentOverlay.X = currentOverlay.loc[0] / currentOverlay.loc[2];
-        currentOverlay.Y = currentOverlay.loc[1] / currentOverlay.loc[2];
-    }
+    currentOverlay.x = parseInt(x);
+    currentOverlay.y = parseInt(y);
 }).unregister();
 
 /**
  * Handles scaling of the selected overlay using key presses.
- * Listens for specific keys: Enter (increase), Minus (decrease), r (reset).
- * Updates normalized coordinates and calls "setSize" after scaling.
  */
-const keying = register("guiKey", (char, keyCode, currentGui, event) => {
+const keying = register("guiKey", (_, keyCode) => {
     // View Change
     if (keyCode === 17) {
         worldView = !worldView;
         if (worldView) {
             overlays = overlays.filter(overlay => {
-                if (!overlay.requires.has(location.getWorld()) && !overlay.requires.has("all")) {
+                if (!overlay.requires.has("all") && !overlay.requires.has(location.getWorld())) {
                     overlaid.push(overlay);
                     return false;
                 }
@@ -114,7 +110,7 @@ const keying = register("guiKey", (char, keyCode, currentGui, event) => {
             ChatLib.chat(`${LOGO + GREEN}Successfully changed to world view!`);
         } else {
             overlays.push(...overlaid);
-            overlaid.length = 0;
+            overlaid = [];
             ChatLib.chat(`${LOGO + GREEN}Successfully changed to global view!`);
         }
     } else if (keyCode === 1) {
@@ -145,7 +141,8 @@ const keying = register("guiKey", (char, keyCode, currentGui, event) => {
         currentOverlay.loc[5] = !currentOverlay.loc[5];
     } else return;
 
-    currentOverlay.setSize();
+    currentOverlay.setSize("message");
+    currentOverlay.setSize("example");
 }).unregister();
 
 /**
@@ -165,102 +162,88 @@ export class Overlay {
      * Creates an overlay with HUD elements and GUI functionality.
      *
      * @param {String} setting - The setting key used to determine whether the overlay should be shown.
-     * @param {String[]} requires - An array of world names where the overlay should be displayed (or "all" for all requires).
-     * @param {Function} condition - Function to check if condition is met before rendering.
-     * @param {Number[]} loc - An array representing the x, y, and scale of the overlay.
+     * @param {Type[]} loc - An array representing [x, y, scale, align, flex, background] of the overlay.
      * @param {String} command - The command name that will open the GUI.
-     * @param {String} example - An example text to be displayed as an overlay.
+     * @param {String} example - The example text to be displayed when editing the GUI.
+     * @param {String[]} requires - An array of world names where the overlay should be displayed or ["all"] if it should render everywhere.
+     * @param {String} trigger - Type of trigger to use for the rendering register.
+     * @param {Function} special - Special rendering function to optional be used in place of text rendering. Should return true if used.
      */
-    constructor(setting, requires, condition, loc, command, example, special = () => false) {
+    constructor(setting, loc, command, example = "Test", requires = ["all"], trigger = "renderOverlay", special = () => false) {
         overlays.push(this);
-        // Store the inputs as instance variables.
-        this.setting = setting;
-        this.requires = new Set(requires);
-        this.loc = loc;
-        this.X = this.loc[0] / this.loc[2];
-        this.Y = this.loc[1] / this.loc[2];
-        this.example = example;
-        this.message = example;
-        this.gui = new Gui();
 
-        // Set size for background rendering
-        this.setSize(this.message, "message");
-        this.setSize(this.example, "example");
+        // Update private variables
+        this.setting = setting;
+        this.loc = loc;
+        this.message = "";
+        this.width = 0;
+        this.height = 0;
+        this.example = example;
+        this.setSize("example");
+        this.requires = new Set(requires);
+        this.gui = new Gui();
 
         // loc array changes for versions < 2.9.4
         if (this.loc[3] === undefined) this.loc.push(false);
         if (this.loc[4] === undefined) this.loc.push(false);
         if (this.loc[5] === undefined) this.loc.push(false);
 
-        // Register a render function to display the overlay and GUI instructions.
-        // The overlay is shown when the GUI is open or in requires specified in 'requires' array.'
+        // The actual rendering register for the GUI.
+        registerWhen(register(trigger, () => {
+            if (!special() && !gui.isOpen() && !this.gui.isOpen() && this.message) {
+                if (trigger === "renderOverlay") background.func_146278_c(0);
+                if (this.loc[5] && this.width !== 0)
+                    Renderer.drawRect(
+                        Renderer.color(0, 0, 0, 128),
+                        this.loc[0] - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2],
+                        this.width + 6 * this.loc[2], this.height + 6 * this.loc[2]
+                    );
+                renderScale(this.loc[0], this.loc[1], this.message, this.loc[2], this.loc[3], this.loc[4]);
+            }
+        }), () => settings[this.setting] && (this.requires.has(location.getWorld()) || this.requires.has("all")));
+
+        // Set registers for editing the GUI.
         this.moving = register("renderOverlay", () => {
             const width = Renderer.screen.getWidth();
             const height = Renderer.screen.getHeight();
 
             // Coords and scale
             const coords = `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`;
-            const coordsWidth = Renderer.getStringWidth(coords);
-            const aligning = this.loc[0] + coordsWidth > width;
-            renderScale(this.loc[2], coords, this.X + (aligning ? -2 : 2), this.Y - 10, aligning, false);
+            const align = this.loc[0] + Renderer.getStringWidth(coords) > width;
+            renderScale(this.loc[0] + (align ? -2 : 2), this.loc[1] - 10, coords, 1, align);
+
             Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], height, 0.5);
             Renderer.drawLine(Renderer.WHITE, width, this.loc[1], 1, this.loc[1], 0.5);
 
             // Draw example text
-            if (this.loc[5] && this.width !== 0)
+            if (this.loc[5])
                 Renderer.drawRect(
                     Renderer.color(0, 0, 0, 128),
-                    this.loc[0] - 3 *  this.loc[2], this.loc[1] - 3 * this.loc[2],
-                    (this.eWidth + 6) * this.loc[2], (this.eHeight + 6) * this.loc[2]
+                    this.loc[0] - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2],
+                    this.ewidth + 6 * this.loc[2], this.eheight + 6 * this.loc[2]
                 );
-            renderScale(this.loc[2], this.example, this.X, this.Y, this.loc[3], this.loc[4]);
+            renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4]);
 
             // GUI Instructions
-            renderScale(
-                1.2, GUI_INSTRUCT,
-                (width - INSTRUCT_WIDTH * 1.4) / 2,
-                height / 2.4, false, false
-            );
+            renderScale((width - INSTRUCT_WIDTH) / 2, height / 2, GUI_INSTRUCT, 1);
         }).unregister();
 
-        registerWhen(register(this.requires.has("misc") ? "guiRender" : "renderOverlay", () => {
-            if (!special() && condition() && !gui.isOpen() && !this.gui.isOpen() && this.message) {
-                if (this.requires.has("misc")) background.func_146278_c(0);
-                if (this.loc[5] && this.width !== 0)
-                    Renderer.drawRect(
-                        Renderer.color(0, 0, 0, 128),
-                        this.loc[0] - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2],
-                        (this.width + 6) * this.loc[2], (this.height + 6) * this.loc[2]
-                    );
-                renderScale(this.loc[2], this.message, this.X, this.Y, this.loc[3], this.loc[4]);
-            }
-        }), () => settings[this.setting] && (this.requires.has(location.getWorld()) || this.requires.has("all")));
-
         // Register editing stuff
-        this.dragging = register("dragged", (dx, dy, x, y) => {
+        this.dragging = register("dragged", (_, __, x, y) => {
             if (this.gui.isOpen()) {
-                // Changes location of text
                 this.loc[0] = parseInt(x);
                 this.loc[1] = parseInt(y);
-                this.X = this.loc[0] / this.loc[2];
-                this.Y = this.loc[1] / this.loc[2];
             }
         }).unregister();
         
-        this.keying = register("guiKey", (char, keyCode, guiScreen, event) => {
+        this.keying = register("guiKey", (_, keyCode) => {
             if (this.gui.isOpen()) {
                 if (keyCode === 13) {  // Increase Scale (+ key)
                     this.loc[2] = Math.round((this.loc[2] + 0.05) * 100) / 100;
-                    this.X = this.loc[0] / this.loc[2];
-                    this.Y = this.loc[1] / this.loc[2];
                 } else if (keyCode === 12) {  // Decrease Scale (- key)
                     this.loc[2] = Math.round((this.loc[2] - 0.05) * 100) / 100;
-                    this.X = this.loc[0] / this.loc[2];
-                    this.Y = this.loc[1] / this.loc[2];
                 } else if (keyCode === 19) {  // Reset Scale (r key)
                     this.loc[2] = 1;
-                    this.X = this.loc[0];
-                    this.Y = this.loc[1];
                 } else if (keyCode === 38) {  // Swap align (l key)
                     this.loc[3] = !this.loc[3];
                 } else if (keyCode === 35) {  // Swap flex (h key)
@@ -273,7 +256,8 @@ export class Overlay {
                     this.keying.unregister();
                 } else return;
 
-                this.setSize(this.message, "message");
+                this.setSize("message");
+                this.setSize("example");
             }
         }).unregister();
 
@@ -293,20 +277,36 @@ export class Overlay {
      */
     setMessage(message) {
         this.message = message;
-        this.setSize(this.message, "message");
+        this.setSize("message");
     }
 
     /**
      * Sets width and height of overlay.
      * Fixes getStringWidth not setting bolded size correctly.
      */
-    setSize(message, type) {
+    setSize(type) {
+        // Set flex size
+        let message = type === "message" ? this.message : this.example;
+        message = this.loc[4] ? message.replace(/\n/g, "  ") : message;
         const lines = message?.split("\n");
-        if (!(lines?.length)) return;
 
-        if (type === "message") this.height = lines.length * 9;
-        else this.eHeight = lines.length * 9;
+        // Check if message is not empty
+        if (!(lines?.length)) {
+            if (type === "message") {
+                this.width = 0;
+                this.height = 0;
+            } else {
+                this.ewidth = 0;
+                this.eheight = 0;
+            }
+            return;
+        }
 
+        // Set message height
+        if (type === "message") this.height = lines.length * 8.8 * this.loc[2];
+        else this.eheight = lines.length * 8.8 * this.loc[2];
+
+        // Find line with largest width
         let maxWidth = 0;
         lines.forEach(line => {
             if (line.includes('§l')) {
@@ -327,7 +327,8 @@ export class Overlay {
             } else maxWidth = Math.max(maxWidth, Renderer.getStringWidth(line));
         });
 
-        if (type === "message") this.width = maxWidth;
-        else this.eWidth = maxWidth;
+        // Set message width
+        if (type === "message") this.width = maxWidth * this.loc[2];
+        else this.ewidth = maxWidth * this.loc[2];
     }
 }

@@ -125,8 +125,7 @@ const valueExample =
    - &8Explosion Scroll: &a+Hailed
 
 &3Total Value: &aKATSU.`;
-const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
-() => settings.itemPrice === 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
+const valueOverlay = new Overlay("itemPrice", data.EL, "moveValue", valueExample, ["all"], "guiRender");
 valueOverlay.setMessage("");
 
 let savedValues = {};

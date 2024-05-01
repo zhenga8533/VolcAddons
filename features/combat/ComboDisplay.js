@@ -13,7 +13,7 @@ const comboExample =
   ${AQUA}+69✯ Magic Find
   ${DARK_GRAY}+${GOLD}420 coins per kill
   ${DARK_AQUA}+911☯ Combat Wisdom`;
-const comboOverlay = new Overlay("comboDisplay", ["all"], () => true, data.WL, "moveCombo", comboExample);
+const comboOverlay = new Overlay("comboDisplay", data.WL, "moveCombo", comboExample);
 comboOverlay.setMessage("");
 let stats = ["", 0, 0, 0];
 

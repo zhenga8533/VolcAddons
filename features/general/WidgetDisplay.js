@@ -14,7 +14,7 @@ export function updateWidgetList() {
     data.widgetlist.forEach(widget => {
         if (widget in widgetOverlays) return;
         if (!(widget in data.WGL)) data.WGL[widget] = [100, 100, 1.2, false, false];
-        widgetOverlays[widget] = new Overlay("widgetDisplay", ["all"], () => true, data.WGL[widget], `move${widget.replace(/\s/g, "")}`, 
+        widgetOverlays[widget] = new Overlay("widgetDisplay", data.WGL[widget], `move${widget.replace(/\s/g, "")}`, 
 `${AQUA + BOLD + widget}:
  Statistic ${GREEN}1
  Statistic ${GREEN}2

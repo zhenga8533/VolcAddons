@@ -26,7 +26,7 @@ ${RED + BOLD}ゴウセル: ${RESET}0^0
 
 ${DARK_RED + BOLD}Total Kills: ${RESET}∞^∞
 ${DARK_RED + BOLD}Time Passed: ${RESET}-∞`;
-const counterOverlay = new Overlay("killCounter", ["all"], () => true, data.JL, "moveKills", counterExample);
+const counterOverlay = new Overlay("killCounter", data.JL, "moveKills", counterExample);
 counterOverlay.setMessage("");
 
 function updateCounter() {

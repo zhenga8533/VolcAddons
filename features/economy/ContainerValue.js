@@ -23,8 +23,7 @@ ${AQUA}Item 7${GRAY} - ${WHITE}Point
 ${RED}Item 8${GRAY} - ${WHITE}Of
 ${RED}Item 9${GRAY} - ${WHITE}Formlessness
 ${DARK_RED}-Sun Tzu, The Art of War`;
-const containerOverlay = new Overlay("containerValue", ["all", "misc"],
-() => true, data.RL, "moveContainer", containerExample);
+const containerOverlay = new Overlay("containerValue", data.RL, "moveContainer", containerExample, ["all"], "guiRender");
 containerOverlay.setMessage("");
 
 /**

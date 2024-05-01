@@ -16,7 +16,7 @@ const sprayExample =
 `${GREEN + BOLD}Sprays:
  ${AQUA}Plot 0 ${DARK_GRAY}(${GREEN}1m10s${DARK_GRAY})
  ${AQUA}Plot 0 ${DARK_GRAY}(${GREEN}1m01s${DARK_GRAY})`
-const sprayOverlay = new Overlay("sprayDisplay", ["Garden"], () => true, data.SDL, "moveSpray", sprayExample);
+const sprayOverlay = new Overlay("sprayDisplay", data.SDL, "moveSpray", sprayExample, ["Garden"]);
 const sprays = {};
 const plots = new Set();
 const pests = new Set();
@@ -233,7 +233,8 @@ registerWhen(register("chat", (_, fortune) => {
  * Track bonus timer
  */
 const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
-const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "moveBonus", bonusExample);
+const bonusOverlay = new Overlay("pesthunterBonus", data.PHL, "moveBonus", bonusExample, ["Garden"]);
+
 registerWhen(register("step", () => {
     let bonusMessage = `${YELLOW + BOLD}Pest Bonus: `;
     let fortune = 0;

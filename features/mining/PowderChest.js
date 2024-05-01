@@ -12,7 +12,7 @@ import { data } from "../../utils/data";
 let nearbyChests = [];
 export function getPowderChests() { return nearbyChests };
 const powderExample = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE}dentge.`;
-const powderOverlay = new Overlay("powderChest", ["Crystal Hollows"], () => true, data.HL, "moveChest", powderExample);
+const powderOverlay = new Overlay("powderChest", data.HL, "moveChest", powderExample, ["Crystal Hollows"]);
 
 /**
  * Detects nearby chests to create waypoints and update overlay.

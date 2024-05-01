@@ -23,7 +23,7 @@ ${GRAY}- ${WHITE}Charisma: ${GREEN}999
 ${DARK_AQUA + BOLD}Legion: ${RED}0 ${DARK_GRAY}(0%)
 ${DARK_AQUA + BOLD}SF: ${GREEN}/ -.. ${AQUA}⸎
 ${DARK_AQUA + BOLD}Daily PT: ${GREEN}/ -..`;
-const statsOverlay = new Overlay("statsDisplay", ["all"], () => true, data.YL, "moveStats", statsExample);
+const statsOverlay = new Overlay("statsDisplay", data.YL, "moveStats", statsExample);
 
 /**
  * Get equipped pet through tab widget, menu, or chat.

@@ -43,7 +43,7 @@ const commissionExample =
 §r §r§fCorpse Looter: §r§c0%§r
 §r §r§fScrap Collector: §r§c0%§r
 §r §r§fCitrine Gemstone Collector: §r§c0%§r`;
-const commissionOverlay = new Overlay("commissionsDisplay", ["Crystal Hollows", "Dwarven Mines", "Mineshaft"], () => true, data.CDL, "moveCommissions", commissionExample);
+const commissionOverlay = new Overlay("commissionsDisplay", data.CDL, "moveCommissions", commissionExample, ["Crystal Hollows", "Dwarven Mines", "Mineshaft"]);
 
 registerWhen(register("renderWorld", () => {
     commissionWaypoints.forEach(gem => {

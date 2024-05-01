@@ -15,7 +15,7 @@ let lastFish = 0;
 const fishExample =
 `${GOLD + BOLD}Last Cast: ${RESET}Yee
 ${GOLD + BOLD}Last Fish: ${RESET}Haw`;
-const fishOverlay = new Overlay("goldenFishAlert", ["Crimson Isle"], () => true, data.TL, "moveGolden", fishExample);
+const fishOverlay = new Overlay("goldenFishAlert", data.TL, "moveGolden", fishExample, ["Crimson Isle"]);
 
 /**
  * Increments time and updates Golden Fish Overlay every second.

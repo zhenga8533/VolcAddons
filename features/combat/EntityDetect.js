@@ -1,10 +1,7 @@
-import location from "../../utils/location"
 import settings from "../../utils/settings";
-import { AMOGUS, BOLD, GRAY, DARK_RED, GREEN, RED, WHITE, SMA, SPIDER_CLASS, EntityArmorStand } from "../../utils/constants";
-import { convertToPascalCase, getTime, unformatNumber } from "../../utils/functions/format";
-import { playSound } from "../../utils/functions/misc";
+import { SMA, EntityArmorStand } from "../../utils/constants";
+import { convertToPascalCase, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
@@ -162,40 +159,3 @@ new Hitbox(() => entityList.length !== 0 || standList.length !== 0, (pt) => {
         renderEntities(entity[0], color[0], color[1], color[2], pt);
     });
 });
-
-
-/**
- * Broodmother detection.
- */
-let nextSpawn = 0;
-const broodmotherExample = `${GRAY + BOLD}Next Spawn: ${RED}???`;
-const broodmotherOverlay = new Overlay("broodmotherDetect", ["Spider's Den"], () => true, data.DL, "moveBrood", broodmotherExample);
-const broodLobbies = {};
-registerWhen(register("step", () => {
-    const server = location.getServer();
-    if (nextSpawn === 0) {
-        nextSpawn = broodLobbies[server] ?? 0;
-        const broodmother = World.getAllEntitiesOfType(SPIDER_CLASS)
-            .find(spider => spider.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b() === 6_000 && spider.getY() > 150);
-        if (broodmother === undefined) return;
-        Client.showTitle(`${DARK_RED + BOLD}Broodmother Spawned!`, "", 0, 25, 5);
-        playSound(AMOGUS, 10000);
-        nextSpawn = 600;
-    } else {
-        nextSpawn--;
-        if (nextSpawn === 0) {
-            broodmotherOverlay.setMessage(`${GRAY + BOLD}Next Spawn: ${GREEN}Soon TM`);
-            Client.showTitle("", `${RED}Broodmother Spawning Soon!`, 0, 25, 5);
-            if (server in broodLobbies) delete broodLobbies[server];
-        } else broodmotherOverlay.setMessage(`${GRAY + BOLD}Next Spawn: ${WHITE + getTime(nextSpawn)}`);
-    }
-}).setFps(1), () => settings.broodmotherDetect);
-
-/**
- * World timer of world leave.
- */
-registerWhen(register("worldUnload", () => {
-    broodLobbies[location.getServer()] = nextSpawn;
-    nextSpawn = 0;
-    broodmotherOverlay.setMessage(`${GRAY + BOLD}Next Spawn: ${RED}???`);
-}), () => location.getWorld() === "Spider's Den" && settings.broodmotherDetect);

@@ -32,7 +32,7 @@ const chocoExample =
 `§6§lChoco: §e3.95m§8 (1.49k/s)
 §6§lTotal: §e4.20m
 §6§lTime: §e00:00:11:03`;
-const chocoOverlay = new Overlay("chocoDisplay", ["all"], () => true, data.CFL, "moveChoco", chocoExample);
+const chocoOverlay = new Overlay("chocoDisplay", data.CFL, "moveChoco", chocoExample);
 
 register("step", () => {
     const now = Math.floor(Date.now() / 1000);
@@ -209,8 +209,7 @@ const eggExample =
  ${YELLOW}Breakfast: ${WHITE}bling
  ${YELLOW}Lunch: ${WHITE}bang
  ${YELLOW}Dinner: ${WHITE}bang`;
-const eggOverlay = new Overlay("eggTimers", ["all"], () => location.getWorld() !== "Garden", data.CGL, "moveEgg", eggExample);
-eggOverlay.setMessage("");
+const eggOverlay = new Overlay("eggTimers", data.CGL, "moveEgg", eggExample);
 
 registerWhen(register("step", () => {
     const time = World.getTime() % 24_000;

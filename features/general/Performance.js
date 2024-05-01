@@ -105,7 +105,7 @@ ${DARK_AQUA + BOLD}FPS: ${GREEN}60 ${AQUA}fps
 ${DARK_AQUA + BOLD}TPS: ${GREEN}19.8 ${AQUA}tps
 ${DARK_AQUA + BOLD}CPS: ${GREEN}0 ${AQUA}: ${GREEN}0
 ${DARK_AQUA + BOLD}Day: ${AQUA}0.75`;
-const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
+const statusOverlay = new Overlay("serverStatus", data.LL, "moveStatus", statusExample);
 
 /**
  * Updates the status overlay message with the current ping, TPS, and FPS information.

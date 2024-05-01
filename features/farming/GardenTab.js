@@ -17,7 +17,7 @@ ${GREEN + BOLD} Gonna
 ${GREEN + BOLD} Give
 ${GREEN + BOLD} You
 ${GREEN + BOLD} Up`;
-const gardenOverlay = new Overlay("gardenTab", ["all"], () => true, data.VL, "moveVisitors", gardenExample);
+const gardenOverlay = new Overlay("gardenTab", data.VL, "moveVisitors", gardenExample);
 let nextVisitor = 0;
 let visitorCount = 5;
 let visitors = [`${AQUA + BOLD}Visitors: ${WHITE}(5)`, ` ${RED}???`, ` ${RED}???`, ` ${RED}???`, ` ${RED}???`, ` ${RED}???`];
@@ -100,7 +100,7 @@ const compostExample =
 `${DARK_GREEN + BOLD}Composter:
 ${GREEN}Empty: ${WHITE}Loading
 ${GREEN}Next: ${WHITE}...`;
-const compostOverlay = new Overlay("compostTab", ["Garden"], () => settings.compostTab === 2, data.OL, "moveCompost", compostExample);
+const compostOverlay = new Overlay("compostTab", data.OL, "moveCompost", compostExample, ["Garden"]);
 let emptyCompost = 0;
 
 /**

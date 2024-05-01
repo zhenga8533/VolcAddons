@@ -25,7 +25,7 @@ const counterExample =
 ${RED + BOLD}Total Kills: ${RESET}Hua
 ${RED + BOLD}Kills Since: ${RESET}Piao
 ${RED + BOLD}Average Kills: ${RESET}Piao`;
-const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], () => true, data.CL, "moveCounter", counterExample);
+const counterOverlay = new Overlay("vanqCounter", data.CL, "moveCounter", counterExample, ["Crimson Isle"]);
 counterOverlay.setMessage("");
 
 /**
@@ -137,7 +137,7 @@ registerWhen(register("chat", () => {
  * Tracks world for any vanquishers near player.
  */
 const vanqExample = `${DARK_PURPLE + BOLD}Vanquisher ${WHITE}Detected`;
-const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
+const vanqOverlay = new Overlay("vanqDetect", data.QL, "moveVanq", vanqExample, ["Crimson Isle"]);
 vanqOverlay.setMessage("");
 registerWhen(register("step", () => {
     vanquishers = World.getAllEntitiesOfType(WITHER_CLASS).filter(entity => entity.getEntity().func_110138_aP() === 1024);
