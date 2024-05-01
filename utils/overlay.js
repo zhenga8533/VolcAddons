@@ -1,6 +1,6 @@
 import location from "./location";
 import settings from "./settings";
-import { GREEN, ITALIC, LOGO } from "./constants";
+import { BOLD, GREEN, ITALIC, LOGO } from "./constants";
 import { registerWhen } from "./register";
 
 
@@ -54,7 +54,7 @@ const moving = register("renderOverlay", () => {
         Renderer.drawRect(
             o.loc[5] ? Renderer.color(0, 0, 0, 128) : Renderer.color(128, 128, 128, 128),
             x - 3 * scale, y - 3 * scale,
-            o.ewidth + 6 * scale, o.eheight + 6 * scale
+            o.ewidth + 5 * scale, o.eheight + 5 * scale
         );
         renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4]);
     });
@@ -174,7 +174,7 @@ export class Overlay {
                     Renderer.drawRect(
                         Renderer.color(0, 0, 0, 128),
                         this.loc[0] - (this.loc[3] ? this.ewidth : 0) - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2],
-                        this.width + 6 * this.loc[2], this.height + 6 * this.loc[2]
+                        this.width + 5 * this.loc[2], this.height + 5 * this.loc[2]
                     );
                 }
                 renderScale(this.loc[0], this.loc[1], this.message, this.loc[2], this.loc[3], this.loc[4]);
@@ -199,7 +199,7 @@ export class Overlay {
                 Renderer.drawRect(
                     Renderer.color(0, 0, 0, 128),
                     this.loc[0] - (this.loc[3] ? this.ewidth : 0) - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2],
-                    this.ewidth + 6 * this.loc[2], this.eheight + 6 * this.loc[2]
+                    this.ewidth + 5 * this.loc[2], this.eheight + 5 * this.loc[2]
                 );
             }
             renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4]);
@@ -257,6 +257,8 @@ export class Overlay {
     /**
      * Sets width and height of overlay.
      * Fixes getStringWidth not setting bolded size correctly.
+     * 
+     * @param {String} type - "message" to set message height or "example" to set example height.
      */
     setSize(type) {
         // Set flex size
@@ -277,8 +279,8 @@ export class Overlay {
         }
 
         // Set message height
-        if (type === "message") this.height = lines.length * 8.8 * this.loc[2];
-        else this.eheight = lines.length * 8.8 * this.loc[2];
+        if (type === "message") this.height = lines.length * 9 * this.loc[2];
+        else this.eheight = lines.length * 9 * this.loc[2];
 
         // Find line with largest width
         let maxWidth = 0;

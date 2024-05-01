@@ -43,17 +43,17 @@ function setMessage(itemValues, totalValue) {
     const sortedItems = Object.entries(itemValues).sort((a, b) => b[1][1] - a[1][1]);
             
     // Display the sorted items and total value
-    let overlayMessage = `${DARK_AQUA}Total Value: ${AQUA + formatNumber(totalValue)}\n\n`;
+    let overlayMessage = `${DARK_AQUA}Total Value: ${AQUA + formatNumber(totalValue)}\n`;
     let displayedItems = 0;
 
     // Destructuring here for cleaner loop
     for ([itemName, [itemCount, itemValue]] of sortedItems) {
-        overlayMessage += `${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}\n`;
+        overlayMessage += `\n${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}`;
         displayedItems++;
         if (displayedItems >= settings.containerValue) {
             const remainingItems = sortedItems.length - settings.containerValue;
             if (remainingItems > 0) {
-                overlayMessage += `${GRAY + ITALIC}+ ${remainingItems} more items...\n`;
+                overlayMessage += `\n${GRAY + ITALIC}+ ${remainingItems} more items...`;
             }
             break;
         }
