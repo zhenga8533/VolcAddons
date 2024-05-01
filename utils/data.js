@@ -2,6 +2,13 @@ import PogObject from "../../PogData";
 import { CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
 
 
+// Relocate old data files (<2.9.5)
+if (FileLib.exists("./config/ChatTriggers/modules/VolcAddons/datitee.json")) {
+    const fileData = FileLib.read("VolcAddons", "datitee.json");
+    FileLib.write("VolcAddons", "data/datitee.json", fileData);
+    FileLib.delete("VolcAddons", "datitee.json");
+}
+
 const DEFAULT_GUI = {
     "AL": [780, 430, 1.2, false, false, true], // Skill Tracker Location
     "BL": [10, 120, 1.2, false, false, true], // Vampire Location
@@ -132,7 +139,11 @@ export let data = new PogObject("VolcAddons", {
     "fairySouls": FAIRY_SOULS,
     "enigmaSouls": ENIGMA_SOULS,
     "catSouls": CAT_SOULS
-}, "datitee.json");
+}, "data/datitee.json");
+
+export const itemNBTs = new PogObject("VolcAddons", {
+    "armor": [null, null, null, null]
+}, "data/itemNBTs.json");
 
 // --- GUI CONTROL ---
 export function resetGUI() {
@@ -144,4 +155,5 @@ export function resetGUI() {
 // Saving data to persistent storage upon game unload
 register("gameUnload", () => {
     data.save();
+    itemNBTs.save();
 }).setPriority(Priority.LOWEST);
