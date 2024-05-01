@@ -164,7 +164,7 @@ export class Overlay {
         // loc array changes for versions < 2.9.4
         if (this.loc[3] === undefined) this.loc.push(false);
         if (this.loc[4] === undefined) this.loc.push(false);
-        if (this.loc[5] === undefined) this.loc.push(false);
+        if (this.loc[5] === undefined) this.loc.push(true);
 
         // The actual rendering register for the GUI.
         registerWhen(register(trigger, () => {
