@@ -162,5 +162,5 @@ registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
  * This function clears the content of the container overlay message, effectively removing it from display.
  */
 registerWhen(register("guiClosed", () => {
-    containerOverlay.setMessage("");
+    Client.scheduleTask(3, () => containerOverlay.setMessage(""));
 }), () => settings.containerValue !== 0);
