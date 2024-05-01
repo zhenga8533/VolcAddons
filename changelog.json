@@ -1,6 +1,7 @@
 [
     "- Changed utils to be somewhat more organized",
     "- Changed overlay to default with background",
+    "- Changed equipment display to be persistant",
     "- Fixed overlay flex box",
     "- Fixed container value carrying over",
     "- Removed Broodmother overlay",

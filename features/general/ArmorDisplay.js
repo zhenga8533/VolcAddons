@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import { data, itemNBTs } from "../../utils/data";
 
 
 /**
@@ -41,7 +41,10 @@ registerWhen(register("tick", () => {
 /**
  * Render equipment pieces as icons
  */
-let equipment = [null, null, null, null];
+let equipment = itemNBTs.equip.map(nbt => {
+    return nbt === null ? null :
+        new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(nbt).rawNBT))
+});
 new Overlay("equipDisplay", data.EQL, "moveEq", "Move", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.EQL[2];
 
@@ -89,3 +92,18 @@ registerWhen(register("guiOpened", () => {
         ];
     });
 }), () => settings.equipDisplay);
+
+/**
+ * Persistant armor and equip.
+ */
+register("gameUnload", () => {
+    itemNBTs.armor = pieces.map(piece => {
+        return piece === null ? null :
+            piece.getNBT().toObject();
+    });
+
+    itemNBTs.equip = equipment.map(piece => {
+        return piece === null ? null :
+            piece.getNBT().toObject();
+    });
+})

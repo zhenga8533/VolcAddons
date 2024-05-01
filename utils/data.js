@@ -142,7 +142,8 @@ export let data = new PogObject("VolcAddons", {
 }, "data/datitee.json");
 
 export const itemNBTs = new PogObject("VolcAddons", {
-    "armor": [null, null, null, null]
+    "armor": [null, null, null, null],
+    "equip": [null, null, null, null]
 }, "data/itemNBTs.json");
 
 // --- GUI CONTROL ---
