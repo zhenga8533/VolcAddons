@@ -2,7 +2,7 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { convertToTitleCase, formatNumber, formatTimeElapsed, getTime } from "../../utils/functions/format";
+import { convertToTitleCase, formatNumber, formatTimeElapsed, formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
@@ -218,9 +218,9 @@ registerWhen(register("step", () => {
     const dinnerTime = time > 15_000 ? 39_000 - time : 15_000 - time;
     eggOverlay.setMessage(
 `${GOLD + BOLD}Egg Timers:
- ${YELLOW}Breakfast: ${WHITE + getTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"}
- ${YELLOW}Lunch: ${WHITE + getTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"}
- ${YELLOW}Dinner: ${WHITE + getTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"}`);
+ ${YELLOW}Breakfast: ${WHITE + formatTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"}
+ ${YELLOW}Lunch: ${WHITE + formatTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"}
+ ${YELLOW}Dinner: ${WHITE + formatTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"}`);
 }).setFps(1), () => settings.eggTimers && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {

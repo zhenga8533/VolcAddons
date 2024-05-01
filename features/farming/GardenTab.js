@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
-import { getTime } from "../../utils/functions/format";
+import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
@@ -55,7 +55,7 @@ registerWhen(register("step", () => {
 
     // Update next display
     if (tabTime !== 0 && tabTime < nextVisitor - 60 || tabTime > nextVisitor + 60 || nextVisitor === 0) nextVisitor = tabTime;
-    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + formatTime(nextVisitor)}`;
     else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
 
     gardenOverlay.setMessage(gardenMessage);
@@ -82,7 +82,7 @@ registerWhen(register("step", () => {
     visitors.forEach(visitor => {
         gardenMessage += visitor + '\n';
     });
-    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + getTime(nextVisitor)}`;
+    if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + formatTime(nextVisitor)}`;
     else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
     gardenOverlay.setMessage(gardenMessage);
 }).setFps(1), () => settings.gardenTab);

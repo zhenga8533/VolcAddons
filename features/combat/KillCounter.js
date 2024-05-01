@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
-import { formatNumber, getTime } from "../../utils/functions/format";
+import { formatNumber, formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { getPaused } from "../../utils/stat";
@@ -42,7 +42,7 @@ function updateCounter() {
 
     counterOverlay.setMessage(messageLines.join('\n') +
         `\n\n${DARK_RED + BOLD}Total: ${RESET + formatNumber(total) + GRAY} (${formatNumber(total / time * 3600)}/hr)` +
-        `\n${DARK_RED + BOLD}Time: ${RESET + getTime(time)}`);
+        `\n${DARK_RED + BOLD}Time: ${RESET + formatTime(time)}`);
 }
 
 /**

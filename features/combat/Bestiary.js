@@ -1,7 +1,7 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { getTime, romanToNum } from "../../utils/functions/format";
+import { formatTime, romanToNum } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
 
@@ -343,7 +343,7 @@ function sortBestiary(val, amount) {
     // Displaying the sorted bestiary information in chat
     ChatLib.chat(`\n${LOGO + WHITE + BOLD}Leftover Bestiary: `);
     Object.keys(sortedBestiary).forEach((key) => {
-        ChatLib.chat(`${GOLD + BOLD + key}: ${GREEN}Needs ${RED + sortedBestiary[key].next + GREEN} kills! (${RED + getTime(sortedBestiary[key].nextTime) + GREEN})`);
+        ChatLib.chat(`${GOLD + BOLD + key}: ${GREEN}Needs ${RED + sortedBestiary[key].next + GREEN} kills! (${RED + formatTime(sortedBestiary[key].nextTime) + GREEN})`);
     });
 }
   
@@ -373,7 +373,7 @@ export function getBestiary(args) {
                 ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
                 ChatLib.chat(`${LOGO + RED}Please input as ${WHITE}/va be ${GRAY}<${WHITE}[name], kill, time, bracket [1-7]${GRAY}> ${WHITE}[amount]`);
             } else
-                ChatLib.chat(`${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${RED + getTime(mob.nextTime) + GREEN})`);
+                ChatLib.chat(`${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${RED + formatTime(mob.nextTime) + GREEN})`);
             break;
     }
     updateBestiary(data.lastID, args);

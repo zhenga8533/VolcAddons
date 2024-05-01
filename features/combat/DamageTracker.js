@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_GRAY, EntityArmorStand, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
-import { formatNumber, getTime } from "../../utils/functions/format";
+import { formatNumber, formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 
 
@@ -129,7 +129,7 @@ registerWhen(register("tick", () => {
             
             const time = Date.now()/1000 - start;
             ChatLib.chat(
-`\n${LOGO + GOLD + BOLD}Damage Statistical Analysis ${GRAY}[${getTime(time, 2)}]
+`\n${LOGO + GOLD + BOLD}Damage Statistical Analysis ${GRAY}[${formattime(time, 2)}]
             
 ${RED + BOLD}Extremas:
   ${DARK_GRAY}- ${YELLOW}Max Damage: ${WHITE + formatNumber(max * 20)}

@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
-import { formatNumber, getTime } from "../../utils/functions/format";
+import { formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
@@ -148,7 +148,7 @@ registerWhen(register("tick", () => {
             data.playtime < 10_800 ? YELLOW :
             data.playtime < 18_000 ? GOLD : 
             data.playtime < 28_800 ? RED : DARK_RED;
-        statsMessage += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + getTime(data.playtime)}`;
+        statsMessage += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + formatTime(data.playtime)}`;
     }
 
     statsOverlay.setMessage(statsMessage);
@@ -182,7 +182,7 @@ export function getStat(stat) {
                 data.playtime < 18_000 ? GOLD : 
                 data.playtime < 28_800 ? RED : DARK_RED;
             
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${ptColor + getTime(data.playtime)}`);
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${ptColor + formatTime(data.playtime)}`);
             break;
         case "legion":
             const player = Player.asPlayerMP();

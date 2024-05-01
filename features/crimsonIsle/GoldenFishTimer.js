@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/constants";
-import { getTime } from "../../utils/functions/format";
+import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
@@ -27,8 +27,8 @@ registerWhen(register("step", () => {
         lastFish = 0;
     
     fishOverlay.setMessage( 
-`${GOLD + BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE + getTime(lastCast)}
-${GOLD + BOLD}Last Fish: ${RESET + getTime(lastCast > 270 ? 0 : lastFish)}`);
+`${GOLD + BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE + formatTime(lastCast)}
+${GOLD + BOLD}Last Fish: ${RESET + formatTime(lastCast > 270 ? 0 : lastFish)}`);
 }).setFps(1), () => location.getWorld() === "Crimson Isle" && settings.goldenFishAlert);
 
 /**

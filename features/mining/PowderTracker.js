@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
-import { commafy, getTime } from "../../utils/functions/format";
+import { commafy, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
 import { Stat, getPaused } from "../../utils/stat";
@@ -76,7 +76,7 @@ registerWhen(register("step", () => {
     });
 
     // Set HUD
-    const timeDisplay = displayTime !== 0 ? getTime(displayTime) : `${RED}Inactive`;
+    const timeDisplay = displayTime !== 0 ? formatTime(displayTime) : `${RED}Inactive`;
     powderOverlay.setMessage( 
 `${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
 ${DARK_GREEN + BOLD}Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr

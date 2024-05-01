@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { commafy, getTime } from "../../utils/functions/format";
+import { commafy, formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { Stat, getPaused } from "../../utils/stat";
@@ -44,7 +44,7 @@ registerWhen(register("step", () => {
     piggy.now = purse;
     
     // Update GUI
-    const timeDisplay = piggy.since < settings.coinTracker * 60 ? getTime(piggy.time) : `${RED}Inactive`;
+    const timeDisplay = piggy.since < settings.coinTracker * 60 ? formatTime(piggy.time) : `${RED}Inactive`;
     coinOverlay.setMessage(
 `${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.getGain())} ¢
 ${GOLD + BOLD}Time: ${WHITE + timeDisplay}

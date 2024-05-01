@@ -2,7 +2,7 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { data } from "../../utils/data";
-import { commafy, getTime, romanToNum } from "../../utils/functions/format";
+import { commafy, formatTime, romanToNum } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
 import { getBazaar } from "../economy/Economy";
@@ -75,10 +75,10 @@ registerWhen(register("step", () => {
     }
 
     emptyCompost--;
-    const message = emptyCompost <= 100 ? `${RED}Inactive` : `${WHITE + getTime(emptyCompost)}`;
+    const message = emptyCompost <= 100 ? `${RED}Inactive` : `${WHITE + formatTime(emptyCompost)}`;
     const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
     const nextCompost = !time ? `${RED}Inactive` :
-        getTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
+        formatTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
     compostOverlay.setMessage(
 `${DARK_GREEN + BOLD}Composter:
 ${GREEN}Empty: ${message}

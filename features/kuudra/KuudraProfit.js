@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/constants";
-import { commafy, formatNumber, getTime } from "../../utils/functions/format";
+import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
@@ -94,7 +94,7 @@ function updateProfitTracker(openedChest) {
 `${DARK_RED + BOLD}Profit: ${WHITE + formatNumber(profitView.profit.toFixed(0))} ¢
 ${DARK_RED + BOLD}Chests: ${WHITE + commafy(profitView.chests)} chests
 ${DARK_RED + BOLD}Average: ${WHITE + formatNumber(profitView.average.toFixed(0))} ¢/chest
-${DARK_RED + BOLD}Time: ${WHITE + getTime(profitView.time)}
+${DARK_RED + BOLD}Time: ${WHITE + formatTime(profitView.time)}
 ${DARK_RED + BOLD}Rate: ${WHITE + formatNumber(profitView.rate.toFixed(0))} ¢/hr`);
 }
 

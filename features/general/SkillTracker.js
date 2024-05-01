@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_AQUA, GREEN, RED, WHITE } from "../../utils/constants";
-import { commafy, getTime, romanToNum, unformatNumber } from "../../utils/functions/format";
+import { commafy, formatTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { Stat, getPaused } from "../../utils/stat";
@@ -157,7 +157,7 @@ registerWhen(register("step", () => {
     }
     
     // Set HUD
-    const timeDisplay = skill.since < settings.skillTracker * 60 ? getTime(skill.time) : `${RED}Inactive`;
+    const timeDisplay = skill.since < settings.skillTracker * 60 ? formatTime(skill.time) : `${RED}Inactive`;
     let skillMessage = 
 `${DARK_AQUA + BOLD}Skill: ${WHITE + current}
 ${DARK_AQUA + BOLD}Gain: ${WHITE + commafy(skill.getGain())} xp
@@ -168,7 +168,7 @@ ${DARK_AQUA + BOLD}Level Up: `;
     // Set time until next
     if (skill.level !== 60) {
         const neededXP = xpTable[skill.level + 1] - skill.now;
-        if (neededXP > 0) skillMessage += `${WHITE + getTime(neededXP / rate * 3600)}`;
+        if (neededXP > 0) skillMessage += `${WHITE + formatTime(neededXP / rate * 3600)}`;
         else skillMessage += `${GREEN}MAXED`;
     } else skillMessage += `${GREEN}MAXED`;
 

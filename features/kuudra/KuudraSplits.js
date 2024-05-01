@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
-import { getTime, isValidDate } from "../../utils/functions/format";
+import { formatTime, isValidDate } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
@@ -166,22 +166,22 @@ registerWhen(register("step", () => {
 
     switch (phase) {
         case 1:
-            times[0] = getTime(Date.now() / 1000 - kuudraSplit[0], 2);
+            times[0] = formatTime(Date.now() / 1000 - kuudraSplit[0], 2);
             break;
         case 2:
-            times[0] = getTime(kuudraSplit[1] - kuudraSplit[0], 2);
-            times[1] = getTime(Date.now() / 1000 - kuudraSplit[1], 2);
+            times[0] = formatTime(kuudraSplit[1] - kuudraSplit[0], 2);
+            times[1] = formatTime(Date.now() / 1000 - kuudraSplit[1], 2);
             break;
         case 3:
-            times[1] = getTime(kuudraSplit[2] - kuudraSplit[1], 2);
-            times[2] = getTime(Date.now() / 1000 - kuudraSplit[2], 2);
+            times[1] = formatTime(kuudraSplit[2] - kuudraSplit[1], 2);
+            times[2] = formatTime(Date.now() / 1000 - kuudraSplit[2], 2);
             break;
         case 4:
-            times[2] = getTime(kuudraSplit[3] - kuudraSplit[2], 2);
-            times[3] = getTime(Date.now() / 1000 - kuudraSplit[3], 2);
+            times[2] = formatTime(kuudraSplit[3] - kuudraSplit[2], 2);
+            times[3] = formatTime(Date.now() / 1000 - kuudraSplit[3], 2);
             break;
         case 5:
-            times[3] = getTime(kuudraSplit[4] - kuudraSplit[3], 2);
+            times[3] = formatTime(kuudraSplit[4] - kuudraSplit[3], 2);
             break;
     }
     
@@ -207,23 +207,23 @@ registerWhen(register("chat", (player, message) => {
         case "split":
         case "last":
             last = [
-                getTime(data.splits.last[0], 2),
-                getTime(data.splits.last[1], 2),
-                getTime(data.splits.last[2], 2),
-                getTime(data.splits.last[3], 2),
-                getTime(data.splits.last[4], 2)
+                formatTime(data.splits.last[0], 2),
+                formatTime(data.splits.last[1], 2),
+                formatTime(data.splits.last[2], 2),
+                formatTime(data.splits.last[3], 2),
+                formatTime(data.splits.last[4], 2)
             ];
             delay(() => ChatLib.command(`pc Supplies: ${last[0]} | Build: ${last[1]} | Fuel/Stun: ${last[2]} | Kuudra: ${last[3]} | Total: ${last[4]}`), 500);
             break;
         case "best":
             best = [
-                getTime(data.splits.best[0], 2),
-                getTime(data.splits.best[1], 2),
-                getTime(data.splits.best[2], 2),
-                getTime(data.splits.best[3], 2),
-                getTime(data.splits.best[4], 2)
+                formatTime(data.splits.best[0], 2),
+                formatTime(data.splits.best[1], 2),
+                formatTime(data.splits.best[2], 2),
+                formatTime(data.splits.best[3], 2),
+                formatTime(data.splits.best[4], 2)
             ];
-            theory = getTime(data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3], 2);
+            theory = formatTime(data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3], 2);
             delay(() => ChatLib.command(`pc Supplies: ${best[0]} | Build: ${best[1]} | Fuel/Stun: ${best[2]} | Kuudra: ${best[3]} | Total: ${best[4]} | Theoretical Best: ${theory}`), 500);
             break;
     }
@@ -242,18 +242,18 @@ registerWhen(register("chat", (player, message) => {
 function formatSplits(splits, color, runs) {
     if (color === GREEN) ChatLib.chat(`${DARK_GREEN + BOLD}Average for last ${runs} runs:`);
     ChatLib.chat(
-`${color + BOLD}Supplies: ${RESET + getTime(splits[0], 2)}
-${color + BOLD}Build: ${RESET + getTime(splits[1], 2)}
-${color + BOLD}Fuel/Stun: ${RESET + getTime(splits[2], 2)}
-${color + BOLD}Kuudra: ${RESET + getTime(splits[3], 2)}
-${color + BOLD}Overall Run: ${RESET + getTime(splits[4], 2)}`);
+`${color + BOLD}Supplies: ${RESET + formatTime(splits[0], 2)}
+${color + BOLD}Build: ${RESET + formatTime(splits[1], 2)}
+${color + BOLD}Fuel/Stun: ${RESET + formatTime(splits[2], 2)}
+${color + BOLD}Kuudra: ${RESET + formatTime(splits[3], 2)}
+${color + BOLD}Overall Run: ${RESET + formatTime(splits[4], 2)}`);
     if (color === GOLD) {
         const theory = (data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3]).toFixed(2);
-        ChatLib.chat(`${color + BOLD}Theoretical Best: ${RESET + getTime(theory, 2)}`);
+        ChatLib.chat(`${color + BOLD}Theoretical Best: ${RESET + formatTime(theory, 2)}`);
     }
     if (color === RED) {
         const conjecture = (data.splits.worst[0] + data.splits.worst[1] + data.splits.worst[2] + data.splits.worst[3]).toFixed(2);
-        ChatLib.chat(`${color + BOLD}Theoretical Worst: ${RESET + getTime(conjecture, 2)}`);
+        ChatLib.chat(`${color + BOLD}Theoretical Worst: ${RESET + formatTime(conjecture, 2)}`);
     }
 }
 
