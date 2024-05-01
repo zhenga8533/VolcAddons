@@ -23,15 +23,15 @@ const DEFAULT_GUI = {
     "SL": [10, 180, 1.2, false, false, true], // Splits Location
     "TL": [10, 130, 1.2, false, false, true], // Golden Fish Timer Location
     "UL": [930, 65, 1.2, false, false, false], // Armor Display Location
-    "VL": [10, 180, 1.2, false, false, true], // Visitors Location
+    "VL": [10, 170, 1.2, false, false, true], // Visitors Location
     "WL": [730, 130, 1.2, false, false, true], // Wolf Combo Location
     "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, false, true], // Searchbox location
-    "YL": [770, 170, 1.2, false, false, true], // SkyBlock Stats Location
+    "YL": [770, 165, 1.2, false, false, true], // SkyBlock Stats Location
     "ZL": [780, 330, 1.2, false, false, true], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false, true], // Bingo Card Location
     "CDL": [190, 115, 1.2, false, false, true], // Commission Display Location
     "CEL": [375, 275, 3, false, false, true], // Crate edit location
-    "CFL": [10, 260, 1.2, false, false, true], // Chocolate factory location
+    "CFL": [180, 130, 1.2, false, false, true], // Chocolate factory location
     "CGL": [10, 115, 1.2, false, false, true], // Chocolate egg location
     "EQL": [905, 65, 1.2, false, false, false], // Equipment Location
     "FHL": [580, 160, 1.2, false, false, true], // Fossil Helper Location
