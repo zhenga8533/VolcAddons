@@ -154,7 +154,7 @@ ${GREEN}Total Profit: ${RESET + commafy(net)}\n${PSA}`);
             // Format ChatLib.chat
             ChatLib.chat(
 `\n${GOLD + BOLD}${minions} Inferno Minion(s) t${tier} ${DARK_GRAY + BOLD}[Heavy]:
-${AQUA}Gabagool ${GRAY}[${commafy(gabagool)}]${AQUA}: ${RESET + commafy(heavyGabagool)}
+${AQUA}Gabagool ${GRAY}[${commafy(gabagool)}]${AQUA}: ${RESET + commafy(heavyGabagool)}\n
 ${RED}Fuel Price: ${RESET + commafy(heavyPrice)}
 ${GREEN}Total Profit: ${RESET + commafy(heavyProfit)}\n${PSA}`);
             break;
@@ -168,11 +168,11 @@ ${GREEN}Total Profit: ${RESET + commafy(heavyProfit)}\n${PSA}`);
             
             ChatLib.chat(
 `\n${GOLD + BOLD}Drops for ${minions} Vampire Minion(s) t${tier}
-${AQUA + BOLD}Hemovibe ${GRAY + BOLD}[${hemovibe[0]}]${AQUA}: ${RESET + commafy(hemovibe[1])}
-${AQUA + BOLD}Hemoglass ${GRAY + BOLD}[${hemoglass[0]}]${AQUA}: ${RESET + commafy(hemoglass[1])}
-${AQUA + BOLD}Hemobomb ${GRAY + BOLD}[${hemobomb[0]}]${AQUA}: ${RESET + commafy(hemobomb[1])}
-${RED + BOLD}Hyper Catalyst Cost: ${RESET + commafy(vampCost)}
-${GREEN + BOLD}Total Profit: ${RESET + commafy(vampProfit)}\n${PSA}`);
+${AQUA}Hemovibe ${GRAY}[${hemovibe[0]}]${AQUA}: ${RESET + commafy(hemovibe[1])}
+${AQUA}Hemoglass ${GRAY}[${hemoglass[0]}]${AQUA}: ${RESET + commafy(hemoglass[1])}
+${AQUA}Hemobomb ${GRAY}[${hemobomb[0]}]${AQUA}: ${RESET + commafy(hemobomb[1])}\n
+${RED}Hyper Catalyst Cost: ${RESET + commafy(vampCost)}
+${GREEN}Total Profit: ${RESET + commafy(vampProfit)}\n${PSA}`);
             break;
     }
 }
