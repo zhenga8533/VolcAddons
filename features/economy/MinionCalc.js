@@ -1,6 +1,6 @@
-import { AQUA, BOLD, DARK_AQUA, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/constants';
-import { commafy } from '../../utils/functions/format';
 import settings from '../../utils/settings';
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/constants';
+import { commafy } from '../../utils/functions/format';
 import { getBazaar } from './Economy';
 
 
@@ -129,20 +129,21 @@ ${AQUA}Sell Offer + Insta Buy: ${WHITE + commafy(p4)}\n`);
 
             // ChatLib the values
             ChatLib.chat(
-`\n${GOLD + BOLD}Average Profit for ${minions} Inferno Minion(s) t${tier}
-${AQUA + BOLD}Crude Gabagool ${GRAY + BOLD}[${drops.GABAGOOL}]${AQUA}: ${RESET + commafy(profit.GABAGOOL)}
-${AQUA + BOLD}Chili Pepper ${GRAY + BOLD}[${drops.CHILI}]${AQUA}: ${RESET + commafy(profit.CHILI)}
-${AQUA + BOLD}Inferno Vertex ${GRAY + BOLD}[${drops.VERTEX}]${AQUA}: ${RESET + commafy(profit.VERTEX)}
-${AQUA + BOLD}Inferno Apex ${GRAY + BOLD}[${drops.APEX}]${AQUA}: ${RESET + commafy(profit.APEX)}
-${AQUA + BOLD}Reaper Pepper ${GRAY + BOLD}[${drops.REAPER}]${AQUA}: ${RESET + commafy(profit.REAPER)}\n
-${RED + BOLD}Fuel Price: ${RESET + commafy(fuel)}
-${GREEN + BOLD}Total Profit: ${RESET + commafy(net)}\n${PSA}`);
+`\n${GOLD + BOLD + minions} Inferno Minion(s) t${tier} ${DARK_GRAY + BOLD}[Hypergolic]:
+${AQUA}Crude Gabagool ${GRAY}[${commafy(drops.GABAGOOL)}]${AQUA}: ${RESET + commafy(profit.GABAGOOL)}
+${AQUA}Chili Pepper ${GRAY}[${commafy(drops.CHILI)}]${AQUA}: ${RESET + commafy(profit.CHILI)}
+${AQUA}Inferno Vertex ${GRAY}[${drops.VERTEX}]${AQUA}: ${RESET + commafy(profit.VERTEX)}
+${AQUA}Inferno Apex ${GRAY}[${drops.APEX}]${AQUA}: ${RESET + commafy(profit.APEX)}
+${AQUA}Reaper Pepper ${GRAY}[${drops.REAPER}]${AQUA}: ${RESET + commafy(profit.REAPER)}\n
+${RED}Fuel Price: ${RESET + commafy(fuel)}
+${GREEN}Total Profit: ${RESET + commafy(net)}\n${PSA}`);
             break;
         case "gabagool": // GABAGOOL!!!
         case "gaba":
             // Heavy 15x
             infernoAction /= 16;
-            const heavyGabagool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1 - settings.priceType];
+            const gabagool = minions * 86400 / (2 * infernoAction);
+            const heavyGabagool = gabagool * bazaar.CRUDE_GABAGOOL[1 - settings.priceType];
             const heavyPrice = minions * (
                 bazaar.HEAVY_GABAGOOL[settings.priceType] +
                 6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[settings.priceType] +
@@ -150,25 +151,12 @@ ${GREEN + BOLD}Total Profit: ${RESET + commafy(net)}\n${PSA}`);
             );
             const heavyProfit = heavyGabagool - heavyPrice;
 
-            // Fuel 10x
-            infernoAction *= 1.6;
-            const fuelGabgool = minions * 86400 / (2 * infernoAction) * bazaar.CRUDE_GABAGOOL[1 - settings.priceType];
-            const fuelPrice = minions * (
-                bazaar.FUEL_GABAGOOL[settings.priceType] +
-                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[settings.priceType] +
-                2 * bazaar.INFERNO_FUEL_BLOCK[settings.priceType]
-            );
-            const fuelProfit = fuelGabgool - fuelPrice;
-
             // Format ChatLib.chat
             ChatLib.chat(
-`\n${GOLD + BOLD}Average Profit for ${minions} Inferno Minion(s) t${tier}
-${AQUA + BOLD}Heavy Gabagool Drops: ${RESET + commafy(heavyGabagool)}
-${RED + BOLD}Heavy Gabagool Cost: ${RESET + commafy(heavyPrice)}
-${GREEN + BOLD}Heavy Gabagool Profit: ${RESET + commafy(heavyProfit)}\n
-${AQUA + BOLD}Fuel Gabagool Drops: ${RESET + commafy(fuelGabgool)}
-${RED + BOLD}Fuel Gabagool Cost: ${RESET + commafy(fuelPrice)}
-${GREEN + BOLD}Fuel Gabagool Profit: ${RESET + commafy(fuelProfit)}\n${PSA}`);
+`\n${GOLD + BOLD}${minions} Inferno Minion(s) t${tier} ${DARK_GRAY + BOLD}[Heavy]:
+${AQUA}Gabagool ${GRAY}[${commafy(gabagool)}]${AQUA}: ${RESET + commafy(heavyGabagool)}
+${RED}Fuel Price: ${RESET + commafy(heavyPrice)}
+${GREEN}Total Profit: ${RESET + commafy(heavyProfit)}\n${PSA}`);
             break;
         case "vampire":
         case "vamp":
