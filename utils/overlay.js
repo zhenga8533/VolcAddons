@@ -290,7 +290,7 @@ export class Overlay {
                 let stringWidth = 0;
 
                 for (let i = 0; i < splitLine.length; i++) {
-                    if (i % 2 === 0) stringWidth += Renderer.getStringWidth(splitLine[i]);
+                    if (i === 0) stringWidth += Renderer.getStringWidth(splitLine[i]);
                     else {
                         let clearIndex = splitLine[i].indexOf("§");
                         let boldedString = clearIndex !== -1 ? splitLine[i].substring(0, clearIndex) : splitLine[i];
