@@ -13,13 +13,6 @@ import { data } from "../../utils/data";
  */
 const statsExample = 
 `${DARK_AQUA + BOLD}Pet: ${GOLD}-..-
-${DARK_AQUA + BOLD}Stats:
-${GRAY}- ${WHITE}Strength: ${RED}-1
-${GRAY}- ${WHITE}Dexterity: ${RED}-1
-${GRAY}- ${WHITE}Constitution: ${RED}-1
-${GRAY}- ${WHITE}Intelligence: ${RED}-1
-${GRAY}- ${WHITE}Wisdom: ${RED}-1
-${GRAY}- ${WHITE}Charisma: ${GREEN}999
 ${DARK_AQUA + BOLD}Legion: ${RED}0 ${DARK_GRAY}(0%)
 ${DARK_AQUA + BOLD}SF: ${GREEN}/ -.. ${AQUA}⸎
 ${DARK_AQUA + BOLD}Daily PT: ${GREEN}/ -..`;
@@ -83,26 +76,6 @@ register("chat", () => {
 }).setCriteria("  RIFT INSTABILITY WARNING");
 
 /**
- * Tab stats
- */
-const stats = [];
-registerWhen(register("step", () => {
-    if (!World.isLoaded()) return;
-    let tab = TabList?.getNames();
-    if (tab === undefined) return;
-    stats.length = 0;
-
-    let index = tab.findIndex(line => line.startsWith("§r§e§lStats:")) + 1;
-    if (index === 0) return;
-    let stat = tab[index];
-
-    while (stat.startsWith("§r ") && !stat.endsWith("§r§3§lInfo§r")) {
-        stats.push(stat);
-        stat = tab[++index];
-    }
-}).setDelay(1), () => true);
-
-/**
  * Get soulflow using inventory
  */
 let soulflow = 0;
@@ -143,12 +116,6 @@ registerWhen(register("tick", () => {
     if (toggles.petDisplay) {
         let pet = data.pet.length > 36 ? data.pet.split(' ').slice(2).join(' ') : data.pet;
         statsMessage += `${DARK_AQUA + BOLD}Pet: ${pet}\n`;
-    }
-
-    // Stats
-    if (toggles.statsDisplay) {
-        statsMessage += `${DARK_AQUA + BOLD}Stats:\n`;
-        stats.forEach(stat => statsMessage += `${GRAY}-${stat}\n` );
     }
 
     // Legion
@@ -196,10 +163,6 @@ export function getStat(stat) {
     switch (stat) {
         case "pet":
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Pet: ${data.pet}`);
-            break;
-        case "stats":
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Stats:`);
-            stats.forEach(stat => ChatLib.chat(`${GRAY}-${stat}`) );
             break;
         case "soulflow":
         case "sf":

@@ -186,7 +186,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     @SwitchProperty({
         name: "Widget Display",
-        description: "Displays any widget in ${AQUA}/va wgl${GRAY}. Move GUI with ${AQUA}/move<widget>${GRAY}.",
+        description: `Displays any widget in ${AQUA}/va wgl${GRAY}. Move GUI with ${AQUA}/move<widget>${GRAY}.`,
         category: "General",
         subcategory: "General"
     })

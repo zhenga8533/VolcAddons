@@ -3,41 +3,41 @@ import { CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
 
 
 const DEFAULT_GUI = {
-    "AL": [780, 430, 1.2, false, false, false], // Skill Tracker Location
-    "BL": [10, 120, 1.2, false, false, false], // Vampire Location
-    "CL": [10, 180, 1.2, false, false, false], // Counter Location
-    "DL": [10, 180, 1.2, false, false, false], // Broodmother Location
-    "EL": [100, 150, 1.1, false, false, false], // Advanced Value Location
-    "FL": [220, 10, 1.2, false, false, false], // Trophy Fish Location
-    "GL": [10, 140, 1.2, false, false, false], // Gyro Location
-    "HL": [10, 240, 1.2, false, false, false], // Powder Chest Location
-    "IL": [10, 180, 1.2, false, false, false], // Inq Location
-    "JL": [150, 180, 1.2, false, false, false], // Kill Counter Location
-    "KL": [600, 220, 1.2, false, false, false], // Kuudra Profit Location
-    "LL": [770, 70, 1.2, false, false, false], // Server Status Location
-    "ML": [780, 390, 1.2, false, false, false], // Coins Location
-    "OL": [10, 130, 1.2, false, false, false], // Composter Location
-    "PL": [10, 100, 1.2, false, false, false], // Powder Location
-    "QL": [250, 225, 4, false, false, false], // Vanquisher Location
-    "RL": [600, 175, 1, false, false, false], // Container Value Location
-    "SL": [10, 180, 1.2, false, false, false], // Splits Location
-    "TL": [10, 130, 1.2, false, false, false], // Golden Fish Timer Location
+    "AL": [780, 430, 1.2, false, false, true], // Skill Tracker Location
+    "BL": [10, 120, 1.2, false, false, true], // Vampire Location
+    "CL": [10, 180, 1.2, false, false, true], // Counter Location
+    "DL": [10, 180, 1.2, false, false, true], // Broodmother Location
+    "EL": [100, 150, 1.1, false, false, true], // Advanced Value Location
+    "FL": [220, 10, 1.2, false, false, true], // Trophy Fish Location
+    "GL": [10, 140, 1.2, false, false, true], // Gyro Location
+    "HL": [10, 240, 1.2, false, false, true], // Powder Chest Location
+    "IL": [10, 180, 1.2, false, false, true], // Inq Location
+    "JL": [150, 180, 1.2, false, false, true], // Kill Counter Location
+    "KL": [600, 220, 1.2, false, false, true], // Kuudra Profit Location
+    "LL": [770, 70, 1.2, false, false, true], // Server Status Location
+    "ML": [780, 390, 1.2, false, false, true], // Coins Location
+    "OL": [10, 130, 1.2, false, false, true], // Composter Location
+    "PL": [10, 100, 1.2, false, false, true], // Powder Location
+    "QL": [250, 225, 4, false, false, true], // Vanquisher Location
+    "RL": [600, 175, 1, false, false, true], // Container Value Location
+    "SL": [10, 180, 1.2, false, false, true], // Splits Location
+    "TL": [10, 130, 1.2, false, false, true], // Golden Fish Timer Location
     "UL": [930, 65, 1.2, false, false, false], // Armor Display Location
-    "VL": [10, 180, 1.2, false, false, false], // Visitors Location
-    "WL": [730, 130, 1.2, false, false, false], // Wolf Combo Location
-    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, false, false], // Searchbox location
-    "YL": [770, 170, 1.2, false, false, false], // SkyBlock Stats Location
-    "ZL": [780, 330, 1.2, false, false, false], // Kuudra Profit Tracker Location
-    "BCL": [180, 10, 1, false, false, false], // Bingo Card Location
-    "CDL": [190, 115, 1.2, false, false, false], // Commission Display Location
-    "CEL": [375, 275, 3, false, false, false], // Crate edit location
-    "CFL": [10, 260, 1.2, false, false, false], // Chocolate factory location
-    "CGL": [10, 115, 1.2, false, false, false], // Chocolate egg location
+    "VL": [10, 180, 1.2, false, false, true], // Visitors Location
+    "WL": [730, 130, 1.2, false, false, true], // Wolf Combo Location
+    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, false, true], // Searchbox location
+    "YL": [770, 170, 1.2, false, false, true], // SkyBlock Stats Location
+    "ZL": [780, 330, 1.2, false, false, true], // Kuudra Profit Tracker Location
+    "BCL": [180, 10, 1, false, false, true], // Bingo Card Location
+    "CDL": [190, 115, 1.2, false, false, true], // Commission Display Location
+    "CEL": [375, 275, 3, false, false, true], // Crate edit location
+    "CFL": [10, 260, 1.2, false, false, true], // Chocolate factory location
+    "CGL": [10, 115, 1.2, false, false, true], // Chocolate egg location
     "EQL": [905, 65, 1.2, false, false, false], // Equipment Location
-    "FHL": [580, 160, 1.2, false, false, false], // Fossil Helper Location
-    "PHL": [170, 160, 1.2, false, false, false], // Pesthunter Location
-    "SDL": [170, 180, 1.2, false, false, false], // Spray Display Location
-    "TVL": [600, 150, 1.2, false, false, false], // Trade Value Location
+    "FHL": [580, 160, 1.2, false, false, true], // Fossil Helper Location
+    "PHL": [170, 160, 1.2, false, false, true], // Pesthunter Location
+    "SDL": [170, 180, 1.2, false, false, true], // Spray Display Location
+    "TVL": [600, 150, 1.2, false, false, true], // Trade Value Location
 }
 
 // --- PERSISTENT DATA ---
