@@ -28,8 +28,8 @@ let skillsTracked = false;
 let current = "None";
 const skillExample =
 `${DARK_AQUA + BOLD}Skill: ${WHITE}None
-${DARK_AQUA + BOLD}XP Gained: ${WHITE}0
-${DARK_AQUA + BOLD}Time Passed: ${RED}Inactive
+${DARK_AQUA + BOLD}Gain: ${WHITE}0
+${DARK_AQUA + BOLD}Time: ${RED}Inactive
 ${DARK_AQUA + BOLD}Rate: ${WHITE}0 xp/hr
 ${DARK_AQUA + BOLD}Level Up: ${GREEN}MAXED`;
 const skillOverlay = new Overlay("skillTracker", data.AL, "moveSkills", skillExample);
@@ -159,8 +159,8 @@ registerWhen(register("step", () => {
     const timeDisplay = skill.since < settings.skillTracker * 60 ? getTime(skill.time) : `${RED}Inactive`;
     let skillMessage = 
 `${DARK_AQUA + BOLD}Skill: ${WHITE + current}
-${DARK_AQUA + BOLD}XP Gained: ${WHITE + commafy(skill.getGain())} xp
-${DARK_AQUA + BOLD}Time Passed: ${WHITE + timeDisplay}
+${DARK_AQUA + BOLD}Gain: ${WHITE + commafy(skill.getGain())} xp
+${DARK_AQUA + BOLD}Time: ${WHITE + timeDisplay}
 ${DARK_AQUA + BOLD}Rate: ${WHITE + commafy(rate)} xp/hr
 ${DARK_AQUA + BOLD}Level Up: `;
 

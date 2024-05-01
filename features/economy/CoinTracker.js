@@ -18,7 +18,7 @@ register("command", () => {
 }).setName("resetCoins");
 const coinExample = 
 `${GOLD + BOLD}Gained: ${WHITE}COUNTING
-${GOLD + BOLD}Time Passed: ${WHITE}ME
+${GOLD + BOLD}Time: ${WHITE}ME
 ${GOLD + BOLD}Rate: ${WHITE}MONEY`;
 const coinOverlay = new Overlay("coinTracker", data.ML, "moveCoins", coinExample);
 
@@ -47,6 +47,6 @@ registerWhen(register("step", () => {
     const timeDisplay = piggy.since < settings.coinTracker * 60 ? getTime(piggy.time) : `${RED}Inactive`;
     coinOverlay.setMessage(
 `${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.getGain())} ¢
-${GOLD + BOLD}Time Passed: ${WHITE + timeDisplay}
+${GOLD + BOLD}Time: ${WHITE + timeDisplay}
 ${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.getRate())} ¢/hr`);
 }).setFps(1), () => settings.coinTracker !== 0);

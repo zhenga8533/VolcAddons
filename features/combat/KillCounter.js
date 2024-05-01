@@ -24,8 +24,8 @@ ${RED + BOLD}マーリン: ${RESET}∞^0
 ${RED + BOLD}エスカノール: ${RESET}∞-∞
 ${RED + BOLD}ゴウセル: ${RESET}0^0
 
-${DARK_RED + BOLD}Total Kills: ${RESET}∞^∞
-${DARK_RED + BOLD}Time Passed: ${RESET}-∞`;
+${DARK_RED + BOLD}Total: ${RESET}∞^∞
+${DARK_RED + BOLD}Time: ${RESET}-∞`;
 const counterOverlay = new Overlay("killCounter", data.JL, "moveKills", counterExample);
 counterOverlay.setMessage("");
 
@@ -41,8 +41,8 @@ function updateCounter() {
     });
 
     counterOverlay.setMessage(messageLines.join('\n') +
-        `\n\n${DARK_RED + BOLD}Total Kills: ${RESET + formatNumber(total) + GRAY} (${formatNumber(total / time * 3600)}/hr)` +
-        `\n${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`);
+        `\n\n${DARK_RED + BOLD}Total: ${RESET + formatNumber(total) + GRAY} (${formatNumber(total / time * 3600)}/hr)` +
+        `\n${DARK_RED + BOLD}Time: ${RESET + getTime(time)}`);
 }
 
 /**

@@ -64,7 +64,7 @@ const coinageExample =
 `${DARK_RED + BOLD}Profit: ${WHITE}And
 ${DARK_RED + BOLD}Chests: ${WHITE}He
 ${DARK_RED + BOLD}Average: ${WHITE}Asked
-${DARK_RED + BOLD}Time Passed: ${WHITE}The
+${DARK_RED + BOLD}Time: ${WHITE}The
 ${DARK_RED + BOLD}Rate: ${WHITE}Man`;
 const coinageOverlay = new Overlay("kuudraProfitTracker", data.ZL, "moveKPT", coinageExample, ["Kuudra", "Crimson Isle"]);
 
@@ -94,7 +94,7 @@ function updateProfitTracker(openedChest) {
 `${DARK_RED + BOLD}Profit: ${WHITE + formatNumber(profitView.profit.toFixed(0))} ¢
 ${DARK_RED + BOLD}Chests: ${WHITE + commafy(profitView.chests)} chests
 ${DARK_RED + BOLD}Average: ${WHITE + formatNumber(profitView.average.toFixed(0))} ¢/chest
-${DARK_RED + BOLD}Time Passed: ${WHITE + getTime(profitView.time)}
+${DARK_RED + BOLD}Time: ${WHITE + getTime(profitView.time)}
 ${DARK_RED + BOLD}Rate: ${WHITE + formatNumber(profitView.rate.toFixed(0))} ¢/hr`);
 }
 
