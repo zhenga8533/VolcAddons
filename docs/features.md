@@ -63,7 +63,6 @@ subtitle: List of all features and their related commands.
 - **Bestiary**
     - Bestiary Display
     - Bestiary GUI
-    - Broodmother Detect (`/moveBrood`)
     - Kill Counter (`/moveKills`, `/resetKills`)
 - **General**
     - Combo Display (`/moveCombo`)

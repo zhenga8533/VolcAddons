@@ -581,14 +581,6 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     bestiaryGUI = true;
 
-    @SwitchProperty({
-        name: "Broodmother Detect",
-        description: `Alerts player when Broodmother spawns in lobby and displays time until next spawn.\nMove GUI with ${AQUA}/moveBrood${GRAY}.`,
-        category: "Combat",
-        subcategory: "Bestiary"
-    })
-    broodmotherDetect = false;
-
     @ColorProperty({
         name: "Hitbox Color",
         description: `Set the seed and opacity used to randomize entity hitbox colors.`,

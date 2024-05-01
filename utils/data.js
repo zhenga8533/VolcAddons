@@ -6,7 +6,7 @@ const DEFAULT_GUI = {
     "AL": [780, 430, 1.2, false, false, true], // Skill Tracker Location
     "BL": [10, 120, 1.2, false, false, true], // Vampire Location
     "CL": [10, 180, 1.2, false, false, true], // Counter Location
-    "DL": [10, 180, 1.2, false, false, true], // Broodmother Location
+    "DL": [10, 180, 1.2, false, false, true], // 
     "EL": [100, 150, 1.1, false, false, true], // Advanced Value Location
     "FL": [220, 10, 1.2, false, false, true], // Trophy Fish Location
     "GL": [10, 140, 1.2, false, false, true], // Gyro Location

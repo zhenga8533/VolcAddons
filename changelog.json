@@ -1,6 +1,6 @@
 [
-    "- Changed utils be somewhat more organized",
-    "- Changed default overlay to have background",
+    "- Changed utils to be somewhat more organized",
+    "- Changed overlay to default with background",
     "- Fixed overlay flex box",
     "- Removed Broodmother overlay",
     "- Removed Stats from stats toggles (/va wgl add stats)"
