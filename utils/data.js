@@ -39,7 +39,7 @@ const DEFAULT_GUI = {
     "CDL": [190, 115, 1.2, false, false, true], // Commission Display Location
     "CEL": [375, 275, 3, false, false, true], // Crate edit location
     "CFL": [180, 130, 1.2, false, false, true], // Chocolate factory location
-    "CGL": [10, 115, 1.2, false, false, true], // Chocolate egg location
+    "CGL": [625, 10, 1.2, false, false, true], // Chocolate egg location
     "CPL": [575, 160, 1, false, false, false], // Container preview location
     "EQL": [905, 65, 1.2, false, false, false], // Equipment Location
     "FHL": [580, 160, 1.2, false, false, true], // Fossil Helper Location
@@ -87,7 +87,11 @@ export let data = new PogObject("VolcAddons", {
     "chocolate": 0,
     "chocoProduction": 0,
     "chocoLast": 0,
+    "chocoTotal": 0,
     "chocoAll": 0,
+    "chocoPrestige": 0,
+    "dupeEggs": 0,
+    "totalEggs": 0,
     // kuudra splits stuff
     "files": [],
     "splits": {

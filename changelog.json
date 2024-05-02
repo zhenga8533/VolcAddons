@@ -1,5 +1,6 @@
 [
     "- Added storage preview",
+    "- TBD: Added duplicate rabbit tracking",
     "- Added more data to Chocolate Factory",
     "- Changed utils to be somewhat more organized",
     "- Changed overlay to default with background",
@@ -10,6 +11,7 @@
     "- Fixed overlay flex box",
     "- Fixed container value carrying over",
     "- Fixed worker highlight when maxed",
+    "- Fixed choco display not updating if highlight is off",
     "- Removed Broodmother overlay",
     "- Removed Stats from stats toggles (/va wgl add stats)"
 ]
