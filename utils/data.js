@@ -151,11 +151,11 @@ export const itemNBTs = new PogObject("VolcAddons", {
 // Set up storage data
 if (itemNBTs.backpacks.length === 0) {
     for (let i = 0; i < 18; i++)
-        itemNBTs.backpacks.push(new Array(45).fill(null));
+        itemNBTs.backpacks.push(new Array(54).fill(null));
 }
 if (itemNBTs.enderchests.length === 0) {
     for (let i = 0; i < 18; i++)
-        itemNBTs.enderchests.push(new Array(45).fill(null));
+        itemNBTs.enderchests.push(new Array(54).fill(null));
 }
 
 // --- GUI CONTROL ---

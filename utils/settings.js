@@ -194,8 +194,16 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     // --- Inventory ---
     @SwitchProperty({
+        name: "Container Preview",
+        description: `${DARK_RED}NEW! ${GRAY}Renders a preview of hovered container besides container GUI. ${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
+        category: "General",
+        subcategory: "Inventory"
+    })
+    containerPreview = false;
+
+    @SwitchProperty({
         name: "Jyrre Time Display",
-        description: 'Adds time label to Bottle of Jyrre item description.',
+        description: "Adds time label to Bottle of Jyrre item description.",
         category: "General",
         subcategory: "Inventory"
     })
