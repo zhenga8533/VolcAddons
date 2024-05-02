@@ -43,12 +43,14 @@ registerWhen(register("guiOpened", () => {
 /**
  * Render preview on container hover.
  */
-let lastPreview = 0;
+let lastPreview = "0";
 let previewItems = [];
 const CONTAINER_PNG = new Image("container.png");
 
 const preview = register("guiRender", () => {
     CONTAINER_PNG.draw(575, 160);
+    Renderer.drawString(lastPreview, 580, 165, true);
+
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
             let item = previewItems[i * 9 + j];
@@ -74,7 +76,7 @@ const preview = register("guiRender", () => {
 
 const clear = register("guiClosed", () => {
     previewItems = [];
-    lastPreview = 0;
+    lastPreview = "0";
     preview.unregister();
     clear.unregister();
 }).unregister();
@@ -85,9 +87,9 @@ registerWhen(register("itemTooltip", (_, item) => {
     if (name.startsWith("§aEnder Chest Page") || name.startsWith("§6Backpack Slot")) {
         const split = name.split(' ');
         const i = parseInt(split[split.length - 1]) - 1;
-        if (lastPreview === name + i) return;
+        if (lastPreview === name) return;
 
-        lastPreview = name + i;
+        lastPreview = name;
         previewItems = itemNBTs[name.startsWith("§a") ? "enderchests" : "backpacks"][i].map(nbt => {
             return nbt === null ? null :
                 new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT))
@@ -97,7 +99,7 @@ registerWhen(register("itemTooltip", (_, item) => {
         clear.register();
     } else {
         previewItems = [];
-        lastPreview = 0;
+        lastPreview = "0";
         preview.unregister();
         clear.unregister();
     }
