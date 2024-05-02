@@ -1,6 +1,6 @@
 import settings from '../../utils/settings';
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/constants';
-import { commafy } from '../../utils/functions/format';
+import { commafy, formatNumber } from '../../utils/functions/format';
 import { getBazaar } from './Economy';
 
 
@@ -104,11 +104,11 @@ ${AQUA}Sell Offer + Insta Buy: ${WHITE + commafy(p4)}\n`);
             const apexMinion = tier >= 10 ? 2 : 1;
 
             const drops = {
-                "GABAGOOL": actions.toFixed(4),
-                "CHILI": (actions / (156 / eyedrop) * 1.15).toFixed(4),
-                "VERTEX": (actions / (16364 / eyedrop) * 2.8).toFixed(4),
-                "APEX": (actions / (1570909 / eyedrop) * apexMinion * 1.2).toFixed(4),
-                "REAPER": (actions / (458182 / eyedrop)).toFixed(4)
+                "GABAGOOL": actions,
+                "CHILI": (actions / (156 / eyedrop) * 1.15),
+                "VERTEX": (actions / (16364 / eyedrop) * 2.8).toFixed(2),
+                "APEX": (actions / (1570909 / eyedrop) * apexMinion * 1.2).toFixed(2),
+                "REAPER": (actions / (458182 / eyedrop)).toFixed(2)
             }
             const profit = {
                 "GABAGOOL": drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1 - settings.priceType],
@@ -130,8 +130,8 @@ ${AQUA}Sell Offer + Insta Buy: ${WHITE + commafy(p4)}\n`);
             // ChatLib the values
             ChatLib.chat(
 `\n${GOLD + BOLD + minions} Inferno Minion(s) t${tier} ${DARK_GRAY + BOLD}[Hypergolic]:
-${AQUA}Crude Gabagool ${GRAY}[${commafy(drops.GABAGOOL)}]${AQUA}: ${RESET + commafy(profit.GABAGOOL)}
-${AQUA}Chili Pepper ${GRAY}[${commafy(drops.CHILI)}]${AQUA}: ${RESET + commafy(profit.CHILI)}
+${AQUA}Crude Gabagool ${GRAY}[${formatNumber(drops.GABAGOOL)}]${AQUA}: ${RESET + commafy(profit.GABAGOOL)}
+${AQUA}Chili Pepper ${GRAY}[${formatNumber(drops.CHILI)}]${AQUA}: ${RESET + commafy(profit.CHILI)}
 ${AQUA}Inferno Vertex ${GRAY}[${drops.VERTEX}]${AQUA}: ${RESET + commafy(profit.VERTEX)}
 ${AQUA}Inferno Apex ${GRAY}[${drops.APEX}]${AQUA}: ${RESET + commafy(profit.APEX)}
 ${AQUA}Reaper Pepper ${GRAY}[${drops.REAPER}]${AQUA}: ${RESET + commafy(profit.REAPER)}\n
