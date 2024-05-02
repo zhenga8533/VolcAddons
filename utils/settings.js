@@ -351,7 +351,8 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     // --- Container ---
     @SwitchProperty({
         name: "Container Preview",
-        description: `${DARK_RED}NEW! ${GRAY}Renders a preview of hovered container besides container GUI. ${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
+        description: `${DARK_RED}NEW! ${GRAY}Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
+${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
         category: "Container",
         subcategory: "Container"
     })
