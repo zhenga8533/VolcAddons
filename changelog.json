@@ -4,6 +4,7 @@
     "- Changed overlay to default with background",
     "- Changed equipment display to be persistant",
     "- Changed searchbar to work with containers",
+    "- Changed item cooldown to not change stack size",
     "- Moved some settings to container category",
     "- Fixed overlay flex box",
     "- Fixed container value carrying over",

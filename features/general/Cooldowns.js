@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { GREEN } from "../../utils/constants";
+import { DARK_GREEN, DARK_RED, GREEN, RED, YELLOW } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
 
@@ -21,11 +21,9 @@ registerWhen(register("clicked", (x, y, button, down) => {
         if (isNaN(remaining)) return;
 
         if (firstLetter === 'a' || (firstLetter === 'l' && !(heldName in items) && button === 0)) {
-            held.setStackSize(remaining);
             items[heldName] = [remaining, held.getName()];
         }
     } else if (button === 1 && !(heldName in items)) {
-        held.setStackSize(cd);
         items[heldName] = [cd, held.getName()];
     }
 }), () => data.cdlist.length !== 0);
@@ -56,10 +54,8 @@ shiftKey.registerKeyPress(() => {
         const remaining = cd.substring(1);
 
         if (firstLetter === 's' && !isNaN(remaining)) {
-            piece.setStackSize(remaining);
             items[pieceName] = [remaining, piece.getName()];
         } else if (!isNaN(cd)) {
-            piece.setStackSize(cd);
             items[pieceName] = [cd, piece.getName()];
         }
     });
@@ -93,7 +89,6 @@ registerWhen(register("tick", () => {
         else if (cd <= 0) {
             if (settings.cooldownAlert)
                 Client.showTitle(itemName, `${GREEN}is off cooldown!`, 5, 25, 5);
-            item.setStackSize(1);
             delete items[itemID];
         }
     });
@@ -102,16 +97,17 @@ registerWhen(register("tick", () => {
 /**
  * Change stack size during renderHotbar for smoother countdown.
  */
-registerWhen(register("renderHotbar", () => {
-    if (filteredItems === undefined || filteredItems.length === 0) return;
-    
-    filteredItems = Player.getInventory().getItems().filter(item =>
-        item !== null && item?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id") in items);
-    filteredItems.forEach(item => {
-        const itemID = item?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
+registerWhen(register("renderItemIntoGui", (item, x, y) => {
+    const id = item.getNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
 
-        const cd = Math.ceil(items[itemID][0]);
-        if (isNaN(cd)) delete items[itemID];
-        else item.setStackSize(cd);
-    });
+    if (id in items) {
+        const cd = items[id][0];
+        const color = cd < 5 ? GREEN :
+            cd < 15 ? DARK_GREEN :
+            cd < 30 ? YELLOW :
+            cd < 60 ? RED : DARK_RED;
+
+        Renderer.translate(0, 0, 999);
+        Renderer.drawString(color + Math.ceil(cd), x, y, true);
+    }
 }), () => data.cdlist.length !== 0);
