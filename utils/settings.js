@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_BLUE, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -16,7 +16,7 @@ import {
 
 @Vigilant("VolcAddons", "VolcAddons", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Party", "Economy", "Combat", "Mining", "Farming", "Event", "Crimson Isles", "Dungeon", "Kuudra", "Rift"];
+        const categories = ["General", "Container", "Party", "Economy", "Combat", "Mining", "Farming", "Event", "Crimson Isles", "Dungeon", "Kuudra", "Rift"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -29,6 +29,9 @@ class Settings {
         `${HEADER}
 ${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, fairy, whitelist, blacklist, blocklist>
 ${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at your own risk [UAYOR]!`);
+
+        // Container Category
+        this.setCategoryDescription("Container", HEADER);
 
         // Party Category
         this.setCategoryDescription("Party",
@@ -132,22 +135,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // --- General ---
     @SwitchProperty({
-        name: "Armor Display",
-        description: `Displays user's armor pieces as icons on an overlay. Move GUI with ${AQUA}/moveArmor${GRAY}.`,
-        category: "General",
-        subcategory: "General"
-    })
-    armorDisplay = false;
-    
-    @SwitchProperty({
-        name: "Equipment Display",
-        description: `Displays user's equipment pieces as icons on an overlay. Move GUI with ${AQUA}/moveEq${GRAY}.`,
-        category: "General",
-        subcategory: "General"
-    })
-    equipDisplay = false;
-
-    @SwitchProperty({
         name: "Remove Selfie Mode",
         description: "Removes selfie mode from perspective toggle.",
         category: "General",
@@ -191,50 +178,6 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         subcategory: "General"
     })
     widgetDisplay = true;
-
-    // --- Inventory ---
-    @SwitchProperty({
-        name: "Container Preview",
-        description: `${DARK_RED}NEW! ${GRAY}Renders a preview of hovered container besides container GUI. ${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
-        category: "General",
-        subcategory: "Inventory"
-    })
-    containerPreview = false;
-
-    @SwitchProperty({
-        name: "Jyrre Time Display",
-        description: "Adds time label to Bottle of Jyrre item description.",
-        category: "General",
-        subcategory: "Inventory"
-    })
-    jyrreTimer = true;
-
-    @SwitchProperty({
-        name: "Searchbar",
-        description: `Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||). Also can be used as a basic calculator.
-Move GUI with ${AQUA}/moveSearch${GRAY}.`,
-        category: "General",
-        subcategory: "Inventory"
-    })
-    searchbar = false;
-    
-    @SwitchProperty({
-        name: "Slot Binding",
-        description: `Scuffed version of NEU's slot binding feature (you can swap pressing inventory slots but not hotbar slots :>).
-Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, list binds with ${AQUA}/listBinds, delete binds with ${AQUA}/deleteBinds, \
-${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
-        category: "General",
-        subcategory: "Inventory",
-    })
-    slotBinding = false;
-
-    @SwitchProperty({
-        name: "Wardrobe Hotkey",
-        description: "Allows linking between wardrobe slots and keys. Set key in MC controls to use in wardrobe menu, and follow the instruction provided there.",
-        category: "General",
-        subcategory: "Inventory",
-    })
-    wardrobeBinding = false;
 
     // --- Server ---
     @SliderProperty({
@@ -401,6 +344,70 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         subcategory: "Yapping"
     })
     imageRatio = 0.0;
+
+
+    // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
+
+    // --- Container ---
+    @SwitchProperty({
+        name: "Container Preview",
+        description: `${DARK_RED}NEW! ${GRAY}Renders a preview of hovered container besides container GUI. ${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
+        category: "Container",
+        subcategory: "Container"
+    })
+    containerPreview = false;
+    
+    @SwitchProperty({
+        name: "Searchbar",
+        description: `Highlights item with matching name/lore with search. Supports binary AND (&&) and OR (||). Also can be used as a basic calculator.
+Move GUI with ${AQUA}/moveSearch${GRAY}.`,
+        category: "Container",
+        subcategory: "Container"
+    })
+    searchbar = false;
+    
+    @SwitchProperty({
+        name: "Slot Binding",
+        description: `Scuffed version of NEU's slot binding feature (you can swap pressing inventory slots but not hotbar slots :>).
+Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, list binds with ${AQUA}/listBinds, delete binds with ${AQUA}/deleteBinds, \
+${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
+        category: "Container",
+        subcategory: "Container",
+    })
+    slotBinding = true;
+
+    @SwitchProperty({
+        name: "Wardrobe Hotkey",
+        description: "Allows linking between wardrobe slots and keys. Set key in MC controls to use in wardrobe menu, and follow the instruction provided there.",
+        category: "Container",
+        subcategory: "Container",
+    })
+    wardrobeBinding = true;
+
+    // --- Inventory ---
+    @SwitchProperty({
+        name: "Armor Display",
+        description: `Displays user's armor pieces as icons on an overlay. Move GUI with ${AQUA}/moveArmor${GRAY}.`,
+        category: "Container",
+        subcategory: "Items"
+    })
+    armorDisplay = false;
+    
+    @SwitchProperty({
+        name: "Equipment Display",
+        description: `Displays user's equipment pieces as icons on an overlay. Move GUI with ${AQUA}/moveEq${GRAY}.`,
+        category: "Container",
+        subcategory: "Items"
+    })
+    equipDisplay = false;
+
+    @SwitchProperty({
+        name: "Jyrre Time Display",
+        description: "Adds time label to Bottle of Jyrre item description.",
+        category: "Container",
+        subcategory: "Items"
+    })
+    jyrreTimer = true;
 
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████

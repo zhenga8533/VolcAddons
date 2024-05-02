@@ -1,8 +1,8 @@
-import { BLUE, COLOR_TABLE, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE } from "../../utils/constants";
+import settings from "../../utils/settings";
+import { COLOR_TABLE} from "../../utils/constants";
 import { itemNBTs } from "../../utils/data";
 import { compressNBT, decompressNBT } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
-import settings from "../../utils/settings";
 
 
 /**

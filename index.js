@@ -17,7 +17,6 @@ for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key
 if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
 
 // General Features
-import "./features/general/ArmorDisplay";
 import "./features/general/Autocorrect";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
@@ -25,22 +24,23 @@ import "./features/general/ChunkBorders";
 import "./features/general/Cooldowns";
 import "./features/general/FairySouls";
 import "./features/general/ImageViewer";
-import "./features/general/JyrreTimer";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
-import "./features/general/Searchbar";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
 import "./features/general/SkyCrypt";
-import "./features/general/SlotBinding";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
-import "./features/general/WardrobeHotkey";
 import "./features/general/WidgetDisplay";
 // Container Features
+import "./features/container/ArmorDisplay";
 import "./features/container/ContainerPreview";
+import "./features/container/JyrreTimer";
+import "./features/container/Searchbar";
+import "./features/container/SlotBinding";
+import "./features/container/WardrobeHotkey";
 // Party Features
 import "./features/party/AntiGhostParty";
 import "./features/party/AutoKick";
