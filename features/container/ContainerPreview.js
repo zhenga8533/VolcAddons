@@ -8,7 +8,24 @@ import { registerWhen } from "../../utils/register";
 /**
  * Log item data as compressed NBT.
  */
-registerWhen(register("guiMouseClick", () => {
+let nameCache = ["T1", 0];
+let itemsCache = [];
+const cacheItems = register("guiMouseClick", () => {
+    Client.scheduleTask(1, () => itemsCache = Player.getContainer().getItems().slice(0, 54));
+}).unregister();
+
+const saveCache = register("guiClosed", () => {
+    if (nameCache[0] === "EC")
+        itemNBTs.enderchests[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+    else if (nameCache[1] === "BP")
+        itemNBTs.backpacks[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+
+    saveCache.unregister();
+    cacheItems.unregister();
+    itemsCache = [];
+}).unregister();
+
+register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const name = Player.getContainer().getName();
         const split = name.split(' ');
@@ -17,28 +34,20 @@ registerWhen(register("guiMouseClick", () => {
         if (name.startsWith("Ender Chest")) {
             const i = parseInt(split[2][1]) - 1;
             itemNBTs.enderchests[i] = items.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+            nameCache = ["EC", i];
+
+            saveCache.register();
+            cacheItems.register();
         } else if (split[1].startsWith("Backpack")) {
             const i = parseInt(split[split.length - 1].replace(/\D/g, "")) - 1;
             itemNBTs.backpacks[i] = items.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+            nameCache = ["BP", i];
+
+            saveCache.register();
+            cacheItems.register();
         }
     });
-}), () => settings.containerPreview);
-
-registerWhen(register("guiOpened", () => {
-    Client.scheduleTask(1, () => {
-        const name = Player.getContainer().getName();
-        const split = name.split(' ');
-        const items = Player.getContainer().getItems().slice(0, 54);
-
-        if (name.startsWith("Ender Chest")) {
-            const i = parseInt(split[2][1]) - 1;
-            itemNBTs.enderchests[i] = items.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-        } else if (split[1].startsWith("Backpack")) {
-            const i = parseInt(split[split.length - 1].replace(/\D/g, "")) - 1;
-            itemNBTs.backpacks[i] = items.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-        }
-    });
-}), () => settings.containerPreview);
+});
 
 /**
  * Render preview on container hover.

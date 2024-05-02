@@ -3,6 +3,7 @@
     "- Changed utils to be somewhat more organized",
     "- Changed overlay to default with background",
     "- Changed equipment display to be persistant",
+    "- Changed searchbar to work with containers",
     "- Moved some settings to container category",
     "- Fixed overlay flex box",
     "- Fixed container value carrying over",
