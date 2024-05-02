@@ -1,4 +1,5 @@
 [
+    "- Added storage preview",
     "- Changed utils to be somewhat more organized",
     "- Changed overlay to default with background",
     "- Changed equipment display to be persistant",

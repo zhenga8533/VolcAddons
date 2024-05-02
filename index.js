@@ -39,6 +39,8 @@ import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/WardrobeHotkey";
 import "./features/general/WidgetDisplay";
+// Container Features
+import "./features/container/ContainerPreview";
 // Party Features
 import "./features/party/AntiGhostParty";
 import "./features/party/AutoKick";

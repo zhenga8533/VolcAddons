@@ -143,8 +143,20 @@ export let data = new PogObject("VolcAddons", {
 
 export const itemNBTs = new PogObject("VolcAddons", {
     "armor": [null, null, null, null],
-    "equip": [null, null, null, null]
+    "equip": [null, null, null, null],
+    "backpacks": [],
+    "enderchests": []
 }, "data/itemNBTs.json");
+
+// Set up storage data
+if (itemNBTs.backpacks.length === 0) {
+    for (let i = 0; i < 18; i++)
+        itemNBTs.backpacks.push(new Array(45).fill(null));
+}
+if (itemNBTs.enderchests.length === 0) {
+    for (let i = 0; i < 18; i++)
+        itemNBTs.enderchests.push(new Array(45).fill(null));
+}
 
 // --- GUI CONTROL ---
 export function resetGUI() {
