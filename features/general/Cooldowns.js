@@ -108,6 +108,6 @@ registerWhen(register("renderItemIntoGui", (item, x, y) => {
             cd < 60 ? RED : DARK_RED;
 
         Renderer.translate(0, 0, 999);
-        Renderer.drawString(color + Math.ceil(cd), x, y, true);
+        Renderer.drawString(color + parseFloat(cd).toFixed(cd >= 100 ? 0 : 1), x, y - 6, true);
     }
 }), () => data.cdlist.length !== 0);
