@@ -1,6 +1,6 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTime, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
@@ -8,7 +8,7 @@ import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
 import { announceMob } from "../../utils/functions/misc";
 
-//DUPLICATE RABBIT! +69,401 Chocolate
+
 /**
  * Choco latte
  */
@@ -50,19 +50,19 @@ const updateChocolate = register("tick", () => {
  */
 const chocoExample =
 `§6§lChocolate:
-§eCurrent: §f12.72m
-§eProduction: §73.59k
-§eTotal: §f901.78m
-§eAll-time: §71.11b
-§ePrestige: §f1.00b
+ §eCurrent: §f12.72m
+ §eProduction: §73.59k
+ §eTotal: §f901.78m
+ §eAll-time: §71.11b
+ §ePrestige: §f1.00b
 
 §6§lTime:
-§ePrestige: §77hr36m10s
-§eLast Open: §f2m27s
+ §ePrestige: §77hr36m10s
+ §eLast Open: §f2m27s
 
 §6§lRabbits:
-§eTotal: §7101
-§eDupes: §f0`;
+ §eTotal: §7101
+ §eDupes: §f0`;
 const chocoOverlay = new Overlay("chocoDisplay", data.CFL, "moveChoco", chocoExample);
 
 register("step", () => {
@@ -89,6 +89,10 @@ ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${GRAY + data.totalEggs}
  ${YELLOW}Dupes: ${WHITE + data.dupeEggs}`);
 }).setFps(1);
+
+register("chat", () => {
+    data.dupeEggs++;
+}).setCriteria("DUPLICATE RABBIT! +${x} Chocolate");
 
 
 /**
