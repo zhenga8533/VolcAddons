@@ -48,10 +48,11 @@ ${GOLD + BOLD}Time: ${YELLOW + formatTimeElapsed(data.chocoLast, now)}`);
 /**
  * Highlight best worker.
  */
-let bestWorker = 29;
+let bestWorker = 0;
 let bestCost = 0;
 
 function findWorker() {
+    bestWorker = 0;
     const items = Player.getContainer().getItems();
     const workers = [];
     for (let i = 29; i < 34; i++) workers.push(items[i].getLore())
@@ -79,6 +80,7 @@ const workerFind = register("chat", () => {
 }).setCriteria("Rabbit ${rabbit} has been promoted to ${rank}!").unregister();
 
 const workerHighlight = register("guiRender", () => {
+    if (bestWorker === 0) return;
     const containerType = Player.getContainer().getClassName();
     const [x, y] = getSlotCoords(bestWorker, containerType);
 

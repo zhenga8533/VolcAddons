@@ -8,6 +8,7 @@
     "- Moved some settings to container category",
     "- Fixed overlay flex box",
     "- Fixed container value carrying over",
+    "- Fixed worker highlight when maxed",
     "- Removed Broodmother overlay",
     "- Removed Stats from stats toggles (/va wgl add stats)"
 ]
