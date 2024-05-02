@@ -1,3 +1,4 @@
+import { BLUE, COLOR_TABLE, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE } from "../../utils/constants";
 import { itemNBTs } from "../../utils/data";
 import { compressNBT, decompressNBT } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
@@ -52,7 +53,21 @@ const preview = register("guiRender", () => {
         for (let j = 0; j < 9; j++) {
             let item = previewItems[i * 9 + j];
             if (item === null) continue;
-            item.draw(582.5 + j * 18, 177.5 + i * 18, 1);
+
+            let x = 582.5 + j * 18;
+            let y = 177.5 + i * 18;
+            
+            // Draw rarity box
+            let color = COLOR_TABLE[item.getName().substring(0, 2)];
+            if (color !== undefined) Renderer.drawRect(Renderer.color(...color, 128), x, y, 17, 17);
+
+            // Draw item and size
+            item.draw(x, y, 1);
+            let size = item.getStackSize();
+            if (size !== 1) {
+                Renderer.translate(0, 0, 999);
+                Renderer.drawString(size, x - Renderer.getStringWidth(size) + 17, y + 9, true);
+            }
         }
     }
 }).unregister();
