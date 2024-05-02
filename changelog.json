@@ -1,5 +1,6 @@
 [
     "- Added storage preview",
+    "- Added more data to Chocolate Factory",
     "- Changed utils to be somewhat more organized",
     "- Changed overlay to default with background",
     "- Changed equipment display to be persistant",

@@ -13,8 +13,8 @@ import { getBazaar } from "../economy/Economy";
  */
 const compostExample =
 `${DARK_GREEN + BOLD}Composter:
-${GREEN}Empty: ${WHITE}Loading
-${GREEN}Next: ${WHITE}...`;
+ ${GREEN}Empty: ${WHITE}Loading
+ ${GREEN}Next: ${WHITE}...`;
 const compostOverlay = new Overlay("compostTab", data.OL, "moveCompost", compostExample, ["Garden"]);
 let emptyCompost = 0;
 
@@ -81,8 +81,8 @@ registerWhen(register("step", () => {
         formatTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
     compostOverlay.setMessage(
 `${DARK_GREEN + BOLD}Composter:
-${GREEN}Empty: ${message}
-${GREEN}Next: ${WHITE + nextCompost}`);
+ ${GREEN}Empty: ${message}
+ ${GREEN}Next: ${WHITE + nextCompost}`);
 }).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab !== 0);
 
 /**
