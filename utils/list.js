@@ -27,7 +27,8 @@ export function updateList(args, listName) {
 
     // Object pairs
     const held = Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
-    const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[3] ?? args[2]) : args.slice(3).join(' ');
+    const value = listName === "valuelist" ? unformatNumber(args[3]) : 
+        listName === "cdlist" ? args[2] : args.slice(3).join(' ');
     const key = listName === "colorlist" ? convertToPascalCase(args[2]) :
         (listName === "cdlist" || listName === "valuelist") && held !== undefined ? held : args[2];
 
