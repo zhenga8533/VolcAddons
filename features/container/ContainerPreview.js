@@ -1,8 +1,9 @@
 import settings from "../../utils/settings";
 import { COLOR_TABLE} from "../../utils/constants";
-import { itemNBTs } from "../../utils/data";
+import { data, itemNBTs } from "../../utils/data";
 import { compressNBT, decompressNBT } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
+import { Overlay } from "../../utils/overlay";
 
 
 /**
@@ -55,18 +56,19 @@ register("guiOpened", () => {
 let lastPreview = "0";
 let previewItems = [];
 const CONTAINER_PNG = new Image("container.png");
+new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "guiRender");
 
 const preview = register("guiRender", () => {
-    CONTAINER_PNG.draw(575, 160);
-    Renderer.drawString(lastPreview, 580, 165, true);
+    CONTAINER_PNG.draw(data.CPL[0], data.CPL[1]);
+    Renderer.drawString(lastPreview, data.CPL[0] + 5, data.CPL[1] + 5, true);
 
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
             let item = previewItems[i * 9 + j];
             if (item === null) continue;
 
-            let x = 582.5 + j * 18;
-            let y = 177.5 + i * 18;
+            let x = data.CPL[0] + 7.5 + j * 18;
+            let y = data.CPL[1] + 17.5 + i * 18;
             
             // Draw rarity box
             let color = COLOR_TABLE[item.getName().substring(0, 2)];

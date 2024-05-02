@@ -9,7 +9,7 @@ import { compressNBT, decompressNBT } from "../../utils/functions/misc";
  * Render armor pieces as icons
  */
 const pieces = [null, null, null, null];
-new Overlay("armorDisplay", data.UL, "moveArmor", "Move", ["all"], "renderOverlay", () => {
+new Overlay("armorDisplay", data.UL, "moveArmor", "Armor", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.UL[2];
 
     pieces.forEach(piece => {
@@ -46,7 +46,7 @@ let equipment = itemNBTs.equip.map(nbt => {
     return nbt === null ? null :
         new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT))
 });
-new Overlay("equipDisplay", data.EQL, "moveEq", "Move", ["all"], "renderOverlay", () => {
+new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.EQL[2];
 
     equipment.forEach(piece => {
