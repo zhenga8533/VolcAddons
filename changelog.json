@@ -2,6 +2,7 @@
     "- Added attribute abbreviations",
     "- TBD: Added tower and barn data to choco",
     "- Changed time formatting",
+    "- Fixed Jyrre timer",
     "- Fixed pick display being untoggleable",
     "- Fixed more tablist errors",
     "- Fixed overlay background toggle",
