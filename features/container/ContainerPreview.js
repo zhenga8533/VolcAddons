@@ -30,18 +30,18 @@ register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const name = Player.getContainer().getName();
         const split = name.split(' ');
-        const items = Player.getContainer().getItems().slice(0, 54);
+        itemsCache = Player.getContainer().getItems().slice(0, 54);
 
         if (name.startsWith("Ender Chest")) {
             const i = parseInt(split[2][1]) - 1;
-            itemNBTs.enderchests[i] = items.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+            itemNBTs.enderchests[i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
             nameCache = ["EC", i];
 
             saveCache.register();
             cacheItems.register();
         } else if (split[1].startsWith("Backpack")) {
             const i = parseInt(split[split.length - 1].replace(/\D/g, "")) - 1;
-            itemNBTs.backpacks[i] = items.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+            itemNBTs.backpacks[i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
             nameCache = ["BP", i];
 
             saveCache.register();
