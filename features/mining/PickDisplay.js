@@ -53,7 +53,8 @@ registerWhen(register("step", () => {
             drillMessage += `\n  ${GOLD + ability.substring(ability.indexOf(' '), ability.indexOf("  §e§lRIGHT CLICK"))} ${DARK_GRAY}[${RED}?${DARK_GRAY}]`;
     } else {
         abilities.forEach(key => {
-            drillMessage += `\n  ${GOLD + key + WHITE} ${DARK_GRAY}[${GREEN + cooldowns[key] + DARK_GRAY}]`;
+            const cd = cooldowns[key];
+            drillMessage += `\n  ${GOLD + key + WHITE} ${DARK_GRAY}[${(cd > 0 ? RED : GREEN) + cd + DARK_GRAY}]`;
         });
     }
 
