@@ -285,7 +285,8 @@ registerWhen(register("chat", (type) => {
 let lastRabbit = "Joe";
 
 registerWhen(register("chat", (_, rabbit, tier) => {
-    lastRabbit = `${tier.substring(0, 4) + rabbit + GRAY} (${tier + GRAY})`;
+    const noFormat = tier.toLowerCase().removeFormatting();
+    lastRabbit = `${tier.substring(0, noFormat.length - tier.length) + rabbit + GRAY} (${tier + GRAY})`;
 }).setCriteria("${hop} HUNT You found ${rabbit} (${tier})!"), () => settings.rabbitAlert);
 
 registerWhen(register("chat", (amount, event) => {
