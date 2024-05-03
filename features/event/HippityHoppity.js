@@ -79,7 +79,7 @@ register("step", () => {
  ${YELLOW}Production: ${GRAY + formatNumber(data.chocoProduction)}
  ${YELLOW}Total: ${WHITE + formatNumber(chocoTotal)}
  ${YELLOW}All-time: ${GRAY + formatNumber(chocoAll)}
- ${YELLOW}Prestige: ${WHITE + formatNumber(data.chocoPrestige)}
+ ${YELLOW}Prestige: ${data.chocoPrestige > 0 ? WHITE + formatNumber(data.chocoPrestige) : GREEN + "✔"}
 
 ${GOLD + BOLD}Time:
  ${YELLOW}Prestige: ${GRAY + formatTime(prestigeTime)}
