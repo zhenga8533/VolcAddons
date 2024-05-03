@@ -6,18 +6,10 @@ subtitle: List of all features and their related commands.
 
 ### <u>General Features</u>
 - **General**
-    - Armor Display (`/moveArmor`)
     - Chunk Borders
-    - Equipment Display (`/moveEq`)
-    - Jyrre Timer
     - Remove Selfie Mode
     - Render Waypoint
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
-- **Inventory**
-    - Recipe Hotkey
-    - Searchbar (`/moveSearch`)
-    - Slot Binding (`/<save, delete, list, load, reset>Binds [key]`)
-    - Wardrobe Hotkeys
 - **Server**
     - Fairy Soul Waypoints
     - Hide Far Entities
@@ -36,6 +28,18 @@ subtitle: List of all features and their related commands.
     - Custom Emotes (`/va emote`)
     - Discord Webhook
     - Image Viewer
+
+### <u>Container Features</u>
+- **General**
+    - Container Preview
+    - Recipe Hotkey
+    - Searchbar (`/moveSearch`)
+    - Slot Binding (`/<save, delete, list, load, reset>Binds [key]`)
+    - Wardrobe Hotkey
+- **Items**
+    - Armor Display (`/moveArmor`)
+    - Equipment Display (`/moveEq`)
+    - Jyrre Timer
 
 ### <u>Party Features</u>
 - **General**
@@ -63,7 +67,6 @@ subtitle: List of all features and their related commands.
 - **Bestiary**
     - Bestiary Display
     - Bestiary GUI
-    - Broodmother Detect (`/moveBrood`)
     - Kill Counter (`/moveKills`, `/resetKills`)
 - **General**
     - Combo Display (`/moveCombo`)

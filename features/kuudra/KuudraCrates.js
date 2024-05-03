@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { GIANT_CLASS, STAND_CLASS } from "../../utils/constants";
-import { registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
 import { getPhase } from "./KuudraSplits";
 
 

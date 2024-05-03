@@ -1,10 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { data, registerWhen } from "../../utils/variables";
-import { Overlay } from "../../utils/overlay";
-import { getClosest } from "../../utils/functions/find";
 import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/constants";
+import { getClosest } from "../../utils/functions/find";
 import { isLookingAway } from "../../utils/functions/matrix";
+import { Overlay } from "../../utils/overlay";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 
 
 const GEMSTONE_WAYPOINTS = {
@@ -42,7 +43,7 @@ const commissionExample =
 §r §r§fCorpse Looter: §r§c0%§r
 §r §r§fScrap Collector: §r§c0%§r
 §r §r§fCitrine Gemstone Collector: §r§c0%§r`;
-const commissionOverlay = new Overlay("commissionsDisplay", ["Crystal Hollows", "Dwarven Mines", "Mineshaft"], () => true, data.CDL, "moveCommissions", commissionExample);
+const commissionOverlay = new Overlay("commissionsDisplay", data.CDL, "moveCommissions", commissionExample, ["Crystal Hollows", "Dwarven Mines", "Mineshaft"]);
 
 registerWhen(register("renderWorld", () => {
     commissionWaypoints.forEach(gem => {

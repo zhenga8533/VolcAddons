@@ -1,9 +1,10 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/constants";
-import { getTime } from "../../utils/functions/format";
+import { formatTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**
@@ -14,7 +15,7 @@ let lastFish = 0;
 const fishExample =
 `${GOLD + BOLD}Last Cast: ${RESET}Yee
 ${GOLD + BOLD}Last Fish: ${RESET}Haw`;
-const fishOverlay = new Overlay("goldenFishAlert", ["Crimson Isle"], () => true, data.TL, "moveGolden", fishExample);
+const fishOverlay = new Overlay("goldenFishAlert", data.TL, "moveGolden", fishExample, ["Crimson Isle"]);
 
 /**
  * Increments time and updates Golden Fish Overlay every second.
@@ -26,8 +27,8 @@ registerWhen(register("step", () => {
         lastFish = 0;
     
     fishOverlay.setMessage( 
-`${GOLD + BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE + getTime(lastCast)}
-${GOLD + BOLD}Last Fish: ${RESET + getTime(lastCast > 270 ? 0 : lastFish)}`);
+`${GOLD + BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE + formatTime(lastCast)}
+${GOLD + BOLD}Last Fish: ${RESET + formatTime(lastCast > 270 ? 0 : lastFish)}`);
 }).setFps(1), () => location.getWorld() === "Crimson Isle" && settings.goldenFishAlert);
 
 /**

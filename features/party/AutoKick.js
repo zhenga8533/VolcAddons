@@ -1,14 +1,15 @@
-import { getIsLeader } from "../../utils/party";
+import party from "../../utils/party";
 import { getPlayerName } from "../../utils/functions/player";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**
  * Kick users on blacklist.
  */
 registerWhen(register("chat", (player) => {
-    if (!getIsLeader()) return;
+    if (!party.getLeader()) return;
     
     const name = getPlayerName(player).toLowerCase();
     if (data.blacklist.includes(name))

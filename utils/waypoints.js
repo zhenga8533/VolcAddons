@@ -1,17 +1,17 @@
 import renderBeaconBeam from "../../BeaconBeam";
-import RenderLib from "../../RenderLib/index.js";
+import RenderLib from "../../RenderLib/index";
 import settings from "./settings";
 import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { getPowderChests } from "../features/mining/PowderChest";
-import { data } from "./variables";
+import { data } from "./data";
 import { getBurrows } from "../features/event/BurrowDetect";
 import { getGuess } from "../features/event/MythRitual";
 import { getCompass } from "../features/mining/WishingCompass";
-import { getFairy } from "../features/general/FairySouls.js";
-import { getCorpses } from "../features/mining/ShaftAnnounce.js";
-import { getEggs } from "../features/event/HippityHoppity.js";
+import { getFairy } from "../features/general/FairySouls";
+import { getCorpses } from "../features/mining/ShaftAnnounce";
+import { getEggs } from "../features/event/HippityHoppity";
 
 
 /**

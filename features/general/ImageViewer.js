@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
 
 
 /**

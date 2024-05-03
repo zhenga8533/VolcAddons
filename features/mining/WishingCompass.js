@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { GRAY, GREEN, LOGO } from "../../utils/constants";
-import { registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
 
 
 /**
@@ -42,10 +42,10 @@ function findIntersection(line1, line2) {
  * Uses wishing compass shattered chat message to update path logic.
  */
 registerWhen(register("chat", () => {
-    if (zone === location.findZone()) lastPath = path;
+    if (zone === location.getZone()) lastPath = path;
     else lastPath = [];
 
-    zone = location.findZone();
+    zone = location.getZone();
     path = [];
 }).setCriteria("Your Wishing Compass shattered into pieces!"), () => location.getWorld() === "Crystal Hollows" && settings.compassLocator);
 

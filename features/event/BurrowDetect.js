@@ -4,8 +4,8 @@ import settings from "../../utils/settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
 import { playSound } from "../../utils/functions/misc";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { registerWhen } from "../../utils/variables";
 
 
 /**

@@ -1,6 +1,6 @@
-import { BOLD, DARK_AQUA, LOGO } from "../../utils/constants";
 import settings from "../../utils/settings";
-import { registerWhen } from "../../utils/variables";
+import { BOLD, DARK_AQUA, LOGO } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
 
 
 /**

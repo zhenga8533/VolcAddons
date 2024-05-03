@@ -1,11 +1,11 @@
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
-import { formatNumber, getTime } from "../../utils/functions/format";
+import { formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
-import { data, registerWhen } from "../../utils/variables";
-import { delay } from "../../utils/thread";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 
 
 /**
@@ -13,17 +13,10 @@ import { delay } from "../../utils/thread";
  */
 const statsExample = 
 `${DARK_AQUA + BOLD}Pet: ${GOLD}-..-
-${DARK_AQUA + BOLD}Stats:
-${GRAY}- ${WHITE}Strength: ${RED}-1
-${GRAY}- ${WHITE}Dexterity: ${RED}-1
-${GRAY}- ${WHITE}Constitution: ${RED}-1
-${GRAY}- ${WHITE}Intelligence: ${RED}-1
-${GRAY}- ${WHITE}Wisdom: ${RED}-1
-${GRAY}- ${WHITE}Charisma: ${GREEN}999
 ${DARK_AQUA + BOLD}Legion: ${RED}0 ${DARK_GRAY}(0%)
 ${DARK_AQUA + BOLD}SF: ${GREEN}/ -.. ${AQUA}⸎
 ${DARK_AQUA + BOLD}Daily PT: ${GREEN}/ -..`;
-const statsOverlay = new Overlay("statsDisplay", ["all"], () => true, data.YL, "moveStats", statsExample);
+const statsOverlay = new Overlay("statsDisplay", data.YL, "moveStats", statsExample);
 
 /**
  * Get equipped pet through tab widget, menu, or chat.
@@ -83,26 +76,6 @@ register("chat", () => {
 }).setCriteria("  RIFT INSTABILITY WARNING");
 
 /**
- * Tab stats
- */
-const stats = [];
-registerWhen(register("step", () => {
-    if (!World.isLoaded()) return;
-    let tab = TabList?.getNames();
-    if (tab === undefined) return;
-    stats.length = 0;
-
-    let index = tab.findIndex(line => line.startsWith("§r§e§lStats:")) + 1;
-    if (index === 0) return;
-    let stat = tab[index];
-
-    while (stat.startsWith("§r ") && !stat.endsWith("§r§3§lInfo§r")) {
-        stats.push(stat);
-        stat = tab[++index];
-    }
-}).setDelay(1), () => true);
-
-/**
  * Get soulflow using inventory
  */
 let soulflow = 0;
@@ -145,12 +118,6 @@ registerWhen(register("tick", () => {
         statsMessage += `${DARK_AQUA + BOLD}Pet: ${pet}\n`;
     }
 
-    // Stats
-    if (toggles.statsDisplay) {
-        statsMessage += `${DARK_AQUA + BOLD}Stats:\n`;
-        stats.forEach(stat => statsMessage += `${GRAY}-${stat}\n` );
-    }
-
     // Legion
     if (toggles.legionDisplay) {
         const player = Player.asPlayerMP();
@@ -181,7 +148,7 @@ registerWhen(register("tick", () => {
             data.playtime < 10_800 ? YELLOW :
             data.playtime < 18_000 ? GOLD : 
             data.playtime < 28_800 ? RED : DARK_RED;
-        statsMessage += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + getTime(data.playtime)}`;
+        statsMessage += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + formatTime(data.playtime)}`;
     }
 
     statsOverlay.setMessage(statsMessage);
@@ -196,10 +163,6 @@ export function getStat(stat) {
     switch (stat) {
         case "pet":
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Pet: ${data.pet}`);
-            break;
-        case "stats":
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Stats:`);
-            stats.forEach(stat => ChatLib.chat(`${GRAY}-${stat}`) );
             break;
         case "soulflow":
         case "sf":
@@ -219,7 +182,7 @@ export function getStat(stat) {
                 data.playtime < 18_000 ? GOLD : 
                 data.playtime < 28_800 ? RED : DARK_RED;
             
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${ptColor + getTime(data.playtime)}`);
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${ptColor + formatTime(data.playtime)}`);
             break;
         case "legion":
             const player = Player.asPlayerMP();

@@ -1,203 +1,16 @@
-import PogObject from "../../PogData";
 import settings from "./settings";
-import { AQUA, CAT_SOULS, DARK_AQUA, DARK_GRAY, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./constants";
-import { delay } from "./thread";
-
-
-const DEFAULT_GUI = {
-    "AL": [780, 430, 1.2, false, false, false], // Skill Tracker Location
-    "BL": [10, 120, 1.2, false, false, false], // Vampire Location
-    "CL": [10, 180, 1.2, false, false, false], // Counter Location
-    "DL": [10, 180, 1.2, false, false, false], // Broodmother Location
-    "EL": [100, 150, 1.1, false, false, false], // Advanced Value Location
-    "FL": [220, 10, 1.2, false, false, false], // Trophy Fish Location
-    "GL": [10, 140, 1.2, false, false, false], // Gyro Location
-    "HL": [10, 240, 1.2, false, false, false], // Powder Chest Location
-    "IL": [10, 180, 1.2, false, false, false], // Inq Location
-    "JL": [150, 180, 1.2, false, false, false], // Kill Counter Location
-    "KL": [600, 220, 1.2, false, false, false], // Kuudra Profit Location
-    "LL": [770, 70, 1.2, false, false, false], // Server Status Location
-    "ML": [780, 390, 1.2, false, false, false], // Coins Location
-    "OL": [10, 130, 1.2, false, false, false], // Composter Location
-    "PL": [10, 100, 1.2, false, false, false], // Powder Location
-    "QL": [250, 225, 4, false, false, false], // Vanquisher Location
-    "RL": [600, 175, 1, false, false, false], // Container Value Location
-    "SL": [10, 180, 1.2, false, false, false], // Splits Location
-    "TL": [10, 130, 1.2, false, false, false], // Golden Fish Timer Location
-    "UL": [930, 65, 1.2, false, false, false], // Armor Display Location
-    "VL": [10, 180, 1.2, false, false, false], // Visitors Location
-    "WL": [730, 130, 1.2, false, false, false], // Wolf Combo Location
-    "XL": [Renderer.screen.getWidth()/2 - 96, Renderer.screen.getHeight()*6/7, 1, false, false, false], // Searchbox location
-    "YL": [770, 170, 1.2, false, false, false], // SkyBlock Stats Location
-    "ZL": [780, 330, 1.2, false, false, false], // Kuudra Profit Tracker Location
-    "BCL": [180, 10, 1, false, false, false], // Bingo Card Location
-    "CDL": [190, 115, 1.2, false, false, false], // Commission Display Location
-    "CEL": [375, 275, 3, false, false, false], // Crate edit location
-    "CFL": [10, 260, 1.2, false, false, false], // Chocolate factory location
-    "CGL": [10, 115, 1.2, false, false, false], // Chocolate egg location
-    "EQL": [905, 65, 1.2, false, false, false], // Equipment Location
-    "FHL": [580, 160, 1.2, false, false, false], // Fossil Helper Location
-    "PHL": [170, 160, 1.2, false, false, false], // Pesthunter Location
-    "SDL": [170, 180, 1.2, false, false, false], // Spray Display Location
-    "TVL": [600, 150, 1.2, false, false, false], // Trade Value Location
-}
-
-// --- PERSISTENT DATA ---
-export let data = new PogObject("VolcAddons", {
-    // Properties with default values for various settings and data
-    "newUser": true,
-    "version": "2.3.1",
-    "commands": {},
-    "wordbank": {},
-    "lastID" : undefined,
-    "world": "none",
-    "tier": 0,
-    "pet": undefined,
-    "lastMsg": "joe",
-    "vision": false,
-    "uuid": undefined,
-    "ign": undefined,
-    "skins": [],
-    // playtime tracking
-    "playtime": 0,
-    "lastDay": 0,
-    // lists
-    "whitelist": [],
-    "blacklist": [],
-    "dianalist": ["hub", "da", "castle", "museum", "wizard"],
-    "moblist": [],
-    "colorlist": {},
-    "emotelist": {},
-    "cdlist": {},
-    "valuelist": {},
-    "spamlist": [],
-    "ignorelist": [],
-    "prefixlist": ["?"],
-    "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune", 
-        "fishing_experience"],
-    "widgetlist": [],
-    "WGL": {},
-    // chocolate factory data
-    "chocolate": 0,
-    "chocoProduction": 0,
-    "chocoLast": 0,
-    "chocoAll": 0,
-    // kuudra splits stuff
-    "files": [],
-    "splits": {
-        "last": [0, 0, 0, 0, 0],
-        "best": [999, 999, 999, 999, 9999],
-        "worst": [0, 0, 0, 0, 0],
-    },
-    // tracker data
-    "vanqSession": {
-        "vanqs": 0,
-        "kills": 0,
-        "last": 0,
-        "average": 0,
-    },
-    "inqSession": {
-        "inqs": 0,
-        "burrows": 0,
-        "last": 0,
-        "average": 0,
-    },
-    "kuudraSession": {
-        "profit": 0,
-        "chests": 0,
-        "average": 0,
-        "time": 0,
-        "rate": 0
-    },
-    // economy calculation stuff
-    "composterUpgrades": {
-        "Composter Speed": -1,
-        "Multi Drop": -1,
-        "Cost Reduction": -1
-    },
-    "apexPrice": 2e9,
-    // control keys
-    "dianaKey": 0,
-    "pauseKey": 0,
-    "devKey": 0,
-    "recipeKey": 0,
-    "bindKey": 0,
-    "chunkey": 0,
-    "wardKey": 0,
-    "wardBinds": {},
-    "slotBinds": {},
-    "bindPresets": {},
-    // Wardrobe binds
-    // GUI locations
-    ...DEFAULT_GUI,
-    // Rift waypoint properties
-    "fairySouls": FAIRY_SOULS,
-    "enigmaSouls": ENIGMA_SOULS,
-    "catSouls": CAT_SOULS
-}, "datitee.json");
-
-// --- GUI CONTROL ---
-export function resetGUI() {
-    Object.keys(DEFAULT_GUI).forEach(overlay => {
-        data[overlay] = DEFAULT_GUI[overlay];
-    });
-}
-
-// --- TRIGGER CONTROL ---
-
-// An array to store registered triggers and their dependencies
-let registers = [];
-
-/**
- * Adds a trigger with its associated dependency to the list of registered triggers.
- * Credit to: https://www.chattriggers.com/modules/v/BloomCore for idea
- *
- * @param {Object} trigger - The trigger to be added.
- * @param {Function} dependency - The function representing the dependency of the trigger.
- */
-export function registerWhen(trigger, dependency) {
-    trigger.unregister();
-    registers.push([trigger, dependency, false]);
-}
-
-// Updates trigger registrations based on world or GUI changes
-export function setRegisters(off = false) {
-    Client.showTitle("Loading Registers", "", 0, 1, 0);
-    registers.forEach(trigger => {
-        if (off || (!trigger[1]() && trigger[2])) {
-            trigger[0].unregister();
-            trigger[2] = false;
-        } else if (trigger[1]() && !trigger[2]) {
-            trigger[0].register();
-            trigger[2] = true;
-        }
-    });
-}
-delay(() => setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")), 1000);
-
-register("renderTitle", (title, sub, event) => {
-    if (title !== "Loading Registers") return;
-    cancel(event);
-});
-
-// Event handler for GUI settings close.
-register("guiClosed", (event) => {
-    if (!event.toString().includes("vigilance")) return;
-
-    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-    updateEntityList();
-});
-
-
-// --- LIST CONTROL ---
+import { AQUA, DARK_AQUA, DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./constants";
 import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions/format";
 import { updateAuction } from "../features/economy/Economy";
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
 import { updateWidgetList } from "../features/general/WidgetDisplay";
+import { setRegisters } from "./register";
+import { data } from "./data";
 
 
 let lines = [5858, 5859];
+
 /**
  * Updates a list based on the provided arguments.
  *
@@ -214,7 +27,8 @@ export function updateList(args, listName) {
 
     // Object pairs
     const held = Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
-    const value = listName === "cdlist" || listName === "valuelist" ? unformatNumber(args[3] ?? args[2]) : args.slice(3).join(' ');
+    const value = listName === "valuelist" ? unformatNumber(args[3]) : 
+        listName === "cdlist" ? args[2] : args.slice(3).join(' ');
     const key = listName === "colorlist" ? convertToPascalCase(args[2]) :
         (listName === "cdlist" || listName === "valuelist") && held !== undefined ? held : args[2];
 
@@ -350,54 +164,3 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
     else if (listName === "prefixlist") ChatLib.chat(`${LOGO + GREEN}Please use ${AQUA}/ct load ${GREEN}to reload registers!`);
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 }
-
-
-// --- ETC ---
-/**
- * Returns the current paused state.
- *
- * @returns {boolean} - The current paused state.
- */
-let paused = false;
-export function getPaused() {
-    return paused;
-}
-
-// Key binding for pausing or unpausing trackers
-const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "./VolcAddons.xdd");
-pauseKey.registerKeyPress(() => {
-    paused = !paused;
-    const message = paused ? `${RED}Paused` : `${GREEN}Resumed`;
-    ChatLib.chat(`${LOGO + GOLD}Tracker ${message}!`);
-});
-register("gameUnload", () => {
-    data.pauseKey = pauseKey.getKeyCode();
-});
-
-// Stats tracking class
-export class Stat {
-    constructor() {
-        this.reset();
-    }
-
-    reset() {
-        this.start = 0.00; // Starting amount
-        this.now = 0.00; // Current amount
-        this.time = 1; // Time passed
-        this.since = 600; // Time since last amount earn
-        this.level = 0; // Skill level
-    }
-
-    getGain() {
-        return this.now - this.start;
-    }
-
-    getRate() {
-        return this.getGain() / this.time * 3600;
-    }
-}
-
-// Saving data to persistent storage upon game unload
-register("gameUnload", () => {
-    data.save();
-}).setPriority(Priority.LOWEST);

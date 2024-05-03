@@ -1,13 +1,15 @@
 import settings from "../../utils/settings";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data, itemNBTs } from "../../utils/data";
+import { compressNBT, decompressNBT } from "../../utils/functions/misc";
 
 
 /**
  * Render armor pieces as icons
  */
 const pieces = [null, null, null, null];
-new Overlay("armorDisplay", ["all"], () => true, data.UL, "moveArmor", "", () => {
+new Overlay("armorDisplay", data.UL, "moveArmor", "Armor", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.UL[2];
 
     pieces.forEach(piece => {
@@ -40,8 +42,11 @@ registerWhen(register("tick", () => {
 /**
  * Render equipment pieces as icons
  */
-let equipment = [null, null, null, null];
-new Overlay("equipDisplay", ["all"], () => true, data.EQL, "moveEq", "", () => {
+let equipment = itemNBTs.equip.map(nbt => {
+    return nbt === null ? null :
+        new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT))
+});
+new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.EQL[2];
 
     equipment.forEach(piece => {
@@ -88,3 +93,11 @@ registerWhen(register("guiOpened", () => {
         ];
     });
 }), () => settings.equipDisplay);
+
+/**
+ * Persistant armor and equip.
+ */
+register("gameUnload", () => {
+    itemNBTs.armor = pieces.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
+    itemNBTs.equip = equipment.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
+});

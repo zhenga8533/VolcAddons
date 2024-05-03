@@ -1,4 +1,5 @@
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 
 
 /**

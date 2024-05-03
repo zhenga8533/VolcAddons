@@ -1,8 +1,9 @@
 import settings from "../../utils/settings";
 import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, DARK_AQUA } from "../../utils/constants";
 import { formatNumber } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
 
@@ -22,8 +23,7 @@ ${AQUA}Item 7${GRAY} - ${WHITE}Point
 ${RED}Item 8${GRAY} - ${WHITE}Of
 ${RED}Item 9${GRAY} - ${WHITE}Formlessness
 ${DARK_RED}-Sun Tzu, The Art of War`;
-const containerOverlay = new Overlay("containerValue", ["all", "misc"],
-() => true, data.RL, "moveContainer", containerExample);
+const containerOverlay = new Overlay("containerValue", data.RL, "moveContainer", containerExample, ["all"], "guiRender");
 containerOverlay.setMessage("");
 
 /**
@@ -43,17 +43,17 @@ function setMessage(itemValues, totalValue) {
     const sortedItems = Object.entries(itemValues).sort((a, b) => b[1][1] - a[1][1]);
             
     // Display the sorted items and total value
-    let overlayMessage = `${DARK_AQUA}Total Value: ${AQUA + formatNumber(totalValue)}\n\n`;
+    let overlayMessage = `${DARK_AQUA}Total Value: ${AQUA + formatNumber(totalValue)}\n`;
     let displayedItems = 0;
 
     // Destructuring here for cleaner loop
     for ([itemName, [itemCount, itemValue]] of sortedItems) {
-        overlayMessage += `${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}\n`;
+        overlayMessage += `\n${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}`;
         displayedItems++;
         if (displayedItems >= settings.containerValue) {
             const remainingItems = sortedItems.length - settings.containerValue;
             if (remainingItems > 0) {
-                overlayMessage += `${GRAY + ITALIC}+ ${remainingItems} more items...\n`;
+                overlayMessage += `\n${GRAY + ITALIC}+ ${remainingItems} more items...`;
             }
             break;
         }
@@ -162,5 +162,5 @@ registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
  * This function clears the content of the container overlay message, effectively removing it from display.
  */
 registerWhen(register("guiClosed", () => {
-    containerOverlay.setMessage("");
+    Client.scheduleTask(3, () => containerOverlay.setMessage(""));
 }), () => settings.containerValue !== 0);

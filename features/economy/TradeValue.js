@@ -1,7 +1,7 @@
 import { BOLD, DARK_GREEN, DARK_RED, GOLD, GREEN, RED } from "../../utils/constants";
 import { formatNumber } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getItemValue } from "./ItemPrice";
 
 
@@ -9,8 +9,7 @@ const tradeExample =
 `${DARK_RED + BOLD}Giving: ${RED}Nah
 ${DARK_GREEN + BOLD}Receiving: ${GREEN}I'd
 ${GOLD + BOLD}Profit: ${GREEN}Win`;
-const tradeOverlay = new Overlay("tradeValue", ["all", "misc"],
-() => true, data.TVL, "moveTrade", tradeExample);
+const tradeOverlay = new Overlay("tradeValue", data.TVL, "moveTrade", tradeExample, ["all"], "guiRender");
 tradeOverlay.setMessage("");
 
 const updateTrade = register("step", () => {

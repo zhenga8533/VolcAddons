@@ -1,7 +1,8 @@
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**
@@ -12,7 +13,7 @@ const comboExample =
   ${AQUA}+69✯ Magic Find
   ${DARK_GRAY}+${GOLD}420 coins per kill
   ${DARK_AQUA}+911☯ Combat Wisdom`;
-const comboOverlay = new Overlay("comboDisplay", ["all"], () => true, data.WL, "moveCombo", comboExample);
+const comboOverlay = new Overlay("comboDisplay", data.WL, "moveCombo", comboExample);
 comboOverlay.setMessage("");
 let stats = ["", 0, 0, 0];
 

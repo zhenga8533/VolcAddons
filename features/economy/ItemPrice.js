@@ -1,8 +1,9 @@
 import settings from "../../utils/settings";
 import { AQUA, BLACK, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getAuction, getBazaar } from "./Economy";
 
 
@@ -124,8 +125,7 @@ const valueExample =
    - &8Explosion Scroll: &a+Hailed
 
 &3Total Value: &aKATSU.`;
-const valueOverlay = new Overlay("itemPrice", ["all", "misc"],
-() => settings.itemPrice === 1 || settings.itemPrice == 3, data.EL, "moveValue", valueExample);
+const valueOverlay = new Overlay("itemPrice", data.EL, "moveValue", valueExample, ["all"], "guiRender");
 valueOverlay.setMessage("");
 
 let savedValues = {};

@@ -3,9 +3,10 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { getTime } from "../../utils/functions/format";
+import { formatTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**
@@ -15,7 +16,7 @@ const sprayExample =
 `${GREEN + BOLD}Sprays:
  ${AQUA}Plot 0 ${DARK_GRAY}(${GREEN}1m10s${DARK_GRAY})
  ${AQUA}Plot 0 ${DARK_GRAY}(${GREEN}1m01s${DARK_GRAY})`
-const sprayOverlay = new Overlay("sprayDisplay", ["Garden"], () => true, data.SDL, "moveSpray", sprayExample);
+const sprayOverlay = new Overlay("sprayDisplay", data.SDL, "moveSpray", sprayExample, ["Garden"]);
 const sprays = {};
 const plots = new Set();
 const pests = new Set();
@@ -70,7 +71,7 @@ register("step", () => {
         const time = sprays[plot];
         const sprayColor = time > 1200 ? GREEN :
             time > 600 ? YELLOW : RED;
-            sprayMessage += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + getTime(time) + DARK_GRAY})`
+            sprayMessage += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + formatTime(time) + DARK_GRAY})`
     });
     if (keys.length === 0) sprayMessage += `\n ${RED + BOLD}None...`;
     sprayOverlay.setMessage(sprayMessage);
@@ -169,7 +170,7 @@ registerWhen(register("guiClosed", () => {
 let lastPlot = undefined;
 register("command", () => {
     setHive();
-    if (hive.length === 0 || !location.findZone().includes("ൠ")) {
+    if (hive.length === 0 || !location.getZone().includes("ൠ")) {
         Client.showTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10);
         return;
     }
@@ -232,7 +233,8 @@ registerWhen(register("chat", (_, fortune) => {
  * Track bonus timer
  */
 const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
-const bonusOverlay = new Overlay("pesthunterBonus", ["Garden"], () => true, data.PHL, "moveBonus", bonusExample);
+const bonusOverlay = new Overlay("pesthunterBonus", data.PHL, "moveBonus", bonusExample, ["Garden"]);
+
 registerWhen(register("step", () => {
     let bonusMessage = `${YELLOW + BOLD}Pest Bonus: `;
     let fortune = 0;
@@ -246,7 +248,7 @@ registerWhen(register("step", () => {
     else {
         const bonusColor = remain > 1200 ? GREEN :
         remain > 600 ? YELLOW : RED;
-        bonusMessage += `${GOLD + fortune}☘ ${bonusColor}(${getTime(--remain)})`
+        bonusMessage += `${GOLD + fortune}☘ ${bonusColor}(${formattime(--remain)})`
     }
 
     bonusOverlay.setMessage(bonusMessage);

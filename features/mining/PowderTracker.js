@@ -1,9 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BLUE, BOLD, DARK_GREEN, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
-import { commafy, getTime } from "../../utils/functions/format";
+import { commafy, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
-import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { Stat, getPaused } from "../../utils/stat";
+import { data } from "../../utils/data";
 
 
 /**
@@ -21,8 +23,8 @@ ${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE}up
 ${LIGHT_PURPLE + BOLD}Rate: ${WHITE}to
 ${AQUA + BOLD}Glacite: ${WHITE}the
 ${AQUA + BOLD}Rate: ${WHITE}sounds
-${BLUE + BOLD}Time Passed: ${WHITE}of`;
-const powderOverlay = new Overlay("powderTracker", ["Dwarven Mines", "Crystal Hollows"], () => true, data.PL, "movePowder", powderExample);
+${BLUE + BOLD}Time: ${WHITE}of`;
+const powderOverlay = new Overlay("powderTracker", data.PL, "movePowder", powderExample, ["Dwarven Mines", "Crystal Hollows"]);
 
 /**
  * Command to reset powder overlay.
@@ -74,7 +76,7 @@ registerWhen(register("step", () => {
     });
 
     // Set HUD
-    const timeDisplay = displayTime !== 0 ? getTime(displayTime) : `${RED}Inactive`;
+    const timeDisplay = displayTime !== 0 ? formatTime(displayTime) : `${RED}Inactive`;
     powderOverlay.setMessage( 
 `${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain())} ᠅
 ${DARK_GREEN + BOLD}Rate: ${WHITE + commafy(powders.Mithril.getRate())} ᠅/hr
@@ -82,5 +84,5 @@ ${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain())} �
 ${LIGHT_PURPLE + BOLD}Rate: ${WHITE + commafy(powders.Gemstone.getRate())} ᠅/hr
 ${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain())} ᠅
 ${AQUA + BOLD}Rate: ${WHITE + commafy(powders.Glacite.getRate())} ᠅/hr
-${BLUE + BOLD}Time Passed: ${WHITE + timeDisplay}`);
+${BLUE + BOLD}Time: ${WHITE + timeDisplay}`);
 }).setFps(1), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && settings.powderTracker !== 0);

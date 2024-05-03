@@ -1,10 +1,11 @@
 import location from "../../utils/location";
 import mayor from "../../utils/mayor";
 import settings from "../../utils/settings";
-import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS } from "../../utils/constants";
+import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS, GREEN, LOGO } from "../../utils/constants";
 import { announceMob } from "../../utils/functions/misc";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
@@ -22,7 +23,7 @@ const counterExample =
 ${GOLD + BOLD}Total Burrows: ${RESET}Let.
 ${GOLD + BOLD}Burrows Since: ${RESET}Him.
 ${GOLD + BOLD}Average Burrows: ${RESET}Cook.`
-const counterOverlay = new Overlay("inqCounter", ["Hub"], () => mayor.getPerks().has("Mythological Ritual"), data.IL, "moveInq", counterExample);
+const counterOverlay = new Overlay("inqCounter", data.IL, "moveInq", counterExample, ["Hub"]);
 
 /**
  * Updates the inquisitor counter depending on if an inquisitor spawned.
@@ -49,7 +50,7 @@ export function updateInqCounter(inqSpawned) {
     if (session.inqs) session.average = Math.round(session.burrows / session.inqs);
 
     // Update HUD
-    counterOverlay.setMessage(settings.inqCounter === 1 ?
+    if (mayor.getPerks().has("Mythological Ritual")) counterOverlay.setMessage(settings.inqCounter === 1 ?
 `${GOLD + BOLD}Total Inqs: ${RESET + data.inqSession.inqs}
 ${GOLD + BOLD}Total Burrows: ${RESET + data.inqSession.burrows}
 ${GOLD + BOLD}Burrows Since: ${RESET + data.inqSession.last}
@@ -71,7 +72,8 @@ register("command", () => {
         "last": 0,
         "average": 0,
     };
-    counterOverlay.setMessage(counterExample);
+    if (mayor.getPerks().has("Mythological Ritual")) counterOverlay.setMessage(counterExample);
+    ChatLib.chat(`${LOGO + GREEN}Succesfully reset Inquisitor tracker!`);
 }).setName("resetInq");
 
 /**

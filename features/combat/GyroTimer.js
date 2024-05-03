@@ -1,7 +1,8 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, GREEN, RED, RESET } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**
@@ -10,7 +11,7 @@ import { data, registerWhen } from "../../utils/variables";
 let align = 0;
 let cd = 0;
 const gyroExample = `${GREEN + BOLD}Align Timer: ${RESET}LEAK?!`;
-const gyroOverlay = new Overlay("gyroTimer", ["all"], () => true, data.GL, "moveGyro", gyroExample);
+const gyroOverlay = new Overlay("gyroTimer", data.GL, "moveGyro", gyroExample);
 
 /**
  * Detects whenever you get affected by "Cell's Alignment".

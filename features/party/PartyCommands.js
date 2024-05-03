@@ -1,13 +1,14 @@
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
+import party from "../../utils/party";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { randIndex } from "../../utils/functions/misc";
-import { getIsLeader } from "../../utils/party";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { getPing, getTPS } from "../general/Performance";
 
 
@@ -222,12 +223,12 @@ export function executeCommand(name, args, sendTo) {
         case "limbo":
         case "lobby":
         case "l":
-            if (!toggles.limboCommand || getIsLeader() || Player.getName() === name) return;
+            if (!toggles.limboCommand || party.getLeader() || Player.getName() === name) return;
 
             ChatLib.command("l");
             break;
         case "leave":
-            if (!toggles.limboCommand || getIsLeader() || Player.getName() === name) return;
+            if (!toggles.limboCommand || party.getLeader() || Player.getName() === name) return;
 
             ChatLib.command("p leave");
             break;
@@ -235,7 +236,7 @@ export function executeCommand(name, args, sendTo) {
             if (!toggles.helpCommand || !sendTo) return;
 
             ChatLib.command(`${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, xyz, help> ${randID}`);
-            if (getIsLeader() && settings.leaderCommands)
+            if (party.getLeader() && settings.leaderCommands)
                 delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream> ${randID}`), 690);
             break;
         default:
@@ -250,7 +251,7 @@ export function executeCommand(name, args, sendTo) {
     } }, 690);
     
     // LEADER COMMANDS
-    if (!sendTo || (sendTo === "pc" && getIsLeader() && settings.leaderCommands && Player.getName() !== name)) {
+    if (!sendTo || (sendTo === "pc" && party.getLeader() && settings.leaderCommands && Player.getName() !== name)) {
         switch (command) {
             case "mute":
                 if (!toggles.warpCommand) return;

@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { NBTTagString } from "../../utils/constants";
-import { registerWhen } from "../../utils/variables";
-import { getTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
+import { formatTime } from "../../utils/functions/format";
 
 /**
  * Adds time NBT tag to Jyrre bottles.
@@ -17,5 +17,5 @@ registerWhen(register("itemTooltip", (_, item) => {
     if (list.getStringTagAt(9).startsWith("§b☲")) list.removeTag(9);
     
     const seconds = itemTag.getCompoundTag("ExtraAttributes").getInteger("bottle_of_jyrre_seconds");
-    list.insertTag(9, new NBTTagString(`§b☲ Time: ${getTime(seconds)}`));
+    list.insertTag(9, new NBTTagString(`§b☲ Time: ${formattime(seconds)}`));
 }), () => settings.jyrreTimer);

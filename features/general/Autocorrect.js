@@ -1,7 +1,8 @@
 import settings from "../../utils/settings";
 import { GREEN, LOGO, RED } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 
 
 /**

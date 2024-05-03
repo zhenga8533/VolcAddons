@@ -1,8 +1,8 @@
+import party from "../../utils/party";
 import settings from "../../utils/settings";
-import { getInParty } from "../../utils/party";
-import { delay } from "../../utils/thread";
-import { registerWhen } from "../../utils/variables";
 import { GREEN, LOGO } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
+import { delay } from "../../utils/thread";
 
 
 /**
@@ -12,7 +12,7 @@ const partyCommands = new Set(["accept", "join", "kick", "promote", "demote"]);
 let cd = false;
 registerWhen(register("messageSent", (message, event) => {
     const args = message.split(' ');
-    if (cd || getInParty() || args.length < 3 || (args[0] !== "/p" && args[0] !== "/party") || partyCommands.has(args[1].toLowerCase())) return;
+    if (cd || party.getIn() || args.length < 3 || (args[0] !== "/p" && args[0] !== "/party") || partyCommands.has(args[1].toLowerCase())) return;
     cd = true;
     delay(() => cd = false, 1000);
 

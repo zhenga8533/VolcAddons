@@ -1,4 +1,4 @@
-import { REFORGES } from "../constants.js";
+import { REFORGES } from "../constants";
 
 
 /**
@@ -7,7 +7,7 @@ import { REFORGES } from "../constants.js";
  * @param {Number} seconds - Total number of seconds to convert.
  * @returns {String} Formatted time in XXhrXXmXXs format.
  */
-export function getTime(seconds, fixed=0) {
+export function formatTime(seconds, fixed=0) {
     const days = Math.floor(seconds / 86400); // 86400 seconds in a day
     const hours = Math.floor((seconds % 86400) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);

@@ -1,8 +1,10 @@
 import settings from "../../utils/settings";
 import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
-import { formatNumber, getTime } from "../../utils/functions/format";
+import { formatNumber, formatTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { data, getPaused, registerWhen } from "../../utils/variables";
+import { getPaused } from "../../utils/stat";
+import { data } from "../../utils/data";
 
 
 /**
@@ -22,9 +24,9 @@ ${RED + BOLD}マーリン: ${RESET}∞^0
 ${RED + BOLD}エスカノール: ${RESET}∞-∞
 ${RED + BOLD}ゴウセル: ${RESET}0^0
 
-${DARK_RED + BOLD}Total Kills: ${RESET}∞^∞
-${DARK_RED + BOLD}Time Passed: ${RESET}-∞`;
-const counterOverlay = new Overlay("killCounter", ["all"], () => true, data.JL, "moveKills", counterExample);
+${DARK_RED + BOLD}Total: ${RESET}∞^∞
+${DARK_RED + BOLD}Time: ${RESET}-∞`;
+const counterOverlay = new Overlay("killCounter", data.JL, "moveKills", counterExample);
 counterOverlay.setMessage("");
 
 function updateCounter() {
@@ -39,8 +41,8 @@ function updateCounter() {
     });
 
     counterOverlay.setMessage(messageLines.join('\n') +
-        `\n\n${DARK_RED + BOLD}Total Kills: ${RESET + formatNumber(total) + GRAY} (${formatNumber(total / time * 3600)}/hr)` +
-        `\n${DARK_RED + BOLD}Time Passed: ${RESET + getTime(time)}`);
+        `\n\n${DARK_RED + BOLD}Total: ${RESET + formatNumber(total) + GRAY} (${formatNumber(total / time * 3600)}/hr)` +
+        `\n${DARK_RED + BOLD}Time: ${RESET + formatTime(time)}`);
 }
 
 /**

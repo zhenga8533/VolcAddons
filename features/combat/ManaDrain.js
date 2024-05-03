@@ -1,7 +1,7 @@
 import RenderLib from "../../../RenderLib";
 import settings from "../../utils/settings";
 import { AQUA, PLAYER_CLASS } from "../../utils/constants";
-import { registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 

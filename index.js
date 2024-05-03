@@ -1,22 +1,22 @@
 // Utility Modules
 import "./utils/player";
+import "./utils/waypoints";
 import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
-import "./utils/waypoints";
+import party from "./utils/party";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, SMA, UNDERLINE, WHITE } from "./utils/constants";
-import { getInParty, getIsLeader, getParty } from "./utils/party";
+import { updateList } from "./utils/list";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
-import { data, resetGUI, updateList } from "./utils/variables";
+import { data, resetGUI } from "./utils/data";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
 if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
 
 // General Features
-import "./features/general/ArmorDisplay";
 import "./features/general/Autocorrect";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
@@ -24,20 +24,23 @@ import "./features/general/ChunkBorders";
 import "./features/general/Cooldowns";
 import "./features/general/FairySouls";
 import "./features/general/ImageViewer";
-import "./features/general/JyrreTimer";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
-import "./features/general/Searchbar";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
 import "./features/general/SkyCrypt";
-import "./features/general/SlotBinding";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
-import "./features/general/WardrobeHotkey";
 import "./features/general/WidgetDisplay";
+// Container Features
+import "./features/container/ArmorDisplay";
+import "./features/container/ContainerPreview";
+import "./features/container/JyrreTimer";
+import "./features/container/Searchbar";
+import "./features/container/SlotBinding";
+import "./features/container/WardrobeHotkey";
 // Party Features
 import "./features/party/AntiGhostParty";
 import "./features/party/AutoKick";
@@ -71,12 +74,13 @@ import "./features/combat/SlayerDetect";
 // Mining Features
 import "./features/mining/CommissionsDisplay";
 import "./features/mining/FossilHelper";
+import "./features/mining/PickDisplay";
 import "./features/mining/PowderChest";
 import "./features/mining/PowderTracker";
 import "./features/mining/ShaftAnnounce";
 import "./features/mining/WishingCompass";
 // Farming Features
-import { calcCompost } from "./features/farming/ComposterCalc";
+import { calcCompost } from "./features/farming/Composter";
 import "./features/farming/FarmingWebhook";
 import "./features/farming/GardenTab";
 import "./features/farming/JacobHighlight";
@@ -308,12 +312,11 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
             ChatLib.chat(
 `${LOGO + DARK_AQUA + BOLD}Important Values:
 - ${AQUA + BOLD}World: ${WHITE + location.getWorld()}
-- ${AQUA + BOLD}Zone: ${WHITE + location.findZone()}
+- ${AQUA + BOLD}Zone: ${WHITE + location.getZone()}
 - ${AQUA + BOLD}Tier: ${WHITE + location.getTier()}
-- ${AQUA + BOLD}Leader: ${WHITE + getIsLeader()}
-- ${AQUA + BOLD}Party: ${WHITE + getInParty()}`);
-            const party = getParty();
-            if (party.size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.join(' ')}`);
+- ${AQUA + BOLD}Leader: ${WHITE + party.getLeader()}
+- ${AQUA + BOLD}Party: ${WHITE + party.getIn()}`);
+            if (party.getMembers().size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.getMembers().join(' ')}`);
             break;
         // Networth
         case "networth":

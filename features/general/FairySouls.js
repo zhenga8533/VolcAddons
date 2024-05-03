@@ -1,7 +1,8 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { getClosest } from "../../utils/functions/find";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 
 
 /**

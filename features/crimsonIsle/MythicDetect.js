@@ -2,7 +2,8 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, DARK_BLUE, DARK_RED, GOLEM_CLASS, GUARDIAN_CLASS, RED, WHITE } from "../../utils/constants";
 import { announceMob } from "../../utils/functions/misc";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 

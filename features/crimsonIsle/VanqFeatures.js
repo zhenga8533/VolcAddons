@@ -1,11 +1,12 @@
 import location from "../../utils/location";
+import party from "../../utils/party";
 import settings from "../../utils/settings";
 import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/constants";
 import { announceMob, playSound } from "../../utils/functions/misc";
-import { getInParty } from "../../utils/party";
+import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { data } from "../../utils/data";
 import { Hitbox, renderEntities } from "../../utils/waypoints";
 
 
@@ -24,7 +25,7 @@ const counterExample =
 ${RED + BOLD}Total Kills: ${RESET}Hua
 ${RED + BOLD}Kills Since: ${RESET}Piao
 ${RED + BOLD}Average Kills: ${RESET}Piao`;
-const counterOverlay = new Overlay("vanqCounter", ["Crimson Isle"], () => true, data.CL, "moveCounter", counterExample);
+const counterOverlay = new Overlay("vanqCounter", data.CL, "moveCounter", counterExample, ["Crimson Isle"]);
 counterOverlay.setMessage("");
 
 /**
@@ -136,7 +137,7 @@ registerWhen(register("chat", () => {
  * Tracks world for any vanquishers near player.
  */
 const vanqExample = `${DARK_PURPLE + BOLD}Vanquisher ${WHITE}Detected`;
-const vanqOverlay = new Overlay("vanqDetect", ["Crimson Isle"], () => true, data.QL, "moveVanq", vanqExample);
+const vanqOverlay = new Overlay("vanqDetect", data.QL, "moveVanq", vanqExample, ["Crimson Isle"]);
 vanqOverlay.setMessage("");
 registerWhen(register("step", () => {
     vanquishers = World.getAllEntitiesOfType(WITHER_CLASS).filter(entity => entity.getEntity().func_110138_aP() === 1024);
@@ -169,7 +170,7 @@ let vanqMessage = "";
  */
 registerWhen(register("chat", () => {
     // Set message to copy and post
-    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${location.findZone()} ]!`;
+    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${location.getZone()} ]!`;
     ChatLib.command(`ct copy ${vanqMessage}`, true);
     ChatLib.chat(`${LOGO + GREEN}Copied vanquisher waypoint to clipboard!`);
 
@@ -183,7 +184,7 @@ registerWhen(register("chat", () => {
     notInParty = 0;
 
     // INVITE PARTY
-    delay(() => { if (getInParty()) ChatLib.command("p leave") }, 500);
+    delay(() => { if (party.getIn()) ChatLib.command("p leave") }, 500);
 
     let timeout = 1000
     settings.vanqParty.split(", ").forEach(ign => {
@@ -203,7 +204,7 @@ function warpParty() {
     if (!vanqSpawned) return;
 
     notInParty--;
-    if (notInParty <= 0 && getInParty()) {
+    if (notInParty <= 0 && party.getIn()) {
         notInParty = 0;
 
         delay(() => { ChatLib.command("p warp") }, 500);

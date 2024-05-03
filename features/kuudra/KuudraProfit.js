@@ -1,9 +1,10 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/constants";
-import { commafy, formatNumber, getTime } from "../../utils/functions/format";
+import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 import { getItemValue } from "../economy/ItemPrice";
 import { getBazaar } from "../economy/Economy";
 
@@ -57,16 +58,15 @@ ${DARK_AQUA + BOLD}Secondary: ${GREEN}The
 ${DARK_PURPLE + BOLD}Teeth: ${GREEN}Most
 ${RED + BOLD}Essence: ${GREEN}Compatible
 ${DARK_RED + BOLD}Key: ${RED}Pokemon...`;
-const profitOverlay = new Overlay("kuudraProfit", ["Kuudra", "misc"], () =>
-Player.getContainer() !== null && Player.getContainer().getName() === "Paid Chest", data.KL, "moveKP", profitExample);
+const profitOverlay = new Overlay("kuudraProfit", data.KL, "moveKP", profitExample, ["Kuudra"], "guiRender");
 
 const coinageExample =
 `${DARK_RED + BOLD}Profit: ${WHITE}And
 ${DARK_RED + BOLD}Chests: ${WHITE}He
 ${DARK_RED + BOLD}Average: ${WHITE}Asked
-${DARK_RED + BOLD}Time Passed: ${WHITE}The
+${DARK_RED + BOLD}Time: ${WHITE}The
 ${DARK_RED + BOLD}Rate: ${WHITE}Man`;
-const coinageOverlay = new Overlay("kuudraProfitTracker", ["Kuudra", "Crimson Isle"], () => downtime < 300, data.ZL, "moveKPT", coinageExample);
+const coinageOverlay = new Overlay("kuudraProfitTracker", data.ZL, "moveKPT", coinageExample, ["Kuudra", "Crimson Isle"]);
 
 /**
  * Updates the profit tracker and metrics based on chest opening.
@@ -94,7 +94,7 @@ function updateProfitTracker(openedChest) {
 `${DARK_RED + BOLD}Profit: ${WHITE + formatNumber(profitView.profit.toFixed(0))} ¢
 ${DARK_RED + BOLD}Chests: ${WHITE + commafy(profitView.chests)} chests
 ${DARK_RED + BOLD}Average: ${WHITE + formatNumber(profitView.average.toFixed(0))} ¢/chest
-${DARK_RED + BOLD}Time Passed: ${WHITE + getTime(profitView.time)}
+${DARK_RED + BOLD}Time: ${WHITE + formatTime(profitView.time)}
 ${DARK_RED + BOLD}Rate: ${WHITE + formatNumber(profitView.rate.toFixed(0))} ¢/hr`);
 }
 

@@ -1,12 +1,12 @@
 import location from "../../utils/location";
+import party from "../../utils/party";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
-import { getInParty } from "../../utils/party";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
-
 
 
 /**
@@ -16,7 +16,7 @@ const vampireExample =
 `${DARK_PURPLE + BOLD}MANIA: ${AQUA}Dracule
 ${GOLD + BOLD}TWINCLAWS: ${AQUA}Mihawk
 ${DARK_AQUA + BOLD}ICHOR: ${AQUA}3,590,000,000`;
-const vampireOverlay = new Overlay("vampireAttack", ["The Rift"], () => true, data.BL, "moveVamp", vampireExample);
+const vampireOverlay = new Overlay("vampireAttack", data.BL, "moveVamp", vampireExample, ["The Rift"]);
 let bossUUID = 0;
 let ichorUUID = 0;
 let ichorSpawn = false;
@@ -64,7 +64,7 @@ registerWhen(register("tick", () => {
                 if (settings.announceMania === 1) {
                     const id = (Math.random() + 1).toString(36).substring(6);
                     ChatLib.command(`ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`);
-                } else if (getInParty() && settings.announceMania === 2)
+                } else if (party.getIn() && settings.announceMania === 2)
                     ChatLib.command(`pc x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}!`);
             }
         } else inMania = false;

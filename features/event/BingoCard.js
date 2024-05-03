@@ -1,7 +1,8 @@
-import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/constants";
-import { Overlay } from "../../utils/overlay";
 import settings from "../../utils/settings";
-import { data, registerWhen } from "../../utils/variables";
+import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
+import { Overlay } from "../../utils/overlay";
+import { data } from "../../utils/data";
 
 
 let community = {};
@@ -26,8 +27,7 @@ ${DARK_GREEN}Bingo Goals
  ${GRAY + BOLD}遊びに行きましょう${GREEN}、${GRAY + BOLD}友達になりましょう${GREEN}！
  ${GRAY + BOLD}楽しい時間${GREEN}、${GRAY + BOLD}ビンゴ${GREEN}！
  ${GRAY + BOLD}ビンゴをする時間です${GREEN}！`;
-const bingoOverlay = new Overlay("bingoCard", ["all"], () => true, data.BCL, "moveBingo", bingoExample);
-bingoOverlay.setMessage("");
+const bingoOverlay = new Overlay("bingoCard", data.BCL, "moveBingo", bingoExample);
 
 /**
  * Updates bingo overlay based on current uncompleted goals.

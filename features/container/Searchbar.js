@@ -1,7 +1,9 @@
 import settings from "../../utils/settings";
 import { DARK_GRAY, ITALIC } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data, itemNBTs } from "../../utils/data";
+import { decompressNBT } from "../../utils/functions/misc";
 
 
 // Search bar parameters
@@ -23,6 +25,13 @@ function getHighlights() {
     const search = text.replace(/[^a-zA-Z0-9&|]/g, "").toLowerCase();
     if (search.length === 0) return;
 
+    // Highlight backpack slots if in storage
+    if (Player.getContainer().getName() === "Storage") {
+        getContainers(search);
+        return;
+    }
+
+    // Find current container content matches
     const contents = search.split('||').map(ors => ors.split('&&'));
     Player.getContainer().getItems().forEach((item, index) => {
         if (item === null) return;
@@ -40,6 +49,41 @@ function getHighlights() {
         });
         if (toAdd !== 0) indexes.push(index);
         else darken.push(index);
+    });
+}
+
+function getContainers(search) {
+    const contents = search.split('||').map(ors => ors.split('&&'));
+    itemNBTs.enderchests.forEach((ec, index) => {
+        if (ec.find(nbt => {
+            if (nbt === null) return false;
+            const display = decompressNBT(nbt).tag.display;
+            const name = display.Name.removeFormatting().replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+            const lore = display.Lore === undefined ? "" : display.Lore.join('').replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+
+            return contents.find(content => {
+                for (let cont of content) {
+                    if (name.includes(cont) || lore.includes(cont))
+                        return true;
+                }
+            }) !== undefined;
+        }) !== undefined) indexes.push(9 + index);
+    });
+
+    itemNBTs.backpacks.forEach((ec, index) => {
+        if (ec.find(nbt => {
+            if (nbt === null) return false;
+            const display = decompressNBT(nbt).tag.display;
+            const name = display.Name.removeFormatting().replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+            const lore = display.Lore === undefined ? "" : display.Lore.join('').replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+
+            return contents.find(content => {
+                for (let cont of content) {
+                    if (name.includes(cont) || lore.includes(cont))
+                        return true;
+                }
+            }) !== undefined;
+        }) !== undefined) indexes.push(27 + index);
     });
 }
 

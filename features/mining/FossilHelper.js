@@ -4,7 +4,8 @@ import { getSlotCoords } from "../../utils/functions/find";
 import { formatNumber } from "../../utils/functions/format";
 import { createMatrix, getAllFormations } from "../../utils/functions/matrix";
 import { Overlay } from "../../utils/overlay";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 import { getAuction } from "../economy/Economy";
 
 
@@ -83,7 +84,7 @@ const fossilExample = `${DARK_AQUA + BOLD}Fossil Probability:
  ${DARK_GRAY} - ${GOLD}Praise
  ${DARK_GRAY} - ${GOLD}Lord
  ${DARK_GRAY} - ${GOLD}Helix`;
-const fossilOverlay = new Overlay("fossilHelper", ["Dwarven Mines", "misc"], () => Player.getContainer()?.getName() === "Fossil Excavator", data.FHL, "moveFossil", fossilExample);
+const fossilOverlay = new Overlay("fossilHelper", data.FHL, "moveFossil", fossilExample, ["Dwarven Mines"], "guiRender");
 
 /**
  * Finds the excavator slot with the highest probability of being a fossil piece.
@@ -258,7 +259,7 @@ const untrackFossils = register("guiClosed", () => {
     trackClicks.unregister();
     untrackFossils.unregister();
     highlightTile.unregister();
-    fossilOverlay.setMessage(fossilExample);
+    fossilOverlay.setMessage("");
     patterns = FOSSILS;
 bestTile = [2, 4];
 }).unregister();

@@ -1,4 +1,4 @@
-import { data } from "./variables";
+import { data } from "./data";
 
 
 /**

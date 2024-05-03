@@ -1,9 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { commafy, getTime } from "../../utils/functions/format";
+import { commafy, formatTime } from "../../utils/functions/format";
+import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
-import { Stat, data, getPaused, registerWhen } from "../../utils/variables";
+import { Stat, getPaused } from "../../utils/stat";
+import { data } from "../../utils/data";
 
 
 /**
@@ -16,9 +18,9 @@ register("command", () => {
 }).setName("resetCoins");
 const coinExample = 
 `${GOLD + BOLD}Gained: ${WHITE}COUNTING
-${GOLD + BOLD}Time Passed: ${WHITE}ME
+${GOLD + BOLD}Time: ${WHITE}ME
 ${GOLD + BOLD}Rate: ${WHITE}MONEY`;
-const coinOverlay = new Overlay("coinTracker", ["all"], () => location.getWorld() !== undefined, data.ML, "moveCoins", coinExample);
+const coinOverlay = new Overlay("coinTracker", data.ML, "moveCoins", coinExample);
 
 /**
  * Tracks Piggybank in Scoreboard for changes in coins and updates Coins Overlay every second.
@@ -42,9 +44,9 @@ registerWhen(register("step", () => {
     piggy.now = purse;
     
     // Update GUI
-    const timeDisplay = piggy.since < settings.coinTracker * 60 ? getTime(piggy.time) : `${RED}Inactive`;
+    const timeDisplay = piggy.since < settings.coinTracker * 60 ? formatTime(piggy.time) : `${RED}Inactive`;
     coinOverlay.setMessage(
 `${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.getGain())} ¢
-${GOLD + BOLD}Time Passed: ${WHITE + timeDisplay}
+${GOLD + BOLD}Time: ${WHITE + timeDisplay}
 ${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.getRate())} ¢/hr`);
 }).setFps(1), () => settings.coinTracker !== 0);

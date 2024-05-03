@@ -1,5 +1,5 @@
-import RenderLib from "../../../RenderLib/index.js";
-import { data } from "../../utils/variables.js";
+import RenderLib from "../../../RenderLib/index";
+import { data } from "../../utils/data";
 
 
 /**

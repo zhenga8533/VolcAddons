@@ -1,25 +1,45 @@
 import settings from "./settings";
-import { setPlayer } from "../features/combat/HealthAlert";
-import { delay } from "./thread";
-import { setRegisters } from "./variables";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, LOGO, WHITE } from "./constants";
+import { setRegisters } from "./register";
+import { delay } from "./thread";
 
 
 class Location {
     #world = undefined;
+    #zone = undefined;
     #tier = 0;
-    #server = undefined
+    #server = undefined;
     #season = undefined;
+    #time = 0;
 
     constructor() {
-        this.SEASONS = ["Spring", "Summer", "Autumn", "Winter"];
-        
         /**
          * Set registers.
          */
         register("chat", (id) => {
             this.#server = id;
         }).setCriteria("Sending to server ${id}...");
+
+        register("tick", () => {
+            if (!World.isLoaded()) return;
+
+            let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().startsWith(" §7⏣")) ??
+                Scoreboard?.getLines()?.find((line) => line.getName().startsWith(" §5ф"));
+            this.#zone = zoneLine === undefined ? "None" :
+                zoneLine.getName().removeFormatting().substring(3);
+        });
+
+        register("step", () => {
+            const now = new Date().getTime() / 1_000;
+            this.#time = (now - 107_704) % 446_400;
+            // const sbMonth = this.#time / 37_200;
+            // const sbDay = (this.#time % 37_200) / 1_200;
+            const ratio = this.#time / 446_400;
+    
+            this.#season = ratio < 0.25 ? "Spring" :
+                ratio < 0.5 ? "Summer" :
+                ratio < 0.75 ? "Autumn" : "Winter";
+        }).setDelay(10);
         
         register("worldLoad", () => {
             this.findWorld();
@@ -34,6 +54,10 @@ class Location {
             this.#world = undefined;
             setRegisters(off = true);
         });
+
+        register("command", () => {
+            this.test();
+        }).setName("worldTest");
     }
 
     /**
@@ -46,6 +70,15 @@ class Location {
     }
 
     /**
+     * Returns Location.#zone
+     * 
+     * @returns {String} - Current world name i.e. "Plot - 1".
+     */
+    getZone() {
+        return this.#zone;
+    }
+
+    /**
      * Returns Location.#tier
      * 
      * @returns {String} - Current tier of Kuudra or 0 if not in Kuudra.
@@ -55,7 +88,7 @@ class Location {
     }
 
     /**
-     * Returns Location.#tier
+     * Returns Location.#server
      * 
      * @returns {String} - Current server id i.e. "m188AJ".
      */
@@ -73,17 +106,6 @@ class Location {
     }
 
     /**
-     * Returns Location.#zone
-     * 
-     * @returns {String} - Current zone player is standing in.
-     */
-    findZone() {
-        let zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣"));
-        if (zoneLine === undefined) zoneLine = Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
-        return zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
-    }
-
-    /**
      * Used to output current location data to chat for testing.
      */
     test() {
@@ -91,8 +113,8 @@ class Location {
 `${LOGO + DARK_AQUA + BOLD}World Test:
  ${DARK_GRAY} - ${AQUA}World: ${WHITE + this.#world}
  ${DARK_GRAY} - ${AQUA}Tier: ${WHITE + this.#tier}
- ${DARK_GRAY} - ${AQUA}Server: ${WHITE + this.#server}
- ${DARK_GRAY} - ${AQUA}Season: ${WHITE + this.#season}`
+ ${DARK_GRAY} - ${AQUA}Season: ${WHITE + this.#season}
+ ${DARK_GRAY} - ${AQUA}Server: ${WHITE + this.#server}`
         );
     }
 
@@ -107,18 +129,13 @@ class Location {
         let world = TabList.getNames()?.find(tab => tab.startsWith("§r§b§lArea:") || tab.startsWith("§r§b§lDungeon:"));
         if (world === undefined) Client.scheduleTask(20, () => this.findWorld(noFind + 1));
         else {
-            // Set season
-            Scoreboard.getLines().find(line => {
-                this.#season = this.SEASONS.find(s => line.getName().includes(s)) ?? this.#season;
-            });
-    
             // Get world formatted
             this.#world = world.removeFormatting().split(' ').splice(1).join(' ');
     
             // Get tier for Kuudra
             if (this.#world === "Kuudra") {
                 delay(() => {
-                    const zone = this.findZone();
+                    const zone = this.getZone();
                     this.#tier = parseInt(zone.charAt(zone.length - 2));
                 }, 1000);
             }
@@ -126,7 +143,7 @@ class Location {
             // Call functions when world is loaded
             delay(() => {
                 setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-                setPlayer();
+                Client.showTitle(" ", "", 0, 1, 0);  // Fix first title not showing
             }, 1000);
         }
     }

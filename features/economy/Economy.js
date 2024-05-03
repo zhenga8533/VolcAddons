@@ -1,7 +1,8 @@
 import request from "../../../requestV2";
 import settings from "../../utils/settings";
-import { DARK_RED, GREEN, LOGO } from "../../utils/constants";
-import { data, registerWhen } from "../../utils/variables";
+import { GREEN, LOGO } from "../../utils/constants";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 
 
 /**

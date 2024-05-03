@@ -1,10 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
-import { data, registerWhen } from "../../utils/variables";
+import { registerWhen } from "../../utils/register";
+import { data } from "../../utils/data";
 
 
 /**
@@ -104,7 +105,7 @@ ${DARK_AQUA + BOLD}FPS: ${GREEN}60 ${AQUA}fps
 ${DARK_AQUA + BOLD}TPS: ${GREEN}19.8 ${AQUA}tps
 ${DARK_AQUA + BOLD}CPS: ${GREEN}0 ${AQUA}: ${GREEN}0
 ${DARK_AQUA + BOLD}Day: ${AQUA}0.75`;
-const statusOverlay = new Overlay("serverStatus", ["all"], () => true, data.LL, "moveStatus", statusExample);
+const statusOverlay = new Overlay("serverStatus", data.LL, "moveStatus", statusExample);
 
 /**
  * Updates the status overlay message with the current ping, TPS, and FPS information.
