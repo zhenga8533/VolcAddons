@@ -1,4 +1,6 @@
 [
+    "- Added attribute abbreviations",
+    "- TBD: Added tower and barn data to choco",
     "- Changed time formatting",
     "- Fixed pick display being untoggleable",
     "- Fixed more tablist errors",

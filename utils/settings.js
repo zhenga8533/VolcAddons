@@ -387,6 +387,14 @@ ${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
 
     // --- Inventory ---
     @SwitchProperty({
+        name: "Attribute Abbreviation",
+        description: `${DARK_RED}NEW! ${GRAY}Renders abbreviation of attributes over any item that has them.`,
+        category: "Container",
+        subcategory: "Items"
+    })
+    attributeAbbrev = false;
+
+    @SwitchProperty({
         name: "Armor Display",
         description: `Displays user's armor pieces as icons on an overlay. Move GUI with ${AQUA}/moveArmor${GRAY}.`,
         category: "Container",

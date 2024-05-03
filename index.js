@@ -36,6 +36,7 @@ import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/ArmorDisplay";
+import "./features/container/AttributeAbbrev";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
