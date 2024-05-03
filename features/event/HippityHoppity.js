@@ -1,6 +1,6 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTime, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
@@ -277,3 +277,24 @@ registerWhen(register("step", () => {
 registerWhen(register("chat", (type) => {
     Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10);
 }).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && location.getSeason() === "Spring");
+
+
+/**
+ * Rabbit alert.
+ */
+let lastRabbit = "Joe";
+
+registerWhen(register("chat", (_, rabbit, tier) => {
+    lastRabbit = `${tier.substring(0, 4) + rabbit + GRAY} (${tier + GRAY})`;
+}).setCriteria("${hop} HUNT You found ${rabbit} (${tier})!"), () => settings.rabbitAlert);
+
+registerWhen(register("chat", (amount, event) => {
+    Client.showTitle(`${DARK_PURPLE}DUPE Rabbit: ${lastRabbit}${DARK_GRAY}...`, `${DARK_GRAY}+${GOLD + amount} Chocolate!`, 10, 50, 10);
+    cancel(event);
+}).setCriteria("DUPLICATE RABBIT! +${amount} Chocolate"), () => settings.rabbitAlert);
+
+registerWhen(register("chat", (additive, multiplier, event) => {
+    Client.showTitle(`${LIGHT_PURPLE}NEW Rabbit: ${lastRabbit + DARK_GRAY}!`, 
+    `${DARK_GRAY}+${GOLD + additive} Chocolate and ${DARK_GRAY}+${GOLD + multiplier}x CPS!`, 10, 50, 10);
+    cancel(event);
+}).setCriteria("NEW RABBIT! +${additive} Chocolate and +${multiplier}x Chocolate per second!"), () => settings.rabbitAlert);
