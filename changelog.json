@@ -1,5 +1,6 @@
 [
     "- Changed time formatting",
     "- Fixed pick display being untoggleable",
-    "- Fixed more tablist errors"
+    "- Fixed more tablist errors",
+    "- Fixed overlay background toggle"
 ]
