@@ -351,7 +351,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     // --- Container ---
     @SwitchProperty({
         name: "Container Preview",
-        description: `${DARK_RED}NEW! ${GRAY}Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
+        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
 ${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
         category: "Container",
         subcategory: "Container"
@@ -754,7 +754,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     // --- Mining ---
     @SwitchProperty({
         name: "Pick Display",
-        description: `${DARK_RED}NEW! ${GRAY}Displays all pickaxe abilities as an overlay and alerts when they are off cooldown. Move GUI with ${AQUA}/movePick${GRAY}.`,
+        description: `Displays all pickaxe abilities as an overlay and alerts when they are off cooldown. Move GUI with ${AQUA}/movePick${GRAY}.`,
         category: "Mining",
         subcategory: "Mining"
     })

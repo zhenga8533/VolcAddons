@@ -1,16 +1,3 @@
 [
-    "- Added storage preview",
-    "- Added more data to Chocolate Factory",
-    "- Added pick display",
-    "- Changed overlay to default with background",
-    "- Changed equipment display to be persistant",
-    "- Changed searchbar to work with containers",
-    "- Changed item cooldown to not change stack size",
-    "- Moved some settings to container category",
-    "- Fixed overlay flex box",
-    "- Fixed container value carrying over",
-    "- Fixed worker highlight when maxed",
-    "- Fixed choco display not updating if highlight is off",
-    "- Removed Broodmother overlay",
-    "- Removed Stats from stats toggles (/va wgl add stats)"
+    "- Changed time formatting"
 ]
