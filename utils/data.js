@@ -43,6 +43,7 @@ const DEFAULT_GUI = {
     "CPL": [575, 160, 1, false, false, false], // Container preview location
     "EQL": [905, 65, 1.2, false, false, false], // Equipment Location
     "FHL": [580, 160, 1.2, false, false, true], // Fossil Helper Location
+    "PDL": [580, 460, 1.2, false, false, true], // Pick display location
     "PHL": [170, 160, 1.2, false, false, true], // Pesthunter Location
     "SDL": [170, 180, 1.2, false, false, true], // Spray Display Location
     "TVL": [600, 150, 1.2, false, false, true], // Trade Value Location

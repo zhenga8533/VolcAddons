@@ -2,6 +2,7 @@
     "- Added storage preview",
     "- Added duplicate rabbit tracking",
     "- Added more data to Chocolate Factory",
+    "- Added drill display",
     "- Changed utils to be somewhat more organized",
     "- Changed overlay to default with background",
     "- Changed equipment display to be persistant",

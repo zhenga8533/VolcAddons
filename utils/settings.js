@@ -719,15 +719,6 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
 
     // ████████████████████████████████████████████████████ MINING ████████████████████████████████████████████████████
 
-    // --- Crystal Hollows ---
-    @SwitchProperty({
-        name: "Wishing Compass Locator",
-        description: `Attempts to use 2 wishing compass uses to estimate important locations ${BLUE}(more accurate when used further apart)${GRAY},`,
-        category: "Mining",
-        subcategory: "Crystal Hollows"
-    })
-    compassLocator = false;
-
     // --- Jinx ---
     @SliderProperty({
         name: "Powder Chest Detect",
@@ -759,6 +750,23 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         max: 10
     })
     powderTracker = 0;
+    
+    // --- Mining ---
+    @SwitchProperty({
+        name: "Pick Display",
+        description: `${DARK_RED}NEW! ${GRAY}Displays all pickaxe abilities as an overlay and alerts when they are off cooldown. Move GUI with ${AQUA}/movePick${GRAY}.`,
+        category: "Mining",
+        subcategory: "Mining"
+    })
+    pickDisplay = false;
+
+    @SwitchProperty({
+        name: "Wishing Compass Locator",
+        description: `Attempts to use 2 wishing compass uses to estimate important locations ${BLUE}(more accurate when used further apart)${GRAY},`,
+        category: "Mining",
+        subcategory: "Mining"
+    })
+    compassLocator = false;
 
     // --- Shaft ---
     @SwitchProperty({
