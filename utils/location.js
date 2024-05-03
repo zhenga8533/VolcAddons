@@ -29,17 +29,8 @@ class Location {
                 zoneLine.getName().removeFormatting().substring(3);
         });
 
-        register("step", () => {
-            const now = new Date().getTime() / 1_000;
-            this.#time = (now - 107_704) % 446_400;
-            // const sbMonth = this.#time / 37_200;
-            // const sbDay = (this.#time % 37_200) / 1_200;
-            const ratio = this.#time / 446_400;
-    
-            this.#season = ratio < 0.25 ? "Spring" :
-                ratio < 0.5 ? "Summer" :
-                ratio < 0.75 ? "Autumn" : "Winter";
-        }).setDelay(10);
+        register("step", this.setSeason).setDelay(10);
+        this.setSeason();
         
         register("worldLoad", () => {
             this.findWorld();
@@ -103,6 +94,21 @@ class Location {
      */
     getSeason() {
         return this.#season;
+    }
+
+    /**
+     * Sets Location.#season using epoch time and SB time offset.
+     */
+    setSeason() {
+        const now = new Date().getTime() / 1_000;
+        this.#time = (now - 107_704) % 446_400;
+        // const sbMonth = this.#time / 37_200;
+        // const sbDay = (this.#time % 37_200) / 1_200;
+        const ratio = this.#time / 446_400;
+
+        this.#season = ratio < 0.25 ? "Spring" :
+            ratio < 0.5 ? "Summer" :
+            ratio < 0.75 ? "Autumn" : "Winter";
     }
 
     /**

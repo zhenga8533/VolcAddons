@@ -2,5 +2,6 @@
     "- Changed time formatting",
     "- Fixed pick display being untoggleable",
     "- Fixed more tablist errors",
-    "- Fixed overlay background toggle"
+    "- Fixed overlay background toggle",
+    "- Fixed season not being set"
 ]
