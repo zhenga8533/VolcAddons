@@ -65,9 +65,9 @@ registerWhen(register("step", () => {
         const speed = (600 / (1 + data.composterUpgrades["Composter Speed"] * 0.2));
 
         // Run out calc
-        const organic = tablist.find(tab => tab.includes("Organic Matter")).removeFormatting();
+        const organic = tablist.find(tab => tab.includes("Organic Matter"))?.removeFormatting() ?? 0;
         const crop = organic.replace(/\D/g, "") * (organic.includes('k') ? 1000 : 1);
-        const fuel = tablist.find(tab => tab.includes("Fuel")).removeFormatting().replace(/\D/g, "") * 1000;
+        const fuel = (tablist.find(tab => tab.includes("Fuel"))?.removeFormatting()?.replace(/\D/g, "") ?? 0) * 1000;
         const noCrop = crop / (4000 * (1 - costUpgrade/100)) * speed;
         const noFuel = fuel / (2000 * (1 - costUpgrade/100)) * speed;
         
@@ -76,14 +76,14 @@ registerWhen(register("step", () => {
 
     emptyCompost--;
     const message = emptyCompost <= 100 ? `${RED}Inactive` : `${WHITE + formatTime(emptyCompost)}`;
-    const time = tablist.find(tab => tab.includes("Time Left")).removeFormatting().match(/(\d+)m (\d+)s|(\d+)s/);
+    const time = (tablist.find(tab => tab.includes("Time Left"))?.removeFormatting()?.match(/(\d+)m (\d+)s|(\d+)s/) ?? 0);
     const nextCompost = !time ? `${RED}Inactive` :
         formatTime((time[1] ? parseInt(time[1], 10) : 0) * 60 + (time[2] ? parseInt(time[2], 10) : parseInt(time[3], 10)));
     compostOverlay.setMessage(
 `${DARK_GREEN + BOLD}Composter:
  ${GREEN}Empty: ${message}
  ${GREEN}Next: ${WHITE + nextCompost}`);
-}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab !== 0);
+}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab);
 
 /**
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.
