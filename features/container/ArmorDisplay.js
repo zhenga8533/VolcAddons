@@ -8,13 +8,17 @@ import { compressNBT, decompressNBT } from "../../utils/functions/misc";
 /**
  * Render armor pieces as icons
  */
+const barrier = new Item("minecraft:barrier");
 const pieces = [null, null, null, null];
 new Overlay("armorDisplay", data.UL, "moveArmor", "Armor", ["all"], "renderOverlay", () => {
     let yDiff = -15 * data.UL[2];
 
     pieces.forEach(piece => {
         yDiff += 15 * data.UL[2];
-        if (piece === null) return;
+        if (piece === null) {
+            barrier.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
+            return;
+        }
 
         // Draw icon
         piece.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
@@ -51,7 +55,10 @@ new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay
 
     equipment.forEach(piece => {
         yDiff += 15 * data.EQL[2];
-        if (piece === null) return;
+        if (piece === null) {
+            barrier.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
+            return;
+        }
 
         // Draw icon
         piece.draw(data.EQL[0], data.EQL[1] + yDiff, data.EQL[2]);
