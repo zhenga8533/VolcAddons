@@ -1,6 +1,8 @@
 import { DARK_GRAY, GOLD, GRAY, GREEN, RED, WHITE } from "../../utils/constants";
 import { data } from "../../utils/data"
 import { Overlay } from "../../utils/overlay"
+import { registerWhen } from "../../utils/register";
+import settings from "../../utils/settings";
 
 
 const drillExample =
@@ -20,7 +22,7 @@ const ABILITY_COOLDOWNS = {
     "Hazardous Miner": 140
 }
 
-register("step", () => {
+registerWhen(register("step", () => {
     // Update overlay
     drillOverlay.setMessage("");
     const abilities = Object.keys(cooldowns);
@@ -56,11 +58,11 @@ register("step", () => {
     }
 
     drillOverlay.setMessage(drillMessage);
-}).setFps(1);
+}).setFps(1), () => settings.pickDisplay);
 
-register("chat", (ability) => {
+registerWhen(register("chat", (ability) => {
     cooldowns[ability] = ABILITY_COOLDOWNS[ability];
-}).setCriteria("You used your ${ability} Pickaxe Ability!");
+}).setCriteria("You used your ${ability} Pickaxe Ability!"), () => settings.pickDisplay);
 
 register("worldLoad", () => {
     Object.keys(cooldowns).forEach(ability => {
