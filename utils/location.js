@@ -128,12 +128,13 @@ class Location {
      * Private.
      */
     findWorld = (noFind = 0) => {
-        // Make sure Hypixel world is loaded
-        if (!World.isLoaded() || noFind > 9) return;
+        // Make sure Hypixel world is loaded)
+        if (noFind > 9) return;
+        else if (!World.isLoaded()) delay(() => this.findWorld(noFind + 1), 1000);
     
         // Get world from tab list
         let world = TabList.getNames()?.find(tab => tab.startsWith("§r§b§lArea:") || tab.startsWith("§r§b§lDungeon:"));
-        if (world === undefined) Client.scheduleTask(20, () => this.findWorld(noFind + 1));
+        if (world === undefined) delay(() => this.findWorld(noFind + 1), 1000);
         else {
             // Get world formatted
             this.#world = world.removeFormatting().split(' ').splice(1).join(' ');

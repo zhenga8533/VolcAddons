@@ -7,5 +7,6 @@
     "- Fixed pick display being untoggleable",
     "- Fixed more tablist errors",
     "- Fixed overlay background toggle",
-    "- Fixed season not being set"
+    "- Fixed season not being set",
+    "- Fixed world not being set properly"
 ]
