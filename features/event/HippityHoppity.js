@@ -96,7 +96,7 @@ register("step", () => {
     const charges = parseInt(towerData.charges) + Math.max(0, Math.floor((lastOpen - towerData.chargeTime) / 28_800));
     chocoCalc += Math.min(lastOpen, towerData.activeTime) * data.chocoProduction * towerData.bonus;
     const towerStr = towerData.activeTime - lastOpen > 0 ? formatTime(towerData.activeTime - lastOpen) :
-        `${Math.min(3, charges)}/3`;
+        charges > 0 ? `${Math.min(3, charges)}/3` : formatTime((lastOpen - towerData.chargeTime) / 28_800);
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
