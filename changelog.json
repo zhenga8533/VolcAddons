@@ -1,8 +1,10 @@
 [
     "- Added attribute abbreviations",
     "- Added tower and barn data to choco",
+    "- Added sold auction highlight",
     "- Changed armor/equip display to show empty",
     "- Changed time formatting",
+    "- Fixed Ragnarok cancel detection",
     "- Fixed Jyrre timer",
     "- Fixed pick display being untoggleable",
     "- Fixed more tablist errors",

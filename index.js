@@ -41,6 +41,7 @@ import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
 import "./features/container/SlotBinding";
+import "./features/container/SoldHighlight";
 import "./features/container/WardrobeHotkey";
 // Party Features
 import "./features/party/AntiGhostParty";

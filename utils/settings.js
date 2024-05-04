@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -349,6 +349,14 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
 
     // --- Container ---
+    @SwitchProperty({
+        name: "Auction Highlight",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights all items in auction house that have been sold. Personal items are in ${GREEN}GREEN ${GRAY}and co-op items are in ${GOLD}GOLD${GRAY}.`,
+        category: "Container",
+        subcategory: "Container"
+    })
+    auctionHighlight = false;
+
     @SwitchProperty({
         name: "Container Preview",
         description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
