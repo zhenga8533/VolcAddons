@@ -113,8 +113,9 @@ ${GOLD + BOLD}Time:
  ${YELLOW}Last Open: ${GRAY + formatTime(lastOpen)}
 
 ${GOLD + BOLD}Rabbits:
- ${YELLOW}Total: ${GRAY + data.totalEggs}
- ${YELLOW}Dupes: ${WHITE + data.dupeEggs}`);
+ ${YELLOW}Total: ${WHITE + data.totalEggs}
+ ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
+ ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.42).toFixed(2)}%`);
 }).setFps(1);
 
 register("chat", () => {
