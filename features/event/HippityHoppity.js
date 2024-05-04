@@ -1,6 +1,6 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
