@@ -7,17 +7,18 @@ import { REFORGES } from "../constants";
  * @param {Number} seconds - Total number of seconds to convert.
  * @returns {String} Formatted time in XXhrXXmXXs format.
  */
-export function formatTime(seconds, fixed=0) {
+export function formatTime(seconds, fixed=0, units=4) {
     const days = Math.floor(seconds / 86400); // 86400 seconds in a day
     const hours = Math.floor((seconds % 86400) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
 
     const timeString = [
-        days > 0 ? `${days}d` : '',
-        hours > 0 || days > 0 ? `${hours}hr` : '',
-        `${minutes < 10 && (hours > 0 || days > 0) ? '0' : ''}${minutes > 0 || hours > 0 || days > 0 ? minutes + 'm' : ''}`,
-        days > 0 ? '' : `${remainingSeconds < 10 && (hours > 0 || minutes > 0) ? '0': ''}${remainingSeconds.toFixed(hours > 0 || minutes > 0 ? 0 : fixed)}s`
+        days > 0 && units-- > 0 ? `${days}d` : '',
+        (hours > 0 || days > 0) && units-- > 0 ? `${(hours < 10 && days > 0 ? '0' : '') + hours}hr` : '',
+        (minutes > 0 || hours > 0 || days > 0) && units-- > 0 ? `${(minutes < 10 && (days > 0 || hours > 0) ? '0' : '') + minutes}m` : '',
+        (remainingSeconds > 10 || minutes > 0 || hours > 0 || days > 0) && units-- > 0 ? 
+            `${(remainingSeconds < 10 && (days > 0 || hours > 0 || minutes > 0) ? '0' : '') + remainingSeconds.toFixed(fixed)}s` : ''
     ].join('');
 
     return timeString;

@@ -93,11 +93,10 @@ register("step", () => {
 
     // Time tower calc
     const towerData = data.timeTower;
-    const charges = towerData.charges + ~~((lastOpen - towerData.chargeTime) / 28_800);
-    const chargeTime = charges >= 3 ? GREEN + "FULL" : formatTime((lastOpen - towerData.chargeTime) % 28_800);
+    const charges = parseInt(towerData.charges) + Math.max(0, Math.floor((lastOpen - towerData.chargeTime) / 28_800));
     chocoCalc += Math.min(lastOpen, towerData.activeTime) * data.chocoProduction * towerData.bonus;
-    const towerStr = towerData.activeTime > 0 ? formatTime(towerData.activeTime - lastOpen) :
-        `${Math.min(3, charges)}/3 (${chargeTime})`;
+    const towerStr = towerData.activeTime - lastOpen > 0 ? formatTime(towerData.activeTime - lastOpen) :
+        `${Math.min(3, charges)}/3`;
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
@@ -108,7 +107,7 @@ register("step", () => {
  ${YELLOW}Prestige: ${data.chocoPrestige > 0 ? WHITE + formatNumber(data.chocoPrestige) : GREEN + "✔"}
 
 ${GOLD + BOLD}Time:
- ${YELLOW}Prestige: ${GRAY + formatTime(prestigeTime)}
+ ${YELLOW}Prestige: ${GRAY + formatTime(prestigeTime, 0, 3)}
  ${YELLOW}Tower: ${WHITE + towerStr}
  ${YELLOW}Last Open: ${GRAY + formatTime(lastOpen)}
 
@@ -118,7 +117,8 @@ ${GOLD + BOLD}Rabbits:
  ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.42).toFixed(2)}%`);
 }).setFps(1);
 
-register("chat", () => {
+register("chat", (x) => {
+    data.chocolate += parseInt(x.replace(/,/g, ''));
     data.dupeEggs++;
 }).setCriteria("DUPLICATE RABBIT! +${x} Chocolate");
 
