@@ -20,7 +20,7 @@ const updateChocolate = register("tick", () => {
     const chocoData = items[13];
     if (chocoData) {
         data.chocolate = parseInt(chocoData.getName().removeFormatting().replace(/\D/g, ""));
-        data.chocoProduction = parseFloat(chocoData.getLore().find(line => line.endsWith("§8per second")).removeFormatting().replace(/,/g, ""));
+        data.chocoProduction = parseFloat(chocoData.getLore().find(line => line.endsWith("§8per second"))?.removeFormatting()?.replace(/,/g, "") ?? 0);
         data.chocoLast = Math.floor(Date.now() / 1000);
         
         const allTime = chocoData.getLore().find(line => line.startsWith("§5§o§7All-time"))?.removeFormatting()?.split(' ');
@@ -31,34 +31,34 @@ const updateChocolate = register("tick", () => {
     const prestigeData = items[28]?.getLore();
     if (prestigeData !== undefined) {
         const prestigeTotal = prestigeData.find(line => line.startsWith("§5§o§7Chocolate this Prestige"))?.removeFormatting()?.split(' ');
-        data.chocoTotal = parseFloat(prestigeTotal?.[prestigeTotal.length - 1]?.replace(/,/g, "") ?? 0);
+        data.chocoTotal = parseFloat(prestigeTotal?.[prestigeTotal?.length - 1]?.replace(/,/g, "") ?? 0);
 
         const pestige = prestigeData.find(line => line.startsWith("§5§o§7§cRequires"))?.removeFormatting()?.split(' ');
-        data.chocoPrestige = unformatNumber(pestige[1]);
+        data.chocoPrestige = unformatNumber(pestige?.[1] ?? 0);
     }
 
     // Fetch eggs
     const eggData = items[34]?.getLore();
     if (eggData !== undefined) {
-        const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:")).split(' ')[2].removeFormatting().split('/');
-        data.totalEggs = parseInt(barnLine[0]);
-        data.maxEggs = parseInt(barnLine[1]);
+        const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:"))?.split(' ')?.[2]?.removeFormatting()?.split('/');
+        data.totalEggs = parseInt(barnLine?.[0] ?? 0);
+        data.maxEggs = parseInt(barnLine?.[1] ?? 20);
     }
 
     // Time tower
     const towerData = items[39]?.getLore();
     if (towerData !== undefined) {
         const timeTower = data.timeTower;
-        timeTower.bonus = romanToNum(items[39].getName().removeFormatting().split(' ')[2]) / 10;
+        timeTower.bonus = romanToNum(items[39]?.getName()?.removeFormatting()?.split(' ')?.[2]) / 10;
 
         const charges = towerData.find(line => line.startsWith("§5§o§7Charges:"));
-        timeTower.charges = charges.split(' ')[1].removeFormatting().split('/')[0];
+        timeTower.charges = parseInt(charges?.split(' ')?.[1]?.removeFormatting()?.split('/')?.[0] ?? 0);
         
         const chargeTime = towerData.find(line => line.startsWith("§5§o§7Next Charge:"));
-        timeTower.chargeTime = unformatTime(chargeTime.split(' ')[2].removeFormatting());
+        timeTower.chargeTime = unformatTime(chargeTime?.split(' ')?.[2]?.removeFormatting() ?? 28_800);
 
-        const status = towerData.find(line => line.startsWith("§5§o§7Status: §a§lACTIVE"));
-        timeTower.activeTime = status === undefined ? 0 : unformatTime(status.split(' ')[2].removeFormatting());
+        const status = towerData.find(line => line.startsWith("§5§o§7Status: §a§lACTIVE"))?.split(' ')?.[2]?.removeFormatting();
+        timeTower.activeTime = status === undefined ? 0 : unformatTime(status);
     }
 }).unregister();
 
@@ -108,7 +108,7 @@ register("step", () => {
  ${YELLOW}Prestige: ${data.chocoPrestige > 0 ? WHITE + formatNumber(data.chocoPrestige) : GREEN + "✔"}
 
 ${GOLD + BOLD}Time:
- ${YELLOW}Prestige: ${GRAY + formatTime(prestigeTime, 0, 3)}
+ ${YELLOW}Prestige: ${GRAY + (prestigeTime > 0 ? formatTime(prestigeTime, 0, 3) : GREEN + "✔")}
  ${YELLOW}Tower: ${WHITE + towerStr}
  ${YELLOW}Last Open: ${GRAY + formatTime(lastOpen)}
 
