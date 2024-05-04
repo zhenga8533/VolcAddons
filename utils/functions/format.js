@@ -15,7 +15,7 @@ export function formatTime(seconds, fixed=0, units=4) {
 
     const timeString = [
         days > 0 && units-- > 0 ? `${days}d` : '',
-        (hours > 0 || days > 0) && units-- > 0 ? `${(hours < 10 && days > 0 ? '0' : '') + hours}hr` : '',
+        (hours > 0 || days > 0) && units-- > 0 ? `${(hours < 10 && days > 0 ? '0' : '') + hours}h` : '',
         (minutes > 0 || hours > 0 || days > 0) && units-- > 0 ? `${(minutes < 10 && (days > 0 || hours > 0) ? '0' : '') + minutes}m` : '',
         (remainingSeconds > 10 || minutes > 0 || hours > 0 || days > 0) && units-- > 0 ? 
             `${(remainingSeconds < 10 && (days > 0 || hours > 0 || minutes > 0) ? '0' : '') + remainingSeconds.toFixed(fixed)}s` : ''
