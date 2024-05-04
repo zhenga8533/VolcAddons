@@ -24,27 +24,38 @@ export function formatTime(seconds, fixed=0) {
 }
 
 /**
- * Formats the elapsed time between two timestamps in seconds into a human-readable string.
- * @param {number} startTimeInSeconds The starting timestamp in seconds.
- * @param {number} endTimeInSeconds The ending timestamp in seconds.
- * @returns {string} A string representing the elapsed time between the two timestamps.
+ * Convert a formatted time string into seconds.
+ * 
+ * @param {string} timeString - The formatted time string containing units (e.g., "2d3h45m12s").
+ * @returns {number} The total time in seconds.
  */
-export function formatTimeElapsed(startTimeInSeconds, endTimeInSeconds) {
-    let elapsedTime = endTimeInSeconds - startTimeInSeconds;
-
-    let seconds = elapsedTime % 60;
-    let minutes = Math.floor((elapsedTime / 60) % 60);
-    let hours = Math.floor(elapsedTime / (60 * 60) % 24);
-    let days = Math.floor(elapsedTime / (60 * 60 * 24));
-
-    let timeString = '';
-
-    timeString += days.toString().padStart(2, '0') + ':';
-    timeString += hours.toString().padStart(2, '0') + ':';
-    timeString += minutes.toString().padStart(2, '0') + ':';
-    timeString += seconds.toString().padStart(2, '0');
-
-    return timeString;
+export function unformatTime(timeString) {
+    let seconds = 0;
+    const timeRegex = /(\d+)([dhms])/g;
+    let match;
+    
+    while ((match = timeRegex.exec(timeString)) !== null) {
+        let value = parseInt(match[1]);
+        let unit = match[2];
+        switch (unit) {
+            case 'd':
+                seconds += value * 24 * 60 * 60;
+                break;
+            case 'hr':
+            case 'h':
+                seconds += value * 60 * 60;
+                break;
+            case 'm':
+                seconds += value * 60;
+                break;
+            case 's':
+                seconds += value;
+                break;
+            default:
+                break;
+        }
+    }
+    return seconds;
 }
 
 /**

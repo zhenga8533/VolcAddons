@@ -2,7 +2,7 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { convertToTitleCase, formatNumber, formatTime, unformatNumber } from "../../utils/functions/format";
+import { convertToTitleCase, formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
@@ -43,6 +43,22 @@ const updateChocolate = register("tick", () => {
         const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:")).split(' ');
         data.totalEggs = parseInt(barnLine[2].removeFormatting().split('/')[0]);
     }
+
+    // Time tower
+    const towerData = items[39]?.getLore();
+    if (towerData !== undefined) {
+        const timeTower = data.timeTower;
+        timeTower.bonus = romanToNum(items[39].getName().removeFormatting().split(' ')[2]) / 10;
+
+        const charges = towerData.find(line => line.startsWith("§5§o§7Charges:"));
+        timeTower.charges = charges.split(' ')[1].removeFormatting().split('/')[0];
+        
+        const chargeTime = towerData.find(line => line.startsWith("§5§o§7Next Charge:"));
+        timeTower.chargeTime = unformatTime(chargeTime.split(' ')[2].removeFormatting());
+
+        const status = towerData.find(line => line.startsWith("§5§o§7Status: §a§lACTIVE"));
+        timeTower.activeTime = status === undefined ? 0 : unformatTime(status.split(' ')[2].removeFormatting());
+    }
 }).unregister();
 
 /**
@@ -68,10 +84,20 @@ const chocoOverlay = new Overlay("chocoDisplay", data.CFL, "moveChoco", chocoExa
 register("step", () => {
     const now = Math.floor(Date.now() / 1000);
     const lastOpen = now - data.chocoLast;
-    const chocoCalc = lastOpen * data.chocoProduction;
+
+    // Chocolate calc
+    let chocoCalc = lastOpen * data.chocoProduction;
     const chocoTotal = chocoCalc + data.chocoTotal;
     const chocoAll = chocoCalc + data.chocoAll;
     const prestigeTime = (data.chocoPrestige - chocoTotal) / data.chocoProduction;
+
+    // Time tower calc
+    const towerData = data.timeTower;
+    const charges = towerData.charges + ~~((lastOpen - towerData.chargeTime) / 28_800);
+    const chargeTime = charges >= 3 ? GREEN + "FULL" : formatTime((lastOpen - towerData.chargeTime) % 28_800);
+    chocoCalc += Math.min(lastOpen, towerData.activeTime) * data.chocoProduction * towerData.bonus;
+    const towerStr = towerData.activeTime > 0 ? formatTime(towerData.activeTime - lastOpen) :
+        `${Math.min(3, charges)}/3 (${chargeTime})`;
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
@@ -83,7 +109,8 @@ register("step", () => {
 
 ${GOLD + BOLD}Time:
  ${YELLOW}Prestige: ${GRAY + formatTime(prestigeTime)}
- ${YELLOW}Last Open: ${WHITE + formatTime(lastOpen)}
+ ${YELLOW}Tower: ${WHITE + towerStr}
+ ${YELLOW}Last Open: ${GRAY + formatTime(lastOpen)}
 
 ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${GRAY + data.totalEggs}
