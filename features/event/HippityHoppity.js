@@ -40,8 +40,9 @@ const updateChocolate = register("tick", () => {
     // Fetch eggs
     const eggData = items[34]?.getLore();
     if (eggData !== undefined) {
-        const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:")).split(' ');
-        data.totalEggs = parseInt(barnLine[2].removeFormatting().split('/')[0]);
+        const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:")).split(' ')[2].removeFormatting().split('/');
+        data.totalEggs = parseInt(barnLine[0]);
+        data.maxEggs = parseInt(barnLine[1]);
     }
 
     // Time tower
@@ -112,7 +113,7 @@ ${GOLD + BOLD}Time:
  ${YELLOW}Last Open: ${GRAY + formatTime(lastOpen)}
 
 ${GOLD + BOLD}Rabbits:
- ${YELLOW}Total: ${WHITE + data.totalEggs}
+ ${YELLOW}Total: ${WHITE + data.totalEggs}/${data.maxEggs}
  ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
  ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.42).toFixed(2)}%`);
 }).setFps(1);

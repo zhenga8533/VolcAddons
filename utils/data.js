@@ -93,6 +93,7 @@ export let data = new PogObject("VolcAddons", {
     "chocoPrestige": 0,
     "dupeEggs": 0,
     "totalEggs": 0,
+    "maxEggs": 20,
     "timeTower": {
         "charges": 0,
         "chargeTime": 0,
