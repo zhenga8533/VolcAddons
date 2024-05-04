@@ -983,14 +983,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     chocoWaypoints = false;
 
     @SwitchProperty({
-        name: "Rabbit Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Converts rabbit chat messages into title alerts.`,
-        category: "Event",
-        subcategory: "Chocolate Factory"
-    })
-    rabbitAlert = false;
-
-    @SwitchProperty({
         name: "Worker Highlight",
         description: "Highlights the worker with the best cost to production ratio.",
         category: "Event",
