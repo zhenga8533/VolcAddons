@@ -68,7 +68,7 @@ const trackSkills = register("guiOpened", () => {
 
         skillsTracked = true;
         trackSkills.unregister();
-        Client.showTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10);
+        if (settings.skillTracker !== 0) Client.showTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10);
     });
 });
 
