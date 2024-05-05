@@ -59,6 +59,7 @@ const updateChocolate = register("tick", () => {
 
         const status = towerData.find(line => line.startsWith("§5§o§7Status: §a§lACTIVE"))?.split(' ')?.[2]?.removeFormatting();
         timeTower.activeTime = status === undefined ? 0 : unformatTime(status);
+        if (timeTower.activeTime > 0) data.chocoProduction /= (1 + timeTower.bonus);
     }
 }).unregister();
 
@@ -102,7 +103,7 @@ register("step", () => {
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
  ${YELLOW}Current: ${WHITE + formatNumber(chocoCalc + data.chocolate)}
- ${YELLOW}Production: ${GRAY + formatNumber(data.chocoProduction)}
+ ${YELLOW}Production: ${GRAY + formatNumber(data.chocoProduction * (towerData.activeTime > 0 ? 1 + towerData.bonus : 1))}
  ${YELLOW}Total: ${WHITE + formatNumber(chocoTotal)}
  ${YELLOW}All-time: ${GRAY + formatNumber(chocoAll)}
  ${YELLOW}Prestige: ${data.chocoPrestige > 0 ? WHITE + formatNumber(data.chocoPrestige) : GREEN + "✔"}
