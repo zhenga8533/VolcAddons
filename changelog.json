@@ -1,5 +1,5 @@
 [
     "- Added calendar real time",
-    "- TBD: Fixed tooltip flicker",
+    "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing"
 ]
