@@ -232,3 +232,13 @@ export function isValidDate(dateString) {
     // Check the range of the day
     return day > 0 && day <= monthLength[month - 1];
 };
+
+/**
+ * Removes any non-numeric character from given string.
+ * 
+ * @param {String} str - String to remove non-numeric characters from.
+ * @returns {String} String with non-numeric characters removed.
+ */
+export function removeNonNumeric(str) {
+    return !str ? "" : str.replace(/\D/g, "");
+}
