@@ -351,7 +351,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     // --- Container ---
     @SwitchProperty({
         name: "Auction Highlight",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights all items in auction house that have been sold. Personal items are in ${GREEN}GREEN ${GRAY}and co-op items are in ${GOLD}GOLD${GRAY}.`,
+        description: `Highlights all items in auction house that have been sold. Personal items are in ${GREEN}GREEN ${GRAY}and co-op items are in ${GOLD}GOLD${GRAY}.`,
         category: "Container",
         subcategory: "Container"
     })
@@ -396,7 +396,7 @@ ${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
     // --- Inventory ---
     @SwitchProperty({
         name: "Attribute Abbreviation",
-        description: `${DARK_RED}NEW! ${GRAY}Renders abbreviation of attributes over any item that has them.`,
+        description: `Renders abbreviation of attributes over any item that has them.`,
         category: "Container",
         subcategory: "Items"
     })
@@ -945,16 +945,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     // ████████████████████████████████████████████████████ EVENT ████████████████████████████████████████████████████
 
-    // --- Bingo ---
-    @SelectorProperty({
-        name: "Bingo Card Overlay",
-        description: `Displays bingo card goals on screen as an overlay.\nMove GUI with ${AQUA}/moveBingo${GRAY}.`,
-        category: "Event",
-        subcategory: "Bingo",
-        options: ["OFF", "All", "Personal", "Community"]
-    })
-    bingoCard = 0;
-
     // --- Chocolate Factory ---
     @SwitchProperty({
         name: "Chocolate Overlay",
@@ -996,6 +986,32 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         subcategory: "Chocolate Factory"
     })
     workerHighlight = false;
+    
+    // --- Diana ---
+    @SwitchProperty({
+        name: "Diana Waypoint",
+        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
+Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
+        category: "Event",
+        subcategory: "Mythological Ritual"
+    })
+    dianaWaypoint = false;
+    @SwitchProperty({
+        name: "Diana Warp",
+        description: `Set keybind in controls to warp to the location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
+        category: "Event",
+        subcategory: "Mythological Ritual"
+    })
+    dianaWarp = false;
+
+    @SelectorProperty({
+        name: "Burrow Detection",
+        description: "Detects, alerts, and creates waypoints to nearby burrow particles.",
+        category: "Event",
+        subcategory: "Mythological Ritual",
+        options: ["OFF", "ON", "w/ Amogus Alert", "w/ Chat Alert", "w/ Both Alerts"]
+    })
+    burrowDetect = 0;
     
     // --- Great Spook ---
     @SwitchProperty({
@@ -1048,32 +1064,24 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         options: ["OFF", "Overall View", "Session View"]
     })
     inqCounter = 0;
-    
-    // --- Diana ---
-    @SwitchProperty({
-        name: "Diana Waypoint",
-        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
-Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
-        category: "Event",
-        subcategory: "Mythological Ritual"
-    })
-    dianaWaypoint = false;
-    @SwitchProperty({
-        name: "Diana Warp",
-        description: `Set keybind in controls to warp to the location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
-        category: "Event",
-        subcategory: "Mythological Ritual"
-    })
-    dianaWarp = false;
 
+    // --- Skyblock ---
     @SelectorProperty({
-        name: "Burrow Detection",
-        description: "Detects, alerts, and creates waypoints to nearby burrow particles.",
+        name: "Bingo Card Overlay",
+        description: `Displays bingo card goals on screen as an overlay.\nMove GUI with ${AQUA}/moveBingo${GRAY}.`,
         category: "Event",
-        subcategory: "Mythological Ritual",
-        options: ["OFF", "ON", "w/ Amogus Alert", "w/ Chat Alert", "w/ Both Alerts"]
+        subcategory: "Skyblock",
+        options: ["OFF", "All", "Personal", "Community"]
     })
-    burrowDetect = 0;
+    bingoCard = 0;
+
+    @SwitchProperty({
+        name: "Calendar Time",
+        description: "Adds the local start and end time to the tooltip of calendar events.",
+        category: "Event",
+        subcategory: "Skyblock"
+    })
+    calendarTime = false;
 
     // ████████████████████████████████████████████████████ CRIMSON ISLES ████████████████████████████████████████████████████
 

@@ -91,6 +91,7 @@ import "./features/farming/PestTracking";
 // Event Features
 import "./features/event/BingoCard";
 import "./features/event/BurrowDetect";
+import "./features/event/CalendarTime";
 import "./features/event/GreatSpook";
 import "./features/event/InquisitorDetect";
 import "./features/event/MythRitual";
