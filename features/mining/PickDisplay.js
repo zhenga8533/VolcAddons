@@ -1,6 +1,8 @@
 import { DARK_GRAY, GOLD, GRAY, GREEN, RED, WHITE } from "../../utils/constants";
 import { data } from "../../utils/data"
 import { Overlay } from "../../utils/overlay"
+import { registerWhen } from "../../utils/register";
+import settings from "../../utils/settings";
 
 
 const drillExample =
@@ -20,7 +22,7 @@ const ABILITY_COOLDOWNS = {
     "Hazardous Miner": 140
 }
 
-register("step", () => {
+registerWhen(register("step", () => {
     // Update overlay
     drillOverlay.setMessage("");
     const abilities = Object.keys(cooldowns);
@@ -51,16 +53,17 @@ register("step", () => {
             drillMessage += `\n  ${GOLD + ability.substring(ability.indexOf(' '), ability.indexOf("  §e§lRIGHT CLICK"))} ${DARK_GRAY}[${RED}?${DARK_GRAY}]`;
     } else {
         abilities.forEach(key => {
-            drillMessage += `\n  ${GOLD + key + WHITE} ${DARK_GRAY}[${GREEN + cooldowns[key] + DARK_GRAY}]`;
+            const cd = cooldowns[key];
+            drillMessage += `\n  ${GOLD + key + WHITE} ${DARK_GRAY}[${(cd > 0 ? RED : GREEN) + cd + DARK_GRAY}]`;
         });
     }
 
     drillOverlay.setMessage(drillMessage);
-}).setFps(1);
+}).setFps(1), () => settings.pickDisplay);
 
-register("chat", (ability) => {
+registerWhen(register("chat", (ability) => {
     cooldowns[ability] = ABILITY_COOLDOWNS[ability];
-}).setCriteria("You used your ${ability} Pickaxe Ability!");
+}).setCriteria("You used your ${ability} Pickaxe Ability!"), () => settings.pickDisplay);
 
 register("worldLoad", () => {
     Object.keys(cooldowns).forEach(ability => {

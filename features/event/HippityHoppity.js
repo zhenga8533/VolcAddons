@@ -2,7 +2,7 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { convertToTitleCase, formatNumber, formatTime, unformatNumber } from "../../utils/functions/format";
+import { convertToTitleCase, formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
@@ -20,7 +20,7 @@ const updateChocolate = register("tick", () => {
     const chocoData = items[13];
     if (chocoData) {
         data.chocolate = parseInt(chocoData.getName().removeFormatting().replace(/\D/g, ""));
-        data.chocoProduction = parseFloat(chocoData.getLore().find(line => line.endsWith("§8per second")).removeFormatting().replace(/,/g, ""));
+        data.chocoProduction = parseFloat(chocoData.getLore().find(line => line.endsWith("§8per second"))?.removeFormatting()?.replace(/,/g, "") ?? 0);
         data.chocoLast = Math.floor(Date.now() / 1000);
         
         const allTime = chocoData.getLore().find(line => line.startsWith("§5§o§7All-time"))?.removeFormatting()?.split(' ');
@@ -31,17 +31,35 @@ const updateChocolate = register("tick", () => {
     const prestigeData = items[28]?.getLore();
     if (prestigeData !== undefined) {
         const prestigeTotal = prestigeData.find(line => line.startsWith("§5§o§7Chocolate this Prestige"))?.removeFormatting()?.split(' ');
-        data.chocoTotal = parseFloat(prestigeTotal?.[prestigeTotal.length - 1]?.replace(/,/g, "") ?? 0);
+        data.chocoTotal = parseFloat(prestigeTotal?.[prestigeTotal?.length - 1]?.replace(/,/g, "") ?? 0);
 
         const pestige = prestigeData.find(line => line.startsWith("§5§o§7§cRequires"))?.removeFormatting()?.split(' ');
-        data.chocoPrestige = unformatNumber(pestige[1]);
+        data.chocoPrestige = unformatNumber(pestige?.[1] ?? 0);
     }
 
     // Fetch eggs
     const eggData = items[34]?.getLore();
     if (eggData !== undefined) {
-        const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:")).split(' ');
-        data.totalEggs = parseInt(barnLine[2].removeFormatting().split('/')[0]);
+        const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:"))?.split(' ')?.[2]?.removeFormatting()?.split('/');
+        data.totalEggs = parseInt(barnLine?.[0] ?? 0);
+        data.maxEggs = parseInt(barnLine?.[1] ?? 20);
+    }
+
+    // Time tower
+    const towerData = items[39]?.getLore();
+    if (towerData !== undefined) {
+        const timeTower = data.timeTower;
+        timeTower.bonus = romanToNum(items[39]?.getName()?.removeFormatting()?.split(' ')?.[2]) / 10;
+
+        const charges = towerData.find(line => line.startsWith("§5§o§7Charges:"));
+        timeTower.charges = parseInt(charges?.split(' ')?.[1]?.removeFormatting()?.split('/')?.[0] ?? 0);
+        
+        const chargeTime = towerData.find(line => line.startsWith("§5§o§7Next Charge:"));
+        timeTower.chargeTime = unformatTime(chargeTime?.split(' ')?.[2]?.removeFormatting() ?? 28_800);
+
+        const status = towerData.find(line => line.startsWith("§5§o§7Status: §a§lACTIVE"))?.split(' ')?.[2]?.removeFormatting();
+        timeTower.activeTime = status === undefined ? 0 : unformatTime(status);
+        if (timeTower.activeTime > 0) data.chocoProduction /= (1 + timeTower.bonus);
     }
 }).unregister();
 
@@ -68,29 +86,41 @@ const chocoOverlay = new Overlay("chocoDisplay", data.CFL, "moveChoco", chocoExa
 register("step", () => {
     const now = Math.floor(Date.now() / 1000);
     const lastOpen = now - data.chocoLast;
-    const chocoCalc = lastOpen * data.chocoProduction;
+
+    // Chocolate calc
+    let chocoCalc = lastOpen * data.chocoProduction;
     const chocoTotal = chocoCalc + data.chocoTotal;
     const chocoAll = chocoCalc + data.chocoAll;
     const prestigeTime = (data.chocoPrestige - chocoTotal) / data.chocoProduction;
 
+    // Time tower calc
+    const towerData = data.timeTower;
+    const charges = parseInt(towerData.charges) + Math.max(0, Math.floor((lastOpen - towerData.chargeTime) / 28_800));
+    chocoCalc += Math.min(lastOpen, towerData.activeTime) * data.chocoProduction * towerData.bonus;
+    const towerStr = towerData.activeTime - lastOpen > 0 ? formatTime(towerData.activeTime - lastOpen) :
+        charges > 0 ? `${Math.min(3, charges)}/3` : formatTime((lastOpen - towerData.chargeTime) / 28_800);
+
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
  ${YELLOW}Current: ${WHITE + formatNumber(chocoCalc + data.chocolate)}
- ${YELLOW}Production: ${GRAY + formatNumber(data.chocoProduction)}
+ ${YELLOW}Production: ${GRAY + formatNumber(data.chocoProduction * (towerData.activeTime > 0 ? 1 + towerData.bonus : 1))}
  ${YELLOW}Total: ${WHITE + formatNumber(chocoTotal)}
  ${YELLOW}All-time: ${GRAY + formatNumber(chocoAll)}
- ${YELLOW}Prestige: ${WHITE + formatNumber(data.chocoPrestige)}
+ ${YELLOW}Prestige: ${data.chocoPrestige > 0 ? WHITE + formatNumber(data.chocoPrestige) : GREEN + "✔"}
 
 ${GOLD + BOLD}Time:
- ${YELLOW}Prestige: ${GRAY + formatTime(prestigeTime)}
- ${YELLOW}Last Open: ${WHITE + formatTime(lastOpen)}
+ ${YELLOW}Prestige: ${GRAY + (prestigeTime > 0 ? formatTime(prestigeTime, 0, 3) : GREEN + "✔")}
+ ${YELLOW}Tower: ${WHITE + towerStr}
+ ${YELLOW}Last Open: ${GRAY + formatTime(lastOpen)}
 
 ${GOLD + BOLD}Rabbits:
- ${YELLOW}Total: ${GRAY + data.totalEggs}
- ${YELLOW}Dupes: ${WHITE + data.dupeEggs}`);
+ ${YELLOW}Total: ${WHITE + data.totalEggs}/${data.maxEggs}
+ ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
+ ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.42).toFixed(2)}%`);
 }).setFps(1);
 
-register("chat", () => {
+register("chat", (x) => {
+    data.chocolate += parseInt(x.replace(/,/g, ''));
     data.dupeEggs++;
 }).setCriteria("DUPLICATE RABBIT! +${x} Chocolate");
 

@@ -7,44 +7,56 @@ import { REFORGES } from "../constants";
  * @param {Number} seconds - Total number of seconds to convert.
  * @returns {String} Formatted time in XXhrXXmXXs format.
  */
-export function formatTime(seconds, fixed=0) {
+export function formatTime(seconds, fixed=0, units=4) {
     const days = Math.floor(seconds / 86400); // 86400 seconds in a day
     const hours = Math.floor((seconds % 86400) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
 
     const timeString = [
-        days > 0 ? `${days}d` : '',
-        hours > 0 || days > 0 ? `${hours}hr` : '',
-        `${minutes < 10 && (hours > 0 || days > 0) ? '0' : ''}${minutes > 0 || hours > 0 || days > 0 ? minutes + 'm' : ''}`,
-        `${remainingSeconds < 10 && (hours > 0 || minutes > 0 || days > 0) ? '0' : ''}${remainingSeconds.toFixed(hours > 0 || minutes > 0 || days > 0 ? 0 : fixed)}s`
+        days > 0 && units-- > 0 ? `${days}d` : '',
+        (hours > 0 || days > 0) && units-- > 0 ? `${(hours < 10 && days > 0 ? '0' : '') + hours}h` : '',
+        (minutes > 0 || hours > 0 || days > 0) && units-- > 0 ? `${(minutes < 10 && (days > 0 || hours > 0) ? '0' : '') + minutes}m` : '',
+        (remainingSeconds > 10 || minutes > 0 || hours > 0 || days > 0) && units-- > 0 ? 
+            `${(remainingSeconds < 10 && (days > 0 || hours > 0 || minutes > 0) ? '0' : '') + remainingSeconds.toFixed(fixed)}s` : ''
     ].join('');
 
     return timeString;
 }
 
 /**
- * Formats the elapsed time between two timestamps in seconds into a human-readable string.
- * @param {number} startTimeInSeconds The starting timestamp in seconds.
- * @param {number} endTimeInSeconds The ending timestamp in seconds.
- * @returns {string} A string representing the elapsed time between the two timestamps.
+ * Convert a formatted time string into seconds.
+ * 
+ * @param {string} timeString - The formatted time string containing units (e.g., "2d3h45m12s").
+ * @returns {number} The total time in seconds.
  */
-export function formatTimeElapsed(startTimeInSeconds, endTimeInSeconds) {
-    let elapsedTime = endTimeInSeconds - startTimeInSeconds;
-
-    let seconds = elapsedTime % 60;
-    let minutes = Math.floor((elapsedTime / 60) % 60);
-    let hours = Math.floor(elapsedTime / (60 * 60) % 24);
-    let days = Math.floor(elapsedTime / (60 * 60 * 24));
-
-    let timeString = '';
-
-    timeString += days.toString().padStart(2, '0') + ':';
-    timeString += hours.toString().padStart(2, '0') + ':';
-    timeString += minutes.toString().padStart(2, '0') + ':';
-    timeString += seconds.toString().padStart(2, '0');
-
-    return timeString;
+export function unformatTime(timeString) {
+    let seconds = 0;
+    const timeRegex = /(\d+)([dhms])/g;
+    let match;
+    
+    while ((match = timeRegex.exec(timeString)) !== null) {
+        let value = parseInt(match[1]);
+        let unit = match[2];
+        switch (unit) {
+            case 'd':
+                seconds += value * 24 * 60 * 60;
+                break;
+            case 'hr':
+            case 'h':
+                seconds += value * 60 * 60;
+                break;
+            case 'm':
+                seconds += value * 60;
+                break;
+            case 's':
+                seconds += value;
+                break;
+            default:
+                break;
+        }
+    }
+    return seconds;
 }
 
 /**

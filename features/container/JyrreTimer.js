@@ -14,8 +14,9 @@ registerWhen(register("itemTooltip", (_, item) => {
 
     // Check if time already in tooltip
     const list = new NBTTagList(loreTag);
-    if (list.getStringTagAt(9).startsWith("§b☲")) list.removeTag(9);
+    if (list.getStringTagAt(9).startsWith("§7☲")) list.removeTag(9);
     
+    // Add time tag
     const seconds = itemTag.getCompoundTag("ExtraAttributes").getInteger("bottle_of_jyrre_seconds");
-    list.insertTag(9, new NBTTagString(`§b☲ Time: ${formattime(seconds)}`));
+    list.insertTag(9, new NBTTagString(`§7☲ Time: §b${formatTime(seconds, 0, 3)}`));
 }), () => settings.jyrreTimer);

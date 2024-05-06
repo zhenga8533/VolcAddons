@@ -74,19 +74,19 @@ const ByteArrayOutputStream = Java.type("java.io.ByteArrayOutputStream");
 const ByteArrayInputStream = Java.type("java.io.ByteArrayInputStream");
 const IOUtils = Java.type("org.apache.commons.io.IOUtils");
 
+/**
+ * Compresses NBT object into a compressed string using Base64.
+ * 
+ * @param {Object} nbtObject - NBT data object of an item to compress.
+ * @returns {String} Compressed form of the NBT data as a string.
+ */
 export function compressNBT(nbtObject) {
     try {
         // Convert NBT object to JSON string
         const nbtString = JSON.stringify(nbtObject);
-
-        // Convert string to byte array
         const nbtBytes = new java.lang.String(nbtString).getBytes("UTF-8");
-
-        // Compress using GzipCompressorOutputStream
         const byteArrayOutputStream = new ByteArrayOutputStream();
         const compressor = new GzipCompressorOutputStream(byteArrayOutputStream);
-
-        // Write uncompressed data to compressor
         compressor.write(nbtBytes);
 
         // Close streams
@@ -96,7 +96,6 @@ export function compressNBT(nbtObject) {
         // Get the compressed data as byte array
         const compressedData = byteArrayOutputStream.toByteArray();
 
-        // Return compressed data as base64 encoded string
         return java.util.Base64.getEncoder().encodeToString(compressedData);
     } catch (e) {
         print("Error compressing NBT: " + e);
@@ -104,6 +103,12 @@ export function compressNBT(nbtObject) {
     }
 }
 
+/**
+ * Decompresses given compressed NBT string using Base64.
+ * 
+ * @param {String} compressedData - Compressed NBT string to decompress data from.
+ * @returns {Object} Decompressed NBT data.
+ */
 export function decompressNBT(compressedData) {
     try {
         // Decode base64 string to byte array

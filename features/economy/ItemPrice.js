@@ -218,7 +218,7 @@ export function getItemValue(item, save=true) {
                 if (order !== 0 || insta !== 0 && save) {
                     if (save) {
                         valueMessage += `- ${AQUA}Insta Sell: ${GREEN}+${formatNumber(order)}\n`;
-                        valueMessage += `- ${AQUA}Sell Offer: ${GREEN}+${formatNumber(insta)}\n`;
+                        valueMessage += `- ${AQUA}Sell Offer: ${GREEN}+${formatNumber(insta)}`;
                         savedValues[itemUUID] = [value, valueMessage];
                     }
                 }

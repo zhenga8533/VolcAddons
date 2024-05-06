@@ -29,17 +29,8 @@ class Location {
                 zoneLine.getName().removeFormatting().substring(3);
         });
 
-        register("step", () => {
-            const now = new Date().getTime() / 1_000;
-            this.#time = (now - 107_704) % 446_400;
-            // const sbMonth = this.#time / 37_200;
-            // const sbDay = (this.#time % 37_200) / 1_200;
-            const ratio = this.#time / 446_400;
-    
-            this.#season = ratio < 0.25 ? "Spring" :
-                ratio < 0.5 ? "Summer" :
-                ratio < 0.75 ? "Autumn" : "Winter";
-        }).setDelay(10);
+        register("step", this.setSeason).setDelay(10);
+        this.setSeason();
         
         register("worldLoad", () => {
             this.findWorld();
@@ -106,6 +97,21 @@ class Location {
     }
 
     /**
+     * Sets Location.#season using epoch time and SB time offset.
+     */
+    setSeason() {
+        const now = new Date().getTime() / 1_000;
+        this.#time = (now - 107_704) % 446_400;
+        // const sbMonth = this.#time / 37_200;
+        // const sbDay = (this.#time % 37_200) / 1_200;
+        const ratio = this.#time / 446_400;
+
+        this.#season = ratio < 0.25 ? "Spring" :
+            ratio < 0.5 ? "Summer" :
+            ratio < 0.75 ? "Autumn" : "Winter";
+    }
+
+    /**
      * Used to output current location data to chat for testing.
      */
     test() {
@@ -122,12 +128,13 @@ class Location {
      * Private.
      */
     findWorld = (noFind = 0) => {
-        // Make sure Hypixel world is loaded
-        if (!World.isLoaded() || noFind > 9) return;
+        // Make sure Hypixel world is loaded)
+        if (noFind > 9) return;
+        else if (!World.isLoaded()) delay(() => this.findWorld(noFind + 1), 1000);
     
         // Get world from tab list
         let world = TabList.getNames()?.find(tab => tab.startsWith("§r§b§lArea:") || tab.startsWith("§r§b§lDungeon:"));
-        if (world === undefined) Client.scheduleTask(20, () => this.findWorld(noFind + 1));
+        if (world === undefined) delay(() => this.findWorld(noFind + 1), 1000);
         else {
             // Get world formatted
             this.#world = world.removeFormatting().split(' ').splice(1).join(' ');

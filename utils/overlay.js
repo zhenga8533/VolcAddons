@@ -237,7 +237,7 @@ export class Overlay {
         else if (keyCode === 19) this.loc[2] = 1;  // Reset Scale (r key)
         else if (keyCode === 38) this.loc[3] = !this.loc[3];  // Swap align (l key)
         else if (keyCode === 35) this.loc[4] = !this.loc[4];  // Swap flex (h key)
-        else if (keyCode === 48) his.loc[5] = !this.loc[5];  // Swap flex (b key)
+        else if (keyCode === 48) this.loc[5] = !this.loc[5];  // Swap flex (b key)
         else return;
 
         this.setSize("message");

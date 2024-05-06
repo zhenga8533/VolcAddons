@@ -1,16 +1,17 @@
 // Utility Modules
+import "./utils/dev";
 import "./utils/player";
 import "./utils/waypoints";
 import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import party from "./utils/party";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, SMA, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
-import { data, resetGUI } from "./utils/data";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
@@ -36,10 +37,12 @@ import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/ArmorDisplay";
+import "./features/container/AttributeAbbrev";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
 import "./features/container/SlotBinding";
+import "./features/container/SoldHighlight";
 import "./features/container/WardrobeHotkey";
 // Party Features
 import "./features/party/AntiGhostParty";
@@ -161,46 +164,8 @@ ${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 const recipeKey = new KeyBind("View Recipe", data.recipeKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.recipeKey = recipeKey.getKeyCode() });
 
-// Dev Mode
-const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
-devKey.registerKeyPress(() => {
-    if (devKey.getKeyCode() === 0) return;
-
-    const view = Player.lookingAt();
-    if (view instanceof Entity) {
-        // Get entity data
-        const entity = view.entity;
-        const extraData = {
-            nbt: entity.getEntityData(),
-            persistantID: entity.persistentID,
-            entityClass: entity.class,
-            entityAttribute: entity.func_70668_bt(),
-            maxHP: entity.func_110148_a(SMA.field_111267_a).func_111125_b(),
-            pitch: entity.field_70125_A,
-            yaw: entity.field_70177_z,
-            ticksAlive: entity.field_70173_aa
-        };
-        const textComponent = entity.func_145748_c_();
-        let extraString = "";
-        for (data in extraData) extraString += `${data}=${extraData[data]}, `;
-        ChatLib.command(`ct copy ${view.toString()} ⦿ ${textComponent} ⦿ ExtraData[${extraString}]`, true);
-        ChatLib.chat(`${LOGO + GREEN}Successfully copied entity data!`);
-    } else {
-        ChatLib.command(`ct copy ${view.toString()}`, true);
-        ChatLib.chat(`${LOGO + GREEN}Successfully copied block data!`);
-    }
-});
-
 register("guiKey", (_, keyCode, gui) => {
-    if (keyCode === devKey.getKeyCode()) {
-        const slot = gui?.getSlotUnderMouse()?.field_75222_d;
-        if (slot === undefined) return;
-        const item = Player.getContainer().getStackInSlot(slot);
-        if (item === null) return;
-        ChatLib.command(`ct copy ${item.getNBT()}`, true);
-        ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
-    } else if (keyCode === recipeKey.getKeyCode()) {
+    if (keyCode === recipeKey.getKeyCode()) {
         // Check if hovering valid slot
         const slot = gui?.getSlotUnderMouse()?.field_75222_d;
         if (slot === undefined) return;
