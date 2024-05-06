@@ -683,7 +683,7 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     gyroAlert = false;
     @SwitchProperty({
         name: "Cells Alignment Timer",
-        description: `Displays the time left before Cells Alignment ends.\nMove GUI with ${AQUA}/moveAlignTimer${GRAY}.`,
+        description: `Displays the time left before Cells Alignment ends.\nMove GUI with ${AQUA}/moveGyro${GRAY}.`,
         category: "Combat",
         subcategory: "Gyrokinetic Wand"
     })

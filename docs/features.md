@@ -10,6 +10,7 @@ subtitle: List of all features and their related commands.
     - Remove Selfie Mode
     - Render Waypoint
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
+    - Widget Display (`/va wgl`, `/move<widget>`)
 - **Server**
     - Fairy Soul Waypoints
     - Hide Far Entities
@@ -20,8 +21,7 @@ subtitle: List of all features and their related commands.
     - SkyBlock Stats Display (`/moveStats`)
 - **Timer**
     - Item Cooldown Alert (`/va cd`)
-    - Reminder Text
-    - Reminder Time
+    - Reminder Timer
 - **Yapping**
     - Autocomplete Commands (`/resetWords`)
     - Autocorrect Commands
@@ -31,12 +31,14 @@ subtitle: List of all features and their related commands.
 
 ### <u>Container Features</u>
 - **General**
+    - Auction Highlight
     - Container Preview
     - Recipe Hotkey
     - Searchbar (`/moveSearch`)
     - Slot Binding (`/<save, delete, list, load, reset>Binds [key]`)
     - Wardrobe Hotkey
 - **Items**
+    - Attribute Abbreviation
     - Armor Display (`/moveArmor`)
     - Equipment Display (`/moveEq`)
     - Jyrre Timer
@@ -46,13 +48,14 @@ subtitle: List of all features and their related commands.
     - Anti Ghost Party
     - Auto Join Reparty
     - Auto Transfer
-    - Guild Join Message
-    - Party Join Message
     - Server Kick Announce
     - Whitelist Rejoin (`/va wl`)
+- **Message**
+    - Guild Join Message
+    - Party Join Message
 - **Party Commands**
     - Leader Chat Commands (`/va bl`)
-    - Party Chat Commands
+    - Party Chat Commands (`/va bl`)
 
 ### <u>Economy Features</u>
 - **General**
@@ -65,12 +68,11 @@ subtitle: List of all features and their related commands.
 
 ### <u>Combat Features</u>
 - **Bestiary**
-    - Bestiary Display
     - Bestiary GUI
     - Kill Counter (`/moveKills`, `/resetKills`)
 - **General**
     - Combo Display (`/moveCombo`)
-    - Damage Tracker
+    - Damage Tracer
     - Low Health Alert
     - Mana Drain Range
     - Ragnarok Detection
@@ -79,39 +81,39 @@ subtitle: List of all features and their related commands.
     - Cell Alignment Timer (`/moveGyro`)
 - **Slayer**
     - Boss Announce
-    - Miniboss Announce
     - Boss Highlight
+    - Miniboss Announce
     - Miniboss Highlight
     - Slayer Spawn Warning
 
 ### <u>Mining Features</u>
-- **Crystal Hollows**
+- **General**
+    - Pick Display
     - Wishing Compass Locator
 - **Jinx**
     - Powder Chest Detect (`/moveChest`)
     - Powder Chest Hider
     - Powder Tracker (`/movePowder`, `/resetPowder`)
 - **Shaft**
-    - Commissions Display (`/moveCommission`)
+    - Commission Announce
+    - Commission Display (`/moveCommission`)
     - Commission Waypoints
     - Corpse Announce
     - Corpse Waypoints
     - Fossil Helper
+    - Shaft Transfer
 
 ### <u>Farming Features</u>
-- **General**
-    - Jacob Reward Highlight
-    - Farming Discord Webhook
 - **Garden**
     - Composter Display (`/moveCompost`)
-    - Garden Warp Override
+    - Garden Plot Box
     - Garden Visitor Display (`/moveVisitors`)
-    - Next Visitor Display (`/moveNext`)
-    - Plot Bounding Box
+    - Garden Webhook
+    - Jacob Reward Highlight
 - **Pests**
+    - Desk Highlight
     - Infestation Alert
     - Pest Alert
-    - Plot Highlight
     - Pesthunter Display (`/movePest`)
     - Spray Display (`moveSpray`)
 
@@ -133,9 +135,9 @@ subtitle: List of all features and their related commands.
     - Inquisitor Announce
     - Inquisitor Counter (`moveInq`, `/resetInq`)
 - **Mythological Ritual**
+    - Burrow Detection
     - Diana Waypoints
     - Diana Warp (`/va warplist`)
-    - Burrow Detection
 
 ### <u>Crimson Isles</u>
 - **Fishing**

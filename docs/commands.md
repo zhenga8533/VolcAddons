@@ -36,6 +36,9 @@ subtitle: List of every non-gui related commands.
 - **Kuudra**
     - `/va splits`: Prints out Kuudra splits' stats.
     - `/kv`: Display important Kuudra stats for inputted player profile.
+- **Dev**
+    - `/printTab`: Prints out Tablist names to console.
+    - `/printScore`: Prints out Scoreboard lines to console.
 - **Misc**
     - `/va be`: Displays bestiary stats and closest milestones.
     - `/missingskins`: Scans user inventory API to determine any missing fire sale skins.

@@ -6,12 +6,12 @@ import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import party from "./utils/party";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, SMA, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
 import { openGUI } from "./utils/overlay";
 import { delay } from "./utils/thread";
 import { getLatestReleaseVersion } from "./utils/updates";
-import { data, resetGUI } from "./utils/data";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
