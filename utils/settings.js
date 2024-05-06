@@ -846,15 +846,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     // ████████████████████████████████████████████████████ FARMING ████████████████████████████████████████████████████
 
-    // --- Farming ---
-    @SwitchProperty({
-        name: "Jacob Reward Highlight",
-        description: "Highlights unclaimed Jacob event rewards.",
-        category: "Farming",
-        subcategory: "Farming"
-    })
-    jacobReward = true;
-
     // --- Garden ---
     @SelectorProperty({
         name: "Composter Display",
@@ -866,8 +857,8 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     compostTab = 0;
 
     @SwitchProperty({
-        name: "Garden Box Plot",
-        description: "Draws a bounding box on the current garden plot player is in.",
+        name: "Garden Plot Box",
+        description: `Draws a bounding box on the current plot player is in. Also renders `,
         category: "Farming",
         subcategory: "Garden"
     })
@@ -880,6 +871,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         subcategory: "Garden"
     })
     gardenTab = false;
+
+    @SwitchProperty({
+        name: "Jacob Reward Highlight",
+        description: "Highlights unclaimed Jacob event rewards.",
+        category: "Farming",
+        subcategory: "Garden"
+    })
+    jacobReward = true;
     
     // --- Garden Webhook ---
     @TextProperty({
@@ -901,9 +900,17 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     webhookTimer = 0;
 
     // --- Pests ---
+    @SwitchProperty({
+        name: "Desk Highlight",
+        description: `Highlights plots in desk menu in ${RED}RED ${GRAY}if infested or in ${GREEN}GREEN ${GRAY}if sprayed. Also changes stack size of plot to count/time.`,
+        category: "Farming",
+        subcategory: "Pests"
+    })
+    deskHighlight = false;
+
     @SliderProperty({
         name: "Infested Alert",
-        description: "Select minimum amount of pests .",
+        description: `Set minimum amount of pests must be on garden to display infestation alert or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Farming",
         subcategory: "Pests",
         min: 0,
@@ -920,14 +927,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     pestAlert = false;
 
     @SwitchProperty({
-        name: "Plot Highlight",
-        description: "Highlights plots with pests in the desk menu.",
-        category: "Farming",
-        subcategory: "Pests"
-    })
-    pestHighlight = false;
-
-    @SwitchProperty({
         name: "Pesthunter Display",
         description: `Tracks and warns when the pesthunter bonus runs out.\nMove GUI with ${AQUA}/moveBonus${GRAY}.`,
         category: "Farming",
@@ -937,7 +936,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Spray Display",
-        description: `Tracks and warns when sprays on any plot in about to expire. Also highlights sprayed plots in the desk menu.\nMove GUI with ${AQUA}/moveSpray${GRAY}.`,
+        description: `Tracks and warns when sprays on any plot expires.\nMove GUI with ${AQUA}/moveSpray${GRAY}.`,
         category: "Farming",
         subcategory: "Pests"
     })

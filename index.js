@@ -1,4 +1,5 @@
 // Utility Modules
+import "./utils/dev";
 import "./utils/player";
 import "./utils/waypoints";
 import location from "./utils/location";

@@ -4,6 +4,7 @@
     "- Added sold auction highlight",
     "- Changed armor/equip display to show empty",
     "- Changed time formatting",
+    "- Changed pests features to be more reliable",
     "- Fixed Ragnarok cancel detection",
     "- Fixed Jyrre timer",
     "- Fixed pick display being untoggleable",
