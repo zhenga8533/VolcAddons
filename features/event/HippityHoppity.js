@@ -134,19 +134,17 @@ let bestCost = 0;
 function findWorker() {
     bestWorker = 0;
     const items = Player.getContainer().getItems();
-    const workers = [];
-    for (let i = 29; i < 34; i++) workers.push(items[i].getLore())
 
     let maxValue = 0;
-    for (let i = 0; i < 5; i++) {
-        let worker = workers[i];
+    for (let i = 29; i < 34; i++) {
+        let worker = items[i].getLore();
         let index = worker.findIndex(line => line === "§5§o§7Cost");
         if (index === -1) continue;
         let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
-        let value = (i + 1) / cost;
+        let value = (i - 28) / cost;
 
         if (value > maxValue) {
-            bestWorker = 29 + i;
+            bestWorker = i;
             maxValue = value;
             bestCost = cost;
         }
