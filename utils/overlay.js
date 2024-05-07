@@ -32,7 +32,6 @@ function renderScale(x, y, text, scale=1, align=false, flex=false) {
 const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, H to swap flex, B to show BG, or W to change view";
 const INSTRUCT_WIDTH = Renderer.getStringWidth(GUI_INSTRUCT);
 const gui = new Gui();
-const background = new Gui();
 
 let overlays = [];
 let overlaid = [];
@@ -135,6 +134,33 @@ export function openGUI() {
 };
 
 
+/**
+ * Overlay render in one register
+ */
+const renders = {
+    "guiRender": [],
+    "renderOverlay": []
+}
+Object.keys(renders).forEach(key => {
+    register(key, () => {
+        renders[key].forEach(render => {
+            if (!render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
+                if (!settings[render.setting] || !(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;
+
+                if (render.loc[5] && render.width !== 0) {
+                    Renderer.drawRect(
+                        Renderer.color(0, 0, 0, 128),
+                        render.loc[0] - (render.loc[3] ? render.ewidth : 0) - 3 * render.loc[2], render.loc[1] - 3 * render.loc[2],
+                        render.width + 5 * render.loc[2], render.height + 5 * render.loc[2]
+                    );
+                }
+                renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4]);
+            }
+        });
+    });
+});
+
+
 export class Overlay {
     /**
      * Creates an overlay with HUD elements and GUI functionality.
@@ -159,6 +185,7 @@ export class Overlay {
         this.example = example;
         this.setSize("example");
         this.requires = new Set(requires);
+        this.special = special;
         this.gui = new Gui();
 
         // loc array changes for versions < 2.9.4
@@ -167,19 +194,7 @@ export class Overlay {
         if (this.loc[5] === undefined) this.loc.push(true);
 
         // The actual rendering register for the GUI.
-        registerWhen(register(trigger, () => {
-            if (!special() && !gui.isOpen() && !this.gui.isOpen() && this.message) {
-                if (trigger === "renderOverlay") background.func_146278_c(0);
-                if (this.loc[5] && this.width !== 0) {
-                    Renderer.drawRect(
-                        Renderer.color(0, 0, 0, 128),
-                        this.loc[0] - (this.loc[3] ? this.ewidth : 0) - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2],
-                        this.width + 5 * this.loc[2], this.height + 5 * this.loc[2]
-                    );
-                }
-                renderScale(this.loc[0], this.loc[1], this.message, this.loc[2], this.loc[3], this.loc[4]);
-            }
-        }), () => settings[this.setting] && (this.requires.has(location.getWorld()) || this.requires.has("all")));
+        renders[trigger]?.push(this);
 
         // Set registers for editing the GUI.
         this.moving = register("renderOverlay", () => {

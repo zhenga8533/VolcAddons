@@ -1,5 +1,6 @@
 [
     "- Added calendar real time",
+    "- Changed some rendering to be more optimized",
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing"
 ]
