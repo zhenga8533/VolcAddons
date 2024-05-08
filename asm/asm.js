@@ -1,51 +1,32 @@
-const modifiedWords = [
-    { phrase: 'hello', replacement: 'hi', enabled: true },
-    { phrase: 'world', replacement: 'planet', enabled: true }
-];
-
-/**
- * Modify the original text based on the defined modified words.
- * 
- * @param {string} originalText - The original text to be modified.
- * @returns {string} The modified text.
- */
-function modifyText(originalText) {
-    ChatLib.chat(originalText);
-    let modifiedText = originalText;
-
-    for (const word of modifiedWords) {
-        if (word.enabled) {
-            modifiedText = modifiedText.replace(new RegExp(word.phrase, 'gi'), word.replacement);
-        }
-    }
-
-    return modifiedText;
-}
-
 export default ASM => {
     const { desc, L, OBJECT, JumpCondition, BOOLEAN } = ASM;
 
-    print("Start Test");
+    print('Start Test');
 
     ASM.injectBuilder(
         'net/minecraft/client/gui/FontRenderer',
-        'renderStringAtPos',
-        desc("Ljava/lang/String;", "FFIZLnet/minecraft/client/renderer/Matrix4f;Lnet/minecraft/client/renderer/IRenderTypeBuffer;ZII)V"),
+        'renderString',
+        desc('I', L('java/lang/String'), 'F', 'F', 'I', 'Z', L('net/minecraft/util/math/Matrix4f'), L('net/minecraft/client/renderer/IRenderTypeBuffer'), 'Z', 'I', 'I'),
         ASM.At(ASM.At.HEAD)
     )
+    .methodMaps({
+        func_180455_b: 'renderString',
+    })
     .instructions($ => {
-        $.aload(0);
-        $.invokeJS("modifyText");
-        const result = $.astore();
-
-        // Check if the result is undefined to prevent crashes
-        $.aload(result.index);
-        $.instanceof('org/mozilla/javascript/Undefined');
+        $.array(0, OBJECT, $ => {}).invokeJS('modifyText')
+        const result = $.astore()
+        $.aload(result.index)
+        $.instanceof('org/mozilla/javascript/Undefined')
         $.ifClause([JumpCondition.TRUE], $ => {
-            $.return();
+            $.aload(result.index)
+            $.checkcast(BOOLEAN)
+            $.invokeVirtual(BOOLEAN, 'booleanValue', desc('Z'))
+            $.ifClause([JumpCondition.FALSE], $ => {
+                ChatLib.chat('E')
+            });
         });
     })
     .execute();
 
-    print("End Test");
+    print('End Test');
 };

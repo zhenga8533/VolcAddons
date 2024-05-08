@@ -1,7 +1,8 @@
 [
     "- Added calendar real time",
+    "- Added inventory buttons",
     "- Changed some rendering to be more optimized",
-    "- Changed autocorrect to be more reliable",
+    "- Changed autocorrect to be more reliable (maybe change to also track word index",
     "- Fixed spamlist",
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing",
