@@ -2,8 +2,8 @@
     "- Added calendar real time",
     "- Changed some rendering to be more optimized",
     "- Changed autocorrect to be more reliable",
-    "- Fixed autocorrect",
     "- Fixed spamlist",
     "- Fixed tooltip flicker",
-    "- Fixed `/pesttp` parsing"
+    "- Fixed `/pesttp` parsing",
+    "= Removed autocomplete"
 ]

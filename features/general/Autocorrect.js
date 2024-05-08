@@ -130,31 +130,6 @@ register("messageSent", (message) => {
     });
 });
 
-
-/**
- * Auto complete command
- */
-registerWhen(register("guiKey", (c, keyCode, gui) => {
-    if (gui.class.getName() !== "net.optifine.gui.GuiChatOF" || keyCode !== 15) return;  // Detect tab key
-    
-    // Find most common occurrence
-    const commands = data.commands;
-    let maxKey = null;
-    let maxValue = 0;
-
-    const current = Client.getCurrentChatMessage();
-    Object.keys(commands).filter(command => command.startsWith(current)).forEach(command => {
-        if (commands[command] > maxValue) {
-            maxValue = commands[command];
-            maxKey = command;
-        }
-    });
-
-    // Set most common as user message
-    if (maxValue === 0) return;
-    Client.setCurrentChatMessage(maxKey);
-}), () => settings.autocomplete);
-
 /**
  * Reset wordbank command.
  */

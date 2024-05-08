@@ -23,7 +23,6 @@ subtitle: List of all features and their related commands.
     - Item Cooldown Alert (`/va cd`)
     - Reminder Timer
 - **Yapping**
-    - Autocomplete Commands (`/resetWords`)
     - Autocorrect Commands
     - Custom Emotes (`/va emote`)
     - Discord Webhook

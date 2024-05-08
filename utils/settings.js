@@ -307,15 +307,6 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     }
 
     // --- Yapping ---
-    @SwitchProperty({
-        name: "Autocomplete Commands",
-        description: `Attempts to generate predications of incomplete commands when 
-user presses ${DARK_AQUA}TAB${GRAY}. It will take time to collect enough data to be accurate.`,
-        category: "General",
-        subcategory: "Yapping"
-    })
-    autocomplete = false;
-
     @SliderProperty({
         name: "Autocorrect Commands",
         description: `Attempts to correct invalid commands with valid ones. It will take

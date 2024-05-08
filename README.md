@@ -156,7 +156,6 @@ After you finish installing, go check out some other useful SkyBlock mods: https
     - Reminder Text
     - Reminder Time
 - **Yapping**
-    - Autocomplete Commands (`/resetWords`)
     - Autocorrect Commands
     - Custom Emotes (`/va emote`)
     - Discord Webhook
