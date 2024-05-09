@@ -1,5 +1,6 @@
 import { RENDERER_BLACK, RENDERER_GRAY } from "./constants";
 import { data } from "./data";
+import settings from "./settings";
 
 
 const InventoryBasic = Java.type("net.minecraft.inventory.InventoryBasic");
@@ -22,7 +23,11 @@ class Button {
         this.#x = x;
         this.#y = y;
         this.#clicked = clicked;
-        this.#icon = new Item("minecraft:" + icon);
+        try {
+            this.#icon = new Item("minecraft:" + icon);
+        } catch (err) {
+            this.#icon = new Item("minecraft:redstone_block");
+        }
     }
 
     draw() {
@@ -59,23 +64,30 @@ const inputClick = register("guiMouseClick", (x, y, button, _, event) => {
 }).unregister();
 
 const inputKey = register("guiKey", (char, keyCode, _, event) => {
-    if (commandInput.func_146206_l()) {
-        commandInput.func_146201_a(char, keyCode);
-        if (keyCode === 28) {  // Enter key
-            // TBD: Save Button
-            buttons[editID] = new Button(editX, editY, () => {
-                ChatLib.command(commandInput.func_146179_b());
-            }, "dirt")
-        }
-    } else if (iconInput.func_146206_l()) iconInput.func_146201_a(char, keyCode);
+    if (commandInput.func_146206_l()) commandInput.func_146201_a(char, keyCode);
+    else if (iconInput.func_146206_l()) iconInput.func_146201_a(char, keyCode);
     else return;
 
     // Cancel all but escape key
     if (keyCode !== 1) cancel(event);
+    else if (keyCode === 28) {  // Enter key
+        if (commandInput.func_146179_b() === "") {
+            // TBD: Add error message here
+            return;
+        }
+
+        // TBD: Save Button
+        buttons[editID] = new Button(editX, editY, () => {
+            ChatLib.command(commandInput.func_146179_b());
+        }, iconInput.func_146179_b());
+        inputRender.unregister();
+    }
 }).unregister();
 
 const inputRender = register("guiRender", () => {
+    Renderer.drawString("Command (ex. \"p list\"", commandInput.field_146209_f, commandInput.field_146210_g - 10, settings.textShadow);
     commandInput.func_146194_f();
+    Renderer.drawString("Icon ID (ex. \"redstone_block\"): ", iconInput.field_146209_f, iconInput.field_146210_g - 10, settings.textShadow);
     iconInput.func_146194_f();
 }).unregister();
 
