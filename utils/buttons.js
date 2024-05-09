@@ -39,28 +39,41 @@ class Button {
     #index;
     #id;
     #edit = false;
+    #icon;
     #item;
+    #command;
 
-    constructor(loc, index, clicked, icon) {
+    constructor(loc, index, clicked, icon="barrier", command="") {
         this.#clicked = clicked;
         this.#loc = loc;
         this.#index = index;
         this.#id = loc + index.toString();
+        this.#command = command;
 
         // Determine loc
         this.#x = OFFSETS[this.#loc][0] + 18 * (this.#index % 9);
         this.#y = OFFSETS[this.#loc][1] + 18 * ~~(this.#index / 9);
 
-        try {
-            this.#item = new Item("minecraft:" + icon);
-            this.#edit = icon === "barrier";
-        } catch (err) {
-            this.#item = new Item("minecraft:redstone_block");
-        }
+        this.setItem(icon);
     }
 
     getIndex() {
         return this.#index;
+    }
+
+    setClicked(callback) {
+        this.#clicked = callback;
+    }
+
+    setItem(icon) {
+        try {
+            this.#item = new Item("minecraft:" + icon);
+            this.#icon = icon;
+            this.#edit = icon === "barrier";
+        } catch (err) {
+            this.#item = new Item("minecraft:redstone_block");
+            this.#icon = "redstone_block";
+        }
     }
 
     draw(dx, dy) {
@@ -89,7 +102,15 @@ class Button {
             if (button === 0) {
                 if (this.#edit) this.#clicked();
                 else {
-                    // TBD: Edit text fields
+                    editing.id = this.#id;
+                    editing.loc = this.#loc;
+                    editing.index = this.#index;
+                    commandInput.func_146180_a(this.#command);
+                    iconInput.func_146180_a(this.#icon);
+    
+                    inputClick.register();
+                    inputKey.register();
+                    inputRender.register();
                 }
             } else {  // Delete button and replace with new edit button
                 editButtons[this.#id] = new Button(this.#loc, this.#index, () => {
@@ -100,7 +121,7 @@ class Button {
                     inputClick.register();
                     inputKey.register();
                     inputRender.register();
-                }, "barrier");
+                });
                 delete buttons[this.#id];
             }
         } else if (button === 0) this.#clicked();
@@ -139,10 +160,18 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
 
         // TBD: Save Button
         let command = commandInput.func_146179_b();  // This is also a pointer for some reason
-        buttons[editing.id] = new Button(editing.loc, editing.index, () => {
-            ChatLib.command(command);
-        }, iconInput.func_146179_b());
-        delete editButtons[editing.id];
+
+        if (buttons.hasOwnProperty(editing.id)) {
+            buttons[editing.id].setClicked(() => {
+                ChatLib.command(command);
+            });
+            buttons[editing.id].setItem(iconInput.func_146179_b());
+        } else {
+            buttons[editing.id] = new Button(editing.loc, editing.index, () => {
+                ChatLib.command(command);
+            }, iconInput.func_146179_b(), command);
+            delete editButtons[editing.id];
+        }
 
         // Clear and unregister
         resetEdit();
@@ -171,7 +200,7 @@ function createButtons(start, end, interval, category) {
             inputClick.register();
             inputKey.register();
             inputRender.register();
-        }, "barrier");
+        });
     }
 }
 
