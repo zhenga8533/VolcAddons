@@ -43,7 +43,7 @@ class Button {
     #item;
     #command;
 
-    constructor(loc, index, clicked, icon="barrier", command="") {
+    constructor(loc, index, clicked, command="", icon="barrier") {
         this.#clicked = clicked;
         this.#loc = loc;
         this.#index = index;
@@ -74,6 +74,10 @@ class Button {
             this.#item = new Item("minecraft:redstone_block");
             this.#icon = "redstone_block";
         }
+    }
+
+    save() {
+        data.buttons[this.#id] = [this.#loc, this.#index, this.#command, this.#icon];
     }
 
     draw(dx, dy) {
@@ -169,7 +173,7 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
         } else {
             buttons[editing.id] = new Button(editing.loc, editing.index, () => {
                 ChatLib.command(command);
-            }, iconInput.func_146179_b(), command);
+            }, command, iconInput.func_146179_b());
             delete editButtons[editing.id];
         }
 
@@ -189,7 +193,7 @@ const inputRender = register("guiRender", () => {
 function createButtons(start, end, interval, category) {
     for (let i = start; i < end; i += interval) {
         let id = category + i;
-        if (data.buttons.hasOwnProperty(id)) return;
+        if (data.buttons.hasOwnProperty(id)) continue;
         
         let j = i / 1;  // Why tf does i act like a pointer
         editButtons[id] = new Button(category, i, () => {
@@ -311,4 +315,22 @@ register("guiOpened", (event) => {
     click.register();
     render.register();
     close.register();
+});
+
+
+/**
+ * Persistant buttons
+ */
+register("gameUnload", () => {
+    data.buttons = {};
+    Object.keys(buttons).forEach(key => {
+        buttons[key].save();
+    });
+});
+
+Object.keys(data.buttons).forEach(key => {
+    const button = data.buttons[key];
+    buttons[key] = new Button(button[0], button[1], () => {
+        ChatLib.command(button[2])
+    }, button[2], button[3]);
 });
