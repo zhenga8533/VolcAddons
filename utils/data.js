@@ -144,8 +144,7 @@ export let data = new PogObject("VolcAddons", {
     "wardBinds": {},
     "slotBinds": {},
     "bindPresets": {},
-    "invButtons": {},
-    "chestButtons": {},
+    "buttons": {},
     // Wardrobe binds
     // GUI locations
     ...DEFAULT_GUI,

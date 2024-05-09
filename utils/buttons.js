@@ -1,8 +1,6 @@
 import { RENDERER_BLACK, RENDERER_GRAY } from "./constants";
 import { data } from "./data";
 
-data.invButtons = {};
-data.chestButtons = {};
 
 const InventoryBasic = Java.type("net.minecraft.inventory.InventoryBasic");
 const GuiInventory = Java.type("net.minecraft.client.gui.inventory.GuiInventory")
@@ -11,9 +9,8 @@ const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
 const commandInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 10, 176, 16);
 const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 30, 176, 16);
 
-let invButtons = {};
-let chestButtons = {};
 let buttons = {};
+let editButtons = {};
 
 class Button {
     #x;
@@ -38,12 +35,19 @@ class Button {
         this.#icon.draw(this.#x, this.#y, 1, 102);
     }
 
-    click(x, y) {
+    click(x, y, button) {
         if (x < this.#x || x > this.#x + 16 || y < this.#y || y > this.#y + 16) return;
-        this.#clicked();
+        
+        if (button === 0) this.#clicked();
+        else {
+
+        }
     }
 }
 
+/**
+ * Editing inputs and rendering.
+ */
 let editID;
 let editX = 0;
 let editY = 0;
@@ -58,7 +62,8 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
     if (commandInput.func_146206_l()) {
         commandInput.func_146201_a(char, keyCode);
         if (keyCode === 28) {  // Enter key
-            invButtons[editID] = new Button(editX, editY, () => {
+            // TBD: Save Button
+            buttons[editID] = new Button(editX, editY, () => {
                 ChatLib.command(commandInput.func_146179_b());
             }, "dirt")
         }
@@ -74,20 +79,20 @@ const inputRender = register("guiRender", () => {
     iconInput.func_146194_f();
 }).unregister();
 
-function createButtons(start, end, interval, typeButtons, category, slots, left, top, dx, dy) {
+function createButtons(start, end, interval, type, category, slots, left, top, dx, dy) {
     for (let i = start; i < end; i += interval) {
         let id = category + i;
         let slot = slots.func_75139_a(i);
         
-        if (data.invButtons.hasOwnProperty(id)) {
-            let button = data.invButtons[id];
-            buttons[id] = new Button(button.x, button.y, () => {
+        if (type === "set" && data.buttons.hasOwnProperty(id)) {
+            let button = data.buttons[id];
+            typeButtons[id] = new Button(button.x, button.y, () => {
                 ChatLib.command(button.command)
             }, button.icon);
-        } else {
+        } else if (type === "edit") {
             let x = left + slot.field_75223_e + dx;
             let y = top + slot.field_75221_f + dy;
-            buttons[id] = new Button(x, y, () => {
+            editButtons[id] = new Button(x, y, () => {
                 editID = id;
                 editX = x;
                 editY = y;
@@ -116,12 +121,12 @@ export function editInvButtons() {
         iconInput.field_146210_g = top - 50;
 
         // Set all inv edit buttons
-        createButtons(1, 5, 1, data.invButtons, "crafting", slots, left, top, 0, 0);
-        createButtons(9, 18, 1, data.invButtons, "top", slots, left, top, 0, -103);
-        createButtons(36, 45, 1, data.invButtons, "bottom", slots, left, top, 0, 27);
-        createButtons(9, 37, 9, data.invButtons, "left", slots, left, top, -27, 0);
-        createButtons(5, 9, 1, data.invButtons, "right", slots, left, top, 171, 0);
-        createButtons(17, 45, 9, data.invButtons, "right", slots, left, top, 27, 0);
+        createButtons(1, 5, 1, "edit", "crafting", slots, left, top, 0, 0);
+        createButtons(9, 18, 1, "edit", "top", slots, left, top, 0, -103);
+        createButtons(36, 45, 1, "edit", "bottom", slots, left, top, 0, 27);
+        createButtons(9, 37, 9, "edit", "left", slots, left, top, -27, 0);
+        createButtons(5, 9, 1, "edit", "right", slots, left, top, 171, 0);
+        createButtons(17, 45, 9, "edit", "right", slots, left, top, 27, 0);
     });
 }
 
@@ -152,20 +157,20 @@ export function editChestButtons() {
         iconInput.field_146210_g = top - 50;
 
         // Set all inv edit buttons
-        createButtons(0, 9, 1, data.chestButtons, "top", slots, left, top, 0, -36);
-        createButtons(size - 9, size, 1, data.chestButtons, "bottom", slots, left, top, 0, 27);
-        createButtons(9, size, 9, data.chestButtons, "left", slots, left, top, -27, 0);
-        createButtons(8, size, 9, data.chestButtons, "right", slots, left, top, 27, 0);
+        createButtons(0, 9, 1, "edit", "top", slots, left, top, 0, -36);
+        createButtons(size - 9, size, 1, "edit", "bottom", slots, left, top, 0, 27);
+        createButtons(9, size, 9, "edit", "left", slots, left, top, -27, 0);
+        createButtons(8, size, 9, "edit", "right", slots, left, top, 27, 0);
     });
 }
 
-const click = register("guiMouseClick", (x, y) => {
+const click = register("guiMouseClick", (x, y, button) => {
     Object.keys(buttons).forEach(key => {
-        buttons[key].click(x, y);
+        buttons[key].click(x, y, button);
     });
 
-    Object.keys(invButtons).forEach(key => {
-        invButtons[key].click(x, y);
+    Object.keys(editButtons).forEach(key => {
+        editButtons[key].click(x, y, button);
     });
 }).unregister();
 
@@ -174,13 +179,12 @@ const render = register("guiRender", () => {
         buttons[key].draw();
     });
 
-    Object.keys(invButtons).forEach(key => {
-        invButtons[key].draw();
+    Object.keys(editButtons).forEach(key => {
+        editButtons[key].draw();
     });
 });
 
 const close = register("guiClosed", () => {
-    buttons = {};
     render.unregister();
     click.unregister();
     close.unregister();
