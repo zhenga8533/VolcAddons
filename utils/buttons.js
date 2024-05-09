@@ -19,20 +19,24 @@ class Button {
     #dy;
     #slot;
     #clicked;
-    #icon;
+    #item;
+    #id;
     #invOnly;
+    #edit = false;
 
-    constructor(dx, dy, slot, clicked, icon, invOnly=true) {
+    constructor(dx, dy, slot, clicked, icon, id, invOnly=true) {
         this.#dx = dx;
         this.#dy = dy;
         this.#slot = slot;
         this.#clicked = clicked;
+        this.#id = id;
         this.#invOnly = invOnly;
 
         try {
-            this.#icon = new Item("minecraft:" + icon);
+            this.#item = new Item("minecraft:" + icon);
+            this.#edit = icon === "barrier";
         } catch (err) {
-            this.#icon = new Item("minecraft:redstone_block");
+            this.#item = new Item("minecraft:redstone_block");
         }
     }
 
@@ -49,7 +53,7 @@ class Button {
         Renderer.drawLine(RENDERER_BLACK, x, y + 16, x, y, 1);
         Renderer.drawLine(RENDERER_BLACK, x, y, x + 16, y, 1);
         Renderer.drawLine(RENDERER_BLACK, x, y, x, y + 16, 1);
-        this.#icon.draw(x, y, 1, 102);
+        this.#item.draw(x, y, 1, 102);
     }
 
     click(dx, dy, cx, cy, button) {
@@ -58,22 +62,39 @@ class Button {
         const y = slot.field_75221_f + dy + this.#dy;
 
         if (cx < x || cx > x + 16 || cy < y || cy > y + 16) return;
-        
-        if (button === 0) this.#clicked();
-        else {
 
-        }
+        if (editing.active) {
+            if (button === 0) {
+                if (this.#edit) this.#clicked();
+                else {
+                    // TBD: Edit text fields
+                }
+            } else {  // Delete button and replace with new edit button
+                editButtons[this.#id] = new Button(this.#dx, this.#dy, this.#slot, () => {
+                    editing.id = this.#id;
+                    editing.slot = this.#slot;
+                    editing.dx = this.#dx;
+                    editing.dy = this.#dy;
+    
+                    inputClick.register();
+                    inputKey.register();
+                    inputRender.register();
+                }, "barrier", this.#id, this.#invOnly);
+                delete buttons[this.#id];
+            }
+        } else if (button === 0) this.#clicked();
     }
 }
 
 /**
  * Editing inputs and rendering.
  */
-let editing = {
+const editing = {
     "id": 0,
     "slot": 0,
     "dx": 0,
-    "dy": 0
+    "dy": 0,
+    "active": false
 }
 
 function resetEdit() {
@@ -105,9 +126,11 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
         }
 
         // TBD: Save Button
+        let command = commandInput.func_146179_b();  // This is also a pointer for some reason
         buttons[editing.id] = new Button(editing.dx, editing.dy, editing.slot, () => {
-            ChatLib.command(commandInput.func_146179_b());
-        }, iconInput.func_146179_b());
+            ChatLib.command(command);
+        }, iconInput.func_146179_b(), editing.id);
+        delete editButtons[editing.id];
 
         // Clear and unregister
         resetEdit();
@@ -130,20 +153,19 @@ function createButtons(start, end, interval, type, category, dx, dy) {
             let button = data.buttons[id];
             typeButtons[id] = new Button(button.dx, button.dy, i, () => {
                 ChatLib.command(button.command)
-            }, button.icon);
+            }, button.icon, id);
         } else if (type === "edit") {
             let j = i / 1;  // Why the fuck is i acting like a pointer???
             editButtons[id] = new Button(dx, dy, i, () => {
-                editing = {
-                    "id": id,
-                    "slot": j,
-                    "dx": dx,
-                    "dy": dy
-                }
+                editing.id = id;
+                editing.slot = j;
+                editing.dx = dx;
+                editing.dy = dy;
+
                 inputClick.register();
                 inputKey.register();
                 inputRender.register();
-            }, "barrier");
+            }, "barrier", id);
         }
     }
 }
@@ -153,6 +175,7 @@ export function editInvButtons() {
     GuiHandler.openGui(new GuiInventory(Player.getPlayer()));
 
     Client.scheduleTask(1, () => {
+        editing.active = true;
         const gui = Client.currentGui.get();
         const top = gui.getGuiTop();
         const left = gui.getGuiLeft();
@@ -187,6 +210,7 @@ export function editChestButtons() {
     GuiHandler.openGui(chest);
     
     Client.scheduleTask(1, () => {
+        editing.active = true;
         const gui = Client.currentGui.get();
         const top = gui.getGuiTop();
         const left = gui.getGuiLeft();
@@ -233,12 +257,15 @@ const render = register("guiRender", (_, __, gui) => {
 });
 
 const close = register("guiClosed", () => {
+    editButtons = {};
     render.unregister();
     click.unregister();
     close.unregister();
     inputRender.unregister();
     inputClick.unregister();
     inputKey.unregister();
+    editing.active = false;
+    resetEdit();
 }).unregister();
 
 register("guiOpened", (event) => {
@@ -252,5 +279,4 @@ register("guiOpened", (event) => {
     click.register();
     render.register();
     close.register();
-    resetEdit();
 });
