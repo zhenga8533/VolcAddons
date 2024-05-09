@@ -70,10 +70,10 @@ class Button {
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
         Renderer.drawRect(RENDERER_GRAY, x, y, 16, 16);
-        Renderer.drawLine(RENDERER_BLACK, x, y, x + 16, y, 1);
-        Renderer.drawLine(RENDERER_BLACK, x, y, x, y + 16, 1);
-        Renderer.drawLine(RENDERER_BLACK, x + 16, y, x + 16, y + 16, 1);
-        Renderer.drawLine(RENDERER_BLACK, x + 16, y + 16, x + 16, y + 16, 1);
+        Renderer.drawLine(RENDERER_BLACK, x - 1, y - 1, x + 17, y - 1, 1);
+        Renderer.drawLine(RENDERER_BLACK, x - 1, y - 1, x - 1, y + 17, 1);
+        Renderer.drawLine(RENDERER_BLACK, x - 1, y + 17, x + 17, y + 17, 1);
+        Renderer.drawLine(RENDERER_BLACK, x + 17, y - 1, x + 17, y + 17, 1);
         this.#item.draw(x, y, 1, 102);
     }
 
@@ -132,6 +132,8 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
     if (keyCode === 28) {  // Enter key
         if (commandInput.func_146179_b() === "") {
             // TBD: Add error message here
+            return;
+        } else if (iconInput.func_146179_b() === "barrier") {
             return;
         }
 
