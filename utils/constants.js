@@ -37,6 +37,9 @@ export const COLOR_TABLE = {
     '§f': [255, 255, 255],
 }
 
+export const RENDERER_BLACK = Renderer.color(0, 0, 0, 128);
+export const RENDERER_GRAY = Renderer.color(128, 128, 128, 128);
+
 /**
  * Formatting codes.
  */

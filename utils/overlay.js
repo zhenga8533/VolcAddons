@@ -1,7 +1,6 @@
 import location from "./location";
 import settings from "./settings";
-import { BOLD, GREEN, ITALIC, LOGO } from "./constants";
-import { registerWhen } from "./register";
+import { GREEN, ITALIC, LOGO } from "./constants";
 
 
 /**

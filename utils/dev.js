@@ -63,3 +63,8 @@ register("command", () => {
     });
     ChatLib.chat(`${LOGO + GREEN}Succesfully printed Scoreboard lines to console!`);
 }).setName("printScore");
+
+
+export function printKeys(object) {
+    Object.keys(object).forEach(key => print(key));
+}

@@ -6,5 +6,6 @@
     "- Fixed spamlist",
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing",
+    "- TBD: Fixed skulls rendering without skin",
     "= Removed autocomplete"
 ]

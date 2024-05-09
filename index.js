@@ -6,6 +6,7 @@ import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import party from "./utils/party";
+import { editChestButtons, editInvButtons } from "./utils/buttons";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
@@ -115,6 +116,7 @@ import { calcTabasco } from "./features/kuudra/TabascoCalc";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
@@ -266,6 +268,13 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
                 ChatLib.chat(`${GREEN}Successfully reset ALL gui location settings!`);
                 ChatLib.command("ct load", true);
             } else openGUI();
+            break;
+        // Buttons
+        case "inv":
+            editInvButtons();
+            break;
+        case "chest":
+            editChestButtons();
             break;
         // Send coords
         case "coords":
