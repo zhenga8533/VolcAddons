@@ -71,12 +71,15 @@ class Button {
     }
 
     /**
-     * Updates Button.#clicked to callback.
+     * Updates Button.#command and Button.#clicked to callback.
      * 
-     * @param {Function} callback - Function to run when button is clicked.
+     * @param {String} command - Command to run when button is pressed.
      */
-    setClicked(callback) {
-        this.#clicked = callback;
+    setCommand(command) {
+        this.#command = command;
+        this.#clicked = () => {
+            ChatLib.command(command);
+        }
     }
 
     /**
@@ -145,19 +148,25 @@ class Button {
                     this.#clicked();
                     return true;
                 }
-                
-                commandInput.func_146180_a(this.#command);
-                iconInput.func_146180_a(this.#icon);
-            } else delete buttons[this.#id];
-            
-            editButtons[this.#id] = new Button(this.#loc, this.#index, () => {
                 editing.id = this.#id;
                 editing.loc = this.#loc;
                 editing.index = this.#index;
 
                 inputKey.register();
                 inputRender.register();
-            });
+                commandInput.func_146180_a(this.#command);
+                iconInput.func_146180_a(this.#icon);
+            } else {
+                delete buttons[this.#id];
+                editButtons[this.#id] = new Button(this.#loc, this.#index, () => {
+                    editing.id = this.#id;
+                    editing.loc = this.#loc;
+                    editing.index = this.#index;
+    
+                    inputKey.register();
+                    inputRender.register();
+                });
+            }
         } else if (button === 0) this.#clicked();
 
         return true;
@@ -201,7 +210,8 @@ const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
         const left = gui.getGuiLeft();
         const top = gui.getGuiTop();
         
-        if (!Object.keys(editButtons).some(key => editButtons[key].click(left, top, x, y, button))) resetEdit();
+        if (!Object.keys(editButtons).some(key => editButtons[key].click(left, top, x, y, button)) || 
+            !Object.keys(buttons).some(key => buttons[key].click(left, top, x, y, button))) resetEdit();
     }
 }).unregister();
 
@@ -218,9 +228,7 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
 
         let command = commandInput.func_146179_b();  // This is also a pointer for some reason
         if (buttons.hasOwnProperty(editing.id)) {
-            buttons[editing.id].setClicked(() => {
-                ChatLib.command(command);
-            });
+            buttons[editing.id].setCommand(command);
             buttons[editing.id].setItem(iconInput.func_146179_b());
         } else {
             buttons[editing.id] = new Button(editing.loc, editing.index, () => {
@@ -272,6 +280,8 @@ function createButtons(start, end, increment, category) {
  * @param {String} type - "inv" or "chest" for type of container to open and process.
  */
 export function setButtons(type) {
+    editing.active = true;
+
     // Open example inventory, credit to: https://www.chattriggers.com/modules/v/ChestMenu
     if (type === "inv") GuiHandler.openGui(new GuiInventory(Player.getPlayer()));
     else {
@@ -281,8 +291,8 @@ export function setButtons(type) {
     }
 
     Client.scheduleTask(1, () => {
-        editing.active = true;
         const gui = Client.currentGui.get();
+        if (!gui) return;
         const top = gui.getGuiTop();
         const left = gui.getGuiLeft();
 
@@ -348,7 +358,7 @@ registerWhen(register("guiOpened", (event) => {
     const name = gui.class.toString();
     if (!name.endsWith("GuiInventory") && !name.endsWith("GuiChest")) return;
 
-    click.register();
+    if (!editing.active) click.register();
     close.register();
     render.register();
     Client.scheduleTask(1, () => {
