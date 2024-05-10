@@ -6,7 +6,6 @@ import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import party from "./utils/party";
-import { setButtons } from "./utils/buttons";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
@@ -39,6 +38,7 @@ import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/ArmorDisplay";
 import "./features/container/AttributeAbbrev";
+import { setButtons } from "./features/container/ContainerButtons";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";

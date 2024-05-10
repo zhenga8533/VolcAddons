@@ -1,6 +1,6 @@
-import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, RENDERER_BLACK, RENDERER_GRAY } from "./constants";
-import { data } from "./data";
-import settings from "./settings";
+import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, RENDERER_BLACK, RENDERER_GRAY } from "../../utils/constants";
+import { data } from "../../utils/data";
+import settings from "../../utils/settings";
 
 
 // Container offsets from top left [x, y]
