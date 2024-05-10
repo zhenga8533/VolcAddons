@@ -1,19 +1,9 @@
-import { BOLD, RENDERER_BLACK, RENDERER_GRAY } from "./constants";
+import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, RENDERER_BLACK, RENDERER_GRAY } from "./constants";
 import { data } from "./data";
 import settings from "./settings";
 
 
-const InventoryBasic = Java.type("net.minecraft.inventory.InventoryBasic");
-const GuiInventory = Java.type("net.minecraft.client.gui.inventory.GuiInventory")
-const GuiChest = Java.type("net.minecraft.client.gui.inventory.GuiChest");
-const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
-const commandInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 10, 176, 16);
-const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 30, 176, 16);
-
-let buttons = {};
-let editButtons = {};
-
-// [x, y, dy]
+// Container offsets from top left [x, y]
 const OFFSETS = {
     "top": [8, -18],
     "right": [178, 12],
@@ -21,28 +11,41 @@ const OFFSETS = {
     "left": [-18, 12]
 };
 
-/**
- * Editing inputs and rendering.
- */
+// Editing inputs and rendering
 const editing = {
     "id": "Top0",
     "loc": "Top",
     "index": 0,
     "active": false
 }
+const commandInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 10, 176, 16);
+const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 30, 176, 16);
+
+// Local cache
+let buttons = {};
+let editButtons = {};
 
 class Button {
     #clicked;
-    #x;
-    #y;
     #loc;
     #index;
     #id;
-    #edit = false;
+    #x;
+    #y;
+    #command;
     #icon;
     #item;
-    #command;
+    #edit = false;
 
+    /**
+     * Boop. Another poorly written class that patches up errors as they came up :).
+     * 
+     * @param {String} loc - "Top", "Right", "Bottom", or "Left" used to set offset.
+     * @param {Number} index - Relative inventory index position. Will be used to determine if button should be rendered 
+     * @param {Function} clicked - Callback function to be called when button is pressed.
+     * @param {String} command - Command args that are called in the callback. Used to cache data.
+     * @param {String} icon - Minecraft item id used to draw logo. Barrier icon is reserved for edit buttons.
+     */
     constructor(loc, index, clicked, command="", icon="barrier") {
         this.#clicked = clicked;
         this.#loc = loc;
@@ -57,14 +60,29 @@ class Button {
         this.setItem(icon);
     }
 
+    /**
+     * Returns Button.#index
+     * 
+     * @returns {Number} - Button's container index.
+     */
     getIndex() {
         return this.#index;
     }
 
+    /**
+     * Updates Button.#clicked to callback.
+     * 
+     * @param {Function} callback - Function to run when button is clicked.
+     */
     setClicked(callback) {
         this.#clicked = callback;
     }
 
+    /**
+     * Updates Button.#item using icon, otherwise defaults to redstone_block.
+     * 
+     * @param {String} icon - Name used to find Minecraft item ID.
+     */
     setItem(icon) {
         try {
             this.#item = new Item("minecraft:" + icon);
@@ -76,10 +94,19 @@ class Button {
         }
     }
 
+    /**
+     * Saves button into PogData cache.
+     */
     save() {
         data.buttons[this.#id] = [this.#loc, this.#index, this.#command, this.#icon];
     }
 
+    /**
+     * Draws button background and icon onto screen.
+     * 
+     * @param {Number} dx - Left most coordinate of current GUI.
+     * @param {Number} dy - Top most coordinate of current GUI.
+     */
     draw(dx, dy) {
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -94,6 +121,16 @@ class Button {
         this.#item.draw(x, y, 1, 102);
     }
 
+    /**
+     * Checks if mouse presses on button.
+     * 
+     * @param {Number} dx - Left most coordinate of current GUI.
+     * @param {Number} dy - Top most coordinate of current GUI.
+     * @param {Number} cx - X pos of mouse press.
+     * @param {Number} cy - Y pos of mouse press.
+     * @param {Number} button - 0 for left click, 1 for right click.
+     * @returns 
+     */
     click(dx, dy, cx, cy, button) {
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -132,6 +169,9 @@ class Button {
     }
 }
 
+/**
+ * Unregisters edit registers and clears input fields.
+ */
 function resetEdit() {
     inputClick.unregister();
     inputKey.unregister();
@@ -155,16 +195,10 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
     // Cancel all but escape key
     if (keyCode !== 1) cancel(event);
     if (keyCode === 28) {  // Enter key
-        if (commandInput.func_146179_b() === "") {
-            // TBD: Add error message here
-            return;
-        } else if (iconInput.func_146179_b() === "barrier") {
-            return;
-        }
+        if (commandInput.func_146179_b() === "") return;
+        else if (iconInput.func_146179_b() === "barrier") return;
 
-        // TBD: Save Button
         let command = commandInput.func_146179_b();  // This is also a pointer for some reason
-
         if (buttons.hasOwnProperty(editing.id)) {
             buttons[editing.id].setClicked(() => {
                 ChatLib.command(command);
@@ -177,7 +211,6 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
             delete editButtons[editing.id];
         }
 
-        // Clear and unregister
         resetEdit();
     }
 }).unregister();
@@ -190,8 +223,16 @@ const inputRender = register("guiRender", () => {
     iconInput.func_146194_f();
 }).unregister();
 
-function createButtons(start, end, interval, category) {
-    for (let i = start; i < end; i += interval) {
+/**
+ * Loops through provided indexes to create buttons for a category.
+ * 
+ * @param {Number} start - Starting index of for loop.
+ * @param {Number} end - Ending index of for loop (not inclusive).
+ * @param {Number} increment - Step size of for loop.
+ * @param {String} category - "top", "right", "bottom", or "left"
+ */
+function createButtons(start, end, increment, category) {
+    for (let i = start; i < end; i += increment) {
         let id = category + i;
         if (data.buttons.hasOwnProperty(id)) continue;
         
@@ -208,9 +249,26 @@ function createButtons(start, end, interval, category) {
     }
 }
 
-export function editInvButtons() {
-    // Open example inventory
-    GuiHandler.openGui(new GuiInventory(Player.getPlayer()));
+/**
+ * Sets up button editing menu for specified container type.
+ * 
+ * @param {String} type - "inv" or "chest" for type of container to open and process.
+ */
+export function setButtons(type) {
+    // Open example inventory, credit to: https://www.chattriggers.com/modules/v/ChestMenu
+    if (type === "inv") GuiHandler.openGui(new GuiInventory(Player.getPlayer()));
+    else {
+        const inv = new InventoryBasic(
+            ChatLib.addColor("Chest"),
+            true,
+            54
+        );
+        const chest = new GuiChest(
+            Player.getPlayer().field_71071_by,
+            inv
+        );
+        GuiHandler.openGui(chest);
+    }
 
     Client.scheduleTask(1, () => {
         editing.active = true;
@@ -225,46 +283,17 @@ export function editInvButtons() {
         iconInput.field_146210_g = top - 50;
 
         // Set all inv edit buttons TRBL
+        const bottom = type === "inv" ? 72 : 99;
         createButtons(0, 9, 1, "top");
         createButtons(0, 9, 1, "bottom");
-        createButtons(0, 72, 9, "left");
-        createButtons(0, 72, 9, "right");
+        createButtons(0, bottom, 9, "left");
+        createButtons(0, bottom, 9, "right");
     });
 }
 
-export function editChestButtons() {
-    // Open example inventory
-    const inv = new InventoryBasic(
-        ChatLib.addColor("Chest"),
-        true,
-        54
-    );
-    const chest = new GuiChest(
-        Player.getPlayer().field_71071_by,
-        inv
-    );
-    GuiHandler.openGui(chest);
-    
-    Client.scheduleTask(1, () => {
-        editing.active = true;
-        const gui = Client.currentGui.get();
-        const top = gui.getGuiTop();
-        const left = gui.getGuiLeft();
-
-        // Set input field locations
-        commandInput.field_146209_f = left;
-        commandInput.field_146210_g = top - 80;
-        iconInput.field_146209_f = left;
-        iconInput.field_146210_g = top - 50;
-
-        // Set all inv edit buttons
-        createButtons(0, 9, 1, "top");
-        createButtons(0, 9, 1, "bottom");
-        createButtons(0, 99, 9, "left");
-        createButtons(0, 99, 9, "right");
-    });
-}
-
+/**
+ * Registers for tracking and rendering buttons.
+ */
 const click = register("guiMouseClick", (x, y, button, gui) => {
     const left = gui.getGuiLeft();
     const top = gui.getGuiTop();
@@ -291,7 +320,7 @@ const render = register("guiRender", (_, __, gui) => {
     Object.keys(editButtons).forEach(key => {
         editButtons[key].draw(left, top);
     });
-});
+}).unregister();
 
 const close = register("guiClosed", () => {
     editButtons = {};
@@ -313,10 +342,9 @@ register("guiOpened", (event) => {
     else return;
 
     click.register();
-    render.register();
     close.register();
+    render.register();
 });
-
 
 /**
  * Persistant buttons

@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { DARK_GRAY, ITALIC } from "../../utils/constants";
+import { DARK_GRAY, GuiTextField, ITALIC } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
 import { data, itemNBTs } from "../../utils/data";
@@ -8,7 +8,6 @@ import { decompressNBT } from "../../utils/functions/misc";
 
 // Search bar parameters
 const loc = data.XL;
-const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
 const searchbar = new GuiTextField(0, Client.getMinecraft().field_71466_p, loc[0], loc[1], 192, 16);
 let calc = undefined;
 

@@ -1,6 +1,6 @@
 [
     "- Added calendar real time",
-    "- Added inventory buttons",
+    "- Added inventory buttons (`/va buttons`)",
     "- Changed some rendering to be more optimized",
     "- Changed autocorrect to be more reliable (maybe change to also track word index",
     "- Fixed spamlist",

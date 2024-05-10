@@ -6,7 +6,7 @@ import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import party from "./utils/party";
-import { editChestButtons, editInvButtons } from "./utils/buttons";
+import { setButtons } from "./utils/buttons";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
@@ -271,10 +271,10 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
             break;
         // Buttons
         case "inv":
-            editInvButtons();
+            setButtons("inv");
             break;
         case "chest":
-            editChestButtons();
+            setButtons("chest");
             break;
         // Send coords
         case "coords":

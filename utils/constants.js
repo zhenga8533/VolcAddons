@@ -78,6 +78,11 @@ export const CHEST_CLASS = Java.type("net.minecraft.tileentity.TileEntityChest")
 export const STAND_CLASS = EntityArmorStand.class;
 export const WITHER_CLASS = EntityWither.class;
 
+export const InventoryBasic = Java.type("net.minecraft.inventory.InventoryBasic");
+export const GuiInventory = Java.type("net.minecraft.client.gui.inventory.GuiInventory")
+export const GuiChest = Java.type("net.minecraft.client.gui.inventory.GuiChest");
+export const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
+
 /**
  * VolcAddons setting constants.
  */
