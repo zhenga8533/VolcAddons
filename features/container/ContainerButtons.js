@@ -9,7 +9,11 @@ const OFFSETS = {
     "top": [8, -18],
     "right": [178, 12],
     "bottom": [8, 42],
-    "left": [-18, 12]
+    "left": [-18, 12],
+    "inv1": [80, 6],
+    "inv2": [80, 24],
+    "inv3": [80, 42],
+    "inv4": [80, 60],
 };
 
 const COLOR_SCHEMES = [
@@ -24,6 +28,7 @@ const editing = {
     "id": "Top0",
     "loc": "Top",
     "index": 0,
+    "inv": false,
     "active": false
 }
 const commandInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 10, 176, 16);
@@ -32,6 +37,7 @@ const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 3
 // Local cache
 let buttons = {};
 let editButtons = {};
+let container;
 
 class Button {
     #clicked;
@@ -43,6 +49,7 @@ class Button {
     #command;
     #icon;
     #item;
+    #invOnly;
     #edit = false;
 
     /**
@@ -54,17 +61,15 @@ class Button {
      * @param {String} command - Command args that are called in the callback. Used to cache data.
      * @param {String} icon - Minecraft item id used to draw logo. Barrier icon is reserved for edit buttons.
      */
-    constructor(loc, index, clicked, command="", icon="barrier") {
+    constructor(loc, index, clicked, command="", icon="barrier", invOnly=false) {
         this.#clicked = clicked;
         this.#loc = loc;
         this.#index = index;
         this.#id = loc + index.toString();
         this.#command = command;
-
-        // Determine loc
         this.#x = OFFSETS[this.#loc][0] + 18 * (this.#index % 9);
         this.#y = OFFSETS[this.#loc][1] + 18 * ~~(this.#index / 9);
-
+        this.#invOnly = invOnly;
         this.setItem(icon);
     }
 
@@ -109,7 +114,7 @@ class Button {
      * Saves button into PogData cache.
      */
     save() {
-        data.buttons[this.#id] = [this.#loc, this.#index, this.#command, this.#icon];
+        data.buttons[this.#id] = [this.#loc, this.#index, this.#command, this.#icon, this.#invOnly];
     }
 
     /**
@@ -119,17 +124,45 @@ class Button {
      * @param {Number} dy - Top most coordinate of current GUI.
      */
     draw(dx, dy) {
+        if (this.#invOnly && container !== "GuiInventory") return;
+
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
+        Renderer.translate(0, 0, 300);
         Renderer.drawRect(COLOR_SCHEMES[settings.buttonColor][0], x, y, 16, 16);
+        Renderer.translate(0, 0, 300);
         Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y - 1, x + 17, y - 1, 1);
+        Renderer.translate(0, 0, 300);
         Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y - 1, x - 1, y + 17, 1);
+        Renderer.translate(0, 0, 300);
         Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y + 17, x + 17, y + 17, 1);
+        Renderer.translate(0, 0, 300);
         Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x + 17, y - 1, x + 17, y + 17, 1);
-        this.#item.draw(x, y, 1, 102);
+        this.#item.draw(x, y, 1, 301);
+    }
+
+    /**
+     * Checks if mouse is hovering over button to render linked command.
+     * 
+     * @param {Number} dx - Left most coordinate of current GUI.
+     * @param {Number} dy - Top most coordinate of current GUI.
+     * @param {Number} hx - Current x pos of mouse.
+     * @param {Number} hy - Current y pos of mouse.
+     */
+    hover(dx, dy, hx, hy) {
+        if (this.#invOnly && container !== "GuiInventory") return;
+        
+        const size = Player.getContainer().getSize();
+        const x = dx + this.#x;
+        const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
+            18 * ~~(size / 9) + (size > 45 ? 0 : 36));
+        if (hx < x || hx > x + 16 || hy < y || hy > y + 16) return;
+
+        Renderer.translate(0, 0, 999);
+        Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx, hy - 10);
     }
 
     /**
@@ -143,6 +176,8 @@ class Button {
      * @returns {Boolean} True if button was pressed, false otherwise.
      */
     click(dx, dy, cx, cy, button) {
+        if (this.#invOnly && container !== "GuiInventory") return;
+
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
@@ -173,30 +208,11 @@ class Button {
     
                     inputKey.register();
                     inputRender.register();
-                });
+                }, "", "barrier", this.#invOnly);
             }
         } else if (button === 0) this.#clicked();
 
         return true;
-    }
-
-    /**
-     * Checks if mouse is hovering over button to render linked command.
-     * 
-     * @param {Number} dx - Left most coordinate of current GUI.
-     * @param {Number} dy - Top most coordinate of current GUI.
-     * @param {Number} hx - Current x pos of mouse.
-     * @param {Number} hy - Current y pos of mouse.
-     */
-    hover(dx, dy, hx, hy) {
-        const size = Player.getContainer().getSize();
-        const x = dx + this.#x;
-        const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
-            18 * ~~(size / 9) + (size > 45 ? 0 : 36));
-        if (hx < x || hx > x + 16 || hy < y || hy > y + 16) return;
-
-        Renderer.translate(0, 0, 300);
-        Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx, hy - 10);
     }
 }
 
@@ -241,7 +257,7 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
         } else {
             buttons[editing.id] = new Button(editing.loc, editing.index, () => {
                 ChatLib.command(command);
-            }, command, iconInput.func_146179_b());
+            }, command, iconInput.func_146179_b(), editing.inv);
             delete editButtons[editing.id];
         }
 
@@ -265,7 +281,7 @@ const inputRender = register("guiRender", () => {
  * @param {Number} increment - Step size of for loop.
  * @param {String} category - "top", "right", "bottom", or "left"
  */
-function createButtons(start, end, increment, category) {
+function createButtons(start, end, increment, category, setInv=false) {
     for (let i = start; i < end; i += increment) {
         let id = category + i;
         if (data.buttons.hasOwnProperty(id)) continue;
@@ -275,12 +291,13 @@ function createButtons(start, end, increment, category) {
             editing.id = id;
             editing.index = j;
             editing.loc = category;
+            editing.inv = setInv;
 
             commandInput.func_146180_a("");
             iconInput.func_146180_a("");
             inputKey.register();
             inputRender.register();
-        });
+        }, "", "barrier", setInv);
     }
 }
 
@@ -291,9 +308,10 @@ function createButtons(start, end, increment, category) {
  */
 export function setButtons(type) {
     editing.active = true;
+    const setInv = type === "inv";
 
     // Open example inventory, credit to: https://www.chattriggers.com/modules/v/ChestMenu
-    if (type === "inv") GuiHandler.openGui(new GuiInventory(Player.getPlayer()));
+    if (setInv) GuiHandler.openGui(new GuiInventory(Player.getPlayer()));
     else {
         const inv = new InventoryBasic("Container Buttons", true, 54);
         const chest = new GuiChest(Player.getPlayer().field_71071_by, inv);
@@ -313,11 +331,17 @@ export function setButtons(type) {
         iconInput.field_146210_g = top - 50;
 
         // Set all inv edit buttons TRBL
-        const bottom = type === "inv" ? 72 : 99;
+        const bottom = setInv ? 72 : 99;
         createButtons(0, 9, 1, "top");
         createButtons(0, 9, 1, "bottom");
         createButtons(0, bottom, 9, "left");
         createButtons(0, bottom, 9, "right");
+        if (setInv) {
+            createButtons(0, 5, 1, "inv1", true);
+            createButtons(0, 5, 1, "inv2", true);
+            createButtons(0, 5, 1, "inv3", true);
+            createButtons(0, 5, 1, "inv4", true);
+        }
     });
     inputClick.register();
 }
@@ -365,8 +389,9 @@ const close = register("guiClosed", () => {
 
 registerWhen(register("guiOpened", (event) => {
     const gui = event.gui;
-    const name = gui.class.toString();
-    if (!name.endsWith("GuiInventory") && !name.endsWith("GuiChest")) return;
+    const name = gui.class.toString().split('.');
+    container = name[name.length - 1];
+    if (container !== "GuiInventory" && container !== "GuiChest") return;
 
     if (!editing.active) click.register();
     close.register();
@@ -392,5 +417,5 @@ Object.keys(data.buttons).forEach(key => {
     const button = data.buttons[key];
     buttons[key] = new Button(button[0], button[1], () => {
         ChatLib.command(button[2])
-    }, button[2], button[3]);
+    }, button[2], button[3], button[4]);
 });
