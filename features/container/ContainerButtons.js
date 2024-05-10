@@ -1,4 +1,4 @@
-import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, RENDERER_BLACK, RENDERER_GRAY } from "../../utils/constants";
+import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, RENDERER_BLACK, RENDERER_GRAY, UNDERLINE } from "../../utils/constants";
 import { data } from "../../utils/data";
 import settings from "../../utils/settings";
 
@@ -129,42 +129,37 @@ class Button {
      * @param {Number} cx - X pos of mouse press.
      * @param {Number} cy - Y pos of mouse press.
      * @param {Number} button - 0 for left click, 1 for right click.
-     * @returns 
+     * @returns {Boolean} True if button was pressed, false otherwise.
      */
     click(dx, dy, cx, cy, button) {
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
-        if (cx < x || cx > x + 16 || cy < y || cy > y + 16) return;
+        if (cx < x || cx > x + 16 || cy < y || cy > y + 16) return false;
 
         if (editing.active) {
             if (button === 0) {
-                if (this.#edit) this.#clicked();
-                else {
-                    editing.id = this.#id;
-                    editing.loc = this.#loc;
-                    editing.index = this.#index;
-                    commandInput.func_146180_a(this.#command);
-                    iconInput.func_146180_a(this.#icon);
-    
-                    inputClick.register();
-                    inputKey.register();
-                    inputRender.register();
+                if (this.#edit) {
+                    this.#clicked();
+                    return true;
                 }
-            } else {  // Delete button and replace with new edit button
-                editButtons[this.#id] = new Button(this.#loc, this.#index, () => {
-                    editing.id = this.#id;
-                    editing.loc = this.#loc;
-                    editing.index = this.#index;
-    
-                    inputClick.register();
-                    inputKey.register();
-                    inputRender.register();
-                });
-                delete buttons[this.#id];
-            }
+                
+                commandInput.func_146180_a(this.#command);
+                iconInput.func_146180_a(this.#icon);
+            } else delete buttons[this.#id];
+            
+            editButtons[this.#id] = new Button(this.#loc, this.#index, () => {
+                editing.id = this.#id;
+                editing.loc = this.#loc;
+                editing.index = this.#index;
+
+                inputKey.register();
+                inputRender.register();
+            });
         } else if (button === 0) this.#clicked();
+
+        return true;
     }
 
     /**
@@ -180,10 +175,10 @@ class Button {
         const x = dx + this.#x;
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
-        if (this.#command === "" || hx < x || hx > x + 16 || hy < y || hy > y + 16) return;
+        if (hx < x || hx > x + 16 || hy < y || hy > y + 16) return;
 
         Renderer.translate(0, 0, 300);
-        Renderer.drawString('/' + this.#command, hx, hy - 10);
+        Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx, hy - 10);
     }
 }
 
@@ -191,18 +186,22 @@ class Button {
  * Unregisters edit registers and clears input fields.
  */
 function resetEdit() {
-    inputClick.unregister();
     inputKey.unregister();
     inputRender.unregister();
     commandInput.func_146180_a("");
     iconInput.func_146180_a("");
 }
 
-const inputClick = register("guiMouseClick", (x, y, button, _, event) => {
+const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
     commandInput.func_146192_a(x, y, button);
     iconInput.func_146192_a(x, y, button);
     if (commandInput.func_146206_l() || iconInput.func_146206_l()) cancel(event);
-    else resetEdit();
+    else {
+        const left = gui.getGuiLeft();
+        const top = gui.getGuiTop();
+        
+        if (!Object.keys(editButtons).some(key => editButtons[key].click(left, top, x, y, button))) resetEdit();
+    }
 }).unregister();
 
 const inputKey = register("guiKey", (char, keyCode, _, event) => {
@@ -260,7 +259,6 @@ function createButtons(start, end, increment, category) {
             editing.index = j;
             editing.loc = category;
 
-            inputClick.register();
             inputKey.register();
             inputRender.register();
         });
@@ -300,6 +298,7 @@ export function setButtons(type) {
         createButtons(0, bottom, 9, "left");
         createButtons(0, bottom, 9, "right");
     });
+    inputClick.register();
 }
 
 /**
@@ -311,10 +310,6 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
 
     Object.keys(buttons).forEach(key => {
         buttons[key].click(left, top, x, y, button);
-    });
-
-    Object.keys(editButtons).forEach(key => {
-        editButtons[key].click(left, top, x, y, button);
     });
 }).unregister();
 
