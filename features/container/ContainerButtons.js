@@ -467,12 +467,19 @@ export function buttonCommands(args) {
             data.save();
             ChatLib.chat(`${LOGO + GREEN}Successfully saved buttons data using key: "${name}".`);
             break;
+        case "delete":
+        case "remove":
+            if (data.buttonPresets.hasOwnProperty(name)) {
+                delete data.buttonPresets[name];
+                ChatLib.chat(`${LOGO + GREEN}Successfully deleted button preset using key: "${name}".`);
+            } else ChatLib.chat(`${LOGO + RED}Error: There are no presets using "${name}" key.`)
+            break;
         case "load":
             if (data.buttonPresets.hasOwnProperty(name)) {
                 data.buttons = data.buttonPresets[name];
                 loadButtons();
-                ChatLib.chat(`${LOGO + GREEN}Successfully loaded button presets using key: "${name}".`);
-            } else ChatLib.chat(`${LOGO + RED}Error: There are no presets of "${name}" key.`);
+                ChatLib.chat(`${LOGO + GREEN}Successfully loaded button preset using key: "${name}".`);
+            } else ChatLib.chat(`${LOGO + RED}Error: There are no presets using "${name}" key.`);
             break;
         case "list":
         case "view":
@@ -521,6 +528,7 @@ ${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}inv: ${YELLOW}Opens edit menu for GuiInventory.
  ${DARK_GRAY}- ${GOLD}chest: ${YELLOW}Opens edit meny for GuiChest.
  ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save button data to presets using key.
+ ${DARK_GRAY}- ${GOLD}delete ${YELLOW}<key>: Delete button preset using key.
  ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load button preset using key.
  ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available button presets.
  ${DARK_GRAY}- ${GOLD}import: ${YELLOW}Import button presets from the clipboard.

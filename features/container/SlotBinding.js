@@ -85,15 +85,73 @@ registerWhen(register("guiRender", (x, y, gui) => {
 /**
  * Slot binding related commands...
  */
-register("command", () => {
-    data.slotBinds = {};
-    ChatLib.chat(`${LOGO + GREEN}Successfully reset slot bindings!`);
-}).setName("resetBinds", true);
+export function slotCommands(args) {
+    const command = args[1];
+    const name = args[2];
 
-register("command", (arg) => {
-    data.bindPresets[arg] = data.slotBinds;
-    ChatLib.chat(`${LOGO + GREEN}Successfully saved slot bindingds to key: "${arg}"`);
-}).setName("saveBinds", true);
+    switch(command) {
+        case "save":
+            data.bindPresets[name] = data.slotBinds;
+            ChatLib.chat(`${LOGO + GREEN}Successfully saved slot bindingds using key: "${name}".`);
+            break;
+        case "load":
+            if (data.bindPresets.hasOwnProperty(name)) {
+                data.slotBinds = data.bindPresets[name];
+                ChatLib.chat(`${LOGO + GREEN}Succesfully loaded slot bindings using key: "${name}".`);
+            } else ChatLib.chat(`${LOGO + RED}Error: There are no presets using "${name}" key.`);
+            break;
+        case "list":
+        case "view":
+            const buttonKeys = Object.keys(data.buttonPresets);
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Button Presets:`);
+            buttonKeys.forEach(preset => ChatLib.chat(` ${DARK_GRAY}- ${AQUA + preset}`));
+            if (buttonKeys.length === 0) ChatLib.chat(` ${RED}No presets exist!`);
+            break;
+        case "import":
+        case "parse":
+            const backup = data.buttons;
+            try {
+                const decoded = JSON.parse(FileLib.decodeBase64(Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor)));
+                data.buttons = decoded;
+                loadButtons();
+                ChatLib.chat(`${LOGO + GREEN}Successfully loaded button preset from clipboard!`);
+            } catch (err) {
+                data.buttons = backup;
+                ChatLib.chat(`${LOGO + RED}Error: Unable to process clipboard content!`);
+            }
+            break;
+        case "export":
+            const compressed = FileLib.encodeBase64(JSON.stringify(data.buttons));
+            new Message(`${LOGO + DARK_GREEN}Encoded Button Data:`, new TextComponent(GREEN + compressed)
+                .setClickAction("run_command")
+                .setClickValue("/vacopy " + compressed)
+                .setHoverValue(`${YELLOW}Click to copy data.`)
+            ).chat();
+            break;
+        case "clear":
+        case "reset":
+            data.slotBinds = {};
+            ChatLib.chat(`${LOGO + GREEN}Successfully reset slot bindings!`);
+            break;
+        case "help":
+        default:
+            if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+            ChatLib.chat(`
+${LOGO + GOLD + BOLD}Container Buttons Commands:
+ ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va buttons <command>
+
+ ${DARK_GRAY}- ${GOLD}inv: ${YELLOW}Opens edit menu for GuiInventory.
+ ${DARK_GRAY}- ${GOLD}chest: ${YELLOW}Opens edit meny for GuiChest.
+ ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save button data to presets using key.
+ ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load button preset using key.
+ ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available button presets.
+ ${DARK_GRAY}- ${GOLD}import: ${YELLOW}Import button presets from the clipboard.
+ ${DARK_GRAY}- ${GOLD}export: ${YELLOW}Export the button data as encoded data.
+ ${DARK_GRAY}- ${GOLD}reset: ${YELLOW}Resets button presets.`);
+            break;
+    }
+}
+
 
 register("command", (arg) => {
     if (data.bindPresets.hasOwnProperty(arg)) {
