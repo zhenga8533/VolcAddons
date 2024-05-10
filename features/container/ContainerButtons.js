@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, RENDERER_BLACK, RENDERER_GRAY, UNDERLINE } from "../../utils/constants";
+import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, UNDERLINE } from "../../utils/constants";
 import { data } from "../../utils/data";
 import { registerWhen } from "../../utils/register";
 
@@ -11,6 +11,13 @@ const OFFSETS = {
     "bottom": [8, 42],
     "left": [-18, 12]
 };
+
+const COLOR_SCHEMES = [
+    [Renderer.color(139, 139, 139, 128), Renderer.color(198, 198, 198, 255)],  // Default
+    [Renderer.color(0, 0, 0, 0), Renderer.color(0, 0, 0, 0)],  // Transparent
+    [Renderer.color(255, 255, 255, 16), Renderer.color(169, 169, 169, 128)],  // Semi-Transparent
+    [Renderer.color(82, 92, 136, 128), Renderer.color(44, 53, 77, 255)]  // FurfSky
+]
 
 // Editing inputs and rendering
 const editing = {
@@ -117,11 +124,11 @@ class Button {
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
-        Renderer.drawRect(RENDERER_GRAY, x, y, 16, 16);
-        Renderer.drawLine(RENDERER_BLACK, x - 1, y - 1, x + 17, y - 1, 1);
-        Renderer.drawLine(RENDERER_BLACK, x - 1, y - 1, x - 1, y + 17, 1);
-        Renderer.drawLine(RENDERER_BLACK, x - 1, y + 17, x + 17, y + 17, 1);
-        Renderer.drawLine(RENDERER_BLACK, x + 17, y - 1, x + 17, y + 17, 1);
+        Renderer.drawRect(COLOR_SCHEMES[settings.buttonColor][0], x, y, 16, 16);
+        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y - 1, x + 17, y - 1, 1);
+        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y - 1, x - 1, y + 17, 1);
+        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y + 17, x + 17, y + 17, 1);
+        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x + 17, y - 1, x + 17, y + 17, 1);
         this.#item.draw(x, y, 1, 102);
     }
 

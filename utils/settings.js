@@ -85,6 +85,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         // Etc
         this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
+        this.addDependency("Container Buttons Scheme", "Container Buttons");
     }
     
 
@@ -355,6 +356,15 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
         subcategory: "Container"
     })
     containerButtons = false;
+
+    @SelectorProperty({
+        name: "Container Buttons Scheme",
+        description: `${DARK_RED}NEW! ${GRAY}Set the color schemes used to render container buttons.`,
+        category: "Container",
+        subcategory: "Container",
+        options: ["Default", "Transparent", "Semi-Transparent", "FurfSky"]
+    })
+    buttonColor = 0;
 
     @SwitchProperty({
         name: "Container Preview",
