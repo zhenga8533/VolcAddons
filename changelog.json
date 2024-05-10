@@ -1,12 +1,13 @@
 [
     "- Added calendar real time",
     "- Added inventory buttons (`/va buttons`)",
-    "- TBD: Added binding guide (`/va binds`)",
+    "- Changed binding commands (`/va binds`)",
     "- Changed some rendering to be more optimized",
     "- Changed autocorrect to be more reliable (maybe change to also track word index",
     "- Fixed spamlist",
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing",
     "- TBD: Fixed skulls rendering without skin",
-    "= Removed autocomplete"
+    "= Removed autocomplete",
+    "- Removed `/va test`"
 ]

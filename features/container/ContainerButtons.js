@@ -322,7 +322,7 @@ function createButtons(start, end, increment, category) {
  * 
  * @param {String} type - "inv" or "chest" for type of container to open and process.
  */
-export function setButtons(type) {
+function setButtons(type) {
     editing.active = true;
     const setInv = type === "inv";
 

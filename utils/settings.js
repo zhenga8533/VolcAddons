@@ -351,7 +351,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
 
     @SwitchProperty({
         name: "Container Buttons",
-        description: `${DARK_RED}NEW! ${GRAY}Display buttons that runs a command when pressed. Use ${AQUA}/va inv ${GRAY}or ${AQUA}/va chest ${GRAY}to set buttons.`,
+        description: `${DARK_RED}NEW! ${GRAY}Display buttons that runs a command when pressed. Use ${AQUA}/va buttons ${GRAY}to view related commands.`,
         category: "Container",
         subcategory: "Container"
     })
@@ -386,9 +386,7 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
     
     @SwitchProperty({
         name: "Slot Binding",
-        description: `Scuffed version of NEU's slot binding feature (you can swap pressing inventory slots but not hotbar slots :>).
-Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, list binds with ${AQUA}/listBinds, delete binds with ${AQUA}/deleteBinds, \
-${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
+        description: `Scuffed version of NEU's slot binding feature. Use ${AQUA}/va slot ${GRAY}to view related commands.`,
         category: "Container",
         subcategory: "Container",
     })

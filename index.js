@@ -38,7 +38,7 @@ import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/ArmorDisplay";
 import "./features/container/AttributeAbbrev";
-import { buttonCommands, setButtons } from "./features/container/ContainerButtons";
+import { buttonCommands } from "./features/container/ContainerButtons";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
@@ -116,6 +116,7 @@ import { calcTabasco } from "./features/kuudra/TabascoCalc";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+import { slotCommands } from "./features/container/SlotBinding";
 
 
 // Launch Tests
@@ -274,22 +275,18 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
         case "buttons":
             buttonCommands(args);
             break;
+        // Slot Binding
+        case "slots":
+        case "slot":
+        case "bindings":
+        case "binding":
+            slotCommands(args);
+            break;
         // Send coords
         case "coords":
         case "xyz":
             const randID = '@' + (Math.random() + 1).toString(36).substring(5);
             ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
-            break;
-        // Testing (please work)
-        case "test":
-            ChatLib.chat(
-`${LOGO + DARK_AQUA + BOLD}Important Values:
-- ${AQUA + BOLD}World: ${WHITE + location.getWorld()}
-- ${AQUA + BOLD}Zone: ${WHITE + location.getZone()}
-- ${AQUA + BOLD}Tier: ${WHITE + location.getTier()}
-- ${AQUA + BOLD}Leader: ${WHITE + party.getLeader()}
-- ${AQUA + BOLD}Party: ${WHITE + party.getIn()}`);
-            if (party.getMembers().size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.getMembers().join(' ')}`);
             break;
         // Networth
         case "networth":
