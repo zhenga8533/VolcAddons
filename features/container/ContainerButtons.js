@@ -136,7 +136,6 @@ class Button {
         const x = dx + this.#x;
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
-
         if (cx < x || cx > x + 16 || cy < y || cy > y + 16) return;
 
         if (editing.active) {
@@ -166,6 +165,25 @@ class Button {
                 delete buttons[this.#id];
             }
         } else if (button === 0) this.#clicked();
+    }
+
+    /**
+     * Checks if mouse is hovering over button to render linked command.
+     * 
+     * @param {Number} dx - Left most coordinate of current GUI.
+     * @param {Number} dy - Top most coordinate of current GUI.
+     * @param {Number} hx - Current x pos of mouse.
+     * @param {Number} hy - Current y pos of mouse.
+     */
+    hover(dx, dy, hx, hy) {
+        const size = Player.getContainer().getSize();
+        const x = dx + this.#x;
+        const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
+            18 * ~~(size / 9) + (size > 45 ? 0 : 36));
+        if (this.#command === "" || hx < x || hx > x + 16 || hy < y || hy > y + 16) return;
+
+        Renderer.translate(0, 0, 300);
+        Renderer.drawString('/' + this.#command, hx, hy - 10);
     }
 }
 
@@ -258,15 +276,8 @@ export function setButtons(type) {
     // Open example inventory, credit to: https://www.chattriggers.com/modules/v/ChestMenu
     if (type === "inv") GuiHandler.openGui(new GuiInventory(Player.getPlayer()));
     else {
-        const inv = new InventoryBasic(
-            ChatLib.addColor("Chest"),
-            true,
-            54
-        );
-        const chest = new GuiChest(
-            Player.getPlayer().field_71071_by,
-            inv
-        );
+        const inv = new InventoryBasic("Container Buttons", true, 54);
+        const chest = new GuiChest(Player.getPlayer().field_71071_by, inv);
         GuiHandler.openGui(chest);
     }
 
@@ -307,7 +318,7 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
     });
 }).unregister();
 
-const render = register("guiRender", (_, __, gui) => {
+const render = register("guiRender", (x, y, gui) => {
     const top = gui.getGuiTop();
     const left = gui.getGuiLeft();
     const size = Player.getContainer().getSize();
@@ -315,10 +326,12 @@ const render = register("guiRender", (_, __, gui) => {
     Object.keys(buttons).forEach(key => {
         if (buttons[key].getIndex() > size) return;
         buttons[key].draw(left, top);
+        buttons[key].hover(left, top, x, y);
     });
 
     Object.keys(editButtons).forEach(key => {
         editButtons[key].draw(left, top);
+        editButtons[key].hover(left, top, x, y);
     });
 }).unregister();
 
@@ -337,13 +350,16 @@ const close = register("guiClosed", () => {
 register("guiOpened", (event) => {
     const gui = event.gui;
     const name = gui.class.toString();
-    if (name.endsWith("GuiInventory"));
-    else if (name.endsWith("GuiChest"));
-    else return;
+    if (!name.endsWith("GuiInventory") && !name.endsWith("GuiChest")) return;
 
     click.register();
     close.register();
     render.register();
+    Client.scheduleTask(1, () => {
+        click.register();
+        close.register();
+        render.register();
+    })
 });
 
 /**
