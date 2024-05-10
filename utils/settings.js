@@ -349,6 +349,14 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     auctionHighlight = false;
 
     @SwitchProperty({
+        name: "Container Buttons",
+        description: `${DARK_RED}NEW! ${GRAY}Display buttons that runs a command when pressed. Use ${AQUA}/va inv ${GRAY}or ${AQUA}/va chest ${GRAY}to set buttons.`,
+        category: "Container",
+        subcategory: "Container"
+    })
+    containerButtons = false;
+
+    @SwitchProperty({
         name: "Container Preview",
         description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
 ${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,

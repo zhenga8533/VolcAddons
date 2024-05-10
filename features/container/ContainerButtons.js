@@ -1,6 +1,7 @@
+import settings from "../../utils/settings";
 import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, RENDERER_BLACK, RENDERER_GRAY, UNDERLINE } from "../../utils/constants";
 import { data } from "../../utils/data";
-import settings from "../../utils/settings";
+import { registerWhen } from "../../utils/register";
 
 
 // Container offsets from top left [x, y]
@@ -342,7 +343,7 @@ const close = register("guiClosed", () => {
     resetEdit();
 }).unregister();
 
-register("guiOpened", (event) => {
+registerWhen(register("guiOpened", (event) => {
     const gui = event.gui;
     const name = gui.class.toString();
     if (!name.endsWith("GuiInventory") && !name.endsWith("GuiChest")) return;
@@ -355,7 +356,7 @@ register("guiOpened", (event) => {
         close.register();
         render.register();
     })
-});
+}), () => settings.containerButtons);
 
 /**
  * Persistant buttons
