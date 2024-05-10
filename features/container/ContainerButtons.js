@@ -262,6 +262,14 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
         }
 
         resetEdit();
+    } else if (keyCode === 15) {
+        if (commandInput.func_146206_l()) {
+            commandInput.func_146195_b(false);
+            iconInput.func_146195_b(true);
+        } else {
+            iconInput.func_146195_b(false);
+            commandInput.func_146195_b(true);
+        }
     }
 }).unregister();
 
