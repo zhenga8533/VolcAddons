@@ -1,5 +1,5 @@
 import PogObject from "../../PogData";
-import { CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
+import { BUTTON_PRESETS, CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
 
 
 // Relocate old data files (<2.9.5)
@@ -145,6 +145,7 @@ export let data = new PogObject("VolcAddons", {
     "slotBinds": {},
     "bindPresets": {},
     "buttons": {},
+    "buttonPresets": BUTTON_PRESETS,
     // Wardrobe binds
     // GUI locations
     ...DEFAULT_GUI,

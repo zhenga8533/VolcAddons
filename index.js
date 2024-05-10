@@ -38,7 +38,7 @@ import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/ArmorDisplay";
 import "./features/container/AttributeAbbrev";
-import { setButtons } from "./features/container/ContainerButtons";
+import { buttonCommands, setButtons } from "./features/container/ContainerButtons";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
@@ -270,11 +270,9 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
             } else openGUI();
             break;
         // Buttons
-        case "inv":
-            setButtons("inv");
-            break;
-        case "chest":
-            setButtons("chest");
+        case "button":
+        case "buttons":
+            buttonCommands(args);
             break;
         // Send coords
         case "coords":

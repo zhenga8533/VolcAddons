@@ -81,6 +81,12 @@ export const GuiChest = Java.type("net.minecraft.client.gui.inventory.GuiChest")
 export const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
 
 /**
+ * Java Class Constants
+ */
+export const Toolkit = Java.type("java.awt.Toolkit");
+export const DataFlavor = Java.type("java.awt.datatransfer.DataFlavor");
+
+/**
  * VolcAddons setting constants.
  */
 export const HEADER = 
@@ -144,6 +150,24 @@ User (Enter IGN below):
 _____________*
 
 *The Parties agree that digital signatures and electronic acceptance of this Agreement shall have the same legal force and effect as traditional, ink-on-paper signatures.`;
+
+/**
+ * Button presets. compact this please
+ */
+export const BUTTON_PRESETS = {
+    "inv": {
+        "inv13": ["inv1", 3, "auction", "golden_horse_armor"],
+        "inv40": ["inv4", 0, "sacks", "chest"],
+        "inv41": ["inv4", 1, "fishingbag", "fish"],
+        "inv42": ["inv4", 2, "potionbag", "potion"],
+        "inv43": ["inv4", 3, "quiver", "arrow"],
+        "inv44": ["inv4", 4, "accessorybag", "redstone_block"],
+        "inv14": ["inv1", 4, "bazaar", "gold_ingot"],
+        "inv10": ["inv1", 0, "hex", "book"],
+        "inv12": ["inv1", 2, "anvil", "anvil"],
+        "inv11": ["inv1", 1, "et", "enchanting_table"]
+    }
+}
 
 /**
  * Reforge names and categories.

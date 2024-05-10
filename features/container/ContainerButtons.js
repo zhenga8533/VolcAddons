@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { BOLD, GuiChest, GuiInventory, GuiTextField, InventoryBasic, UNDERLINE } from "../../utils/constants";
+import { AQUA, BOLD, BUTTON_PRESETS, DARK_AQUA, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, GuiChest, GuiInventory, GuiTextField, InventoryBasic, LOGO, RED, Toolkit, UNDERLINE, YELLOW } from "../../utils/constants";
 import { data } from "../../utils/data";
 import { registerWhen } from "../../utils/register";
 
@@ -28,7 +28,6 @@ const editing = {
     "id": "Top0",
     "loc": "Top",
     "index": 0,
-    "inv": false,
     "active": false
 }
 const commandInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 10, 176, 16);
@@ -61,7 +60,7 @@ class Button {
      * @param {String} command - Command args that are called in the callback. Used to cache data.
      * @param {String} icon - Minecraft item id used to draw logo. Barrier icon is reserved for edit buttons.
      */
-    constructor(loc, index, clicked, command="", icon="barrier", invOnly=false) {
+    constructor(loc, index, clicked, command="", icon="barrier") {
         this.#clicked = clicked;
         this.#loc = loc;
         this.#index = index;
@@ -69,7 +68,7 @@ class Button {
         this.#command = command;
         this.#x = OFFSETS[this.#loc][0] + 18 * (this.#index % 9);
         this.#y = OFFSETS[this.#loc][1] + 18 * ~~(this.#index / 9);
-        this.#invOnly = invOnly;
+        this.#invOnly = loc.startsWith("inv");
         this.setItem(icon);
     }
 
@@ -111,10 +110,12 @@ class Button {
     }
 
     /**
-     * Saves button into PogData cache.
+     * Saves button caching data into specified data variable.
+     * 
+     * @param {Object} cache - Data variasble to save Button data to.
      */
-    save() {
-        data.buttons[this.#id] = [this.#loc, this.#index, this.#command, this.#icon, this.#invOnly];
+    save(cache) {
+        cache[this.#id] = [this.#loc, this.#index, this.#command, this.#icon, this.#invOnly];
     }
 
     /**
@@ -197,8 +198,9 @@ class Button {
 
                 inputKey.register();
                 inputRender.register();
-                commandInput.func_146180_a(this.#command);
                 iconInput.func_146180_a(this.#icon);
+                commandInput.func_146180_a(this.#command);
+                commandInput.func_146195_b(true);
             } else {
                 delete buttons[this.#id];
                 editButtons[this.#id] = new Button(this.#loc, this.#index, () => {
@@ -226,11 +228,30 @@ function resetEdit() {
     iconInput.func_146180_a("");
 }
 
+/**
+ * Creates a button using input fields as arguments.
+ */
+function saveEdit() {
+    if (commandInput.func_146179_b() === "" || iconInput.func_146179_b() === "barrier") return;
+
+    let command = commandInput.func_146179_b();  // This is also a pointer for some reason
+    if (buttons.hasOwnProperty(editing.id)) {
+        buttons[editing.id].setCommand(command);
+        buttons[editing.id].setItem(iconInput.func_146179_b());
+    } else {
+        buttons[editing.id] = new Button(editing.loc, editing.index, () => {
+            ChatLib.command(command);
+        }, command, iconInput.func_146179_b(), editing.inv);
+        delete editButtons[editing.id];
+    }
+}
+
 const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
     commandInput.func_146192_a(x, y, button);
     iconInput.func_146192_a(x, y, button);
     if (commandInput.func_146206_l() || iconInput.func_146206_l()) cancel(event);
     else {
+        saveEdit();
         const left = gui.getGuiLeft();
         const top = gui.getGuiTop();
         
@@ -247,22 +268,9 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
     // Cancel all but escape key
     if (keyCode !== 1) cancel(event);
     if (keyCode === 28) {  // Enter key
-        if (commandInput.func_146179_b() === "") return;
-        else if (iconInput.func_146179_b() === "barrier") return;
-
-        let command = commandInput.func_146179_b();  // This is also a pointer for some reason
-        if (buttons.hasOwnProperty(editing.id)) {
-            buttons[editing.id].setCommand(command);
-            buttons[editing.id].setItem(iconInput.func_146179_b());
-        } else {
-            buttons[editing.id] = new Button(editing.loc, editing.index, () => {
-                ChatLib.command(command);
-            }, command, iconInput.func_146179_b(), editing.inv);
-            delete editButtons[editing.id];
-        }
-
+        saveEdit();
         resetEdit();
-    } else if (keyCode === 15) {
+    } else if (keyCode === 15) {  // Tab key
         if (commandInput.func_146206_l()) {
             commandInput.func_146195_b(false);
             iconInput.func_146195_b(true);
@@ -289,23 +297,23 @@ const inputRender = register("guiRender", () => {
  * @param {Number} increment - Step size of for loop.
  * @param {String} category - "top", "right", "bottom", or "left"
  */
-function createButtons(start, end, increment, category, setInv=false) {
+function createButtons(start, end, increment, category) {
     for (let i = start; i < end; i += increment) {
         let id = category + i;
-        if (data.buttons.hasOwnProperty(id)) continue;
+        if (buttons.hasOwnProperty(id)) continue;
         
         let j = i / 1;  // Why tf does i act like a pointer
         editButtons[id] = new Button(category, i, () => {
             editing.id = id;
             editing.index = j;
             editing.loc = category;
-            editing.inv = setInv;
 
-            commandInput.func_146180_a("");
             iconInput.func_146180_a("");
+            commandInput.func_146180_a("");
+            commandInput.func_146195_b(true)
             inputKey.register();
             inputRender.register();
-        }, "", "barrier", setInv);
+        }, "", "barrier");
     }
 }
 
@@ -345,10 +353,10 @@ export function setButtons(type) {
         createButtons(0, bottom, 9, "left");
         createButtons(0, bottom, 9, "right");
         if (setInv) {
-            createButtons(0, 5, 1, "inv1", true);
-            createButtons(0, 5, 1, "inv2", true);
-            createButtons(0, 5, 1, "inv3", true);
-            createButtons(0, 5, 1, "inv4", true);
+            createButtons(0, 5, 1, "inv1");
+            createButtons(0, 5, 1, "inv2");
+            createButtons(0, 5, 1, "inv3");
+            createButtons(0, 5, 1, "inv4");
         }
     });
     inputClick.register();
@@ -412,18 +420,113 @@ registerWhen(register("guiOpened", (event) => {
 }), () => settings.containerButtons);
 
 /**
- * Persistant buttons
+ * Persistant buttons.
  */
 register("gameUnload", () => {
     data.buttons = {};
     Object.keys(buttons).forEach(key => {
-        buttons[key].save();
+        buttons[key].save(data.buttons);
     });
 });
 
-Object.keys(data.buttons).forEach(key => {
-    const button = data.buttons[key];
-    buttons[key] = new Button(button[0], button[1], () => {
-        ChatLib.command(button[2])
-    }, button[2], button[3], button[4]);
-});
+/**
+ * Loads buttons using cached button data.
+ */
+function loadButtons() {
+    buttons = {};
+    Object.keys(data.buttons).forEach(key => {
+        const button = data.buttons[key];
+        buttons[key] = new Button(button[0], button[1], () => {
+            ChatLib.command(button[2])
+        }, button[2], button[3], button[4]);
+    });
+}
+loadButtons();
+
+/**
+ * Calls through all the commands associated with container buttons feature.
+ * 
+ * @param {String[]} args - String arguments passed through command call.
+ */
+export function buttonCommands(args) {
+    const command = args[1];
+    const name = args[2];
+
+    switch(command) {
+        case "inv":
+            setButtons("inv");
+            break;
+        case "chest":
+            setButtons("chest");
+            break;
+        case "save":
+            data.buttonPresets[name] = {};
+            Object.keys(buttons).forEach(key => {
+                buttons[key].save(data.buttonPresets[name]);
+            });
+            data.save();
+            ChatLib.chat(`${LOGO + GREEN}Successfully saved buttons data using key: "${name}".`);
+            break;
+        case "load":
+            if (data.buttonPresets.hasOwnProperty(name)) {
+                data.buttons = data.buttonPresets[name];
+                loadButtons();
+                ChatLib.chat(`${LOGO + GREEN}Successfully loaded button presets using key: "${name}".`);
+            } else ChatLib.chat(`${LOGO + RED}Error: There are no presets of "${name}" key.`);
+            break;
+        case "list":
+        case "view":
+            const buttonKeys = Object.keys(data.buttonPresets);
+            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Button Presets:`);
+            buttonKeys.forEach(preset => ChatLib.chat(` ${DARK_GRAY}- ${AQUA + preset}`));
+            if (buttonKeys.length === 0) ChatLib.chat(` ${RED}No presets exist!`);
+            break;
+        case "import":
+        case "parse":
+            const backup = data.buttons;
+            try {
+                const decoded = JSON.parse(FileLib.decodeBase64(Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor)));
+                data.buttons = decoded;
+                loadButtons();
+                ChatLib.chat(`${LOGO + GREEN}Successfully loaded button preset from clipboard!`);
+            } catch (err) {
+                data.buttons = backup;
+                ChatLib.chat(`${LOGO + RED}Error: Unable to process clipboard content!`);
+            }
+            break;
+        case "export":
+            const compressed = FileLib.encodeBase64(JSON.stringify(data.buttons));
+            new Message(`${LOGO + DARK_GREEN}Encoded Button Data:`, new TextComponent(GREEN + compressed)
+                .setClickAction("run_command")
+                .setClickValue("/vacopy " + compressed)
+                .setHoverValue(`${YELLOW}Click to copy data.`)
+            ).chat();
+            break;
+        case "reset":
+            data.buttonPresets = BUTTON_PRESETS;
+            ChatLib.chat(`${LOGO + GREEN}Successfully reset button presets!`);
+            break;
+        case "clear":
+            data.buttons = {};
+            loadButtons();
+            ChatLib.chat(`${LOGO + GREEN}Successfully cleared current buttons!`);
+            break;
+        case "help":
+        default:
+            if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+            ChatLib.chat(`
+${LOGO + GOLD + BOLD}Container Buttons Commands:
+ ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va buttons <command>
+
+ ${DARK_GRAY}- ${GOLD}inv: ${YELLOW}Opens edit menu for GuiInventory.
+ ${DARK_GRAY}- ${GOLD}chest: ${YELLOW}Opens edit meny for GuiChest.
+ ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save button data to presets using key.
+ ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load button preset using key.
+ ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available button presets.
+ ${DARK_GRAY}- ${GOLD}import: ${YELLOW}Import button presets from the clipboard.
+ ${DARK_GRAY}- ${GOLD}export: ${YELLOW}Export the button data as encoded data.
+ ${DARK_GRAY}- ${GOLD}reset: ${YELLOW}Resets button presets.
+ ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Resets current button data.`);
+            break;
+    }
+}

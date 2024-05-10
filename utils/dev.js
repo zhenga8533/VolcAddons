@@ -50,6 +50,11 @@ register("guiKey", (_, keyCode, gui) => {
 /**
  * Dev commands
  */
+register("command", (...args) => {
+    ChatLib.command("ct copy " + args.join(' '), true);
+    ChatLib.chat(`${LOGO + GREEN}Successfully copied text to clipboard!`);
+}).setName("vacopy");
+
 register("command", () => {
     TabList.getNames().forEach(name => {
         print(name);
