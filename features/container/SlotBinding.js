@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GREEN, LOGO, RED } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
@@ -120,7 +120,6 @@ export function slotCommands(args) {
             break;
         case "help":
         default:
-            
             if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
             ChatLib.chat(`
 ${LOGO + GOLD + BOLD}Container Buttons Commands:

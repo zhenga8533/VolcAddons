@@ -280,6 +280,7 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
         case "slot":
         case "bindings":
         case "binding":
+        case "bind":
             slotCommands(args);
             break;
         // Send coords
