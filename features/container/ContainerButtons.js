@@ -148,6 +148,7 @@ class Button {
                     this.#clicked();
                     return true;
                 }
+
                 editing.id = this.#id;
                 editing.loc = this.#loc;
                 editing.index = this.#index;
@@ -210,7 +211,7 @@ const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
         const left = gui.getGuiLeft();
         const top = gui.getGuiTop();
         
-        if (!Object.keys(editButtons).some(key => editButtons[key].click(left, top, x, y, button)) || 
+        if (!Object.keys(editButtons).some(key => editButtons[key].click(left, top, x, y, button)) && 
             !Object.keys(buttons).some(key => buttons[key].click(left, top, x, y, button))) resetEdit();
     }
 }).unregister();
@@ -268,6 +269,8 @@ function createButtons(start, end, increment, category) {
             editing.index = j;
             editing.loc = category;
 
+            commandInput.func_146180_a("");
+            iconInput.func_146180_a("");
             inputKey.register();
             inputRender.register();
         });
