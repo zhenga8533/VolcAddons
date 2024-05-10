@@ -1,7 +1,8 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, BUTTON_PRESETS, DARK_AQUA, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, GuiChest, GuiInventory, GuiTextField, InventoryBasic, LOGO, RED, Toolkit, UNDERLINE, YELLOW } from "../../utils/constants";
+import { BOLD, BUTTON_PRESETS, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, GuiChest, GuiInventory, GuiTextField, InventoryBasic, LOGO, RED, Toolkit, UNDERLINE, YELLOW } from "../../utils/constants";
 import { data } from "../../utils/data";
 import { registerWhen } from "../../utils/register";
+import { printList } from "../../utils/list";
 
 
 // Container offsets from top left [x, y]
@@ -484,9 +485,7 @@ export function buttonCommands(args) {
         case "list":
         case "view":
             const buttonKeys = Object.keys(data.buttonPresets);
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Button Presets:`);
-            buttonKeys.forEach(preset => ChatLib.chat(` ${DARK_GRAY}- ${AQUA + preset}`));
-            if (buttonKeys.length === 0) ChatLib.chat(` ${RED}No presets exist!`);
+            printList(buttonKeys, "Buttons", parseInt(args[2] ?? 1));
             break;
         case "import":
         case "parse":

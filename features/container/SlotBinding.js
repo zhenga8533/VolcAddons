@@ -1,8 +1,9 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
+import { printList } from "../../utils/list";
 
 
 // Bind key
@@ -109,9 +110,7 @@ export function slotCommands(args) {
         case "list":
         case "view":
             const bindingKeys = Object.keys(data.bindPresets);
-            ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Slot Binding Presets:`);
-            bindingKeys.forEach(preset => ChatLib.chat(` ${DARK_GRAY}- ${AQUA + preset}`));
-            if (bindingKeys.length === 0) ChatLib.chat(` ${RED}No keys exist!`);
+            printList(bindingKeys, "Bindings", parseInt(args[2] ?? 1));
             break;
         case "clear":
         case "reset":
