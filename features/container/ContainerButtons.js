@@ -101,10 +101,44 @@ class Button {
      */
     setItem(icon) {
         try {
-            this.#item = new Item("minecraft:" + icon);
-            this.#icon = icon;
-            this.#edit = icon === "barrier";
+            const texture = icon === "skull" ? Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor) :
+                icon.length > 32 ? icon : undefined;
+
+            if (texture !== undefined) {  // Skull textures
+                const decoded = JSON.parse(FileLib.decodeBase64(texture));
+
+                // Stolen from Dalwyn ^_^
+                const tag = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+                const skullOwner = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+                const properties = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+                const textures = new NBTTagList(new net.minecraft.nbt.NBTTagList());
+                const textureString = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+                const display = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+
+                skullOwner.setString("Id", decoded.profileId);
+                skullOwner.setString("Name", decoded.profileName);
+
+                textureString.setString("Value", texture);
+                textures.appendTag(textureString);
+
+                display.setString("Name", decoded.profileName);
+                tag.set("display", display);
+
+                properties.set("textures", textures);
+                skullOwner.set("Properties", properties);
+                tag.set("SkullOwner", skullOwner);
+
+                const item = new Item(397).setDamage(3);
+                item.itemStack.func_77982_d(tag.rawNBT);
+                this.#item = item;
+                this.#icon = texture;
+            } else {
+                this.#item = new Item("minecraft:" + icon);
+                this.#icon = icon;
+                this.#edit = icon === "barrier";
+            }
         } catch (err) {
+            ChatLib.chat(`${LOGO + RED}Error: Invalid icon ID "${err}"!`);
             this.#item = new Item("minecraft:redstone_block");
             this.#icon = "redstone_block";
         }
@@ -430,7 +464,7 @@ register("gameUnload", () => {
     Object.keys(buttons).forEach(key => {
         buttons[key].save(data.buttons);
     });
-});
+}).setPriority(Priority.HIGHEST);
 
 /**
  * Loads buttons using cached button data.
@@ -535,7 +569,12 @@ ${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}import: ${YELLOW}Import button presets from the clipboard.
  ${DARK_GRAY}- ${GOLD}export: ${YELLOW}Export the button data as encoded data.
  ${DARK_GRAY}- ${GOLD}reset: ${YELLOW}Resets button presets.
- ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Resets current button data.`);
+ ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Resets current button data.
+ ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.
+
+ ${DARK_GRAY}- ${GOLD}Examples: ${YELLOW}/va buttons inv, /va buttons save test, /va buttons delete test
+ ${DARK_GRAY}- ${GOLD}Note: ${YELLOW}To use skull textures, copy the texture data to clipboard and use "skull" as icon ID.
+ ${DARK_GRAY}You can find copy this value by using DevKey and copying Value from the Properties tag.`);
             break;
     }
 }
