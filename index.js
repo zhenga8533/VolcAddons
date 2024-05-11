@@ -4,7 +4,7 @@ import "./utils/player";
 import "./utils/waypoints";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
 import { openGUI } from "./utils/overlay";
@@ -226,18 +226,17 @@ register ("command", (...args) => {
         case "list":
         case "lists":
             ChatLib.chat(
-`\n${GOLD + BOLD + UNDERLINE}VolcAddons Lists
-
-${DARK_GRAY}- ${AQUA + BOLD}cd: ${WHITE}cooldown-list
-${DARK_GRAY}- ${AQUA + BOLD}wl: ${WHITE}white-list
-${DARK_GRAY}- ${AQUA + BOLD}bl: ${WHITE}black-list
-${DARK_GRAY}- ${AQUA + BOLD}el: ${WHITE}emote-list
-${DARK_GRAY}- ${AQUA + BOLD}vl: ${WHITE}value-list
-${DARK_GRAY}- ${AQUA + BOLD}dl: ${WHITE}diana-list
-${DARK_GRAY}- ${AQUA + BOLD}sl: ${WHITE}spam-list
-${DARK_GRAY}- ${AQUA + BOLD}il: ${WHITE}ignore-list
-${DARK_GRAY}- ${AQUA + BOLD}wgl: ${WHITE}widget-list
-${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
+`\n${LOGO + GOLD + BOLD} Lists:
+${DARK_GRAY}- ${GOLD + BOLD}cd: ${YELLOW}cooldown-list
+${DARK_GRAY}- ${GOLD + BOLD}wl: ${YELLOW}white-list
+${DARK_GRAY}- ${GOLD + BOLD}bl: ${YELLOW}black-list
+${DARK_GRAY}- ${GOLD + BOLD}el: ${YELLOW}emote-list
+${DARK_GRAY}- ${GOLD + BOLD}vl: ${YELLOW}value-list
+${DARK_GRAY}- ${GOLD + BOLD}dl: ${YELLOW}diana-list
+${DARK_GRAY}- ${GOLD + BOLD}sl: ${YELLOW}spam-list
+${DARK_GRAY}- ${GOLD + BOLD}il: ${YELLOW}ignore-list
+${DARK_GRAY}- ${GOLD + BOLD}wgl: ${YELLOW}widget-list
+${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Update
         case "update":
