@@ -1,7 +1,10 @@
 [
     "- Added calendar real time",
     "- Added inventory buttons (`/va buttons`)",
-    "- Reworked autocomplete",
+    "- Added bestiary tracker",
+    "- TBD: Added equipment inv display",
+    "- Added texture schemes to container preview",
+    "- TBD: Reworked autocomplete",
     "- Changed slot binding commands (`/va binds`)",
     "- Changed some rendering to be more optimized",
     "- Changed autocorrect to be more reliable",

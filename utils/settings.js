@@ -82,6 +82,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         // Dependencies
         this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
         this.addDependency("Container Buttons Scheme", "Container Buttons");
+        this.addDependency("Container Preview Scheme", "Container Preview");
     }
     
 
@@ -361,12 +362,20 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
 
     @SwitchProperty({
         name: "Container Preview",
-        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
-${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
+        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.`,
         category: "Container",
         subcategory: "Container"
     })
     containerPreview = false;
+
+    @SelectorProperty({
+        name: "Container Preview Scheme",
+        description: "Set the texture scheme used to draw container preview background.",
+        category: "Container",
+        subcategory: "Container",
+        options: ["Default", "FurfSky"]
+    })
+    containerColor = 0;
     
     @SwitchProperty({
         name: "Searchbar",

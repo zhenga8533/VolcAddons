@@ -50,24 +50,27 @@ register("guiOpened", () => {
  */
 let lastPreview = "0";
 let previewItems = [];
-const CONTAINER_PNG = new Image("container.png");
+const CONTAINER_PNGS = [new Image("container.png"), new Image("container-fs.png")];
 new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "guiRender");
 
 const preview = register("guiRender", () => {
-    CONTAINER_PNG.draw(data.CPL[0], data.CPL[1]);
+    CONTAINER_PNGS[settings.containerColor].draw(data.CPL[0], data.CPL[1]);
     Renderer.drawString(lastPreview, data.CPL[0] + 5, data.CPL[1] + 5, true);
 
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
-            let item = previewItems[i * 9 + j];
+            let index = i * 9 + j;
+            let item = previewItems[index];
             if (item === null) continue;
 
             let x = data.CPL[0] + 7.5 + j * 18;
             let y = data.CPL[1] + 17.5 + i * 18;
             
             // Draw rarity box
-            let color = COLOR_TABLE[item.getName().substring(0, 2)];
-            if (color !== undefined) Renderer.drawRect(Renderer.color(...color, 128), x, y, 17, 17);
+            if (index >= 9) {
+                let color = COLOR_TABLE[item.getName().substring(0, 2)];
+                if (color !== undefined) Renderer.drawRect(Renderer.color(...color, 200), x, y, 17, 17);
+            }
 
             // Draw item and size
             item.draw(x, y, 1);
