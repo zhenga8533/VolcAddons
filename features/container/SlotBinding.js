@@ -8,7 +8,7 @@ import { printList } from "../../utils/list";
 
 // Bind key
 const bindKey = new KeyBind("Slot Binding", data.bindKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.bindKey = bindKey.getKeyCode() });
+register("gameUnload", () => { data.bindKey = bindKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 let binding = undefined;
 
 // Bind slots

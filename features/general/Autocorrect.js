@@ -146,4 +146,4 @@ register("gameUnload", () => {
         if (--data.wordbank[word] <= 0) delete data.wordbank[word];
     });
     data.save();
-});
+}).setPriority(Priority.HIGHEST);

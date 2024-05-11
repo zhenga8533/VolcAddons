@@ -20,4 +20,4 @@ chunkey.registerKeyPress(() => {
     if (rendering) renderBorders.unregister();
     else renderBorders.register();
     rendering = !rendering;
-});
+}).setPriority(Priority.HIGHEST);

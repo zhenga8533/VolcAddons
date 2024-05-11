@@ -13,7 +13,7 @@ import { data } from "../../utils/data";
  */
 let warp = "player";
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() });
+register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 dianaKey.registerKeyPress(() => {
     if (settings.dianaWarp && warp !== "player") {
         ChatLib.chat(`${LOGO + GREEN}Warping to "${warp}"...`);

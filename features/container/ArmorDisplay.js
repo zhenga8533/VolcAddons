@@ -107,4 +107,4 @@ registerWhen(register("guiOpened", () => {
 register("gameUnload", () => {
     itemNBTs.armor = pieces.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
     itemNBTs.equip = equipment.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
-});
+}).setPriority(Priority.HIGHEST);;

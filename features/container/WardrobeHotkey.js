@@ -8,7 +8,7 @@ import { data } from "../../utils/data";
  * Key press to warp player to closest burrow.
  */
 const wardKey = new KeyBind("Wardrobe Set", data.wardKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.wardKey = wardKey.getKeyCode() });
+register("gameUnload", () => { data.wardKey = wardKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 
 /**
  * Sets wardrobe slot item stack size based on linked key.

@@ -166,7 +166,7 @@ ${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 
 // `viewrecipe` GUI Button
 const recipeKey = new KeyBind("View Recipe", data.recipeKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.recipeKey = recipeKey.getKeyCode() });
+register("gameUnload", () => { data.recipeKey = recipeKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 
 register("guiKey", (_, keyCode, gui) => {
     if (keyCode === recipeKey.getKeyCode()) {

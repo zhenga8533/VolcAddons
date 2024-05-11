@@ -6,7 +6,7 @@ import { data } from "./data";
  * Dev mode
  */
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
+register("gameUnload", () => { data.devKey = devKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 devKey.registerKeyPress(() => {
     if (devKey.getKeyCode() === 0) return;
 
