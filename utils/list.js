@@ -9,19 +9,14 @@ import { setRegisters } from "./register";
 import { data } from "./data";
 
 
-let lines = [5858, 5859];
-
-
 export function printList(list, listName, page) {
-    ChatLib.clearChat(lines);
-    lines = [5858, 5859];
-    let id = 5860;
+    ChatLib.clearChat(5858);
     const isArray = Array.isArray(list);
     const length = isArray ? list.length : Object.keys(list).length;
     const total = Math.ceil(length / 12) || 1;
+    const message = new Message("\n&c&m-----------------------------------------------------&r").setChatLineId(5858);
 
     // Print out header
-    new Message("\n&c&m-----------------------------------------------------&r").setChatLineId(5858).chat();
     const lArrow = new TextComponent("&r&e&l<<&r&9")
         .setClickAction("run_command")
         .setClickValue(`/va ${listName} list ${page - 1}`)
@@ -83,8 +78,7 @@ export function updateList(args, listName) {
 
     // Object pairs
     const held = Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
-    const value = listName === "valuelist" ? unformatNumber(args[3]) : 
-        listName === "cdlist" ? args[2] : args.slice(3).join(' ');
+    const value = listName === "valuelist" || listName === "cdlist" ? unformatNumber(args[2]) : args.slice(3).join(' ');
     const key = listName === "colorlist" ? convertToPascalCase(args[2]) :
         (listName === "cdlist" || listName === "valuelist") && held !== undefined ? held : args[2];
 

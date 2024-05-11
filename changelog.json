@@ -7,7 +7,7 @@
     "- Fixed features not registering in Hub",
     "- Fixed chocolate calculations",
     "- Fixed spamlist",
-    "- TBD: Fixed valuelist",
+    "- Fixed valuelist",
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing",
     "- Fixed skulls rendering without skin",
