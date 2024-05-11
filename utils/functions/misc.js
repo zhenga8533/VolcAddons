@@ -98,7 +98,7 @@ export function compressNBT(nbtObject) {
 
         return java.util.Base64.getEncoder().encodeToString(compressedData);
     } catch (e) {
-        print("Error compressing NBT: " + e);
+        console.error("Error compressing NBT: " + e);
         return null;
     }
 }
@@ -130,7 +130,34 @@ export function decompressNBT(compressedData) {
 
         return nbtObject;
     } catch (e) {
-        print("Error decompressing NBT: " + e);
+        console.error("Error decompressing NBT: " + e);
         return null;
     }
+}
+
+/**
+ * Parse a texture NBT string into an item.
+ * 
+ * @param {String} nbt - Base64 encoded NBT string.
+ * @returns {Item} Item with the texture.
+ */
+export function parseTexture(nbt) {
+    const decoded = JSON.parse(FileLib.decodeBase64(nbt));
+
+    // Stolen from Dalwyn ^_^
+    const skullOwner = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+    const properties = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+    const textures = new NBTTagList(new net.minecraft.nbt.NBTTagList());
+    const textureString = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
+
+    skullOwner.setString("Id", decoded.profileId);
+    skullOwner.setString("Name", decoded.profileName);
+
+    textureString.setString("Value", nbt);
+    textures.appendTag(textureString);
+
+    properties.set("textures", textures);
+    skullOwner.set("Properties", properties);
+
+    return skullOwner;
 }

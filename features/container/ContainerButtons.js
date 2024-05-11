@@ -3,6 +3,7 @@ import { BOLD, BUTTON_PRESETS, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, G
 import { data } from "../../utils/data";
 import { registerWhen } from "../../utils/register";
 import { printList } from "../../utils/list";
+import { parseTexture } from "../../utils/functions/misc";
 
 
 // Container offsets from top left [x, y]
@@ -102,31 +103,11 @@ class Button {
     setItem(icon) {
         try {
             const texture = icon === "skull" ? Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor) :
-                icon.length > 32 ? icon : undefined;
+                icon.length >= 32 ? data.buttons[this.#id][3] : undefined;
 
             if (texture !== undefined) {  // Skull textures
-                const decoded = JSON.parse(FileLib.decodeBase64(texture));
-
-                // Stolen from Dalwyn ^_^
                 const tag = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
-                const skullOwner = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
-                const properties = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
-                const textures = new NBTTagList(new net.minecraft.nbt.NBTTagList());
-                const textureString = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
-                const display = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
-
-                skullOwner.setString("Id", decoded.profileId);
-                skullOwner.setString("Name", decoded.profileName);
-
-                textureString.setString("Value", texture);
-                textures.appendTag(textureString);
-
-                display.setString("Name", decoded.profileName);
-                tag.set("display", display);
-
-                properties.set("textures", textures);
-                skullOwner.set("Properties", properties);
-                tag.set("SkullOwner", skullOwner);
+                tag.set("SkullOwner", parseTexture(texture));
 
                 const item = new Item(397).setDamage(3);
                 item.itemStack.func_77982_d(tag.rawNBT);
@@ -137,8 +118,8 @@ class Button {
                 this.#icon = icon;
                 this.#edit = icon === "barrier";
             }
-        } catch (err) {
-            ChatLib.chat(`${LOGO + RED}Error: Invalid icon ID "${err}"!`);
+        } catch (_) {
+            ChatLib.chat(`${LOGO + RED}Error: Invalid icon ID "${texture ?? icon}"!`);
             this.#item = new Item("minecraft:redstone_block");
             this.#icon = "redstone_block";
         }

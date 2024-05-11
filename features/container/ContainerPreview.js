@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
 import { COLOR_TABLE} from "../../utils/constants";
 import { data, itemNBTs } from "../../utils/data";
-import { compressNBT, decompressNBT } from "../../utils/functions/misc";
+import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 
@@ -97,8 +97,17 @@ registerWhen(register("itemTooltip", (_, item) => {
 
         lastPreview = name;
         previewItems = itemNBTs[name.startsWith("§a") ? "enderchests" : "backpacks"][i].map(nbt => {
-            return nbt === null ? null :
-                new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT))
+            if (nbt === null) return null;
+            const item = new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT));
+
+            if (item.getUnlocalizedName() === "item.skull") {  // Fix skull textures not rendering
+                const skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
+                const texture = skullNBT.getCompoundTag("Properties").getTagList("textures", 0).func_150305_b(0).func_74779_i("Value");
+                const skull = parseTexture(texture);
+                item.getNBT().getCompoundTag("tag").set("SkullOwner", skull);
+            }
+
+            return item;
         });
 
         preview.register();
