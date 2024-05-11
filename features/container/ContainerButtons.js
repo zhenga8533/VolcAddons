@@ -163,8 +163,10 @@ class Button {
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
         if (hx < x || hx > x + 16 || hy < y || hy > y + 16) return;
 
-        Renderer.translate(0, 0, 999);
-        Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx, hy - 10);
+        Renderer.translate(0, 0, 500);
+        Renderer.drawRect(Renderer.color(0, 0, 0, 128), hx + 2, hy - 16, Renderer.getStringWidth('/' + this.#command) + 6, 14);
+        Renderer.translate(0, 0, 500);
+        Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx + 5, hy - 13);
     }
 
     /**
