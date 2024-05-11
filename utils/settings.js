@@ -27,16 +27,18 @@ class Settings {
         // General Category
         this.setCategoryDescription("General",
         `${HEADER}
-${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, fairy, whitelist, blacklist, blocklist>
+${ITALIC}Related Commands: /va <clear, coords, fairy, gui, help, lists, settings, waypoint>
 ${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at your own risk [UAYOR]!`);
 
         // Container Category
-        this.setCategoryDescription("Container", HEADER);
+        this.setCategoryDescription("Container", 
+        `${HEADER}
+${ITALIC}Related Commands: /va <binds, buttons>`);
 
         // Party Category
         this.setCategoryDescription("Party",
         `${HEADER}
-${ITALIC}Related Commands: /va <wl, bl, toggles>`);
+${ITALIC}Related Commands: /va <wl, bl>`);
 
         // Economy Category
         this.setCategoryDescription("Economy",
@@ -64,7 +66,7 @@ ${ITALIC}Related Commands: /va warplist`);
         // Crimson Isles Category
         this.setCategoryDescription("Crimson Isles",
         `${HEADER}
-${ITALIC}Related Commands: /va <apex, attribute, calc>`);
+${ITALIC}Related Commands: /va <attribute, calc>`);
 
         // Dungeon Category
         this.setCategoryDescription("Dungeon", HEADER);
@@ -74,16 +76,12 @@ ${ITALIC}Related Commands: /va <apex, attribute, calc>`);
         `${HEADER}
 ${ITALIC}Related Commands: /va <attribute, splits>, /kv`);
 
-        // Garden Category
-        this.setCategoryDescription("Garden",
-        `${HEADER}`);
-
         // Rift Category
         this.setCategoryDescription("Rift",
         `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
-        // Etc
+        // Dependencies
         this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
         this.addDependency("Container Buttons Scheme", "Container Buttons");
     }

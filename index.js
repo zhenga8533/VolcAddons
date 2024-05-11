@@ -278,8 +278,7 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
         // Slot Binding
         case "slots":
         case "slot":
-        case "bindings":
-        case "binding":
+        case "binds":
         case "bind":
             slotCommands(args);
             break;
