@@ -128,7 +128,8 @@ ${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}delete ${YELLOW}<key>: Delete binding preset using key.
  ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load binding preset using key.
  ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available binding presets.
- ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Removes all bindings.`);
+ ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Removes all bindings.
+ ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.`);
             break;
     }
 }

@@ -572,7 +572,7 @@ ${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Resets current button data.
  ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.
 
- ${DARK_GRAY}- ${GOLD}Examples: ${YELLOW}/va buttons inv, /va buttons save test, /va buttons delete test
+ ${DARK_GRAY}- ${GOLD}Edit: ${YELLOW}Left click to edit button, right click to delete button.
  ${DARK_GRAY}- ${GOLD}Note: ${YELLOW}To use skull textures, copy the texture data to clipboard and use "skull" as icon ID.
  ${DARK_GRAY}You can find copy this value by using DevKey and copying Value from the Properties tag.`);
             break;
