@@ -44,6 +44,13 @@ const updateChocolate = register("tick", () => {
         data.totalEggs = parseInt(barnLine?.[0] ?? 0);
         data.maxEggs = parseInt(barnLine?.[1] ?? 20);
     }
+    
+    // Multiplier
+    const productionData = items[45]?.getLore();
+    if (productionData !== undefined) {
+        const multiplier = productionData.find(line => line.startsWith("§5§o§7Total Multiplier:"))?.split(' ')?.[2]?.removeFormatting();
+        data.chocoMultiplier = parseFloat(multiplier ?? 1);
+    }
 
     // Time tower
     const towerData = items[39]?.getLore();
@@ -59,7 +66,6 @@ const updateChocolate = register("tick", () => {
 
         const status = towerData.find(line => line.startsWith("§5§o§7Status: §a§lACTIVE"))?.split(' ')?.[2]?.removeFormatting();
         timeTower.activeTime = status === undefined ? 0 : unformatTime(status);
-        if (timeTower.activeTime > 0) data.chocoProduction /= (1 + timeTower.bonus);
     }
 }).unregister();
 
@@ -87,23 +93,28 @@ register("step", () => {
     const now = Math.floor(Date.now() / 1000);
     const lastOpen = now - data.chocoLast;
 
-    // Chocolate calc
-    let chocoCalc = lastOpen * data.chocoProduction;
-    const chocoTotal = chocoCalc + data.chocoTotal;
-    const chocoAll = chocoCalc + data.chocoAll;
-    const prestigeTime = (data.chocoPrestige - chocoTotal) / data.chocoProduction;
-
     // Time tower calc
     const towerData = data.timeTower;
+    const timeLeft = towerData.activeTime - lastOpen;
+    const noTower = data.chocoProduction * (data.chocoMultiplier - towerData.bonus) / data.chocoMultiplier;
+    const production = timeLeft > 0 ? data.chocoProduction : noTower;
+
     const charges = parseInt(towerData.charges) + Math.max(0, Math.floor((lastOpen - towerData.chargeTime) / 28_800));
     chocoCalc += Math.min(lastOpen, towerData.activeTime) * data.chocoProduction * towerData.bonus;
-    const towerStr = towerData.activeTime - lastOpen > 0 ? formatTime(towerData.activeTime - lastOpen) :
+    const towerStr = timeLeft > 0 ? formatTime(timeLeft) :
         charges > 0 ? `${Math.min(3, charges)}/3` : formatTime((lastOpen - towerData.chargeTime) / 28_800);
+
+    // Chocolate calc
+    const boostedCalc = timeLeft > 0 ? (data.chocoProduction - noTower) * timeLeft : 0;
+    const chocoCalc = production * lastOpen + boostedCalc;
+    const chocoTotal = chocoCalc + data.chocoTotal;
+    const chocoAll = chocoCalc + data.chocoAll;
+    const prestigeTime = (data.chocoPrestige - chocoTotal - boostedCalc) / noTower;
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
  ${YELLOW}Current: ${WHITE + formatNumber(chocoCalc + data.chocolate)}
- ${YELLOW}Production: ${GRAY + formatNumber(data.chocoProduction * (towerData.activeTime > 0 ? 1 + towerData.bonus : 1))}
+ ${YELLOW}Production: ${GRAY + formatNumber(production)}
  ${YELLOW}Total: ${WHITE + formatNumber(chocoTotal)}
  ${YELLOW}All-time: ${GRAY + formatNumber(chocoAll)}
  ${YELLOW}Prestige: ${data.chocoPrestige > 0 ? WHITE + formatNumber(data.chocoPrestige) : GREEN + "✔"}
@@ -116,7 +127,7 @@ ${GOLD + BOLD}Time:
 ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${WHITE + data.totalEggs}/${data.maxEggs}
  ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
- ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.42).toFixed(2)}%`);
+ ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.95).toFixed(2)}%`);
 }).setFps(1);
 
 register("chat", (x) => {
