@@ -36,14 +36,9 @@ class Location {
             this.findWorld();
         }).setPriority(Priority.LOWEST);
 
-        register("worldUnload", () => {
-            this.#world = undefined;
-            setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
-        }).setPriority(Priority.LOWEST);
-
         register("serverDisconnect", () => {
             this.#world = undefined;
-            setRegisters(off = true);
+            setRegisters(true);
         });
 
         register("command", () => {

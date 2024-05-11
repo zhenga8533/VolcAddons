@@ -122,14 +122,14 @@ registerWhen(register("spawnParticle", (particle, type) => {
     // Push to particles list and make a guess
     path.push([x, y, z]);
     guess = [guessBurrow(path, distance)];
-}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 /**
  * Get distance using Echo note pitch.
  */
 registerWhen(register("soundPlay", (_, __, ___, pitch) => {
     distance = (Math.E / pitch) ** (Math.E + (1 - 2 * pitch)) - Math.E ** (1 - pitch ** 2) + Math.E ** (0.8 - Math.E * pitch);
-}).setCriteria("note.harp"), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}).setCriteria("note.harp"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 /**
  * Remove guess on world unload.
