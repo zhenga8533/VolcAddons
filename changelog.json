@@ -1,9 +1,10 @@
 [
     "- Added calendar real time",
     "- Added inventory buttons (`/va buttons`)",
+    "- Reworked autocomplete",
     "- Changed slot binding commands (`/va binds`)",
     "- Changed some rendering to be more optimized",
-    "- Changed autocorrect to be more reliable (maybe change to also track word index)",
+    "- Changed autocorrect to be more reliable",
     "- Fixed features not registering in Hub",
     "- Fixed chocolate calculations",
     "- Fixed spamlist",
@@ -11,7 +12,6 @@
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing",
     "- Fixed skulls rendering without skin",
-    "= Removed autocomplete",
     "- Removed `/va test`",
     "- Removed `/va be`"
 ]

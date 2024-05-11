@@ -1,6 +1,5 @@
 import settings from "../../utils/settings";
 import { GREEN, LOGO, RED } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
 
@@ -56,7 +55,7 @@ function autocorrect(inputWord, dictionary) {
 
     Object.keys(dictionary).forEach(word => {
         const distance = levenshteinDistance(inputWord, word);
-        if (distance <= settings.autocorrect && distance < bestDistance) {
+        if (distance <= 2 && distance < bestDistance) {
             bestWord = word;
             bestDistance = distance;
         }
@@ -74,18 +73,20 @@ function autocorrect(inputWord, dictionary) {
  * @returns {String} - The corrected command if autocorrection is enabled; otherwise, returns null.
 */
 function correct(command, event) {
-    if (cd) return;
+    command.split(' ').forEach((word, index) => {
+        const wordbank = data.wordbanks[index];
+        wordbank[word] -= 2;
+        if (wordbank[word] <= 0) delete wordbank[word];
+    });
+    if (cd || !settings.autocorrect) return;
 
     // Seperate command into args and correct wordbank
     const corrected = [];
-    command.split(' ').forEach(word => {
-        data.wordbank[word] -= 2;
-        if (data.wordbank[word] <= 0) delete data.wordbank[word];
-        if (settings.autocorrect !== 0) corrected.push(autocorrect(word, data.wordbank));
+    command.split(' ').forEach((word, index) => {
+        corrected.push(autocorrect(word, data.wordbanks[index]));
     });
     
     // Attempt to run new command
-    if (settings.autocorrect === 0) return;
     const newCommand = corrected.join(' ');
     if (newCommand !== command) {
         // Run new command
@@ -123,9 +124,11 @@ register("messageSent", (message) => {
     lastMessage = message.substring(1);
 
     // Add to wordbank count
-    const wordbank = data.wordbank;
-    lastMessage.split(' ').forEach(word => {
-        if (word in wordbank) wordbank[word]++;
+    lastMessage.split(' ').forEach((word, index) => {
+        if (data.wordbanks.length < index + 1) data.wordbanks.push({});
+
+        const wordbank = data.wordbanks[index];
+        if (wordbank.hasOwnProperty(word)) wordbank[word]++;
         else wordbank[word] = 1;
     });
 });
@@ -134,7 +137,7 @@ register("messageSent", (message) => {
  * Reset wordbank command.
  */
 register("command", () => {
-    data.wordbank = {};
+    data.wordbanks = [];
     ChatLib.chat(`${LOGO + GREEN}Successfully reset commands' wordbank!`);
 }).setName("resetWordbank");
 
@@ -142,8 +145,9 @@ register("command", () => {
  * Parse out uncommon commands/words
  */
 register("gameUnload", () => {
-    Object.keys(data.wordbank).forEach(word => {
-        if (--data.wordbank[word] <= 0) delete data.wordbank[word];
+    data.wordbanks.forEach(wordbank => {
+        Object.keys(wordbank).forEach(word => {
+            if (--wordbank[word] <= 0) delete wordbank[word];
+        });
     });
-    data.save();
 }).setPriority(Priority.HIGHEST);

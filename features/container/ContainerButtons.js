@@ -482,7 +482,6 @@ export function buttonCommands(args) {
             Object.keys(buttons).forEach(key => {
                 buttons[key].save(data.buttonPresets[name]);
             });
-            data.save();
             ChatLib.chat(`${LOGO + GREEN}Successfully saved buttons data using key: "${name}".`);
             break;
         case "delete":

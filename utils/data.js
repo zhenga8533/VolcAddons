@@ -54,7 +54,7 @@ export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
     "newUser": true,
     "version": "2.3.1",
-    "wordbank": {},
+    "wordbanks": [],
     "lastID" : undefined,
     "world": "none",
     "tier": 0,
@@ -172,6 +172,7 @@ if (itemNBTs.enderchests.length === 0) {
     for (let i = 0; i < 18; i++)
         itemNBTs.enderchests.push(new Array(54).fill(null));
 }
+data.autosave(30);
 
 // --- GUI CONTROL ---
 export function resetGUI() {

@@ -304,16 +304,13 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     }
 
     // --- Yapping ---
-    @SliderProperty({
-        name: "Autocorrect Commands",
-        description: `Attempts to correct invalid commands with valid ones. It will take
-time to collect enough data to be accurate. Set the # of transformations away a correction can be or as 0 to turn ${RED}OFF${GRAY}.`,
+    @SwitchProperty({
+        name: "Autocorrect Command",
+        description: "Attempts to correct invalid commands with valid ones. It will take time to collect enough data to be accurate.",
         category: "General",
-        subcategory: "Yapping",
-        max: 2,
-        min: 0
+        subcategory: "Yapping"
     })
-    autocorrect = 0;
+    autocorrect = false;
 
     @SwitchProperty({
         name: "Custom Emotes",
