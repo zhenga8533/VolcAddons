@@ -97,19 +97,18 @@ register("step", () => {
     const towerData = data.timeTower;
     const timeLeft = towerData.activeTime - lastOpen;
     const noTower = data.chocoProduction * (data.chocoMultiplier - towerData.bonus) / data.chocoMultiplier;
-    const production = timeLeft > 0 ? data.chocoProduction : noTower;
+    const production = timeLeft > 0 || towerData.activeTime <= 0 ? data.chocoProduction : noTower;
 
-    const charges = parseInt(towerData.charges) + Math.max(0, Math.floor((lastOpen - towerData.chargeTime) / 28_800));
-    chocoCalc += Math.min(lastOpen, towerData.activeTime) * data.chocoProduction * towerData.bonus;
+    const charges = parseInt(towerData.charges) + Math.max(0, Math.ceil((lastOpen - towerData.chargeTime) / 28_800));
     const towerStr = timeLeft > 0 ? formatTime(timeLeft) :
-        charges > 0 ? `${Math.min(3, charges)}/3` : formatTime((lastOpen - towerData.chargeTime) / 28_800);
+        charges > 0 ? `${Math.min(3, charges)}/3` : formatTime(Math.abs(lastOpen - towerData.chargeTime));
 
     // Chocolate calc
     const boostedCalc = timeLeft > 0 ? (data.chocoProduction - noTower) * timeLeft : 0;
     const chocoCalc = production * lastOpen + boostedCalc;
     const chocoTotal = chocoCalc + data.chocoTotal;
     const chocoAll = chocoCalc + data.chocoAll;
-    const prestigeTime = (data.chocoPrestige - chocoTotal - boostedCalc) / noTower;
+    const prestigeTime = (data.chocoPrestige - chocoTotal - boostedCalc) / (timeLeft > 0 ? noTower : data.chocoProduction);
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:

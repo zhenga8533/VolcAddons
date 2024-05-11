@@ -32,21 +32,16 @@ register("guiOpened", () => {
         const split = name.split(' ');
         itemsCache = Player.getContainer().getItems().slice(0, 54);
 
-        if (name.startsWith("Ender Chest")) {
-            const i = parseInt(split[2][1]) - 1;
-            itemNBTs.enderchests[i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-            nameCache = ["EC", i];
+        const continaerCache = name.startsWith("Ender Chest") ? [itemNBTs.enderchests, "EC"] : 
+            name.startsWith("Backpack") ? [itemNBTs.backpacks, "BP"] : undefined;
+        if (continaerCache === undefined) return;
+        
+        const i = parseInt(split[2][1]) - 1;
+        continaerCache[0][i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+        nameCache = [continaerCache[1], i];
 
-            saveCache.register();
-            cacheItems.register();
-        } else if (split[1].startsWith("Backpack")) {
-            const i = parseInt(split[split.length - 1].replace(/\D/g, "")) - 1;
-            itemNBTs.backpacks[i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-            nameCache = ["BP", i];
-
-            saveCache.register();
-            cacheItems.register();
-        }
+        saveCache.register();
+        cacheItems.register();
     });
 });
 
