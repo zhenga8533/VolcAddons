@@ -10,8 +10,8 @@
     "- TBD: Fixed valuelist",
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing",
-    "- TBD: Fixed skulls rendering without skin",
+    "- Fixed skulls rendering without skin",
     "= Removed autocomplete",
     "- Removed `/va test`",
-    "- TBD: Removed `/va be`"
+    "- Removed `/va be`"
 ]

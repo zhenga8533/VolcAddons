@@ -2,10 +2,8 @@
 import "./utils/dev";
 import "./utils/player";
 import "./utils/waypoints";
-import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
-import party from "./utils/party";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
@@ -65,7 +63,7 @@ import "./features/economy/MissingSkins";
 import { getNetworth } from "./features/economy/Networth";
 import "./features/economy/TradeValue";
 // Combat Features
-import { getBestiary } from "./features/combat/Bestiary";
+import "./features/combat/BestiaryDisplay";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
@@ -187,7 +185,9 @@ register("guiKey", (_, keyCode, gui) => {
     }
 });
 
-// Open settings
+/**
+ * Open settings GUI.
+ */
 function openSettings() {
     try {
         settings.openGUI();
@@ -292,11 +292,6 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
         case "networth":
         case "nw":
             getNetworth(args[1] || Player.getName(), args[2]);
-            break;
-        // Bestiary Stuff
-        case "bestiary":
-        case "be":
-            getBestiary(args);
             break;
         // Attribute Pricing
         case "attribute":

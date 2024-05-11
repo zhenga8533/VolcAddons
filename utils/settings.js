@@ -46,9 +46,7 @@ ${ITALIC}Related Commands: /va <wl, bl>`);
 ${ITALIC}Related Commands: /va <attribute, calc, nw>`);
 
         // Combat Category
-        this.setCategoryDescription("Combat",
-        `${HEADER}
-${ITALIC}Related Commands: /va be`);
+        this.setCategoryDescription("Combat", HEADER);
     
         // Mining Category
         this.setCategoryDescription("Mining", HEADER);
