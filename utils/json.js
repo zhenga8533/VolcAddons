@@ -1,6 +1,7 @@
 export class Json {
     /**
      * Create a new persistant single object JSON file.
+     * Currently using this to keep track of server based data.
      * 
      * @param {String} file - The name of the JSON file
      */
