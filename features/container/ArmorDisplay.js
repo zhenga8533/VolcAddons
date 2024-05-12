@@ -62,7 +62,7 @@ let equipment = itemNBTs.equip.map((nbt, index) => {
     } else texture = "stained_glass_pane";
 
     // Create inv eq button
-    buttons.push(new Button("invEq", index * 9, () => {
+    buttons.push(new Button("eq", index * 9, () => {
         ChatLib.command("equipment");
     }, "equipment", texture, () => settings.equipDisplay));
 

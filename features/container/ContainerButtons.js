@@ -16,7 +16,7 @@ const OFFSETS = {
     "inv2": [80, 26],
     "inv3": [80, 44],
     "inv4": [80, 62],
-    "invEq": [-18, 8],
+    "eq": [-18, 8],
 };
 
 const COLOR_SCHEMES = [
@@ -144,7 +144,7 @@ export class Button {
      * @param {Object} cache - Data variasble to save Button data to.
      */
     save(cache) {
-        if (this.#id.startsWith("invEq")) return;
+        if (this.#id.startsWith("eq")) return;
         cache[this.#id] = [this.#loc, this.#index, this.#command, this.#icon];
     }
 
@@ -162,17 +162,17 @@ export class Button {
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
-        Renderer.translate(0, 0, 300);
+        Renderer.translate(0, 0, 100);
         Renderer.drawRect(COLOR_SCHEMES[settings.containerButtons - 1][0], x, y, 16, 16);
-        Renderer.translate(0, 0, 300);
+        Renderer.translate(0, 0, 100);
         Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y - 1, x + 17, y - 1, 1);
-        Renderer.translate(0, 0, 300);
+        Renderer.translate(0, 0, 100);
         Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y - 1, x - 1, y + 17, 1);
-        Renderer.translate(0, 0, 300);
+        Renderer.translate(0, 0, 100);
         Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y + 17, x + 17, y + 17, 1);
-        Renderer.translate(0, 0, 300);
+        Renderer.translate(0, 0, 100);
         Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x + 17, y - 1, x + 17, y + 17, 1);
-        this.#item.draw(x, y, 1, 301);
+        this.#item.draw(x, y, 1, 1);
     }
 
     /**
@@ -242,7 +242,7 @@ export class Button {
     
                     inputKey.register();
                     inputRender.register();
-                }, "", "barrier", this.#invOnly);
+                }, "", "barrier");
             }
         } else if (button === 0) this.#clicked();
 
@@ -286,8 +286,12 @@ const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
         saveEdit();
         const left = gui.getGuiLeft();
         const top = gui.getGuiTop();
+        const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
         
-        if (!Object.keys(buttons).some(key => buttons[key].click(left, top, x, y, button))) resetEdit();
+        if (!Object.keys(buttons).some(key => {
+            if (buttons[key].getIndex() > size) return false;
+            return buttons[key].click(left, top, x, y, button);
+        })) resetEdit();
     }
 }).unregister();
 
@@ -380,7 +384,7 @@ function setButtons(type) {
         // Set all inv edit buttons TRBL
         createButtons(0, 9, 1, "top");
         createButtons(0, 9, 1, "bottom");
-        createButtons(0, 99, 9, "left");
+        createButtons(settings.equipDisplay ? 36 : 0, 99, 9, "left");
         createButtons(0, 99, 9, "right");
         if (setInv) {
             createButtons(0, 5, 1, "inv1");
@@ -398,8 +402,10 @@ function setButtons(type) {
 const click = register("guiMouseClick", (x, y, button, gui) => {
     const left = gui.getGuiLeft();
     const top = gui.getGuiTop();
+    const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
 
     Object.keys(buttons).forEach(key => {
+        if (buttons[key].getIndex() > size) return;
         buttons[key].click(left, top, x, y, button);
     });
 }).unregister();
@@ -407,7 +413,7 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
 const render = register("guiRender", (x, y, gui) => {
     const top = gui.getGuiTop();
     const left = gui.getGuiLeft();
-    const size = Player.getContainer().getSize();
+    const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
 
     Object.keys(buttons).forEach(key => {
         if (buttons[key].getIndex() > size) return;
