@@ -55,8 +55,8 @@ const CONTAINER_PNGS = [new Image("container.png"), new Image("container-fs.png"
 new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "guiRender");
 
 const preview = register("guiRender", () => {
-    CONTAINER_PNGS[settings.containerColor].draw(data.CPL[0], data.CPL[1]);
-    Renderer.drawString(DARK_GRAY + lastPreview.removeFormatting(), data.CPL[0] + 7, data.CPL[1] + 6, true);
+    CONTAINER_PNGS[settings.containerPreview - 1].draw(data.CPL[0], data.CPL[1]);
+    Renderer.drawString(DARK_GRAY + lastPreview.removeFormatting(), data.CPL[0] + 7, data.CPL[1] + 6);
 
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
@@ -122,4 +122,4 @@ registerWhen(register("itemTooltip", (_, item) => {
         preview.unregister();
         clear.unregister();
     }
-}), () => settings.containerPreview);
+}), () => settings.containerPreview !== 0);

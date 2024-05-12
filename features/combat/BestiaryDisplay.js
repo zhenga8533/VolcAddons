@@ -61,10 +61,10 @@ const setHighlight = register('guiRender', () => {
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const containerName = Player.getContainer().getName();
-        if ((!containerName.includes("Bestiary ➜") && !containerName.includes("Fishing ➜"))) return;
+        if ((!containerName.startsWith("Bestiary ➜") && !containerName.instartsWithcludes("Fishing ➜"))) return;
         setLevels.register();
         setHighlight.register();
-    })
+    });
 }), () => settings.bestiaryGUI);
 registerWhen(register("guiClosed", () => {
     setLevels.unregister();
@@ -77,3 +77,27 @@ registerWhen(register("guiClosed", () => {
 /**
  * Bestiary widget tracker.
  */
+register("guiOpened", () => {
+    Client.scheduleTask(1, () => {
+        const containerName = Player.getContainer().getName();
+        if ((!containerName.startsWith("Bestiary ➜") && !containerName.startsWith("Fishing ➜"))) return;
+        
+        const items = Player.getContainer().getItems();
+        for (let i = 1; i < 5; i++) {
+            for (let j = 1; j < 8; j++) {
+                let index = i * 9 + j;
+                let item = items[index];
+                if (item === null) break;
+                
+                ChatLib.chat(item.getName());
+            }
+        }
+    });
+});
+
+register("step", () => {
+    if (!World.isLoaded()) return;
+
+    const bestiaryIndex = TabList.getNames().findIndex(name => name.startsWith("§r§6§lBestiary:§r"));
+
+}).setFps(1);

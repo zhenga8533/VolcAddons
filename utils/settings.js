@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -81,8 +81,6 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
         // Dependencies
         this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
-        this.addDependency("Container Buttons Scheme", "Container Buttons");
-        this.addDependency("Container Preview Scheme", "Container Preview");
     }
     
 
@@ -343,39 +341,23 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     })
     auctionHighlight = false;
 
-    @SwitchProperty({
-        name: "Container Buttons",
+    @SelectorProperty({
+        name: "Container Buttons ",
         description: `${DARK_RED}NEW! ${GRAY}Display buttons that runs a command when pressed. Use ${AQUA}/va buttons ${GRAY}to view related commands.`,
         category: "Container",
-        subcategory: "Container"
+        subcategory: "Container",
+        options: ["OFF", "Default", "Transparent", "Semi-Transparent", "FurfSky"]
     })
-    containerButtons = false;
+    containerButtons = 0;
 
     @SelectorProperty({
-        name: "Container Buttons Scheme",
-        description: `${DARK_RED}NEW! ${GRAY}Set the color schemes used to render container buttons.`,
-        category: "Container",
-        subcategory: "Container",
-        options: ["Default", "Transparent", "Semi-Transparent", "FurfSky"]
-    })
-    buttonColor = 0;
-
-    @SwitchProperty({
-        name: "Container Preview",
+        name: "Container Preview ",
         description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.`,
         category: "Container",
-        subcategory: "Container"
-    })
-    containerPreview = false;
-
-    @SelectorProperty({
-        name: "Container Preview Scheme",
-        description: "Set the texture scheme used to draw container preview background.",
-        category: "Container",
         subcategory: "Container",
-        options: ["Default", "FurfSky"]
+        options: ["OFF", "Default", "FurfSky"]
     })
-    containerColor = 0;
+    containerPreview = 0;
     
     @SwitchProperty({
         name: "Searchbar",
@@ -615,12 +597,21 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     // --- Bestiary ---
     @SwitchProperty({
+        name: "Bestiary Counter",
+        description: `${DARK_RED}NEW! ${GRAY}Tracks bestiary hourly progress using tablist widget.
+Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}.`,
+        category: "Combat",
+        subcategory: "Bestiary"
+    })
+    killCounter = false;
+
+    @SwitchProperty({
         name: "Bestiary GUI",
         description: "Shows bestiary level as stack size and highlight uncompleted bestiary milestones.",
         category: "Combat",
         subcategory: "Bestiary"
     })
-    bestiaryGUI = true;
+    bestiaryGUI = false;
 
     @ColorProperty({
         name: "Hitbox Color",

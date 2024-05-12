@@ -12,10 +12,10 @@ const OFFSETS = {
     "right": [178, 12],
     "bottom": [8, 42],
     "left": [-18, 12],
-    "inv1": [80, 6],
-    "inv2": [80, 24],
-    "inv3": [80, 42],
-    "inv4": [80, 60],
+    "inv1": [80, 8],
+    "inv2": [80, 26],
+    "inv3": [80, 44],
+    "inv4": [80, 62],
 };
 
 const COLOR_SCHEMES = [
@@ -149,15 +149,15 @@ class Button {
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
         Renderer.translate(0, 0, 300);
-        Renderer.drawRect(COLOR_SCHEMES[settings.buttonColor][0], x, y, 16, 16);
+        Renderer.drawRect(COLOR_SCHEMES[settings.containerButtons - 1][0], x, y, 16, 16);
         Renderer.translate(0, 0, 300);
-        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y - 1, x + 17, y - 1, 1);
+        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y - 1, x + 17, y - 1, 1);
         Renderer.translate(0, 0, 300);
-        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y - 1, x - 1, y + 17, 1);
+        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y - 1, x - 1, y + 17, 1);
         Renderer.translate(0, 0, 300);
-        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x - 1, y + 17, x + 17, y + 17, 1);
+        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y + 17, x + 17, y + 17, 1);
         Renderer.translate(0, 0, 300);
-        Renderer.drawLine(COLOR_SCHEMES[settings.buttonColor][1], x + 17, y - 1, x + 17, y + 17, 1);
+        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x + 17, y - 1, x + 17, y + 17, 1);
         this.#item.draw(x, y, 1, 301);
     }
 
@@ -435,7 +435,7 @@ registerWhen(register("guiOpened", (event) => {
         close.register();
         render.register();
     })
-}), () => settings.containerButtons);
+}), () => settings.containerButtons !== 0);
 
 /**
  * Persistant buttons.
