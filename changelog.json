@@ -3,7 +3,7 @@
     "- Added inventory buttons (`/va buttons`)",
     "- Added bestiary tracker",
     "- Added texture schemes to container preview",
-    "- Added equipment inv display",
+    "- Changed equipment display to also display buttons",
     "- Added Skyblock XP alert",
     "- TBD: Reworked autocomplete",
     "- Changed slot binding commands (`/va binds`)",
@@ -18,5 +18,6 @@
     "- Fixed skulls rendering without skin",
     "- Fixed no pet display",
     "- Removed `/va test`",
-    "- Removed `/va be`"
+    "- Removed `/va be`",
+    "- Removed Garden webhook"
 ]

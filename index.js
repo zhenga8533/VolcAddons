@@ -84,7 +84,6 @@ import "./features/mining/ShaftAnnounce";
 import "./features/mining/WishingCompass";
 // Farming Features
 import { calcCompost } from "./features/farming/Composter";
-import "./features/farming/FarmingWebhook";
 import "./features/farming/GardenTab";
 import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";

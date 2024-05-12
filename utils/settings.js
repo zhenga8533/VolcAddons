@@ -312,6 +312,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     // --- Yapping ---
     @SwitchProperty({
+        name: "Autocomplete Command",
+        description: "Attempts to autocomplete commands with the most used commands of the past.",
+        category: "General",
+        subcategory: "Yapping"
+    })
+    autocomplete = false;
+
+    @SwitchProperty({
         name: "Autocorrect Command",
         description: "Attempts to correct invalid commands with valid ones. It will take time to collect enough data to be accurate.",
         category: "General",
@@ -877,25 +885,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         subcategory: "Garden"
     })
     jacobReward = true;
-    
-    // --- Garden Webhook ---
-    @TextProperty({
-        name: "Discord Webhook",
-        description: "Input Discord Webhook link to send the Garden Statistics to.",
-        category: "Farming",
-        subcategory: "Garden Webhook",
-        protected: true
-    })
-    gardenWebhook = "";
-    @SliderProperty({
-        name: "Webhook Timer",
-        description: `Set minutes until data is sent to webhook or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "Farming",
-        subcategory: "Garden Webhook",
-        min: 0,
-        max: 120
-    })
-    webhookTimer = 0;
 
     // --- Pests ---
     @SwitchProperty({

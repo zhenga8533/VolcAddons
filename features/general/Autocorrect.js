@@ -2,6 +2,7 @@ import settings from "../../utils/settings";
 import { GREEN, LOGO, RED } from "../../utils/constants";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/register";
 
 
 /**
@@ -131,23 +132,43 @@ register("messageSent", (message) => {
         if (wordbank.hasOwnProperty(word)) wordbank[word]++;
         else wordbank[word] = 1;
     });
+
+    // Add to command count
+    if (data.commands.hasOwnProperty(lastMessage)) data.commands[lastMessage]++;
+    else data.commands[lastMessage] = 1;
 });
 
+registerWhen(register("guiKey", (_, code) => {
+    if (!Client.isInChat()) return;
+
+    const chat = Client.getCurrentChatMessage();
+    if (!chat.startsWith('/') || chat.length < 3) return;
+}), () => settings.autocorrect);
+
 /**
- * Reset wordbank command.
+ * Reset commands.
  */
 register("command", () => {
     data.wordbanks = [];
-    ChatLib.chat(`${LOGO + GREEN}Successfully reset commands' wordbank!`);
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset wordbank cache!`);
 }).setName("resetWordbank");
+
+register("command", () => {
+    data.commands = {};
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset commands cache!`);
+}).setName("resetCommands");
 
 /**
  * Parse out uncommon commands/words
  */
-register("gameUnload", () => {
-    data.wordbanks.forEach(wordbank => {
-        Object.keys(wordbank).forEach(word => {
-            if (--wordbank[word] <= 0) delete wordbank[word];
-        });
+data.wordbanks.forEach(wordbank => {
+    Object.keys(wordbank).forEach(word => {
+        wordbank[word] -= 3;
+        if (wordbank[word] <= 0) delete wordbank[word];
     });
-}).setPriority(Priority.HIGHEST);
+});
+
+Object.keys(data.commands).forEach(command => {
+    data.commands[command] -= 3;
+    if (data.commands[command] <= 0) delete data.commands[command];
+});
