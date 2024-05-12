@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { COLOR_TABLE} from "../../utils/constants";
+import { COLOR_TABLE, DARK_GRAY} from "../../utils/constants";
 import { data, itemNBTs } from "../../utils/data";
 import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
@@ -55,7 +55,7 @@ new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "gu
 
 const preview = register("guiRender", () => {
     CONTAINER_PNGS[settings.containerColor].draw(data.CPL[0], data.CPL[1]);
-    Renderer.drawString(lastPreview, data.CPL[0] + 5, data.CPL[1] + 5, true);
+    Renderer.drawString(DARK_GRAY + lastPreview.removeFormatting(), data.CPL[0] + 7, data.CPL[1] + 6, true);
 
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
