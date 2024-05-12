@@ -1,9 +1,9 @@
 import settings from "../../utils/settings";
-import { romanToNum, unformatNumber } from "../../utils/functions/format";
+import { formatTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
-import { DARK_GRAY, GOLD, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, GRAY, RED, UNDERLINE, WHITE, YELLOW } from "../../utils/constants";
 
 
 /**
@@ -149,6 +149,10 @@ const bestiaryOverlay = new Overlay("bestiaryCounter", data.BEL, "moveBe", besti
 const beCounter = {};
 let beTime = 0;
 
+register("command", () => {
+    beCounter = {};
+}).setName("resetBe");
+
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
     const tablist = TabList.getNames();
@@ -171,21 +175,28 @@ registerWhen(register("step", () => {
     }
 
     // Sort by now - start
-    const keys = Object.keys(beCounter).sort((a, b) => beCounter[b][1] - beCounter[b][0] - beCounter[a][1] + beCounter[a][0]);
+    const keys = Object.keys(beCounter).filter(key => {
+        return beCounter[key][0] !== beCounter[key][1];
+    }).sort((a, b) => {
+        return beCounter[b][1] - beCounter[b][0] - beCounter[a][1] + beCounter[a][0];
+    });
+
+    // Update time if not empty
+    if (keys.length > 0) beTime += 1;
+    else return;
 
     // Set overlay message
-    let message = `${GOLD}Bestiary:`;
+    let message = '';
     keys.forEach(key => {
-        if (beCounter[key][0] === beCounter[key][1]) return;
-
         let kills = beCounter[key][1] - beCounter[key][0];
-        let rate = (kills) / (beTime) * 3600;
+        let rate = kills / beTime;
         let next = (beCounter[key][2] - beCounter[key][1]) / rate;
-        let max = (MAX_BESTIARY[key] - beCounter[key][1]) / rate;
+        let max = ((MAX_BESTIARY[key] ?? 0) - beCounter[key][1]) / rate;
 
-        message += `\n${GOLD + BOLD + key + DARK_GRAY}: ${WHITE + kills} (${rate.toFixed(2)}/hr)`;
-        message += `\n ${YELLOW}Next${DARK_GRAY}: ${WHITE + next.toFixed(2)} hrs`;
-        message += `\n ${YELLOW}Max${DARK_GRAY}: ${WHITE + max.toFixed(2)} hrs, `;
+        if (message !== "") message += '\n';
+        message += `${GOLD + BOLD + key}: ${WHITE + kills} (${(rate * 3600).toFixed(2)}/hr)`;
+        message += `\n ${YELLOW}Next: ${GRAY + formatTime(next, 0, 3)}`;
+        message += `\n ${YELLOW}Max: ${GRAY + formatTime(max, 0, 3)}`;
     });
 
     bestiaryOverlay.setMessage(message);
