@@ -411,7 +411,7 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
     
     @SwitchProperty({
         name: "Equipment Display",
-        description: `Displays user's equipment pieces as icons on an overlay. Move GUI with ${AQUA}/moveEq${GRAY}.`,
+        description: `Displays user's equipment pieces as icons on an overlay and besides inventory. Move GUI with ${AQUA}/moveEq${GRAY}.`,
         category: "Container",
         subcategory: "Items"
     })

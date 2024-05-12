@@ -16,6 +16,7 @@ const OFFSETS = {
     "inv2": [80, 26],
     "inv3": [80, 44],
     "inv4": [80, 62],
+    "invEq": [-18, 8],
 };
 
 const COLOR_SCHEMES = [
@@ -37,10 +38,9 @@ const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 3
 
 // Local cache
 let buttons = {};
-let editButtons = {};
 let container;
 
-class Button {
+export class Button {
     #clicked;
     #loc;
     #index;
@@ -52,6 +52,7 @@ class Button {
     #item;
     #invOnly;
     #edit = false;
+    #condition;
 
     /**
      * Boop. Another poorly written class that patches up errors as they came up :).
@@ -62,7 +63,7 @@ class Button {
      * @param {String} command - Command args that are called in the callback. Used to cache data.
      * @param {String} icon - Minecraft item id used to draw logo. Barrier icon is reserved for edit buttons.
      */
-    constructor(loc, index, clicked, command="", icon="barrier") {
+    constructor(loc, index, clicked, command="", icon="barrier", condition=() => true) {
         this.#clicked = clicked;
         this.#loc = loc;
         this.#index = index;
@@ -72,6 +73,8 @@ class Button {
         this.#y = OFFSETS[this.#loc][1] + 18 * ~~(this.#index / 9);
         this.#invOnly = loc.startsWith("inv");
         this.setItem(icon);
+        this.#condition = condition;
+        buttons[this.#id] = this;
     }
 
     /**
@@ -84,15 +87,12 @@ class Button {
     }
 
     /**
-     * Updates Button.#command and Button.#clicked to callback.
+     * Returns Button.#item
      * 
-     * @param {String} command - Command to run when button is pressed.
+     * @returns {String} - Button's icon ID.
      */
-    setCommand(command) {
-        this.#command = command;
-        this.#clicked = () => {
-            ChatLib.command(command);
-        }
+    getIcon() {
+        return this.#icon;
     }
 
     /**
@@ -103,7 +103,8 @@ class Button {
     setItem(icon) {
         try {
             const texture = icon === "skull" ? Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor) :
-                icon.length >= 32 ? data.buttons[this.#id][3] : undefined;
+                icon.length > 32 ? icon : 
+                icon.length === 32 ? data.buttons[this.#id][3] : undefined;
 
             if (texture !== undefined) {  // Skull textures
                 const tag = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
@@ -119,9 +120,21 @@ class Button {
                 this.#edit = icon === "barrier";
             }
         } catch (_) {
-            ChatLib.chat(`${LOGO + RED}Error: Invalid icon ID "${texture ?? icon}"!`);
+            ChatLib.chat(`${LOGO + RED}Error: Invalid icon ID "${icon}"!`);
             this.#item = new Item("minecraft:redstone_block");
             this.#icon = "redstone_block";
+        }
+    }
+
+    /**
+     * Updates Button.#command and Button.#clicked to callback.
+     * 
+     * @param {String} command - Command to run when button is pressed.
+     */
+    setCommand(command) {
+        this.#command = command;
+        this.#clicked = () => {
+            ChatLib.command(command);
         }
     }
 
@@ -131,7 +144,8 @@ class Button {
      * @param {Object} cache - Data variasble to save Button data to.
      */
     save(cache) {
-        cache[this.#id] = [this.#loc, this.#index, this.#command, this.#icon, this.#invOnly];
+        if (this.#id.startsWith("invEq")) return;
+        cache[this.#id] = [this.#loc, this.#index, this.#command, this.#icon];
     }
 
     /**
@@ -141,7 +155,7 @@ class Button {
      * @param {Number} dy - Top most coordinate of current GUI.
      */
     draw(dx, dy) {
-        if (this.#invOnly && container !== "GuiInventory") return;
+        if ((this.#invOnly && container !== "GuiInventory") || !this.#condition()) return;
 
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -170,7 +184,7 @@ class Button {
      * @param {Number} hy - Current y pos of mouse.
      */
     hover(dx, dy, hx, hy) {
-        if (this.#invOnly && container !== "GuiInventory") return;
+        if ((this.#invOnly && container !== "GuiInventory") || !this.#condition()) return;
         
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -195,7 +209,7 @@ class Button {
      * @returns {Boolean} True if button was pressed, false otherwise.
      */
     click(dx, dy, cx, cy, button) {
-        if (this.#invOnly && container !== "GuiInventory") return;
+        if ((this.#invOnly && container !== "GuiInventory") || !this.#condition()) return;
 
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -221,7 +235,7 @@ class Button {
                 commandInput.func_146195_b(true);
             } else {
                 delete buttons[this.#id];
-                editButtons[this.#id] = new Button(this.#loc, this.#index, () => {
+                new Button(this.#loc, this.#index, () => {
                     editing.id = this.#id;
                     editing.loc = this.#loc;
                     editing.index = this.#index;
@@ -259,8 +273,8 @@ function saveEdit() {
     } else {
         buttons[editing.id] = new Button(editing.loc, editing.index, () => {
             ChatLib.command(command);
-        }, command, iconInput.func_146179_b(), editing.inv);
-        delete editButtons[editing.id];
+        }, command, iconInput.func_146179_b());
+        delete buttons[editing.id];
     }
 }
 
@@ -273,8 +287,7 @@ const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
         const left = gui.getGuiLeft();
         const top = gui.getGuiTop();
         
-        if (!Object.keys(editButtons).some(key => editButtons[key].click(left, top, x, y, button)) && 
-            !Object.keys(buttons).some(key => buttons[key].click(left, top, x, y, button))) resetEdit();
+        if (!Object.keys(buttons).some(key => buttons[key].click(left, top, x, y, button))) resetEdit();
     }
 }).unregister();
 
@@ -321,7 +334,7 @@ function createButtons(start, end, increment, category) {
         if (buttons.hasOwnProperty(id)) continue;
         
         let j = i / 1;  // Why tf does i act like a pointer
-        editButtons[id] = new Button(category, i, () => {
+        new Button(category, i, () => {
             editing.id = id;
             editing.index = j;
             editing.loc = category;
@@ -365,11 +378,10 @@ function setButtons(type) {
         iconInput.field_146210_g = top - 50;
 
         // Set all inv edit buttons TRBL
-        const bottom = setInv ? 72 : 99;
         createButtons(0, 9, 1, "top");
         createButtons(0, 9, 1, "bottom");
-        createButtons(0, bottom, 9, "left");
-        createButtons(0, bottom, 9, "right");
+        createButtons(0, 99, 9, "left");
+        createButtons(0, 99, 9, "right");
         if (setInv) {
             createButtons(0, 5, 1, "inv1");
             createButtons(0, 5, 1, "inv2");
@@ -402,15 +414,20 @@ const render = register("guiRender", (x, y, gui) => {
         buttons[key].draw(left, top);
         buttons[key].hover(left, top, x, y);
     });
-
-    Object.keys(editButtons).forEach(key => {
-        editButtons[key].draw(left, top);
-        editButtons[key].hover(left, top, x, y);
-    });
 }).unregister();
 
 const close = register("guiClosed", () => {
-    editButtons = {};
+    // Clear out edit buttons
+    Object.keys(buttons).forEach(key => {
+        try {
+            if (buttons[key].getIcon() === "barrier") delete buttons[key];
+        } catch (err) {
+            ChatLib.chat(key);
+            ChatLib.chat(err);
+        }
+    });
+    
+    // Set registers
     render.unregister();
     click.unregister();
     close.unregister();
@@ -454,9 +471,9 @@ function loadButtons() {
     buttons = {};
     Object.keys(data.buttons).forEach(key => {
         const button = data.buttons[key];
-        buttons[key] = new Button(button[0], button[1], () => {
+        new Button(button[0], button[1], () => {
             ChatLib.command(button[2])
-        }, button[2], button[3], button[4]);
+        }, button[2], button[3]);
     });
 }
 loadButtons();
