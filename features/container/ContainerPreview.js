@@ -16,6 +16,7 @@ const cacheItems = register("guiMouseClick", () => {
 }).unregister();
 
 const saveCache = register("guiClosed", () => {
+    ChatLib.chat(nameCache[0]);
     if (nameCache[0] === "EC")
         itemNBTs.enderchests[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
     else if (nameCache[1] === "BP")
@@ -32,13 +33,13 @@ register("guiOpened", () => {
         const split = name.split(' ');
         itemsCache = Player.getContainer().getItems().slice(0, 54);
 
-        const continaerCache = name.startsWith("Ender Chest") ? [itemNBTs.enderchests, "EC"] : 
-            name.startsWith("Backpack") ? [itemNBTs.backpacks, "BP"] : undefined;
-        if (continaerCache === undefined) return;
+        const containerCache = name.startsWith("Ender Chest") ? [itemNBTs.enderchests, "EC"] : 
+            split[1] === "Backpack" ? [itemNBTs.backpacks, "BP"] : undefined;
+        if (containerCache === undefined) return;
         
-        const i = parseInt(split[2][1]) - 1;
-        continaerCache[0][i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-        nameCache = [continaerCache[1], i];
+        const i = split[split[1] === "Backpack" ? split.length - 1 : 2][1] - 1;
+        containerCache[0][i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+        nameCache = [containerCache[1], i];
 
         saveCache.register();
         cacheItems.register();
