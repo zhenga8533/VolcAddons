@@ -3,6 +3,7 @@ import { romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
+import { DARK_GRAY, GOLD, WHITE, YELLOW } from "../../utils/constants";
 
 
 /**
@@ -144,12 +145,12 @@ const MAX_BESTIARY = {
 const bestiaryExample = `TEST`;
 const bestiaryOverlay = new Overlay("bestiaryCounter", data.BEL, "moveBe", bestiaryExample);
 
+// Dict of [start, now, next]
 const beCounter = {};
 let beTime = 0;
 
-register("step", () => {
+registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
-
     const tablist = TabList.getNames();
     let index = tablist.findIndex(name => name.startsWith("§r§6§lBestiary:§r")) + 1;
     if (index === 0) return;
@@ -166,11 +167,26 @@ register("step", () => {
         let next = unformatNumber(count[1]);
 
         if (beCounter.hasOwnProperty(name)) beCounter[name][1] = now;
-        else beCounter[name] = [now, now];
+        else beCounter[name] = [now, now, next];
     }
 
+    // Sort by now - start
+    const keys = Object.keys(beCounter).sort((a, b) => beCounter[b][1] - beCounter[b][0] - beCounter[a][1] + beCounter[a][0]);
+
     // Set overlay message
-    Object.keys(beCounter).forEach(name => {
-        
+    let message = `${GOLD}Bestiary:`;
+    keys.forEach(key => {
+        if (beCounter[key][0] === beCounter[key][1]) return;
+
+        let kills = beCounter[key][1] - beCounter[key][0];
+        let rate = (kills) / (beTime) * 3600;
+        let next = (beCounter[key][2] - beCounter[key][1]) / rate;
+        let max = (MAX_BESTIARY[key] - beCounter[key][1]) / rate;
+
+        message += `\n${GOLD + BOLD + key + DARK_GRAY}: ${WHITE + kills} (${rate.toFixed(2)}/hr)`;
+        message += `\n ${YELLOW}Next${DARK_GRAY}: ${WHITE + next.toFixed(2)} hrs`;
+        message += `\n ${YELLOW}Max${DARK_GRAY}: ${WHITE + max.toFixed(2)} hrs, `;
     });
-}).setFps(1);
+
+    bestiaryOverlay.setMessage(message);
+}).setFps(1), () => settings.bestiaryCounter);
