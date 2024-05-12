@@ -16,9 +16,9 @@ import { getPing, getTPS } from "../general/Performance";
  * Variable used to represent /pc cooldown and possible responses.
  */
 let onCD = false;
-const RESPONSES = JSON.parse(FileLib.read("./VolcAddons/assets", "8ball.json"));
+const RESPONSES = JSON.parse(FileLib.read("VolcAddons", "json/8ball.json"));
 const RPS = ["rock", "paper", "scissors"];
-const QUOTES = JSON.parse(FileLib.read("./VolcAddons/assets", "quotes.json"));
+const QUOTES = JSON.parse(FileLib.read("VolcAddons", "json/quotes.json"));
 const W = ["waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", "blush", "smile", "wave", "highfive", 
     "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"];
 const IMGUR_KEYS = [
