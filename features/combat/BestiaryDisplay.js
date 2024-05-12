@@ -1,6 +1,8 @@
 import settings from "../../utils/settings";
 import { romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
+import { Overlay } from "../../utils/overlay";
+import { data } from "../../utils/data";
 
 
 /**
@@ -139,6 +141,9 @@ const MAX_BESTIARY = {
     "Kuudra Knocker": 10000, "Kuudra Landmine": 10000, "Kuudra Slasher": 30, "Magma Follower": 30, "Wandering Blaze": 3000, "Wither Sentry": 75,     
 };
 
+const bestiaryExample = `TEST`;
+const bestiaryOverlay = new Overlay("bestiaryCounter", data.BEL, "moveBe", bestiaryExample);
+
 const beCounter = {};
 let beTime = 0;
 
@@ -159,5 +164,13 @@ register("step", () => {
         let count = levelData.split('/');
         let now = unformatNumber(count[0]);
         let next = unformatNumber(count[1]);
+
+        if (beCounter.hasOwnProperty(name)) beCounter[name][1] = now;
+        else beCounter[name] = [now, now];
     }
+
+    // Set overlay message
+    Object.keys(beCounter).forEach(name => {
+        
+    });
 }).setFps(1);

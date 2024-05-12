@@ -108,7 +108,7 @@ register("step", () => {
     const chocoCalc = production * lastOpen + boostedCalc;
     const chocoTotal = chocoCalc + data.chocoTotal;
     const chocoAll = chocoCalc + data.chocoAll;
-    const prestigeTime = (data.chocoPrestige - chocoTotal - boostedCalc) / (timeLeft > 0 ? noTower : data.chocoProduction);
+    const prestigeTime = (data.chocoPrestige - chocoTotal) / (timeLeft > 0 ? noTower : data.chocoProduction);
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:

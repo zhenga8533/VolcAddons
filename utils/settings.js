@@ -611,7 +611,7 @@ Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}
         category: "Combat",
         subcategory: "Bestiary"
     })
-    killCounter = false;
+    bestiaryCounter = false;
 
     @SwitchProperty({
         name: "Bestiary GUI",
