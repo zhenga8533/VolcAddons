@@ -11,14 +11,15 @@ import { Overlay } from "../../utils/overlay";
  */
 let nameCache = ["T1", 0];
 let itemsCache = [];
+
 const cacheItems = register("guiMouseClick", () => {
-    Client.scheduleTask(1, () => itemsCache = Player.getContainer().getItems().slice(0, 54));
+    Client.scheduleTask(4, () => itemsCache = Player.getContainer().getItems().slice(0, 54));
 }).unregister();
 
 const saveCache = register("guiClosed", () => {
     if (nameCache[0] === "EC")
         itemNBTs.enderchests[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-    else if (nameCache[1] === "BP")
+    else if (nameCache[0] === "BP")
         itemNBTs.backpacks[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
 
     saveCache.unregister();

@@ -152,7 +152,7 @@ export function parseTexture(nbt) {
 
     const randomString = Math.random().toString(36).substring(2, 12);
     skullOwner.setString("Id", decoded.profileId ?? randomString);
-    skullOwner.setString("Name", decoded.profileName ?? randomString);
+    skullOwner.setString("Name", (decoded.profileName + decoded.timestamp) || randomString);
 
     textureString.setString("Value", nbt);
     textures.appendTag(textureString);
