@@ -13,7 +13,11 @@ let nameCache = ["T1", 0];
 let itemsCache = [];
 
 const cacheItems = register("guiMouseClick", () => {
-    Client.scheduleTask(4, () => itemsCache = Player.getContainer().getItems().slice(0, 54));
+    Client.scheduleTask(4, () => {
+        const items = Player.getContainer().getItems();
+        if (items.length < 54) return;
+        itemsCache = items.slice(0, 54)
+    });
 }).unregister();
 
 const saveCache = register("guiClosed", () => {
