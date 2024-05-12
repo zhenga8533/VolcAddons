@@ -16,7 +16,6 @@ const cacheItems = register("guiMouseClick", () => {
 }).unregister();
 
 const saveCache = register("guiClosed", () => {
-    ChatLib.chat(nameCache[0]);
     if (nameCache[0] === "EC")
         itemNBTs.enderchests[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
     else if (nameCache[1] === "BP")

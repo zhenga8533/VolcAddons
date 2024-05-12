@@ -150,8 +150,9 @@ export function parseTexture(nbt) {
     const textures = new NBTTagList(new net.minecraft.nbt.NBTTagList());
     const textureString = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
 
-    skullOwner.setString("Id", decoded.profileId);
-    skullOwner.setString("Name", decoded.profileName);
+    const randomString = Math.random().toString(36).substring(2, 12);
+    skullOwner.setString("Id", decoded.profileId ?? randomString);
+    skullOwner.setString("Name", decoded.profileName ?? randomString);
 
     textureString.setString("Value", nbt);
     textures.appendTag(textureString);
