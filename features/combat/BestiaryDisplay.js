@@ -72,3 +72,8 @@ registerWhen(register("guiClosed", () => {
     bestiaryData[0] = [];
     bestiaryData[1] = [];
 }), () => settings.bestiaryGUI);
+
+
+/**
+ * Bestiary widget tracker.
+ */

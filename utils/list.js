@@ -44,7 +44,7 @@ export function printList(list, listName, page) {
             message.addTextComponent(new TextComponent(`${YELLOW + list[i]}`)
                 .setClickAction("run_command")
                 .setClickValue(`/va ${listName} remove ${list[i]}`)
-                .setHoverValue(`${YELLOW}Click to remove ${YELLOW + list[i] + YELLOW} from list.`)
+                .setHoverValue(`${YELLOW}Click to remove ${AQUA + list[i] + YELLOW} from list.`)
             );
         }
     } else {
