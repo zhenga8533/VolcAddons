@@ -31,7 +31,7 @@ registerWhen(register("step", () => {
         data.pet = tabNames[petIndex + 1].substring(3);
 
         const petXP = tabNames[petIndex + 2].split(' ')[1];
-        if (petXP != "§r§b§lMAX") data.pet += `\n   ${petXP} XP`;
+        if (petXP != "§r§b§lMAX" && !data.pet.startsWith("§r§7No pet")) data.pet += `\n   ${petXP} XP`;
     } else petWidget = false;
 }).setFps(1), () => settings.statsDisplay && toggles.petDisplay);
 
@@ -114,7 +114,7 @@ registerWhen(register("tick", () => {
 
     // Pet
     if (toggles.petDisplay) {
-        let pet = data.pet.length > 36 ? data.pet.split(' ').slice(2).join(' ') : data.pet;
+        let pet = data.pet.length > 36 && !data.pet.startsWith("§r§7No pet") ? data.pet.split(' ').slice(2).join(' ') : data.pet;
         statsMessage += `${DARK_AQUA + BOLD}Pet: ${pet}\n`;
     }
 

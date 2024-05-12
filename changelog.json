@@ -2,10 +2,8 @@
     "- Added calendar real time",
     "- Added inventory buttons (`/va buttons`)",
     "- Added bestiary tracker",
-    "- TBD: Added equipment inv display",
     "- Added texture schemes to container preview",
     "- Added Skyblock XP alert",
-    "- TBD: Reworked autocomplete",
     "- Changed slot binding commands (`/va binds`)",
     "- Changed some rendering to be more optimized",
     "- Changed autocorrect to be more reliable",
@@ -16,6 +14,8 @@
     "- Fixed tooltip flicker",
     "- Fixed `/pesttp` parsing",
     "- Fixed skulls rendering without skin",
+    "- Fixed no pet display",
     "- Removed `/va test`",
-    "- Removed `/va be`"
+    "- Removed `/va be`",
+    "- Removed autocomplete"
 ]
