@@ -36,6 +36,7 @@ const DEFAULT_GUI = {
     "YL": [770, 165, 1.2, false, false, true], // SkyBlock Stats Location
     "ZL": [780, 330, 1.2, false, false, true], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false, true], // Bingo Card Location
+    "BEL": [10, 180, 1.2, false, false, true], // Bestiary Counter Location --
     "CDL": [190, 115, 1.2, false, false, true], // Commission Display Location
     "CEL": [375, 275, 3, false, false, true], // Crate edit location
     "CFL": [180, 130, 1.2, false, false, true], // Chocolate factory location
