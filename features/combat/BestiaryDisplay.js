@@ -104,7 +104,10 @@ register("guiOpened", () => {
     });
 });
 
-const bestiaryExample = `TEST`;
+const bestiaryExample = 
+`§6§lWolf: §f3 (10800.00/hr)
+ §eNext: §715m39s
+ §eMax: §73h24m32s`;
 const bestiaryOverlay = new Overlay("bestiaryCounter", data.BEL, "moveBe", bestiaryExample);
 
 // Dict of [start, now, next]
