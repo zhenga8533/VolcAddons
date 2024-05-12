@@ -100,8 +100,8 @@ register("step", () => {
     const production = timeLeft > 0 || towerData.activeTime <= 0 ? data.chocoProduction : noTower;
 
     const charges = parseInt(towerData.charges) + Math.max(0, Math.ceil((lastOpen - towerData.chargeTime) / 28_800));
-    const towerStr = timeLeft > 0 ? formatTime(timeLeft) :
-        charges > 0 ? `${Math.min(3, charges)}/3` : formatTime(Math.abs(lastOpen - towerData.chargeTime));
+    const towerStr = timeLeft > 0 ? formatTime(timeLeft) + GREEN + " ✔" :
+        charges > 0 ? `${Math.min(3, charges)}/3` : formatTime(Math.abs(lastOpen - towerData.chargeTime)) + RED + " ✘";
 
     // Chocolate calc
     const boostedCalc = timeLeft > 0 ? (data.chocoProduction - noTower) * timeLeft : 0;
