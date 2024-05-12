@@ -545,16 +545,6 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     coinTracker = 0;
 
-    @SliderProperty({
-        name: "Economy Refresh",
-        description: `Set minutes until Auction/Bazaar data gets updated.\nRuns ${AQUA}/updateEconomy${GRAY}.`,
-        category: "Economy",
-        subcategory: "Economy",
-        min: 0,
-        max: 120
-    })
-    economyRefresh = 30;
-
     // --- Item Cost ---
     @SliderProperty({
         name: "Container Value",
