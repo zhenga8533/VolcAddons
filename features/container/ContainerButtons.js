@@ -167,7 +167,7 @@ export class Button {
         const boxColor = this.#hovered ? BOX_HIGHLIGHT : COLOR_SCHEMES[settings.containerButtons - 1][0];
         const borderColor = this.#hovered ? BORDER_HIGHLIGHT : COLOR_SCHEMES[settings.containerButtons - 1][1];
         drawBox(x, y, 100, 16, 16, boxColor, borderColor);
-        this.#item.draw(x, y, 1, 1);
+        this.#item.draw(x, y, 1, 100);
     }
 
     /**
