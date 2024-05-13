@@ -144,8 +144,8 @@ const renders = {
 Object.keys(renders).forEach(key => {
     register(key, () => {
         renders[key].forEach(render => {
-            if (!render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
-                if (!settings[render.setting] || !(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;
+            if (settings[render.setting] && !render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
+                if (!(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;
 
                 if (render.loc[5] && render.width !== 0) {
                     Renderer.drawRect(
