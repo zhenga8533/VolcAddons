@@ -55,7 +55,7 @@ const moving = register("renderOverlay", () => {
             x - 3 * scale, y - 3 * scale,
             o.ewidth + 5 * scale, o.eheight + 5 * scale
         );
-        renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 1);
+        renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 0);
     });
 
     // GUI Instructions
@@ -154,7 +154,7 @@ Object.keys(renders).forEach(key => {
                         render.width + 5 * render.loc[2], render.height + 5 * render.loc[2]
                     );
                 }
-                renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4], 1);
+                renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4], 0);
             }
         });
     });
@@ -219,7 +219,7 @@ export class Overlay {
                     this.ewidth + 5 * this.loc[2], this.eheight + 5 * this.loc[2]
                 );
             }
-            renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4], 1);
+            renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4], 0);
 
             // GUI Instructions
             renderScale((width - INSTRUCT_WIDTH) / 2, height / 2, GUI_INSTRUCT, 1, false, false, 500);

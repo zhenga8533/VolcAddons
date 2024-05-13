@@ -56,7 +56,7 @@ export let data = new PogObject("VolcAddons", {
     "newUser": true,
     "version": "2.3.1",
     "wordbanks": [],
-    "comands": {},
+    "commands": {},
     "lastID" : undefined,
     "world": "none",
     "tier": 0,

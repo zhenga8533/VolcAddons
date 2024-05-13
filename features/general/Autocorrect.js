@@ -76,6 +76,8 @@ function autocorrect(inputWord, dictionary) {
 function correct(command, event) {
     // Remove command from cache
     data.commands[command] -= 2;
+    if (data.commands[command] <= 0) delete data.commands[command];
+
     command.split(' ').forEach((word, index) => {
         const wordbank = data.wordbanks[index];
         wordbank[word] -= 2;
@@ -205,7 +207,7 @@ register("messageSent", (message) => {
     // Add to command count
     if (data.commands.hasOwnProperty(lastMessage)) data.commands[lastMessage]++;
     else data.commands[lastMessage] = 1;
-});
+}).setPriority(Priority.HIGHEST);
 
 /**
  * Reset commands.
