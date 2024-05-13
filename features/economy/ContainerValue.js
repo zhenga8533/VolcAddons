@@ -1,5 +1,5 @@
 import settings from "../../utils/settings";
-import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, DARK_AQUA } from "../../utils/constants";
+import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, DARK_AQUA, YELLOW } from "../../utils/constants";
 import { formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
@@ -43,7 +43,7 @@ function setMessage(itemValues, totalValue) {
     const sortedItems = Object.entries(itemValues).sort((a, b) => b[1][1] - a[1][1]);
             
     // Display the sorted items and total value
-    let overlayMessage = `${DARK_AQUA}Total Value: ${AQUA + formatNumber(totalValue)}\n`;
+    let overlayMessage = `${GOLD}Total Value: ${YELLOW + formatNumber(totalValue)}\n`;
     let displayedItems = 0;
 
     // Destructuring here for cleaner loop

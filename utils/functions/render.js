@@ -14,12 +14,11 @@ export function drawBox(x, y, z, width, height, rectColor, borderColor) {
     Renderer.drawRect(rectColor, 0, 0, width, height);
 
     // Draw Outline
+    Renderer.retainTransforms(true);
     Renderer.translate(x, y, z + 1);
     Renderer.drawLine(borderColor, -1, -1, width, -1, 1);
-    Renderer.translate(x, y, z + 1);
     Renderer.drawLine(borderColor, -1, -1, -1, height, 1);
-    Renderer.translate(x, y, z + 1);
     Renderer.drawLine(borderColor, -1, height, width, height, 1);
-    Renderer.translate(x, y, z + 1);
     Renderer.drawLine(borderColor, width, -1, width, height, 1);
+    Renderer.retainTransforms(false);
 }

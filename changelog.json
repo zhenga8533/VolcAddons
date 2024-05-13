@@ -3,4 +3,5 @@
     "- Changed worker to calc Jackrabbit/Tower",
     "- Changed overlay to show border",
     "- Changed slot binding functionality",
+    "- Changed autocomplete to be more responsive"
 ]

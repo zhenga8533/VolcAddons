@@ -202,7 +202,7 @@ export function getItemValue(item, save=true) {
                 value += skinValue;
                 if (skinValue !== 0 && save) valueMessage += `- ${AQUA}Skin: ${GREEN}+${formatNumber(skinValue)}\n`;
                 if (save) {
-                    valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN + formatNumber(value)}`;
+                    valueMessage += `\n${GOLD}Total Value: ${YELLOW + formatNumber(value)}`;
                     savedValues[itemUUID] = [value, valueMessage];
                 }
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
@@ -428,7 +428,7 @@ export function getItemValue(item, save=true) {
     value += attributesValue;
 
     // Total Value
-    if (save) valueMessage += `\n${DARK_AQUA}Total Value: ${GREEN + formatNumber(value)}`;
+    if (save) valueMessage += `\n${GOLD}Total Value: ${YELLOW + formatNumber(value)}`;
   
     if (save) savedValues[itemUUID] = [value, valueMessage];
     return value;
