@@ -1,7 +1,7 @@
 import settings from "../../utils/settings";
-import { COLOR_TABLE} from "../../utils/constants";
+import { COLOR_TABLE, DARK_GRAY} from "../../utils/constants";
 import { data, itemNBTs } from "../../utils/data";
-import { compressNBT, decompressNBT } from "../../utils/functions/misc";
+import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 
@@ -11,14 +11,19 @@ import { Overlay } from "../../utils/overlay";
  */
 let nameCache = ["T1", 0];
 let itemsCache = [];
+
 const cacheItems = register("guiMouseClick", () => {
-    Client.scheduleTask(1, () => itemsCache = Player.getContainer().getItems().slice(0, 54));
+    Client.scheduleTask(4, () => {
+        const items = Player.getContainer().getItems();
+        if (items.length < 54) return;
+        itemsCache = items.slice(0, 54)
+    });
 }).unregister();
 
 const saveCache = register("guiClosed", () => {
     if (nameCache[0] === "EC")
         itemNBTs.enderchests[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-    else if (nameCache[1] === "BP")
+    else if (nameCache[0] === "BP")
         itemNBTs.backpacks[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
 
     saveCache.unregister();
@@ -32,21 +37,16 @@ register("guiOpened", () => {
         const split = name.split(' ');
         itemsCache = Player.getContainer().getItems().slice(0, 54);
 
-        if (name.startsWith("Ender Chest")) {
-            const i = parseInt(split[2][1]) - 1;
-            itemNBTs.enderchests[i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-            nameCache = ["EC", i];
+        const containerCache = name.startsWith("Ender Chest") ? [itemNBTs.enderchests, "EC"] : 
+            split[1] === "Backpack" ? [itemNBTs.backpacks, "BP"] : undefined;
+        if (containerCache === undefined) return;
+        
+        const i = split[split[1] === "Backpack" ? split.length - 1 : 2][1] - 1;
+        containerCache[0][i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+        nameCache = [containerCache[1], i];
 
-            saveCache.register();
-            cacheItems.register();
-        } else if (split[1].startsWith("Backpack")) {
-            const i = parseInt(split[split.length - 1].replace(/\D/g, "")) - 1;
-            itemNBTs.backpacks[i] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-            nameCache = ["BP", i];
-
-            saveCache.register();
-            cacheItems.register();
-        }
+        saveCache.register();
+        cacheItems.register();
     });
 });
 
@@ -55,24 +55,27 @@ register("guiOpened", () => {
  */
 let lastPreview = "0";
 let previewItems = [];
-const CONTAINER_PNG = new Image("container.png");
+const CONTAINER_PNGS = [new Image("container.png"), new Image("container-fs.png")];
 new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "guiRender");
 
 const preview = register("guiRender", () => {
-    CONTAINER_PNG.draw(data.CPL[0], data.CPL[1]);
-    Renderer.drawString(lastPreview, data.CPL[0] + 5, data.CPL[1] + 5, true);
+    CONTAINER_PNGS[settings.containerPreview - 1].draw(data.CPL[0], data.CPL[1]);
+    Renderer.drawString(DARK_GRAY + lastPreview.removeFormatting(), data.CPL[0] + 7, data.CPL[1] + 6);
 
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
-            let item = previewItems[i * 9 + j];
+            let index = i * 9 + j;
+            let item = previewItems[index];
             if (item === null) continue;
 
             let x = data.CPL[0] + 7.5 + j * 18;
             let y = data.CPL[1] + 17.5 + i * 18;
             
             // Draw rarity box
-            let color = COLOR_TABLE[item.getName().substring(0, 2)];
-            if (color !== undefined) Renderer.drawRect(Renderer.color(...color, 128), x, y, 17, 17);
+            if (index >= 9) {
+                let color = COLOR_TABLE[item.getName().substring(0, 2)];
+                if (color !== undefined) Renderer.drawRect(Renderer.color(...color, 200), x, y, 17, 17);
+            }
 
             // Draw item and size
             item.draw(x, y, 1);
@@ -102,8 +105,17 @@ registerWhen(register("itemTooltip", (_, item) => {
 
         lastPreview = name;
         previewItems = itemNBTs[name.startsWith("§a") ? "enderchests" : "backpacks"][i].map(nbt => {
-            return nbt === null ? null :
-                new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT))
+            if (nbt === null) return null;
+            const item = new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT));
+
+            if (item.getUnlocalizedName() === "item.skull") {  // Fix skull textures not rendering
+                const skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
+                const texture = skullNBT.getCompoundTag("Properties").getTagList("textures", 0).func_150305_b(0).func_74779_i("Value");
+                const skull = parseTexture(texture);
+                item.getNBT().getCompoundTag("tag").set("SkullOwner", skull);
+            }
+
+            return item;
         });
 
         preview.register();
@@ -114,4 +126,4 @@ registerWhen(register("itemTooltip", (_, item) => {
         preview.unregister();
         clear.unregister();
     }
-}), () => settings.containerPreview);
+}), () => settings.containerPreview !== 0);

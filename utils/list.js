@@ -9,7 +9,62 @@ import { setRegisters } from "./register";
 import { data } from "./data";
 
 
-let lines = [5858, 5859];
+export function printList(list, listName, page) {
+    ChatLib.clearChat(5858);
+    const isArray = Array.isArray(list);
+    const length = isArray ? list.length : Object.keys(list).length;
+    const total = Math.ceil(length / 12) || 1;
+    page = MathLib.clamp(page, 1, total);
+
+    // Print out header
+    const message = new Message("\n&c&m-----------------------------------------------------&r").setChatLineId(5858);
+    const header = ChatLib.getCenteredText(`${listName} ${page > 1 ? "<< " : ""}(Page ${page} of ${total})${page < total ? " >>" : ""}`);
+    const whitespace = header.match(/^\s+/)[0];
+    
+    const lArrow = new TextComponent("&r&e&l<<&r&9")
+        .setClickAction("run_command")
+        .setClickValue(`/va ${listName} list ${page - 1}`)
+        .setHoverValue(`${YELLOW}Click to view page ${page - 1}.`);
+    const rArrow = new TextComponent("&r&e&l>>")
+        .setClickAction("run_command")
+        .setClickValue(`/va ${listName} list ${page + 1}`)
+        .setHoverValue(`${YELLOW}Click to view page ${page + 1}.`);
+    message.addTextComponent(whitespace);
+    
+    if (page > 1) message.addTextComponent(lArrow);
+    message.addTextComponent(` §6${convertToTitleCase(listName)} §8(§fPage §7${page} §fof §7${total}§8) `);
+    if (page < total) message.addTextComponent(rArrow);
+
+    // Loop through variables
+    const pageIndex = (page - 1) * 12;
+    if (length === 0) message.addTextComponent(`\n` + ChatLib.getCenteredText(YELLOW + "  404, This list is empty!"));
+    else if (isArray) {
+        for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
+            message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
+            message.addTextComponent(new TextComponent(`${YELLOW + list[i]}`)
+                .setClickAction("run_command")
+                .setClickValue(`/va ${listName} remove ${list[i]}`)
+                .setHoverValue(`${YELLOW}Click to remove ${AQUA + list[i] + YELLOW} from list.`)
+            );
+        }
+    } else {
+        const keys = Object.keys(list);
+        for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
+            let key = keys[i];
+            new Message(` ${DARK_GRAY}⁍ `, new TextComponent(`${YELLOW + key}`)
+                .setClickAction("run_command")
+                .setClickValue(`/va ${listName} remove ${key}`)
+                .setHoverValue(`${YELLOW}Click to remove ${YELLOW + key + YELLOW} from list.`),
+                `${GRAY} => ${YELLOW + list[key]}`
+            ).setChatLineId(++id).chat();
+            lines.push(id);
+        }
+    }
+
+    // Footer
+    message.addTextComponent("&c&m-----------------------------------------------------&r");
+    message.chat();
+}
 
 /**
  * Updates a list based on the provided arguments.
@@ -27,8 +82,7 @@ export function updateList(args, listName) {
 
     // Object pairs
     const held = Player?.getHeldItem()?.getItemNBT()?.getCompoundTag("tag")?.getCompoundTag("ExtraAttributes")?.getString("id");
-    const value = listName === "valuelist" ? unformatNumber(args[3]) : 
-        listName === "cdlist" ? args[2] : args.slice(3).join(' ');
+    const value = listName === "valuelist" || listName === "cdlist" ? unformatNumber(args[2]) : args.slice(3).join(' ');
     const key = listName === "colorlist" ? convertToPascalCase(args[2]) :
         (listName === "cdlist" || listName === "valuelist") && held !== undefined ? held : args[2];
 
@@ -40,7 +94,7 @@ export function updateList(args, listName) {
             } else if (!isArray && !(key in list)) {
                 list[key] = value;
                 ChatLib.chat(`${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${WHITE + key + GREEN}]!`);
-            } else ChatLib.chat(`${LOGO + RED}[${WHITE + (isArray ? item : key + RED)}] is already in the ${listName}!`);
+            } else ChatLib.chat(`${LOGO + RED}[${WHITE + (isArray ? item : key) + RED}] is already in the ${listName}!`);
             break;
         case "remove": // REMOVE FROM LIST
             if (isArray && list.indexOf(item) > -1) {
@@ -58,58 +112,7 @@ export function updateList(args, listName) {
             break;
         case "view": // DISPLAY LIST
         case "list":
-            ChatLib.clearChat(lines);
-            lines = [5858, 5859];
-            let id = 5860;
-            const page = parseInt(args[2] ?? 1);
-            const length = isArray ? list.length : Object.keys(list).length;
-            const total = Math.ceil(length / 12) || 1;
-
-            // Print out header
-            new Message("\n&c&m-----------------------------------------------------").setChatLineId(5858).chat();
-            const lArrow = new TextComponent("&r&e&l<<&r&9")
-                .setClickAction("run_command")
-                .setClickValue(`/va ${listName} list ${page - 1}`)
-                .setHoverValue(`${YELLOW}Click to view page ${page - 1}.`);
-            const rArrow = new TextComponent("&r&e&l>>")
-                .setClickAction("run_command")
-                .setClickValue(`/va ${listName} list ${page + 1}`)
-                .setHoverValue(`${YELLOW}Click to view page ${page + 1}.`);
-            const header = new Message("&r&9                     ").setChatLineId(5859);
-
-            header.addTextComponent(page > 1 ? lArrow : "   ");
-            header.addTextComponent(` §6${convertToTitleCase(listName)} §8(§fPage §7${page} §fof §7${total}§8) `);
-            if (page < total) header.addTextComponent(rArrow);
-            header.addTextComponent("\n").chat();
-
-            // Loop through variables
-            const pageIndex = (page - 1) * 12;
-            if (isArray) {
-                for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
-                    new Message(` ${DARK_GRAY}⁍ `, new TextComponent(`${AQUA + list[i]}`)
-                        .setClickAction("run_command")
-                        .setClickValue(`/va ${listName} remove ${list[i]}`)
-                        .setHoverValue(`${YELLOW}Click to remove ${AQUA + list[i] + YELLOW} from list.`)
-                    ).setChatLineId(++id).chat();
-                    lines.push(id);
-                }
-            } else {
-                const keys = Object.keys(list);
-                for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
-                    let key = keys[i];
-                    new Message(` ${DARK_GRAY}⁍ `, new TextComponent(`${AQUA + key}`)
-                        .setClickAction("run_command")
-                        .setClickValue(`/va ${listName} remove ${key}`)
-                        .setHoverValue(`${YELLOW}Click to remove ${AQUA + key + YELLOW} from list.`),
-                        `${GRAY} => ${YELLOW + list[key]}`
-                    ).setChatLineId(++id).chat();
-                    lines.push(id);
-                }
-            }
-
-            // Footer
-            new Message("&c&m-----------------------------------------------------&r").setChatLineId(++id).chat();
-            lines.push(id);
+            printList(list, listName, parseInt(args[2] ?? 1));
             return;
         case "reset": // RESET LIST TO DEFAULT
             if (listName === "dianalist") data.dianalist = ["hub", "da", "castle", "museum", "wizard"];

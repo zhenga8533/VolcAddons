@@ -63,7 +63,7 @@ registerWhen(register("spawnParticle", (particle, type) => {
             if (closest[1] < 3) burrows[burrows.indexOf(closest[0])][0] = `§cMob`;
             break;
     }
-}), () => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
 
 /**
  * Events to remove burrows from list
@@ -72,7 +72,7 @@ registerWhen(register("chat", () => {
     const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows);
     if (closest !== undefined) Client.scheduleTask(2, () => burrows.splice(burrows.indexOf(closest[0]), 1));
 }).setCriteria("You ${completed} Griffin ${burrow}! (${x}/4)"),
-() => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
 
 register("worldUnload", () => {
     burrows.length = 0;
@@ -81,4 +81,4 @@ register("worldUnload", () => {
 registerWhen(register("chat", () => {
     burrows.length = 0;
 }).setCriteria(" ☠ You ${died}."),
-() => location.getWorld() === "Hub" && getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);

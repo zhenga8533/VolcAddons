@@ -12,10 +12,10 @@ import { data } from "../../utils/data";
  * Stats display overlay variables
  */
 const statsExample = 
-`${DARK_AQUA + BOLD}Pet: ${GOLD}-..-
-${DARK_AQUA + BOLD}Legion: ${RED}0 ${DARK_GRAY}(0%)
-${DARK_AQUA + BOLD}SF: ${GREEN}/ -.. ${AQUA}⸎
-${DARK_AQUA + BOLD}Daily PT: ${GREEN}/ -..`;
+`${GRAY}[${GOLD}Pet${GRAY}] ${GREEN}-..-
+${GRAY}[${GOLD}Legion${GRAY}] ${RED}0 ${DARK_GRAY}(0%)
+${GRAY}[${GOLD}SF${GRAY}] ${GREEN}/ -.. ${AQUA}⸎
+${GRAY}[${GOLD}Daily PT${GRAY}] ${GREEN}/ -..`;
 const statsOverlay = new Overlay("statsDisplay", data.YL, "moveStats", statsExample);
 
 /**
@@ -31,7 +31,7 @@ registerWhen(register("step", () => {
         data.pet = tabNames[petIndex + 1].substring(3);
 
         const petXP = tabNames[petIndex + 2].split(' ')[1];
-        if (petXP != "§r§b§lMAX") data.pet += `\n   ${petXP} XP`;
+        if (petXP != "§r§b§lMAX" && !data.pet.startsWith("§r§7No pet")) data.pet += `\n   ${petXP} XP`;
     } else petWidget = false;
 }).setFps(1), () => settings.statsDisplay && toggles.petDisplay);
 
@@ -114,8 +114,8 @@ registerWhen(register("tick", () => {
 
     // Pet
     if (toggles.petDisplay) {
-        let pet = data.pet.length > 36 ? data.pet.split(' ').slice(2).join(' ') : data.pet;
-        statsMessage += `${DARK_AQUA + BOLD}Pet: ${pet}\n`;
+        let pet = data.pet.length > 36 && !data.pet.startsWith("§r§7No pet") ? data.pet.split(' ').slice(2).join(' ') : data.pet;
+        statsMessage += `${GRAY}[${GOLD}Pet${GRAY}] ${pet}\n`;
     }
 
     // Legion
@@ -128,7 +128,7 @@ registerWhen(register("tick", () => {
             legionCount > 8 ? YELLOW :
             legionCount > 4 ? GOLD :
             legionColor > 0 ? RED : DARK_RED;
-        statsMessage += `${DARK_AQUA + BOLD}Legion: ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)\n`;
+        statsMessage += `${GRAY}[${GOLD}Legion${GRAY}] ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)\n`;
     }
 
     // Soulflow
@@ -138,7 +138,7 @@ registerWhen(register("tick", () => {
             soulflow > 50_000 ? YELLOW :
             soulflow > 25_000 ? GOLD : 
             soulflow > 10_000 ? RED : DARK_RED;
-        statsMessage += `${DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎\n`;
+        statsMessage += `${GRAY}[${GOLD}SF${GRAY}] ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎\n`;
     }
 
     // Playtime
@@ -148,7 +148,8 @@ registerWhen(register("tick", () => {
             data.playtime < 10_800 ? YELLOW :
             data.playtime < 18_000 ? GOLD : 
             data.playtime < 28_800 ? RED : DARK_RED;
-        statsMessage += `${DARK_AQUA + BOLD}Daily PT: ${ptColor + formatTime(data.playtime)}`;
+        const formattedPlaytime = formatTime(data.playtime).replace(/\d+/g, (match) => `${ptColor}${match}${DARK_GRAY}`);
+        statsMessage += `${GRAY}[${GOLD}Daily PT${GRAY}] ${formattedPlaytime}`;
     }
 
     statsOverlay.setMessage(statsMessage);
@@ -171,7 +172,7 @@ export function getStat(stat) {
                 soulflow > 50_000 ? YELLOW :
                 soulflow > 25_000 ? GOLD : 
                 soulflow > 10_000 ? RED : DARK_RED;
-            
+                
             ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`);
             break;
         case "playtime":

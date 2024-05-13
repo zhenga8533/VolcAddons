@@ -8,7 +8,7 @@ import { data } from "../../utils/data";
  * Key press to warp player to closest burrow.
  */
 const wardKey = new KeyBind("Wardrobe Set", data.wardKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.wardKey = wardKey.getKeyCode() });
+register("gameUnload", () => { data.wardKey = wardKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 
 /**
  * Sets wardrobe slot item stack size based on linked key.
@@ -23,7 +23,7 @@ function setKeySize() {
 
 let instructions = "";
 registerWhen(register("guiRender", () => {
-    if (!Player.getContainer().getName().startsWith("Wardrobe")) return;
+    if (!Player.getContainer()?.getName()?.startsWith("Wardrobe")) return;
     Renderer.drawString(instructions, (Renderer.screen.getWidth() - Renderer.getStringWidth(instructions)) / 2 , 80, true);
     setKeySize();
 }), () => settings.wardrobeBinding);
@@ -90,7 +90,7 @@ registerWhen(register("guiKey", (_, code, gui, event) => {
         return;
     }
 
-    if (!Player.getContainer().getName().startsWith("Wardrobe")) return;
+    if (!Player.getContainer()?.getName()?.startsWith("Wardrobe")) return;
 
     if (data.wardBinds.hasOwnProperty(code)) {
         cancel(event);

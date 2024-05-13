@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
 import toggles from "./toggles";
 import {
     @TextProperty,
@@ -27,16 +27,18 @@ class Settings {
         // General Category
         this.setCategoryDescription("General",
         `${HEADER}
-${ITALIC}Related Commands: /va <help, settings, gui, clear, coords, waypoint, fairy, whitelist, blacklist, blocklist>
+${ITALIC}Related Commands: /va <clear, coords, fairy, gui, help, lists, settings, waypoint>
 ${DARK_RED + BOLD}CAUTION: Some features are technically chat macros, so use at your own risk [UAYOR]!`);
 
         // Container Category
-        this.setCategoryDescription("Container", HEADER);
+        this.setCategoryDescription("Container", 
+        `${HEADER}
+${ITALIC}Related Commands: /va <binds, buttons>`);
 
         // Party Category
         this.setCategoryDescription("Party",
         `${HEADER}
-${ITALIC}Related Commands: /va <wl, bl, toggles>`);
+${ITALIC}Related Commands: /va <wl, bl>`);
 
         // Economy Category
         this.setCategoryDescription("Economy",
@@ -44,9 +46,7 @@ ${ITALIC}Related Commands: /va <wl, bl, toggles>`);
 ${ITALIC}Related Commands: /va <attribute, calc, nw>`);
 
         // Combat Category
-        this.setCategoryDescription("Combat",
-        `${HEADER}
-${ITALIC}Related Commands: /va be`);
+        this.setCategoryDescription("Combat", HEADER);
     
         // Mining Category
         this.setCategoryDescription("Mining", HEADER);
@@ -64,7 +64,7 @@ ${ITALIC}Related Commands: /va warplist`);
         // Crimson Isles Category
         this.setCategoryDescription("Crimson Isles",
         `${HEADER}
-${ITALIC}Related Commands: /va <apex, attribute, calc>`);
+${ITALIC}Related Commands: /va <attribute, calc>`);
 
         // Dungeon Category
         this.setCategoryDescription("Dungeon", HEADER);
@@ -74,16 +74,12 @@ ${ITALIC}Related Commands: /va <apex, attribute, calc>`);
         `${HEADER}
 ${ITALIC}Related Commands: /va <attribute, splits>, /kv`);
 
-        // Garden Category
-        this.setCategoryDescription("Garden",
-        `${HEADER}`);
-
         // Rift Category
         this.setCategoryDescription("Rift",
         `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
-        // Etc
+        // Dependencies
         this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
     }
     
@@ -162,6 +158,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         max: 10
     })
     skillTracker = 0;
+    
+    @SwitchProperty({
+        name: "SkyBlock XP Alert",
+        description: `${DARK_RED}NEW! ${GRAY}Displays a chat message and title when player gains SkyBlock XP in actionBar.`,
+        category: "General",
+        subcategory: "General"
+    })
+    levelAlert = true;
 
     @SwitchProperty({
         name: "Text Shadow Toggle",
@@ -308,24 +312,20 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
 
     // --- Yapping ---
     @SwitchProperty({
-        name: "Autocomplete Commands",
-        description: `Attempts to generate predications of incomplete commands when 
-user presses ${DARK_AQUA}TAB${GRAY}. It will take time to collect enough data to be accurate.`,
+        name: "Autocomplete Command",
+        description: "Attempts to autocomplete commands with the most used commands. Use arrow keys to navigate through suggestions and tab to select suggestion.",
         category: "General",
         subcategory: "Yapping"
     })
     autocomplete = false;
 
-    @SliderProperty({
-        name: "Autocorrect Commands",
-        description: `Attempts to correct invalid commands with valid ones. It will take
-time to collect enough data to be accurate. Set the # of transformations away a correction can be or as 0 to turn ${RED}OFF${GRAY}.`,
+    @SwitchProperty({
+        name: "Autocorrect Command",
+        description: "Attempts to correct invalid commands with valid ones. It will take time to collect enough data to be accurate.",
         category: "General",
-        subcategory: "Yapping",
-        max: 2,
-        min: 0
+        subcategory: "Yapping"
     })
-    autocorrect = 0;
+    autocorrect = false;
 
     @SwitchProperty({
         name: "Custom Emotes",
@@ -351,20 +351,29 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
     // --- Container ---
     @SwitchProperty({
         name: "Auction Highlight",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights all items in auction house that have been sold. Personal items are in ${GREEN}GREEN ${GRAY}and co-op items are in ${GOLD}GOLD${GRAY}.`,
+        description: `Highlights all items in auction house that have been sold. Personal items are in ${GREEN}GREEN ${GRAY}and co-op items are in ${GOLD}GOLD${GRAY}.`,
         category: "Container",
         subcategory: "Container"
     })
     auctionHighlight = false;
 
-    @SwitchProperty({
-        name: "Container Preview",
-        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
-${RED}Currently wipes skull textures sometimes so we shall call this BETA.`,
+    @SelectorProperty({
+        name: "Container Buttons ",
+        description: `${DARK_RED}NEW! ${GRAY}Display buttons that runs a command when pressed. Use ${AQUA}/va buttons ${GRAY}to view related commands.`,
         category: "Container",
-        subcategory: "Container"
+        subcategory: "Container",
+        options: ["OFF", "Default", "Transparent", "Semi-Transparent", "FurfSky"]
     })
-    containerPreview = false;
+    containerButtons = 0;
+
+    @SelectorProperty({
+        name: "Container Preview ",
+        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.`,
+        category: "Container",
+        subcategory: "Container",
+        options: ["OFF", "Default", "FurfSky"]
+    })
+    containerPreview = 0;
     
     @SwitchProperty({
         name: "Searchbar",
@@ -377,9 +386,7 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
     
     @SwitchProperty({
         name: "Slot Binding",
-        description: `Scuffed version of NEU's slot binding feature (you can swap pressing inventory slots but not hotbar slots :>).
-Reset binds with ${AQUA}/resetBinds${GRAY}, save binds with ${AQUA}/saveBinds [key]${GRAY}, list binds with ${AQUA}/listBinds, delete binds with ${AQUA}/deleteBinds, \
-${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
+        description: `Scuffed version of NEU's slot binding feature. Use ${AQUA}/va slot ${GRAY}to view related commands.`,
         category: "Container",
         subcategory: "Container",
     })
@@ -396,7 +403,7 @@ ${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
     // --- Inventory ---
     @SwitchProperty({
         name: "Attribute Abbreviation",
-        description: `${DARK_RED}NEW! ${GRAY}Renders abbreviation of attributes over any item that has them.`,
+        description: `Renders abbreviation of attributes over any item that has them.`,
         category: "Container",
         subcategory: "Items"
     })
@@ -412,7 +419,7 @@ ${GRAY}or load binds with ${AQUA}/loadBinds [key]${GRAY}.`,
     
     @SwitchProperty({
         name: "Equipment Display",
-        description: `Displays user's equipment pieces as icons on an overlay. Move GUI with ${AQUA}/moveEq${GRAY}.`,
+        description: `Displays user's equipment pieces as icons on an overlay and besides inventory. Move GUI with ${AQUA}/moveEq${GRAY}.`,
         category: "Container",
         subcategory: "Items"
     })
@@ -546,16 +553,6 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     })
     coinTracker = 0;
 
-    @SliderProperty({
-        name: "Economy Refresh",
-        description: `Set minutes until Auction/Bazaar data gets updated.\nRuns ${AQUA}/updateEconomy${GRAY}.`,
-        category: "Economy",
-        subcategory: "Economy",
-        min: 0,
-        max: 120
-    })
-    economyRefresh = 30;
-
     // --- Item Cost ---
     @SliderProperty({
         name: "Container Value",
@@ -606,12 +603,21 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
 
     // --- Bestiary ---
     @SwitchProperty({
+        name: "Bestiary Counter",
+        description: `${DARK_RED}NEW! ${GRAY}Tracks bestiary hourly progress using tablist widget.
+Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}.`,
+        category: "Combat",
+        subcategory: "Bestiary"
+    })
+    bestiaryCounter = false;
+
+    @SwitchProperty({
         name: "Bestiary GUI",
         description: "Shows bestiary level as stack size and highlight uncompleted bestiary milestones.",
         category: "Combat",
         subcategory: "Bestiary"
     })
-    bestiaryGUI = true;
+    bestiaryGUI = false;
 
     @ColorProperty({
         name: "Hitbox Color",
@@ -879,25 +885,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         subcategory: "Garden"
     })
     jacobReward = true;
-    
-    // --- Garden Webhook ---
-    @TextProperty({
-        name: "Discord Webhook",
-        description: "Input Discord Webhook link to send the Garden Statistics to.",
-        category: "Farming",
-        subcategory: "Garden Webhook",
-        protected: true
-    })
-    gardenWebhook = "";
-    @SliderProperty({
-        name: "Webhook Timer",
-        description: `Set minutes until data is sent to webhook or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "Farming",
-        subcategory: "Garden Webhook",
-        min: 0,
-        max: 120
-    })
-    webhookTimer = 0;
 
     // --- Pests ---
     @SwitchProperty({
@@ -945,16 +932,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     // ████████████████████████████████████████████████████ EVENT ████████████████████████████████████████████████████
 
-    // --- Bingo ---
-    @SelectorProperty({
-        name: "Bingo Card Overlay",
-        description: `Displays bingo card goals on screen as an overlay.\nMove GUI with ${AQUA}/moveBingo${GRAY}.`,
-        category: "Event",
-        subcategory: "Bingo",
-        options: ["OFF", "All", "Personal", "Community"]
-    })
-    bingoCard = 0;
-
     // --- Chocolate Factory ---
     @SwitchProperty({
         name: "Chocolate Overlay",
@@ -996,6 +973,32 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         subcategory: "Chocolate Factory"
     })
     workerHighlight = false;
+    
+    // --- Diana ---
+    @SwitchProperty({
+        name: "Diana Waypoint",
+        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
+Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
+        category: "Event",
+        subcategory: "Mythological Ritual"
+    })
+    dianaWaypoint = false;
+    @SwitchProperty({
+        name: "Diana Warp",
+        description: `Set keybind in controls to warp to the location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
+        category: "Event",
+        subcategory: "Mythological Ritual"
+    })
+    dianaWarp = false;
+
+    @SelectorProperty({
+        name: "Burrow Detection",
+        description: "Detects, alerts, and creates waypoints to nearby burrow particles.",
+        category: "Event",
+        subcategory: "Mythological Ritual",
+        options: ["OFF", "ON", "w/ Amogus Alert", "w/ Chat Alert", "w/ Both Alerts"]
+    })
+    burrowDetect = 0;
     
     // --- Great Spook ---
     @SwitchProperty({
@@ -1048,32 +1051,24 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
         options: ["OFF", "Overall View", "Session View"]
     })
     inqCounter = 0;
-    
-    // --- Diana ---
-    @SwitchProperty({
-        name: "Diana Waypoint",
-        description: `Estimates theoretical burrow location using particles and pitch of Ancestral Spade cast ${BLUE}(POV Soopy servers are down)${GRAY}.
-Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn music ${RED}OFF${GRAY}.`,
-        category: "Event",
-        subcategory: "Mythological Ritual"
-    })
-    dianaWaypoint = false;
-    @SwitchProperty({
-        name: "Diana Warp",
-        description: `Set keybind in controls to warp to the location closest to estimation.\nSet wanted warps with ${AQUA}/va warplist${GRAY}.`,
-        category: "Event",
-        subcategory: "Mythological Ritual"
-    })
-    dianaWarp = false;
 
+    // --- SkyBlock ---
     @SelectorProperty({
-        name: "Burrow Detection",
-        description: "Detects, alerts, and creates waypoints to nearby burrow particles.",
+        name: "Bingo Card Overlay",
+        description: `Displays bingo card goals on screen as an overlay.\nMove GUI with ${AQUA}/moveBingo${GRAY}.`,
         category: "Event",
-        subcategory: "Mythological Ritual",
-        options: ["OFF", "ON", "w/ Amogus Alert", "w/ Chat Alert", "w/ Both Alerts"]
+        subcategory: "SkyBlock",
+        options: ["OFF", "All", "Personal", "Community"]
     })
-    burrowDetect = 0;
+    bingoCard = 0;
+
+    @SwitchProperty({
+        name: "Calendar Time",
+        description: "Adds the local start and end time to the tooltip of calendar events.",
+        category: "Event",
+        subcategory: "SkyBlock"
+    })
+    calendarTime = false;
 
     // ████████████████████████████████████████████████████ CRIMSON ISLES ████████████████████████████████████████████████████
 

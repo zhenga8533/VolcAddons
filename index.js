@@ -2,11 +2,9 @@
 import "./utils/dev";
 import "./utils/player";
 import "./utils/waypoints";
-import location from "./utils/location";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
-import party from "./utils/party";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
 import { openGUI } from "./utils/overlay";
@@ -25,6 +23,7 @@ import "./features/general/ChunkBorders";
 import "./features/general/Cooldowns";
 import "./features/general/FairySouls";
 import "./features/general/ImageViewer";
+import "./features/general/LevelAlert";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
@@ -38,6 +37,7 @@ import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/ArmorDisplay";
 import "./features/container/AttributeAbbrev";
+import { buttonCommands } from "./features/container/ContainerButtons";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
@@ -64,7 +64,7 @@ import "./features/economy/MissingSkins";
 import { getNetworth } from "./features/economy/Networth";
 import "./features/economy/TradeValue";
 // Combat Features
-import { getBestiary } from "./features/combat/Bestiary";
+import "./features/combat/BestiaryDisplay";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
@@ -84,13 +84,13 @@ import "./features/mining/ShaftAnnounce";
 import "./features/mining/WishingCompass";
 // Farming Features
 import { calcCompost } from "./features/farming/Composter";
-import "./features/farming/FarmingWebhook";
 import "./features/farming/GardenTab";
 import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";
 // Event Features
 import "./features/event/BingoCard";
 import "./features/event/BurrowDetect";
+import "./features/event/CalendarTime";
 import "./features/event/GreatSpook";
 import "./features/event/InquisitorDetect";
 import "./features/event/MythRitual";
@@ -114,6 +114,8 @@ import { calcTabasco } from "./features/kuudra/TabascoCalc";
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+import { slotCommands } from "./features/container/SlotBinding";
+
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
@@ -162,7 +164,7 @@ ${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 
 // `viewrecipe` GUI Button
 const recipeKey = new KeyBind("View Recipe", data.recipeKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.recipeKey = recipeKey.getKeyCode() });
+register("gameUnload", () => { data.recipeKey = recipeKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 
 register("guiKey", (_, keyCode, gui) => {
     if (keyCode === recipeKey.getKeyCode()) {
@@ -183,7 +185,9 @@ register("guiKey", (_, keyCode, gui) => {
     }
 });
 
-// Open settings
+/**
+ * Open settings GUI.
+ */
 function openSettings() {
     try {
         settings.openGUI();
@@ -222,18 +226,17 @@ register ("command", (...args) => {
         case "list":
         case "lists":
             ChatLib.chat(
-`\n${GOLD + BOLD + UNDERLINE}VolcAddons Lists
-
-${DARK_GRAY}- ${AQUA + BOLD}cd: ${WHITE}cooldown-list
-${DARK_GRAY}- ${AQUA + BOLD}wl: ${WHITE}white-list
-${DARK_GRAY}- ${AQUA + BOLD}bl: ${WHITE}black-list
-${DARK_GRAY}- ${AQUA + BOLD}el: ${WHITE}emote-list
-${DARK_GRAY}- ${AQUA + BOLD}vl: ${WHITE}value-list
-${DARK_GRAY}- ${AQUA + BOLD}dl: ${WHITE}diana-list
-${DARK_GRAY}- ${AQUA + BOLD}sl: ${WHITE}spam-list
-${DARK_GRAY}- ${AQUA + BOLD}il: ${WHITE}ignore-list
-${DARK_GRAY}- ${AQUA + BOLD}wgl: ${WHITE}widget-list
-${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
+`\n${LOGO + GOLD + BOLD} Lists:
+${DARK_GRAY}- ${GOLD + BOLD}cd: ${YELLOW}cooldown-list
+${DARK_GRAY}- ${GOLD + BOLD}wl: ${YELLOW}white-list
+${DARK_GRAY}- ${GOLD + BOLD}bl: ${YELLOW}black-list
+${DARK_GRAY}- ${GOLD + BOLD}el: ${YELLOW}emote-list
+${DARK_GRAY}- ${GOLD + BOLD}vl: ${YELLOW}value-list
+${DARK_GRAY}- ${GOLD + BOLD}dl: ${YELLOW}diana-list
+${DARK_GRAY}- ${GOLD + BOLD}sl: ${YELLOW}spam-list
+${DARK_GRAY}- ${GOLD + BOLD}il: ${YELLOW}ignore-list
+${DARK_GRAY}- ${GOLD + BOLD}wgl: ${YELLOW}widget-list
+${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Update
         case "update":
@@ -266,32 +269,28 @@ ${DARK_GRAY}- ${AQUA + BOLD}pl: ${WHITE}prefix-list`);
                 ChatLib.command("ct load", true);
             } else openGUI();
             break;
+        // Buttons
+        case "button":
+        case "buttons":
+            buttonCommands(args);
+            break;
+        // Slot Binding
+        case "slots":
+        case "slot":
+        case "binds":
+        case "bind":
+            slotCommands(args);
+            break;
         // Send coords
         case "coords":
         case "xyz":
             const randID = '@' + (Math.random() + 1).toString(36).substring(5);
             ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
             break;
-        // Testing (please work)
-        case "test":
-            ChatLib.chat(
-`${LOGO + DARK_AQUA + BOLD}Important Values:
-- ${AQUA + BOLD}World: ${WHITE + location.getWorld()}
-- ${AQUA + BOLD}Zone: ${WHITE + location.getZone()}
-- ${AQUA + BOLD}Tier: ${WHITE + location.getTier()}
-- ${AQUA + BOLD}Leader: ${WHITE + party.getLeader()}
-- ${AQUA + BOLD}Party: ${WHITE + party.getIn()}`);
-            if (party.getMembers().size !== 0) ChatLib.chat(`- ${AQUA + BOLD}Members: ${WHITE + party.getMembers().join(' ')}`);
-            break;
         // Networth
         case "networth":
         case "nw":
             getNetworth(args[1] || Player.getName(), args[2]);
-            break;
-        // Bestiary Stuff
-        case "bestiary":
-        case "be":
-            getBestiary(args);
             break;
         // Attribute Pricing
         case "attribute":

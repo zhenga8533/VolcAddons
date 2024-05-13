@@ -1,13 +1,14 @@
 import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GREEN, LOGO, RED } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
+import { printList } from "../../utils/list";
 
 
 // Bind key
 const bindKey = new KeyBind("Slot Binding", data.bindKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.bindKey = bindKey.getKeyCode() });
+register("gameUnload", () => { data.bindKey = bindKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 let binding = undefined;
 
 // Bind slots
@@ -85,33 +86,50 @@ registerWhen(register("guiRender", (x, y, gui) => {
 /**
  * Slot binding related commands...
  */
-register("command", () => {
-    data.slotBinds = {};
-    ChatLib.chat(`${LOGO + GREEN}Successfully reset slot bindings!`);
-}).setName("resetBinds", true);
+export function slotCommands(args) {
+    const command = args[1];
+    const name = args[2];
 
-register("command", (arg) => {
-    data.bindPresets[arg] = data.slotBinds;
-    ChatLib.chat(`${LOGO + GREEN}Successfully saved slot bindingds to key: "${arg}"`);
-}).setName("saveBinds", true);
+    switch(command) {
+        case "save":
+            data.bindPresets[name] = data.slotBinds;
+            ChatLib.chat(`${LOGO + GREEN}Successfully saved slot bindings using key: "${name}".`);
+            break;
+        case "delete":
+            if (data.bindPresets.hasOwnProperty(name)) {
+                delete data.bindPresets[name];
+                ChatLib.chat(`${LOGO + GREEN}Succesfully deleted slot bindings using key: "${name}"`);
+            } else ChatLib.chat(`${LOGO + RED}Invalid bind key: "${name}"`);
+            break;
+        case "load":
+            if (data.bindPresets.hasOwnProperty(name)) {
+                data.slotBinds = data.bindPresets[name];
+                ChatLib.chat(`${LOGO + GREEN}Succesfully loaded slot bindings using key: "${name}".`);
+            } else ChatLib.chat(`${LOGO + RED}Error: There are no presets using "${name}" key.`);
+            break;
+        case "list":
+        case "view":
+            const bindingKeys = Object.keys(data.bindPresets);
+            printList(bindingKeys, "Bindings", parseInt(args[2] ?? 1));
+            break;
+        case "clear":
+        case "reset":
+            data.slotBinds = {};
+            ChatLib.chat(`${LOGO + GREEN}Successfully reset slot bindings!`);
+            break;
+        case "help":
+        default:
+            if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+            ChatLib.chat(`
+${LOGO + GOLD + BOLD}Container Buttons Commands:
+ ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va bind <command>
 
-register("command", (arg) => {
-    if (data.bindPresets.hasOwnProperty(arg)) {
-        delete data.bindPresets[arg];
-        ChatLib.chat(`${LOGO + GREEN}Succesfully deleted slot bindings using key: "${arg}"`);
-    } else ChatLib.chat(`${LOGO + RED}Invalid bind key: "${arg}"`);
-}).setName("deleteBinds", true);
-
-register("command", (arg) => {
-    if (data.bindPresets.hasOwnProperty(arg)) {
-        data.slotBinds = data.bindPresets[arg];
-        ChatLib.chat(`${LOGO + GREEN}Succesfully loaded slot bindings using key: "${arg}"`);
-    } else ChatLib.chat(`${LOGO + RED}Invalid bind key: "${arg}"`);
-}).setName("loadBinds", true);
-
-register("command", (arg) => {
-    const bindingKeys = Object.keys(data.bindPresets);
-    ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Slot Binding Presets:`);
-    bindingKeys.forEach(preset => ChatLib.chat(` ${DARK_GRAY}- ${AQUA + preset}`));
-    if (bindingKeys.length === 0) ChatLib.chat(` ${RED}No keys exist!`);
-}).setName("listBinds", true);
+ ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save binding data to presets using key.
+ ${DARK_GRAY}- ${GOLD}delete ${YELLOW}<key>: Delete binding preset using key.
+ ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load binding preset using key.
+ ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available binding presets.
+ ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Removes all bindings.
+ ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.`);
+            break;
+    }
+}

@@ -55,6 +55,4 @@ pauseKey.registerKeyPress(() => {
     ChatLib.chat(`${LOGO + GOLD}Tracker ${message}!`);
 });
 
-register("gameUnload", () => {
-    data.pauseKey = pauseKey.getKeyCode();
-});
+register("gameUnload", () => { data.pauseKey = pauseKey.getKeyCode() }).setPriority(Priority.HIGHEST);

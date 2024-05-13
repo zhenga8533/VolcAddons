@@ -1,5 +1,5 @@
 import PogObject from "../../PogData";
-import { CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
+import { BUTTON_PRESETS, CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
 
 
 // Relocate old data files (<2.9.5)
@@ -36,6 +36,7 @@ const DEFAULT_GUI = {
     "YL": [770, 165, 1.2, false, false, true], // SkyBlock Stats Location
     "ZL": [780, 330, 1.2, false, false, true], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false, true], // Bingo Card Location
+    "BEL": [180, 10, 1.2, false, false, true], // Bestiary Counter Location
     "CDL": [190, 115, 1.2, false, false, true], // Commission Display Location
     "CEL": [375, 275, 3, false, false, true], // Crate edit location
     "CFL": [180, 130, 1.2, false, false, true], // Chocolate factory location
@@ -54,8 +55,8 @@ export let data = new PogObject("VolcAddons", {
     // Properties with default values for various settings and data
     "newUser": true,
     "version": "2.3.1",
-    "commands": {},
-    "wordbank": {},
+    "wordbanks": [],
+    "comands": {},
     "lastID" : undefined,
     "world": "none",
     "tier": 0,
@@ -64,7 +65,6 @@ export let data = new PogObject("VolcAddons", {
     "vision": false,
     "uuid": undefined,
     "ign": undefined,
-    "skins": [],
     // playtime tracking
     "playtime": 0,
     "lastDay": 0,
@@ -91,6 +91,7 @@ export let data = new PogObject("VolcAddons", {
     "chocoTotal": 0,
     "chocoAll": 0,
     "chocoPrestige": 0,
+    "chocoMultiplier": 0,
     "dupeEggs": 0,
     "totalEggs": 0,
     "maxEggs": 20,
@@ -142,10 +143,12 @@ export let data = new PogObject("VolcAddons", {
     "bindKey": 0,
     "chunkey": 0,
     "wardKey": 0,
+    // Container bindings
     "wardBinds": {},
     "slotBinds": {},
     "bindPresets": {},
-    // Wardrobe binds
+    "buttons": {},
+    "buttonPresets": BUTTON_PRESETS,
     // GUI locations
     ...DEFAULT_GUI,
     // Rift waypoint properties
@@ -170,6 +173,7 @@ if (itemNBTs.enderchests.length === 0) {
     for (let i = 0; i < 18; i++)
         itemNBTs.enderchests.push(new Array(54).fill(null));
 }
+data.autosave(30);
 
 // --- GUI CONTROL ---
 export function resetGUI() {

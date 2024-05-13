@@ -1,7 +1,7 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
@@ -120,14 +120,14 @@ registerWhen(register('tick', () => {
         const x = Math.round(Player.getX());
         const y = Math.round(Player.getY());
         const z = Math.round(Player.getZ());
-        statusMessage += `${DARK_AQUA + BOLD}XYZ: ${GREEN + x}, ${y}, ${z}\n`;
+        statusMessage += `\n${GRAY}[${GOLD}XYZ${GRAY}] ${WHITE + x}, ${y}, ${z}`;
     }
 
     // Yaw and Pitch
     if (toggles.angleDisplay) {
         const yaw = Player.getYaw();
         const pitch = Player.getPitch();
-        statusMessage += `${DARK_AQUA + BOLD}Y/P: ${AQUA + yaw.toFixed(2)} / ${AQUA + pitch.toFixed(2)}\n`;
+        statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${WHITE + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
     }
 
     // Direction
@@ -135,8 +135,8 @@ registerWhen(register('tick', () => {
         const yaw = (Player.getYaw() + 360) % 360;
         const direction = yaw >= 45 && yaw < 135 ? "West" :
             yaw >= 135 && yaw < 255 ? "North" :
-            yaw >= 225 && yaw < 315 ? "East" : "South"
-        statusMessage += `${DARK_AQUA + BOLD}Dir: ${AQUA + direction}\n`;
+            yaw >= 225 && yaw < 315 ? "East" : "South";
+        statusMessage += `\n${GRAY}[${GOLD}Dir${GRAY}] ${WHITE + direction}`;
     }
 
     // Ping
@@ -146,7 +146,7 @@ registerWhen(register('tick', () => {
             ping < 300 ? YELLOW :
             ping < 420 ? GOLD : 
             ping < 690 ? RED : DARK_RED;
-        statusMessage += `${DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms\n`;
+        statusMessage += `\n${GRAY}[${GOLD}Ping${GRAY}] ${pingColor + ping + WHITE} ms`;
     }
 
     // FPS
@@ -159,7 +159,7 @@ registerWhen(register('tick', () => {
             fpsRatio > 0.7 ? YELLOW :
             fpsRatio > 0.6 ? GOLD : 
             fpsRatio > 0.5 ? RED : DARK_RED;
-        statusMessage += `${DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps\n`;
+        statusMessage += `\n${GRAY}[${GOLD}FPS${GRAY}] ${fpsColor + fps + WHITE} fps`;
     }
 
     // TPS
@@ -169,7 +169,7 @@ registerWhen(register('tick', () => {
             tps > 13 ? YELLOW :
             tps > 10 ? GOLD : 
             tps > 7 ? RED : DARK_RED;
-        statusMessage += `${DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps\n`;
+        statusMessage += `\n${GRAY}[${GOLD}TPS${GRAY}] ${tpsColor + tps.toFixed(1) + WHITE} tps`;
     }
 
     // CPS
@@ -186,16 +186,16 @@ registerWhen(register('tick', () => {
             rightCPS < 13 ? YELLOW :
             rightCPS < 21 ? GOLD : 
             rightCPS < 30 ? RED : DARK_RED;
-        statusMessage += `${DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}\n`;
+        statusMessage += `\n${GRAY}[${GOLD}CPS${GRAY}] ${leftColor + leftCPS + WHITE} : ${rightColor + rightCPS}`;
     }
 
     // Day
     if (toggles.dayDisplay) {
         const daytime = (World.getTime() / 24000).toFixed(2);
-        statusMessage += `${DARK_AQUA + BOLD}Day: ${AQUA + daytime}`
+        statusMessage += `\n${GRAY}[${GOLD}Day${GRAY}] ${WHITE + daytime}`;
     }
 
-    statusOverlay.setMessage(statusMessage);
+    statusOverlay.setMessage(statusMessage.substring(1));
 }), () => settings.serverStatus || toggles.statusCommand);
 
 /**

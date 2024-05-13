@@ -6,7 +6,7 @@ import { data } from "./data";
  * Dev mode
  */
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
-register("gameUnload", () => { data.devKey = devKey.getKeyCode() });
+register("gameUnload", () => { data.devKey = devKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 devKey.registerKeyPress(() => {
     if (devKey.getKeyCode() === 0) return;
 
@@ -50,6 +50,11 @@ register("guiKey", (_, keyCode, gui) => {
 /**
  * Dev commands
  */
+register("command", (...args) => {
+    ChatLib.command("ct copy " + args.join(' '), true);
+    ChatLib.chat(`${LOGO + GREEN}Successfully copied text to clipboard!`);
+}).setName("vacopy");
+
 register("command", () => {
     TabList.getNames().forEach(name => {
         print(name);
@@ -63,3 +68,8 @@ register("command", () => {
     });
     ChatLib.chat(`${LOGO + GREEN}Succesfully printed Scoreboard lines to console!`);
 }).setName("printScore");
+
+
+export function printKeys(object) {
+    Object.keys(object).forEach(key => print(key));
+}

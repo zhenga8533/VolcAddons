@@ -23,18 +23,18 @@ export const COLOR_TABLE = {
     '§1': [0, 0, 139],
     '§2': [1, 50, 32],
     '§3': [2, 41, 42],
-    '§4': [139, 0, 0],
-    '§5': [80, 0, 80],
-    '§6': [212, 175, 55],
+    '§4': [116, 57, 84],
+    '§5': [108, 57, 142],
+    '§6': [148, 122, 84],
     '§7': [128, 128, 128],
     '§8': [169, 169, 169],
-    '§9': [0, 0, 169],
-    '§a': [89, 230, 89],
-    '§b': [0, 255, 255],
-    '§c': [200, 0, 0],
-    '§d': [191, 64, 191],
+    '§9': [83, 89, 181],
+    '§a': [80, 145, 113],
+    '§b': [83, 154, 181],
+    '§c': [148, 89, 117],
+    '§d': [148, 89, 181],
     '§e': [255, 255, 0],
-    '§f': [255, 255, 255],
+    '§f': [148, 154, 181],
 }
 
 /**
@@ -74,6 +74,17 @@ export const CUBE_CLASS = Java.type("net.minecraft.entity.monster.EntityMagmaCub
 export const CHEST_CLASS = Java.type("net.minecraft.tileentity.TileEntityChest").class;
 export const STAND_CLASS = EntityArmorStand.class;
 export const WITHER_CLASS = EntityWither.class;
+
+export const InventoryBasic = Java.type("net.minecraft.inventory.InventoryBasic");
+export const GuiInventory = Java.type("net.minecraft.client.gui.inventory.GuiInventory")
+export const GuiChest = Java.type("net.minecraft.client.gui.inventory.GuiChest");
+export const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
+
+/**
+ * Java Class Constants
+ */
+export const Toolkit = Java.type("java.awt.Toolkit");
+export const DataFlavor = Java.type("java.awt.datatransfer.DataFlavor");
 
 /**
  * VolcAddons setting constants.
@@ -139,6 +150,24 @@ User (Enter IGN below):
 _____________*
 
 *The Parties agree that digital signatures and electronic acceptance of this Agreement shall have the same legal force and effect as traditional, ink-on-paper signatures.`;
+
+/**
+ * Button presets. compact this please
+ */
+export const BUTTON_PRESETS = {
+    "inv": {
+        "inv13": ["inv1", 3, "auction", "golden_horse_armor"],
+        "inv40": ["inv4", 0, "sacks", "chest"],
+        "inv41": ["inv4", 1, "fishingbag", "fish"],
+        "inv42": ["inv4", 2, "potionbag", "potion"],
+        "inv43": ["inv4", 3, "quiver", "arrow"],
+        "inv44": ["inv4", 4, "accessorybag", "redstone_block"],
+        "inv14": ["inv1", 4, "bazaar", "gold_ingot"],
+        "inv10": ["inv1", 0, "hex", "book"],
+        "inv12": ["inv1", 2, "anvil", "anvil"],
+        "inv11": ["inv1", 1, "et", "enchanting_table"]
+    }
+}
 
 /**
  * Reforge names and categories.

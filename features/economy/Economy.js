@@ -39,16 +39,10 @@ updateBazaar();
 /**
  * Calls for an auction house reloop every X minutes.
  */
-let minutes = 0
-registerWhen(register("step", () => {
-    minutes++;
-
-    if (minutes >= settings.economyRefresh) {
-        updateAuction();
-        updateBazaar();
-        minutes = 0;
-    }
-}).setDelay(60), () => settings.economyRefresh !== 0);
+register("step", () => {
+    updateAuction();
+    updateBazaar();
+}).setDelay(3600);
 
 /**
  * Updates auction and bazaar data and notifies the user upon successful update.

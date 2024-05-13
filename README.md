@@ -96,7 +96,6 @@ After you finish installing, go check out some other useful SkyBlock mods: https
     - `/va calc`: Various calculations that deal with general economical values.
     - `/va nw`: Calculates the networth of a SkyBlock profile using custom API.
 - **Misc**
-    - `/va be`: Displays bestiary stats and closest milestones.
     - `/va splits`: Prints out Kuudra splits' stats.
     - `/sk`: Opens the SkyCrypt profile of inputted user.
 
@@ -156,7 +155,6 @@ After you finish installing, go check out some other useful SkyBlock mods: https
     - Reminder Text
     - Reminder Time
 - **Yapping**
-    - Autocomplete Commands (`/resetWords`)
     - Autocorrect Commands
     - Custom Emotes (`/va emote`)
     - Discord Webhook

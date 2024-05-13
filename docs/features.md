@@ -10,6 +10,7 @@ subtitle: List of all features and their related commands.
     - Remove Selfie Mode
     - Render Waypoint
     - Skill Tracker (`/moveSkills`, `/resetSkills`)
+    - SkyBlock XP Alert
     - Widget Display (`/va wgl`, `/move<widget>`)
 - **Server**
     - Fairy Soul Waypoints
@@ -23,7 +24,6 @@ subtitle: List of all features and their related commands.
     - Item Cooldown Alert (`/va cd`)
     - Reminder Timer
 - **Yapping**
-    - Autocomplete Commands (`/resetWords`)
     - Autocorrect Commands
     - Custom Emotes (`/va emote`)
     - Discord Webhook
@@ -32,6 +32,7 @@ subtitle: List of all features and their related commands.
 ### <u>Container Features</u>
 - **General**
     - Auction Highlight
+    - Container Buttons
     - Container Preview
     - Recipe Hotkey
     - Searchbar (`/moveSearch`)
@@ -69,6 +70,7 @@ subtitle: List of all features and their related commands.
 ### <u>Combat Features</u>
 - **Bestiary**
     - Bestiary GUI
+    - Bestiary Counter
     - Kill Counter (`/moveKills`, `/resetKills`)
 - **General**
     - Combo Display (`/moveCombo`)
@@ -118,8 +120,6 @@ subtitle: List of all features and their related commands.
     - Spray Display (`moveSpray`)
 
 ### <u>Event Features</u>
-- **Bingo**
-    - Bingo Card Overlay
 - **Chocolate Factory**
     - Chocolate Overlay
     - Egg Announce
@@ -138,6 +138,9 @@ subtitle: List of all features and their related commands.
     - Burrow Detection
     - Diana Waypoints
     - Diana Warp (`/va warplist`)
+- **SkyBlock**
+    - Bingo Card Overlay
+    - Calendar Time
 
 ### <u>Crimson Isles</u>
 - **Fishing**

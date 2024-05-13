@@ -2,7 +2,8 @@ import settings from "../../utils/settings";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data, itemNBTs } from "../../utils/data";
-import { compressNBT, decompressNBT } from "../../utils/functions/misc";
+import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
+import { Button } from "./ContainerButtons";
 
 
 /**
@@ -46,17 +47,84 @@ registerWhen(register("tick", () => {
 /**
  * Render equipment pieces as icons
  */
-let equipment = itemNBTs.equip.map(nbt => {
-    return nbt === null ? null :
-        new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT))
+const buttons = [];
+let equipment = itemNBTs.equip.map((nbt, index) => {
+    if (nbt === null) return null;
+
+    const item = new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT));
+    let texture;
+
+    if (item.getUnlocalizedName() === "item.skull") {  // Fix skull textures not rendering
+        const skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
+        texture = skullNBT.getCompoundTag("Properties").getTagList("textures", 0).func_150305_b(0).func_74779_i("Value");
+        const skull = parseTexture(texture);
+        item.getNBT().getCompoundTag("tag").set("SkullOwner", skull);
+    } else texture = "stained_glass_pane";
+
+    // Create inv eq button
+    buttons.push(new Button("eq", index * 9, () => {
+        ChatLib.command("equipment");
+    }, "equipment", texture));
+
+    return item;
 });
+
+/**
+ * Equipment button handling
+ */
+const click = register("guiMouseClick", (x, y, button, gui) => {
+    const left = gui.getGuiLeft();
+    const top = gui.getGuiTop();
+
+    Object.keys(buttons).forEach(key => {
+        buttons[key].click(left, top, x, y, button);
+    });
+}).unregister();
+
+const render = register("guiRender", (x, y, gui) => {
+    const top = gui.getGuiTop();
+    const left = gui.getGuiLeft();
+
+    Object.keys(buttons).forEach(key => {
+        buttons[key].draw(left, top);
+        buttons[key].hover(left, top, x, y);
+    });
+}).unregister();
+
+const close = register("guiClosed", () => {
+    // Set registers
+    render.unregister();
+    click.unregister();
+    close.unregister();
+}).unregister();
+
+registerWhen(register("guiOpened", (event) => {
+    const gui = event.gui;
+    const name = gui.class.toString().split('.');
+    container = name[name.length - 1];
+    if (container !== "GuiInventory" && container !== "GuiChest") return;
+
+    click.register();
+    close.register();
+    render.register();
+    Client.scheduleTask(1, () => {
+        click.register();
+        close.register();
+        render.register();
+    });
+}), () => settings.equipDisplay);
+
+/**
+ * Equipment Overlay
+ */
 new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay", () => {
+    if (!settings.equipDisplay) return;
     let yDiff = -15 * data.EQL[2];
 
     equipment.forEach(piece => {
         yDiff += 15 * data.EQL[2];
         if (piece === null) {
-            barrier.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
+            barrier.draw(data.EQL[0], data.EQL[1] + yDiff, data.EQL[2]);
             return;
         }
 
@@ -74,31 +142,35 @@ new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay
 /**
  * Get player equipment pieces
  */
-registerWhen(register("guiMouseClick", () => {
-    Client.scheduleTask(1, () => {
-        const container = Player.getContainer();
-        if (container.getName() !== "Your Equipment and Stats") return;
+function updateEquipment() {
+    const container = Player.getContainer();
+    if (container.getName() !== "Your Equipment and Stats") return;
 
-        equipment = [
-            container.getStackInSlot(10),
-            container.getStackInSlot(19),
-            container.getStackInSlot(28),
-            container.getStackInSlot(37)
-        ];
-    });
+    equipment = [
+        container.getStackInSlot(10),
+        container.getStackInSlot(19),
+        container.getStackInSlot(28),
+        container.getStackInSlot(37)
+    ];
+
+    for (let i = 0; i < 4; i++) {
+        let item = equipment[i];
+        if(item.getID() === 160) {
+            buttons[i].setItem("stained_glass_pane");
+            continue;
+        }
+
+        let skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
+        let texture = skullNBT.getCompoundTag("Properties").getTag("textures").getRawNBT();
+        buttons[i].setItem(texture.func_150305_b(0).func_74779_i("Value"));
+    }
+}
+
+registerWhen(register("guiMouseClick", () => {
+    Client.scheduleTask(1, updateEquipment);
 }), () => settings.equipDisplay);
 registerWhen(register("guiOpened", () => {
-    Client.scheduleTask(1, () => {
-        const container = Player.getContainer();
-        if (container.getName() !== "Your Equipment and Stats") return;
-
-        equipment = [
-            container.getStackInSlot(10),
-            container.getStackInSlot(19),
-            container.getStackInSlot(28),
-            container.getStackInSlot(37)
-        ];
-    });
+    Client.scheduleTask(1, updateEquipment);
 }), () => settings.equipDisplay);
 
 /**
@@ -107,4 +179,4 @@ registerWhen(register("guiOpened", () => {
 register("gameUnload", () => {
     itemNBTs.armor = pieces.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
     itemNBTs.equip = equipment.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
-});
+}).setPriority(Priority.HIGHEST);;

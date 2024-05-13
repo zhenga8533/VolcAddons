@@ -1,9 +1,10 @@
 import axios from "../../../axios";
 import { AQUA, DARK_GRAY, GREEN, ITALIC, LOGO, RED } from "../../utils/constants";
+import { Json } from "../../utils/json";
 import { decode } from "../../utils/functions/misc";
-import { data } from "../../utils/data";
 
 
+const skins = new Json("skins.json").getData();
 register("guiOpened", () => {
     Client.scheduleTask(2, () => {
         if (!Player.getContainer().getName().startsWith("Previous Fire Sales")) return;
@@ -17,20 +18,20 @@ register("guiOpened", () => {
                 let skinID = skin.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
                 if (skinID.endsWith("RUNE") || skinID.startsWith("DYE") || skinID.endsWith("BARN_SKIN")) continue;
 
-                if (!data.skins.includes(skinID)) data.skins.push(skinID);
+                if (!skins.includes(skinID)) skins.push(skinID);
             }
         }
     });
 });
 
 register("command", () => {
-    if (data.skins.length === 0) {
+    if (skins.length === 0) {
         ChatLib.chat(`${LOGO + RED}Please open all Fire Sale menus first to register all valid skins!`)
         return;
     }
 
     axios.get(`https://sky.shiiyu.moe/api/v2/profile/${Player.getName()}`).then(response => {
-        let missing = [...data.skins];
+        let missing = [...skins];
 
         function parseSkins(contents) {
             if (contents === undefined) return;

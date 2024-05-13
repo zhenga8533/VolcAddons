@@ -1,6 +1,6 @@
 import settings from "../../utils/settings";
 import { AQUA, BLACK, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/constants";
-import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
+import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
@@ -437,8 +437,11 @@ export function getItemValue(item, save=true) {
 /**
  * Adds enchantment value tag onto item over all items hovered over.
  */
-registerWhen(register("itemTooltip", (lore, item) => {
+registerWhen(register("preItemRender", (_, __, ___, gui) => {
     // Check item data to cancel lore append.
+    const item = Player.getContainer().getItems()[gui?.getSlotUnderMouse()?.field_75222_d];
+    if (!item) return;
+    
     const itemTag = item.getNBT().getCompoundTag("tag");
     const loreTag = itemTag.getCompoundTag("display").getTagMap().get("Lore");
     const itemUUID = (itemTag.getCompoundTag("ExtraAttributes").getString("uuid") || item.getName()) + item.getStackSize();
@@ -456,8 +459,10 @@ registerWhen(register("itemTooltip", (lore, item) => {
     // Add to item lore.
     const value = getItemValue(item);
     valueOverlay.setMessage(savedValues?.[itemUUID]?.[1] ?? "");
-    if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3))
-        list.appendTag(new NBTTagString(`§3§lItem Value: §6${commafy(value)}`));
+    if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3)) {
+        list.appendTag(new NBTTagString(''));
+        list.appendTag(new NBTTagString(`§3§lItem Value: §6${formatNumber(value)}`));
+    }
 }), () => settings.itemPrice !== 0);
 
 /**

@@ -29,6 +29,8 @@ subtitle: List of every non-gui related commands.
     - `/va spamlist`: Set chat messages to hide.
     - `/va valuelist`: Set a constant value of the currently held item.
     - `/va whitelist`: Set player party invites to auto join.
+    - `/va binds`: Set slot bindings and their presets.
+    - `/va buttons`: Set container buttons and their presets.
 - **Economy**
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
@@ -40,7 +42,6 @@ subtitle: List of every non-gui related commands.
     - `/printTab`: Prints out Tablist names to console.
     - `/printScore`: Prints out Scoreboard lines to console.
 - **Misc**
-    - `/va be`: Displays bestiary stats and closest milestones.
     - `/missingskins`: Scans user inventory API to determine any missing fire sale skins.
     - `/pesttp`: Warps to plot with most pests.
     - `/sk`: Opens the SkyCrypt profile of inputted user.

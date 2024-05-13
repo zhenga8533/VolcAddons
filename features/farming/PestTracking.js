@@ -3,7 +3,7 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { formatTime } from "../../utils/functions/format";
+import { formatTime, removeNonNumeric } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
@@ -13,7 +13,7 @@ const sprays = {};
 let pests = [];
 
 /**
- * 
+ * Uses pests widget in TabList in order to track all plots with pests.
  */
 function setPests() {
     pests = [];
@@ -22,7 +22,8 @@ function setPests() {
     const pestLine = TabList.getNames().find(tab => tab.startsWith("§r Plots:"));
     if (pestLine === undefined) return;
 
-    pests = pestLine.removeFormatting().trim().split(' ').slice(1);
+    pests = pestLine.removeFormatting().trim().split(', ');
+    if (pests.length > 0) pests[0] = pests[0].split(' ')[1];
 }
 registerWhen(register("step", setPests).setFps(1), () => location.getWorld() === "Garden");
 
@@ -36,7 +37,7 @@ register("command", () => {
         return;
     }
 
-    const zone = location.getZone().substring(location.getZone().length - 1);
+    const zone = removeNonNumeric(Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot §7-"))?.getName()?.removeFormatting()?.trim()?.split(' ')?.[2]);
     const plot = pests.find(plot => plot !== zone);
 
     if (plot !== undefined) {
