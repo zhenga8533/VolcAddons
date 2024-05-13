@@ -11,24 +11,31 @@ const bindKey = new KeyBind("Slot Binding", data.bindKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.bindKey = bindKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 let binding = undefined;
 
+const HOTBAR = ["36", "37", "38", "39", "40", "41", "42", "43", "44"];
+HOTBAR.forEach(slot => {
+    if (!data.slotBinds.hasOwnProperty(slot) && !Array.isArray(data.slotBinds[slot]))
+        data.slotBinds[slot] = [];
+});
+
 // Bind slots
 registerWhen(register("guiKey", (c, keyCode, gui) => {
     if (keyCode !== bindKey.getKeyCode()) return;
     const bind = gui?.getSlotUnderMouse()?.field_75222_d;
     if (bind === undefined || bind <= 4) return;
 
-    if (data.slotBinds.hasOwnProperty(bind)) {
-        delete data.slotBinds[data.slotBinds[bind]];
+    if (data.slotBinds.hasOwnProperty(bind) && bind < 36) {
+        const binded = data.slotBinds[bind];
+        data.slotBinds[binded].splice(data.slotBinds[binded].indexOf(bind), 1);
         delete data.slotBinds[bind];
     } else if (binding === undefined) binding = bind;
     else if (binding === bind) binding = undefined;
-    else if ((binding >= 36 && bind < 36) || (binding < 36 && bind >= 36)) {
-        // Delete old binds and set new binds
-        delete data.slotBinds[binding];
-        delete data.slotBinds[bind];
-
+    else if (binding >= 36 && bind < 36) {
+        data.slotBinds[bind] = binding;
+        data.slotBinds[binding].push(bind);
+        binding = undefined;
+    } else if (binding < 36 && bind >= 36) {
         data.slotBinds[binding] = bind;
-        data.slotBinds[bind] = [binding];
+        data.slotBinds[bind].push(binding);
         binding = undefined;
     }
 }), () => settings.slotBinding);
@@ -37,10 +44,10 @@ registerWhen(register("guiClosed", () => {
 }), () => settings.slotBinding);
 
 // Swap binded items
-registerWhen(register("guiMouseClick", (x, y, button, gui, event) => {
+registerWhen(register("guiMouseClick", (_, __, button, gui, event) => {
     if (button !== 0 || !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) return;
 
-    const hover = gui?.getSlotUnderMouse()?.field_75222_d;
+    const hover = gui?.getSlotUnderMouse()?.field_75222_d ?? 36;
     const bind = data.slotBinds[hover];
     if (hover >= 36 || bind === undefined) return;
 
@@ -59,26 +66,35 @@ registerWhen(register("guiRender", (x, y, gui) => {
     if (binding !== undefined) {
         const [x, y] = getSlotCoords(binding, containerType);
     
-        Renderer.translate(0, 0, 100);
-        Renderer.drawRect(Renderer.color(0, 255, 255, 200), x, y, 16, 16);
+        Renderer.translate(0, 0, 200);
+        Renderer.drawRect(Renderer.AQUA, x, y, 16, 16);
     }
 
     // render all binds
     Object.keys(data.slotBinds).forEach(bind => {
+        if (Array.isArray(data.slotBinds[bind]) && data.slotBinds[bind].length === 0) return;
         const [x, y] = getSlotCoords(bind, containerType);
 
-        Renderer.translate(0, 0, 100);
-        Renderer.drawRect(Renderer.color(128, 128, 128, 200), x, y, 16, 16);
+        Renderer.translate(0, 0, 200);
+        Renderer.drawRect(Renderer.GRAY, x, y, 16, 16);
     });
 
     // render hovered binds
     const hover = gui?.getSlotUnderMouse()?.field_75222_d;
     const bind = data.slotBinds[hover];
-    if (bind !== undefined) {
+    if (Array.isArray(bind)) {
+        bind.forEach(slot => {
+            const [x, y] = getSlotCoords(hover, containerType);
+            const [dx, dy] = getSlotCoords(slot, containerType);
+
+            Renderer.translate(0, 0, 300);
+            Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);
+        });
+    } else if (bind !== undefined) {
         const [x, y] = getSlotCoords(hover, containerType);
         const [dx, dy] = getSlotCoords(bind, containerType);
 
-        Renderer.translate(0, 0, 100);
+        Renderer.translate(0, 0, 300);
         Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);
     }
 }), () => settings.slotBinding);
@@ -114,7 +130,7 @@ export function slotCommands(args) {
             break;
         case "clear":
         case "reset":
-            data.slotBinds = {};
+            data.slotBinds = {"36": [], "37": [], "38": [], "39": [], "40": [], "41": [], "42": [], "43": [], "44": []};
             ChatLib.chat(`${LOGO + GREEN}Successfully reset slot bindings!`);
             break;
         case "help":

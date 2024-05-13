@@ -145,7 +145,9 @@ export let data = new PogObject("VolcAddons", {
     "wardKey": 0,
     // Container bindings
     "wardBinds": {},
-    "slotBinds": {},
+    "slotBinds": {
+        "36": [], "37": [], "38": [], "39": [], "40": [], "41": [], "42": [], "43": [], "44": []
+    },
     "bindPresets": {},
     "buttons": {},
     "buttonPresets": BUTTON_PRESETS,
