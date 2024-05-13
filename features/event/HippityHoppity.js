@@ -182,7 +182,10 @@ function findWorker() {
         const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));
         const jackValue = data.chocoProduction / data.chocoMultiplier * 0.01 / jackCost;
 
-        if (jackValue > maxValue) bestWorker = 42;
+        if (jackValue > maxValue) {
+            bestWorker = 42;
+            bestCost = jackCost;
+        }
     }
 }
 
