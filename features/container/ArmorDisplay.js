@@ -64,11 +64,59 @@ let equipment = itemNBTs.equip.map((nbt, index) => {
     // Create inv eq button
     buttons.push(new Button("eq", index * 9, () => {
         ChatLib.command("equipment");
-    }, "equipment", texture, () => settings.equipDisplay));
+    }, "equipment", texture));
 
     return item;
 });
 
+/**
+ * Equipment button handling
+ */
+const click = register("guiMouseClick", (x, y, button, gui) => {
+    const left = gui.getGuiLeft();
+    const top = gui.getGuiTop();
+
+    Object.keys(buttons).forEach(key => {
+        buttons[key].click(left, top, x, y, button);
+    });
+}).unregister();
+
+const render = register("guiRender", (x, y, gui) => {
+    const top = gui.getGuiTop();
+    const left = gui.getGuiLeft();
+
+    Object.keys(buttons).forEach(key => {
+        buttons[key].draw(left, top);
+        buttons[key].hover(left, top, x, y);
+    });
+}).unregister();
+
+const close = register("guiClosed", () => {
+    // Set registers
+    render.unregister();
+    click.unregister();
+    close.unregister();
+}).unregister();
+
+registerWhen(register("guiOpened", (event) => {
+    const gui = event.gui;
+    const name = gui.class.toString().split('.');
+    container = name[name.length - 1];
+    if (container !== "GuiInventory" && container !== "GuiChest") return;
+
+    click.register();
+    close.register();
+    render.register();
+    Client.scheduleTask(1, () => {
+        click.register();
+        close.register();
+        render.register();
+    });
+}), () => settings.equipDisplay);
+
+/**
+ * Equipment Overlay
+ */
 new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay", () => {
     if (!settings.equipDisplay) return;
     let yDiff = -15 * data.EQL[2];

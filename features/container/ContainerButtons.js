@@ -41,7 +41,6 @@ const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 3
 // Local cache
 let buttons = {};
 let container;
-let equipment = [];  // CBA to rework just to implement this, so brute force it is :D
 
 export class Button {
     #clicked;
@@ -56,7 +55,6 @@ export class Button {
     #invOnly;
     #hovered;
     #edit = false;
-    #condition;
 
     /**
      * Boop. Another poorly written class that patches up errors as they came up ^_^
@@ -67,7 +65,7 @@ export class Button {
      * @param {String} command - Command args that are called in the callback. Used to cache data.
      * @param {String} icon - Minecraft item id used to draw logo. Barrier icon is reserved for edit buttons.
      */
-    constructor(loc, index, clicked, command="", icon="barrier", condition=() => true) {
+    constructor(loc, index, clicked, command="", icon="barrier") {
         this.#clicked = clicked;
         this.#loc = loc;
         this.#index = index;
@@ -77,9 +75,6 @@ export class Button {
         this.#y = OFFSETS[this.#loc][1] + 18 * ~~(this.#index / 9);
         this.#invOnly = loc.startsWith("inv");
         this.setItem(icon);
-        this.#condition = condition;
-
-        if (loc === "eq") equipment.push(this);
     }
 
     /**
@@ -160,7 +155,7 @@ export class Button {
      * @param {Number} dy - Top most coordinate of current GUI.
      */
     draw(dx, dy) {
-        if ((this.#invOnly && container !== "GuiInventory") || !this.#condition()) return;
+        if (this.#invOnly && container !== "GuiInventory") return;
 
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -197,7 +192,7 @@ export class Button {
      * @param {Number} hy - Current y pos of mouse.
      */
     hover(dx, dy, hx, hy) {
-        if ((this.#invOnly && container !== "GuiInventory") || !this.#condition()) return;
+        if (this.#invOnly && container !== "GuiInventory") return;
         
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -226,7 +221,7 @@ export class Button {
      * @returns {Boolean} True if button was pressed, false otherwise.
      */
     click(dx, dy, cx, cy, button) {
-        if ((this.#invOnly && container !== "GuiInventory") || !this.#condition()) return;
+        if (this.#invOnly && container !== "GuiInventory") return;
 
         const size = Player.getContainer().getSize();
         const x = dx + this.#x;
@@ -426,11 +421,6 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
         if (buttons[key].getIndex() > size) return;
         buttons[key].click(left, top, x, y, button);
     });
-
-    Object.keys(equipment).forEach(key => {
-        if (equipment[key].getIndex() > size) return;
-        equipment[key].click(left, top, x, y, button);
-    });
 }).unregister();
 
 const render = register("guiRender", (x, y, gui) => {
@@ -443,22 +433,12 @@ const render = register("guiRender", (x, y, gui) => {
         buttons[key].draw(left, top);
         buttons[key].hover(left, top, x, y);
     });
-
-    Object.keys(equipment).forEach(key => {
-        equipment[key].draw(left, top);
-        equipment[key].hover(left, top, x, y);
-    });
 }).unregister();
 
 const close = register("guiClosed", () => {
     // Clear out edit buttons
     Object.keys(buttons).forEach(key => {
-        try {
-            if (buttons[key].getIcon() === "barrier") delete buttons[key];
-        } catch (err) {
-            ChatLib.chat(key);
-            ChatLib.chat(err);
-        }
+        if (buttons[key].getIcon() === "barrier") delete buttons[key];
     });
     
     // Set registers
@@ -482,7 +462,7 @@ registerWhen(register("guiOpened", (event) => {
     close.register();
     render.register();
     Client.scheduleTask(1, () => {
-        click.register();
+        if (!editing.active) click.register();
         close.register();
         render.register();
     });
