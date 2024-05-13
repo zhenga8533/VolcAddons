@@ -153,7 +153,7 @@ const suggest = register("renderChat", () => {
 
 const key = register("guiKey", (_, keyCode, __, event) => {
     const chat = Client.getCurrentChatMessage();
-    if (!chat.startsWith('/') || chat.length < 3) return;
+    if (!chat.startsWith('/') || chat.length < 3 || suggestions.length === 0) return;
 
     if (keyCode === 200) {  // Up Key
         selected = MathLib.clamp(selected + 1, 0, suggestions.length - 1);
