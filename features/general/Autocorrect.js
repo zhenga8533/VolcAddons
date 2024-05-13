@@ -127,15 +127,8 @@ register("chat", (event) => correct(lastMessage, event))
  */
 let selected = 0;
 let suggestions = [];
+
 const suggest = register("renderChat", () => {
-    const chat = Client.getCurrentChatMessage();
-    if (!chat.startsWith('/') || chat.length < 3) return;
-
-    // Get possible commands and sort by frequency
-    suggestions = Object.keys(data.commands).filter(command => command.startsWith(chat.substring(1)));
-    suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
-    if (suggestions.length === 0) return;
-
     const select = suggestions.length - selected - 1;
     const strings = suggestions.map((command, index) => `${(index === select ? WHITE : GRAY) + command + DARK_GRAY} (${data.commands[command]})`);
 
@@ -151,9 +144,17 @@ const suggest = register("renderChat", () => {
     Renderer.drawString(strings.join('\n'), 9, y, true);
 }).unregister();
 
-const key = register("guiKey", (_, keyCode, __, event) => {
-    const chat = Client.getCurrentChatMessage();
-    if (!chat.startsWith('/') || chat.length < 3 || suggestions.length === 0) return;
+const key = register("guiKey", (char, keyCode, __, event) => {
+    let chat = Client.getCurrentChatMessage() + (keyCode <= 57 ? char : '');
+    if (keyCode === 14) chat = chat.substring(0, chat.length - 2);
+    suggestions = Object.keys(data.commands).filter(command => command.startsWith(chat.substring(1)));
+    suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
+
+    if (!chat.startsWith('/') || chat.length < 3 || suggestions.length === 0) {
+        suggest.unregister();
+        close.unregister();
+        return;
+    }
 
     if (keyCode === 200) {  // Up Key
         selected = MathLib.clamp(selected + 1, 0, suggestions.length - 1);
@@ -167,6 +168,9 @@ const key = register("guiKey", (_, keyCode, __, event) => {
         suggestions = Object.keys(data.commands).filter(command => command.startsWith(fill));
         selected = suggestions.indexOf(fill);
         cancel(event);
+    } else {
+        suggest.register();
+        close.register();
     }
 });
 
@@ -182,8 +186,6 @@ registerWhen(register("guiOpened", () => {
 
         selected = 0;
         key.register();
-        suggest.register();
-        close.register();
     });
 }), () => settings.autocomplete);
 
