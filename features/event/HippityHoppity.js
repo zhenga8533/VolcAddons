@@ -161,14 +161,29 @@ function findWorker() {
         }
     }
 
+    // Tower calc
+    const tower = items[39].getLore();
+    const towerI = tower.findIndex(line => line === "§5§o§7Cost");
+    if (towerI !== 1) {
+        const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
+        const towerValue = data.chocoProduction / data.chocoMultiplier * 0.00125 / towerCost;
+
+        if (towerValue > maxValue) {
+            bestWorker = 39;
+            maxValue = towerValue;
+            bestCost = towerCost;
+        }
+    }
+
     // Jackrabbit calc
     const jackrabbit = items[42].getLore();
-    const index = jackrabbit.findIndex(line => line === "§5§o§7Cost");
-    if (index === -1) return;
-    const cost = parseInt(jackrabbit[index + 1].removeFormatting().replace(/\D/g, ""));
-    const value = data.chocoProduction / data.chocoMultiplier * 0.01 / cost;
+    const jackI = jackrabbit.findIndex(line => line === "§5§o§7Cost");
+    if (jackI !== -1) {
+        const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));
+        const jackValue = data.chocoProduction / data.chocoMultiplier * 0.01 / jackCost;
 
-    if (value > maxValue) bestWorker = 42;
+        if (jackValue > maxValue) bestWorker = 42;
+    }
 }
 
 const workerFind = register("chat", () => {
