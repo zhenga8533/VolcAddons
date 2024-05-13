@@ -4,6 +4,7 @@ import { data } from "../../utils/data";
 import { registerWhen } from "../../utils/register";
 import { printList } from "../../utils/list";
 import { parseTexture } from "../../utils/functions/misc";
+import { drawBox } from "../../utils/functions/render";
 
 
 // Container offsets from top left [x, y]
@@ -163,23 +164,9 @@ export class Button {
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
         // Draw box
-        Renderer.translate(0, 0, 100);
-        Renderer.drawRect(COLOR_SCHEMES[settings.containerButtons - 1][0], x, y, 16, 16);
-        if (this.#hovered) {
-            Renderer.translate(0, 0, 100);
-            Renderer.drawRect(BOX_HIGHLIGHT, x, y, 16, 16);
-        }
-
-        // Draw border
+        const boxColor = this.#hovered ? BOX_HIGHLIGHT : COLOR_SCHEMES[settings.containerButtons - 1][0];
         const borderColor = this.#hovered ? BORDER_HIGHLIGHT : COLOR_SCHEMES[settings.containerButtons - 1][1];
-        Renderer.translate(0, 0, 101);
-        Renderer.drawLine(borderColor, x - 1, y - 1, x + 17, y - 1, 1);
-        Renderer.translate(0, 0, 101);
-        Renderer.drawLine(borderColor, x - 1, y - 1, x - 1, y + 17, 1);
-        Renderer.translate(0, 0, 101);
-        Renderer.drawLine(borderColor, x - 1, y + 17, x + 17, y + 17, 1);
-        Renderer.translate(0, 0, 101);
-        Renderer.drawLine(borderColor, x + 17, y - 1, x + 17, y + 17, 1);
+        drawBox(x, y, 100, 16, 16, boxColor, borderColor);
         this.#item.draw(x, y, 1, 1);
     }
 

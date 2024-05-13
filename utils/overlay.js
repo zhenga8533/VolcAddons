@@ -1,6 +1,7 @@
 import location from "./location";
 import settings from "./settings";
 import { GREEN, ITALIC, LOGO } from "./constants";
+import { drawBox } from "./functions/render";
 
 
 /**
@@ -33,6 +34,10 @@ const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, H to swap f
 const INSTRUCT_WIDTH = Renderer.getStringWidth(GUI_INSTRUCT);
 const gui = new Gui();
 
+const BORDER_COLOR = Renderer.color(128, 128, 128, 128);
+const RECT_COLOR = Renderer.color(0, 0, 0, 128);
+const EDIT_COLOR = Renderer.color(64, 64, 64, 128);
+
 let overlays = [];
 let overlaid = [];
 let currentOverlay = undefined;
@@ -50,10 +55,10 @@ const moving = register("renderOverlay", () => {
         const x = o.loc[0] - (o.loc[3] ? o.ewidth : 0);
         const y = o.loc[1];
 
-        Renderer.drawRect(
-            o.loc[5] ? Renderer.color(0, 0, 0, 128) : Renderer.color(128, 128, 128, 128),
-            x - 3 * scale, y - 3 * scale,
-            o.ewidth + 5 * scale, o.eheight + 5 * scale
+        drawBox(
+            x - 3 * scale, y - 3 * scale, 0, 
+            o.ewidth + 5 * scale, o.eheight + 5 * scale, 
+            o.loc[5] ? RECT_COLOR : EDIT_COLOR, BORDER_COLOR
         );
         renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 0);
     });
@@ -148,10 +153,10 @@ Object.keys(renders).forEach(key => {
                 if (!(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;
 
                 if (render.loc[5] && render.width !== 0) {
-                    Renderer.drawRect(
-                        Renderer.color(0, 0, 0, 128),
-                        render.loc[0] - (render.loc[3] ? render.ewidth : 0) - 3 * render.loc[2], render.loc[1] - 3 * render.loc[2],
-                        render.width + 5 * render.loc[2], render.height + 5 * render.loc[2]
+                    drawBox(
+                        render.loc[0] - (render.loc[3] ? render.ewidth : 0) - 3 * render.loc[2], render.loc[1] - 3 * render.loc[2], 0, 
+                        render.width + 5 * render.loc[2], render.height + 5 * render.loc[2], 
+                        RECT_COLOR, BORDER_COLOR
                     );
                 }
                 renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4], 0);
@@ -213,10 +218,10 @@ export class Overlay {
 
             // Draw example text
             if (this.loc[5]) {
-                Renderer.drawRect(
-                    Renderer.color(0, 0, 0, 128),
-                    this.loc[0] - (this.loc[3] ? this.ewidth : 0) - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2],
-                    this.ewidth + 5 * this.loc[2], this.eheight + 5 * this.loc[2]
+                drawBox(
+                    this.loc[0] - (this.loc[3] ? this.ewidth : 0) - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2], 0, 
+                    this.ewidth + 5 * this.loc[2], this.eheight + 5 * this.loc[2], 
+                    o.loc[5] ? RECT_COLOR : EDIT_COLOR, BORDER_COLOR
                 );
             }
             renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4], 0);
