@@ -121,6 +121,9 @@ let lastMessage = "";
 register("chat", (event) => correct(lastMessage, event))
 .setCriteria("Unknown destination! Check the Fast Travel menu to view options!");
 
+register("chat", (event) => correct(lastMessage, event))
+.setCriteria("You don't have permission to run that command!");
+
 
 /**
  * Autocomplete
@@ -149,6 +152,7 @@ const key = register("guiKey", (char, keyCode, __, event) => {
     if (keyCode === 14) chat = chat.substring(0, chat.length - 2);
     suggestions = Object.keys(data.commands).filter(command => command.startsWith(chat.substring(1)));
     suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
+    selected = MathLib.clamp(selected, 0, Math.max(0, suggestions.length - 1));
 
     if (!chat.startsWith('/') || chat.length < 3 || suggestions.length === 0) {
         suggest.unregister();
