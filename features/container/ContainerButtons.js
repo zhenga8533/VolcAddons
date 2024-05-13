@@ -24,7 +24,9 @@ const COLOR_SCHEMES = [
     [Renderer.color(0, 0, 0, 0), Renderer.color(0, 0, 0, 0)],  // Transparent
     [Renderer.color(255, 255, 255, 16), Renderer.color(169, 169, 169, 128)],  // Semi-Transparent
     [Renderer.color(82, 92, 136, 128), Renderer.color(44, 53, 77, 255)]  // FurfSky
-]
+];
+const BOX_HIGHLIGHT = Renderer.color(0, 255, 255, 64);
+const BORDER_HIGHLIGHT = Renderer.color(0, 255, 255, 255);
 
 // Editing inputs and rendering
 const editing = {
@@ -51,6 +53,7 @@ export class Button {
     #icon;
     #item;
     #invOnly;
+    #hovered;
     #edit = false;
     #condition;
 
@@ -162,16 +165,24 @@ export class Button {
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
+        // Draw box
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(COLOR_SCHEMES[settings.containerButtons - 1][0], x, y, 16, 16);
-        Renderer.translate(0, 0, 100);
-        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y - 1, x + 17, y - 1, 1);
-        Renderer.translate(0, 0, 100);
-        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y - 1, x - 1, y + 17, 1);
-        Renderer.translate(0, 0, 100);
-        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x - 1, y + 17, x + 17, y + 17, 1);
-        Renderer.translate(0, 0, 100);
-        Renderer.drawLine(COLOR_SCHEMES[settings.containerButtons - 1][1], x + 17, y - 1, x + 17, y + 17, 1);
+        if (this.#hovered) {
+            Renderer.translate(0, 0, 100);
+            Renderer.drawRect(BOX_HIGHLIGHT, x, y, 16, 16);
+        }
+
+        // Draw border
+        const borderColor = this.#hovered ? BORDER_HIGHLIGHT : COLOR_SCHEMES[settings.containerButtons - 1][1];
+        Renderer.translate(0, 0, 101);
+        Renderer.drawLine(borderColor, x - 1, y - 1, x + 17, y - 1, 1);
+        Renderer.translate(0, 0, 101);
+        Renderer.drawLine(borderColor, x - 1, y - 1, x - 1, y + 17, 1);
+        Renderer.translate(0, 0, 101);
+        Renderer.drawLine(borderColor, x - 1, y + 17, x + 17, y + 17, 1);
+        Renderer.translate(0, 0, 101);
+        Renderer.drawLine(borderColor, x + 17, y - 1, x + 17, y + 17, 1);
         this.#item.draw(x, y, 1, 1);
     }
 
@@ -190,8 +201,12 @@ export class Button {
         const x = dx + this.#x;
         const y = dy + this.#y + (this.#loc !== "bottom" ? 0 :
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
-        if (hx < x || hx > x + 16 || hy < y || hy > y + 16) return;
+        if (hx < x || hx > x + 16 || hy < y || hy > y + 16) {
+            this.#hovered = false;
+            return;
+        }
 
+        this.#hovered = true;
         Renderer.translate(0, 0, 500);
         Renderer.drawRect(Renderer.color(0, 0, 0, 128), hx + 2, hy - 16, Renderer.getStringWidth('/' + this.#command) + 6, 14);
         Renderer.translate(0, 0, 500);
