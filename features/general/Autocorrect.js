@@ -74,6 +74,8 @@ function autocorrect(inputWord, dictionary) {
  * @returns {String} - The corrected command if autocorrection is enabled; otherwise, returns null.
 */
 function correct(command, event) {
+    // Remove command from cache
+    data.commands[command] -= 2;
     command.split(' ').forEach((word, index) => {
         const wordbank = data.wordbanks[index];
         wordbank[word] -= 2;
