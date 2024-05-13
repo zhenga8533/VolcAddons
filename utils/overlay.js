@@ -221,7 +221,7 @@ export class Overlay {
                 drawBox(
                     this.loc[0] - (this.loc[3] ? this.ewidth : 0) - 3 * this.loc[2], this.loc[1] - 3 * this.loc[2], 0, 
                     this.ewidth + 5 * this.loc[2], this.eheight + 5 * this.loc[2], 
-                    o.loc[5] ? RECT_COLOR : EDIT_COLOR, BORDER_COLOR
+                    this.loc[5] ? RECT_COLOR : EDIT_COLOR, BORDER_COLOR
                 );
             }
             renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4], 0);

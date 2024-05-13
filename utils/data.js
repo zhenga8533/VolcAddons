@@ -24,7 +24,7 @@ const DEFAULT_GUI = {
     "LL": [770, 70, 1.2, false, false, true], // Server Status Location
     "ML": [780, 390, 1.2, false, false, true], // Coins Location
     "OL": [10, 130, 1.2, false, false, true], // Composter Location
-    "PL": [10, 100, 1.2, false, false, true], // Powder Location
+    "PL": [10, 85, 1.2, false, false, true], // Powder Location
     "QL": [250, 225, 4, false, false, true], // Vanquisher Location
     "RL": [600, 175, 1, false, false, true], // Container Value Location
     "SL": [10, 180, 1.2, false, false, true], // Splits Location
@@ -37,9 +37,9 @@ const DEFAULT_GUI = {
     "ZL": [780, 330, 1.2, false, false, true], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false, true], // Bingo Card Location
     "BEL": [180, 10, 1.2, false, false, true], // Bestiary Counter Location
-    "CDL": [190, 115, 1.2, false, false, true], // Commission Display Location
+    "CDL": [185, 65, 1.2, false, false, true], // Commission Display Location
     "CEL": [375, 275, 3, false, false, true], // Crate edit location
-    "CFL": [180, 130, 1.2, false, false, true], // Chocolate factory location
+    "CFL": [625, 120, 1.2, false, false, true], // Chocolate factory location
     "CGL": [625, 70, 1.2, false, false, true], // Chocolate egg location
     "CPL": [575, 160, 1, false, false, false], // Container preview location
     "EQL": [905, 65, 1.2, false, false, false], // Equipment Location

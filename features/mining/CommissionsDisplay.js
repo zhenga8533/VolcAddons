@@ -57,7 +57,7 @@ registerWhen(register("step", () => {
     let index = tab.findIndex(name => name === "§r§9§lCommissions:§r");
     if (index === -1) return;
 
-    let commissionMessage = tab[index++] + '\n';
+    let commissionMessage = tab[index++];
     commissionWaypoints = [["Base Camp", 0xffd700, 0.5, 129, 200.5]];
     closestWaypoints = [];
     while (tab[index].startsWith("§r §r§f")) {
