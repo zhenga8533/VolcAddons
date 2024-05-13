@@ -177,6 +177,12 @@ const workerFind = register("chat", () => {
     });
 }).setCriteria("Rabbit ${rabbit} has been promoted to ${rank}!").unregister();
 
+const coachFind = register("chat", () => {
+    Client.scheduleTask(2, () => {
+        findWorker();
+    });
+}).setCriteria("You upgraded to Coach Jackrabbit ${rank}!").unregister();
+
 const workerHighlight = register("guiRender", () => {
     if (bestWorker === 0) return;
     const containerType = Player.getContainer().getClassName();
@@ -192,6 +198,7 @@ const workerHighlight = register("guiRender", () => {
 const chocomatte = register("guiClosed", () => {
     chocomatte.unregister();
     updateChocolate.unregister();
+    coachFind.unregister();
     workerFind.unregister();
     workerHighlight.unregister();
 }).unregister();
@@ -203,6 +210,7 @@ registerWhen(register("guiOpened", () => {
         updateChocolate.register();
         if (settings.workerHighlight) {
             findWorker();
+            coachFind.register();
             workerFind.register();
             workerHighlight.register();
             chocomatte.register();
