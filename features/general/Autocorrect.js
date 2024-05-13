@@ -1,8 +1,8 @@
 import settings from "../../utils/settings";
-import { GREEN, LOGO, RED } from "../../utils/constants";
-import { delay } from "../../utils/thread";
+import { DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { data } from "../../utils/data";
 import { registerWhen } from "../../utils/register";
+import { delay } from "../../utils/thread";
 
 
 /**
@@ -117,6 +117,73 @@ let lastMessage = "";
 register("chat", (event) => correct(lastMessage, event))
 .setCriteria("Unknown destination! Check the Fast Travel menu to view options!");
 
+
+/**
+ * Autocomplete
+ */
+let selected = 0;
+let suggestions = [];
+const suggest = register("renderChat", () => {
+    const chat = Client.getCurrentChatMessage();
+    if (!chat.startsWith('/') || chat.length < 3) return;
+
+    // Get possible commands and sort by frequency
+    suggestions = Object.keys(data.commands).filter(command => command.startsWith(chat.substring(1)));
+    suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
+    if (suggestions.length === 0) return;
+
+    const select = suggestions.length - selected - 1;
+    const strings = suggestions.map((command, index) => `${(index === select ? WHITE : GRAY) + command + DARK_GRAY} (${data.commands[command]})`);
+
+    // Draw suggestions
+    const width = Renderer.getStringWidth(strings.reduce((longest, current) => current.length > longest.length ? current : longest, ''));
+    const height = strings.length * 9;
+    const y = Renderer.screen.getHeight() - 18 - height;
+
+    Renderer.translate(0, 0, 300);
+    Renderer.drawRect(Renderer.color(0, 0, 0, 128), 7, y - 2, width + 4, height + 4);
+
+    Renderer.translate(0, 0, 300);
+    Renderer.drawString(strings.join('\n'), 9, y, true);
+}).unregister();
+
+const key = register("guiKey", (_, keyCode, __, event) => {
+    const chat = Client.getCurrentChatMessage();
+    if (!chat.startsWith('/') || chat.length < 3) return;
+
+    if (keyCode === 200) {  // Up Key
+        selected = MathLib.clamp(selected + 1, 0, suggestions.length - 1);
+        cancel(event);
+    } else if (keyCode === 208) {  // Down Key
+        selected = MathLib.clamp(selected - 1, 0, suggestions.length - 1);
+        cancel(event);
+    } else if (keyCode === 15) {  // Tab Key
+        const fill = suggestions[suggestions.length - selected - 1];
+        Client.setCurrentChatMessage('/' + fill);
+        suggestions = Object.keys(data.commands).filter(command => command.startsWith(fill));
+        selected = suggestions.indexOf(fill);
+        cancel(event);
+    }
+});
+
+const close = register("guiClosed", () => {
+    key.unregister();
+    suggest.unregister();
+    close.unregister();
+}).unregister();
+
+registerWhen(register("guiOpened", () => {
+    Client.scheduleTask(1, () => {
+        if (!Client.isInChat()) return;
+
+        selected = 0;
+        key.register();
+        suggest.register();
+        close.register();
+    });
+}), () => settings.autocomplete);
+
+
 /**
  * Save words to wordbank.
  */
@@ -137,13 +204,6 @@ register("messageSent", (message) => {
     if (data.commands.hasOwnProperty(lastMessage)) data.commands[lastMessage]++;
     else data.commands[lastMessage] = 1;
 });
-
-registerWhen(register("guiKey", (_, code) => {
-    if (!Client.isInChat()) return;
-
-    const chat = Client.getCurrentChatMessage();
-    if (!chat.startsWith('/') || chat.length < 3) return;
-}), () => settings.autocorrect);
 
 /**
  * Reset commands.

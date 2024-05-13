@@ -313,7 +313,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     // --- Yapping ---
     @SwitchProperty({
         name: "Autocomplete Command",
-        description: "Attempts to autocomplete commands with the most used commands of the past.",
+        description: "Attempts to autocomplete commands with the most used commands. Use arrow keys to navigate through suggestions and tab to select suggestion.",
         category: "General",
         subcategory: "Yapping"
     })
