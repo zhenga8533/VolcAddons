@@ -41,6 +41,7 @@ const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 3
 // Local cache
 let buttons = {};
 let container;
+let equipment = [];  // CBA to rework just to implement this, so brute force it is :D
 
 export class Button {
     #clicked;
@@ -58,7 +59,7 @@ export class Button {
     #condition;
 
     /**
-     * Boop. Another poorly written class that patches up errors as they came up :).
+     * Boop. Another poorly written class that patches up errors as they came up ^_^
      * 
      * @param {String} loc - "Top", "Right", "Bottom", or "Left" used to set offset.
      * @param {Number} index - Relative inventory index position. Will be used to determine if button should be rendered 
@@ -77,7 +78,8 @@ export class Button {
         this.#invOnly = loc.startsWith("inv");
         this.setItem(icon);
         this.#condition = condition;
-        buttons[this.#id] = this;
+
+        if (loc === "eq") equipment.push(this);
     }
 
     /**
@@ -233,7 +235,8 @@ export class Button {
         if (cx < x || cx > x + 16 || cy < y || cy > y + 16) return false;
 
         if (editing.active) {
-            if (button === 0) {
+            if (this.#id.startsWith("eq")) return false;
+            else if (button === 0) {
                 if (this.#edit) {
                     this.#clicked();
                     return true;
@@ -250,7 +253,7 @@ export class Button {
                 commandInput.func_146195_b(true);
             } else {
                 delete buttons[this.#id];
-                new Button(this.#loc, this.#index, () => {
+                button[this.#id] = new Button(this.#loc, this.#index, () => {
                     editing.id = this.#id;
                     editing.loc = this.#loc;
                     editing.index = this.#index;
@@ -353,7 +356,7 @@ function createButtons(start, end, increment, category) {
         if (buttons.hasOwnProperty(id)) continue;
         
         let j = i / 1;  // Why tf does i act like a pointer
-        new Button(category, i, () => {
+        buttons[id] = new Button(category, i, () => {
             editing.id = id;
             editing.index = j;
             editing.loc = category;
@@ -423,6 +426,11 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
         if (buttons[key].getIndex() > size) return;
         buttons[key].click(left, top, x, y, button);
     });
+
+    Object.keys(equipment).forEach(key => {
+        if (equipment[key].getIndex() > size) return;
+        equipment[key].click(left, top, x, y, button);
+    });
 }).unregister();
 
 const render = register("guiRender", (x, y, gui) => {
@@ -434,6 +442,11 @@ const render = register("guiRender", (x, y, gui) => {
         if (buttons[key].getIndex() > size) return;
         buttons[key].draw(left, top);
         buttons[key].hover(left, top, x, y);
+    });
+
+    Object.keys(equipment).forEach(key => {
+        equipment[key].draw(left, top);
+        equipment[key].hover(left, top, x, y);
     });
 }).unregister();
 
@@ -472,7 +485,7 @@ registerWhen(register("guiOpened", (event) => {
         click.register();
         close.register();
         render.register();
-    })
+    });
 }), () => settings.containerButtons !== 0);
 
 /**
@@ -492,7 +505,7 @@ function loadButtons() {
     buttons = {};
     Object.keys(data.buttons).forEach(key => {
         const button = data.buttons[key];
-        new Button(button[0], button[1], () => {
+        buttons[key] = new Button(button[0], button[1], () => {
             ChatLib.command(button[2])
         }, button[2], button[3]);
     });
