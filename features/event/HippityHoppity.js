@@ -145,6 +145,7 @@ function findWorker() {
     bestWorker = 0;
     const items = Player.getContainer().getItems();
 
+    // Worker calc
     let maxValue = 0;
     for (let i = 29; i < 34; i++) {
         let worker = items[i].getLore();
@@ -159,6 +160,15 @@ function findWorker() {
             bestCost = cost;
         }
     }
+
+    // Jackrabbit calc
+    const jackrabbit = items[42].getLore();
+    const index = jackrabbit.findIndex(line => line === "§5§o§7Cost");
+    if (index === -1) return;
+    const cost = parseInt(jackrabbit[index + 1].removeFormatting().replace(/\D/g, ""));
+    const value = data.chocoProduction / data.chocoMultiplier * 0.01 / cost;
+
+    if (value > maxValue) bestWorker = 42;
 }
 
 const workerFind = register("chat", () => {
