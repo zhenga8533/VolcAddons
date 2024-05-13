@@ -13,7 +13,7 @@ import { GREEN, ITALIC, LOGO } from "./constants";
  * @param {Boolean} align - True for right align, or false for left align.
  * @param {Boolean} flex - True for vertical flex, or false for horizontal flex.
  */
-function renderScale(x, y, text, scale=1, align=false, flex=false) {
+function renderScale(x, y, text, scale=1, align=false, flex=false, z=0) {
     // Apply parameters
     x /= scale;
     y /= scale;
@@ -21,6 +21,7 @@ function renderScale(x, y, text, scale=1, align=false, flex=false) {
 
     // Scale and render
     Renderer.scale(scale);
+    Renderer.translate(0, 0, z ?? 300);
     if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(settings.textShadow).draw();
     else Renderer.drawString(text, x, y, settings.textShadow);
 }
@@ -54,11 +55,11 @@ const moving = register("renderOverlay", () => {
             x - 3 * scale, y - 3 * scale,
             o.ewidth + 5 * scale, o.eheight + 5 * scale
         );
-        renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4]);
+        renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 1);
     });
 
     // GUI Instructions
-    renderScale((Renderer.screen.getWidth() - INSTRUCT_WIDTH) / 2, Renderer.screen.getHeight() / 2, GUI_INSTRUCT, 1);
+    renderScale((Renderer.screen.getWidth() - INSTRUCT_WIDTH) / 2, Renderer.screen.getHeight() / 2, GUI_INSTRUCT, 1, false, false, 500);
 }).unregister();
 
 /**
@@ -153,7 +154,7 @@ Object.keys(renders).forEach(key => {
                         render.width + 5 * render.loc[2], render.height + 5 * render.loc[2]
                     );
                 }
-                renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4]);
+                renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4], 1);
             }
         });
     });
@@ -203,9 +204,11 @@ export class Overlay {
             // Coords and scale
             const coords = `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(2)}`;
             const align = this.loc[0] + Renderer.getStringWidth(coords) > width;
-            renderScale(this.loc[0] + (align ? -2 : 2), this.loc[1] - 10, coords, 1, align);
+            renderScale(this.loc[0] + (align ? -2 : 2), this.loc[1] - 10, coords, 1, align, false, 300);
 
+            Renderer.translate(0, 0, 300);
             Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], height, 0.5);
+            Renderer.translate(0, 0, 300);
             Renderer.drawLine(Renderer.WHITE, width, this.loc[1], 1, this.loc[1], 0.5);
 
             // Draw example text
@@ -216,10 +219,10 @@ export class Overlay {
                     this.ewidth + 5 * this.loc[2], this.eheight + 5 * this.loc[2]
                 );
             }
-            renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4]);
+            renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4], 1);
 
             // GUI Instructions
-            renderScale((width - INSTRUCT_WIDTH) / 2, height / 2, GUI_INSTRUCT, 1);
+            renderScale((width - INSTRUCT_WIDTH) / 2, height / 2, GUI_INSTRUCT, 1, false, false, 500);
         }).unregister();
 
         // Register editing stuff
