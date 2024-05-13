@@ -1,25 +1,3 @@
 [
-    "- Added calendar real time",
-    "- Added inventory buttons (`/va buttons`)",
-    "- Added bestiary tracker",
-    "- Added texture schemes to container preview",
-    "- Added Skyblock XP alert",
-    "- Reworked autocomplete",
-    "- Changed overlay boxes to have outlines",
-    "- Changed equipment display to also display buttons",
-    "- Changed slot binding commands (`/va binds`)",
-    "- Changed some rendering to be more optimized",
-    "- Changed autocorrect to be more reliable",
-    "- Changed some overlay formatting and colors",
-    "- Fixed features not registering in Hub",
-    "- Fixed chocolate calculations",
-    "- Fixed spamlist",
-    "- Fixed valuelist",
-    "- Fixed tooltip flicker",
-    "- Fixed `/pesttp` parsing",
-    "- Fixed skulls rendering without skin",
-    "- Fixed no pet display",
-    "- Removed `/va test`",
-    "- Removed `/va be`",
-    "- Removed Garden webhook"
+    "- TBD: Added Jackrabbit to rabbit calc"
 ]

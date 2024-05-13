@@ -161,7 +161,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     
     @SwitchProperty({
         name: "SkyBlock XP Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Displays a chat message and title when player gains SkyBlock XP in actionBar.`,
+        description: "Displays a chat message and title when player gains SkyBlock XP in actionBar.",
         category: "General",
         subcategory: "General"
     })
@@ -359,7 +359,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
 
     @SelectorProperty({
         name: "Container Buttons ",
-        description: `${DARK_RED}NEW! ${GRAY}Display buttons that runs a command when pressed. Use ${AQUA}/va buttons ${GRAY}to view related commands.`,
+        description: `Display buttons that runs a command when pressed. Use ${AQUA}/va buttons ${GRAY}to view related commands.`,
         category: "Container",
         subcategory: "Container",
         options: ["OFF", "Default", "Transparent", "Semi-Transparent", "FurfSky"]
@@ -604,7 +604,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Bestiary ---
     @SwitchProperty({
         name: "Bestiary Counter",
-        description: `${DARK_RED}NEW! ${GRAY}Tracks bestiary hourly progress using tablist widget.
+        description: `Tracks bestiary hourly progress using tablist widget.
 Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}.`,
         category: "Combat",
         subcategory: "Bestiary"
