@@ -1052,12 +1052,12 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
     })
     inqCounter = 0;
 
-    // --- Skyblock ---
+    // --- SkyBlock ---
     @SelectorProperty({
         name: "Bingo Card Overlay",
         description: `Displays bingo card goals on screen as an overlay.\nMove GUI with ${AQUA}/moveBingo${GRAY}.`,
         category: "Event",
-        subcategory: "Skyblock",
+        subcategory: "SkyBlock",
         options: ["OFF", "All", "Personal", "Community"]
     })
     bingoCard = 0;
@@ -1066,7 +1066,7 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
         name: "Calendar Time",
         description: "Adds the local start and end time to the tooltip of calendar events.",
         category: "Event",
-        subcategory: "Skyblock"
+        subcategory: "SkyBlock"
     })
     calendarTime = false;
 
