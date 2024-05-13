@@ -148,7 +148,8 @@ registerWhen(register("tick", () => {
             data.playtime < 10_800 ? YELLOW :
             data.playtime < 18_000 ? GOLD : 
             data.playtime < 28_800 ? RED : DARK_RED;
-        statsMessage += `${GRAY}[${GOLD}Daily PT${GRAY}] ${ptColor + formatTime(data.playtime)}`;
+        const formattedPlaytime = formatTime(data.playtime).replace(/\d+/g, (match) => `${WHITE}${match}${ptColor}`);
+        statsMessage += `${GRAY}[${GOLD}Daily PT${GRAY}] ${formattedPlaytime}`;
     }
 
     statsOverlay.setMessage(statsMessage);
