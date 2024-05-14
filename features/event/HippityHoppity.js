@@ -144,6 +144,7 @@ let bestCost = 0;
 function findWorker() {
     bestWorker = 0;
     const items = Player.getContainer().getItems();
+    const baseMultiplier = data.chocoMultiplier - data.timeTower.bonus;
 
     // Worker calc
     let maxValue = 0;
@@ -152,7 +153,7 @@ function findWorker() {
         let index = worker.findIndex(line => line === "§5§o§7Cost");
         if (index === -1) continue;
         let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
-        let value = (i - 28) / cost;
+        let value = (i - 28) * baseMultiplier / cost;
 
         if (value > maxValue) {
             bestWorker = i;
@@ -166,7 +167,7 @@ function findWorker() {
     const towerI = tower.findIndex(line => line === "§5§o§7Cost");
     if (towerI !== 1) {
         const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
-        const towerValue = data.chocoProduction / data.chocoMultiplier * 0.0125 / towerCost;
+        const towerValue = data.chocoProduction / baseMultiplier * 0.0125 / towerCost;
 
         if (towerValue > maxValue) {
             bestWorker = 39;
@@ -180,7 +181,7 @@ function findWorker() {
     const jackI = jackrabbit.findIndex(line => line === "§5§o§7Cost");
     if (jackI !== -1) {
         const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));
-        const jackValue = data.chocoProduction / data.chocoMultiplier * 0.01 / jackCost;
+        const jackValue = data.chocoProduction / baseMultiplier * 0.01 / jackCost;
 
         if (jackValue > maxValue) {
             bestWorker = 42;
