@@ -3,5 +3,6 @@
     "- Changed worker to calc Jackrabbit/Tower",
     "- Changed overlay to show border",
     "- Changed slot binding functionality",
-    "- Changed autocomplete to be more responsive"
+    "- Changed autocomplete to be more responsive",
+    "- Changed powder tracker to be more compact"
 ]
