@@ -170,7 +170,8 @@ const key = register("guiKey", (char, keyCode, __, event) => {
         const fill = suggestions[suggestions.length - selected - 1];
         Client.setCurrentChatMessage('/' + fill);
         suggestions = Object.keys(data.commands).filter(command => command.startsWith(fill));
-        selected = suggestions.indexOf(fill);
+        suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
+        selected = suggestions.length - suggestions.indexOf(fill) - 1;
         cancel(event);
     } else {
         suggest.register();
