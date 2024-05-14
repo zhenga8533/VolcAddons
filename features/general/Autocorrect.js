@@ -93,7 +93,7 @@ function correct(command, event) {
     
     // Attempt to run new command
     const newCommand = corrected.join(' ');
-    if (newCommand !== command) {
+    if (newCommand !== command && data.commands.hasOwnProperty(newCommand)) {
         // Run new command
         cancel(event);
         ChatLib.chat(`${LOGO + RED}Invalid command: "/${command}", attempting to run: "/${newCommand}"!`);
