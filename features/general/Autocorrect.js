@@ -148,7 +148,7 @@ const suggest = register("renderChat", () => {
 }).unregister();
 
 const key = register("guiKey", (char, keyCode, __, event) => {
-    let chat = Client.getCurrentChatMessage() + (keyCode <= 57 ? char : '');
+    let chat = Client.getCurrentChatMessage() + (keyCode <= 57 && keyCode !== 15 ? char : '');
     if (keyCode === 14) chat = chat.substring(0, chat.length - 2);
     suggestions = Object.keys(data.commands).filter(command => command.startsWith(chat.substring(1)));
     suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
@@ -176,7 +176,7 @@ const key = register("guiKey", (char, keyCode, __, event) => {
         suggest.register();
         close.register();
     }
-});
+}).unregister();
 
 const close = register("guiClosed", () => {
     key.unregister();
