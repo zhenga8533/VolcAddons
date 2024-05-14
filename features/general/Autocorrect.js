@@ -156,7 +156,6 @@ const key = register("guiKey", (char, keyCode, __, event) => {
 
     if (!chat.startsWith('/') || chat.length < 3 || suggestions.length === 0) {
         suggest.unregister();
-        close.unregister();
         return;
     }
 
@@ -173,10 +172,7 @@ const key = register("guiKey", (char, keyCode, __, event) => {
         suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
         selected = suggestions.length - suggestions.indexOf(fill) - 1;
         cancel(event);
-    } else {
-        suggest.register();
-        close.register();
-    }
+    } else suggest.register();
 }).unregister();
 
 const close = register("guiClosed", () => {
@@ -187,10 +183,11 @@ const close = register("guiClosed", () => {
 
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, () => {
-        if (!Client.isInChat()) return;
+        if (!Client.currentGui.get().toString().includes("GuiChat")) return;
 
         selected = 0;
         key.register();
+        close.register();
     });
 }), () => settings.autocomplete);
 
