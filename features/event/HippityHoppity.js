@@ -190,16 +190,22 @@ function findWorker() {
 }
 
 const workerFind = register("chat", () => {
-    Client.scheduleTask(2, () => {
+    Client.scheduleTask(1, () => {
         findWorker();
     });
 }).setCriteria("Rabbit ${rabbit} has been promoted to ${rank}!").unregister();
 
 const coachFind = register("chat", () => {
-    Client.scheduleTask(2, () => {
+    Client.scheduleTask(1, () => {
         findWorker();
     });
 }).setCriteria("You upgraded to Coach Jackrabbit ${rank}!").unregister();
+
+const towerFind = register("chat", () => {
+    Client.scheduleTask(1, () => {
+        findWorker();
+    });
+}).setCriteria("You upgraded to Time Tower ${rank}!").unregister();
 
 const workerHighlight = register("guiRender", () => {
     if (bestWorker === 0) return;
@@ -217,6 +223,7 @@ const chocomatte = register("guiClosed", () => {
     chocomatte.unregister();
     updateChocolate.unregister();
     coachFind.unregister();
+    towerFind.unregister();
     workerFind.unregister();
     workerHighlight.unregister();
 }).unregister();
@@ -229,6 +236,7 @@ registerWhen(register("guiOpened", () => {
         if (settings.workerHighlight) {
             findWorker();
             coachFind.register();
+            towerFind.register();
             workerFind.register();
             workerHighlight.register();
             chocomatte.register();
