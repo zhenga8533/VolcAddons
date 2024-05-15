@@ -201,10 +201,13 @@ export class Button {
         } else {
             const lore = this.#item.getLore().slice(1);
             const width = lore.reduce((max, line) => Math.max(max, Renderer.getStringWidth(line)), 0);
-            const height = lore.length * 9;
-            drawBox(hx + 2, hy - height - 2, 500, width + 6, height + 4, Renderer.BLACK, BORDER_COLOR)
-            Renderer.translate(0, 0, 500);
-            Renderer.drawString(lore.join('\n'), hx + 5, hy - height + 2);
+            const height = lore.length * 9 + 4;
+            const x = hx + 8 + width > Renderer.screen.getWidth() ? Renderer.screen.getWidth() - width : hx + 8;
+            const y = hy - 16 + height > Renderer.screen.getHeight() ? Renderer.screen.getHeight() - height : hy - 16;
+
+            drawBox(x + 2, y, 999, width + 6, height + 4, Renderer.BLACK, BORDER_COLOR);
+            Renderer.translate(0, 0, 999);
+            Renderer.drawString(lore.join('\n'), x + 5, y + 2);
         }
     }
 
