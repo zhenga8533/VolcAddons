@@ -3,7 +3,7 @@ import { formatTime, romanToNum, unformatNumber } from "../../utils/functions/fo
 import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
-import { BOLD, DARK_GRAY, GOLD, GRAY, RED, UNDERLINE, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE, YELLOW } from "../../utils/constants";
 import { Json } from "../../utils/json";
 
 
@@ -111,11 +111,13 @@ const bestiaryExample =
 const bestiaryOverlay = new Overlay("bestiaryCounter", data.BEL, "moveBe", bestiaryExample);
 
 // Dict of [start, now, next]
-const beCounter = {};
+let beCounter = {};
 let beTime = 0;
 
 register("command", () => {
     beCounter = {};
+    bestiaryOverlay.setMessage("");
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset bestiary counter.`);
 }).setName("resetBe");
 
 registerWhen(register("step", () => {
