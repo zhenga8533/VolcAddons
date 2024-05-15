@@ -28,6 +28,7 @@ const COLOR_SCHEMES = [
 ];
 const BOX_HIGHLIGHT = Renderer.color(0, 255, 255, 64);
 const BORDER_HIGHLIGHT = Renderer.color(0, 255, 255, 255);
+const BORDER_COLOR = Renderer.color(128, 128, 128, 128);
 
 // Editing inputs and rendering
 const editing = {
@@ -66,7 +67,7 @@ export class Button {
      * @param {String} command - Command args that are called in the callback. Used to cache data.
      * @param {String} icon - Minecraft item id used to draw logo. Barrier icon is reserved for edit buttons.
      */
-    constructor(loc, index, clicked, command="", icon="barrier") {
+    constructor(loc, index, clicked, command="", icon="barrier", lore) {
         this.#clicked = clicked;
         this.#loc = loc;
         this.#index = index;
@@ -75,7 +76,7 @@ export class Button {
         this.#x = OFFSETS[this.#loc][0] + 18 * (this.#index % 9);
         this.#y = OFFSETS[this.#loc][1] + 18 * ~~(this.#index / 9);
         this.#invOnly = loc.startsWith("inv");
-        this.setItem(icon);
+        this.setItem(icon, lore);
     }
 
     /**
@@ -101,7 +102,7 @@ export class Button {
      * 
      * @param {String} icon - Name used to find Minecraft item ID.
      */
-    setItem(icon) {
+    setItem(icon, lore) {
         try {
             const texture = icon === "skull" ? Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor) :
                 icon.length > 32 ? icon : 
@@ -113,6 +114,7 @@ export class Button {
 
                 const item = new Item(397).setDamage(3);
                 item.itemStack.func_77982_d(tag.rawNBT);
+                if (lore !== undefined) item.setLore([...lore]);  // Make sure lore is an array
                 this.#item = item;
                 this.#icon = texture;
             } else {
@@ -191,10 +193,19 @@ export class Button {
         }
 
         this.#hovered = true;
-        Renderer.translate(0, 0, 500);
-        Renderer.drawRect(Renderer.color(0, 0, 0, 128), hx + 2, hy - 16, Renderer.getStringWidth('/' + this.#command) + 6, 14);
-        Renderer.translate(0, 0, 500);
-        Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx + 5, hy - 13);
+        if (this.#item.getLore().length === 1) {
+            Renderer.translate(0, 0, 500);
+            Renderer.drawRect(Renderer.color(0, 0, 0, 128), hx + 2, hy - 16, Renderer.getStringWidth('/' + this.#command) + 6, 14);
+            Renderer.translate(0, 0, 500);
+            Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx + 5, hy - 13);
+        } else {
+            const lore = this.#item.getLore().slice(1);
+            const width = lore.reduce((max, line) => Math.max(max, Renderer.getStringWidth(line)), 0);
+            const height = lore.length * 9;
+            drawBox(hx + 2, hy - height - 2, 500, width + 6, height + 4, Renderer.BLACK, BORDER_COLOR)
+            Renderer.translate(0, 0, 500);
+            Renderer.drawString(lore.join('\n'), hx + 5, hy - height + 2);
+        }
     }
 
     /**

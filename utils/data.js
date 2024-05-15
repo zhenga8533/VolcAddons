@@ -65,6 +65,7 @@ export let data = new PogObject("VolcAddons", {
     "vision": false,
     "uuid": undefined,
     "ign": undefined,
+    "equipmentLore": [[], [], [], []],
     // playtime tracking
     "playtime": 0,
     "lastDay": 0,

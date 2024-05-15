@@ -64,7 +64,7 @@ let equipment = itemNBTs.equip.map((nbt, index) => {
     // Create inv eq button
     buttons.push(new Button("eq", index * 9, () => {
         ChatLib.command("equipment");
-    }, "equipment", texture));
+    }, "equipment", texture, data.equipmentLore[index] ?? []));
 
     return item;
 });
@@ -156,13 +156,13 @@ function updateEquipment() {
     for (let i = 0; i < 4; i++) {
         let item = equipment[i];
         if(item.getID() === 160) {
-            buttons[i].setItem("stained_glass_pane");
+            buttons[i].setItem("stained_glass_pane", []);
             continue;
         }
 
         let skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
         let texture = skullNBT.getCompoundTag("Properties").getTag("textures").getRawNBT();
-        buttons[i].setItem(texture.func_150305_b(0).func_74779_i("Value"));
+        buttons[i].setItem(texture.func_150305_b(0).func_74779_i("Value"), item.getLore());
     }
 }
 
@@ -178,5 +178,8 @@ registerWhen(register("guiOpened", () => {
  */
 register("gameUnload", () => {
     itemNBTs.armor = pieces.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
-    itemNBTs.equip = equipment.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
+    itemNBTs.equip = equipment.map((piece, index) => {
+        if (piece?.getLore()?.length > 1) data.equipmentLore[index] = [...piece.getLore()];
+        return piece === null ? null : compressNBT(piece.getNBT().toObject())
+    });
 }).setPriority(Priority.HIGHEST);;

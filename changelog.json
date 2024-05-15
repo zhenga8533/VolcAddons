@@ -1,8 +1,10 @@
 [
+    "- TBD: Added show item rarity",
     "- Changed calendar time to track icon",
     "- Changed worker to calc Jackrabbit/Tower",
     "- Changed overlay to show border",
     "- Changed slot binding functionality",
     "- Changed autocomplete to be more responsive",
-    "- Changed powder tracker to be more compact"
+    "- Changed powder tracker to be more compact",
+    "- Changed equipment to show lore (budget)"
 ]
