@@ -7,6 +7,7 @@ export class NonPooledThread {
 
     /**
      * Creates a new non-pooled thread.
+     * Stolen from https://github.com/Soopyboo32/soopyApis/tree/master
      * 
      * @param {Function} callback - The function to be executed.
      */
@@ -20,10 +21,6 @@ export class NonPooledThread {
      */
     execute() {
         this.#executor.execute(this.#callback);
-    }
-
-    kill() {
-        this.#executor.shutdown();
     }
 }
 

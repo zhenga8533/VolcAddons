@@ -8,26 +8,38 @@ const PrintWriter = Java.type("java.io.PrintWriter");
 
 class WebSocket {
     #socket = null;
-    #outputStream = [];
     #output;
     #input;
+    #inputStream = [];
 
     // Condition variables
     #connected = false;
     #running = true;
 
+    /**
+     * Creates a new WebSocket connection.
+     * 
+     * Sugar, spice, and everything nice.
+     * These were the ingredients chosen to create the perfect little girl
+     * But Professor Utonium accidentally added an extra ingredient to the concoction--
+     * https://github.com/Soopyboo32/soopyApis/tree/master
+     */
     constructor() {
-        register("gameUnload", this.disconnect);
+        register("gameUnload", () => {
+            this.#running = false;
+            this.disconnect();
+        });
+
         if (this.connect()) {
             // Send data to the server
             new NonPooledThread(() => {
                 while (this.#running) {
                     if (this.#connected && this.#socket !== null) {
-                        if (this.#outputStream.length > 0) {
-                            for (let line of this.#outputStream) {
+                        if (this.#inputStream.length > 0) {
+                            this.#inputStream.forEach(line => {
                                 this.#input.println(line);
-                            }
-                            this.#outputStream = [];
+                            });
+                            this.#inputStream = [];
                         } else {
                             Thread.sleep(1_000);
                         }
@@ -35,8 +47,6 @@ class WebSocket {
                         Thread.sleep(10_000);
                     }
                 }
-    
-                this.#input.println('{ "command": "disconnect" }');
             }).execute();
         } else {
             console.error("[VolcAddons] Failed to connect to socket server.");
@@ -57,7 +67,7 @@ class WebSocket {
             console.error("[VolcAddons] Error connecting to socket server: " + e);
             delay(() => {
                 this.connect(attempts + 1);
-            }, 10000);
+            }, 10_000);
             return false;
         }
         this.#connected = true;
@@ -72,29 +82,18 @@ class WebSocket {
             new NonPooledThread(() => {
                 let input = this.#socket.getInputStream();
                 let reader = new BufferedReader(new InputStreamReader(input));
-                let shouldCont = true;
 
-                while (this.#connected && this.#socket !== null && this.#running && shouldCont) {
+                while (this.#connected && this.#socket !== null && this.#running) {
                     try {
                         let data = reader.readLine();
-                        if (data) {
+                        if (data !== null) {
                             this.receive(data);
                         }
                     } catch (e) {
-                        shouldCont = false;
-                        console.log("[VolcAddons] Error reading data from socket server: " + e);
+                        console.error("[VolcAddons] Error reading data from socket server: " + e);
                         this.disconnect();
-                        Thread.sleep(5000);
-
-                        console.log("[VolcAddons] Attempting to reconnect to the server...");
-                        this.connect();
+                        break;
                     }
-                }
-                
-                if (this.#connected && shouldCont) {
-                    Thread.sleep(1000);
-                    console.log("[VolcAddons] Attempting to reconnect to the server...");
-                    this.connect();
                 }
             }).execute();
         } catch (e) {
@@ -107,37 +106,37 @@ class WebSocket {
     }
 
     disconnect() {
-        if (this.#socket) {
-            try {
-                this.#socket.close();
-                this.#socket = null;
-                this.connected = false;
-                console.log("[VolcAddons] Disconnected from socket server.");
-            } catch (e) {
-                console.error("[VolcAddons] Error disconnecting from socket server: " + e);
+        new NonPooledThread(() => {
+            this.#connected = false;
+
+            if (this.#socket) {
+                try {
+                    this.#input.println('{ "command": "disconnect" }');
+                    this.#input.close();
+                    this.#output.close();
+                    this.#socket.close();
+                    this.#socket = null;
+                    console.log("[VolcAddons] Disconnected from socket server.");
+                } catch (e) {
+                    console.error("[VolcAddons] Error disconnecting from socket server: " + e);
+                }
             }
-        }
+        }).execute();
     }
 
     send(data) {
         if (!this.#socket) return;
 
         try {
-            this.#outputStream.push(JSON.stringify(data));
+            this.#inputStream.push(JSON.stringify(data));
         } catch (e) {
             console.error("[VolcAddons] Error sending data to socket server: " + e);
         }
     }
 
     receive(data) {
+        ChatLib.chat(data);
         console.log("[VolcAddons] Received data from socket server: " + data);
     }
 }
-
-/**
-const socket = new WebSocket();
-
-delay(() => {
-    socket.send({ "command": "test" });
-}, 5000);
-*/
+export default new WebSocket();
