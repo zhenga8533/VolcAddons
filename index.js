@@ -1,6 +1,7 @@
 // Utility Modules
 import "./utils/dev";
 import "./utils/player";
+import "./utils/socket";
 import "./utils/waypoints";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
