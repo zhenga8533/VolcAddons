@@ -41,6 +41,7 @@ import "./features/container/AttributeAbbrev";
 import { buttonCommands } from "./features/container/ContainerButtons";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
+import "./features/container/RarityHighlight";
 import "./features/container/Searchbar";
 import "./features/container/SlotBinding";
 import "./features/container/SoldHighlight";

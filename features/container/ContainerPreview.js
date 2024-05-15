@@ -74,7 +74,7 @@ const preview = register("guiRender", () => {
             // Draw rarity box
             if (index >= 9) {
                 let color = COLOR_TABLE[item.getName().substring(0, 2)];
-                if (color !== undefined) Renderer.drawRect(Renderer.color(...color, 200), x, y, 17, 17);
+                if (color !== undefined) Renderer.drawRect(color, x, y, 16, 16);
             }
 
             // Draw item and size
