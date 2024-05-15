@@ -51,13 +51,13 @@ export function printList(list, listName, page) {
         const keys = Object.keys(list);
         for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
             let key = keys[i];
-            new Message(` ${DARK_GRAY}⁍ `, new TextComponent(`${YELLOW + key}`)
+            message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
+            message.addTextComponent(new TextComponent(`${YELLOW + key}`)
                 .setClickAction("run_command")
                 .setClickValue(`/va ${listName} remove ${key}`)
-                .setHoverValue(`${YELLOW}Click to remove ${YELLOW + key + YELLOW} from list.`),
-                `${GRAY} => ${YELLOW + list[key]}`
-            ).setChatLineId(++id).chat();
-            lines.push(id);
+                .setHoverValue(`${YELLOW}Click to remove ${YELLOW + key + YELLOW} from list.`)
+            );
+            message.addTextComponent(new TextComponent(`${GRAY} => ${YELLOW + list[key]}`));
         }
     }
 
