@@ -1,3 +1,5 @@
+import { processEvent } from "../features/mining/EventTracker";
+import { DARK_GRAY, GRAY, LOGO } from "./constants";
 import { NonPooledThread, delay } from "./thread";
 
 
@@ -166,11 +168,20 @@ class WebSocket {
     /**
      * Receives data from the server.
      * 
-     * @param {String} data - The data received from the server.
+     * @param {String} json - The data received from the server.
      */
-    receive(data) {
-        ChatLib.chat(data);
-        console.log("[VolcAddons] Received data from socket server: " + data);
+    receive(json) {
+        const data = JSON.parse(json);
+        const callback = data.command;
+
+        switch (callback) {
+            case "ch":
+            case "dm":
+                processEvent(data);
+                break;
+            default:
+                ChatLib.chat(`${LOGO + DARK_GRAY}Received unknown command: ${GRAY + callback}`);
+        }
     }
 }
 export default new WebSocket();

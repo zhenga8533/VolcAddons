@@ -1,3 +1,5 @@
+import { GRAY, LOGO } from "../../utils/constants";
+import { formatTime } from "../../utils/functions/format";
 import location from "../../utils/location";
 import socket from "../../utils/socket";
 
@@ -14,6 +16,18 @@ register("chat", (event) => {
         "event": event
     });
 }).setCriteria(" ⚑ The ${event} event starts in 20 seconds${_}");
+
+export function processEvent(data) {
+    const command = data.command;
+    const events = data.events;
+    
+    Object.keys(events).forEach(event => {
+        const time = events[event].time;
+        const percerntage = events[event].percentage;
+
+        ChatLib.chat(`${LOGO + GRAY + formatTime(time)} (${percerntage})`);
+    })
+}
 
 register("command", () => {
     socket.send({
