@@ -1,8 +1,8 @@
 // Utility Modules
 import "./utils/dev";
 import "./utils/player";
-import "./utils/socket";
 import "./utils/waypoints";
+import socket from "./utils/socket";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
 import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
@@ -117,7 +117,6 @@ import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 import { slotCommands } from "./features/container/SlotBinding";
-import socket from "./utils/socket";
 
 
 // Launch Tests
@@ -151,7 +150,6 @@ Instruction manual (i think) => /va help\n`);
 // Track unique users
 socket.send({
     "command": "user",
-    "username": Player.getName(),
     "version": version,
 });
 

@@ -1,4 +1,3 @@
-import { processEvent } from "../features/mining/EventTracker";
 import { DARK_GRAY, GRAY, LOGO } from "./constants";
 import { NonPooledThread, delay } from "./thread";
 
@@ -59,12 +58,8 @@ class WebSocket {
         });
 
         register("command", () => {
-            this.disconnect();
-        }).setName("socketDisconnect");
-
-        register("command", () => {
-            this.connect();
-        }).setName("socketConnect");
+            this.send({ "command": "test" });
+        }).setName("socketTest");
     }
     
     /**
@@ -112,6 +107,8 @@ class WebSocket {
                         let data = reader.readLine();
                         if (data !== null) {
                             this.receive(data);
+                        } else {
+                            Thread.sleep(1_000);
                         }
                     } catch (e) {
                         console.error("[VolcAddons] Error reading data from socket server: " + e);
@@ -157,6 +154,7 @@ class WebSocket {
      */
     send(data) {
         if (!this.#socket) return;
+        data.player = Player.getName();
 
         try {
             this.#inputStream.push(JSON.stringify(data));
@@ -171,17 +169,35 @@ class WebSocket {
      * @param {String} json - The data received from the server.
      */
     receive(json) {
-        const data = JSON.parse(json);
-        const callback = data.command;
-
-        switch (callback) {
-            case "ch":
-            case "dm":
-                processEvent(data);
-                break;
-            default:
-                ChatLib.chat(`${LOGO + DARK_GRAY}Received unknown command: ${GRAY + callback}`);
+        if (!json.startsWith("{") || !json.endsWith("}")){
+            return;
         }
+
+        callback(JSON.parse(json));
     }
 }
 export default new WebSocket();
+
+
+/**
+ * Run callback and prevent circular dependency.
+ */
+import { processEvent } from "../features/mining/EventTracker";
+
+/**
+ * Processes the event received from the server.
+ * 
+ * @param {Object} data - The data received from the server.
+ */
+function callback(data) {
+    const command = data.command;
+
+    switch (command) {
+        case "ch":
+        case "dm":
+            processEvent(data);
+            break;
+        default:
+            ChatLib.chat(`${LOGO + DARK_GRAY}Received unknown command: ${GRAY + command}`);
+    }
+}
