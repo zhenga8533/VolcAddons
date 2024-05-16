@@ -25,8 +25,10 @@ class WebSocket {
      * https://github.com/Soopyboo32/soopyApis/tree/master
      */
     constructor() {
-        if (this.connect()) {
-            // Send data to the server
+        this.connect();
+        
+        // Send data to the server
+        try  {
             new NonPooledThread(() => {
                 while (this.#running) {
                     if (this.#connected && this.#socket !== null) {
@@ -43,8 +45,9 @@ class WebSocket {
                     }
                 }
             }).execute();
-        } else {
-            console.error("[VolcAddons] Failed to connect to socket server.");
+        } catch (e) {
+            console.error("[VolcAddons] Error sending data to socket server: " + e);
+            this.disconnect();
         }
 
         // Set registers
@@ -62,7 +65,17 @@ class WebSocket {
         }).setName("socketConnect");
     }
     
+    /**
+     * Connects to the socket server.
+     * 
+     * @param {Number} attempts - The number of attempts to connect to the server.
+     */
     connect(attempts = 0) {
+        if (this.#connected || this.#socket !== null) {
+            console.error("[VolcAddons] Already connected to socket server.");
+            return;
+        }
+
         if (attempts > 9) {
             console.error("[VolcAddons] Failed to connect to socket server after 10 attempts.");
             return;
@@ -77,7 +90,7 @@ class WebSocket {
             delay(() => {
                 this.connect(attempts + 1);
             }, 10_000);
-            return false;
+            return;
         }
         this.#connected = true;
         console.log("[VolcAddons] Connected to socket server.");
@@ -108,12 +121,12 @@ class WebSocket {
         } catch (e) {
             console.error("[VolcAddons] Error starting listener thread: " + e);
             this.disconnect();
-            return false;
         }
-
-        return true;
     }
 
+    /**
+     * Disconnects from the socket server.
+     */
     disconnect() {
         new NonPooledThread(() => {
             this.#connected = false;
@@ -121,6 +134,8 @@ class WebSocket {
             if (this.#socket) {
                 try {
                     this.#input.println('{ "command": "disconnect" }');
+                    Thread.sleep(5_000);
+
                     this.#input.close();
                     this.#output.close();
                     this.#socket.close();
@@ -133,6 +148,11 @@ class WebSocket {
         }).execute();
     }
 
+    /**
+     * Sends data to the server.
+     * 
+     * @param {Object} data - The data to send to the server.
+     */
     send(data) {
         if (!this.#socket) return;
 
@@ -143,6 +163,11 @@ class WebSocket {
         }
     }
 
+    /**
+     * Receives data from the server.
+     * 
+     * @param {String} data - The data received from the server.
+     */
     receive(data) {
         ChatLib.chat(data);
         console.log("[VolcAddons] Received data from socket server: " + data);

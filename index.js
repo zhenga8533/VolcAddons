@@ -77,6 +77,7 @@ import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features
 import "./features/mining/CommissionsDisplay";
+import "./features/mining/EventTracker";
 import "./features/mining/FossilHelper";
 import "./features/mining/PickDisplay";
 import "./features/mining/PowderChest";
