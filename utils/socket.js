@@ -25,11 +25,6 @@ class WebSocket {
      * https://github.com/Soopyboo32/soopyApis/tree/master
      */
     constructor() {
-        register("gameUnload", () => {
-            this.#running = false;
-            this.disconnect();
-        });
-
         if (this.connect()) {
             // Send data to the server
             new NonPooledThread(() => {
@@ -51,6 +46,20 @@ class WebSocket {
         } else {
             console.error("[VolcAddons] Failed to connect to socket server.");
         }
+
+        // Set registers
+        register("gameUnload", () => {
+            this.#running = false;
+            this.disconnect();
+        });
+
+        register("command", () => {
+            this.disconnect();
+        }).setName("socketDisconnect");
+
+        register("command", () => {
+            this.connect();
+        }).setName("socketConnect");
     }
     
     connect(attempts = 0) {

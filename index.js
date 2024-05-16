@@ -116,17 +116,20 @@ import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
 import { slotCommands } from "./features/container/SlotBinding";
+import socket from "./utils/socket";
 
 
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
 if (!FileLib.exists("VolcAddons", "data/contract.txt")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
 
+// First Run
+const version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
 const once = register("worldLoad", () => {
     once.unregister();
     delay(() => {
         // NEW UPDATE - Display update message when a new version is detected
-        if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
+        if (version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`\n${LOGO + WHITE + BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => ChatLib.chat(change));
@@ -142,6 +145,13 @@ Instruction manual (i think) => /va help\n`);
             data.newUser = false;
         }
     }, 1000);
+});
+
+// Track unique users
+socket.send({
+    "command": "user",
+    "username": Player.getName(),
+    "version": version,
 });
 
 // HELP - Display help message for available commands
