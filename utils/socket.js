@@ -114,6 +114,7 @@ class WebSocket {
                         }
                     } catch (e) {
                         console.error("[VolcAddons] Error reading data from socket server: " + e);
+                        this.disconnect();
                         break;
                     }
                 }
@@ -135,6 +136,8 @@ class WebSocket {
 
             try {
                 this.#input.println(`{ "command": "disconnect", "player": "${Player.getName()}" }`);
+                Thread.sleep(5_000);
+
                 this.#input.close();
                 this.#output.close();
                 this.#socket.close();
@@ -142,6 +145,13 @@ class WebSocket {
                 console.log("[VolcAddons] Disconnected from socket server.");
             } catch (e) {
                 console.error("[VolcAddons] Error disconnecting from socket server: " + e);
+            }
+
+            // Attempt reconnect
+            if (this.#running) {
+                delay(() => {
+                    this.connect();
+                }, 10_000);
             }
         }).execute();
     }
