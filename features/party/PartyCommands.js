@@ -87,8 +87,9 @@ function setWaifu() {
             imgur: link
         });
     }).catch(_ => {
+        // Attempt to use base Imgur API
+        ChatLib.clearChat(11997);
         if (waifuSet) {
-            // Attempt to use base Imgur API
             ChatLib.chat(`${LOGO + RED}Imgur Upload Failed!`);
             ChatLib.chat(`${LOGO + DARK_GRAY}Attempting to fetch using Imgur API...`);
         }
