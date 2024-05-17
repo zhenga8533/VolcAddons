@@ -1,5 +1,6 @@
 let Executors = Java.type("java.util.concurrent.Executors");
 const Threading = Java.type("gg.essential.api.utils.Multithreading");
+const threads = [];
 
 export class NonPooledThread {
     #callback;
@@ -12,6 +13,7 @@ export class NonPooledThread {
      * @param {Function} callback - The function to be executed.
      */
     constructor(callback) {
+        threads.push(this);
         this.#callback = callback;
         this.#executor = Executors.newSingleThreadExecutor();
     }
@@ -22,7 +24,23 @@ export class NonPooledThread {
     execute() {
         this.#executor.execute(this.#callback);
     }
+
+    /**
+     * Shuts down the thread.
+     */
+    shutdown() {
+        this.#executor.shutdown();
+    }
 }
+
+/**
+ * Backup kill all threads.
+ */
+register("gameUnload", () => {
+    threads.forEach(thread => {
+        thread.shutdown();
+    });
+}).setPriority(Priority.HIGHEST);
 
 /**
  * Adds a delay before executing a function or runs the function asynchronously.
