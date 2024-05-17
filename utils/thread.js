@@ -40,7 +40,7 @@ register("gameUnload", () => {
     threads.forEach(thread => {
         thread.shutdown();
     });
-}).setPriority(Priority.HIGHEST);
+}).setPriority(Priority.LOWEST);
 
 /**
  * Adds a delay before executing a function or runs the function asynchronously.

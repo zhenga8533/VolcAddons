@@ -136,8 +136,6 @@ class WebSocket {
 
             try {
                 this.#input.println(`{ "command": "disconnect", "player": "${Player.getName()}" }`);
-                Thread.sleep(5_000);
-
                 this.#input.close();
                 this.#output.close();
                 this.#socket.close();
