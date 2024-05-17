@@ -26,6 +26,7 @@ class WebSocket {
      * https://github.com/Soopyboo32/soopyApis/tree/master
      */
     constructor() {
+        console.log("[VolcAddons] Connecting to socket server...");
         this.connect();
         this.expected = 0;
         
@@ -78,6 +79,7 @@ class WebSocket {
      * @param {Number} attempts - The number of attempts to connect to the server.
      */
     connect(attempts = 0) {
+        if (!this.#running) return;
         if (this.#connected || this.#socket !== null) {
             console.error("[VolcAddons] Already connected to socket server.");
             return;
@@ -89,11 +91,9 @@ class WebSocket {
         }
 
         // Attempt to connect to the socket server
-        console.log("[VolcAddons] Connecting to socket server...");
         try {
             this.#socket = new Socket("volca.dev", 3389);
         } catch (e) {
-            console.error("[VolcAddons] Error connecting to socket server: " + e);
             delay(() => {
                 this.connect(attempts + 1);
             }, 10_000);
@@ -157,6 +157,7 @@ class WebSocket {
             // Attempt reconnect
             if (this.#running) {
                 delay(() => {
+                    console.log("[VolcAddons] Attempting to reconnect to socket server...");
                     this.connect();
                 }, 10_000);
             }
@@ -182,7 +183,6 @@ class WebSocket {
      * @param {String} json - The data received from the server.
      */
     receive(json) {
-        ChatLib.chat(this.expected + ": " + json);
         if (!json.startsWith("{") || !json.endsWith("}") || this.expected === 0) return;
 
         this.expected--;
