@@ -123,6 +123,8 @@ class WebSocket {
                         break;
                     }
                 }
+
+                this.disconnect();
             }).execute();
         } catch (e) {
             console.error("[VolcAddons] Error starting listener thread: " + e);
