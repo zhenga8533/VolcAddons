@@ -1,18 +1,3 @@
 [
-    "- Added socket beta testing [WIP]",
-    "   - Alloy tracking?",
-    "   - Cache ?w from imgur?",
-    "   - Mining event tracking?",
-    "   - Users tracking?",
-    "- Changed calendar time to track icon",
-    "- Changed worker to calc Jackrabbit/Tower",
-    "- Changed overlay to show border",
-    "- Changed slot binding functionality",
-    "- Changed autocomplete to be more responsive",
-    "- Changed powder tracker to be more compact",
-    "- Changed equipment to show lore (budget)",
-    "- Changed party to be persistant",
-    "- Changed dev mode to also require a `/devMode`",
-    "- Fixed `/resetBe`",
-    "- Fixed dict list printing"
+    "- TBD"
 ]

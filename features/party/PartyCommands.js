@@ -22,13 +22,6 @@ const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("VolcAddons", "json/quotes.json"));
 const W = ["waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", 
     "blush", "smile", "wave", "highfive", "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"];
-const IMGUR_KEYS = [
-    "d30c6dc9941b52b",
-    "b2e8519cbb7712a",
-    "eb1f61e23b9eabd",
-    "d1275dca5af8904",
-    "ed46361ccd67d6d"
-];
 
 /**
  * Makes a POST request to upload an image to Imgur.
@@ -36,13 +29,11 @@ const IMGUR_KEYS = [
  * @param {String} image - Link of the image.
  */
 function upload(image) {
-    const clientID = IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
-
     return request({
         url: "https://api.imgur.com/3/image",
         method: "POST",
         headers: {
-            Authorization: `Client-ID ${clientID}`,
+            Authorization: "Client-ID 43f3f362c8963a0",
         },
         body: {
             image
@@ -94,12 +85,11 @@ function setWaifu() {
             ChatLib.chat(`${LOGO + DARK_GRAY}Attempting to fetch using Imgur API...`);
         }
         
-        const clientID = IMGUR_KEYS[parseInt(Math.random() * (IMGUR_KEYS.length - 1))];
         request({
             url: "https://api.imgur.com/3/gallery/t/waifu/viral/1?showViral=true",
             method: "GET",
             headers: {
-                Authorization: `Client-ID ${clientID}`,
+                Authorization: "Client-ID 43f3f362c8963a0",
             },
             json: true
         }).then(res => {
