@@ -52,20 +52,31 @@ const DEFAULT_GUI = {
 
 // --- PERSISTENT DATA ---
 export let data = new PogObject("VolcAddons", {
-    // Properties with default values for various settings and data
+    // VolcAddons data tracking
     "newUser": true,
     "version": "2.3.1",
-    "wordbanks": [],
-    "commands": {},
-    "lastID" : undefined,
-    "world": "none",
-    "tier": 0,
-    "pet": undefined,
-    "lastMsg": "joe",
     "vision": false,
-    "uuid": undefined,
-    "ign": undefined,
+    // Container bindings
+    "wardBinds": {},
+    "slotBinds": {
+        "36": [], "37": [], "38": [], "39": [], "40": [], "41": [], "42": [], "43": [], "44": []
+    },
+    "bindPresets": {},
+    "buttons": {},
+    "buttonPresets": BUTTON_PRESETS,
+    // Control keys
+    "dianaKey": 0,
+    "pauseKey": 0,
+    "devKey": 0,
+    "recipeKey": 0,
+    "bindKey": 0,
+    "chunkey": 0,
+    "wardKey": 0,
+    // Hypixel persistant data
+    "commands": {},
     "equipmentLore": [[], [], [], []],
+    "pet": undefined,
+    "wordbanks": [],
     // playtime tracking
     "playtime": 0,
     "lastDay": 0,
@@ -81,8 +92,8 @@ export let data = new PogObject("VolcAddons", {
     "spamlist": [],
     "ignorelist": [],
     "prefixlist": ["?"],
-    "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune", 
-        "fishing_experience"],
+    "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", 
+        "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune",  "fishing_experience"],
     "widgetlist": [],
     "WGL": {},
     // chocolate factory data
@@ -102,14 +113,21 @@ export let data = new PogObject("VolcAddons", {
         "activeTime": 0,
         "bonus": 0,
     },
-    // kuudra splits stuff
+    // Kuudra data
     "files": [],
     "splits": {
         "last": [0, 0, 0, 0, 0],
         "best": [999, 999, 999, 999, 9999],
         "worst": [0, 0, 0, 0, 0],
     },
-    // tracker data
+    "kuudraSession": {
+        "profit": 0,
+        "chests": 0,
+        "average": 0,
+        "time": 0,
+        "rate": 0
+    },
+    // Mob tracker data
     "vanqSession": {
         "vanqs": 0,
         "kills": 0,
@@ -122,42 +140,18 @@ export let data = new PogObject("VolcAddons", {
         "last": 0,
         "average": 0,
     },
-    "kuudraSession": {
-        "profit": 0,
-        "chests": 0,
-        "average": 0,
-        "time": 0,
-        "rate": 0
-    },
-    // economy calculation stuff
+    // Economy calculator data
     "composterUpgrades": {
         "Composter Speed": -1,
         "Multi Drop": -1,
         "Cost Reduction": -1
     },
-    "apexPrice": 2e9,
-    // control keys
-    "dianaKey": 0,
-    "pauseKey": 0,
-    "devKey": 0,
-    "recipeKey": 0,
-    "bindKey": 0,
-    "chunkey": 0,
-    "wardKey": 0,
-    // Container bindings
-    "wardBinds": {},
-    "slotBinds": {
-        "36": [], "37": [], "38": [], "39": [], "40": [], "41": [], "42": [], "43": [], "44": []
-    },
-    "bindPresets": {},
-    "buttons": {},
-    "buttonPresets": BUTTON_PRESETS,
-    // GUI locations
-    ...DEFAULT_GUI,
-    // Rift waypoint properties
+    // Waypoint properties
     "fairySouls": FAIRY_SOULS,
     "enigmaSouls": ENIGMA_SOULS,
-    "catSouls": CAT_SOULS
+    "catSouls": CAT_SOULS,
+    // GUI locations
+    ...DEFAULT_GUI
 }, "data/datitee.json");
 
 export const itemNBTs = new PogObject("VolcAddons", {

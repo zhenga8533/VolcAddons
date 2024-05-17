@@ -13,8 +13,3 @@ export function getMVP() { return isMVP }
 register("chat", (player) => {
     isMVP = player === Player.getName();
 }).setCriteria(">>> [MVP++] ${player} joined the lobby! <<<");
-
-// Event handler for detecting the player's profile ID from a chat message and update API data.
-register("chat", (id) => {
-    data.lastID = id;
-}).setCriteria("Profile ID: ${id}");

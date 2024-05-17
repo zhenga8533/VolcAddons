@@ -9,6 +9,8 @@ class Party {
     #members = new Set();
 
     constructor() {
+        
+
         // --- TRACK EMPTY PARTY ---
         register("chat", () => {
             this.#in = false;

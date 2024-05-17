@@ -88,12 +88,13 @@ registerWhen(register("messageSent", (message, event) => {
 /**
  * Message back last messaged player with `/b ${msg}`
  */
+let lastMsg = "";
 register("command", (...args) => {
-    ChatLib.command(`msg ${data.lastMsg} ${args.join(' ')}`);
+    ChatLib.command(`msg ${lastMsg} ${args.join(' ')}`);
 }).setName("b", true);
 
 register("messageSent", (message) => {
     const args = message.split(' ');
     if (!(args[0] === "/msg" || args[0] === "/message")) return;
-    data.lastMsg = args[1];
+    lastMsg = args[1];
 });
