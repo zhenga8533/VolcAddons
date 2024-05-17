@@ -1,4 +1,4 @@
-import { DARK_GRAY, GRAY, LOGO } from "./constants";
+import { DARK_GRAY, GRAY, LOGO, RED } from "./constants";
 import { NonPooledThread, delay } from "./thread";
 
 
@@ -171,7 +171,12 @@ class WebSocket {
      */
     send(data) {
         data.player = Player.getName();
-        if (data?.request === "get") this.expected++;
+        if (data?.request === "get") {
+            if (this.#socket === null) {
+                ChatLib.chat(`${LOGO + RED}Socket server is not connected.`);
+            }
+            this.expected++;
+        }
 
         const json = JSON.stringify(data);
         this.#inputStream.push(json);
