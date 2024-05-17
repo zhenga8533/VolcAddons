@@ -7,6 +7,7 @@
     "- Changed autocomplete to be more responsive",
     "- Changed powder tracker to be more compact",
     "- Changed equipment to show lore (budget)",
+    "- Changed party to be persistant",
     "- Fixed `/resetBe`",
     "- Fixed dict list printing"
 ]

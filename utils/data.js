@@ -75,6 +75,12 @@ export let data = new PogObject("VolcAddons", {
     // Hypixel persistant data
     "commands": {},
     "equipmentLore": [[], [], [], []],
+    "party": {
+        "in": false,
+        "leader": false,
+        "members": [],
+        "updated": 0
+    },
     "pet": undefined,
     "wordbanks": [],
     // playtime tracking
