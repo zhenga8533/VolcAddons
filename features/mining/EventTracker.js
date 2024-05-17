@@ -65,3 +65,16 @@ registerWhen(register("chat", (username) => {
         "username": username
     });
 }).setCriteria("ALLOY! ${username} just found a Divan's Alloy!"), () => location.getWorld() === "Crystal Hollows");
+
+register("command", () => {
+    socket.send({
+        "command": "alloy",
+        "request": "get"
+    });
+}).setName("alloy");
+
+export function processAlloy(data) {
+    const last_alloy = data.last_alloy;
+    const date = new Date(Date.now() - last_alloy * 1_000);
+    ChatLib.chat(`${LOGO + YELLOW}Alloy: ${WHITE + formatTime(last_alloy)} ago ${DARK_GRAY}(${date.toLocaleDateString()})`);
+}

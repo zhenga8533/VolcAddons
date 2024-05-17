@@ -1,8 +1,8 @@
 [
     "- Added socket beta testing [WIP]",
-    "   - Mining event tracking?",
     "   - Alloy tracking?",
     "   - Cache ?w from imgur?",
+    "   - Mining event tracking?",
     "   - Users tracking?",
     "- Changed calendar time to track icon",
     "- Changed worker to calc Jackrabbit/Tower",

@@ -96,7 +96,7 @@ class WebSocket {
         } catch (e) {
             delay(() => {
                 this.connect(attempts + 1);
-            }, 10_000);
+            }, 10_000 * (1.5 ** attempts));
             return;
         }
         this.#connected = true;
@@ -195,7 +195,7 @@ export default new WebSocket();
 /**
  * Run callback and prevent circular dependency.
  */
-import { processEvent } from "../features/mining/EventTracker";
+import { processAlloy, processEvent } from "../features/mining/EventTracker";
 import { processWaifu } from "../features/party/PartyCommands";
 
 /**
@@ -207,6 +207,9 @@ function callback(data) {
     const command = data.command;
 
     switch (command) {
+        case "alloy":
+            processAlloy(data);
+            break;
         case "ch":
         case "dm":
             processEvent(data);

@@ -49,7 +49,9 @@ ${ITALIC}Related Commands: /va <attribute, calc, nw>`);
         this.setCategoryDescription("Combat", HEADER);
     
         // Mining Category
-        this.setCategoryDescription("Mining", HEADER);
+        this.setCategoryDescription("Mining", 
+        `${HEADER}
+${ITALIC}Related Commands: /va <alloy, chevent, dmevent>`);
 
         // Farming Category
         this.setCategoryDescription("Farming", 
