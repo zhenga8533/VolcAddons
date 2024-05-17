@@ -73,7 +73,7 @@ class WebSocket {
             return;
         }
 
-        if (attempts > 9) {
+        if (attempts > 1) {
             console.error("[VolcAddons] Failed to connect to socket server after 10 attempts.");
             return;
         }
@@ -132,7 +132,8 @@ class WebSocket {
 
             if (this.#socket) {
                 try {
-                    this.#input.println('{ "command": "disconnect" }');
+                    ChatLib.chat("E");
+                    this.#input.println(`{ "command": "disconnect", "player": "${Player.getName()}" `);
                     Thread.sleep(5_000);
 
                     this.#input.close();
