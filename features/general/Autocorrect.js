@@ -130,6 +130,7 @@ register("chat", (event) => correct(lastMessage, event))
  */
 let selected = 0;
 let suggestions = [];
+let suggesting = false;
 
 const suggest = register("renderChat", () => {
     const select = suggestions.length - selected - 1;
@@ -161,24 +162,28 @@ const key = register("guiKey", (char, keyCode, __, event) => {
 
     if (keyCode === 200) {  // Up Key
         selected = MathLib.clamp(selected + 1, 0, suggestions.length - 1);
-        cancel(event);
+        if (suggesting) cancel(event);
     } else if (keyCode === 208) {  // Down Key
         selected = MathLib.clamp(selected - 1, 0, suggestions.length - 1);
-        cancel(event);
+        if (suggesting) cancel(event);
     } else if (keyCode === 15) {  // Tab Key
         const fill = suggestions[suggestions.length - selected - 1];
         Client.setCurrentChatMessage('/' + fill);
         suggestions = Object.keys(data.commands).filter(command => command.startsWith(fill));
         suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
         selected = suggestions.length - suggestions.indexOf(fill) - 1;
-        cancel(event);
-    } else suggest.register();
+        if (suggesting) cancel(event);
+    } else {
+        suggest.register();
+        suggesting = true;
+    }
 }).unregister();
 
 const close = register("guiClosed", () => {
     key.unregister();
     suggest.unregister();
     close.unregister();
+    suggesting = false;
 }).unregister();
 
 registerWhen(register("guiOpened", () => {
