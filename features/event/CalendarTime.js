@@ -24,7 +24,7 @@ const tooltip = register("preItemRender", (_, __, slot) => {
         const time = start.toLocaleTimeString();
 
         item.setName(`§aDay ${day + 1} §7[${YELLOW + date}, ${time.substring(0, time.length - 3).trim()}§7]`);
-    } else if (name === "Calender and Events") {  // Calendar event date
+    } else if (name === "Calendar and Events") {  // Calendar event date
         let startDate = Date.now();
         for (let i = 0; i < lore.length + 1; i++) {
             if (lore[i]?.startsWith("§7Starts in:") && !lore[i + 1]?.startsWith("§7Start Date")) {
