@@ -1,5 +1,9 @@
 [
-    "- Added socket beta testing",
+    "- Added socket beta testing [WIP]",
+    "   - Mining event tracking?",
+    "   - Alloy tracking?",
+    "   - Cache ?w from imgur?",
+    "   - Users tracking?",
     "- Changed calendar time to track icon",
     "- Changed worker to calc Jackrabbit/Tower",
     "- Changed overlay to show border",

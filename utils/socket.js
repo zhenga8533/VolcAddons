@@ -62,6 +62,15 @@ class WebSocket {
             this.send({ "command": "test" });
         }).setName("socketTest");
     }
+
+    /**
+     * Returns whether the socket is connected.
+     * 
+     * @returns {Boolean} - Whether the socket is connected.
+     */
+    getConnected() {
+        return this.#connected;
+    }
     
     /**
      * Connects to the socket server.
@@ -160,8 +169,6 @@ class WebSocket {
      * @param {Object} data - The data to send to the server.
      */
     send(data) {
-        if (!this.#socket) return;
-
         data.player = Player.getName();
         if (data?.request === "get") this.expected++;
 
@@ -175,6 +182,7 @@ class WebSocket {
      * @param {String} json - The data received from the server.
      */
     receive(json) {
+        ChatLib.chat(this.expected + ": " + json);
         if (!json.startsWith("{") || !json.endsWith("}") || this.expected === 0) return;
 
         this.expected--;
@@ -188,6 +196,7 @@ export default new WebSocket();
  * Run callback and prevent circular dependency.
  */
 import { processEvent } from "../features/mining/EventTracker";
+import { processWaifu } from "../features/party/PartyCommands";
 
 /**
  * Processes the event received from the server.
@@ -201,6 +210,9 @@ function callback(data) {
         case "ch":
         case "dm":
             processEvent(data);
+            break;
+        case "waifu":
+            processWaifu(data);
             break;
         default:
             ChatLib.chat(`${LOGO + DARK_GRAY}Received unknown command: ${GRAY + command}`);

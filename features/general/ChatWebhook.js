@@ -3,7 +3,6 @@ import settings from "../../utils/settings";
 import toggles from "../../utils/toggles";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
-import { getWaifu } from "../party/PartyCommands";
 
 
 /**
@@ -22,7 +21,7 @@ function sendWebhook(player, msg, color) {
         },
         body: {
             "username": "VolcYapons",
-            "avatar_url": getWaifu(),
+            "avatar_url": `https://www.mc-heads.net/avatar/${player}`,
             "embeds": [{
                 "author": {
                     "name": player,
