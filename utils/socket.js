@@ -58,10 +58,6 @@ class WebSocket {
             this.#running = false;
             this.disconnect();
         }).setPriority(Priority.HIGHEST);
-
-        register("command", () => {
-            this.send({ "command": "test" });
-        }).setName("socketTest");
     }
 
     /**

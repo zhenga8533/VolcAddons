@@ -11,13 +11,6 @@ subtitle: List of every non-gui related commands.
     - `/va settings`: Opens the settings' menu.
     - `/va toggles`: Opens the setting toggles' menu.
     - `/va version`: Checks if you are currently on latest version and prints out changelog.
-- **Waypoints**
-    - `/va cat`: Controls Montezuma Soul Piece waypoints.
-    - `/va enigma`: Controls Enigma Soul waypoints.
-    - `/va fairy`: Controls Fairy Soul waypoints.
-    - `/va npc`: Creates waypoints to user inputted rift NPCs.
-    - `/va zone`: Creates waypoints to user inputted rift locations.
-    - `/va waypoint`: Creates waypoints to user inputted coordinates.
 - **Lists**
     - `/va attributelist`: Set wanted attributes to calculate for.
     - `/va blacklist`: Set players to kick and ignore.
@@ -31,6 +24,13 @@ subtitle: List of every non-gui related commands.
     - `/va whitelist`: Set player party invites to auto join.
     - `/va binds`: Set slot bindings and their presets.
     - `/va buttons`: Set container buttons and their presets.
+- **Waypoints**
+    - `/va cat`: Controls Montezuma Soul Piece waypoints.
+    - `/va enigma`: Controls Enigma Soul waypoints.
+    - `/va fairy`: Controls Fairy Soul waypoints.
+    - `/va npc`: Creates waypoints to user inputted rift NPCs.
+    - `/va zone`: Creates waypoints to user inputted rift locations.
+    - `/va waypoint`: Creates waypoints to user inputted coordinates.
 - **Economy**
     - `/va attribute`: Various calculations that deal with attribute values.
     - `/va calc`: Various calculations that deal with general economical values.
@@ -38,7 +38,12 @@ subtitle: List of every non-gui related commands.
 - **Kuudra**
     - `/va splits`: Prints out Kuudra splits' stats.
     - `/kv`: Display important Kuudra stats for inputted player profile.
+- **Socket**
+    - `/alloy`: Fetches last dropped alloy.
+    - `/chEvent`: Fetches current events active in the Crystal Hollows.
+    - `/dmEvent`: Fetches current events active in the Dwarven Mines.
 - **Dev**
+    - `/devMode`: Toggles Dev button usage.
     - `/printTab`: Prints out Tablist names to console.
     - `/printScore`: Prints out Scoreboard lines to console.
 - **Misc**
