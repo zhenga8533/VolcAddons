@@ -1,6 +1,7 @@
 import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { formatTime } from "../../utils/functions/format";
 import location from "../../utils/location";
+import { registerWhen } from "../../utils/register";
 import socket from "../../utils/socket";
 
 
@@ -52,3 +53,15 @@ register("command", () => {
         "event": "event"
     });
 }).setName("dmevent");
+
+
+/**
+ * Alloy tracking.
+ */
+registerWhen(register("chat", (username) => {
+    socket.send({
+        "command": "alloy",
+        "request": "post",
+        "username": username
+    });
+}).setCriteria("ALLOY! ${username} just found a Divan's Alloy!"), () => location.getWorld() === "Crystal Hollows");
