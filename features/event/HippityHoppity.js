@@ -96,7 +96,7 @@ register("step", () => {
     // Time tower calc
     const towerData = data.timeTower;
     const timeLeft = towerData.activeTime - lastOpen;
-    const noTower = data.chocoProduction * (data.chocoMultiplier - towerData.bonus) / data.chocoMultiplier;
+    const noTower = data.chocoProduction * (data.chocoMultiplier - (timeLeft > 0 ? towerData.bonus : 0)) / data.chocoMultiplier;
     const production = timeLeft > 0 || towerData.activeTime <= 0 ? data.chocoProduction : noTower;
 
     const charges = parseInt(towerData.charges) + Math.max(0, Math.ceil((lastOpen - towerData.chargeTime) / 28_800));
@@ -108,7 +108,7 @@ register("step", () => {
     const chocoCalc = production * lastOpen + boostedCalc;
     const chocoTotal = chocoCalc + data.chocoTotal;
     const chocoAll = chocoCalc + data.chocoAll;
-    const prestigeTime = (data.chocoPrestige - chocoTotal) / (timeLeft > 0 ? noTower : data.chocoProduction);
+    const prestigeTime = (data.chocoPrestige - chocoTotal) / noTower;
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
