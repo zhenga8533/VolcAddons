@@ -175,7 +175,6 @@ class WebSocket {
      * @param {String} json - The data received from the server.
      */
     receive(json) {
-        ChatLib.chat(this.expected);
         if (!json.startsWith("{") || !json.endsWith("}") || this.expected === 0) return;
 
         this.expected--;
