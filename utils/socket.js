@@ -55,7 +55,7 @@ class WebSocket {
         register("gameUnload", () => {
             this.#running = false;
             this.disconnect();
-        });
+        }).setPriority(Priority.HIGHEST);
 
         register("command", () => {
             this.send({ "command": "test" });
@@ -73,7 +73,7 @@ class WebSocket {
             return;
         }
 
-        if (attempts > 1) {
+        if (attempts > 9) {
             console.error("[VolcAddons] Failed to connect to socket server after 10 attempts.");
             return;
         }
@@ -130,10 +130,9 @@ class WebSocket {
         new NonPooledThread(() => {
             this.#connected = false;
 
-            if (this.#socket) {
+            if (this.#socket !== null) {
                 try {
-                    ChatLib.chat("E");
-                    this.#input.println(`{ "command": "disconnect", "player": "${Player.getName()}" `);
+                    this.#input.println(`{ "command": "disconnect", "player": "${Player.getName()}" }`);
                     Thread.sleep(5_000);
 
                     this.#input.close();
