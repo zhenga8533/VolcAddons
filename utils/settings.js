@@ -962,7 +962,7 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Egg Waypoints",
-        description: `Display waypoints for nearby corpses. ${DARK_RED}Technically uses ESP so UAYOR!`,
+        description: `Display waypoints for nearby eggs. ${DARK_RED}Technically uses ESP so UAYOR!`,
         category: "Event",
         subcategory: "Chocolate Factory"
     })
