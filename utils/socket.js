@@ -27,6 +27,7 @@ class WebSocket {
      */
     constructor() {
         this.connect();
+        this.expected = 0;
         
         // Send data to the server
         try  {
@@ -90,6 +91,7 @@ class WebSocket {
             return;
         }
         this.#connected = true;
+        this.expected = 0;
         console.log("[VolcAddons] Connected to socket server.");
         
         // Initialize input and output streams
@@ -129,6 +131,7 @@ class WebSocket {
         new NonPooledThread(() => {
             if (!this.#connected || this.#socket === null) return;
             this.#connected = false;
+            this.expected = 0;
 
             try {
                 this.#input.println(`{ "command": "disconnect", "player": "${Player.getName()}" }`);
@@ -150,13 +153,12 @@ class WebSocket {
      */
     send(data) {
         if (!this.#socket) return;
-        data.player = Player.getName();
 
-        try {
-            this.#inputStream.push(JSON.stringify(data));
-        } catch (e) {
-            console.error("[VolcAddons] Error sending data to socket server: " + e);
-        }
+        data.player = Player.getName();
+        if (data?.request === "get") this.expected++;
+
+        const json = JSON.stringify(data);
+        this.#inputStream.push(json);
     }
 
     /**
@@ -165,10 +167,10 @@ class WebSocket {
      * @param {String} json - The data received from the server.
      */
     receive(json) {
-        if (!json.startsWith("{") || !json.endsWith("}")){
-            return;
-        }
+        ChatLib.chat(this.expected);
+        if (!json.startsWith("{") || !json.endsWith("}") || this.expected === 0) return;
 
+        this.expected--;
         callback(JSON.parse(json));
     }
 }
