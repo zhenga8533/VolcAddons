@@ -31,10 +31,10 @@ class WebSocket {
         this.expected = 0;
         
         // Send data to the server
-        try  {
-            new NonPooledThread(() => {
-                while (this.#running) {
-                    if (this.#connected && this.#socket !== null) {
+        new NonPooledThread(() => {
+            while (this.#running) {
+                if (this.#connected && this.#socket !== null) {
+                    try {
                         if (this.#inputStream.length > 0) {
                             this.#inputStream.forEach(line => {
                                 this.#input.println(line);
@@ -43,15 +43,16 @@ class WebSocket {
                         } else {
                             Thread.sleep(1_000);
                         }
-                    } else {
+                    } catch (e) {
+                        this.disconnect();
                         Thread.sleep(10_000);
                     }
+                } else {
+                    this.disconnect();
+                    Thread.sleep(10_000);
                 }
-            }).execute();
-        } catch (e) {
-            console.error("[VolcAddons] Error sending data to socket server: " + e);
-            this.disconnect();
-        }
+            }
+        }).execute();
 
         // Set registers
         register("gameUnload", () => {
@@ -104,32 +105,26 @@ class WebSocket {
         this.#input = new PrintWriter(this.#output, true);
 
         // Start the listener thread
-        try {
-            new NonPooledThread(() => {
-                let input = this.#socket.getInputStream();
-                let reader = new BufferedReader(new InputStreamReader(input));
+        new NonPooledThread(() => {
+            let input = this.#socket.getInputStream();
+            let reader = new BufferedReader(new InputStreamReader(input));
 
-                while (this.#connected && this.#socket !== null && this.#running) {
-                    try {
-                        let data = reader.readLine();
-                        if (data !== null) {
-                            this.receive(data);
-                        } else {
-                            Thread.sleep(1_000);
-                        }
-                    } catch (e) {
-                        console.error("[VolcAddons] Error reading data from socket server: " + e);
-                        this.disconnect();
-                        break;
+            while (this.#connected && this.#socket !== null && this.#running) {
+                try {
+                    let data = reader.readLine();
+                    if (data !== null) {
+                        this.receive(data);
+                    } else {
+                        Thread.sleep(1_000);
                     }
+                } catch (e) {
+                    console.error("[VolcAddons] Error reading data from socket server: " + e);
+                    this.disconnect();
+                    break;
                 }
-
-                this.disconnect();
-            }).execute();
-        } catch (e) {
-            console.error("[VolcAddons] Error starting listener thread: " + e);
+            }
             this.disconnect();
-        }
+        }).execute();
     }
 
     /**
