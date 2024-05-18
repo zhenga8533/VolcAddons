@@ -115,7 +115,8 @@ class WebSocket {
                     if (data !== null) {
                         this.receive(data);
                     } else {
-                        Thread.sleep(1_000);
+                        this.disconnect();
+                        break;
                     }
                 } catch (e) {
                     console.error("[VolcAddons] Error reading data from socket server: " + e);
