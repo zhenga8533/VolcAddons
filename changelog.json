@@ -1,5 +1,6 @@
 [
     "- Added additional mining event checks",
+    "- Fixed socket reconnecting",
     "- TBD: Fixed Diana particles",
     "- TBD: Fixed Vampire Impel"
 ]
