@@ -1,28 +1,63 @@
+import location from "../../utils/location";
+import socket from "../../utils/socket";
 import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, WITHER_CLASS, YELLOW } from "../../utils/constants";
 import { formatTime } from "../../utils/functions/format";
-import location from "../../utils/location";
 import { registerWhen } from "../../utils/register";
-import socket from "../../utils/socket";
+import { delay } from "../../utils/thread";
 
 
 /**
  * Track off of wither names.
  */
-const trackEvent = register("step", () => {
-    const withers = World.getAllEntitiesOfType(WITHER_CLASS);
-    withers.forEach(wither => {
-        ChatLib.chat(wither.getName());
+const findEvent = register("step", () => {
+    const loc = location.getWorld();
+    const world = loc === "Dwarven Mines" ? "dm" :
+        loc === "Crystal Hollows" ? "ch" : undefined;
+    if (world === undefined) {
+        findEvent.unregister();
+        return;
+    }
+
+    World.getAllEntitiesOfType(WITHER_CLASS).forEach(wither => {
+        const name = wither.getName().toLowerCase().removeFormatting();
+        let match = name.match(/(passive event|event) (.+) (running for|active in (.+)) (\d+):(\d+)/);
+
+        if (match) {
+            const n = match.length;
+            const event = match[2];
+            const time = parseInt(match[n - 2]) * 60 + parseInt(match[n - 1]) + (name.startsWith("passive") ? 300 : 600);
+
+            // Capitalize the first and last word.
+            const words = event.split(' ');
+            words[0] = words[0][0].toUpperCase() + words[0].slice(1);
+            words[words.length - 1] = words[words.length - 1][0].toUpperCase() + words[words.length - 1].slice(1);
+
+            // Send the event data to the server.
+            socket.send({
+                "command": world,
+                "request": "post",
+                "event": words.join(' '),
+                "time": time
+            });
+            findEvent.unregister();
+        }
     });
 }).setFps(1).unregister();
 
-function trackEvent() {
-    trackEvent.unregister();
-    trackEvent.register();
-}
+/**
+ * Track the event in the Dwarven Mines and Crystal Hollows.
+ * 
+ * @param {Number} attempt - The number of attempts to track the event.
+ */
+function trackEvent(attempt=0) {
+    if (attempt > 5) return;
 
-register("worldLoad", () => {
-    ChatLib.chat(location.getWorld());
-})
+    const world = location.getWorld();
+    if (world === undefined) delay(() => trackEvent(attempt + 1), 1000);
+    else if (world === "Dwarven Mines" || world === "Crystal Hollows") findEvent.register();
+    else findEvent.unregister();
+}
+register("worldLoad", trackEvent)
 
 /**
  * Track the event start message.
