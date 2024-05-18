@@ -89,9 +89,9 @@ export function processEvent(data) {
     ChatLib.chat(`${LOGO + YELLOW + loc} Events:`)
     Object.keys(events).forEach(event => {
         const time = events[event].time;
-        const percerntage = events[event].percentage;
+        const percentage = parseFloat(events[event].percentage).toFixed(2);
 
-        ChatLib.chat(`${DARK_GRAY}- ${AQUA + event + WHITE} ${formatTime(time) + GRAY} (${percerntage}%)`);
+        ChatLib.chat(`${DARK_GRAY}- ${AQUA + event + WHITE} ${formatTime(time) + GRAY} (${percentage}%)`);
     })
 }
 
