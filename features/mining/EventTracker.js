@@ -1,10 +1,32 @@
-import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
+import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, WITHER_CLASS, YELLOW } from "../../utils/constants";
 import { formatTime } from "../../utils/functions/format";
 import location from "../../utils/location";
 import { registerWhen } from "../../utils/register";
 import socket from "../../utils/socket";
 
 
+/**
+ * Track off of wither names.
+ */
+const trackEvent = register("step", () => {
+    const withers = World.getAllEntitiesOfType(WITHER_CLASS);
+    withers.forEach(wither => {
+        ChatLib.chat(wither.getName());
+    });
+}).setFps(1).unregister();
+
+function trackEvent() {
+    trackEvent.unregister();
+    trackEvent.register();
+}
+
+register("worldLoad", () => {
+    ChatLib.chat(location.getWorld());
+})
+
+/**
+ * Track the event start message.
+ */
 register("chat", (event) => {
     const loc = location.getWorld();
     const world = loc === "Dwarven Mines" ? "dm" :

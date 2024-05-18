@@ -1,0 +1,710 @@
+{
+    "Hub": {
+        "Archery Range": [
+            "5",
+            "61",
+            "-134"
+        ],
+        "Auction House": [
+            "-24",
+            "71",
+            "-90"
+        ],
+        "Bank": [
+            "-20",
+            "70",
+            "-65"
+        ],
+        "Bazaar Alley": [
+            "-29",
+            "70",
+            "-75"
+        ],
+        "Blacksmith": [
+            "-26",
+            "69",
+            "-124"
+        ],
+        "Builder's House": [
+            "-51",
+            "71",
+            "-33"
+        ],
+        "Canvas Room": [
+            "-10",
+            "19",
+            "-27"
+        ],
+        "Coal Mine": [
+            "-20",
+            "71",
+            "-158"
+        ],
+        "Colosseum": [
+            "82",
+            "70",
+            "-51"
+        ],
+        "Community Center": [
+            "4",
+            "71",
+            "-99"
+        ],
+        "Election Room": [
+            "-4",
+            "73",
+            "-114"
+        ],
+        "Farm": [
+            "41",
+            "71",
+            "-138"
+        ],
+        "Farmhouse": [
+            "18",
+            "71",
+            "-67"
+        ],
+        "Fashion Shop": [
+            "27",
+            "71",
+            "-45"
+        ],
+        "Fisherman's Hut": [
+            "155",
+            "68",
+            "46"
+        ],
+        "Flower House": [
+            "-7",
+            "71",
+            "-26"
+        ],
+        "Forest": [
+            "-98",
+            "72",
+            "-31"
+        ],
+        "Graveyard": [
+            "-120",
+            "71",
+            "-83"
+        ],
+        "Catacombs Entrance": [
+            "-80",
+            "56",
+            "-125"
+        ],
+        "Hexatorum": [
+            "-64",
+            "70",
+            "-107"
+        ],
+        "Unincorporated": [
+            "-25",
+            "74",
+            "142"
+        ],
+        "Library": [
+            "-30",
+            "69",
+            "-110"
+        ],
+        "Mountain": [
+            "-33",
+            "91",
+            "8"
+        ],
+        "Museum": [
+            "-75",
+            "76",
+            "80"
+        ],
+        "Pet Care": [
+            "24",
+            "70",
+            "-90"
+        ],
+        "Ruins": [
+            "-208",
+            "91",
+            "47"
+        ],
+        "Tavern": [
+            "-77",
+            "71",
+            "-51"
+        ],
+        "Thaumaturgist": [
+            "46",
+            "69",
+            "-39"
+        ],
+        "Village": [
+            "-2",
+            "70",
+            "-69"
+        ],
+        "Weaponsmith": [
+            "-11",
+            "68",
+            "-127"
+        ],
+        "Wilderness": [
+            "78",
+            "72",
+            "-12"
+        ],
+        "Wizard Tower": [
+            "42",
+            "90",
+            "67"
+        ]
+    },
+    "The Barn": {
+        "Windmill": [
+            "107",
+            "82",
+            "-283"
+        ]
+    },
+    "Mushroom Desert": {
+        "Desert Settlement": [
+            "159",
+            "77",
+            "-368"
+        ],
+        "Glowing Mushroom Cave": [
+            "231",
+            "54",
+            "-496"
+        ],
+        "Jake's House": [
+            "258",
+            "184",
+            "-565"
+        ],
+        "Mushroom Gorge": [
+            "276",
+            "47",
+            "-484"
+        ],
+        "Oasis": [
+            "136",
+            "65",
+            "-474"
+        ],
+        "Overgrown Mushroom Cave": [
+            "239",
+            "57",
+            "-398"
+        ],
+        "Shepherd's Keep": [
+            "372",
+            "84",
+            "-373"
+        ],
+        "Trapper's Den": [
+            "286",
+            "102",
+            "-570"
+        ],
+        "Treasure Hunter Camp": [
+            "201",
+            "92",
+            "-429"
+        ]
+    },
+    "The Park": {
+        "Birch Park": [
+            "-276",
+            "82",
+            "-13"
+        ],
+        "Howling Cave": [
+            "-335",
+            "89",
+            "-55"
+        ],
+        "Spruce Woods": [
+            "-335",
+            "89",
+            "-15"
+        ],
+        "Lonely Island": [
+            "-339",
+            "88",
+            "64"
+        ],
+        "Viking Longhouse": [
+            "-350",
+            "91",
+            "75"
+        ],
+        "Dark Thicket": [
+            "-353",
+            "103",
+            "-23"
+        ],
+        "Savanna Woodland": [
+            "-379",
+            "110",
+            "-19"
+        ],
+        "Melody's Plateau": [
+            "-397",
+            "110",
+            "28"
+        ],
+        "Jungle Island": [
+            "-406",
+            "120",
+            "-39"
+        ]
+    },
+    "The End": {
+        "Dragon's Nest": [
+            "-600",
+            "22",
+            "-275"
+        ],
+        "Void Sepulture": [
+            "-576",
+            "7",
+            "-317"
+        ],
+        "Void Slate": [
+            "-611",
+            "5",
+            "-275"
+        ],
+        "Zealot Bruiser Hideout": [
+            "-617",
+            "85",
+            "-203"
+        ]
+    },
+    "Crimson Isle": {
+        "Stronghold": [
+            "-360",
+            "86",
+            "-517"
+        ],
+        "Crimson Fields": [
+            "-360",
+            "83",
+            "-604"
+        ],
+        "Blazing Volcano": [
+            "-364",
+            "127",
+            "-756"
+        ],
+        "Odger's Hut": [
+            "-373",
+            "206",
+            "-801"
+        ],
+        "Plhlegblast Pool": [
+            "-383",
+            "81",
+            "-702"
+        ],
+        "Magma Chamber": [
+            "-368",
+            "63",
+            "-779"
+        ],
+        "Aura's Lab": [
+            "-395",
+            "69",
+            "-882"
+        ],
+        "Matriarch's Lair": [
+            "-523",
+            "40",
+            "-887"
+        ],
+        "Belly of the Beast": [
+            "-540",
+            "25",
+            "-888"
+        ],
+        "Dojo": [
+            "-235",
+            "108",
+            "-597"
+        ],
+        "Burning Desert": [
+            "-477",
+            "95",
+            "-659"
+        ],
+        "Mystic Marsh": [
+            "-248",
+            "75",
+            "-678"
+        ],
+        "Barbarian Outpost": [
+            "-425",
+            "104",
+            "-679"
+        ],
+        "Mage Outpost": [
+            "-298",
+            "93",
+            "-690"
+        ],
+        "Dragontail": [
+            "-556",
+            "98",
+            "-685"
+        ],
+        "Chief's Hut": [
+            "-585",
+            "115",
+            "-687"
+        ],
+        "Dragontail Blacksmith": [
+            "-550",
+            "98",
+            "-705"
+        ],
+        "Dragontail Townsquare": [
+            "-631",
+            "100",
+            "-807"
+        ],
+        "Dragontail Auction House": [
+            "-636",
+            "102",
+            "-789"
+        ],
+        "Dragontail Bazaar": [
+            "-624",
+            "100",
+            "-797"
+        ],
+        "Dragontail Bank": [
+            "-612",
+            "100",
+            "-786"
+        ],
+        "Minion Shop": [
+            "-640",
+            "101",
+            "-825"
+        ],
+        "The Dukedom": [
+            "-534",
+            "117",
+            "-903"
+        ],
+        "The Bastion": [
+            "-635",
+            "111",
+            "-928"
+        ],
+        "Scarleton": [
+            "-120",
+            "99",
+            "-805"
+        ],
+        "Community Center": [
+            "-124",
+            "92",
+            "-754"
+        ],
+        "Throne Room": [
+            "-124",
+            "103",
+            "-754"
+        ],
+        "Mage Council": [
+            "-123",
+            "83",
+            "-754"
+        ],
+        "Scarleton Plaza": [
+            "-60",
+            "107",
+            "-800"
+        ],
+        "Scarleton Minion Shop": [
+            "-48",
+            "107",
+            "-783"
+        ],
+        "Scarleton Auction House": [
+            "-60",
+            "107",
+            "-751"
+        ],
+        "Scarleton Bazaar": [
+            "-69",
+            "107",
+            "-757"
+        ],
+        "Scarleton Bank": [
+            "-79",
+            "107",
+            "-775"
+        ],
+        "Scarleton Blacksmith": [
+            "-86",
+            "92",
+            "-734"
+        ],
+        "Igrupan's House": [
+            "-23",
+            "92",
+            "-816"
+        ],
+        "Igrupan's Chicken Coop": [
+            "-32",
+            "93",
+            "-818"
+        ],
+        "Cathedral": [
+            "-37",
+            "114",
+            "-883"
+        ],
+        "Courtyard": [
+            "-179",
+            "105",
+            "-857"
+        ],
+        "The Wasteland": [
+            "-361",
+            "109",
+            "-889"
+        ],
+        "Ruins of Ashfang": [
+            "-484",
+            "134",
+            "-996"
+        ],
+        "Forgotten Skull": [
+            "-372",
+            "117",
+            "-991"
+        ],
+        "Smoldering Tomb": [
+            "-270",
+            "97",
+            "-1,000"
+        ]
+    },
+    "Deep Caverns": {
+        "Gunpowder Mines": [
+            "-3",
+            "153",
+            "40"
+        ],
+        "Lapis Quarry": [
+            "-14",
+            "129",
+            "-20"
+        ],
+        "Pigmen's Den": [
+            "1",
+            "111",
+            "42"
+        ],
+        "Slimehill": [
+            "-6",
+            "73",
+            "57"
+        ],
+        "Diamond Reserve": [
+            "-40",
+            "46",
+            "-12"
+        ],
+        "Obsidian Sanctuary": [
+            "-35",
+            "16",
+            "65"
+        ]
+    },
+    "Dwarven Mines": {
+        "Aristocrat Passage": [
+            "130",
+            "151",
+            "130"
+        ],
+        "Barracks Of Heroes": [
+            "90",
+            "196",
+            "180"
+        ],
+        "C&C Minecarts Co.": [
+            "-120",
+            "150",
+            "-20"
+        ],
+        "Cliffside Veins": [
+            "40",
+            "128",
+            "40"
+        ],
+        "Divan's Gateway": [
+            "0",
+            "128",
+            "100"
+        ],
+        "Dwarven Tavern": [
+            "30",
+            "202",
+            "-150"
+        ],
+        "Dwarven Village": [
+            "-41",
+            "200",
+            "-121"
+        ],
+        "Far Reserve": [
+            "-140",
+            "149",
+            "50"
+        ],
+        "Forge Basin": [
+            "0",
+            "146",
+            "-20"
+        ],
+        "Gates To The Mines": [
+            "31",
+            "134",
+            "-54"
+        ],
+        "Goblin Burrows": [
+            "-100",
+            "163",
+            "150"
+        ],
+        "Grand Library": [
+            "180",
+            "196",
+            "180"
+        ],
+        "Great Ice Wall": [
+            "0",
+            "128",
+            "150"
+        ],
+        "Hanging Court": [
+            "80",
+            "188",
+            "140"
+        ],
+        "Lava Springs": [
+            "60",
+            "197",
+            "-15"
+        ],
+        "Miner's Guild": [
+            "-170",
+            "221",
+            "-110"
+        ],
+        "Palace Bridge": [
+            "129",
+            "187",
+            "62"
+        ],
+        "Rampart's Quarry": [
+            "-100",
+            "150",
+            "-20"
+        ],
+        "Royal Mines": [
+            "130",
+            "154",
+            "30"
+        ],
+        "Royal Palace": [
+            "130",
+            "195",
+            "170"
+        ],
+        "Royal Quarters": [
+            "110",
+            "196",
+            "210"
+        ],
+        "The Forge": [
+            "0",
+            "149",
+            "-70"
+        ],
+        "The Lift": [
+            "-80",
+            "200",
+            "-120"
+        ],
+        "The Mist": [
+            "150",
+            "76",
+            "50"
+        ],
+        "Upper Mines": [
+            "-130",
+            "174",
+            "-50"
+        ]
+    },
+    "Rift Dimension": {
+        "Wizard Tower": [
+            "-47.5",
+            "122",
+            "72.5"
+        ],
+        "Black Lagoon": [
+            "-150",
+            "67",
+            "59"
+        ],
+        "Rift Gallery Entrance": [
+            "87",
+            "70",
+            "72"
+        ],
+        "West Village": [
+            "-80",
+            "70",
+            "-40"
+        ],
+        "Village Plaza": [
+            "-2",
+            "70",
+            "-50"
+        ],
+        "Living Cave": [
+            "15",
+            "71",
+            "-158"
+        ],
+        "Living Stillness": [
+            "15",
+            "71",
+            "-158"
+        ],
+        "Colosseum": [
+            "-104.5",
+            "68",
+            "-51.5"
+        ],
+        "Barrier Street": [
+            "31",
+            "72",
+            "-90"
+        ],
+        "Stillgore Ch\u00e2teau": [
+            "197",
+            "76",
+            "42"
+        ]
+    }
+}
