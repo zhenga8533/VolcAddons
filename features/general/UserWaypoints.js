@@ -53,17 +53,22 @@ registerWhen(register("chat", (player, _, x, y, z) => {
  * @param {String[]} args - Array of user input needed for waypoint.
  */
 export function createWaypoint(args) {
-    if (args[1] === "clear") {
+    const name = args[1];
+    const x = isNaN(args[2]) ? Math.round(Player.getX()) : parseFloat(args[2]);
+    const y = isNaN(args[3]) ? Math.round(Player.getY()) : parseFloat(args[3]);
+    const z = isNaN(args[4]) ? Math.round(Player.getZ()) : parseFloat(args[4]);
+
+    if (name === "clear") {
         chatWaypoints.clear();
         userWaypoints.clear();
         NPCs = [];
         zones = [];
         ChatLib.chat(`${LOGO + GREEN}Successfully cleared waypoints!`);
-    } else if (!isNaN(args[2]) && !isNaN(args[3]) && !isNaN(args[4])) {
-        userWaypoints.push([args[1], args[2], args[3], args[4]]);
-        ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
+    } else if (args[2] && args[3] && args[4]) {
+        userWaypoints.push([name, x, y, z]);
+        ChatLib.chat(`${GREEN}Successfully added waypoint [${name}] at [x: ${x}, y: ${y}, z: ${z}]!`);
     } else {
-        ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+        ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${name}"!`);
         ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va waypoint ${GRAY}<${WHITE}[name] [x] [y] [z], clear${GRAY}>`);
     }
 }
