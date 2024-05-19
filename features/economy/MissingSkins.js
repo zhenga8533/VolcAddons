@@ -4,7 +4,7 @@ import { Json } from "../../utils/json";
 import { decode } from "../../utils/functions/misc";
 
 
-const skins = new Json("skins.json").getData();
+const skins = new Json("skins.json", true).getData();
 register("guiOpened", () => {
     Client.scheduleTask(2, () => {
         if (!Player.getContainer().getName().startsWith("Previous Fire Sales")) return;
