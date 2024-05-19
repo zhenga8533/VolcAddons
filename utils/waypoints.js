@@ -4,7 +4,6 @@ import settings from "./settings";
 import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
-import { getPowderChests } from "../features/mining/PowderChest";
 import { data } from "./data";
 import { getBurrows } from "../features/event/BurrowDetect";
 import { getGuess } from "../features/event/MythRitual";
@@ -151,7 +150,6 @@ register("renderWorld", () => {
     renderSimple(getFairy(), 1, 0.08, 0.58, true); // Pink Fairy Souls
     renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma Souls
     renderSimple(getCat(), 0, 0, 1, true); // Blue Montezuma Fragments
-    renderSimpler(getPowderChests(), 1, 0, 1); // Magenta Powder Chests
 });
 
 

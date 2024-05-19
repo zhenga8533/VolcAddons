@@ -1,6 +1,7 @@
 [
     "- Added additional mining event checks",
-    "- Fixed socket reconnecting",
+    "- Change chest tracker to hide opened",
+    "- Fixed socket reconnections",
     "- TBD: Fixed Diana particles",
     "- TBD: Fixed Vampire Impel"
 ]
