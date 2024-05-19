@@ -100,12 +100,8 @@ export class Waypoint {
     /**
      * Gets the list of waypoints.
      * 
-     * @returns {Number} The number of waypoints in the list.
+     * @returns {Number[]} The list of waypoints.
      */
-    getLength() {
-        return this.#waypoints.length;
-    }
-
     getWaypoints() {
         return this.#waypoints;
     }

@@ -22,7 +22,7 @@ registerWhen(register("tick", () => {
         .filter(chest => chest.tileEntity.field_145987_o === 0 && Player.asPlayerMP().distanceTo(chest.getBlockPos()) <= settings.powderChest)
         .map(chest => [chest.getX(), chest.getY(), chest.getZ()])
     );
-    powderOverlay.setMessage(`${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + chests.getLength()}`);
+    powderOverlay.setMessage(`${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + chests.getWaypoints().length}`);
 }), () => location.getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
 
 /**
