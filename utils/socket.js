@@ -149,11 +149,10 @@ class WebSocket {
             }
 
             // Attempt reconnect
+            Thread.sleep(10_000);
             if (this.#running) {
-                delay(() => {
-                    console.log("[VolcAddons] Attempting to reconnect to socket server...");
-                    this.connect();
-                }, 10_000);
+                console.log("[VolcAddons] Attempting to reconnect to socket server...");
+                this.connect();
             }
         }).execute();
     }

@@ -11,6 +11,7 @@ export class Json {
      * Currently using this to keep track of server based data.
      * 
      * @param {String} file - The name of the JSON file
+     * @param {Boolean} save - Whether to save the file or not
      */
     constructor(file, save=true) {
         this.data = JSON.parse(FileLib.read("VolcAddons", "json/" + file));
