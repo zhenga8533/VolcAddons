@@ -4,20 +4,19 @@ import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
  * Variables used to represent user inputted waypoints.
  */
-let chatWaypoints = [];
-export function getChatWaypoints() { return chatWaypoints };
-let userWaypoints = [];
-export function getUserWaypoints() { return userWaypoints };
+const chatWaypoints = new Waypoint([0, 1, 1]); // Cyan Chat
+const userWaypoints = new Waypoint([0, 1, 0]); // Lime User
 
 /**
  * Detects any patcher formatted coords sent in chat.
  */
-registerWhen(register("chat", (player, spacing, x, y, z) => {
+registerWhen(register("chat", (player, _, x, y, z) => {
     // Check blacklist
     if (data.blacklist.includes(getPlayerName(player).toLowerCase())) return;
 
@@ -42,7 +41,10 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     chatWaypoints.push([player, x, y, z]);
 
     // Delete waypoint after 'X' seconds
-    delay(() => { if (chatWaypoints.length) chatWaypoints.shift() }, settings.drawWaypoint * time);
+    delay(() => {
+        const waypoints = chatWaypoints.getWaypoints();
+        if (waypoints.length) waypoints.shift();
+    }, settings.drawWaypoint * time);
 }).setCriteria("${player}:${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint !== 0);
 
 /**
@@ -52,8 +54,8 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
  */
 export function createWaypoint(args) {
     if (args[1] === "clear") {
-        chatWaypoints = [];
-        userWaypoints = [];
+        chatWaypoints.clear();
+        userWaypoints.clear();
         NPCs = [];
         zones = [];
         ChatLib.chat(`${LOGO + GREEN}Successfully cleared waypoints!`);
@@ -65,4 +67,4 @@ export function createWaypoint(args) {
         ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va waypoint ${GRAY}<${WHITE}[name] [x] [y] [z], clear${GRAY}>`);
     }
 }
-register("worldUnload", () => { userWaypoints = [] });
+register("worldUnload", () => userWaypoints.clear() );
