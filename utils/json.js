@@ -7,6 +7,7 @@ register("gameUnload", () => {
 
 export class Json {
     #data;
+    #file;
     #path;
 
     /**
@@ -17,6 +18,7 @@ export class Json {
      */
     constructor(file, isData) {
         files.push(this);
+        this.#file = file;
         this.#path = (isData ? "data/" : "json/") + file;
 
         // Load the data from the file
@@ -41,5 +43,12 @@ export class Json {
      */
     getPath() {
         return this.#path;
+    }
+
+    /**
+     * Set the data of the JSON file.
+     */
+    reset() {
+        this.#data = FileLib.read("VolcAddons", "json/" + this.#file);
     }
 }

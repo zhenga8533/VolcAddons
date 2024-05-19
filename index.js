@@ -1,7 +1,6 @@
 // Utility Modules
 import "./utils/dev";
 import "./utils/player";
-import "./utils/waypoints";
 import socket from "./utils/socket";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
@@ -116,7 +115,7 @@ import { calcTabasco } from "./features/kuudra/TabascoCalc";
 // Rift Features
 import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
-import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
+import "./features/rift/RiftWaypoints";
 import { slotCommands } from "./features/container/SlotBinding";
 
 
@@ -423,14 +422,6 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
         case "mont":
         case "cat":
             soulEdit(args, "cat", "catSouls", CAT_SOULS);
-            break;
-        // Configure npc waypoints
-        case "npc":
-            riftWaypointEdit(args, "npc", RIFT_NPCS);
-            break;
-        // Configure zone waypoints
-        case "zone":
-            riftWaypointEdit(args, "zone", RIFT_ZONES);
             break;
         // Party Commands and Else Case
         default:

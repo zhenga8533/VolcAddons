@@ -1,7 +1,7 @@
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
 import settings from "./settings";
-import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
+import { getCat, getEnigma } from "../features/rift/RiftWaypoints";
 import { data } from "./data";
 
 
@@ -51,9 +51,6 @@ function formatWaypoints(waypoints, r, g, b) {
 }
 register("tick", () => {
     formattedWaypoints = [];
-    formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
-    formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
-    formatWaypoints(getEffigies(), 0.75, 0.75, 0.75); // Silver effigies
 });
 
 /**

@@ -167,3 +167,40 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
     else if (listName === "prefixlist") ChatLib.chat(`${LOGO + GREEN}Please use ${AQUA}/ct load ${GREEN}to reload registers!`);
     setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 }
+
+/**
+ * /va edit command to directly change the waypoint arrays.
+ * 
+ * @param {String[]} args - Array of player input values.
+ * @param {String} type - Type of soul (Enigma/Montezuma).
+ * @param {String} soul - Name of the soul.
+ * @param {Type[]} base - Original array with all waypoints.
+ * @param {String} world - Current world name
+ */
+export function soulEdit(args, type, soul, base, world) {
+    switch (args[1]) {
+        case "reset":
+            data[soul] = base;
+            ChatLib.chat(`${LOGO + GREEN}Succesfully reset ${type} waypoint!`);
+            break;
+        case "clear":
+            data[soul] = world === undefined ? [] : {};
+            ChatLib.chat(`${LOGO + GREEN}Succesfully cleared ${type} waypoint!`);
+            break;
+        case "pop":
+            const souls = data[soul][world];
+            if (souls === undefined || souls.length === 0) {
+                ChatLib.chat(`${LOGO + RED}There are no ${type} souls to pop!`);
+                return;
+            }
+
+            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
+            if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
+            ChatLib.chat(`${LOGO + GREEN}Succesfully popped closest ${type} soul!`);
+            break;
+        default:
+            ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+            ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va ${type} ${GRAY}<${WHITE}reset, clear, pop${GRAY}>`);
+            break;
+    }
+}

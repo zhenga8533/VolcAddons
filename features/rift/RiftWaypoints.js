@@ -4,6 +4,7 @@ import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
@@ -65,98 +66,19 @@ registerWhen(register("chat", () => {
 
 
 /**
- * Variables used to represent rift waypoints.
- */
-let NPCs = [];
-export function getNPCs() { return NPCs };
-let zones = [];
-export function getZones() { return zones };
-
-/**
- * /va edit command to directly change the waypoint arrays.
- * 
- * @param {String[]} args - Array of player input values.
- * @param {String} type - Type of soul (Enigma/Montezuma).
- * @param {String} soul - Name of the soul.
- * @param {Type[]} base - Original array with all waypoints.
- * @param {String} world - Current world name
- */
-export function soulEdit(args, type, soul, base, world) {
-    switch (args[1]) {
-        case "reset":
-            data[soul] = base;
-            ChatLib.chat(`${LOGO + GREEN}Succesfully reset ${type} waypoint!`);
-            break;
-        case "clear":
-            data[soul] = world === undefined ? [] : {};
-            ChatLib.chat(`${LOGO + GREEN}Succesfully cleared ${type} waypoint!`);
-            break;
-        case "pop":
-            const souls = data[soul][world];
-            if (souls === undefined || souls.length === 0) {
-                ChatLib.chat(`${LOGO + RED}There are no ${type} souls to pop!`);
-                return;
-            } 
-
-            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
-            if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
-            ChatLib.chat(`${LOGO + GREEN}Succesfully popped closest ${type} soul!`);
-            break;
-        default:
-            ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-            ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va ${type} ${GRAY}<${WHITE}reset, clear, pop${GRAY}>`);
-            break;
-    }
-}
-
-/**
- * /va edit command to directly change the waypoint arrays.
- *
- * @param {String[]} args - Array of player input values.
- * @param {String} type - Type of waypoint (Zone/NPC).
- * @param {Type[]} base - Original array with all waypoints.
- */
-export function riftWaypointEdit(args, type, base) {
-    const waypoint = type === "npc" ? NPCs : zones;
-
-    if (args[1] === "clear") {
-        if (type === "npc") NPCs = [];
-        else zones = [];
-        ChatLib.chat(`${LOGO + GREEN}Succesfully cleared ${type} waypoint!`);
-        return;
-    }
-
-    args.shift();
-    const name = args.join(' ').toLowerCase();
-    
-    if (name in base) {
-        if (!(base[name][0] instanceof String))
-            base[name].forEach(coords => { waypoint.push(coords) });
-        else
-            waypoint.push(base[name]);
-        ChatLib.chat(`${LOGO + GREEN}Succesfully loaded [${name}] waypoint!`);
-    } else {
-        ChatLib.chat(`\n${LOGO + RED}Error: ${type} [${name}] not found!`);
-        ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va ${type} ${GRAY}<${WHITE}[name], clear${GRAY}>`);
-    }
-}
-
-
-/**
  * Variables used to reprsent and track the 6 effigies.
  */
 const EFFIGIES = [
-    ["1st Effigy", 150, 73, 95], ["2nd Effigy", 193, 87, 119], ["3rd Effigy", 235, 103, 147],
-    ["4th Effigy", 293, 90, 134], ["5th Effigy", 262, 93, 94], ["6th Effigy", 240, 123, 118]
+    ["1st Effigy", 151, 73, 96], ["2nd Effigy", 194, 87, 120], ["3rd Effigy", 236, 104, 148],
+    ["4th Effigy", 294, 90, 135], ["5th Effigy", 263, 93, 95], ["6th Effigy", 241, 123, 119]
 ];
-let missingEffigies = [];
+const missingEffigies = new Waypoint([0.75, 0.75, 0.75]);  // Silver effigies
 
 /**
  * Tracks missing effigies and makes a waypoint to them.
  */
-export function getEffigies() { return missingEffigies };
 registerWhen(register("step", () => {
-    missingEffigies = [];
+    missingEffigies.clear();
     let effigies = Scoreboard?.getLines()?.find((line) => line.getName().includes("Effigies"));
     if (effigies === undefined) return;
 
@@ -164,4 +86,3 @@ registerWhen(register("step", () => {
     effigies.shift();
     effigies.forEach((effigy, i) => { if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]) });
 }).setFps(1), () => location.getWorld() === "The Rift" && settings.effigyWaypoint);
-register("worldUnload", () => { missingEffigies = [] });
