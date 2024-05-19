@@ -1,7 +1,7 @@
 const files = [];
 register("gameUnload", () => {
     files.forEach(file => {
-        FileLib.write("VolcAddons", "json/" + file, JSON.stringify(this.data, null, 4));
+        FileLib.write("VolcAddons", "json/" + file, JSON.stringify(file.data, null, 4));
     });
 }).setPriority(Priority.HIGHEST);
 
