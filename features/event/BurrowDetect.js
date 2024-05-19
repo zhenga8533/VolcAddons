@@ -2,18 +2,17 @@ import location from "../../utils/location";
 import mayor from "../../utils/mayor";
 import settings from "../../utils/settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
-import { getClosest } from "../../utils/functions/find";
 import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
  * Variables used for burrow tracking
  */
 let echo = false;
-const burrows = [];
-export function getBurrows() { return burrows };
+const burrows = new Waypoint([0, 0.5, 0]); // Green Burrows
 const lastBurrows = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 
 /**
@@ -35,7 +34,8 @@ registerWhen(register("spawnParticle", (particle, type) => {
     const pos = particle.getPos();
     const [x, y, z] = [pos.getX(), pos.getY(), pos.getZ()];
     const xyz = [`§6Burrow`, x, y, z];
-    const closest = getClosest(xyz, burrows);
+    const closest = burrows.getClosest(xyz);
+    const waypoints = burrows.getWaypoints();
 
     switch (type.toString()) {
         case "FOOTSTEP":
@@ -57,10 +57,10 @@ registerWhen(register("spawnParticle", (particle, type) => {
             }
             break;
         case ("CRIT_MAGIC"):
-            if (closest[1] < 3) burrows[burrows.indexOf(closest[0])][0] = `§aStart`;
+            if (closest[1] < 3) waypoints[waypoints.indexOf(closest[0])][0] = `§aStart`;
             break;
         case ("CRIT"):
-            if (closest[1] < 3) burrows[burrows.indexOf(closest[0])][0] = `§cMob`;
+            if (closest[1] < 3) waypoints[waypoints.indexOf(closest[0])][0] = `§cMob`;
             break;
     }
 }), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
@@ -69,16 +69,17 @@ registerWhen(register("spawnParticle", (particle, type) => {
  * Events to remove burrows from list
  */
 registerWhen(register("chat", () => {
-    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows);
-    if (closest !== undefined) Client.scheduleTask(2, () => burrows.splice(burrows.indexOf(closest[0]), 1));
+    const closest = burrows.getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()]);
+    const waypoints = burrows.getWaypoints();
+    if (closest !== undefined) Client.scheduleTask(2, () => waypoints.splice(waypoints.indexOf(closest[0]), 1));
 }).setCriteria("You ${completed} Griffin ${burrow}! (${x}/4)"),
 () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
 
-register("worldUnload", () => {
-    burrows.length = 0;
-});
-
 registerWhen(register("chat", () => {
-    burrows.length = 0;
+    burrows.clear();
 }).setCriteria(" ☠ You ${died}."),
 () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+
+register("worldUnload", () => {
+    burrows.clear();
+});

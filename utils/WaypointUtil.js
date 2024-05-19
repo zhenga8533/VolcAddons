@@ -77,12 +77,37 @@ export class Waypoint {
     }
 
     /**
+     * Finds the closest waypoint to the given coordinate.
+     * 
+     * @param {Numer[]} coord - The coordinate to find the closest waypoint to.
+     * @returns {Number[]} The closest waypoint to the given coordinate.
+     */
+    getClosest(coord) {
+        const n = coord.length;
+        let closest = [null, Infinity];
+
+        this.#waypoints.forEach(waypoint => {
+            const m = waypoint.length;
+            const dX = waypoint[m - 3] - coord[n - 3];
+            const dY = waypoint[m - 2] - coord[n - 2];
+            const dZ = waypoint[m - 1] - coord[n - 1];
+            const distance = Math.hypot(dX, dY, dZ);
+            if (distance < closest[1]) closest = [waypoint, distance];
+        });
+        return closest;
+    }
+
+    /**
      * Gets the list of waypoints.
      * 
      * @returns {Number} The number of waypoints in the list.
      */
     getLength() {
         return this.#waypoints.length;
+    }
+
+    getWaypoints() {
+        return this.#waypoints;
     }
     
     /**
