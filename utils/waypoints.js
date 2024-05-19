@@ -1,7 +1,6 @@
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
 import settings from "./settings";
-import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { data } from "./data";
 import { getFairy } from "../features/general/FairySouls";
@@ -107,11 +106,6 @@ function renderWaypoint(waypoints) {
         renderBeaconBeam(beam[0], beam[1], beam[2], rgb[0], rgb[1], rgb[2], 0.5, false);
     });
 }
-function renderBeam(waypoints) {
-    if (!waypoints.length) return;
-
-    waypoints.forEach((waypoint) => renderBeaconBeam(waypoint[0], waypoint[1], waypoint[2], waypoint[3], waypoint[4], waypoint[5], 0.5, false) );
-}
 /**
  * 
  * @param {Array} entities - list of entities to draw hitboxes around
@@ -138,8 +132,6 @@ export function renderEntities(entities, r, g, b, pt, title, fill = true) {
 // Registering renderWorld event to render the waypoints and other entities
 register("renderWorld", () => {
     renderWaypoint(formattedWaypoints);
-    renderBeam(getCrates());
-    renderBeam(getBuilds());
     renderSimple(getFairy(), 1, 0.08, 0.58, true); // Pink Fairy Souls
     renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma Souls
     renderSimple(getCat(), 0, 0, 1, true); // Blue Montezuma Fragments

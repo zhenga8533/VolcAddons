@@ -21,17 +21,21 @@ export class Waypoint {
     #color;
     #waypoints;
     #simple;
+    #box;
+    #beam;
 
     /**
      * Creates a new waypoint.
      * 
      * @param {Number[]} color - RGB color of the waypoint.
      */
-    constructor(color, simple=false) {
+    constructor(color, simple=false, box=true, beam=true) {
         waypoints.push(this);
         this.#color = color;
         this.#waypoints = [];
         this.#simple = simple;
+        this.#box = box;
+        this.#beam = beam;
     }
 
     /**
@@ -57,15 +61,18 @@ export class Waypoint {
             const rY1 = pY + pEye + (y + 1 + (20 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
             const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (11 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
             const rZ = pZ + (z + 0.5 - pZ) / (distance / renderDistance);
+            const color = waypoint.length < 6 ? this.#color : waypoint.slice(0, 3);
 
             // Render the waypoint
-            RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, ...this.#color, 1, data.vision || !this.#simple);
-            RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, ...this.#color, 0.25, data.vision || !this.#simple);
+            if (this.#box) {
+                RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, ...color, 1, data.vision || !this.#simple);
+                RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, ...color, 0.25, data.vision || !this.#simple);
+            }
             if (!this.#simple) {
                 Tessellator.drawString(GOLD + waypoint[0], rX, rY1, rZ);
                 Tessellator.drawString(`${DARK_GRAY}[${YELLOW + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
-                renderBeaconBeam(x, y, z, ...this.#color, 0.5, false);
             }
+            if (this.#beam) renderBeaconBeam(x, y, z, ...color, 0.5, false);
         });
     }
 
