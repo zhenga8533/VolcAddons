@@ -303,7 +303,7 @@ registerWhen(register("step", () => {
         const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
         if (helmet !== null) {
             const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id");  // getNBT() +> getNBTTagCompound() => getString()
-            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], ~~stand.getX(), stand.getY() + 1, ~~stand.getZ()]);
+            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()]);
         }
     });
 }).setFps(1), () => settings.chocoWaypoints);

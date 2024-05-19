@@ -56,12 +56,15 @@ export class Waypoint {
      */
     draw(pX, pY, pZ, pEye){
         this.#waypoints.forEach(waypoint => {
-            // Calculate the distance between the player and the waypoint
             const n = waypoint.length;
             const title = waypoint[n - 4];
-            const x = (this.#rounded ? Math.round(waypoint[n - 3]) : waypoint[n - 3]) - 0.5;
-            const y = this.#rounded ? Math.round(waypoint[n - 2]) : waypoint[n - 2];
-            const z = (this.#rounded ? Math.round(waypoint[n - 1]) : waypoint[n - 1]) - 0.5;
+
+            // Calculate the position of the waypoint
+            let x = parseFloat(this.#rounded ? Math.round(waypoint[n - 3]) : waypoint[n - 3]) - 0.5;
+            let y = parseFloat(this.#rounded ? Math.round(waypoint[n - 2]) : waypoint[n - 2]);
+            let z = parseFloat(this.#rounded ? Math.round(waypoint[n - 1]) : waypoint[n - 1]) - 0.5;
+
+            // Calculate the render distance of the waypoint
             const distance = Math.hypot(pX - x, pY - y, pZ - z);
             const renderDistance = Math.min(distance, 50);
 
