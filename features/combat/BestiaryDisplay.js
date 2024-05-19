@@ -81,7 +81,7 @@ registerWhen(register("guiClosed", () => {
 /**
  * Bestiary widget tracker.
  */
-const maxBestiary = new Json("bestiary.json", true).getData();
+const maxBestiary = new Json("bestiary.json", false).getData();
 register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const containerName = Player.getContainer().getName();

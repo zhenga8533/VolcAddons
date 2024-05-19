@@ -3,7 +3,6 @@ import RenderLib from "../../RenderLib/index";
 import settings from "./settings";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { data } from "./data";
-import { getFairy } from "../features/general/FairySouls";
 
 
 /**
@@ -126,7 +125,6 @@ export function renderEntities(entities, r, g, b, pt, title, fill = true) {
 // Registering renderWorld event to render the waypoints and other entities
 register("renderWorld", () => {
     renderWaypoint(formattedWaypoints);
-    renderSimple(getFairy(), 1, 0.08, 0.58, true); // Pink Fairy Souls
     renderSimple(getEnigma(), 0.5, 0, 0.5, true); // Purple Enigma Souls
     renderSimple(getCat(), 0, 0, 1, true); // Blue Montezuma Fragments
 });
