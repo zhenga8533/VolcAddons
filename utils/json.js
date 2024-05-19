@@ -1,11 +1,14 @@
 const files = [];
 register("gameUnload", () => {
     files.forEach(file => {
-        FileLib.write("VolcAddons", "json/" + file, JSON.stringify(file.data, null, 4));
+        FileLib.write("VolcAddons", file.getPath(), JSON.stringify(file.getData(), null, 4));
     });
 }).setPriority(Priority.HIGHEST);
 
 export class Json {
+    #data;
+    #path;
+
     /**
      * Create a new persistant single object JSON file.
      * Currently using this to keep track of server based data.
@@ -14,8 +17,9 @@ export class Json {
      * @param {Boolean} save - Whether to save the file or not
      */
     constructor(file, save) {
-        this.data = JSON.parse(FileLib.read("VolcAddons", "json/" + file));
-        if (save) files.push(file);
+        this.#path = "json/" + file;
+        this.#data = JSON.parse(FileLib.read("VolcAddons", this.#path));
+        if (save) files.push(this);
     }
 
     /**
@@ -24,6 +28,15 @@ export class Json {
      * @returns {Object} The data of the JSON file
      */
     getData() {
-        return this.data;
+        return this.#data;
+    }
+
+    /**
+     * Set the data of the JSON file
+     * 
+     * @param {Object} data - The new data of the JSON file
+     */
+    getPath() {
+        return this.#path;
     }
 }
