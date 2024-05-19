@@ -56,29 +56,29 @@ export class Waypoint {
         this.#waypoints.forEach(waypoint => {
             // Calculate the distance between the player and the waypoint
             const n = waypoint.length;
-            const x = Math.round(waypoint[n - 3]);
+            const x = Math.round(waypoint[n - 3]) + 0.5;
             const y = Math.round(waypoint[n - 2]);
-            const z = Math.round(waypoint[n - 1]);
+            const z = Math.round(waypoint[n - 1]) + 0.5;
             const distance = Math.hypot(pX - x, pY - y, pZ - z);
             const renderDistance = Math.min(distance, 50);
 
             // Credit: https://github.com/Soopyboo32/SoopyV2/blob/master/src/utils/renderUtils.js
-            const rX = pX + (x + 0.5 - pX) / (distance / renderDistance);
+            const rX = pX + (x - pX) / (distance / renderDistance);
             const rY1 = pY + pEye + (y + 1 + (20 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
-            const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (11 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
-            const rZ = pZ + (z + 0.5 - pZ) / (distance / renderDistance);
+            const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (10 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
+            const rZ = pZ + (z - pZ) / (distance / renderDistance);
             const color = waypoint.length < 6 ? this.#color : waypoint.slice(0, 3);
 
             // Render the waypoint
             if (this.#box) {
-                RenderLib.drawEspBox(x + 0.5, y, z + 0.5, 1, 1, ...color, 1, data.vision || !this.#simple);
-                RenderLib.drawInnerEspBox(x + 0.5, y, z + 0.5, 1, 1, ...color, 0.25, data.vision || !this.#simple);
+                RenderLib.drawEspBox(x, y, z, 1, 1, ...color, 1, data.vision || !this.#simple);
+                RenderLib.drawInnerEspBox(x, y, z, 1, 1, ...color, 0.25, data.vision || !this.#simple);
             }
             if (!this.#simple) {
                 Tessellator.drawString(GOLD + waypoint[0], rX, rY1, rZ);
                 Tessellator.drawString(`${DARK_GRAY}[${YELLOW + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
             }
-            if (this.#beam) renderBeaconBeam(x, y, z, ...color, 0.5, false);
+            if (this.#beam) renderBeaconBeam(x - 0.5, y, z - 0.5, ...color, 0.5, false);
         });
     }
 
