@@ -9,8 +9,8 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to track and display crate locations.
  */
-const crates = new Waypoint([1, 1, 1], true, false, true);
-const builds = new Waypoint([1, 0, 0], true, false, true);
+const crates = new Waypoint([1, 1, 1], true, false, true, false);
+const builds = new Waypoint([1, 0, 0], true, false, true, false);
 
 /**
  * Tracks crates near player and colors them depending on how close they are.
@@ -25,8 +25,8 @@ registerWhen(register("tick", () => {
     crates.set(supplies.map(supply => {
         const yaw = supply.getYaw();
         const distance = player.distanceTo(supply);
-        const x = supply.getX() + 5 * Math.cos((yaw + 130) * (Math.PI / 180));
-        const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180));
+        const x = supply.getX() + 5 * Math.cos((yaw + 130) * (Math.PI / 180)) + 0.5;
+        const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180)) + 0.5;
         return [distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0, x, 75, z];
     }));
 }), () => location.getWorld() === "Kuudra" && settings.kuudraCrates);
@@ -40,5 +40,5 @@ registerWhen(register("step", () => {
     builds.clear();
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
-    piles.forEach(pile => builds.push([pile.getX(), pile.getY(), pile.getZ()]) );
+    piles.forEach(pile => builds.push([pile.getX() + 0.5, pile.getY(), pile.getZ() + 0.5]) );
 }).setFps(2), () => location.getWorld() === "Kuudra" && settings.kuudraBuild);
