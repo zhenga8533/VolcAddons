@@ -11,7 +11,6 @@ import { getGuess } from "../features/event/MythRitual";
 import { getCompass } from "../features/mining/WishingCompass";
 import { getFairy } from "../features/general/FairySouls";
 import { getCorpses } from "../features/mining/ShaftAnnounce";
-import { getEggs } from "../features/event/HippityHoppity";
 
 
 /**
@@ -68,7 +67,6 @@ register("tick", () => {
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75); // Silver effigies
     formatWaypoints(getCompass(), 0.75, 0.17, 0.41); // Bright Purple Compass
-    formatWaypoints(getEggs(), 0.25, 0.1, 0); // Brown Chocolate Eggs
     const corpses = getCorpses(); // Color coded corpses
     formatWaypoints(corpses["Lapis"], 0.15, 0.38, 0.61);
     formatWaypoints(corpses["Mineral"], 0.84, 0.82, 0.77);

@@ -7,6 +7,7 @@ import { registerWhen } from "../../utils/register";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
 import { announceMob } from "../../utils/functions/misc";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
@@ -249,7 +250,8 @@ registerWhen(register("guiOpened", () => {
 /**
  * Egglocator
  */
-let eggWaypoints = [];
+const eggWaypoints = new Waypoint([0.25, 0.1, 0]);
+
 const EGGS = {
     "015adc61-0aba-3d4d-b3d1-ca47a68a154b": "Breakfast",
     "55ae5624-c86b-359f-be54-e0ec7c175403": "Lunch",
@@ -260,7 +262,6 @@ let looted = {
     "Lunch": false,
     "Dinner": false
 };
-export function getEggs() { return eggWaypoints };
 
 // Track if egg was looted.
 registerWhen(register("chat", (type) => {
@@ -296,19 +297,19 @@ register("worldUnload", () => {
 // ArmorStand ESP susge, UAYOR
 registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
-    eggWaypoints = [];
+    eggWaypoints.clear();
 
     stands.forEach(stand => {
         const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
         if (helmet !== null) {
             const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id");  // getNBT() +> getNBTTagCompound() => getString()
-            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], ~~stand.getX(), stand.getY() + 2, ~~stand.getZ()]);
+            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], ~~stand.getX(), stand.getY() + 1, ~~stand.getZ()]);
         }
     });
 }).setFps(1), () => settings.chocoWaypoints);
 
 register("worldUnload", () => {
-    eggWaypoints = [];
+    eggWaypoints.clear();
 });
 
 
