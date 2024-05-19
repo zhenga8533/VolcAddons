@@ -72,4 +72,3 @@ export function createWaypoint(args) {
         ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va waypoint ${GRAY}<${WHITE}[name] [x] [y] [z], clear${GRAY}>`);
     }
 }
-register("worldUnload", () => userWaypoints.clear() );

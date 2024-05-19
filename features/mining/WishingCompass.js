@@ -13,7 +13,6 @@ let path = [];
 let lastPath = [];
 let zone = undefined;
 register("worldUnload", () => {
-    compass.clear();
     zone = undefined;
 });
 

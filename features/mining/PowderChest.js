@@ -26,13 +26,6 @@ registerWhen(register("tick", () => {
 }), () => location.getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
 
 /**
- * Removes chest waypoints on world leave.
- */
-registerWhen(register("worldUnload", () => {
-    chests.clear();
-}), () => location.getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
-
-/**
  * Remove powder chest spam.
  */
 registerWhen(register("chat", (gain, event) => {

@@ -17,6 +17,12 @@ register("renderWorld", () => {
     });
 });
 
+register("worldUnload", () => {
+    waypoints.forEach(waypoint => {
+        waypoint.clear();
+    });
+});
+
 export class Waypoint {
     #color;
     #waypoints;

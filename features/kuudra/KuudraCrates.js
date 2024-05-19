@@ -42,11 +42,3 @@ registerWhen(register("step", () => {
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
     piles.forEach(pile => builds.push([pile.getX(), pile.getY(), pile.getZ()]) );
 }).setFps(2), () => location.getWorld() === "Kuudra" && settings.kuudraBuild);
-
-/**
- * Marks build piles that are not completed.
- */
-register("worldUnload", () => {
-    crates.clear();
-    builds.clear();
-});

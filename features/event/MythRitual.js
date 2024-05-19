@@ -129,10 +129,3 @@ registerWhen(register("spawnParticle", (particle, type) => {
 registerWhen(register("soundPlay", (_, __, ___, pitch) => {
     distance = (Math.E / pitch) ** (Math.E + (1 - 2 * pitch)) - Math.E ** (1 - pitch ** 2) + Math.E ** (0.8 - Math.E * pitch);
 }).setCriteria("note.harp"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
-
-/**
- * Remove guess on world unload.
- */
-register("worldUnload", () => {
-    guessed.clear();
-});

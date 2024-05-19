@@ -79,7 +79,3 @@ registerWhen(register("chat", () => {
     burrows.clear();
 }).setCriteria(" ☠ You ${died}."),
 () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
-
-register("worldUnload", () => {
-    burrows.clear();
-});

@@ -308,10 +308,6 @@ registerWhen(register("step", () => {
     });
 }).setFps(1), () => settings.chocoWaypoints);
 
-register("worldUnload", () => {
-    eggWaypoints.clear();
-});
-
 
 /**
  * Announce egg location on roulette completion.
