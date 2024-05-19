@@ -2,18 +2,18 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { GRAY, GREEN, LOGO } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
  * Variables used to estimate compass location.
  */
+const compass = new Waypoint([0.75, 0.17, 0.41]); // Bright Purple Compass
 let path = [];
 let lastPath = [];
-let compass = [];
 let zone = undefined;
-export function getCompass() { return compass };
 register("worldUnload", () => {
-    compass = [];
+    compass.clear();
     zone = undefined;
 });
 
@@ -72,7 +72,9 @@ registerWhen(register("spawnParticle", (particle, type) => {
             zone.startsWith(" ⏣ Goblin") ? "Beard Cutter" :
             zone.startsWith(" ⏣ Jungle") ? "Tarzan's Jarven" :
             zone.startsWith(" ⏣ Magma") ? "Heatran's Cave" : "Important Location";
-        compass = [[name, intersect[0], y, intersect[1]]];
+
+        compass.clear();
+        compass.push([name, intersect[0], y, intersect[1]]);
         ChatLib.chat(`${LOGO + GREEN}Compass location found!`);
 
         // Check if paths are too close

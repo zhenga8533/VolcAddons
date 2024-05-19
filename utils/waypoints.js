@@ -8,7 +8,6 @@ import { getPowderChests } from "../features/mining/PowderChest";
 import { data } from "./data";
 import { getBurrows } from "../features/event/BurrowDetect";
 import { getGuess } from "../features/event/MythRitual";
-import { getCompass } from "../features/mining/WishingCompass";
 import { getFairy } from "../features/general/FairySouls";
 import { getCorpses } from "../features/mining/ShaftAnnounce";
 
@@ -66,7 +65,6 @@ register("tick", () => {
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75); // Silver effigies
-    formatWaypoints(getCompass(), 0.75, 0.17, 0.41); // Bright Purple Compass
     const corpses = getCorpses(); // Color coded corpses
     formatWaypoints(corpses["Lapis"], 0.15, 0.38, 0.61);
     formatWaypoints(corpses["Mineral"], 0.84, 0.82, 0.77);
