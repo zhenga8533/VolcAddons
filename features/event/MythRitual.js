@@ -6,11 +6,13 @@ import { getClosest } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
  * Key press to warp player to closest burrow.
  */
+const guessed = new Waypoint([1, 1, 0]);  // Yellow Guess
 let warp = "player";
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() }).setPriority(Priority.HIGHEST);
@@ -104,9 +106,6 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
     path = [[Player.getX(), Player.getY(), Player.getZ()]];
 }), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
-let guess = [];
-export function getGuess() { return guess };
-
 /**
  * Use Ancestral Spade particles to guess a burrow location.
  */
@@ -121,7 +120,7 @@ registerWhen(register("spawnParticle", (particle, type) => {
     
     // Push to particles list and make a guess
     path.push([x, y, z]);
-    guess = [guessBurrow(path, distance)];
+    guessed.set([guessBurrow(path, distance)]);
 }), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 /**
@@ -135,5 +134,5 @@ registerWhen(register("soundPlay", (_, __, ___, pitch) => {
  * Remove guess on world unload.
  */
 register("worldUnload", () => {
-    guess = [];
+    guessed.clear();
 });

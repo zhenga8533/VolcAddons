@@ -5,7 +5,6 @@ import { getBuilds, getCrates } from "../features/kuudra/KuudraCrates";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { getChatWaypoints, getUserWaypoints } from "../features/general/UserWaypoints";
 import { data } from "./data";
-import { getGuess } from "../features/event/MythRitual";
 import { getFairy } from "../features/general/FairySouls";
 import { getCorpses } from "../features/mining/ShaftAnnounce";
 
@@ -58,7 +57,6 @@ register("tick", () => {
     formattedWaypoints = [];
     formatWaypoints(getChatWaypoints(), 0, 1, 1); // Cyan Waypoint
     formatWaypoints(getUserWaypoints(), 0, 1, 0); // Lime user
-    formatWaypoints(getGuess(), 1, 1, 0); // Yellow diana theory burrow
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75); // Silver effigies
