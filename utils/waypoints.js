@@ -4,7 +4,6 @@ import settings from "./settings";
 import { getCat, getEffigies, getEnigma, getNPCs, getZones } from "../features/rift/RiftWaypoints";
 import { data } from "./data";
 import { getFairy } from "../features/general/FairySouls";
-import { getCorpses } from "../features/mining/ShaftAnnounce";
 
 
 /**
@@ -56,11 +55,6 @@ register("tick", () => {
     formatWaypoints(getNPCs(), 0, 0.2, 0.4); // Navy NPC
     formatWaypoints(getZones(), 0, 0.5, 0.5); // Teal zone
     formatWaypoints(getEffigies(), 0.75, 0.75, 0.75); // Silver effigies
-    const corpses = getCorpses(); // Color coded corpses
-    formatWaypoints(corpses["Lapis"], 0.15, 0.38, 0.61);
-    formatWaypoints(corpses["Mineral"], 0.84, 0.82, 0.77);
-    formatWaypoints(corpses["Yog"], 1, 0.65, 0);
-    formatWaypoints(corpses["Vanguard"], 0, 1, 1);
 });
 
 /**

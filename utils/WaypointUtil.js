@@ -29,19 +29,21 @@ export class Waypoint {
     #simple;
     #box;
     #beam;
+    #rounded;
 
     /**
      * Creates a new waypoint.
      * 
      * @param {Number[]} color - RGB color of the waypoint.
      */
-    constructor(color, simple=false, box=true, beam=true) {
+    constructor(color, simple=false, box=true, beam=true, rounded=true) {
         waypoints.push(this);
         this.#color = color;
         this.#waypoints = [];
         this.#simple = simple;
         this.#box = box;
         this.#beam = beam;
+        this.#rounded = rounded;
     }
 
     /**
@@ -56,9 +58,10 @@ export class Waypoint {
         this.#waypoints.forEach(waypoint => {
             // Calculate the distance between the player and the waypoint
             const n = waypoint.length;
-            const x = Math.round(waypoint[n - 3]) + 0.5;
-            const y = Math.round(waypoint[n - 2]);
-            const z = Math.round(waypoint[n - 1]) + 0.5;
+            const title = waypoint[n - 4];
+            const x = (this.#rounded ? Math.round(waypoint[n - 3]) : waypoint[n - 3]) - 0.5;
+            const y = this.#rounded ? Math.round(waypoint[n - 2]) : waypoint[n - 2];
+            const z = (this.#rounded ? Math.round(waypoint[n - 1]) : waypoint[n - 1]) - 0.5;
             const distance = Math.hypot(pX - x, pY - y, pZ - z);
             const renderDistance = Math.min(distance, 50);
 
@@ -69,15 +72,19 @@ export class Waypoint {
             const rZ = pZ + (z - pZ) / (distance / renderDistance);
             const color = waypoint.length < 6 ? this.#color : waypoint.slice(0, 3);
 
-            // Render the waypoint
+            // Render waypoint box
             if (this.#box) {
                 RenderLib.drawEspBox(x, y, z, 1, 1, ...color, 1, data.vision || !this.#simple);
                 RenderLib.drawInnerEspBox(x, y, z, 1, 1, ...color, 0.25, data.vision || !this.#simple);
             }
+
+            // Render waypoint text
             if (!this.#simple) {
-                Tessellator.drawString(GOLD + waypoint[0], rX, rY1, rZ);
+                Tessellator.drawString(GOLD + title, rX, rY1, rZ);
                 Tessellator.drawString(`${DARK_GRAY}[${YELLOW + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
             }
+
+            // Render beacon beam
             if (this.#beam) renderBeaconBeam(x - 0.5, y, z - 0.5, ...color, 0.5, false);
         });
     }
