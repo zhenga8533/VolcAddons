@@ -127,7 +127,8 @@ export class Waypoint {
             RenderLib.drawEspBox(x, y, z, width, height, ...this.#color, 1, data.vision);
             if (this.#box) RenderLib.drawInnerEspBox(x, y, z, width, height, ...this.#color, settings.hitboxColor.alpha/510, data.vision);
             if (title !== undefined && data.vision) {
-                const text = title + (this.#type === 2 ? ` [${Player.asPlayerMP().distanceTo(entity).toFixed(0)}m]` : "");
+                const text = title + (this.#type !== 2 ? '' :
+                    ` ${DARK_GRAY}[${YELLOW + Player.asPlayerMP().distanceTo(entity).toFixed(0)}m${DARK_GRAY}]`);
                 Tessellator.drawString(text, x, y + height + 1, z, 0xffffff, true);
             }
         });

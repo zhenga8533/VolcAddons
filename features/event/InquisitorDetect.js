@@ -79,7 +79,7 @@ register("command", () => {
 /**
  * Announce inquisitor spawn on chat message appears.
  */
-registerWhen(register("chat", (wow, mob) => {
+registerWhen(register("chat", (_, mob) => {
     if (mob === "Minos Inquisitor") {
         announceMob(settings.inqAlert, "Minos Inquisitor", Player.getX(), Player.getY(), Player.getZ());
         if (settings.inqCounter !== 0) updateInqCounter(true);
@@ -89,18 +89,20 @@ registerWhen(register("chat", (wow, mob) => {
 /**
  * Tracks world for any inquisitors near player.
  */
-const inqWaypoints = new Waypoint([1, 0.84, 0], 2, true, false, false);
+const inqWaypoints = new Waypoint([1, 0.84, 0], 2, true, true, false);
 registerWhen(register("step", () => {
     inqWaypoints.clear();
     const inquisitors = World.getAllEntitiesOfType(PLAYER_CLASS).filter(player => player.getName() === "Minos Inquisitor");
 
     if (inquisitors.length > 0) {
+        // Check if inquisitor is dead
         let foundDead = false;
         inquisitors.forEach(inq => {
             if (data.moblist.includes("inquisitor")) inqWaypoints.push(inq);
             if (inq.func_110143_aJ() === 0) foundDead = true;
         });
 
+        // Update HUD
         if (foundDead) Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${RED}DEAD!`, "", 0, 50, 10);
         else Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
     }

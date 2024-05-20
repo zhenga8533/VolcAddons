@@ -7,7 +7,7 @@ import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
-import { Hitbox, renderEntities } from "../../utils/waypoints";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
@@ -115,11 +115,6 @@ register("command", () => {
 
 /**
  * --- Vanquisher Detect ---
- * Vanquisher detection variables.
- */
-let vanquishers = [];
-
-/**
  * Announce vanquisher spawn on chat message appears.
  */
 registerWhen(register("chat", () => {
@@ -136,25 +131,30 @@ registerWhen(register("chat", () => {
 /**
  * Tracks world for any vanquishers near player.
  */
+const vanqWaypoints = new Waypoint([0.5, 0, 0.5], 2, true, true, false);
 const vanqExample = `${DARK_PURPLE + BOLD}Vanquisher ${WHITE}Detected`;
 const vanqOverlay = new Overlay("vanqDetect", data.QL, "moveVanq", vanqExample, ["Crimson Isle"]);
 vanqOverlay.setMessage("");
+
 registerWhen(register("step", () => {
-    vanquishers = World.getAllEntitiesOfType(WITHER_CLASS).filter(entity => entity.getEntity().func_110138_aP() === 1024);
+    vanqWaypoints.clear();
+    const vanquishers = World.getAllEntitiesOfType(WITHER_CLASS).filter(entity => entity.getEntity().func_110138_aP() === 1024);
 
     if (vanquishers.length > 0) {
-        if (vanquishers.find(vanquisher => vanquisher.getEntity().func_110143_aJ() === 0) !== undefined)
-            vanqOverlay.setMessage(`${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`);
+        // Check if vanquisher is dead
+        let foundDead = false;
+        vanquishers.forEach(vanq => {
+            if (data.moblist.includes("vanquisher")) vanqWaypoints.push([DARK_PURPLE + "Vanquisher", vanq]);
+            if (vanq.getEntity().func_110143_aJ() === 0) foundDead = true;
+        });
+        
+        // Update HUD
+        if (foundDead) vanqOverlay.setMessage(`${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`);
         else vanqOverlay.setMessage(vanqExample);
         
         if (settings.vanqSound)playSound(AMOGUS, 10000);
-        if (!data.moblist.includes("vanquisher")) vanquishers = [];
     } else vanqOverlay.setMessage("");
 }).setFps(2), () => location.getWorld() === "Crimson Isle" && settings.vanqDetect);
-new Hitbox(() => location.getWorld() === "Crimson Isle" && settings.vanqDetect, (pt) => {
-    renderEntities(vanquishers, 0.5, 0, 0.5, pt, "Vanquisher");
-});
-register("worldUnload", () => vanquishers = []);
 
 
 /**
