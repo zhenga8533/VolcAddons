@@ -4,7 +4,7 @@ import "./utils/player";
 import socket from "./utils/socket";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
+import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
 import { openGUI } from "./utils/overlay";
@@ -29,6 +29,7 @@ import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
+import "./features/general/SkyBlockWaypoints";
 import "./features/general/SkyCrypt";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
@@ -117,6 +118,7 @@ import "./features/rift/DDR";
 import "./features/rift/VampireSlayer";
 import "./features/rift/RiftWaypoints";
 import { slotCommands } from "./features/container/SlotBinding";
+import { updateSBW } from "./features/general/SkyBlockWaypoints";
 
 
 // Launch Tests
@@ -381,6 +383,13 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
         case "waypoint":
         case "wp":
             createWaypoint(args);
+            break;
+        case "npc":
+            updateSBW("NPC", args[1], args.slice(2).join(' '));
+            break;
+        case "location":
+        case "zone":
+            updateSBW(args[0], args[1], args.slice(2).join(' '));
             break;
         // Bazaar Calculations
         case "calculate":

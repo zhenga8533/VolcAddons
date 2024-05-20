@@ -84,5 +84,7 @@ registerWhen(register("step", () => {
 
     effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
     effigies.shift();
-    effigies.forEach((effigy, i) => { if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]) });
+    effigies.forEach((effigy, i) => { 
+        if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]);
+    });
 }).setFps(1), () => location.getWorld() === "The Rift" && settings.effigyWaypoint);

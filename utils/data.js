@@ -1,5 +1,5 @@
 import PogObject from "../../PogData";
-import { BUTTON_PRESETS, CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
+import { BUTTON_PRESETS } from "./constants";
 
 
 // Relocate old data files (<2.9.5)
@@ -152,10 +152,6 @@ export let data = new PogObject("VolcAddons", {
         "Multi Drop": -1,
         "Cost Reduction": -1
     },
-    // Waypoint properties
-    "fairySouls": FAIRY_SOULS,
-    "enigmaSouls": ENIGMA_SOULS,
-    "catSouls": CAT_SOULS,
     // GUI locations
     ...DEFAULT_GUI
 }, "data/datitee.json");

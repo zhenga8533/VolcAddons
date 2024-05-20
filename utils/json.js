@@ -16,8 +16,8 @@ export class Json {
      * @param {String} file - The name of the JSON file
      * @param {Boolean} save - Whether to save the file or not
      */
-    constructor(file, isData) {
-        files.push(this);
+    constructor(file, isData, save=true) {
+        if (save) files.push(this);
         this.#file = file;
         this.#path = (isData ? "data/" : "json/") + file;
 
