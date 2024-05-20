@@ -2,10 +2,9 @@ import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { AQUA, BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, LOGO, RED, YELLOW } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
+import { Json } from "../../utils/json";
 import { registerWhen } from "../../utils/register";
 import { Waypoint } from "../../utils/WaypointUtil";
-import { Json } from "../../utils/json";
-import { AQUA, YELLOW } from "../../utils/constants";
 
 
 /**
@@ -67,26 +66,13 @@ export function updateFairy(command, index) {
     const souls = data[location.getWorld()] ?? [];
 
     switch (command) {
-        case "clear":
-            // Clear all waypoints
+        case "clear":  // Clear all waypoints
             Object.keys(data).forEach(world => {
                 data[world].length = 0
             });
             ChatLib.chat(`${LOGO + GREEN}Successfully cleared out all Fairy Soul waypoints.`);
             break;
-        case "reset":
-            // Reset the array
-            fairySouls.reset();
-            ChatLib.chat(`${LOGO + GREEN}Successfully reset Fairy Soul waypoints.`);
-            break;
-        case "pop":
-            // Delete closest soul
-            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
-            if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
-            ChatLib.chat(`${LOGO + GREEN}Successfully removed closest Fairy Soul.`);
-            break;
-        case "delete":
-            // Delete the specified soul
+        case "delete":  // Delete the specified soul
             if (souls[index] === undefined) {
                 ChatLib.chat(`${LOGO + RED}Error: Invalid Fairy Soul index "${index}"!`);
                 return;
@@ -95,7 +81,7 @@ export function updateFairy(command, index) {
             ChatLib.command(`va fairy list`, true);
             ChatLib.chat(`${LOGO + GREEN}Successfully removed Fairy Soul.`);
             break;
-        case "list":
+        case "list":  // List all missing fairy souls
             const message = new Message(`\n${LOGO + GOLD + BOLD}Fairy Souls:`).setChatLineId(5858);
             souls.forEach((soul, i) => {
                 // Get the soul data
@@ -113,7 +99,16 @@ export function updateFairy(command, index) {
             });
             message.chat();
             break;
-        case "help":
+        case "pop":  // Delete closest soul
+            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
+            if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
+            ChatLib.chat(`${LOGO + GREEN}Successfully removed closest Fairy Soul.`);
+            break;
+        case "reset":  // Reset the array
+            fairySouls.reset();
+            ChatLib.chat(`${LOGO + GREEN}Successfully reset Fairy Soul waypoints.`);
+            break;
+        case "help":  // Display help message
         default:
             if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
             ChatLib.chat(
