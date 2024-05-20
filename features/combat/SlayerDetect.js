@@ -5,7 +5,7 @@ import { romanToNum } from "../../utils/functions/format";
 import { announceMob } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/register";
 import { delay } from "../../utils/thread";
-import { Hitbox, renderEntities } from "../../utils/waypoints";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
@@ -20,7 +20,7 @@ export function getSlayerBoss() { return bossCD };
 /**
  * Uses sound name, volume, and pitch, to detect when slayer miniboss spawns.
  */
-registerWhen(register("soundPlay", (pos, name, vol, pitch, category) => {
+registerWhen(register("soundPlay", (_, __, vol, pitch) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
     
     if (settings.miniAlert === 3) Client.showTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5);
@@ -131,15 +131,15 @@ const SLAYER_COLORS = {
     "Voidgloom": [0.58, 0, 0.83],
     "Inferno": [0.55, 0, 0]
 }
-let bosses = [];
-let minibosses = [];
-let rgb = [0, 0, 0];
+const bossWaypoints = new Waypoint([1, 1, 1], 2, true, true, false);
+const miniWaypoints = new Waypoint([1, 1, 1], 2, true, true, false);
 
 /**
  * Track world for mobs that match miniboss healths depending on slayer quest.
  */
 registerWhen(register("step", () => {
-    minibosses = [];
+    bossWaypoints.clear();
+    miniWaypoints.clear();
     const index = Scoreboard.getLines().findIndex(line => line.getName().startsWith("Slayer Quest")) - 1;
     if (index === -2) return;
 
@@ -150,17 +150,18 @@ registerWhen(register("step", () => {
     const mobClass = MOB_CLASSES[type];
     if (mobClass === undefined) return;
 
+    // Get mob healths
     const bossHP = BOSS_HPS[type]?.[tier - 1];
     const miniSet = MINI_HPS[type]?.[tier - 3];
-    rgb = SLAYER_COLORS[type];
+
+    // Set colors
+    bossWaypoints.setColor(SLAYER_COLORS[type]);
+    miniWaypoints.setColor(SLAYER_COLORS[type]);
 
     // Check mobs
-    bosses = World.getAllEntitiesOfType(mobClass).filter(mob => bossHP == mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b());
-    minibosses = World.getAllEntitiesOfType(mobClass).filter(mob => miniSet.has(mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b()));
+    World.getAllEntitiesOfType(mobClass).forEach(mob => {
+        const hp = mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b();
+        if (bossHP == hp) bossWaypoints.push([RED + "Boss", mob]);
+        else if (miniSet.has(hp)) miniWaypoints.push([RED + "Mini", mob]);
+    });
 }).setFps(2), () => settings.bossHighlight || settings.miniHighlight);
-
-/**
- * Hitbox rendering
- */
-new Hitbox(() => settings.bossHighlight, (pt) => { renderEntities(bosses, rgb[0], rgb[1], rgb[2], pt, "Boss") });
-new Hitbox(() => settings.miniHighlight, (pt) => { renderEntities(minibosses, 1 - rgb[0], 1 - rgb[1], 1 - rgb[2], pt, "Mini") });
