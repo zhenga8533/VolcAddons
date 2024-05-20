@@ -21,7 +21,7 @@ import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
 import "./features/general/ChunkBorders";
 import "./features/general/Cooldowns";
-import "./features/general/FairySouls";
+import { updateFairy } from "./features/general/FairySouls";
 import "./features/general/ImageViewer";
 import "./features/general/LevelAlert";
 import { getStatus } from "./features/general/Performance";
@@ -42,7 +42,7 @@ import { buttonCommands } from "./features/container/ContainerButtons";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
-import "./features/container/SlotBinding";
+import { slotCommands } from "./features/container/SlotBinding";
 import "./features/container/SoldHighlight";
 import "./features/container/WardrobeHotkey";
 // Party Features
@@ -115,11 +115,9 @@ import "./features/kuudra/KuudraView";
 import { calcTabasco } from "./features/kuudra/TabascoCalc";
 // Rift Features
 import "./features/rift/DDR";
-import "./features/rift/EnigmaSouls";
+import { updateEnigma } from "./features/rift/EnigmaSouls";
 import "./features/rift/VampireSlayer";
 import "./features/rift/RiftWaypoints";
-import { slotCommands } from "./features/container/SlotBinding";
-import { updateEnigma } from "./features/rift/EnigmaSouls";
 
 
 // Launch Tests
@@ -420,8 +418,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Configure fairy souls
         case "fairy":
-        case "soul":
-            soulEdit(args, "fairy", "fairySouls", FAIRY_SOULS, getWorld());
+            updateFairy(args[1], args[2]);
             break;
         // Configure enigma souls
         case "enigma":

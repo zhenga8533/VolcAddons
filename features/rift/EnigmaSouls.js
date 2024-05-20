@@ -52,7 +52,7 @@ registerWhen(register("step", () => {
             soulWaypoints.push([x, y, z]);
         }
     });
-}).setFps(1), () => settings.enigmaWaypoint !== 0);
+}).setFps(1), () => location.getWorld() === "The Rift" && settings.enigmaWaypoint !== 0);
 
 export function updateEnigma(command, name) {
     switch (command) {
