@@ -54,26 +54,19 @@ registerWhen(register("step", () => {
     });
 }).setFps(1), () => location.getWorld() === "The Rift" && settings.enigmaWaypoint !== 0);
 
+/**
+ * Updates the enigma soul array.
+ * 
+ * @param {String} command - The command to execute.
+ * @param {String} name - The name of the enigma soul.
+ */
 export function updateEnigma(command, name) {
     switch (command) {
-        case "clear":
-            // Clear all waypoints
+        case "clear":  // Clear all waypoints
             enigmaSouls.getData().length = 0;
             ChatLib.chat(`${LOGO + GREEN}Successfully cleared out all Enigma Soul waypoints.`);
             break;
-        case "reset":
-            // Reset the array
-            enigmaSouls.reset();
-            ChatLib.chat(`${LOGO + GREEN}Successfully reset Enigma Soul waypoints.`);
-            break;
-        case "pop":
-            // Delete closest soul
-            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], enigmaSouls.getData());
-            if (closest !== undefined) enigmaSouls.getData().splice(enigmaSouls.getData().indexOf(closest[0]), 1);
-            ChatLib.chat(`${LOGO + GREEN}Successfully removed closest Enigma Soul.`);
-            break;
-        case "delete":
-            // Check if the name exists
+        case "delete":  // Check if the name exists
             const souls = enigmaSouls.getData();
             const soul = souls.find(soul => soul[0] === name);
             if (soul === undefined) {
@@ -86,7 +79,7 @@ export function updateEnigma(command, name) {
             ChatLib.command("va enigma list", true);
             ChatLib.chat(`${LOGO + GREEN}Successfully removed Enigma Soul "${name}".`);
             break;
-        case "list":
+        case "list":  // List all souls
             ChatLib.clearChat(5858);
             const message = new Message(`\n${LOGO + GOLD + BOLD}Enigma Souls:`).setChatLineId(5858);
             enigmaSouls.getData().forEach(soul => {
@@ -130,7 +123,16 @@ ${YELLOW}Click to remove ${AQUA + name + YELLOW} from the list.`;
             });
             message.chat();
             break;
-        case "help":
+        case "pop":  // Delete closest soul
+            const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], enigmaSouls.getData());
+            if (closest !== undefined) enigmaSouls.getData().splice(enigmaSouls.getData().indexOf(closest[0]), 1);
+            ChatLib.chat(`${LOGO + GREEN}Successfully removed closest Enigma Soul.`);
+            break;
+        case "reset":  // Reset the array
+            enigmaSouls.reset();
+            ChatLib.chat(`${LOGO + GREEN}Successfully reset Enigma Soul waypoints.`);
+            break;
+        case "help":  // Display help message
         default:
             if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
             ChatLib.chat(
