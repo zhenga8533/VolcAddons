@@ -10,7 +10,7 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to track and detect nearby chests.
  */
-const chests = new Waypoint([1, 0, 1], true); // Magenta Powder Chests
+const chests = new Waypoint([1, 0, 1], true);  // Purple Powder Chests
 const powderExample = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE}dentge.`;
 const powderOverlay = new Overlay("powderChest", data.HL, "moveChest", powderExample, ["Crystal Hollows"]);
     
@@ -18,10 +18,10 @@ const powderOverlay = new Overlay("powderChest", data.HL, "moveChest", powderExa
  * Detects nearby chests to create waypoints and update overlay.
  */
 registerWhen(register("tick", () => {
-    chests.set(World.getAllTileEntitiesOfType(CHEST_CLASS)
+    chests.clear();
+    World.getAllTileEntitiesOfType(CHEST_CLASS)
         .filter(chest => chest.tileEntity.field_145987_o === 0 && Player.asPlayerMP().distanceTo(chest.getBlockPos()) <= settings.powderChest)
-        .map(chest => [chest.getX(), chest.getY(), chest.getZ()])
-    );
+        .forEach(chest => chests.push([chest.getX() + 1, chest.getY(), chest.getZ() + 1]));
     powderOverlay.setMessage(`${DARK_AQUA + BOLD}Nearby Chests: ${WHITE + chests.getWaypoints().length}`);
 }), () => location.getWorld() === "Crystal Hollows" && settings.powderChest !== 0);
 

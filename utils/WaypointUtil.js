@@ -140,13 +140,4 @@ export class Waypoint {
     push(waypoint) {
         this.#waypoints.push(waypoint);
     }
-
-    /**
-     * Sets the list of waypoints.
-     * 
-     * @param {Type[]} arr - The list of waypoints to set.
-     */
-    set(arr) {
-        this.#waypoints = arr;
-    }
 }

@@ -9,8 +9,8 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to track and display crate locations.
  */
-const crates = new Waypoint([1, 1, 1], true, false, true, false);
-const builds = new Waypoint([1, 0, 0], true, false, true, false);
+const crates = new Waypoint([1, 1, 1], true, false, true, false);  // White Crates
+const builds = new Waypoint([1, 0, 0], true, false, true, false);  // Red Builds
 
 /**
  * Tracks crates near player and colors them depending on how close they are.
@@ -18,17 +18,20 @@ const builds = new Waypoint([1, 0, 0], true, false, true, false);
 registerWhen(register("tick", () => {
     if (getPhase() !== 1 && getPhase() !== 3) return;
     
+    // Get all giant zombies and filter out the ones that are not on the ground
     const gzs = World.getAllEntitiesOfType(GIANT_CLASS);
     const supplies = gzs.filter(gz => gz.getY() < 67);
     const player = Player.asPlayerMP();
 
-    crates.set(supplies.map(supply => {
+    // Update waypoints
+    crates.clear();
+    supplies.forEach(supply => {
         const yaw = supply.getYaw();
         const distance = player.distanceTo(supply);
         const x = supply.getX() + 5 * Math.cos((yaw + 130) * (Math.PI / 180)) + 0.5;
         const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180)) + 0.5;
-        return [distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0, x, 75, z];
-    }));
+        crates.push([distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0, x, 75, z]);
+    });
 }), () => location.getWorld() === "Kuudra" && settings.kuudraCrates);
 
 /**

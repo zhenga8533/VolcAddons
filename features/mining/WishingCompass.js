@@ -8,7 +8,7 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to estimate compass location.
  */
-const compass = new Waypoint([0.75, 0.17, 0.41]); // Bright Purple Compass
+const compass = new Waypoint([0.75, 0.17, 0.41]);  // Bright Purple Compass
 let path = [];
 let lastPath = [];
 let zone = undefined;

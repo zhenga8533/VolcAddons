@@ -10,8 +10,8 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to represent user inputted waypoints.
  */
-const chatWaypoints = new Waypoint([0, 1, 1]); // Cyan Chat
-const userWaypoints = new Waypoint([0, 1, 0]); // Lime User
+const chatWaypoints = new Waypoint([0, 1, 1]);  // Cyan Chat
+const userWaypoints = new Waypoint([0, 1, 0]);  // Green User
 
 /**
  * Detects any patcher formatted coords sent in chat.

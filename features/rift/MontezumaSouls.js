@@ -10,7 +10,7 @@ import { Json } from "../../utils/json";
 /**
  * Variables used to represent soul waypoints.
  */
-const soulWaypoints = new Waypoint([0.5, 0, 0.5]);
+const soulWaypoints = new Waypoint([0.68, 0.85, 0.90]);  // Light Blue Souls
 const catSouls = new Json("catSouls.json", true);
 
 /**
