@@ -2,46 +2,47 @@ import RenderLib from "../../../RenderLib";
 import settings from "../../utils/settings";
 import { AQUA, PLAYER_CLASS } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
-import { Hitbox, renderEntities } from "../../utils/waypoints";
+import { Waypoint } from "../../utils/WaypointUtil";
+import { isPlayer } from "../../utils/functions/player";
 
 
 /**
  * Register hitbox rendering
  */
-let nearby = [];
-let render = false;
-new Hitbox(() => settings.manaDrain, (pt) => {
-    // Mana Blue Hitboxes
-    renderEntities(nearby, 0.408, 0.76, 0.96, pt);
-});
+const nearWaypoints = new Waypoint([0.41, 0.76, 0.96], 3, true, false, false);
 
-registerWhen(register("renderOverlay", () => {
-    if (!render) return;
-
-    Client.showTitle(`${nearby.length + AQUA} nearby ${nearby.length === 1 ? "player" : "players"}!`, "", 0, 5, 1);
-}), () => settings.manaDrain);
-
-registerWhen(register("renderWorld", (pt) => {
-    if (!render) return;
-
+const remderWorld = register("renderWorld", (pt) => {
     const entity = Player.asPlayerMP().getEntity();
     const x = entity.field_70165_t * pt - entity.field_70142_S * (pt - 1);
     const y = entity.field_70163_u * pt - entity.field_70137_T * (pt - 1);
     const z = entity.field_70161_v * pt - entity.field_70136_U * (pt - 1);
     RenderLib.drawSphere(x, y + 1, z, 5, 20, 20, -90, 0, 0, 1, 1, 0, 0.5, false, false);
-}), () => settings.manaDrain);
+}).unregister();
 
 /**
  * Updates nearby players
  */
 registerWhen(register("step", () => {
+    nearWaypoints.clear();
     const heldName = Player.getHeldItem()?.getName();
-    render = heldName !== undefined && (heldName.includes("flux Power Orb") || heldName.endsWith("End Stone Sword"))
-    if (!render) {
-        nearby = [];
+
+    // Check if player is holding a mana draining item
+    const render = heldName !== undefined && (heldName.includes("flux Power Orb") || heldName.endsWith("End Stone Sword"))
+    if (render) {
+        remderWorld.register();
+    } else {
+        remderWorld.unregister();
         return;
     }
 
+    // Add waypoints for nearby players
     const player = Player.asPlayerMP();
-    nearby = World.getAllEntitiesOfType(PLAYER_CLASS).filter(other => other.getEntity().func_110143_aJ() !== 20 && player.distanceTo(other) < 5);
+    World.getAllEntitiesOfType(PLAYER_CLASS).forEach(other => {
+        if (isPlayer(other) && player.distanceTo(other) < 5)
+            nearWaypoints.push(['', other]);
+    });
+
+    // Show title
+    const length = nearWaypoints.getWaypoints().length;
+    Client.showTitle(`${length + AQUA} nearby player${length === 1 ? "" : "s"}!`, "", 0, 15, 5);
 }).setFps(2), () => settings.manaDrain);
