@@ -126,7 +126,8 @@ registerWhen(register("chat", () => {
  */
 registerWhen(register("chat", () => {
     playSound(AMOGUS, 10000);
-}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"), () => location.getWorld() === "Crimson Isle" && settings.vanqSound);
+}).setCriteria("${player}: ${coords} | Vanquisher Spawned at [${location}]!"),
+() => location.getWorld() === "Crimson Isle" && settings.vanqSound);
 
 /**
  * Tracks world for any vanquishers near player.
@@ -170,7 +171,10 @@ let vanqMessage = "";
  */
 registerWhen(register("chat", () => {
     // Set message to copy and post
-    vanqMessage = `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} | Vanquisher Spawned at [${location.getZone()} ]!`;
+    const x = Math.round(Player.getX());
+    const y = Math.round(Player.getY());
+    const z = Math.round(Player.getZ());
+    vanqMessage = `x: ${x}, y: ${y}, z: ${z} | Vanquisher Spawned at [${location.getZone()} ]!`;
     ChatLib.command(`ct copy ${vanqMessage}`, true);
     ChatLib.chat(`${LOGO + GREEN}Copied vanquisher waypoint to clipboard!`);
 
@@ -236,7 +240,8 @@ registerWhen(register("chat", () => {
 }).setCriteria("Couldn't find a player with that name!"), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 registerWhen(register("chat", () => {
     delay(noInvite(), 500);
-}).setCriteria("You cannot invite that player since they're not online."), () => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
+}).setCriteria("You cannot invite that player since they're not online."),
+() => location.getWorld() === "Crimson Isle" && settings.vanqParty !== "");
 
 /**
  * Fail safe in the event that two players spawn at same time or the Vanquisher you spawn dies before warp.

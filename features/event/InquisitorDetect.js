@@ -98,8 +98,8 @@ registerWhen(register("step", () => {
         // Check if inquisitor is dead
         let foundDead = false;
         inquisitors.forEach(inq => {
-            if (data.moblist.includes("inquisitor")) inqWaypoints.push(inq);
-            if (inq.func_110143_aJ() === 0) foundDead = true;
+            if (data.moblist.includes("inquisitor")) inqWaypoints.push([GOLD + "Inquisitor", inq]);
+            if (inq.getEntity().func_110143_aJ() === 0) foundDead = true;
         });
 
         // Update HUD
