@@ -1,0 +1,66 @@
+[
+
+    [
+        "Wyld Woods",
+        "Found underneath a tree.",
+        -93,
+        69,
+        112
+    ],
+    [
+        "Rift Gallery",
+        "Found behind a door to a small house, which can be opened by pressing the stone button next to it.",
+        0,
+        56,
+        63
+    ],
+    [
+        "Black Lagoon",
+        "Found behind the entry-point to the Leeches Lair.",
+        -139,
+        45,
+        15
+    ],
+    [
+        "West Village",
+        "Found on top of the house containing Plumber Joe, which can be accessed by climbing the nearby water stream.",
+        -62,
+        88,
+        -81
+    ],
+    [
+        "Dreadfarm",
+        "Found behind a cracked stone brick wall, which can be destroyed with a Horsezooka.",
+        -24,
+        72,
+        -198
+    ],
+    [
+        "Otherside",
+        "Found adjacent to the Déjà Vu Alley.",
+        38,
+        65,
+        -118
+    ],
+    [
+        "Book In A Book",
+        "Found in a hidden room, which can be accessed by clicking the bookshelf at 8, 72, -15.",
+        8,
+        72,
+        -15
+    ],
+    [
+        "Living Stillness",
+        "Found underneath a destroyable snow block next to a Rock.",
+        22,
+        43,
+        -220
+    ],
+    [
+        "Photon Pathway",
+        "Found in the second floor of the house at the end of the parkour.",
+        152,
+        80,
+        -14
+    ]
+]

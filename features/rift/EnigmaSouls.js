@@ -61,6 +61,8 @@ registerWhen(register("step", () => {
  * @param {String} name - The name of the enigma soul.
  */
 export function updateEnigma(command, name) {
+    ChatLib.clearChat(5858);
+    
     switch (command) {
         case "clear":  // Clear all waypoints
             enigmaSouls.getData().length = 0;
@@ -80,7 +82,6 @@ export function updateEnigma(command, name) {
             ChatLib.chat(`${LOGO + GREEN}Successfully removed Enigma Soul "${name}".`);
             break;
         case "list":  // List all souls
-            ChatLib.clearChat(5858);
             const message = new Message(`\n${LOGO + GOLD + BOLD}Enigma Souls:`).setChatLineId(5858);
             enigmaSouls.getData().forEach(soul => {
                 // Get the soul data

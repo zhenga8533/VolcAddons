@@ -7,6 +7,7 @@ import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
 import { getSlayerBoss } from "../combat/SlayerDetect";
 import { renderEntities } from "../../utils/waypoints";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
@@ -134,3 +135,28 @@ registerWhen(register("renderWorld", (pt) => {
     renderEntities(dracula, 1, 0, 0, pt, undefined, false);
     renderEntities(vamps, 1, 0, 0, pt);
 }), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
+
+
+/**
+ * Variables used to reprsent and track the 6 effigies.
+ */
+const EFFIGIES = [
+    ["1st Effigy", 151, 73, 96], ["2nd Effigy", 194, 87, 120], ["3rd Effigy", 236, 104, 148],
+    ["4th Effigy", 294, 90, 135], ["5th Effigy", 263, 93, 95], ["6th Effigy", 241, 123, 119]
+];
+const missingEffigies = new Waypoint([0.75, 0.75, 0.75]);  // Silver effigies
+
+/**
+ * Tracks missing effigies and makes a waypoint to them.
+ */
+registerWhen(register("step", () => {
+    missingEffigies.clear();
+    let effigies = Scoreboard?.getLines()?.find((line) => line.getName().includes("Effigies"));
+    if (effigies === undefined) return;
+
+    effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
+    effigies.shift();
+    effigies.forEach((effigy, i) => { 
+        if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]);
+    });
+}).setFps(1), () => location.getWorld() === "The Rift" && settings.effigyWaypoint);
