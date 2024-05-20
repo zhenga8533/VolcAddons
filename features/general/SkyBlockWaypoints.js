@@ -87,9 +87,9 @@ export function updateSBW(type, command, name) {
 `${LOGO + GOLD + BOLD}Waypoint Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va [npc, zone] <command>
 
- ${DARK_GRAY}- ${GOLD}add <key>: ${YELLOW}Add waypoint using key.
- ${DARK_GRAY}- ${GOLD}clear <key>: ${YELLOW}Delete all waypoints.
- ${DARK_GRAY}- ${GOLD}list <key>: ${YELLOW}List all valid keys.
+ ${DARK_GRAY}- ${GOLD}add <key>: ${YELLOW}Add waypoint using key name.
+ ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Delete all waypoints.
+ ${DARK_GRAY}- ${GOLD}list: ${YELLOW}List all valid keys.
  ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.`);
             break;
     }

@@ -4,6 +4,9 @@ import { DARK_GRAY, GOLD, YELLOW } from "./constants";
 import { data } from "./data";
 
 
+/**
+ * General utility for rendering waypoints.
+ */
 const waypoints = [];
 
 register("renderWorld", () => {
