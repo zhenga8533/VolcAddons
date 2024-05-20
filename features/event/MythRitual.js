@@ -120,7 +120,8 @@ registerWhen(register("spawnParticle", (particle, type) => {
     
     // Push to particles list and make a guess
     path.push([x, y, z]);
-    guessed.set([guessBurrow(path, distance)]);
+    guessed.clear();
+    guessed.push(guessBurrow(path, distance));
 }), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
 
 /**

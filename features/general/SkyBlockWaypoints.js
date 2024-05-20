@@ -5,9 +5,9 @@ import { Waypoint } from "../../utils/WaypointUtil";
 
 
 const NPCS = new Json("npcs.json", false, false).getData();
-const npcWaypoints = new Waypoint([0.5, 0.5, 1]);
+const npcWaypoints = new Waypoint([1, 1, 1]);  // White NPCs
 const LOCATIONS = new Json("locations.json", false, false).getData();
-const locationWaypoints = new Waypoint([0.5, 0.5, 1]);
+const locationWaypoints = new Waypoint([0, 1, 1]);  // Aqua Locations
 
 /**
  * Update Skyblock Waypoints.

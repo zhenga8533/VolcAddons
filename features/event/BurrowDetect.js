@@ -12,7 +12,7 @@ import { Waypoint } from "../../utils/WaypointUtil";
  * Variables used for burrow tracking
  */
 let echo = false;
-const burrows = new Waypoint([0, 0.5, 0]); // Green Burrows
+const burrows = new Waypoint([0, 0.5, 0]);  // Green Burrows
 const lastBurrows = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 
 /**

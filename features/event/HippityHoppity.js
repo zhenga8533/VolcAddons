@@ -250,7 +250,7 @@ registerWhen(register("guiOpened", () => {
 /**
  * Egglocator
  */
-const eggWaypoints = new Waypoint([0.25, 0.1, 0]);
+const eggWaypoints = new Waypoint([0.25, 0.1, 0]);  // Brown Eggs
 
 const EGGS = {
     "015adc61-0aba-3d4d-b3d1-ca47a68a154b": "Breakfast",
