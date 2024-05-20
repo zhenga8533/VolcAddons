@@ -1,22 +1,37 @@
-import RenderLib from "../../../RenderLib";
 import location from "../../utils/location";
 import settings from "../../utils/settings";
 import { EntityArmorStand, EntityWither } from "../../utils/constants";
 import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
-import { Hitbox } from "../../utils/waypoints";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
  * Variables used to detect and store star mob data.
  */
-let starMobs = {};
+const starMobs = new Waypoint([0, 0, 0], 3, settings.starDetect === 2, false, false);
+const starHighlight = new Set();
+
+/**
+ * Sets the color and box of the star mobs.
+ */
+function setStar() {
+    const c = settings.starColor;
+    starMobs.setBox(settings.starDetect === 2);
+    starMobs.setColor([c.getRed()/255, c.getGreen()/255, c.getBlue()/255]);
+}
+setStar();
+
+register("guiClosed", (event) => {
+    if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui")) return;
+    setStar();
+});
 
 /**
  * Scans and stores all starred mob in world every half second.
  */
 registerWhen(register("step", () => {
-    starMobs = {};
+    starMobs.clear();
+    starHighlight.clear();
     const stands = World.getAllEntitiesOfType(EntityArmorStand.class);
 
     stands.forEach(stand => {
@@ -36,38 +51,18 @@ registerWhen(register("step", () => {
             return distance < closest.distance ? { entity, distance } : closest;
         }, { entity: undefined, distance: 20 });
 
-        if (closestEntity.entity)starMobs[closestEntity.entity.func_145782_y()] = closestEntity.entity;
+        if (closestEntity.entity) {
+            starMobs.push([stand.getName(), closestEntity.entity]);
+            starHighlight.add(closestEntity.entity?.func_145782_y());
+        }
     });
 }).setFps(2), () => location.getWorld() === "Catacombs" && settings.starDetect !== 0);
-
-/**
- * Rendering for box and outline of star mobs.
- */
-new Hitbox(() => location.getWorld() === "Catacombs" && (settings.starDetect === 2 || settings.starDetect === 3), () => {
-    const c = settings.starColor;
-    Object.keys(starMobs).forEach(key => {
-        // Check dead
-        const mob = starMobs[key];
-        try { if (mob.func_110143_aJ() == 0) return; }
-        catch (err) { return }
-
-        // Render Box
-        const x = mob.field_70142_S;
-        const y = mob.field_70137_T;
-        const z = mob.field_70136_U;
-        const width = mob.field_70130_N * 1.5;
-        const height =  mob.field_70131_O * 1.2;
-        RenderLib.drawEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 1, data.vision);
-        if (settings.starDetect === 2)
-            RenderLib.drawInnerEspBox(x, y, z, width, height, c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 0.5, data.vision);
-    });
-});
 
 /**
  * Rendering for colored star mobs.
  */
 registerWhen(register("renderEntity", (entity) => {
-    if (!starMobs.hasOwnProperty(entity.getEntity().func_145782_y())) return;
+    if (!starHighlight.has(entity.getEntity().func_145782_y())) return;
     const c = settings.starColor;
     Tessellator.colorize(c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 1);
 }), () => location.getWorld() === "Catacombs" && settings.starDetect === 1);

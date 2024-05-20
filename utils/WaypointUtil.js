@@ -2,6 +2,7 @@ import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
 import { DARK_GRAY, GOLD, YELLOW } from "./constants";
 import { data } from "./data";
+import settings from "./settings";
 
 
 /**
@@ -9,14 +10,14 @@ import { data } from "./data";
  */
 const waypoints = [];
 
-register("renderWorld", () => {
+register("renderWorld", (pt) => {
     const pX = Player.getRenderX();
     const pY = Player.getRenderY();
     const pZ = Player.getRenderZ();
     const pEye = Player.asPlayerMP().getEyeHeight();
 
     waypoints.forEach(waypoint => {
-        waypoint.draw(pX, pY, pZ, pEye);
+        waypoint.draw(pX, pY, pZ, pEye, pt);
     });
 });
 
@@ -38,7 +39,7 @@ export class Waypoint {
      * Creates a new waypoint.
      * 
      * @param {Number[]} color - RGB color of the waypoint.
-     * @param {Number} type - 0 for default, 1 for simple, or 2 for entity waypoints.
+     * @param {Number} type - 0 for default, 1 for simple, 2 for entity, or 3 for simple entity.
      * @param {Boolean} box - Whether or not to render the waypoint box.
      * @param {Boolean} beam - Whether or not to render the beacon beam.
      * @param {Boolean} rounded - Whether or not to round the waypoint coordinates.
@@ -61,8 +62,14 @@ export class Waypoint {
      * @param {Number} pY - Player's y position.
      * @param {Number} pZ - Player's z position.
      * @param {Number} pEye - Player's eye height.
+     * @param {Number} pt - Partial tick.
      */
-    draw(pX, pY, pZ, pEye){
+    draw(pX, pY, pZ, pEye, pt){
+        if (this.#type > 1) {
+            this.highlight(pt);
+            return;
+        }
+
         this.#waypoints.forEach(waypoint => {
             const n = waypoint.length;
             const title = waypoint[n - 4];
@@ -71,16 +78,6 @@ export class Waypoint {
             let x = parseFloat(this.#rounded ? Math.round(waypoint[n - 3]) : waypoint[n - 3]) - 0.5;
             let y = parseFloat(this.#rounded ? Math.round(waypoint[n - 2]) : waypoint[n - 2]);
             let z = parseFloat(this.#rounded ? Math.round(waypoint[n - 1]) : waypoint[n - 1]) - 0.5;
-
-            // Calculate the render distance of the waypoint
-            const distance = Math.hypot(pX - x, pY - y, pZ - z);
-            const renderDistance = Math.min(distance, 50);
-
-            // Credit: https://github.com/Soopyboo32/SoopyV2/blob/master/src/utils/renderUtils.js
-            const rX = pX + (x - pX) / (distance / renderDistance);
-            const rY1 = pY + pEye + (y + 1 + (20 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
-            const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (10 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
-            const rZ = pZ + (z - pZ) / (distance / renderDistance);
             const color = waypoint.length < 6 && !isNaN(waypoint[2]) ? this.#color : waypoint.slice(0, 3);
 
             // Render waypoint box
@@ -91,6 +88,16 @@ export class Waypoint {
 
             // Render waypoint text
             if (this.#type === 0) {
+                // Calculate the render distance of the waypoint
+                const distance = Math.hypot(pX - x, pY - y, pZ - z);
+                const renderDistance = Math.min(distance, 50);
+    
+                // Credit: https://github.com/Soopyboo32/SoopyV2/blob/master/src/utils/renderUtils.js
+                const rX = pX + (x - pX) / (distance / renderDistance);
+                const rY1 = pY + pEye + (y + 1 + (20 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
+                const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (10 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
+                const rZ = pZ + (z - pZ) / (distance / renderDistance);
+
                 Tessellator.drawString(GOLD + title, rX, rY1, rZ);
                 Tessellator.drawString(`${DARK_GRAY}[${YELLOW + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
             }
@@ -100,8 +107,30 @@ export class Waypoint {
         });
     }
 
-    highlight() {
-        
+    /**
+     * Highlights the waypoints on the screen. Typically used for entities.
+     * 
+     * @param {Number} pt - Partial tick.
+     */
+    highlight(pt) {
+        this.#waypoints.forEach(waypoint => {
+            // Get the title and entity of the waypoint
+            const title = waypoint[0];
+            const entity = waypoint[1]?.getEntity() ?? waypoint[1];
+            const x = entity.field_70165_t * pt - entity.field_70142_S * (pt - 1);
+            const y = entity.field_70163_u * pt - entity.field_70137_T * (pt - 1);
+            const z = entity.field_70161_v * pt - entity.field_70136_U * (pt - 1);
+            const width = entity.field_70130_N;
+            const height =  entity.field_70131_O;
+    
+            // Render the entity box
+            RenderLib.drawEspBox(x, y, z, width, height, ...this.#color, 1, data.vision);
+            if (this.#box) RenderLib.drawInnerEspBox(x, y, z, width, height, ...this.#color, settings.hitboxColor.alpha/510, data.vision);
+            if (title !== undefined && data.vision) {
+                const text = title + (this.#type === 2 ? ` [${Player.asPlayerMP().distanceTo(entity).toFixed(0)}m]` : "");
+                Tessellator.drawString(text, x, y + height + 1, z, 0xffffff, true);
+            }
+        });
     }
 
     /**
@@ -109,6 +138,29 @@ export class Waypoint {
      */
     clear() {
         this.#waypoints = [];
+    }
+
+    /**
+     * Sets if the waypoint should render a box or not.
+     */
+    setBox(box) {
+        this.#box = box;
+    }
+
+    /**
+     * Sets the color of the waypoint.
+     */
+    setColor(color) {
+        this.#color = color;
+    }
+    
+    /**
+     * Adds a waypoint to the list.
+     * 
+     * @param {Number[]} waypoint - The waypoint to add.
+     */
+    push(waypoint) {
+        this.#waypoints.push(waypoint);
     }
 
     /**
@@ -139,14 +191,5 @@ export class Waypoint {
      */
     getWaypoints() {
         return this.#waypoints;
-    }
-    
-    /**
-     * Adds a waypoint to the list.
-     * 
-     * @param {Number[]} waypoint - The waypoint to add.
-     */
-    push(waypoint) {
-        this.#waypoints.push(waypoint);
     }
 }
