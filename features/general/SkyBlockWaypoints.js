@@ -1,7 +1,7 @@
-import { Waypoint } from "../../utils/WaypointUtil";
+import location from "../../utils/location";
 import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { Json } from "../../utils/json";
-import location from "../../utils/location";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 const NPCS = new Json("npcs.json", false, false).getData();
@@ -10,11 +10,11 @@ const LOCATIONS = new Json("locations.json", false, false).getData();
 const locationWaypoints = new Waypoint([0.5, 0.5, 1]);
 
 /**
+ * Update Skyblock Waypoints.
  * 
- * @param {String} type 
- * @param {String} command 
- * @param {String} name 
- * @returns 
+ * @param {String} type - NPC or Zone.
+ * @param {String} command - add, clear, list, help.
+ * @param {String} name - Name of the NPC or Zone.
  */
 export function updateSBW(type, command, name) {
     const world = location.getWorld();
