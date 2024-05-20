@@ -234,16 +234,20 @@ register("command", () => {
 /**
  * Parse out uncommon commands/words
  */
-if (Player.getName() !== "Volcaronitee") {
-    data.wordbanks.forEach(wordbank => {
-        Object.keys(wordbank).forEach(word => {
-            wordbank[word] -= 3;
-            if (wordbank[word] <= 0) delete wordbank[word];
+try {
+    if (Player.getName() !== "Volcaronitee") {
+        data.wordbanks.forEach(wordbank => {
+            Object.keys(wordbank).forEach(word => {
+                wordbank[word] -= 3;
+                if (wordbank[word] <= 0) delete wordbank[word];
+            });
         });
-    });
 
-    Object.keys(data.commands).forEach(command => {
-        data.commands[command] -= 3;
-        if (data.commands[command] <= 0) delete data.commands[command];
-    });
+        Object.keys(data.commands).forEach(command => {
+            data.commands[command] -= 3;
+            if (data.commands[command] <= 0) delete data.commands[command];
+        });
+    }
+} catch(e) {
+    console.error(`[VolcAddons] Failed to parse data JSON!`);
 }
