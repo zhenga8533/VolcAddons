@@ -73,7 +73,7 @@ export class Waypoint {
             const rY1 = pY + pEye + (y + 1 + (20 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
             const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (10 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
             const rZ = pZ + (z - pZ) / (distance / renderDistance);
-            const color = waypoint.length < 6 ? this.#color : waypoint.slice(0, 3);
+            const color = waypoint.length < 6 && !isNaN(waypoint[0]) ? this.#color : waypoint.slice(0, 3);
 
             // Render waypoint box
             if (this.#box) {

@@ -24,9 +24,7 @@ export class Json {
         // Load the data from the file
         if (isData && FileLib.exists("VolcAddons", "data/" + file)) {
             this.#data = JSON.parse(FileLib.read("VolcAddons", "data/" + file));
-        } else {
-            this.#data = JSON.parse(FileLib.read("VolcAddons", "json/" + file));
-        }
+        } else this.reset();
     }
 
     /**
@@ -49,6 +47,6 @@ export class Json {
      * Set the data of the JSON file.
      */
     reset() {
-        this.#data = FileLib.read("VolcAddons", "json/" + this.#file);
+        this.#data = JSON.parse(FileLib.read("VolcAddons", "json/" + this.#file));
     }
 }

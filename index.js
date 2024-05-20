@@ -29,7 +29,7 @@ import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
-import "./features/general/SkyBlockWaypoints";
+import { updateSBW } from "./features/general/SkyBlockWaypoints";
 import "./features/general/SkyCrypt";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
@@ -115,10 +115,11 @@ import "./features/kuudra/KuudraView";
 import { calcTabasco } from "./features/kuudra/TabascoCalc";
 // Rift Features
 import "./features/rift/DDR";
+import "./features/rift/EnigmaSouls";
 import "./features/rift/VampireSlayer";
 import "./features/rift/RiftWaypoints";
 import { slotCommands } from "./features/container/SlotBinding";
-import { updateSBW } from "./features/general/SkyBlockWaypoints";
+import { updateEnigma } from "./features/rift/EnigmaSouls";
 
 
 // Launch Tests
@@ -424,7 +425,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Configure enigma souls
         case "enigma":
-            soulEdit(args, "enigma", "enigmaSouls", ENIGMA_SOULS);
+            updateEnigma(args[1], args.splice(2).join(' '));
             break;
         // Configure enigma souls
         case "montezuma":

@@ -1,46 +1,10 @@
 import location from "../../utils/location";
 import settings from "../../utils/settings";
-import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
 import { Waypoint } from "../../utils/WaypointUtil";
 
-
-/**
- * Variables used to represent soul waypoints.
- */
-let enigmaClose = data.enigmaSouls;
-export function getEnigma() { return settings.enigmaWaypoint && location.getWorld() === "The Rift" ? enigmaClose : [] };
-export function getCat() { return settings.catWaypoint && location.getWorld() === "The Rift" ? data.catSouls : [] };
-
-/**
- * Removes closest enigma soul to player once one is unlocked.
- */
-registerWhen(register("chat", () => {
-    // Delete closest soul
-    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
-    if (closest !== undefined) data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
-}).setCriteria("SOUL! You unlocked an Enigma Soul!"), () => location.getWorld() === "The Rift");
-
-/**
- * Fail safe enigma soul remove in case player clicks on an unregistered soul.
- */
-registerWhen(register("chat", () => {
-    if (data.enigmaSouls.length === 0) return;
-
-    // Delete duplicate soul
-    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], data.enigmaSouls);
-    if (closest !== undefined && closest[1] < 5) data.enigmaSouls.splice(data.enigmaSouls.indexOf(closest[0]), 1);
-}).setCriteria("You have already found that Enigma Soul!"), () => location.getWorld() === "The Rift");
-
-/**
- * Updates enigma soul array closer than set threshold to player.
- */
-registerWhen(register("step", () => {
-    // Filters to closest souls
-    enigmaClose = data.enigmaSouls.filter((enigma) => Math.hypot(Player.getX() - enigma[0], Player.getZ() - enigma[2]) < settings.enigmaWaypoint);
-}).setFps(1), () => location.getWorld() === "The Rift" && settings.enigmaWaypoint !== 0);
 
 /**
  * Removes closest Montezuma soul piece when player finds one.
