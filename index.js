@@ -4,7 +4,7 @@ import "./utils/player";
 import socket from "./utils/socket";
 import settings from "./utils/settings";
 import toggles from "./utils/toggles";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
+import { AQUA, BOLD, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";
 import { openGUI } from "./utils/overlay";
@@ -116,8 +116,8 @@ import { calcTabasco } from "./features/kuudra/TabascoCalc";
 // Rift Features
 import "./features/rift/DDR";
 import { updateEnigma } from "./features/rift/EnigmaSouls";
+import { updateCat } from "./features/rift/MontezumaSouls";
 import "./features/rift/VampireSlayer";
-import "./features/rift/RiftWaypoints";
 
 
 // Launch Tests
@@ -416,19 +416,19 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
                 }
             } catch (err) { ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)) }
             break;
-        // Configure fairy souls
+        // Configure Fairy souls
         case "fairy":
             updateFairy(args[1], args[2]);
             break;
-        // Configure enigma souls
+        // Configure Enigma souls
         case "enigma":
             updateEnigma(args[1], args.splice(2).join(' '));
             break;
-        // Configure enigma souls
+        // Configure Montezuma souls
         case "montezuma":
         case "mont":
         case "cat":
-            soulEdit(args, "cat", "catSouls", CAT_SOULS);
+            updateCat(args[1], args[2]);
             break;
         // Party Commands and Else Case
         default:
