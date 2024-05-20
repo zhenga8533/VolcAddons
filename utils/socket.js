@@ -27,7 +27,9 @@ class WebSocket {
      */
     constructor() {
         console.log("[VolcAddons] Connecting to socket server...");
-        this.connect();
+        new NonPooledThread(() => {
+            this.connect();
+        }).execute();
         this.expected = 0;
         
         // Send data to the server
@@ -91,9 +93,11 @@ class WebSocket {
         try {
             this.#socket = new Socket("volca.dev", 3389);
         } catch (e) {
+            const time = 10_000 * (1.5 ** attempts);
+            console.error(`[VolcAddons] Error connecting to socket server: ${e}. Retrying in ${(time / 1_000).toFixed(2)} seconds...`);
             delay(() => {
                 this.connect(attempts + 1);
-            }, 10_000 * (1.5 ** attempts));
+            }, time);
             return;
         }
         this.#connected = true;
