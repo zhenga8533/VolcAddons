@@ -10,7 +10,7 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to represent soul waypoints.
  */
-const soulWaypoints = new Waypoint([0.5, 0, 0.5], true);  // Purple Souls
+const soulWaypoints = new Waypoint([0.5, 0, 0.5], 1);  // Purple Souls
 const enigmaSouls = new Json("enigmaSouls.json", true);
 
 /**

@@ -10,7 +10,7 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to track and detect nearby chests.
  */
-const chests = new Waypoint([1, 0, 1], true);  // Purple Powder Chests
+const chests = new Waypoint([1, 0, 1], 1);  // Purple Powder Chests
 const powderExample = `${DARK_AQUA + BOLD}Nearby Chests: ${WHITE}dentge.`;
 const powderOverlay = new Overlay("powderChest", data.HL, "moveChest", powderExample, ["Crystal Hollows"]);
     

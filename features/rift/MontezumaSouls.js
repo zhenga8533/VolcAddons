@@ -10,7 +10,7 @@ import { Json } from "../../utils/json";
 /**
  * Variables used to represent soul waypoints.
  */
-const soulWaypoints = new Waypoint([0.68, 0.85, 0.90]);  // Light Blue Souls
+const soulWaypoints = new Waypoint([0, 0, 1]);  // Blue Souls
 const catSouls = new Json("catSouls.json", true);
 
 /**
@@ -46,9 +46,9 @@ registerWhen(register("step", () => {
 
     soulWaypoints.push([
         soul[0],
-        parseFloat(soul[2]), 
         parseFloat(soul[3]), 
-        parseFloat(soul[4])
+        parseFloat(soul[4]), 
+        parseFloat(soul[5])
     ]);
 }).setFps(1), () => location.getWorld() === "The Rift" && settings.catWaypoint);
 

@@ -10,7 +10,7 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to represent soul waypoints.
  */
-const soulWaypoints = new Waypoint([1, 0.75, 0.8], true);  // Pink Fairies
+const soulWaypoints = new Waypoint([1, 0.75, 0.8], 1);  // Pink Fairies
 const fairySouls = new Json("fairySouls.json", true);
 
 /**

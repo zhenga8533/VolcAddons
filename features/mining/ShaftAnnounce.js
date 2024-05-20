@@ -91,7 +91,7 @@ const CORPSE_COLORS = {
     "Yog": [1, 0.65, 0],
     "Vanguard": [0, 1, 1]
 };
-const corpseWaypoints = new Waypoint([0, 0, 0]);  // Black Corpses
+const corpseWaypoints = new Waypoint();
 
 registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);

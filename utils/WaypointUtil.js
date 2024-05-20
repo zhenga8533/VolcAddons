@@ -29,7 +29,7 @@ register("worldUnload", () => {
 export class Waypoint {
     #color;
     #waypoints;
-    #simple;
+    #type;
     #box;
     #beam;
     #rounded;
@@ -38,12 +38,17 @@ export class Waypoint {
      * Creates a new waypoint.
      * 
      * @param {Number[]} color - RGB color of the waypoint.
+     * @param {Number} type - 0 for default, 1 for simple, or 2 for entity waypoints.
+     * @param {Boolean} box - Whether or not to render the waypoint box.
+     * @param {Boolean} beam - Whether or not to render the beacon beam.
+     * @param {Boolean} rounded - Whether or not to round the waypoint coordinates.
+     * @returns {Waypoint} The new waypoint.
      */
-    constructor(color, simple=false, box=true, beam=true, rounded=true) {
+    constructor(color=[1, 1, 1], type=0, box=true, beam=true, rounded=true) {
         waypoints.push(this);
-        this.#color = color;
         this.#waypoints = [];
-        this.#simple = simple;
+        this.#color = color;
+        this.#type = type;
         this.#box = box;
         this.#beam = beam;
         this.#rounded = rounded;
@@ -80,12 +85,12 @@ export class Waypoint {
 
             // Render waypoint box
             if (this.#box) {
-                RenderLib.drawEspBox(x, y, z, 1, 1, ...color, 1, data.vision || !this.#simple);
-                RenderLib.drawInnerEspBox(x, y, z, 1, 1, ...color, 0.25, data.vision || !this.#simple);
+                RenderLib.drawEspBox(x, y, z, 1, 1, ...color, 1, data.vision || this.#type === 0);
+                RenderLib.drawInnerEspBox(x, y, z, 1, 1, ...color, 0.25, data.vision || this.#type === 0);
             }
 
             // Render waypoint text
-            if (!this.#simple) {
+            if (this.#type === 0) {
                 Tessellator.drawString(GOLD + title, rX, rY1, rZ);
                 Tessellator.drawString(`${DARK_GRAY}[${YELLOW + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
             }
@@ -93,6 +98,10 @@ export class Waypoint {
             // Render beacon beam
             if (this.#beam) renderBeaconBeam(x - 0.5, y, z - 0.5, ...color, 0.5, false);
         });
+    }
+
+    highlight() {
+        
     }
 
     /**

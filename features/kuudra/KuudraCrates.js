@@ -9,8 +9,8 @@ import { Waypoint } from "../../utils/WaypointUtil";
 /**
  * Variables used to track and display crate locations.
  */
-const crates = new Waypoint([1, 1, 1], true, false, true, false);  // White Crates
-const builds = new Waypoint([1, 0, 0], true, false, true, false);  // Red Builds
+const crates = new Waypoint([1, 1, 1], 1, false, true, false);  // White Crates
+const builds = new Waypoint([1, 0, 0], 1, false, true, false);  // Red Builds
 
 /**
  * Tracks crates near player and colors them depending on how close they are.
