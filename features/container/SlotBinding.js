@@ -136,8 +136,8 @@ export function slotCommands(args) {
         case "help":
         default:
             if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
-            ChatLib.chat(`
-${LOGO + GOLD + BOLD}Container Buttons Commands:
+            ChatLib.chat(
+`${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va bind <command>
 
  ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save binding data to presets using key.

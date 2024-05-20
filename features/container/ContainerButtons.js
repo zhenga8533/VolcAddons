@@ -568,8 +568,8 @@ export function buttonCommands(args) {
         case "help":
         default:
             if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
-            ChatLib.chat(`
-${LOGO + GOLD + BOLD}Container Buttons Commands:
+            ChatLib.chat(
+`${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va buttons <command>
 
  ${DARK_GRAY}- ${GOLD}inv: ${YELLOW}Opens edit menu for GuiInventory.

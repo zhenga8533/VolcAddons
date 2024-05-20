@@ -35,13 +35,15 @@ export function updateSBW(type, command, name) {
             }
 
             // Add all locations to waypoints
-            locs.forEach(loc => {
-                if (loc[1] === "") return;
-                const x = Math.floor(loc[1]) + 1;
-                const y = Math.floor(loc[2]);
-                const z = Math.floor(loc[3]) + 1;
-                waypoints.push([name, x, y, z]);
-            });
+            if (type === "NPC")
+                locs.forEach(loc => {
+                    if (loc[1] === "") return;
+                    const x = Math.floor(loc[1]) + 1;
+                    const y = Math.floor(loc[2]);
+                    const z = Math.floor(loc[3]) + 1;
+                    waypoints.push([name, x, y, z]);
+                });
+            else waypoints.push([name, ...locs]);
 
             ChatLib.chat(`${LOGO + GREEN}Added "${name}" to ${type} waypoints.`);
             break;
@@ -57,12 +59,14 @@ export function updateSBW(type, command, name) {
             Object.keys(base).forEach(key => {
                 // Create hover text
                 let hover = `${AQUA + key}:`;
-                base[key].forEach(loc => {
-                    const x = loc[1] === "" ? RED + "?" : WHITE + loc[1];
-                    const y = loc[2] === "" ? "?" : loc[2];
-                    const z = loc[3] === "" ? "?" : loc[3];
-                    hover += `\n${DARK_GRAY} - ${YELLOW + loc[0]}: ${x}, ${y}, ${z}`;
-                });
+                if (type === "NPC")
+                    base[key].forEach(loc => {
+                        const x = loc[1] === "" ? RED + "?" : WHITE + loc[1];
+                        const y = loc[2] === "" ? "?" : loc[2];
+                        const z = loc[3] === "" ? "?" : loc[3];
+                        hover += `\n${DARK_GRAY} - ${YELLOW + loc[0]}: ${x}, ${y}, ${z}`;
+                    });
+                else hover += `\n${DARK_GRAY} - ${YELLOW}Origin: ${WHITE + base[key][0]}, ${base[key][1]}, ${base[key][2]}`;
                 hover += `\n\n${YELLOW}Click to add ${AQUA + key + YELLOW} to waypoints.`;
 
                 // Add text component
@@ -77,7 +81,7 @@ export function updateSBW(type, command, name) {
             message.chat();
             break;
         case "help":
-        case "default":
+        default:
             if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
             ChatLib.chat(
 `${LOGO + GOLD + BOLD}Waypoint Commands:
