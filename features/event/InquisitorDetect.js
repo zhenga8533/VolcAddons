@@ -2,11 +2,11 @@ import location from "../../utils/location";
 import mayor from "../../utils/mayor";
 import settings from "../../utils/settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS, GREEN, LOGO } from "../../utils/constants";
-import { announceMob } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
-import { Hitbox, renderEntities } from "../../utils/waypoints";
+import { announceMob } from "../../utils/functions/misc";
+import { Overlay } from "../../utils/overlay";
+import { registerWhen } from "../../utils/register";
+import { Waypoint } from "../../utils/WaypointUtil";
 
 
 /**
@@ -89,20 +89,19 @@ registerWhen(register("chat", (wow, mob) => {
 /**
  * Tracks world for any inquisitors near player.
  */
-let inquisitors = [];
-export function getInquisitors() { return inquisitors };
+const inqWaypoints = new Waypoint([1, 0.84, 0], 2, true, false, false);
 registerWhen(register("step", () => {
-    inquisitors = World.getAllEntitiesOfType(PLAYER_CLASS).filter(player => player.getName() === "Minos Inquisitor");
+    inqWaypoints.clear();
+    const inquisitors = World.getAllEntitiesOfType(PLAYER_CLASS).filter(player => player.getName() === "Minos Inquisitor");
 
     if (inquisitors.length > 0) {
-        if (inquisitors.find(inquisitor => inquisitor.getEntity().func_110143_aJ() === 0) !== undefined)
-            Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${RED}DEAD!`, "", 0, 50, 10);
-        else Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
+        let foundDead = false;
+        inquisitors.forEach(inq => {
+            if (data.moblist.includes("inquisitor")) inqWaypoints.push(inq);
+            if (inq.func_110143_aJ() === 0) foundDead = true;
+        });
 
-        if (!data.moblist.includes("inquisitor")) inquisitors = [];
+        if (foundDead) Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${RED}DEAD!`, "", 0, 50, 10);
+        else Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
     }
 }).setFps(2), () => location.getWorld() === "Hub" && settings.detectInq && mayor.getPerks().has("Mythological Ritual"));
-new Hitbox(() => location.getWorld() === "Hub" && settings.detectInq && mayor.getPerks().has("Mythological Ritual"), (pt) => {
-    renderEntities(inquisitors, 1, 0.84, 0, pt, "Inspector Gadget");
-});
-register("worldUnload", () => inquisitors = []);
