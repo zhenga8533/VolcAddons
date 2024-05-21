@@ -87,7 +87,15 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // --- Essential ---
     @SwitchProperty({
-        name: "Skyblock Toggle",
+        name: "VolcAddons Toggle",
+        description: `Toggle ${GREEN}ON ${GRAY}to enable or ${RED}OFF ${GRAY}to disable VolcAddons.`,
+        category: "General",
+        subcategory: "Essential"
+    })
+    vaToggle = true;
+
+    @SwitchProperty({
+        name: "SkyBlock Toggle",
         description: `Toggle ${GREEN}ON ${GRAY}for features to only function in Skyblock or ${RED}OFF ${GRAY}to function anywhere.`,
         category: "General",
         subcategory: "Essential"

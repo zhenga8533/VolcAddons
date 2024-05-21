@@ -47,6 +47,8 @@ let worldView = false;
  * Renders overlays on the GUI if it's open.
  */
 const moving = register("renderOverlay", () => {
+    if (!settings.vaToggle) return;
+
     overlays.forEach(o => {
         if (!settings[o.setting]) return;
 
@@ -148,6 +150,8 @@ const renders = {
 }
 Object.keys(renders).forEach(key => {
     register(key, () => {
+        if (!settings.vaToggle) return;
+        
         renders[key].forEach(render => {
             if (settings[render.setting] && !render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
                 if (!(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;

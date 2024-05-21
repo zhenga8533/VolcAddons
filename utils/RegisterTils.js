@@ -26,7 +26,7 @@ export function registerWhen(trigger, callback) {
  */
 export function setRegisters(off = false) {
     registers.forEach(reg => {
-        if (off || (reg.active && !reg.callback())) {
+        if (!settings.vaToggle || off || (reg.active && !reg.callback())) {
             reg.trigger.unregister();
             reg.active = false;
         } else if (!reg.active && reg.callback()) {

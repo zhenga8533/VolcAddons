@@ -1,4 +1,5 @@
 [
+    "- Added global toggle",
     "- Added additional mining event checks",
     "- Updated chococolate factory to latest",
     "- Organized util files",
