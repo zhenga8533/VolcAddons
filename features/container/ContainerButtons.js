@@ -4,7 +4,7 @@ import { data } from "../../utils/Data";
 import { registerWhen } from "../../utils/RegisterTils";
 import { printList } from "../../utils/ListTils";
 import { parseTexture } from "../../utils/functions/misc";
-import { drawBox } from "../../utils/functions/render";
+import { drawBox, drawLore } from "../../utils/functions/render";
 
 
 // Container offsets from top left [x, y]
@@ -28,7 +28,6 @@ const COLOR_SCHEMES = [
 ];
 const BOX_HIGHLIGHT = Renderer.color(0, 255, 255, 64);
 const BORDER_HIGHLIGHT = Renderer.color(0, 255, 255, 255);
-const BORDER_COLOR = Renderer.color(128, 128, 128, 128);
 
 // Editing inputs and rendering
 const editing = {
@@ -198,17 +197,7 @@ export class Button {
             Renderer.drawRect(Renderer.color(0, 0, 0, 128), hx + 2, hy - 16, Renderer.getStringWidth('/' + this.#command) + 6, 14);
             Renderer.translate(0, 0, 500);
             Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : '/' + this.#command), hx + 5, hy - 13);
-        } else {
-            const lore = this.#item.getLore().slice(1);
-            const width = lore.reduce((max, line) => Math.max(max, Renderer.getStringWidth(line)), 0);
-            const height = lore.length * 9 + 4;
-            const x = hx + 8 + width > Renderer.screen.getWidth() ? Renderer.screen.getWidth() - width : hx + 8;
-            const y = hy - 16 + height > Renderer.screen.getHeight() ? Renderer.screen.getHeight() - height : hy - 16;
-
-            drawBox(x + 2, y, 999, width + 6, height + 4, Renderer.BLACK, BORDER_COLOR);
-            Renderer.translate(0, 0, 999);
-            Renderer.drawString(lore.join('\n'), x + 5, y + 2);
-        }
+        } else drawLore(hx, hy, this.#item.getLore());
     }
 
     /**

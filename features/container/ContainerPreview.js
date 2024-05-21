@@ -4,6 +4,7 @@ import { data, itemNBTs } from "../../utils/Data";
 import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
+import { drawLore } from "../../utils/functions/render";
 
 
 /**
@@ -58,7 +59,7 @@ let previewItems = [];
 const CONTAINER_PNGS = [new Image("container.png"), new Image("container-fs.png")];
 new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "guiRender");
 
-const preview = register("guiRender", () => {
+const preview = register("guiRender", (mouseX, mouseY) => {
     CONTAINER_PNGS[settings.containerPreview - 1].draw(data.CPL[0], data.CPL[1]);
     Renderer.drawString(DARK_GRAY + lastPreview.removeFormatting(), data.CPL[0] + 7, data.CPL[1] + 6);
 
@@ -84,6 +85,11 @@ const preview = register("guiRender", () => {
                 Renderer.translate(0, 0, 999);
                 Renderer.drawString(size, x - Renderer.getStringWidth(size) + 17, y + 9, true);
             }
+
+            // Draw lore if hovered
+            if (mouseX >= x && mouseX <= x + 16 && mouseY >= y && mouseY <= y + 16) {
+                drawLore(mouseX, mouseY, item.getLore());
+            }
         }
     }
 }).unregister();
@@ -106,7 +112,20 @@ registerWhen(register("itemTooltip", (_, item) => {
         lastPreview = name;
         previewItems = itemNBTs[name.startsWith("§a") ? "enderchests" : "backpacks"][i].map(nbt => {
             if (nbt === null) return null;
-            const item = new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT));
+            const parsedNBT = NBT.parse(decompressNBT(nbt)).rawNBT;
+            const item = new Item(net.minecraft.item.ItemStack.func_77949_a(parsedNBT));
+            try {
+                const loreTag = parsedNBT.func_74775_l("tag").func_74775_l("display").field_74784_a.get("Lore");
+                const lore = [item.getLore()[0]];
+                if (loreTag !== null) {
+                    for (let i = 0; i < loreTag.func_74745_c(); i++) {
+                        lore.push(loreTag.func_150307_f(i));
+                    }
+                }
+                item.setLore(lore);
+            } catch(e) {
+                ChatLib.chat(e);
+            }
 
             if (item.getUnlocalizedName() === "item.skull") {  // Fix skull textures not rendering
                 const skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
