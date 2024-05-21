@@ -1,3 +1,7 @@
+/**
+ * ARCHIVED
+ */
+
 import settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
 

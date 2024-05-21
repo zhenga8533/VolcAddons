@@ -99,16 +99,6 @@ registerWhen(register("tick", () => {
 }), () => location.getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
 
 /**
- * Replaces Hypixel's impel subtitle with a flashy title.
- */
-registerWhen(register("renderTitle", (title, subtitle, event) => {
-    if (subtitle.includes("Impel")) {
-        cancel(event);
-        Client.showTitle(subtitle, "", 0, 20, 0);
-    }
-}), () => location.getWorld() === "The Rift" && settings.vampireImpel);
-
-/**
  * Highlights vampire bosses with steakable HP.
  */
 const VAMP_HP = new Set([625, 1100, 1800, 2400, 3000]);

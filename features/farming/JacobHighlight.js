@@ -1,3 +1,7 @@
+/**
+ * ARCHIVED
+ */
+
 import settings from "../../utils/Settings";
 import location from "../../utils/Location";
 import settings from "../../utils/Settings";

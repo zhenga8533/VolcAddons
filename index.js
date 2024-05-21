@@ -21,7 +21,6 @@ import "./features/general/ChatWebhook";
 import "./features/general/ChunkBorders";
 import "./features/general/Cooldowns";
 import { updateFairy } from "./features/general/FairySouls";
-import "./features/general/ImageViewer";
 import "./features/general/LevelAlert";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
@@ -68,7 +67,6 @@ import "./features/combat/BestiaryDisplay";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
-import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/KillCounter";
 import "./features/combat/ManaDrain";
@@ -86,7 +84,6 @@ import "./features/mining/WishingCompass";
 // Farming Features
 import { calcCompost } from "./features/farming/Composter";
 import "./features/farming/GardenTab";
-import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";
 // Event Features
 import "./features/event/BingoCard";

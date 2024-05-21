@@ -1,3 +1,7 @@
+/**
+ * ARCHIVED
+ */
+
 import settings from "../../utils/Settings";
 import { BOLD, DARK_RED, GREEN, RED, RESET } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";

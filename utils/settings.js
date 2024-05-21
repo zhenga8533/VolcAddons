@@ -80,9 +80,6 @@ ${ITALIC}Related Commands: /va <attribute, splits>, /kv`);
         this.setCategoryDescription("Rift",
         `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
-
-        // Dependencies
-        this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
     }
     
 
@@ -142,7 +139,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SliderProperty({
         name: "Render Waypoint",
-        description: `Creates waypoints out of patcher formated coords in chat. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
+        description: `Creates waypoints out of patcher formated coords. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
         category: "General",
         subcategory: "General",
         min: 0,
@@ -337,15 +334,6 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
         subcategory: "Yapping"
     })
     enableEmotes = false;
-
-    @PercentSliderProperty({
-        name: "Image Viewer",
-        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
-Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "General",
-        subcategory: "Yapping"
-    })
-    imageRatio = 0.0;
 
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
@@ -681,22 +669,6 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
     })
     ragDetect = true;
 
-    // --- Gyrokinetic Wand ---
-    @SwitchProperty({
-        name: "Cells Alignment Alert",
-        description: "Alerts player when Cells Alignment is about to run out.",
-        category: "Combat",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroAlert = false;
-    @SwitchProperty({
-        name: "Cells Alignment Timer",
-        description: `Displays the time left before Cells Alignment ends.\nMove GUI with ${AQUA}/moveGyro${GRAY}.`,
-        category: "Combat",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroTimer = false;
-
     // --- Slayer ---
     @SelectorProperty({
         name: "Announce Boss Chat",
@@ -880,14 +852,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     gardenTab = false;
 
-    @SwitchProperty({
-        name: "Jacob Reward Highlight",
-        description: "Highlights unclaimed Jacob event rewards.",
-        category: "Farming",
-        subcategory: "Garden"
-    })
-    jacobReward = true;
-
     // --- Pests ---
     @SwitchProperty({
         name: "Desk Highlight",
@@ -1018,14 +982,6 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
         subcategory: "Great Spook"
     })
     fearAlert = false;
-    
-    @SwitchProperty({
-        name: "Primal Fear Highlight",
-        description: "Draws a colorful hitbox around any primal fears.",
-        category: "Event",
-        subcategory: "Great Spook"
-    })
-    fearHighlight = false;
 
     // --- Inquisitor ---
     @SwitchProperty({
@@ -1145,13 +1101,6 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
         subcategory: "Vanquisher"
     })
     vanqDetect = false;
-    @SwitchProperty({
-        name: "Vanquisher Detection Sound",
-        description: "Calls an emergency meeting once a Vanquisher is detected.",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher"
-    })
-    vanqSound = false;
 
     // ████████████████████████████████████████████████████ DUNGEON ████████████████████████████████████████████████████
 

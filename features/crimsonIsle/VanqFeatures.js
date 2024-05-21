@@ -152,8 +152,6 @@ registerWhen(register("step", () => {
         // Update HUD
         if (foundDead) vanqOverlay.setMessage(`${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`);
         else vanqOverlay.setMessage(vanqExample);
-        
-        if (settings.vanqSound)playSound(AMOGUS, 10000);
     } else vanqOverlay.setMessage("");
 }).setFps(2), () => location.getWorld() === "Crimson Isle" && settings.vanqDetect);
 
