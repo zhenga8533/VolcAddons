@@ -123,7 +123,7 @@ import "./features/rift/VampireSlayer";
 // Launch Tests
 if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/Data").mkdir();
 if (!FileLib.exists("VolcAddons", "data/contract.txt"))
-    FileLib.write("VolcAddons", "data/contract.txt", FileLib.read("VolcAddons", "json/contract.txt"));
+    FileLib.write("VolcAddons", "data/contract.txt", FileLib.read("VolcAddons", "assets/contract.txt"));
 
 // First Run
 const version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;

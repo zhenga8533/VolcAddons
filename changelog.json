@@ -1,5 +1,6 @@
 [
     "- Added additional mining event checks",
+    "- Organized util files",
     "- Change chest tracker to hide opened",
     "- Fixed socket reconnections",
     "- TBD: Fixed Vampire Impel"

@@ -1,5 +1,4 @@
 import settings from "../../utils/Settings";
-import { getMVP } from "../../utils/player";
 import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
 
@@ -51,15 +50,13 @@ registerWhen(register("messageSent", (message, event) => {
     let contains = false;
 
     // MVP++ Emotes
-    if (!getMVP()) {
-        Object.keys(MVP).forEach((key) => {
-            if (message.includes(key)) {
-                const reg = new RegExp(key, 'g');
-                message = message.replace(reg, MVP[key]);
-                contains = true;
-            }
-        });
-    }
+    Object.keys(MVP).forEach((key) => {
+        if (message.includes(key)) {
+            const reg = new RegExp(key, 'g');
+            message = message.replace(reg, MVP[key]);
+            contains = true;
+        }
+    });
     // Rank Gifting Emotes
     Object.keys(GIFT).forEach((key) => {
         if (message.includes(key)) {
