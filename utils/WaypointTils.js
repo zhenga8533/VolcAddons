@@ -2,7 +2,7 @@ import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
 import { DARK_GRAY, GOLD, YELLOW } from "./constants";
 import { data } from "./data";
-import settings from "./settings";
+import settings from "./Settings";
 
 
 /**

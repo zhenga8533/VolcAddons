@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BLACK, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
 import { getAuction, getBazaar } from "./Economy";

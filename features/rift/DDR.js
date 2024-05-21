@@ -1,6 +1,6 @@
 import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { registerWhen } from "../../utils/register";
+import settings from "../../utils/Settings";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**

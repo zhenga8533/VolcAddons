@@ -1,6 +1,6 @@
 import party from "../../utils/party";
 import { getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
 

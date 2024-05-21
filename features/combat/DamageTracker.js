@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { BOLD, DARK_GRAY, EntityArmorStand, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
 import { formatNumber, formatTime } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**

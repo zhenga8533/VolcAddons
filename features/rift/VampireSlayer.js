@@ -1,12 +1,12 @@
 import location from "../../utils/location";
 import party from "../../utils/party";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/data";
 import { getSlayerBoss } from "../combat/SlayerDetect";
-import { Waypoint } from "../../utils/WaypointUtil";
+import { Waypoint } from "../../utils/WaypointTils";
 
 
 /**

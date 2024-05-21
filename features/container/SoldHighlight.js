@@ -1,6 +1,6 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 let own = [];

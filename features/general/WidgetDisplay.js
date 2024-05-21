@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BOLD, GREEN } from "../../utils/constants";
 import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/data";
 
 

@@ -1,9 +1,9 @@
 // Utility Modules
 import "./utils/dev";
 import "./utils/player";
-import socket from "./utils/socket";
-import settings from "./utils/settings";
-import toggles from "./utils/toggles";
+import socket from "./utils/Socket";
+import settings from "./utils/Settings";
+import toggles from "./utils/Toggles";
 import { AQUA, BOLD, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
 import { data, resetGUI } from "./utils/data";
 import { updateList } from "./utils/list";

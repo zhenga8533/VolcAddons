@@ -1,11 +1,11 @@
-import settings from "./settings";
+import settings from "./Settings";
 import { AQUA, DARK_AQUA, DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./constants";
 import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions/format";
 import { updateAuction } from "../features/economy/Economy";
 import { updateEntityList } from "../features/combat/EntityDetect";
 import { setWarps } from "../features/event/MythRitual";
 import { updateWidgetList } from "../features/general/WidgetDisplay";
-import { setRegisters } from "./register";
+import { setRegisters } from "./RegisterTils";
 import { data } from "./data";
 
 

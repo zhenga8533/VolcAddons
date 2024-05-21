@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { BOLD, BUTTON_PRESETS, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, GuiChest, GuiInventory, GuiTextField, InventoryBasic, LOGO, RED, Toolkit, UNDERLINE, YELLOW } from "../../utils/constants";
 import { data } from "../../utils/data";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { printList } from "../../utils/list";
 import { parseTexture } from "../../utils/functions/misc";
 import { drawBox } from "../../utils/functions/render";

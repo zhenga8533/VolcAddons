@@ -1,10 +1,10 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, RED, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatNumber } from "../../utils/functions/format";
 import { createMatrix, getAllFormations } from "../../utils/functions/matrix";
 import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/data";
 import { getAuction } from "../economy/Economy";
 

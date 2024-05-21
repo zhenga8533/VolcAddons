@@ -1,6 +1,6 @@
-import settings from "./settings";
+import settings from "./Settings";
 import { BOLD, DARK_GRAY, GOLD, LOGO, YELLOW } from "./constants";
-import { setRegisters } from "./register";
+import { setRegisters } from "./RegisterTils";
 import { delay } from "./thread";
 
 

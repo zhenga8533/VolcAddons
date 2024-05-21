@@ -1,9 +1,9 @@
 import location from "../../utils/location";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/constants";
 import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/data";
 import { getItemValue } from "../economy/ItemPrice";
 import { getBazaar } from "../economy/Economy";

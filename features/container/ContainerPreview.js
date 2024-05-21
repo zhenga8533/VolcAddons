@@ -1,8 +1,8 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { COLOR_TABLE, DARK_GRAY} from "../../utils/constants";
 import { data, itemNBTs } from "../../utils/data";
 import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/overlay";
 
 

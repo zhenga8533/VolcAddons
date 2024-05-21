@@ -1,9 +1,9 @@
 import request from "../../../requestV2";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import location from "../../utils/location";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { formatNumber, formatTime, unformatNumber } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { getBazaar } from "../economy/Economy";
 import { getWaifu } from "../party/PartyCommands";
 

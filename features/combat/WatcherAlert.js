@@ -1,7 +1,7 @@
-import settings from "../../settings";
+import settings from "../../Settings";
 import { AMOGUS, BOLD, GOLD, GREEN } from "../../utils/constants";
 import { playSound } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**

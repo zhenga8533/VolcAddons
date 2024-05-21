@@ -1,9 +1,9 @@
 import location from "../../utils/location";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BLUE, BOLD, DARK_GREEN, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
 import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { Stat, getPaused } from "../../utils/stat";
 import { data } from "../../utils/data";
 

@@ -1,9 +1,9 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { SMA, EntityArmorStand, STAND_CLASS } from "../../utils/constants";
 import { convertToPascalCase, unformatNumber } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/data";
-import { Waypoint } from "../../utils/WaypointUtil";
+import { Waypoint } from "../../utils/WaypointTils";
 
 
 /**

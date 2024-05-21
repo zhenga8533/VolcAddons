@@ -1,12 +1,12 @@
 import location from "../../utils/location";
 import mayor from "../../utils/mayor";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS, GREEN, LOGO } from "../../utils/constants";
 import { data } from "../../utils/data";
 import { announceMob } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
-import { Waypoint } from "../../utils/WaypointUtil";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Waypoint } from "../../utils/WaypointTils";
 
 
 /**

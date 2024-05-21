@@ -1,4 +1,4 @@
-import settings from "./settings";
+import settings from "./Settings";
 
 
 const registers = [];

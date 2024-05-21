@@ -1,8 +1,8 @@
 import RenderLib from "../../../RenderLib";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, PLAYER_CLASS } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { Waypoint } from "../../utils/WaypointUtil";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Waypoint } from "../../utils/WaypointTils";
 import { isPlayer } from "../../utils/functions/player";
 
 

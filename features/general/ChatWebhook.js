@@ -1,8 +1,8 @@
 import { request } from "../../../axios";
-import settings from "../../utils/settings";
-import toggles from "../../utils/toggles";
+import settings from "../../utils/Settings";
+import toggles from "../../utils/Toggles";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**

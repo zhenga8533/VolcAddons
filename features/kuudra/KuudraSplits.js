@@ -1,10 +1,10 @@
 import location from "../../utils/location";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
 import { formatTime, isValidDate } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
 import { getKuudraHP } from "./KuudraDetect";

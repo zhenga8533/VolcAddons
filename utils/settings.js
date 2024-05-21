@@ -1,5 +1,5 @@
 import { AQUA, BLUE, BOLD, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
-import toggles from "./toggles";
+import toggles from "./Toggles";
 import {
     @TextProperty,
 	@PercentSliderProperty,

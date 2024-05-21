@@ -1,8 +1,8 @@
 import { DARK_GRAY, GOLD, GRAY, GREEN, RED, WHITE } from "../../utils/constants";
 import { data } from "../../utils/data"
 import { Overlay } from "../../utils/overlay"
-import { registerWhen } from "../../utils/register";
-import settings from "../../utils/settings";
+import { registerWhen } from "../../utils/RegisterTils";
+import settings from "../../utils/Settings";
 
 
 const drillExample =

@@ -1,10 +1,10 @@
-import settings from "../../utils/settings";
-import toggles from "../../utils/toggles";
+import settings from "../../utils/Settings";
+import toggles from "../../utils/Toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
 import { formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/overlay";
 import { isPlayer } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/data";
 
 

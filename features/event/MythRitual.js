@@ -1,12 +1,12 @@
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import mayor from "../../utils/mayor";
 import location from "../../utils/location";
 import { GREEN, LOGO } from "../../utils/constants";
 import { getClosest } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
-import { Waypoint } from "../../utils/WaypointUtil";
+import { Waypoint } from "../../utils/WaypointTils";
 
 
 /**

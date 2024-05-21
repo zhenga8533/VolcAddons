@@ -1,13 +1,13 @@
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
 import party from "../../utils/party";
-import settings from "../../utils/settings";
-import socket from "../../utils/socket";
-import toggles from "../../utils/toggles";
+import settings from "../../utils/Settings";
+import socket from "../../utils/Socket";
+import toggles from "../../utils/Toggles";
 import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
 import { randIndex } from "../../utils/functions/misc";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/thread";
 import { data } from "../../utils/data";
 import { getPing, getTPS } from "../general/Performance";

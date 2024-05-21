@@ -1,5 +1,5 @@
 import location from "./location";
-import settings from "./settings";
+import settings from "./Settings";
 import { GREEN, ITALIC, LOGO } from "./constants";
 import { drawBox } from "./functions/render";
 

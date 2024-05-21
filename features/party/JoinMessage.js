@@ -1,7 +1,7 @@
 import party from "../../utils/party";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/thread";
 
 

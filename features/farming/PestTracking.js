@@ -1,10 +1,10 @@
 import RenderLib from "../../../RenderLib";
 import location from "../../utils/location";
-import settings from "../../utils/settings";
+import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatTime, removeNonNumeric } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/overlay";
 import { data } from "../../utils/data";
 
