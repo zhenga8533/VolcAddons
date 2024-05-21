@@ -73,8 +73,8 @@ let equipment = itemNBTs.equip.map((nbt, index) => {
  * Equipment button handling
  */
 const click = register("guiMouseClick", (x, y, button, gui) => {
-    const left = gui.getGuiLeft();
-    const top = gui.getGuiTop();
+    const left = gui?.getGuiLeft() ?? 0;
+    const top = gui?.getGuiTop() ?? 0;
 
     Object.keys(buttons).forEach(key => {
         buttons[key].click(left, top, x, y, button);
@@ -82,8 +82,8 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
 }).unregister();
 
 const render = register("guiRender", (x, y, gui) => {
-    const top = gui.getGuiTop();
-    const left = gui.getGuiLeft();
+    const top = gui?.getGuiTop() ?? 0;
+    const left = gui?.getGuiLeft() ?? 0;
 
     Object.keys(buttons).forEach(key => {
         buttons[key].draw(left, top);

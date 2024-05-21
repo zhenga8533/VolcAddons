@@ -39,8 +39,8 @@ export function getClosest(origin, positions) {
 export function getSlotCoords(i) {
     const gui = Client.currentGui.get();
     const slot = gui.field_147002_h?.func_75139_a(i);
-    const x = slot.field_75223_e + gui.getGuiLeft();
-    const y = slot.field_75221_f + gui.getGuiTop();
+    const x = slot.field_75223_e + gui?.getGuiLeft() ?? 0;
+    const y = slot.field_75221_f + gui?.getGuiTop() ?? 0;
 
     return [x, y];
 }

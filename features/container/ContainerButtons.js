@@ -298,8 +298,8 @@ const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
     if (commandInput.func_146206_l() || iconInput.func_146206_l()) cancel(event);
     else {
         saveEdit();
-        const left = gui.getGuiLeft();
-        const top = gui.getGuiTop();
+        const left = gui?.getGuiLeft() ?? 0;
+        const top = gui?.getGuiTop() ?? 0;
         const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
         
         if (!Object.keys(buttons).some(key => {
@@ -386,8 +386,8 @@ function setButtons(type) {
     Client.scheduleTask(1, () => {
         const gui = Client.currentGui.get();
         if (!gui) return;
-        const top = gui.getGuiTop();
-        const left = gui.getGuiLeft();
+        const top = gui?.getGuiTop() ?? 0;
+        const left = gui?.getGuiLeft() ?? 0;
 
         // Set input field locations
         commandInput.field_146209_f = left;
@@ -414,8 +414,8 @@ function setButtons(type) {
  * Registers for tracking and rendering buttons.
  */
 const click = register("guiMouseClick", (x, y, button, gui) => {
-    const left = gui.getGuiLeft();
-    const top = gui.getGuiTop();
+    const left = gui?.getGuiLeft() ?? 0;
+    const top = gui?.getGuiTop() ?? 0;
     const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
 
     Object.keys(buttons).forEach(key => {
@@ -425,8 +425,8 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
 }).unregister();
 
 const render = register("guiRender", (x, y, gui) => {
-    const top = gui.getGuiTop();
-    const left = gui.getGuiLeft();
+    const top = gui?.getGuiTop() ?? 0;
+    const left = gui?.getGuiLeft() ?? 0;
     const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
 
     Object.keys(buttons).forEach(key => {
