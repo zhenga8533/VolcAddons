@@ -1,0 +1,54 @@
+VolcAddons Module User Agreement & Terms of Service
+
+This Agreement ("Agreement") is entered into between VolcAddons and user, collectively referred to as the "Parties," with respect to the use of the Minecraft modification created by The Pirate King.
+
+1. License Grant
+
+1.1 Mod Creator hereby grants User a non-exclusive, non-transferable license to use the Mod in accordance with the terms and conditions of this Agreement.
+
+2. Acceptable Use
+
+2.1 User agrees to use the Mod solely for personal, non-commercial purposes and in compliance with the rules and policies set forth by Minecraft and its developer, Mojang AB as well any involved servers, i.e. Hypixel.
+
+2.2 User acknowledges that the Mod is provided "as-is" and that Mod Creator does not provide any warranties or guarantees regarding the performance, functionality, or compatibility of the Mod.
+
+2.3 User acknowledges that the Mod Creator holds no responsibility in any punishments that may result from use of the Mod.
+
+3. Restrictions
+
+3.1 User agrees not to reverse engineer, decompile, or modify the Mod in any way that may violate applicable laws or regulations.
+
+3.2 User shall not distribute, sell, or transfer the Mod to any third party without the express written consent of Mod Creator.
+
+4. Support and Updates
+
+4.1 Mod Creator may, at their sole discretion, provide support or updates for the Mod.
+
+5. Termination
+
+5.1 Mod Creator reserves the right to terminate this Agreement and revoke the license granted herein if User violates any of the terms and conditions set forth in this Agreement.
+
+6. Governing Law
+
+6.1 This Agreement shall be governed by and construed in accordance with the laws of the "Code of Hammurabi".
+
+7. Entire Agreement
+
+7.1 This Agreement constitutes the entire agreement between the Parties regarding the use of the Mod and supersedes all prior agreements and understandings, whether oral or written.
+
+8. Contact Information
+
+8.1 For questions or concerns regarding this Agreement, please contact Mod Creator at "grapefruited" on Discord.
+
+IN WITNESS WHEREOF, the Parties hereto have executed this Agreement as of the date first above written.
+
+Mod Creator:
+
+VolcAddons
+Volcaronitee
+
+User (Enter IGN below):
+
+_____________*
+
+*The Parties agree that digital signatures and electronic acceptance of this Agreement shall have the same legal force and effect as traditional, ink-on-paper signatures.`
