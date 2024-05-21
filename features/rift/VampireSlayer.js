@@ -6,7 +6,6 @@ import { Overlay } from "../../utils/overlay";
 import { registerWhen } from "../../utils/register";
 import { data } from "../../utils/data";
 import { getSlayerBoss } from "../combat/SlayerDetect";
-import { renderEntities } from "../../utils/waypoints";
 import { Waypoint } from "../../utils/WaypointUtil";
 
 
@@ -113,28 +112,21 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
  * Highlights vampire bosses with steakable HP.
  */
 const VAMP_HP = new Set([625, 1100, 1800, 2400, 3000]);
-let dracula = [];
-let vamps = [];
+const draculaWaypoints = new Waypoint([1, 0, 0], 2, true, true, false);
+const vampWaypoints = new Waypoint([1, 0, 0], 2, true, true, false);
 
 registerWhen(register("step", () => {
-    dracula = World.getAllEntitiesOfType(PLAYER_CLASS).filter(entity => 
-        VAMP_HP.has(entity.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b())
-    );
+    draculaWaypoints.clear();
+    vampWaypoints.clear();
 
-    vamps = World.getAllEntitiesOfType(PLAYER_CLASS).filter(entity => {
-        entity = entity.getEntity();
+    World.getAllEntitiesOfType(PLAYER_CLASS).forEach(mob => {
+        const entity = mob.getEntity();
         const max = entity.func_110148_a(SMA.field_111267_a).func_111125_b();
-        return max > 210 && entity.func_110143_aJ() / max <= 0.2;
+
+        if (max > 210 && entity.func_110143_aJ() / max <= 0.2) vampWaypoints.push([RED + "Dracule", mob]);
+        else if (VAMP_HP.has(max)) draculaWaypoints.push([RED + "Mihawk", mob]);
     });
 }).setFps(2), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
-
-/**
- * Render boxx hitboxes
- */
-registerWhen(register("renderWorld", (pt) => {
-    renderEntities(dracula, 1, 0, 0, pt, undefined, false);
-    renderEntities(vamps, 1, 0, 0, pt);
-}), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
 
 
 /**
