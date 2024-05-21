@@ -120,10 +120,5 @@ registerWhen(register("itemTooltip", (_, item) => {
 
         preview.register();
         clear.register();
-    } else {
-        previewItems = [];
-        lastPreview = "0";
-        preview.unregister();
-        clear.unregister();
     }
 }), () => settings.containerPreview !== 0);
