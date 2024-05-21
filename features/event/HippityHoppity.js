@@ -211,8 +211,7 @@ const towerFind = register("chat", () => {
 
 const workerHighlight = register("guiRender", () => {
     if (bestWorker === 0) return;
-    const containerType = Player.getContainer().getClassName();
-    const [x, y] = getSlotCoords(bestWorker, containerType);
+    const [x, y] = getSlotCoords(bestWorker);
 
     Renderer.translate(0, 0, 100);
     Renderer.drawRect(data.chocolate > bestCost ? Renderer.GREEN : Renderer.RED, x, y, 16, 16);

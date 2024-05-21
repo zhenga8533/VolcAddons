@@ -91,15 +91,14 @@ registerWhen(register("guiRender", (x, y, gui) => {
     if (!gui.class.getName().startsWith("net.minecraft.client.gui.inventory.")) return;
     searchbar.func_146194_f();
 
-    const containerType = Player.getContainer().getClassName();
     indexes.forEach(index => {
-        const [x, y] = getSlotCoords(index, containerType);
+        const [x, y] = getSlotCoords(index);
     
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(255, 255, 255, 255), x - 1, y - 1, 18, 18);
     });
     darken.forEach(index => {
-        const [x, y] = getSlotCoords(index, containerType);
+        const [x, y] = getSlotCoords(index);
     
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(0, 0, 0, 255), x, y, 16, 16);

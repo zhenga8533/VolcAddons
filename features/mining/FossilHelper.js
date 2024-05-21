@@ -213,8 +213,7 @@ function findTile() {
 
 const highlightTile = register("guiRender", () => {
     if (bestTile[0] === -1) return;
-    const containerType = Player.getContainer().getClassName();
-    const [x, y] = getSlotCoords(bestTile[0] * 9 + bestTile[1], containerType);
+    const [x, y] = getSlotCoords(bestTile[0] * 9 + bestTile[1]);
 
     Renderer.translate(0, 0, 100);
     Renderer.drawRect(Renderer.DARK_GREEN, x, y, 16, 16);

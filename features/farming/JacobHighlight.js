@@ -44,10 +44,9 @@ registerWhen(register("guiClosed", () => {
  */
 registerWhen(register("guiRender", () => {
     if (unclaimed.length === 0) return;
-    const containerType = Player.getContainer().getClassName();
 
     unclaimed.forEach(index => {
-        const [x, y] = getSlotCoords(index[0], containerType);
+        const [x, y] = getSlotCoords(index[0]);
     
         const color = index[1];
         Renderer.translate(0, 0, 100);

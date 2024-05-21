@@ -1,6 +1,5 @@
 // Utility Modules
 import "./utils/DevTils";
-import "./utils/player";
 import socket from "./utils/Socket";
 import settings from "./utils/Settings";
 import toggles from "./utils/Toggles";

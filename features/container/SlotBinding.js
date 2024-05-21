@@ -60,11 +60,10 @@ registerWhen(register("guiMouseClick", (_, __, button, gui, event) => {
 // Render bindings
 registerWhen(register("guiRender", (x, y, gui) => {
     if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiInventory") return;
-    const containerType = Player.getContainer().getClassName();
 
     // render binding
     if (binding !== undefined) {
-        const [x, y] = getSlotCoords(binding, containerType);
+        const [x, y] = getSlotCoords(binding);
     
         Renderer.translate(0, 0, 200);
         Renderer.drawRect(Renderer.AQUA, x, y, 16, 16);
@@ -73,7 +72,7 @@ registerWhen(register("guiRender", (x, y, gui) => {
     // render all binds
     Object.keys(data.slotBinds).forEach(bind => {
         if (Array.isArray(data.slotBinds[bind]) && data.slotBinds[bind].length === 0) return;
-        const [x, y] = getSlotCoords(bind, containerType);
+        const [x, y] = getSlotCoords(bind);
 
         Renderer.translate(0, 0, 200);
         Renderer.drawRect(Renderer.GRAY, x, y, 16, 16);
@@ -84,15 +83,15 @@ registerWhen(register("guiRender", (x, y, gui) => {
     const bind = data.slotBinds[hover];
     if (Array.isArray(bind)) {
         bind.forEach(slot => {
-            const [x, y] = getSlotCoords(hover, containerType);
-            const [dx, dy] = getSlotCoords(slot, containerType);
+            const [x, y] = getSlotCoords(hover);
+            const [dx, dy] = getSlotCoords(slot);
 
             Renderer.translate(0, 0, 300);
             Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);
         });
     } else if (bind !== undefined) {
-        const [x, y] = getSlotCoords(hover, containerType);
-        const [dx, dy] = getSlotCoords(bind, containerType);
+        const [x, y] = getSlotCoords(hover);
+        const [dx, dy] = getSlotCoords(bind);
 
         Renderer.translate(0, 0, 300);
         Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);

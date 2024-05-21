@@ -75,7 +75,7 @@ registerWhen(register("step", () => {
 const render = register("guiRender", () => {
     const items = Player.getContainer().getItems();
     Object.keys(highlights).forEach(index => {
-        const [x, y] = getSlotCoords(index, "ContainerChest");
+        const [x, y] = getSlotCoords(index);
     
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(highlights[index][0], x, y, 16, 16);
