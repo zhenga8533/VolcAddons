@@ -82,7 +82,7 @@ const preview = register("guiRender", (mouseX, mouseY) => {
             item.draw(x, y, 1);
             let size = item.getStackSize();
             if (size !== 1) {
-                Renderer.translate(0, 0, 999);
+                Renderer.translate(0, 0, 500);
                 Renderer.drawString(size, x - Renderer.getStringWidth(size) + 17, y + 9, true);
             }
 
