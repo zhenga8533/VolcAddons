@@ -1,5 +1,6 @@
 [
     "- Added additional mining event checks",
+    "- Updated chococolate factory to latest",
     "- Organized util files",
     "- Change chest tracker to hide opened",
     "- Fixed socket reconnections",
