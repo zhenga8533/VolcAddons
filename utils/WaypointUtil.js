@@ -22,9 +22,12 @@ register("renderWorld", (pt) => {
 });
 
 register("worldUnload", () => {
-    waypoints.forEach(waypoint => {
-        waypoint.clear();
-    });
+    waypoints.forEach(waypoint => waypoint.clear());
+});
+
+register("guiClosed", (event) => {
+    if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui")) return;
+    waypoints.forEach(waypoint => waypoint.clear());
 });
 
 export class Waypoint {
