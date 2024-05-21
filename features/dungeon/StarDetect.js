@@ -40,16 +40,16 @@ registerWhen(register("step", () => {
 
         // Find closest mob
         const closestEntity = World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1))
-        .filter(entity => {
-            return entity &&
-                !(entity instanceof EntityArmorStand) &&
-                !(entity instanceof EntityWither) &&
-                entity !== Player.getPlayer();
-        })
-        .reduce((closest, entity) => {
-            const distance = stand.distanceTo(entity);
-            return distance < closest.distance ? { entity, distance } : closest;
-        }, { entity: undefined, distance: 20 });
+            .filter(entity => {
+                return entity &&
+                    !(entity instanceof EntityArmorStand) &&
+                    !(entity instanceof EntityWither) &&
+                    entity !== Player.getPlayer();
+            })
+            .reduce((closest, entity) => {
+                const distance = stand.distanceTo(entity);
+                return distance < closest.distance ? { entity, distance } : closest;
+            }, { entity: standEntity, distance: 20 });
 
         if (closestEntity.entity) {
             starMobs.push([stand.getName(), closestEntity.entity]);

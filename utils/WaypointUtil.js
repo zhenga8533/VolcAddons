@@ -193,4 +193,11 @@ export class Waypoint {
     getWaypoints() {
         return this.#waypoints;
     }
+
+    /**
+     * Deletes the waypoint.
+     */
+    delete() {
+        waypoints.splice(waypoints.indexOf(this), 1);
+    }
 }
