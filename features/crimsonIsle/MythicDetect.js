@@ -1,10 +1,10 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { BLUE, BOLD, DARK_BLUE, DARK_RED, GOLEM_CLASS, GUARDIAN_CLASS, RED, WHITE } from "../../utils/constants";
+import { BLUE, BOLD, DARK_BLUE, DARK_RED, GOLEM_CLASS, GUARDIAN_CLASS, RED, WHITE } from "../../utils/Constants";
 import { announceMob } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/data";
-import { Waypoint } from "../../utils/WaypointTils";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

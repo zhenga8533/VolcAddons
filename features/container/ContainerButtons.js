@@ -1,8 +1,8 @@
 import settings from "../../utils/Settings";
-import { BOLD, BUTTON_PRESETS, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, GuiChest, GuiInventory, GuiTextField, InventoryBasic, LOGO, RED, Toolkit, UNDERLINE, YELLOW } from "../../utils/constants";
-import { data } from "../../utils/data";
+import { BOLD, BUTTON_PRESETS, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, GuiChest, GuiInventory, GuiTextField, InventoryBasic, LOGO, RED, Toolkit, UNDERLINE, YELLOW } from "../../utils/Constants";
+import { data } from "../../utils/Data";
 import { registerWhen } from "../../utils/RegisterTils";
-import { printList } from "../../utils/list";
+import { printList } from "../../utils/ListTils";
 import { parseTexture } from "../../utils/functions/misc";
 import { drawBox } from "../../utils/functions/render";
 

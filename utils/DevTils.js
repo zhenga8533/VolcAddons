@@ -1,5 +1,5 @@
-import { GRAY, GREEN, LOGO, RED } from "./constants";
-import { data } from "./data";
+import { GRAY, GREEN, LOGO, RED } from "./Constants";
+import { data } from "./Data";
 
 
 /**

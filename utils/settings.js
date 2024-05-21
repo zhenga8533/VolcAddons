@@ -1,4 +1,4 @@
-import { AQUA, BLUE, BOLD, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
+import { AQUA, BLUE, BOLD, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./Constants";
 import toggles from "./Toggles";
 import {
     @TextProperty,
@@ -626,7 +626,7 @@ Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}
         description: `Set the seed and opacity used to randomize entity hitbox colors.`,
         category: "Combat",
         subcategory: "Bestiary",
-        hidden: !FileLib.read("./VolcAddons/data", "contract.txt")?.split("\n")?.[51]?.includes(Player.getName()) ?? false
+        hidden: !FileLib.read("./VolcAddons/Data", "contract.txt")?.split("\n")?.[51]?.includes(Player.getName()) ?? false
     })
     hitboxColor = Color.BLACK;
     

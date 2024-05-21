@@ -1,5 +1,5 @@
 import party from "../party";
-import { delay } from "../thread";
+import { delay } from "../ThreadTils";
 
 
 /**

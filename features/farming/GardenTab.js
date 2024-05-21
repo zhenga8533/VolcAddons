@@ -1,10 +1,10 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, WHITE } from "../../utils/Constants";
 import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 
 
 /**

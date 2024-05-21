@@ -1,8 +1,8 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { EntityArmorStand, EntityWither } from "../../utils/constants";
+import { EntityArmorStand, EntityWither } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Waypoint } from "../../utils/WaypointTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

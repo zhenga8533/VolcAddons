@@ -1,5 +1,5 @@
 import settings from "../../utils/Settings";
-import { BOLD, DARK_GRAY, GOLD, GRAY, RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, GRAY, RED, WHITE } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import { formatNumber } from "../../utils/functions/format";
 

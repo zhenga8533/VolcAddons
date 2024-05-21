@@ -1,10 +1,10 @@
 import settings from "../../utils/Settings";
 import { formatTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
-import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE, YELLOW } from "../../utils/constants";
-import { Json } from "../../utils/json";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
+import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE, YELLOW } from "../../utils/Constants";
+import { Json } from "../../utils/Json";
 
 
 /**

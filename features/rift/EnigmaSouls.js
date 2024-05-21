@@ -1,10 +1,10 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
-import { Json } from "../../utils/json";
+import { Json } from "../../utils/Json";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Waypoint } from "../../utils/WaypointTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

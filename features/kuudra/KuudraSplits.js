@@ -1,12 +1,12 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
+import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/Constants";
 import { formatTime, isValidDate } from "../../utils/functions/format";
-import { Overlay } from "../../utils/overlay";
+import { Overlay } from "../../utils/Overlay";
 import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/thread";
-import { data } from "../../utils/data";
+import { delay } from "../../utils/ThreadTils";
+import { data } from "../../utils/Data";
 import { getKuudraHP } from "./KuudraDetect";
 
 
@@ -124,14 +124,14 @@ registerWhen(register("chat", () => {
         // Tracks when timer not infinite
         if (!broken) {
             splitFormat = splitFormat + mm+'/'+dd+'/'+yyyy + '\n';
-            FileLib.append("./VolcAddons/data", "splits.txt", splitFormat);
+            FileLib.append("./VolcAddons/Data", "splits.txt", splitFormat);
             if (!data.files.includes("splits.txt")) 
                 data.files.push("splits.txt");
 
             // Tracks splits for unique parties
             const fileMembers = party.sort().join("-") + ".txt";
             if (party.length === 4) {
-                FileLib.append("./VolcAddons/data", fileMembers, splitFormat);
+                FileLib.append("./VolcAddons/Data", fileMembers, splitFormat);
                 if (!data.files.includes(fileMembers)) 
                     data.files.push(fileMembers);
             }
@@ -281,7 +281,7 @@ export function getSplits(args){
             if (args[6] !== undefined) fileName = [args[3], args[4], args[5], args[6]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
             else if (args[5] !== undefined) fileName = [args[2], args[3], args[4], args[5]].map(p => p.toLowerCase()).sort().join("-") + ".txt";
 
-            const fileSplits = FileLib.read("./VolcAddons/data", fileName);
+            const fileSplits = FileLib.read("./VolcAddons/Data", fileName);
 
             // Get runs from file
             if (fileSplits) {
@@ -313,7 +313,7 @@ export function getSplits(args){
         case "clear":
             // Clears every split
             data.files.forEach(file => {
-                FileLib.delete("./VolcAddons/data", file);
+                FileLib.delete("./VolcAddons/Data", file);
             });
             data.files = [];
             

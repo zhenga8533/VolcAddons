@@ -1,9 +1,9 @@
 import location from "../../utils/location";
 import socket from "../../utils/Socket";
-import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, WITHER_CLASS, YELLOW } from "../../utils/constants";
+import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, WITHER_CLASS, YELLOW } from "../../utils/Constants";
 import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/thread";
+import { delay } from "../../utils/ThreadTils";
 
 
 /**

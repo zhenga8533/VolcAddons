@@ -16,7 +16,7 @@ function sendWebhook(player, msg, color) {
         url: settings.chatWebhook,
         method: "POST",
         headers: {
-            "Content-type": "application/json",
+            "Content-type": "application/Json",
             "User-Agent": "Mozilla/5.0"
         },
         body: {

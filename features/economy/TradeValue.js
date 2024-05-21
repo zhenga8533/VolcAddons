@@ -1,7 +1,7 @@
-import { BOLD, DARK_GREEN, DARK_RED, GOLD, GREEN, RED } from "../../utils/constants";
+import { BOLD, DARK_GREEN, DARK_RED, GOLD, GREEN, RED } from "../../utils/Constants";
 import { formatNumber } from "../../utils/functions/format";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 import { getItemValue } from "./ItemPrice";
 
 

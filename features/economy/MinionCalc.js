@@ -1,5 +1,5 @@
-import settings from '../../utils/settings';
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/constants';
+import settings from '../../utils/Settings';
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/Constants';
 import { commafy, formatNumber } from '../../utils/functions/format';
 import { getBazaar } from './Economy';
 

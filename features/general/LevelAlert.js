@@ -1,5 +1,5 @@
 import settings from "../../utils/Settings";
-import { AQUA, BOLD, DARK_AQUA, GRAY, LOGO } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, GRAY, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 
 

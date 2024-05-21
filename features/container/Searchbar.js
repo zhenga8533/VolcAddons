@@ -1,8 +1,8 @@
 import settings from "../../utils/Settings";
-import { DARK_GRAY, GuiTextField, ITALIC } from "../../utils/constants";
+import { DARK_GRAY, GuiTextField, ITALIC } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data, itemNBTs } from "../../utils/data";
+import { data, itemNBTs } from "../../utils/Data";
 import { decompressNBT } from "../../utils/functions/misc";
 
 

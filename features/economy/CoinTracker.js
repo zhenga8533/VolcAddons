@@ -1,11 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/overlay";
+import { Overlay } from "../../utils/Overlay";
 import { Stat, getPaused } from "../../utils/stat";
-import { data } from "../../utils/data";
+import { data } from "../../utils/Data";
 
 
 /**

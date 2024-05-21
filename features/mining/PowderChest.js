@@ -1,10 +1,10 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { BOLD, CHEST_CLASS, DARK_AQUA, WHITE } from "../../utils/constants";
-import { Overlay } from "../../utils/overlay";
+import { BOLD, CHEST_CLASS, DARK_AQUA, WHITE } from "../../utils/Constants";
+import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/data";
-import { Waypoint } from "../../utils/WaypointTils";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

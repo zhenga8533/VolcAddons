@@ -1,6 +1,6 @@
-import { DARK_GRAY, GOLD, GRAY, GREEN, RED, WHITE } from "../../utils/constants";
-import { data } from "../../utils/data"
-import { Overlay } from "../../utils/overlay"
+import { DARK_GRAY, GOLD, GRAY, GREEN, RED, WHITE } from "../../utils/Constants";
+import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import settings from "../../utils/Settings";
 

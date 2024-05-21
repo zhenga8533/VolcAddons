@@ -1,8 +1,8 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { GRAY, GREEN, LOGO } from "../../utils/constants";
+import { GRAY, GREEN, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Waypoint } from "../../utils/WaypointTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

@@ -1,15 +1,15 @@
 // Utility Modules
-import "./utils/dev";
+import "./utils/DevTils";
 import "./utils/player";
 import socket from "./utils/Socket";
 import settings from "./utils/Settings";
 import toggles from "./utils/Toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
-import { data, resetGUI } from "./utils/data";
-import { updateList } from "./utils/list";
-import { openGUI } from "./utils/overlay";
-import { delay } from "./utils/thread";
-import { getLatestReleaseVersion } from "./utils/updates";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/Constants";
+import { data, resetGUI } from "./utils/Data";
+import { updateList } from "./utils/ListTils";
+import { openGUI } from "./utils/Overlay";
+import { delay } from "./utils/ThreadTils";
+import { getLatestReleaseVersion } from "./utils/UpdateTils";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
 for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
@@ -121,7 +121,7 @@ import "./features/rift/VampireSlayer";
 
 
 // Launch Tests
-if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
+if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/Data").mkdir();
 if (!FileLib.exists("VolcAddons", "data/contract.txt"))
     FileLib.write("VolcAddons", "data/contract.txt", FileLib.read("VolcAddons", "json/contract.txt"));
 
@@ -264,7 +264,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         case "wdr":
         case "sin":
-            if (!FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName())) {
+            if (!FileLib.read("./VolcAddons/Data", "contract.txt").split("\n")[51]?.includes(Player.getName())) {
                 ChatLib.chat(`${LOGO + RED}The contract, signed it must be. Access granted, for you to see. ${DARK_GRAY}/va contract`);
                 break;
             }

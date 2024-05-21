@@ -1,13 +1,13 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
+import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 import { announceMob } from "../../utils/functions/misc";
-import { Waypoint } from "../../utils/WaypointTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

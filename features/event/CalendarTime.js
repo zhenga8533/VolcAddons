@@ -1,5 +1,5 @@
 import settings from "../../utils/Settings";
-import { YELLOW } from "../../utils/constants";
+import { YELLOW } from "../../utils/Constants";
 import { unformatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 

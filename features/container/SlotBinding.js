@@ -1,9 +1,9 @@
 import settings from "../../utils/Settings";
-import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/data";
-import { printList } from "../../utils/list";
+import { data } from "../../utils/Data";
+import { printList } from "../../utils/ListTils";
 
 
 // Bind key

@@ -1,12 +1,12 @@
 import location from "../../utils/location";
 import party from "../../utils/party";
 import settings from "../../utils/Settings";
-import { STAND_CLASS } from "../../utils/constants";
+import { STAND_CLASS } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { convertToTitleCase } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/thread";
-import { Waypoint } from "../../utils/WaypointTils";
+import { delay } from "../../utils/ThreadTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

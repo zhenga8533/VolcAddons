@@ -1,7 +1,7 @@
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
-import { DARK_GRAY, GOLD, YELLOW } from "./constants";
-import { data } from "./data";
+import { DARK_GRAY, GOLD, YELLOW } from "./Constants";
+import { data } from "./Data";
 import settings from "./Settings";
 
 
@@ -30,7 +30,7 @@ register("guiClosed", (event) => {
     waypoints.forEach(waypoint => waypoint.clear());
 });
 
-export class Waypoint {
+export default class Waypoint {
     #color;
     #waypoints;
     #type;

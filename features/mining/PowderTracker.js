@@ -1,11 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { AQUA, BLUE, BOLD, DARK_GREEN, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BLUE, BOLD, DARK_GREEN, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
-import { Overlay } from "../../utils/overlay";
+import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Stat, getPaused } from "../../utils/stat";
-import { data } from "../../utils/data";
+import { data } from "../../utils/Data";
 
 
 /**

@@ -108,7 +108,7 @@ function sendWebhook() {
         url: settings.gardenWebhook,
         method: "POST",
         headers: {
-            "Content-type": "application/json",
+            "Content-type": "application/Json",
             "User-Agent": "Mozilla/5.0"
         },
         body: {

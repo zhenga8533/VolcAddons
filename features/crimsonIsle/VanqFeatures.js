@@ -1,13 +1,13 @@
 import location from "../../utils/location";
 import party from "../../utils/party";
 import settings from "../../utils/Settings";
-import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/constants";
+import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/Constants";
 import { announceMob, playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/thread";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
-import { Waypoint } from "../../utils/WaypointTils";
+import { delay } from "../../utils/ThreadTils";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

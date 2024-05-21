@@ -1,5 +1,5 @@
 import settings from "../../Settings";
-import { AMOGUS, BOLD, GOLD, GREEN } from "../../utils/constants";
+import { AMOGUS, BOLD, GOLD, GREEN } from "../../utils/Constants";
 import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
 

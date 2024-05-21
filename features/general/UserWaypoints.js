@@ -1,10 +1,10 @@
 import settings from "../../utils/Settings";
-import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/thread";
-import { data } from "../../utils/data";
-import { Waypoint } from "../../utils/WaypointTils";
+import { delay } from "../../utils/ThreadTils";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

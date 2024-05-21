@@ -1,5 +1,5 @@
-import { DARK_GRAY, GRAY, LOGO, RED } from "./constants";
-import { NonPooledThread, delay } from "./thread";
+import { DARK_GRAY, GRAY, LOGO, RED } from "./Constants";
+import { NonPooledThread, delay } from "./ThreadTils";
 
 
 const Socket = Java.type("java.net.Socket");

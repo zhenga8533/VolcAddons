@@ -1,6 +1,6 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { BOLD, DARK_RED, WHITE } from "../../utils/constants";
+import { BOLD, DARK_RED, WHITE } from "../../utils/Constants";
 import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 

@@ -1,7 +1,7 @@
 import settings from "./Settings";
-import { BOLD, DARK_GRAY, GOLD, LOGO, YELLOW } from "./constants";
+import { BOLD, DARK_GRAY, GOLD, LOGO, YELLOW } from "./Constants";
 import { setRegisters } from "./RegisterTils";
-import { delay } from "./thread";
+import { delay } from "./ThreadTils";
 
 
 class Location {

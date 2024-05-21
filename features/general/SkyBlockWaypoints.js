@@ -1,7 +1,7 @@
 import location from "../../utils/location";
-import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
-import { Json } from "../../utils/json";
-import { Waypoint } from "../../utils/WaypointTils";
+import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
+import { Json } from "../../utils/Json";
+import Waypoint from "../../utils/Waypoint";
 
 
 const NPCS = new Json("npcs.json", false, false).getData();

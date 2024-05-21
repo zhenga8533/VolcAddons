@@ -1,11 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
 import toggles from "../../utils/Toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
-import { Overlay } from "../../utils/overlay";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
+import { Overlay } from "../../utils/Overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/data";
+import { data } from "../../utils/Data";
 
 
 /**

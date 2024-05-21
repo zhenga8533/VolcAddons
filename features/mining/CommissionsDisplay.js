@@ -1,11 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/constants";
+import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { isLookingAway } from "../../utils/functions/matrix";
-import { Overlay } from "../../utils/overlay";
+import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/data";
+import { data } from "../../utils/Data";
 
 
 const GEMSTONE_WAYPOINTS = {

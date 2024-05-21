@@ -1,5 +1,5 @@
 import PogObject from "../../PogData";
-import { BUTTON_PRESETS } from "./constants";
+import { BUTTON_PRESETS } from "./Constants";
 
 
 // Relocate old data files (<2.9.5)

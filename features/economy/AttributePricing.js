@@ -1,8 +1,8 @@
 import request from "../../../requestV2";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE } from "../../utils/Constants";
 import { commafy, convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
-import { data } from "../../utils/data";
+import { data } from "../../utils/Data";
 import { getAuction } from "./Economy";
 
 

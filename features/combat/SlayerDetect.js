@@ -1,11 +1,11 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { BLAZE_CLASS, BOLD, DARK_GREEN, ENDERMAN_CLASS, GREEN, RED, SMA, SPIDER_CLASS, WHITE, WOLF_CLASS, ZOMBIE_CLASS } from "../../utils/constants";
+import { BLAZE_CLASS, BOLD, DARK_GREEN, ENDERMAN_CLASS, GREEN, RED, SMA, SPIDER_CLASS, WHITE, WOLF_CLASS, ZOMBIE_CLASS } from "../../utils/Constants";
 import { romanToNum } from "../../utils/functions/format";
 import { announceMob } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/thread";
-import { Waypoint } from "../../utils/WaypointTils";
+import { delay } from "../../utils/ThreadTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

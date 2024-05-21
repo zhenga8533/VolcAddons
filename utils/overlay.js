@@ -1,6 +1,6 @@
 import location from "./location";
 import settings from "./Settings";
-import { GREEN, ITALIC, LOGO } from "./constants";
+import { GREEN, ITALIC, LOGO } from "./Constants";
 import { drawBox } from "./functions/render";
 
 

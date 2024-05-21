@@ -1,5 +1,5 @@
 import settings from "../../utils/Settings";
-import { AQUA } from "../../utils/constants";
+import { AQUA } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 
 

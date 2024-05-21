@@ -1,9 +1,9 @@
 import location from "../../utils/location";
 import settings from "../../utils/Settings";
-import { GIANT_CLASS, STAND_CLASS } from "../../utils/constants";
+import { GIANT_CLASS, STAND_CLASS } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import { getPhase } from "./KuudraSplits";
-import { Waypoint } from "../../utils/WaypointTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

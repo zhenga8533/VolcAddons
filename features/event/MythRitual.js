@@ -1,12 +1,12 @@
 import settings from "../../utils/Settings";
 import mayor from "../../utils/mayor";
 import location from "../../utils/location";
-import { GREEN, LOGO } from "../../utils/constants";
+import { GREEN, LOGO } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/thread";
-import { data } from "../../utils/data";
-import { Waypoint } from "../../utils/WaypointTils";
+import { delay } from "../../utils/ThreadTils";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**

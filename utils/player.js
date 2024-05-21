@@ -1,6 +1,3 @@
-import { data } from "./data";
-
-
 /**
  * Returns whether the player is MVP+ or MVP++ based on chat messages.
  *

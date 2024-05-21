@@ -1,7 +1,7 @@
 import settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/overlay";
-import { data, itemNBTs } from "../../utils/data";
+import { Overlay } from "../../utils/Overlay";
+import { data, itemNBTs } from "../../utils/Data";
 import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
 import { Button } from "./ContainerButtons";
 
