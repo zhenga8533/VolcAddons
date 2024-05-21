@@ -5,6 +5,7 @@
     "- Organized util files",
     "- Change chest tracker to hide opened",
     "- Fixed socket reconnections",
+    "- Fixed enchanted book calc",
     "- Removed image viewer",
     "= Remove Gurokinetic features",
     "- Removed Jacob highlight",

@@ -34,7 +34,6 @@ const MAX_ENCHANTS = {
     // Equipment Enchantments
     "CAYENNE": 1, "GREEN_THUMB": 1, "PROSPERITY": 1, "QUANTUM": 3, "ULTIMATE_THE_ONE": 4, "PESTERMINATOR": 1
 };
-const ENCHANTS = new Set(Object.keys(MAX_ENCHANTS));
 const STACKING_ENCHANTS = new Set(["EXPERTISE", "COMPACT", "CULTIVATING", "CHAMPION", "HECATOMB", "EFFICIENCY"]);
 
 /**
@@ -51,15 +50,18 @@ function getEnchantmentValue(enchantments, bazaar, type) {
     Object.entries(enchantments ?? {}).forEach(([enchant, enchantlvl]) => {
         enchant = enchant.toUpperCase();
         const maxEnchantLevel = MAX_ENCHANTS[enchant];
-        
-        if (!ENCHANTS.has(enchant) || enchantlvl < maxEnchantLevel) return;
+        if (!MAX_ENCHANTS.hasOwnProperty(enchant)) return;
 
         const enchantName = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${enchantlvl}`;
         const enchantKey = enchant === "EFFICIENCY" ? "SIL_EX" : `ENCHANTMENT_${enchant}_${maxEnchantLevel}`;
         const base = bazaar?.[enchantKey] ?? 0;
         let multiplier = enchant === "EFFICIENCY" ? enchantlvl - 5 : 1;
         multiplier = STACKING_ENCHANTS.has(enchant) ? multiplier : 2 ** (enchantlvl - maxEnchantLevel);
-        value += Math.max((base?.[type] ?? 0) * multiplier, bazaar?.[enchantName]?.[type] ?? bazaar?.[enchantKey]?.[type] ?? 0);
+        value += Math.max(
+            0, 
+            (base?.[type] ?? 0) * multiplier, 
+            bazaar?.[enchantName]?.[type] ?? bazaar?.[enchantKey]?.[type] ?? 0
+        );
     });
     return value;
 }
@@ -208,7 +210,7 @@ export function getItemValue(item, save=true) {
             } else if (itemID === "ENCHANTED_BOOK") {  // Enchantment Value
                 value = getEnchantmentValue(itemData?.enchantments, bazaar, 0);
                 if (save) {
-                    valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
+                    valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}`;
                     savedValues[itemUUID] = [value, valueMessage];
                 }
             } else {  // Bazaar Value
