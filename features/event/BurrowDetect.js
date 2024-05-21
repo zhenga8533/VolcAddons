@@ -1,5 +1,5 @@
-import location from "../../utils/location";
-import mayor from "../../utils/mayor";
+import location from "../../utils/Location";
+import mayor from "../../utils/Mayor";
 import settings from "../../utils/Settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/Constants";
 import { playSound } from "../../utils/functions/misc";

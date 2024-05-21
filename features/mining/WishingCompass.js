@@ -1,4 +1,4 @@
-import location from "../../utils/location";
+import location from "../../utils/Location";
 import settings from "../../utils/Settings";
 import { GRAY, GREEN, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";

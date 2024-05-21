@@ -1,4 +1,4 @@
-import party from "../../utils/party";
+import party from "../../utils/Party";
 import settings from "../../utils/Settings";
 import { GREEN, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -12,7 +12,7 @@ const partyCommands = new Set(["accept", "join", "kick", "promote", "demote"]);
 let cd = false;
 registerWhen(register("messageSent", (message, event) => {
     const args = message.split(' ');
-    if (cd || party.getIn() || args.length < 3 || (args[0] !== "/p" && args[0] !== "/party") || partyCommands.has(args[1].toLowerCase())) return;
+    if (cd || party.getIn() || args.length < 3 || (args[0] !== "/p" && args[0] !== "/Party") || partyCommands.has(args[1].toLowerCase())) return;
     cd = true;
     delay(() => cd = false, 1000);
 

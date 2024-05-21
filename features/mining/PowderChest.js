@@ -1,4 +1,4 @@
-import location from "../../utils/location";
+import location from "../../utils/Location";
 import settings from "../../utils/Settings";
 import { BOLD, CHEST_CLASS, DARK_AQUA, WHITE } from "../../utils/Constants";
 import { Overlay } from "../../utils/Overlay";

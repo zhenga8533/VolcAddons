@@ -1,4 +1,4 @@
-import party from "../party";
+import party from "../Party";
 import { delay } from "../ThreadTils";
 
 

@@ -1,4 +1,4 @@
-import location from "../../utils/location";
+import location from "../../utils/Location";
 import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { data } from "../../utils/Data";

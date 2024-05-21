@@ -1,6 +1,6 @@
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
-import party from "../../utils/party";
+import party from "../../utils/Party";
 import settings from "../../utils/Settings";
 import socket from "../../utils/Socket";
 import toggles from "../../utils/Toggles";

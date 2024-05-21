@@ -1,4 +1,4 @@
-import location from "../../utils/location";
+import location from "../../utils/Location";
 import settings from "../../utils/Settings";
 import { CUBE_CLASS } from "../../utils/Constants";
 import { formatNumber } from "../../utils/functions/format";

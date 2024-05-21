@@ -1,5 +1,5 @@
-import location from "../../utils/location";
-import party from "../../utils/party";
+import location from "../../utils/Location";
+import party from "../../utils/Party";
 import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/Constants";
 import { Overlay } from "../../utils/Overlay";

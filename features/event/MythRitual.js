@@ -1,6 +1,6 @@
 import settings from "../../utils/Settings";
-import mayor from "../../utils/mayor";
-import location from "../../utils/location";
+import mayor from "../../utils/Mayor";
+import location from "../../utils/Location";
 import { GREEN, LOGO } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";

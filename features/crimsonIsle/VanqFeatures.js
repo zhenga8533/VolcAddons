@@ -1,5 +1,5 @@
-import location from "../../utils/location";
-import party from "../../utils/party";
+import location from "../../utils/Location";
+import party from "../../utils/Party";
 import settings from "../../utils/Settings";
 import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/Constants";
 import { announceMob, playSound } from "../../utils/functions/misc";

@@ -3,7 +3,7 @@ import { BOLD, DARK_AQUA, GREEN, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
-import { Stat, getPaused } from "../../utils/stat";
+import { Stat, getPaused } from "../../utils/Stat";
 import { data } from "../../utils/Data";
 
 

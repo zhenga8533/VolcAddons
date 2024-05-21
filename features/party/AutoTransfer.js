@@ -1,5 +1,5 @@
-import location from "../../utils/location";
-import party from "../../utils/party";
+import location from "../../utils/Location";
+import party from "../../utils/Party";
 import settings from "../../utils/Settings";
 import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";

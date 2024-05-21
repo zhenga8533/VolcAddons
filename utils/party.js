@@ -1,7 +1,6 @@
 
 import { data } from "./Data";
 import { getPlayerName } from "./functions/player";
-import { delay } from "./ThreadTils";
 
 
 class Party {

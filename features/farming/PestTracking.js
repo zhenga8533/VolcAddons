@@ -1,5 +1,5 @@
 import RenderLib from "../../../RenderLib";
-import location from "../../utils/location";
+import location from "../../utils/Location";
 import settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";

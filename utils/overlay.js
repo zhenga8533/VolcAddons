@@ -1,4 +1,4 @@
-import location from "./location";
+import location from "./Location";
 import settings from "./Settings";
 import { GREEN, ITALIC, LOGO } from "./Constants";
 import { drawBox } from "./functions/render";

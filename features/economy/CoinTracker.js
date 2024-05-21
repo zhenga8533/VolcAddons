@@ -1,10 +1,10 @@
-import location from "../../utils/location";
+import location from "../../utils/Location";
 import settings from "../../utils/Settings";
 import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
-import { Stat, getPaused } from "../../utils/stat";
+import { Stat, getPaused } from "../../utils/Stat";
 import { data } from "../../utils/Data";
 
 

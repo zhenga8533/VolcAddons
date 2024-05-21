@@ -1,4 +1,4 @@
-import location from "../../utils/location";
+import location from "../../utils/Location";
 import settings from "../../utils/Settings"
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/Constants";
 import { formatTime } from "../../utils/functions/format";

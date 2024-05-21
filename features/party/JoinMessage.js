@@ -1,4 +1,4 @@
-import party from "../../utils/party";
+import party from "../../utils/Party";
 import settings from "../../utils/Settings";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";

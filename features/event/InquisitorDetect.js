@@ -1,5 +1,5 @@
-import location from "../../utils/location";
-import mayor from "../../utils/mayor";
+import location from "../../utils/Location";
+import mayor from "../../utils/Mayor";
 import settings from "../../utils/Settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS, GREEN, LOGO } from "../../utils/Constants";
 import { data } from "../../utils/Data";
