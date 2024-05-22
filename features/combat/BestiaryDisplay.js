@@ -98,7 +98,7 @@ register("guiOpened", () => {
                 let lore = item.getLore();
                 let ind = lore.findIndex(line => line.startsWith("§5§o§7Overall Progress: §b"));
                 let max = unformatNumber(lore[ind + 1].removeFormatting().split('/')[1]);
-                if (max !== 0) maxBestiary[name] = max;
+                if (max !== 0 && name !== '') maxBestiary[name] = max;
             }
         }
     });
