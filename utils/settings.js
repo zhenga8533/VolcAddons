@@ -374,7 +374,8 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
 
     @SelectorProperty({
         name: "Container Preview ",
-        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.`,
+        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
+Also ${AQUA}/va preview ${GRAY}can be used to lock previews and show replica. Move GUI with ${AQUA}/moveSP${GRAY}.`,
         category: "Container",
         subcategory: "Container",
         options: ["OFF", "Default", "FurfSky"]

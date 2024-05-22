@@ -13,6 +13,7 @@ import { printList } from "../../utils/ListTils";
  */
 let nameCache = ["T1", 0];
 let itemsCache = [];
+new Overlay("containerPreview", data.SPL, "moveSP", "Saved Preview", ["all"], "guiRender");
 
 /**
  * Preview commands for container data.
