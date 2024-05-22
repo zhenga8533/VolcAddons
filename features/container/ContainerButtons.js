@@ -571,9 +571,9 @@ export function buttonCommands(args) {
 
  ${DARK_GRAY}- ${GOLD}inv: ${YELLOW}Opens edit menu for GuiInventory.
  ${DARK_GRAY}- ${GOLD}chest: ${YELLOW}Opens edit meny for GuiChest.
- ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save button data to presets using key.
- ${DARK_GRAY}- ${GOLD}delete ${YELLOW}<key>: Delete button preset using key.
- ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load button preset using key.
+ ${DARK_GRAY}- ${GOLD}save <key>: ${YELLOW}Save button data to presets using key.
+ ${DARK_GRAY}- ${GOLD}delete <key>: ${YELLOW}Delete button preset using key.
+ ${DARK_GRAY}- ${GOLD}load <key>: ${YELLOW}Load button preset using key.
  ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available button presets.
  ${DARK_GRAY}- ${GOLD}import: ${YELLOW}Import button presets from the clipboard.
  ${DARK_GRAY}- ${GOLD}export: ${YELLOW}Export the button data as encoded data.

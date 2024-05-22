@@ -100,6 +100,8 @@ registerWhen(register("guiRender", (x, y, gui) => {
 
 /**
  * Slot binding related commands...
+ * 
+ * @param {string[]} args - Command arguments.
  */
 export function slotCommands(args) {
     const command = args[1];
@@ -139,9 +141,9 @@ export function slotCommands(args) {
 `${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va bind <command>
 
- ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save binding data to presets using key.
- ${DARK_GRAY}- ${GOLD}delete ${YELLOW}<key>: Delete binding preset using key.
- ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load binding preset using key.
+ ${DARK_GRAY}- ${GOLD}save <key>: ${YELLOW}Save binding data to presets using key.
+ ${DARK_GRAY}- ${GOLD}delete <key>: ${YELLOW}Delete binding preset using key.
+ ${DARK_GRAY}- ${GOLD}load <key>: ${YELLOW}Load binding preset using key.
  ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available binding presets.
  ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Removes all bindings.
  ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.`);
