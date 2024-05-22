@@ -3,7 +3,7 @@ import { formatTime, romanToNum, unformatNumber } from "../../utils/functions/fo
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
-import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE, YELLOW } from "../../utils/Constants";
+import { BOLD, GOLD, GRAY, GREEN, LOGO, WHITE, YELLOW } from "../../utils/Constants";
 import { Json } from "../../utils/Json";
 
 
@@ -98,7 +98,7 @@ register("guiOpened", () => {
                 let lore = item.getLore();
                 let ind = lore.findIndex(line => line.startsWith("§5§o§7Overall Progress: §b"));
                 let max = unformatNumber(lore[ind + 1].removeFormatting().split('/')[1]);
-                maxBestiary[name] = max;
+                if (max !== 0) maxBestiary[name] = max;
             }
         }
     });
