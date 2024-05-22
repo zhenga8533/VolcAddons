@@ -100,6 +100,7 @@ import "./features/crimsonIsle/TrophyCounter";
 import "./features/crimsonIsle/VanqFeatures";
 // Dungeon Features
 import "./features/dungeon/CroesusHighlight";
+import "./features/dungeon/DungeonProfit";
 import "./features/dungeon/StarDetect";
 // Kuudra Features
 import "./features/kuudra/CrateEdit";
@@ -227,6 +228,11 @@ register ("command", (...args) => {
         case "toggles":
         case "control":
             toggles.openGUI();
+            break;
+        case "dev":
+            data.devMode = !data.devMode;
+            const color = data.devMode ? GREEN : RED;
+            ChatLib.chat(`${LOGO + color}Developer mode is now ${data.devMode ? "enabled" : "disabled"}!`);
             break;
         // Help
         case "help":

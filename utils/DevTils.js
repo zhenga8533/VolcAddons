@@ -7,16 +7,9 @@ import { data } from "./Data";
  */
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.devKey = devKey.getKeyCode() }).setPriority(Priority.HIGHEST);
-let devMode = false;
-
-register("command", () => {
-    devMode = !devMode;
-    const color = devMode ? GREEN : RED;
-    ChatLib.chat(`${LOGO + color}Developer mode is now ${devMode ? "enabled" : "disabled"}!`);
-}).setName("devMode");
 
 devKey.registerKeyPress(() => {
-    if (devKey.getKeyCode() === 0 || !devMode) return;
+    if (devKey.getKeyCode() === 0 || !data.devMode) return;
 
     const view = Player.lookingAt();
     if (view instanceof Entity) {
@@ -44,7 +37,7 @@ devKey.registerKeyPress(() => {
 });
 
 register("guiKey", (_, keyCode, gui) => {
-    if (keyCode !== devKey.getKeyCode() || !devMode) return;
+    if (keyCode !== devKey.getKeyCode() || !data.devMode) return;
     
     const slot = gui?.getSlotUnderMouse()?.field_75222_d;
     if (slot === undefined) return;
