@@ -222,7 +222,7 @@ function updateContainerValue(remove) {
         } else if (containerName === "Manage Auctions") {
             auctionValue(container);
             return;
-        }else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
+        } else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
 
         const items = container.getItems();
         const itemValues = {};
