@@ -1,3 +1,7 @@
+/**
+ * ARCHIVED
+ */
+
 import request from "../../../requestV2";
 import settings from "../../utils/Settings";
 import location from "../../utils/Location";

@@ -1,3 +1,7 @@
+/**
+ * ARCHIVED
+ */
+
 import request from "../../../requestV2";
 import settings from "../../utils/Settings";
 import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
