@@ -1,6 +1,6 @@
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
-import { DARK_GRAY, GOLD, YELLOW } from "./Constants";
+import { DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GREEN, RED, YELLOW } from "./Constants";
 import { data } from "./Data";
 import settings from "./Settings";
 
@@ -94,6 +94,11 @@ export default class Waypoint {
                 // Calculate the render distance of the waypoint
                 const distance = Math.hypot(pX - x, pY - y, pZ - z);
                 const renderDistance = Math.min(distance, 50);
+                const distanceColor = distance < 10 ? GREEN :
+                    distance < 25 ? DARK_GREEN :
+                    distance < 50 ? YELLOW :
+                    distance < 100 ? GOLD :
+                    distance < 200 ? RED : DARK_RED;
     
                 // Credit: https://github.com/Soopyboo32/SoopyV2/blob/master/src/utils/renderUtils.js
                 const rX = pX + (x - pX) / (distance / renderDistance);
@@ -102,7 +107,7 @@ export default class Waypoint {
                 const rZ = pZ + (z - pZ) / (distance / renderDistance);
 
                 Tessellator.drawString(GOLD + title, rX, rY1, rZ);
-                Tessellator.drawString(`${DARK_GRAY}[${YELLOW + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
+                Tessellator.drawString(`${DARK_GRAY}[${distanceColor + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
             }
 
             // Render beacon beam
@@ -130,8 +135,16 @@ export default class Waypoint {
             RenderLib.drawEspBox(x, y, z, width, height, ...this.#color, 1, data.vision);
             if (this.#box) RenderLib.drawInnerEspBox(x, y, z, width, height, ...this.#color, settings.hitboxColor.alpha/510, data.vision);
             if (title !== undefined && data.vision) {
-                const text = title + (this.#type !== 2 ? '' :
-                    ` ${DARK_GRAY}[${YELLOW + Player.asPlayerMP().distanceTo(entity).toFixed(0)}m${DARK_GRAY}]`);
+                let text = '';
+                if (this.#type === 2) {
+                    const distance = Player.asPlayerMP().distanceTo(entity);
+                    const distanceColor = distance < 10 ? GREEN :
+                        distance < 25 ? DARK_GREEN :
+                        distance < 50 ? YELLOW :
+                        distance < 100 ? GOLD :
+                        distance < 200 ? RED : DARK_RED;
+                    text = `${DARK_GRAY}[${distanceColor + Math.round(distance)}m${DARK_GRAY}]`;
+                }
                 Tessellator.drawString(text, x, y + height + 1, z, 0xffffff, true);
             }
         });
