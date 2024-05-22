@@ -164,3 +164,38 @@ export function parseTexture(nbt) {
 
     return skullOwner;
 }
+
+/**
+ * Parse a container cache into an array of items.
+ * 
+ * @param {String[]} cache - Cache of container items.
+ * @returns {Item[]} Parsed items from the cache.
+ */
+export function parseContainerCache(cache) {
+    return cache.map(nbt => {
+        if (nbt === null) return null;
+        const parsedNBT = NBT.parse(decompressNBT(nbt)).rawNBT;
+        const item = new Item(net.minecraft.item.ItemStack.func_77949_a(parsedNBT));
+        try {
+            const loreTag = parsedNBT.func_74775_l("tag").func_74775_l("display").field_74784_a.get("Lore");
+            const lore = [item.getLore()[0]];
+            if (loreTag !== null) {
+                for (let i = 0; i < loreTag.func_74745_c(); i++) {
+                    lore.push(loreTag.func_150307_f(i));
+                }
+            }
+            item.setLore(lore);
+        } catch(e) {
+            ChatLib.chat(e);
+        }
+
+        if (item.getUnlocalizedName() === "item.skull") {  // Fix skull textures not rendering
+            const skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
+            const texture = skullNBT.getCompoundTag("Properties").getTagList("textures", 0).func_150305_b(0).func_74779_i("Value");
+            const skull = parseTexture(texture);
+            item.getNBT().getCompoundTag("tag").set("SkullOwner", skull);
+        }
+
+        return item;
+    });
+}

@@ -35,7 +35,7 @@ import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/AttributeAbbrev";
-import "./features/container/ContainerPreview";
+import { previewCommands } from "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
 import { slotCommands } from "./features/container/SlotBinding";
@@ -287,6 +287,10 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
         case "buttons":
             buttonCommands(args);
             break;
+        // Container Preview
+        case "preview":
+            previewCommands(args);
+            break;
         // Slot Binding
         case "slots":
         case "slot":
@@ -463,3 +467,4 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
  */
 import "./features/container/ArmorDisplay";
 import { buttonCommands } from "./features/container/ContainerButtons";
+
