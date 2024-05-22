@@ -216,14 +216,14 @@ register ("command", (...args) => {
 
     // Parsing command and executing appropriate actions
     const command = args[0] === undefined ? undefined : args[0].toLowerCase();
-    switch (command) {
+    const soleCommand = command.replace(/s$/, '');
+    switch (soleCommand) {
         // Settings
         case undefined:
-        case "settings":
+        case "setting":
             openSettings();
             break;
         case "toggle":
-        case "toggles":
         case "control":
             toggles.openGUI();
             break;
@@ -237,7 +237,6 @@ register ("command", (...args) => {
             getHelp();
             break;
         case "list":
-        case "lists":
             ChatLib.chat(
 `\n${LOGO + GOLD + BOLD} Lists:
 ${DARK_GRAY}- ${GOLD + BOLD}cd: ${YELLOW}cooldown-list
@@ -284,7 +283,6 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Buttons
         case "button":
-        case "buttons":
             buttonCommands(args);
             break;
         // Container Preview
@@ -292,14 +290,12 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             previewCommands(args);
             break;
         // Slot Binding
-        case "slots":
         case "slot":
-        case "binds":
         case "bind":
             slotCommands(args);
             break;
         // Send coords
-        case "coords":
+        case "coord":
         case "xyz":
             const randID = '@' + (Math.random() + 1).toString(36).substring(5);
             ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
@@ -311,7 +307,6 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Attribute Pricing
         case "attribute":
-        case "attributes":
             getAttributes(args);
             break;
         // List Controls
@@ -379,12 +374,10 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             updateList(args, "prefixlist");
             break;
         // Kuudra Splits
-        case "splits": // Kuudra splits
         case "split":
             getSplits(args);
             break;
         // User Waypoints
-        case "waypoints":
         case "waypoint":
         case "wp":
             createWaypoint(args);
@@ -467,4 +460,3 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
  */
 import "./features/container/ArmorDisplay";
 import { buttonCommands } from "./features/container/ContainerButtons";
-
