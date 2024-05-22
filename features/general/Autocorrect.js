@@ -186,7 +186,9 @@ const close = register("guiClosed", () => {
     suggesting = false;
 }).unregister();
 
-registerWhen(register("guiOpened", () => {
+register("guiOpened", () => {
+    if (!settings.autocomplete) return;
+
     Client.scheduleTask(1, () => {
         if (!Client.currentGui.get().toString().includes("GuiChat")) return;
 
@@ -194,7 +196,7 @@ registerWhen(register("guiOpened", () => {
         key.register();
         close.register();
     });
-}), () => settings.autocomplete);
+});
 
 
 /**
