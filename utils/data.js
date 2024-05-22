@@ -13,14 +13,14 @@ const DEFAULT_GUI = {
     "AL": [780, 430, 1.2, false, false, true], // Skill Tracker Location
     "BL": [10, 120, 1.2, false, false, true], // Vampire Location
     "CL": [10, 180, 1.2, false, false, true], // Counter Location
-    "DL": [10, 180, 1.2, false, false, true], // 
+    "DL": [575, 160, 1.2, false, false, true], // Dungeon Profit Location
     "EL": [100, 150, 1.1, false, false, true], // Advanced Value Location
     "FL": [220, 10, 1.2, false, false, true], // Trophy Fish Location
     "GL": [10, 140, 1.2, false, false, true], // Gyro Location
     "HL": [10, 240, 1.2, false, false, true], // Powder Chest Location
     "IL": [10, 180, 1.2, false, false, true], // Inq Location
     "JL": [150, 180, 1.2, false, false, true], // Kill Counter Location
-    "KL": [600, 220, 1.2, false, false, true], // Kuudra Profit Location
+    "KL": [575, 160, 1.2, false, false, true], // Kuudra Profit Location
     "LL": [770, 70, 1.2, false, false, true], // Server Status Location
     "ML": [780, 390, 1.2, false, false, true], // Coins Location
     "OL": [10, 130, 1.2, false, false, true], // Composter Location

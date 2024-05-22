@@ -209,6 +209,7 @@ function updateContainerValue(remove) {
         // Check if container is valid
         const container = Player.getContainer();
         const containerName = container.getName().removeFormatting();
+        const items = container.getItems();
         const words = containerName.split(" ");
         if (containerName.endsWith("Sack")) {
             sackValue(container);
@@ -222,9 +223,9 @@ function updateContainerValue(remove) {
         } else if (containerName === "Manage Auctions") {
             auctionValue(container);
             return;
-        } else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
+        } else if ((!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) ||
+            items[31]?.getName() === "§aOpen Reward Chest") return;
 
-        const items = container.getItems();
         const itemValues = {};
         for (let i = 0; i < items.length - remove; i++) {
             let item = items[i];
