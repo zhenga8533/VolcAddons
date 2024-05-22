@@ -105,6 +105,7 @@ export class Button {
      */
     setItem(icon, lore) {
         try {
+            this.#edit = icon === "barrier";
             const texture = icon === "skull" ? Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor) :
                 icon.length > 32 ? icon : 
                 icon.length === 32 ? data.buttons[this.#id][3] : undefined;
@@ -242,7 +243,7 @@ export class Button {
                 commandInput.func_146195_b(true);
             } else {
                 delete buttons[this.#id];
-                button[this.#id] = new Button(this.#loc, this.#index, () => {
+                buttons[this.#id] = new Button(this.#loc, this.#index, () => {
                     editing.id = this.#id;
                     editing.loc = this.#loc;
                     editing.index = this.#index;
