@@ -137,8 +137,10 @@ registerWhen(register("step", () => {
         let now = unformatNumber(count[0]);
         let next = unformatNumber(count[1]);
 
-        if (beCounter.hasOwnProperty(name)) beCounter[name][1] = now;
-        else beCounter[name] = [now, now, next];
+        if (beCounter.hasOwnProperty(name)) {
+            beCounter[name][1] = now;
+            beCounter[name][2] = Math.max(next, beCounter[name][2]);
+        } else beCounter[name] = [now, now, next];
     }
 
     // Sort by now - start
