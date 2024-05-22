@@ -26,7 +26,6 @@ export function drawBox(x, y, z, width, height, rectColor, borderColor) {
     Renderer.retainTransforms(false);
 }
 
-
 const BORDER_COLOR = Renderer.color(128, 128, 128, 128);
 /**
  * Function to draw a box on the screen.

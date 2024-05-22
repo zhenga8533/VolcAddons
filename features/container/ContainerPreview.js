@@ -1,5 +1,5 @@
 import Settings from "../../utils/Settings";
-import { BOLD, COLOR_TABLE, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW} from "../../utils/Constants";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW} from "../../utils/Constants";
 import { data, itemNBTs } from "../../utils/Data";
 import { compressNBT, parseContainerCache } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
