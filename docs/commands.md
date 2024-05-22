@@ -43,9 +43,9 @@ subtitle: List of every non-gui related commands.
     - `/chEvent`: Fetches current events active in the Crystal Hollows.
     - `/dmEvent`: Fetches current events active in the Dwarven Mines.
 - **Dev**
-    - `/devMode`: Toggles Dev button usage.
     - `/printTab`: Prints out Tablist names to console.
     - `/printScore`: Prints out Scoreboard lines to console.
+    - `/va dev`: Toggles devButton usage.
 - **Misc**
     - `/missingskins`: Scans user inventory API to determine any missing fire sale skins.
     - `/pesttp`: Warps to plot with most pests.
