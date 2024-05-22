@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { DARK_GRAY, GuiTextField, ITALIC } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -105,7 +105,7 @@ registerWhen(register("guiRender", (x, y, gui) => {
     })
 
     if(calc !== undefined) Renderer.drawString(DARK_GRAY + calc, loc[0] - Renderer.getStringWidth(calc) + 190, loc[1] + 4);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 /**
  * Stuff to move searchbox
@@ -133,13 +133,13 @@ registerWhen(register("guiMouseDrag", (x, y) => {
     loc[1] = y;
     searchbar.field_146209_f = x;
     searchbar.field_146210_g = y;
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Detect mouse click on box
 registerWhen(register("guiMouseClick", (x, y, button) => {
     searchbar.func_146192_a(x, y, button);
     Client.scheduleTask(3, getHighlights);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Searchbox key detects
 registerWhen(register("guiKey", (char, keyCode, _, event) => {
@@ -163,16 +163,16 @@ registerWhen(register("guiKey", (char, keyCode, _, event) => {
 
     // Cancel all but escape key
     if (keyCode != 1) cancel(event);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Reset search when opening gui
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, getHighlights);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Exit search when closing gui
 registerWhen(register("guiClosed", () => {
     if (gui.isOpen()) renderOverlay.unregister();
     searchbar.func_146195_b(false);
     indexes.length = 0;
-}), () => settings.searchbar);
+}), () => Settings.searchbar);

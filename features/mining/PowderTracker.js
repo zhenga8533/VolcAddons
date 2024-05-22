@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BLUE, BOLD, DARK_GREEN, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/Overlay";
@@ -43,7 +43,7 @@ function updatePowder(powder, current) {
     if (current < powder.now) powder.start -= powder.now - current; 
     powder.now = current;
 
-    if (powder.since < settings.powderTracker * 60) {
+    if (powder.since < Settings.powderTracker * 60) {
         powder.since += 1;
         powder.time += 1;
     }
@@ -69,7 +69,7 @@ registerWhen(register("step", () => {
     // Get max valid time
     let displayTime = 0;
     Object.keys(powders).forEach(powder => {
-        if (powders[powder].time > displayTime && powders[powder].since < settings.powderTracker * 60) displayTime = powders[powder].time;
+        if (powders[powder].time > displayTime && powders[powder].since < Settings.powderTracker * 60) displayTime = powders[powder].time;
     });
 
     // Set HUD
@@ -79,4 +79,4 @@ registerWhen(register("step", () => {
 ${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain()) + GRAY} (${formatNumber(powders.Gemstone.getRate())} ᠅/hr)
 ${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain()) + GRAY} (${formatNumber(powders.Glacite.getRate())} ᠅/hr)
 ${BLUE + BOLD}Time: ${WHITE + timeDisplay}`);
-}).setFps(1), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && settings.powderTracker !== 0);
+}).setFps(1), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && Settings.powderTracker !== 0);

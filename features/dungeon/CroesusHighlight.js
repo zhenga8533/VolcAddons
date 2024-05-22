@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
 import { getSlotCoords } from "../../utils/functions/find";
 
@@ -45,4 +45,4 @@ registerWhen(register("guiOpened", () => {
             close.register();
         }
     })
-}), () => settings.croesusHighlight);
+}), () => Settings.croesusHighlight);

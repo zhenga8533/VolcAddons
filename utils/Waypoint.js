@@ -2,7 +2,7 @@ import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
 import { DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GREEN, RED, YELLOW } from "./Constants";
 import { data } from "./Data";
-import settings from "./Settings";
+import Settings from "./Settings";
 
 
 /**
@@ -133,7 +133,7 @@ export default class Waypoint {
     
             // Render the entity box
             RenderLib.drawEspBox(x, y, z, width, height, ...this.#color, 1, data.vision);
-            if (this.#box) RenderLib.drawInnerEspBox(x, y, z, width, height, ...this.#color, settings.hitboxColor.alpha/510, data.vision);
+            if (this.#box) RenderLib.drawInnerEspBox(x, y, z, width, height, ...this.#color, Settings.hitboxColor.alpha/510, data.vision);
             if (title !== undefined && data.vision) {
                 let text = '';
                 if (this.#type === 2) {

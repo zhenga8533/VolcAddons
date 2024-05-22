@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { isLookingAway } from "../../utils/functions/matrix";
@@ -49,7 +49,7 @@ registerWhen(register("renderWorld", () => {
     commissionWaypoints.forEach(gem => {
         Tessellator.drawString(gem[0], gem[2], gem[3], gem[4], gem[1], true);
     });
-}), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && settings.commissionWaypoints !== 0);
+}), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && Settings.commissionWaypoints !== 0);
 
 registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
@@ -73,7 +73,7 @@ registerWhen(register("step", () => {
             let closestCopy = [...closest];
             closestWaypoints.push(closestCopy);
             closestCopy[0] = `${BOLD + UNDERLINE}${closestCopy[0]}`;
-            if (settings.commissionWaypoints !== 2) commissionWaypoints.push(closestCopy);
+            if (Settings.commissionWaypoints !== 2) commissionWaypoints.push(closestCopy);
 
             commissionMessage += `\n${tab[index].replace("§f", GOLD)}`;
         } else commissionMessage += `\n${tab[index]}`;
@@ -84,7 +84,7 @@ registerWhen(register("step", () => {
 
     commissionOverlay.setMessage(commissionMessage);
 }).setFps(4), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines" || location.getWorld() === "Mineshaft") && 
-    (settings.commissionsDisplay || settings.commissionWaypoints !== 0));
+    (Settings.commissionsDisplay || Settings.commissionWaypoints !== 0));
 
 /* Render closest lines */
 const SKIP = new Set(["§l§nGlacite", "§l§nTungsten", "§l§nUmber"]);
@@ -114,7 +114,7 @@ registerWhen(register("renderWorld", (pt) => {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
     })
-}), () => location.getWorld() === "Dwarven Mines" && (settings.commissionWaypoints === 2 || settings.commissionWaypoints === 3))
+}), () => location.getWorld() === "Dwarven Mines" && (Settings.commissionWaypoints === 2 || Settings.commissionWaypoints === 3))
 
 
 /**
@@ -122,4 +122,4 @@ registerWhen(register("renderWorld", (pt) => {
  */
 registerWhen(register("chat", (commission) => {
     Client.showTitle(GREEN + BOLD + commission, `${YELLOW}Commission Complete!`, 5, 25, 5);
-}).setCriteria("${commission} Commission Complete! Visit the King to claim your rewards!"), () => settings.commissionAnnounce);
+}).setCriteria("${commission} Commission Complete! Visit the King to claim your rewards!"), () => Settings.commissionAnnounce);

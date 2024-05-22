@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BLUE, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -50,7 +50,7 @@ registerWhen(register("step", () => {
         parseFloat(soul[4]), 
         parseFloat(soul[5])
     ]);
-}).setFps(1), () => location.getWorld() === "The Rift" && settings.catWaypoint);
+}).setFps(1), () => location.getWorld() === "The Rift" && Settings.catWaypoint);
 
 /**
  * Updates the fairy soul array.

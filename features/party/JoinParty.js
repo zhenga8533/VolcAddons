@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/ThreadTils";
@@ -18,7 +18,7 @@ registerWhen(register("chat", (player) => {
 
     invites.push(name);
     delay(() => invites.shift(), 60000);
-}).setCriteria("${player} has disbanded the party!"), () => settings.joinRP);
+}).setCriteria("${player} has disbanded the party!"), () => Settings.joinRP);
 
 /**
  * Acceots oarty invite if party was disbanded in last 60 seconds or part of user whitelist.
@@ -26,12 +26,12 @@ registerWhen(register("chat", (player) => {
 registerWhen(register("chat", (player) => {
     const name = getPlayerName(player).toLowerCase();
 
-    if (settings.joinWhitelist && data.whitelist.includes(name))  // Whitelist
+    if (Settings.joinWhitelist && data.whitelist.includes(name))  // Whitelist
         delay(() => ChatLib.command("p accept " + name), 500);
-    else if (settings.joinRP && invites.includes(name))  // Reparty
+    else if (Settings.joinRP && invites.includes(name))  // Reparty
         delay(() => ChatLib.command("p accept " + name), 500);
 }).setCriteria("-----------------------------------------------------\n${player} has invited you to join their party!\nYou have 60 seconds to accept. Click here to join!\n-----------------------------------------------------"),
-() => settings.joinRP || settings.joinWhitelist);
+() => Settings.joinRP || Settings.joinWhitelist);
 registerWhen(register("chat", (player1, player2) => {
     const name1 = getPlayerName(player1).toLowerCase();
     const name2 = getPlayerName(player2).toLowerCase();
@@ -39,4 +39,4 @@ registerWhen(register("chat", (player1, player2) => {
     
     delay(() => ChatLib.command("p accept " + name1), 500);
 }).setCriteria("-----------------------------------------------------\n${player1} has invited you to join ${player2}'s party!\nYou have 60 seconds to accept. Click here to join!\n-----------------------------------------------------"),
-() => settings.joinWhitelist);
+() => Settings.joinWhitelist);

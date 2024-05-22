@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
 
 
@@ -88,14 +88,14 @@ registerWhen(register("renderTitle", (title, subtitle, event) => {
     last = subtitle;
     print(subtitle);
     cancel(event);
-}), () => location.getWorld() === "The Rift" && settings.ddrHelper);
+}), () => location.getWorld() === "The Rift" && Settings.ddrHelper);
 
 /**
  * Resets dance if player fails.
  */
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You were${failure}!"),
-() => location.getWorld() === "The Rift" && settings.ddrHelper);
+() => location.getWorld() === "The Rift" && Settings.ddrHelper);
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You d${failure}!"),
-() => location.getWorld() === "The Rift" && settings.ddrHelper);
+() => location.getWorld() === "The Rift" && Settings.ddrHelper);
 registerWhen(register("chat", () => { dancing = [...DANCES] }).setCriteria("You're ${failure}!"),
-() => location.getWorld() === "The Rift" && settings.ddrHelper);
+() => location.getWorld() === "The Rift" && Settings.ddrHelper);

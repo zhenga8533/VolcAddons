@@ -1,6 +1,6 @@
 import location from "../../utils/Location";
 import party from "../../utils/Party";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/Constants";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -61,10 +61,10 @@ registerWhen(register("tick", () => {
                 const pX = Math.round(Player.getX());
                 const PY = Math.round(Player.getY());
                 const PZ = Math.round(Player.getZ());
-                if (settings.announceMania === 1) {
+                if (Settings.announceMania === 1) {
                     const id = (Math.random() + 1).toString(36).substring(6);
                     ChatLib.command(`ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`);
-                } else if (party.getIn() && settings.announceMania === 2)
+                } else if (party.getIn() && Settings.announceMania === 2)
                     ChatLib.command(`pc x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}!`);
             }
         } else inMania = false;
@@ -96,7 +96,7 @@ registerWhen(register("tick", () => {
             ichorUUID = ichor.persistentID;
         }
     }
-}), () => location.getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
+}), () => location.getWorld() === "The Rift" && (Settings.vampireAttack || Settings.announceMania !== 0));
 
 /**
  * Highlights vampire bosses with steakable HP.
@@ -116,7 +116,7 @@ registerWhen(register("step", () => {
         if (max > 210 && entity.func_110143_aJ() / max <= 0.2) vampWaypoints.push([RED + "Dracule", mob]);
         else if (VAMP_HP.has(max)) draculaWaypoints.push([RED + "Mihawk", mob]);
     });
-}).setFps(2), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
+}).setFps(2), () => location.getWorld() === "The Rift" && Settings.vampireHitbox);
 
 
 /**
@@ -141,4 +141,4 @@ registerWhen(register("step", () => {
     effigies.forEach((effigy, i) => { 
         if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]);
     });
-}).setFps(1), () => location.getWorld() === "The Rift" && settings.effigyWaypoint);
+}).setFps(1), () => location.getWorld() === "The Rift" && Settings.effigyWaypoint);

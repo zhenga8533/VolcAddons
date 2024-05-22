@@ -2,7 +2,7 @@ import axios from "../../../axios";
 import { AQUA, BLUE, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { getItemValue } from "./ItemPrice";
 import { getAuction, getBazaar } from "./Economy";
 
@@ -136,7 +136,7 @@ export function getNetworth(username, fruit) {
         const essences = currencies?.essence;
         let essenceValue = 0;
         if (essences !== undefined) Object.keys(essences).forEach(essence => {
-            essenceValue += bazaar["ESSENCE_" + essence][settings.priceType] * essences[essence].current;
+            essenceValue += bazaar["ESSENCE_" + essence][Settings.priceType] * essences[essence].current;
         });
         invValues.push([essenceValue, ` ${DARK_GRAY}- ${AQUA}Essence Value: ${GREEN + formatNumber(essenceValue)}\n`]);
 
@@ -164,7 +164,7 @@ export function getNetworth(username, fruit) {
         if (bags !== undefined) Object.keys(bags).forEach(bag => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
         const sacks = inv.sacks_counts;
         let sacksValue = 0;
-        if (sacks !== undefined) Object.keys(sacks).forEach(product => sacksValue += (bazaar[product]?.[settings.priceType] ?? 0) * sacks[product]);
+        if (sacks !== undefined) Object.keys(sacks).forEach(product => sacksValue += (bazaar[product]?.[Settings.priceType] ?? 0) * sacks[product]);
         invValues.push([sacksValue, ` ${DARK_GRAY}- ${AQUA}Sacks Value: ${GREEN + formatNumber(sacksValue)}`]);
         total += setInv("Bag", invValues);
 

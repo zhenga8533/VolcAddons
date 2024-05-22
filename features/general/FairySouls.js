@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { Json } from "../../utils/Json";
@@ -23,7 +23,7 @@ registerWhen(register("chat", () => {
     // Delete closest soul
     const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
     if (closest !== undefined && closest[1] < 10) souls.splice(souls.indexOf(closest[0]), 1);
-}).setCriteria("SOUL! You found a Fairy Soul!"), () => settings.fairyWaypoint !== 0);
+}).setCriteria("SOUL! You found a Fairy Soul!"), () => Settings.fairyWaypoint !== 0);
 
 /**
  * Fail safe fairy soul remove in case player clicks on an unregistered soul.
@@ -35,7 +35,7 @@ registerWhen(register("chat", () => {
     // Delete duplicate soul
     const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
     if (closest !== undefined && closest[1] < 10) souls.splice(souls.indexOf(closest[0]), 1);
-}).setCriteria("You have already found that Fairy Soul!"), () => settings.fairyWaypoint !== 0);
+}).setCriteria("You have already found that Fairy Soul!"), () => Settings.fairyWaypoint !== 0);
 
 /**
  * Updates fairy soul array closer than set threshold to player.
@@ -48,11 +48,11 @@ registerWhen(register("step", () => {
         const y = parseFloat(fairy[2]);
         const z = parseFloat(fairy[3]) + 1;
 
-        if (Math.hypot(Player.getX() - x, Player.getZ() - z) < settings.fairyWaypoint) {
+        if (Math.hypot(Player.getX() - x, Player.getZ() - z) < Settings.fairyWaypoint) {
             soulWaypoints.push([x, y, z]);
         }
     });
-}).setFps(1), () => settings.fairyWaypoint !== 0);
+}).setFps(1), () => Settings.fairyWaypoint !== 0);
 
 /**
  * Updates the fairy soul array.

@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GREEN, DARK_RED, GREEN, RED, WHITE } from "../../utils/Constants";
 import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -59,7 +59,7 @@ registerWhen(register("step", () => {
     else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
 
     gardenOverlay.setMessage(gardenMessage);
-}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab);
+}).setFps(1), () => location.getWorld() === "Garden" && Settings.gardenTab);
 
 
 /**
@@ -85,9 +85,9 @@ registerWhen(register("step", () => {
     if (nextVisitor > 0) gardenMessage += ` Next Visitor: ${AQUA + formatTime(nextVisitor)}`;
     else gardenMessage += ` Next Visitor: ${RED + BOLD}Queue Full!`;
     gardenOverlay.setMessage(gardenMessage);
-}).setFps(1), () => settings.gardenTab);
+}).setFps(1), () => Settings.gardenTab);
 
 // Set next visitor time (assuming with 20% visitor reduction)
 registerWhen(register("chat", () => {
     nextVisitor = 720;
-}).setCriteria("${npc} has arrived on your Garden!"), () => settings.gardenTab);
+}).setCriteria("${npc} has arrived on your Garden!"), () => Settings.gardenTab);

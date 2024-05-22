@@ -1,14 +1,20 @@
+import Settings from "../../utils/Settings";
 import { GREEN, RED, YELLOW } from "../../utils/Constants";
 import { data } from "../../utils/Data";
 import { Overlay } from "../../utils/Overlay";
-import Settings from "../../utils/Settings";
 import { formatNumber, unformatNumber } from "../../utils/functions/format";
 import { getBazaar } from "../economy/Economy";
 import { getItemValue } from "../economy/ItemPrice";
 
 
 const profitExample =
-`TEST`;
+`§eProfit: §c-123.77k
+
+§9Enchanted Book: §a0
+§fEnchanted Book: §a0
+§dWither Essence §8x9: §a26.82k
+§dUndead Essence §8x10: §a5.99k
+§eCost: §c156.59k`;
 const profitOverlay = new Overlay("dungeonProfit", data.DL, "moveDP", profitExample, ["Catacombs", "Dungeon Hub"], "guiRender");
 
 const close = register("guiClosed", () => {
@@ -16,6 +22,9 @@ const close = register("guiClosed", () => {
     close.unregister();
 }).unregister();
 
+/**
+ * Sets the profit overlay message for the chest.
+ */
 function setChest() {
     const items = Player.getContainer().getItems();
     const bazaar = getBazaar();
@@ -56,6 +65,9 @@ function setChest() {
     profitOverlay.setMessage(message);
 }
 
+/**
+ * TBD at a later date if I feel like it :).
+ */
 function setCroesus() {
     const bazaar = getBazaar();
     const items = Player.getContainer().getItems();

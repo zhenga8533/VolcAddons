@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
@@ -128,7 +128,7 @@ ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${WHITE + data.totalEggs}/${data.maxEggs}
  ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
  ${YELLOW}Completion: ${WHITE + (data.totalEggs / 4.57).toFixed(2)}%`);
-}).setFps(1), () => settings.chocoDisplay);
+}).setFps(1), () => Settings.chocoDisplay);
 
 /**
  * Rabbit chat detection.
@@ -142,13 +142,13 @@ registerWhen(register("chat", (choco, mult) => {
     data.chocoMultiplier += parseFloat(mult);
     data.chocoProduction += parseInt(choco) * data.chocoMultiplier;
     data.totalEggs++;
-}).setCriteria("NEW RABBIT! +${choco} Chocolate and +${mult}x Chocolate per second!"), () => settings.chocoDisplay);
+}).setCriteria("NEW RABBIT! +${choco} Chocolate and +${mult}x Chocolate per second!"), () => Settings.chocoDisplay);
 
 registerWhen(register("chat", (mult) => {
     if (isNaN(mult)) return;
     data.chocoMultiplier += parseFloat(mult);
     data.totalEggs++;
-}).setCriteria("NEW RABBIT! +${mult}x Chocolate per second!"), () => settings.chocoDisplay);
+}).setCriteria("NEW RABBIT! +${mult}x Chocolate per second!"), () => Settings.chocoDisplay);
 
 
 /**
@@ -182,7 +182,7 @@ function findWorker() {
     // Tower calc
     const tower = items[39].getLore();
     const towerI = tower.findIndex(line => line === "§5§o§7Cost");
-    if (settings.rabbitHighlight === 1 && towerI !== 1) {
+    if (Settings.rabbitHighlight === 1 && towerI !== 1) {
         const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
         const towerValue = data.chocoProduction / baseMultiplier * 0.0125 / towerCost;
 
@@ -196,7 +196,7 @@ function findWorker() {
     // Jackrabbit calc
     const jackrabbit = items[42].getLore();
     const jackI = jackrabbit.findIndex(line => line === "§5§o§7Cost");
-    if (settings.rabbitHighlight !== 3 && jackI !== -1) {
+    if (Settings.rabbitHighlight !== 3 && jackI !== -1) {
         const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));
         const jackValue = data.chocoProduction / baseMultiplier * 0.01 / jackCost;
 
@@ -250,7 +250,7 @@ registerWhen(register("guiOpened", () => {
         if (Player.getContainer().getName() !== "Chocolate Factory") return;
 
         updateChocolate.register();
-        if (settings.rabbitHighlight) {
+        if (Settings.rabbitHighlight) {
             findWorker();
             coachFind.register();
             towerFind.register();
@@ -259,7 +259,7 @@ registerWhen(register("guiOpened", () => {
             chocomatte.register();
         }
     });
-}), () => settings.rabbitHighlight !== 0 || settings.chocoDisplay);
+}), () => Settings.rabbitHighlight !== 0 || Settings.chocoDisplay);
 
 
 /**
@@ -282,24 +282,24 @@ let looted = {
 registerWhen(register("chat", (type) => {
     looted[type] = true;
 }).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"),
-() => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+() => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     looted[type] = true;
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"),
-() => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+() => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     looted[type] = false;
 }).setCriteria("HOPPITY'S HUNT A Chocolate ${type} Egg has appeared!"),
-() => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+() => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("tick", () => {
     const time = World.getTime() % 24_000;
     if (Math.abs(time - 1_000) < 4) looted.Breakfast = false;
     else if (Math.abs(time - 8_000) < 4) looted.Lunch = false;
     else if (Math.abs(time - 15_000) < 4) looted.Dinner = false;
-}), () => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+}), () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 register("worldUnload", () => {
     looted = {
@@ -321,7 +321,7 @@ registerWhen(register("step", () => {
             if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()]);
         }
     });
-}).setFps(1), () => settings.chocoWaypoints);
+}).setFps(1), () => Settings.chocoWaypoints);
 
 
 /**
@@ -331,7 +331,7 @@ let chocoType = "";
 let chocoLoc = "";
 
 const announceOnClose = register("guiClosed", () => {
-    Client.scheduleTask(5, () => announceMob(settings.chocoAlert, chocoType, Player.getX(), Player.getY(), Player.getZ(), chocoLoc));
+    Client.scheduleTask(5, () => announceMob(Settings.chocoAlert, chocoType, Player.getX(), Player.getY(), Player.getZ(), chocoLoc));
     announceOnClose.unregister();
 }).unregister();
 
@@ -339,7 +339,7 @@ registerWhen(register("chat", (type, loc) => {
     chocoType = type + " Egg";
     chocoLoc = convertToTitleCase(loc);
     announceOnClose.register();
-}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoAlert !== 0);
+}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => Settings.chocoAlert !== 0);
 
 
 /**
@@ -367,8 +367,8 @@ registerWhen(register("step", () => {
  ${YELLOW}Breakfast: ${WHITE + formatTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"}
  ${YELLOW}Lunch: ${WHITE + formatTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"}
  ${YELLOW}Dinner: ${WHITE + formatTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"}`);
-}).setFps(1), () => settings.eggTimers && location.getSeason() === "Spring");
+}).setFps(1), () => Settings.eggTimers && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10);
-}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && location.getSeason() === "Spring");
+}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => Settings.eggTimers && location.getSeason() === "Spring");

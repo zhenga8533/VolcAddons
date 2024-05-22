@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -44,8 +44,8 @@ registerWhen(register("chat", (player, _, x, y, z) => {
     delay(() => {
         const waypoints = chatWaypoints.getWaypoints();
         if (waypoints.length) waypoints.shift();
-    }, settings.drawWaypoint * time);
-}).setCriteria("${player}:${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint !== 0);
+    }, Settings.drawWaypoint * time);
+}).setCriteria("${player}:${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => Settings.drawWaypoint !== 0);
 
 /**
  * Allows user to create waypoints via command.

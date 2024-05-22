@@ -1,7 +1,7 @@
 // Utility Modules
 import "./utils/DevTils";
 import socket from "./utils/Socket";
-import settings from "./utils/Settings";
+import Settings from "./utils/Settings";
 import toggles from "./utils/Toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/Constants";
 import { data, resetGUI } from "./utils/Data";
@@ -11,8 +11,8 @@ import { delay } from "./utils/ThreadTils";
 import { getLatestReleaseVersion } from "./utils/UpdateTils";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
-for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
-if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
+for (const key in Settings) if (CHANGED_SETTINGS.has(key) && typeof Settings[key] !== "number") Settings[key] = 0;
+if (typeof Settings.partyCommands !== "boolean") Settings.partyCommands = false;
 
 // General Features
 import "./features/general/Autocorrect";
@@ -198,9 +198,9 @@ register("guiKey", (_, keyCode, gui) => {
  */
 function openSettings() {
     try {
-        settings.openGUI();
+        Settings.openGUI();
     } catch (err) {
-        ChatLib.chat(`${LOGO + RED}Error opening settings... Please run '/ct reload' to fix!`);
+        ChatLib.chat(`${LOGO + RED}Error opening Settings... Please run '/ct reload' to fix!`);
         register("gameUnload", () => {
             FileLib.delete("VolcAddons", "config.toml");
         }).setPriority(Priority.LOWEST);
@@ -456,6 +456,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
     }
 }).setName("va", true).setAliases("volcaddons", "volc", "itee");
+
 
 /**
  * Final imports

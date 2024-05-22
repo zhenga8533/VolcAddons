@@ -1,6 +1,6 @@
 import location from "../../utils/Location";
 import mayor from "../../utils/Mayor";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/Constants";
 import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -23,7 +23,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
 
     echo = true;
     delay(() => echo = false, 3000);
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);
 
 /**
  * Detect for mytholigical burrows
@@ -52,8 +52,8 @@ registerWhen(register("spawnParticle", (particle, type) => {
                 burrows.push(xyz);
         
                 // Announce burrow depending on settings
-                if (settings.burrowDetect === 2 || settings.burrowDetect === 4) playSound(AMOGUS, 100);
-                if (settings.burrowDetect === 3 || settings.burrowDetect === 4) ChatLib.chat(`${LOGO + WHITE}Burrow Detected at ${GRAY}x: ${x}, y: ${y}, z: ${z}!`);
+                if (Settings.burrowDetect === 2 || Settings.burrowDetect === 4) playSound(AMOGUS, 100);
+                if (Settings.burrowDetect === 3 || Settings.burrowDetect === 4) ChatLib.chat(`${LOGO + WHITE}Burrow Detected at ${GRAY}x: ${x}, y: ${y}, z: ${z}!`);
             }
             break;
         case ("CRIT_MAGIC"):
@@ -63,7 +63,7 @@ registerWhen(register("spawnParticle", (particle, type) => {
             if (closest[1] < 3) waypoints[waypoints.indexOf(closest[0])][0] = `§cMob`;
             break;
     }
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);
 
 /**
  * Events to remove burrows from list
@@ -73,9 +73,9 @@ registerWhen(register("chat", () => {
     const waypoints = burrows.getWaypoints();
     if (closest !== undefined) Client.scheduleTask(2, () => waypoints.splice(waypoints.indexOf(closest[0]), 1));
 }).setCriteria("You ${completed} Griffin ${burrow}! (${x}/4)"),
-() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);
 
 registerWhen(register("chat", () => {
     burrows.clear();
 }).setCriteria(" ☠ You ${died}."),
-() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);

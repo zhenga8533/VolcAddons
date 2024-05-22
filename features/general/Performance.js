@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import toggles from "../../utils/Toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { Overlay } from "../../utils/Overlay";
@@ -69,7 +69,7 @@ function sendPingRequest() {
 };
 registerWhen(register("step", () => {
     sendPingRequest();
-}).setDelay(3), () => settings.serverStatus || toggles.statusCommand);
+}).setDelay(3), () => Settings.serverStatus || toggles.statusCommand);
 
 /**
  * Calculates the ping (latency) based on the difference between the current time
@@ -196,7 +196,7 @@ registerWhen(register('tick', () => {
     }
 
     statusOverlay.setMessage(statusMessage.substring(1));
-}), () => settings.serverStatus || toggles.statusCommand);
+}), () => Settings.serverStatus || toggles.statusCommand);
 
 /**
  * Output status to user chat when user requests via command args.
@@ -274,14 +274,14 @@ export function getStatus(status) {
  */
 registerWhen(register("renderEntity", (entity, _, __, event) => {
     const distance = entity.distanceTo(Player.asPlayerMP());
-    if (settings.hideFarEntity !== 0 && distance >= settings.hideFarEntity)
+    if (Settings.hideFarEntity !== 0 && distance >= Settings.hideFarEntity)
         cancel(event);
-    if (settings.hideCloseEntity !== 0 && distance <= settings.hideCloseEntity && entity.name !== Player.name && isPlayer(entity))
+    if (Settings.hideCloseEntity !== 0 && distance <= Settings.hideCloseEntity && entity.name !== Player.name && isPlayer(entity))
         cancel(event);
 }).setPriority(Priority.LOWEST), () => {
-    if (settings.hideFarEntity === 0 && settings.hideCloseEntity === 0) return false;
+    if (Settings.hideFarEntity === 0 && Settings.hideCloseEntity === 0) return false;
     const world = location.getWorld()?.toLowerCase() ?? "";
-    const worlds = settings.hideWorlds.toLowerCase().split(", ");
+    const worlds = Settings.hideWorlds.toLowerCase().split(", ");
     return worlds[0] === "" || worlds.includes(world);
 });
 
@@ -291,4 +291,4 @@ registerWhen(register("renderEntity", (entity, _, __, event) => {
  */
 registerWhen(register("spawnParticle", (particle, type, event) => {
     cancel(event);
-}).setPriority(Priority.LOWEST), () => settings.hideParticles);
+}).setPriority(Priority.LOWEST), () => Settings.hideParticles);

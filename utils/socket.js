@@ -1,4 +1,4 @@
-import settings from "./Settings";
+import Settings from "./Settings";
 import { DARK_GRAY, GRAY, LOGO, RED } from "./Constants";
 import { NonPooledThread, delay } from "./ThreadTils";
 
@@ -27,7 +27,7 @@ class WebSocket {
      * https://github.com/Soopyboo32/soopyApis/tree/master
      */
     constructor() {
-        if (!settings.socketToggle) return;
+        if (!Settings.socketToggle) return;
 
         console.log("[VolcAddons] Connecting to socket server...");
         new NonPooledThread(() => {

@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BOLD, BUTTON_PRESETS, DARK_GRAY, DARK_GREEN, DataFlavor, GOLD, GREEN, GuiChest, GuiInventory, GuiTextField, InventoryBasic, LOGO, RED, Toolkit, UNDERLINE, YELLOW } from "../../utils/Constants";
 import { data } from "../../utils/Data";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -170,8 +170,8 @@ export class Button {
             18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
         // Draw box
-        const boxColor = this.#hovered ? BOX_HIGHLIGHT : COLOR_SCHEMES[settings.containerButtons - 1][0];
-        const borderColor = this.#hovered ? BORDER_HIGHLIGHT : COLOR_SCHEMES[settings.containerButtons - 1][1];
+        const boxColor = this.#hovered ? BOX_HIGHLIGHT : COLOR_SCHEMES[Settings.containerButtons - 1][0];
+        const borderColor = this.#hovered ? BORDER_HIGHLIGHT : COLOR_SCHEMES[Settings.containerButtons - 1][1];
         drawBox(x, y, 100, 16, 16, boxColor, borderColor);
         this.#item.draw(x, y, 1, 100);
     }
@@ -326,10 +326,10 @@ const inputKey = register("guiKey", (char, keyCode, _, event) => {
 }).unregister();
 
 const inputRender = register("guiRender", () => {
-    Renderer.drawString(`${BOLD}Editing: ${editing.id}`, commandInput.field_146209_f, commandInput.field_146210_g - 20, settings.textShadow);
-    Renderer.drawString("Command (ex. \"p list\"):", commandInput.field_146209_f, commandInput.field_146210_g - 10, settings.textShadow);
+    Renderer.drawString(`${BOLD}Editing: ${editing.id}`, commandInput.field_146209_f, commandInput.field_146210_g - 20, Settings.textShadow);
+    Renderer.drawString("Command (ex. \"p list\"):", commandInput.field_146209_f, commandInput.field_146210_g - 10, Settings.textShadow);
     commandInput.func_146194_f();
-    Renderer.drawString("Icon ID (ex. \"redstone_block\"): ", iconInput.field_146209_f, iconInput.field_146210_g - 10, settings.textShadow);
+    Renderer.drawString("Icon ID (ex. \"redstone_block\"): ", iconInput.field_146209_f, iconInput.field_146210_g - 10, Settings.textShadow);
     iconInput.func_146194_f();
 }).unregister();
 
@@ -393,7 +393,7 @@ function setButtons(type) {
         // Set all inv edit buttons TRBL
         createButtons(0, 9, 1, "top");
         createButtons(0, 9, 1, "bottom");
-        createButtons(settings.equipDisplay ? 36 : 0, 99, 9, "left");
+        createButtons(Settings.equipDisplay ? 36 : 0, 99, 9, "left");
         createButtons(0, 99, 9, "right");
         if (setInv) {
             createButtons(0, 5, 1, "inv1");
@@ -462,7 +462,7 @@ registerWhen(register("guiOpened", (event) => {
         close.register();
         render.register();
     });
-}), () => settings.containerButtons !== 0);
+}), () => Settings.containerButtons !== 0);
 
 /**
  * Persistant buttons.

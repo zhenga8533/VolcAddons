@@ -1,4 +1,4 @@
-import settings from '../../utils/Settings';
+import Settings from '../../utils/Settings';
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, RESET, UNDERLINE, WHITE } from '../../utils/Constants';
 import { commafy, formatNumber } from '../../utils/functions/format';
 import { getBazaar } from './Economy';
@@ -111,19 +111,19 @@ ${AQUA}Sell Offer + Insta Buy: ${WHITE + commafy(p4)}\n`);
                 "REAPER": (actions / (458182 / eyedrop)).toFixed(2)
             }
             const profit = {
-                "GABAGOOL": drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1 - settings.priceType],
-                "CHILI": drops.CHILI * bazaar.CHILI_PEPPER[1 - settings.priceType],
-                "VERTEX": drops.VERTEX * bazaar.INFERNO_VERTEX[1 - settings.priceType],
-                "APEX": drops.APEX * bazaar.INFERNO_APEX[1 - settings.priceType],
-                "REAPER": drops.REAPER * bazaar.REAPER_PEPPER[1 - settings.priceType]
+                "GABAGOOL": drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1 - Settings.priceType],
+                "CHILI": drops.CHILI * bazaar.CHILI_PEPPER[1 - Settings.priceType],
+                "VERTEX": drops.VERTEX * bazaar.INFERNO_VERTEX[1 - Settings.priceType],
+                "APEX": drops.APEX * bazaar.INFERNO_APEX[1 - Settings.priceType],
+                "REAPER": drops.REAPER * bazaar.REAPER_PEPPER[1 - Settings.priceType]
             };
 
             // Fuel + Net Gain
             const fuel = minions * (
-                bazaar.HYPERGOLIC_GABAGOOL[settings.priceType] + 
-                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[settings.priceType] +
-                2 * bazaar.INFERNO_FUEL_BLOCK[settings.priceType] +
-                bazaar.CAPSAICIN_EYEDROPS_NO_CHARGES[settings.priceType]
+                bazaar.HYPERGOLIC_GABAGOOL[Settings.priceType] + 
+                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[Settings.priceType] +
+                2 * bazaar.INFERNO_FUEL_BLOCK[Settings.priceType] +
+                bazaar.CAPSAICIN_EYEDROPS_NO_CHARGES[Settings.priceType]
             );
             const net = Object.values(profit).reduce((a, c) => a + c, 0) - fuel;
 
@@ -143,11 +143,11 @@ ${GREEN}Total Profit: ${RESET + commafy(net)}\n${PSA}`);
             // Heavy 15x
             infernoAction /= 16;
             const gabagool = minions * 86400 / (2 * infernoAction);
-            const heavyGabagool = gabagool * bazaar.CRUDE_GABAGOOL[1 - settings.priceType];
+            const heavyGabagool = gabagool * bazaar.CRUDE_GABAGOOL[1 - Settings.priceType];
             const heavyPrice = minions * (
-                bazaar.HEAVY_GABAGOOL[settings.priceType] +
-                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[settings.priceType] +
-                2 * bazaar.INFERNO_FUEL_BLOCK[settings.priceType]
+                bazaar.HEAVY_GABAGOOL[Settings.priceType] +
+                6 * bazaar.CRUDE_GABAGOOL_DISTILLATE[Settings.priceType] +
+                2 * bazaar.INFERNO_FUEL_BLOCK[Settings.priceType]
             );
             const heavyProfit = heavyGabagool - heavyPrice;
 
@@ -160,10 +160,10 @@ ${GREEN}Total Profit: ${RESET + commafy(heavyProfit)}\n${PSA}`);
             break;
         case "vampire":
         case "vamp":
-            const hemovibe = [(vampAction).toFixed(4), vampAction*bazaar.HEMOVIBE[1 - settings.priceType]];
-            const hemoglass = [(hemovibe[0]/160).toFixed(4), hemovibe[0]/160*bazaar.HEMOGLASS[1 - settings.priceType]];
-            const hemobomb = [(hemoglass[0]/15).toFixed(4), hemoglass[0]/15*bazaar.HEMOBOMB[1 - settings.priceType]];
-            const vampCost = bazaar.HYPER_CATALYST[settings.priceType] * 4 * minions;
+            const hemovibe = [(vampAction).toFixed(4), vampAction*bazaar.HEMOVIBE[1 - Settings.priceType]];
+            const hemoglass = [(hemovibe[0]/160).toFixed(4), hemovibe[0]/160*bazaar.HEMOGLASS[1 - Settings.priceType]];
+            const hemobomb = [(hemoglass[0]/15).toFixed(4), hemoglass[0]/15*bazaar.HEMOBOMB[1 - Settings.priceType]];
+            const vampCost = bazaar.HYPER_CATALYST[Settings.priceType] * 4 * minions;
             const vampProfit = hemovibe[1] - vampCost;
             
             ChatLib.chat(

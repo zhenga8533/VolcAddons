@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { YELLOW } from "../../utils/Constants";
 import { unformatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -76,4 +76,4 @@ registerWhen(register("guiOpened", () => {
         tooltip.register();
         close.register();
     });
-}), () => settings.calendarTime);
+}), () => Settings.calendarTime);

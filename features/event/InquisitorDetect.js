@@ -1,6 +1,6 @@
 import location from "../../utils/Location";
 import mayor from "../../utils/Mayor";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BOLD, GOLD, WHITE, RESET, RED, PLAYER_CLASS, GREEN, LOGO } from "../../utils/Constants";
 import { data } from "../../utils/Data";
 import { announceMob } from "../../utils/functions/misc";
@@ -50,7 +50,7 @@ export function updateInqCounter(inqSpawned) {
     if (session.inqs) session.average = Math.round(session.burrows / session.inqs);
 
     // Update HUD
-    if (mayor.getPerks().has("Mythological Ritual")) counterOverlay.setMessage(settings.inqCounter === 1 ?
+    if (mayor.getPerks().has("Mythological Ritual")) counterOverlay.setMessage(Settings.inqCounter === 1 ?
 `${GOLD + BOLD}Total Inqs: ${RESET + data.inqSession.inqs}
 ${GOLD + BOLD}Total Burrows: ${RESET + data.inqSession.burrows}
 ${GOLD + BOLD}Burrows Since: ${RESET + data.inqSession.last}
@@ -81,9 +81,9 @@ register("command", () => {
  */
 registerWhen(register("chat", (_, mob) => {
     if (mob === "Minos Inquisitor") {
-        announceMob(settings.inqAlert, "Minos Inquisitor", Player.getX(), Player.getY(), Player.getZ());
-        if (settings.inqCounter !== 0) updateInqCounter(true);
-    } else if (settings.inqCounter !== 0) updateInqCounter(false);
+        announceMob(Settings.inqAlert, "Minos Inquisitor", Player.getX(), Player.getY(), Player.getZ());
+        if (Settings.inqCounter !== 0) updateInqCounter(true);
+    } else if (Settings.inqCounter !== 0) updateInqCounter(false);
 }).setCriteria("${wow}! You dug out a ${mob}!"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual"));
 
 /**
@@ -106,4 +106,4 @@ registerWhen(register("step", () => {
         if (foundDead) Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${RED}DEAD!`, "", 0, 50, 10);
         else Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
     }
-}).setFps(2), () => location.getWorld() === "Hub" && settings.detectInq && mayor.getPerks().has("Mythological Ritual"));
+}).setFps(2), () => location.getWorld() === "Hub" && Settings.detectInq && mayor.getPerks().has("Mythological Ritual"));

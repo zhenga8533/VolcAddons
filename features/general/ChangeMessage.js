@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
 
@@ -79,7 +79,7 @@ registerWhen(register("messageSent", (message, event) => {
         ChatLib.say(message);
         cancel(event);
     }
-}), () => settings.enableEmotes);
+}), () => Settings.enableEmotes);
 
 
 /**

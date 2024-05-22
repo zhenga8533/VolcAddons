@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { EntityArmorStand, EntityWither } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import Waypoint from "../../utils/Waypoint";
@@ -8,15 +8,15 @@ import Waypoint from "../../utils/Waypoint";
 /**
  * Variables used to detect and store star mob data.
  */
-const starMobs = new Waypoint([0, 0, 0], 3, settings.starDetect === 2, false, false);
+const starMobs = new Waypoint([0, 0, 0], 3, Settings.starDetect === 2, false, false);
 const starHighlight = new Set();
 
 /**
  * Sets the color and box of the star mobs.
  */
 function setStar() {
-    const c = settings.starColor;
-    starMobs.setBox(settings.starDetect === 2);
+    const c = Settings.starColor;
+    starMobs.setBox(Settings.starDetect === 2);
     starMobs.setColor([c.getRed()/255, c.getGreen()/255, c.getBlue()/255]);
 }
 setStar();
@@ -56,13 +56,13 @@ registerWhen(register("step", () => {
             starHighlight.add(closestEntity.entity?.func_145782_y());
         }
     });
-}).setFps(2), () => location.getWorld() === "Catacombs" && settings.starDetect !== 0);
+}).setFps(2), () => location.getWorld() === "Catacombs" && Settings.starDetect !== 0);
 
 /**
  * Rendering for colored star mobs.
  */
 registerWhen(register("renderEntity", (entity) => {
     if (!starHighlight.has(entity.getEntity().func_145782_y())) return;
-    const c = settings.starColor;
+    const c = Settings.starColor;
     Tessellator.colorize(c.getRed()/255, c.getGreen()/255, c.getBlue()/255, 1);
-}), () => location.getWorld() === "Catacombs" && settings.starDetect === 1);
+}), () => location.getWorld() === "Catacombs" && Settings.starDetect === 1);

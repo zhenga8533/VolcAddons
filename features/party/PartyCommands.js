@@ -1,7 +1,7 @@
 import axios from "../../../axios";
 import { request } from "../../../requestV2";
 import party from "../../utils/Party";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import socket from "../../utils/Socket";
 import toggles from "../../utils/Toggles";
 import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
@@ -278,7 +278,7 @@ export function executeCommand(name, args, sendTo) {
             if (!toggles.helpCommand || !sendTo) return;
 
             ChatLib.command(`${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, xyz, help> ${randID}`);
-            if (party.getLeader() && settings.leaderCommands)
+            if (party.getLeader() && Settings.leaderCommands)
                 delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream> ${randID}`), 690);
             break;
         default:
@@ -293,7 +293,7 @@ export function executeCommand(name, args, sendTo) {
     } }, 690);
     
     // LEADER COMMANDS
-    if (!sendTo || (sendTo === "pc" && party.getLeader() && settings.leaderCommands && Player.getName() !== name)) {
+    if (!sendTo || (sendTo === "pc" && party.getLeader() && Settings.leaderCommands && Player.getName() !== name)) {
         switch (command) {
             case "mute":
                 if (!toggles.warpCommand) return;
@@ -360,7 +360,7 @@ export function executeCommand(name, args, sendTo) {
     }
     
     // MODERATOR COMMANDS
-    if (settings.leaderCommands && toggles.inviteCommand && (command === "inv" || command === "invite")) {
+    if (Settings.leaderCommands && toggles.inviteCommand && (command === "inv" || command === "invite")) {
         if (data.whitelist.includes(name.toLowerCase())) ChatLib.command(`p ${name}`);
         else ChatLib.command(`r You are not in the whitelist! ${randID}`);
     }
@@ -379,13 +379,13 @@ data.prefixlist.forEach(prefix => {
     registerWhen(register("chat", (player, message) => {
         if (onCD) return;
         executeCommand(getPlayerName(player), message.split(" "), "pc");
-    }).setCriteria(`Party > ${playerRegex}: ${prefix + messageRegex}`), () => settings.partyCommands && toggles.partyCommands);
+    }).setCriteria(`Party > ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && toggles.partyCommands);
     registerWhen(register("chat", (player, message) => {
         if (onCD) return;
         executeCommand(getGuildName(player), message.split(" "), "gc");
-    }).setCriteria(`Guild > ${playerRegex}: ${prefix + messageRegex}`), () => settings.partyCommands && toggles.guildCommands);
+    }).setCriteria(`Guild > ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && toggles.guildCommands);
     registerWhen(register("chat", (player, message) => {
         if (onCD) return;
         executeCommand(getPlayerName(player), message.split(" "), "r");
-    }).setCriteria(`From ${playerRegex}: ${prefix + messageRegex}`), () => settings.partyCommands && toggles.dmCommands);
+    }).setCriteria(`From ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && toggles.dmCommands);
 });

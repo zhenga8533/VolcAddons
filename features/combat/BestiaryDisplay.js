@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { formatTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
@@ -69,13 +69,13 @@ registerWhen(register("guiOpened", () => {
         setLevels.register();
         setHighlight.register();
     });
-}), () => settings.bestiaryGUI);
+}), () => Settings.bestiaryGUI);
 registerWhen(register("guiClosed", () => {
     setLevels.unregister();
     setHighlight.unregister();
     bestiaryData[0] = [];
     bestiaryData[1] = [];
-}), () => settings.bestiaryGUI);
+}), () => Settings.bestiaryGUI);
 
 
 /**
@@ -169,4 +169,4 @@ registerWhen(register("step", () => {
     });
 
     bestiaryOverlay.setMessage(message);
-}).setFps(1), () => settings.bestiaryCounter);
+}).setFps(1), () => Settings.bestiaryCounter);

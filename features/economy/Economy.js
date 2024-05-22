@@ -1,5 +1,5 @@
 import request from "../../../requestV2";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { GREEN, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";

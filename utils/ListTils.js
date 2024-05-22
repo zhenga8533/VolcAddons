@@ -1,4 +1,4 @@
-import settings from "./Settings";
+import Settings from "./Settings";
 import { AQUA, DARK_AQUA, DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./Constants";
 import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions/format";
 import { updateAuction } from "../features/economy/Economy";
@@ -165,7 +165,7 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
     else if (listName === "valuelist") updateAuction();
     else if (listName === "widgetlist") updateWidgetList(); 
     else if (listName === "prefixlist") ChatLib.chat(`${LOGO + GREEN}Please use ${AQUA}/ct load ${GREEN}to reload registers!`);
-    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+    setRegisters(off = Settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 }
 
 /**

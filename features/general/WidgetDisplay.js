@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, GREEN } from "../../utils/Constants";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -44,4 +44,4 @@ registerWhen(register("step", () => {
         while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) message += '\n' + tablist[index++];
         widgetOverlays[widget].setMessage(message);
     });
-}).setFps(1), () => settings.widgetDisplay);
+}).setFps(1), () => Settings.widgetDisplay);

@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BLUE, BOLD, DARK_BLUE, DARK_RED, GOLEM_CLASS, GUARDIAN_CLASS, RED, WHITE } from "../../utils/Constants";
 import { announceMob } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -11,13 +11,13 @@ import Waypoint from "../../utils/Waypoint";
  * Announce to party/all chat whenever player spawns a mythic lava creature.
  */
 registerWhen(register("chat", () => {
-    announceMob(settings.mythicLavaAnnounce, "Lord Jawbus", Player.getX(), Player.getY(), Player.getZ());
+    announceMob(Settings.mythicLavaAnnounce, "Lord Jawbus", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("You have angered a legendary creature... Lord Jawbus has arrived."),
-() => location.getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
+() => location.getWorld() === "Crimson Isle" && Settings.mythicLavaAnnounce !== 0);
 registerWhen(register("chat", () => {
-    announceMob(settings.mythicLavaAnnounce, "Thunder", Player.getX(), Player.getY(), Player.getZ());
+    announceMob(Settings.mythicLavaAnnounce, "Thunder", Player.getX(), Player.getY(), Player.getZ());
 }).setCriteria("You hear a massive rumble as Thunder emerges."),
-() => location.getWorld() === "Crimson Isle" && settings.mythicLavaAnnounce !== 0);
+() => location.getWorld() === "Crimson Isle" && Settings.mythicLavaAnnounce !== 0);
 
 /**
  * Detects if any mythic lava creatures are near the player.
@@ -56,4 +56,4 @@ registerWhen(register("step", () => {
         if (foundDead) Client.Companion.showTitle(`${DARK_RED + BOLD}JAWBUS ${RED}DEAD!`, "", 0, 50, 10);
         else Client.Companion.showTitle(`${DARK_RED + BOLD}JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5);
     }
-}).setFps(2), () => location.getWorld() === "Crimson Isle" && settings.mythicLavaDetect);
+}).setFps(2), () => location.getWorld() === "Crimson Isle" && Settings.mythicLavaDetect);

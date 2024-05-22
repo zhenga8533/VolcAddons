@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, DARK_RED, GOLD, GREEN, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/Overlay";
@@ -89,7 +89,7 @@ function updateProfitTracker(openedChest) {
     kuudraSession.rate = kuudraSession.profit / kuudraSession.time * 3600;
     data.kuudraSession.rate = kuudraSession.profit / kuudraSession.time * 3600;
 
-    const profitView = settings.kuudraProfitTracker === 1 ? data.kuudraSession : kuudraSession;
+    const profitView = Settings.kuudraProfitTracker === 1 ? data.kuudraSession : kuudraSession;
     coinageOverlay.setMessage(
 `${DARK_RED + BOLD}Profit: ${WHITE + formatNumber(profitView.profit.toFixed(0))} ¢
 ${DARK_RED + BOLD}Chests: ${WHITE + commafy(profitView.chests)} chests
@@ -106,7 +106,7 @@ registerWhen(register("guiMouseClick", (x, y, button, gui) => {
     downtime = 0;
     updateProfitTracker(true);
     chestOpened = true;
-}), () => location.getWorld() === "Kuudra" && settings.kuudraProfitTracker !== 0);
+}), () => location.getWorld() === "Kuudra" && Settings.kuudraProfitTracker !== 0);
 
 /**
  * Track time and downtime of runs.
@@ -115,10 +115,10 @@ registerWhen(register("step", () => {
     downtime++;
     if (downtime >= 300) return;
     updateProfitTracker(false);
-}).setFps(1), () => settings.kuudraProfitTracker !== 0);
+}).setFps(1), () => Settings.kuudraProfitTracker !== 0);
 registerWhen(register("chat", () => {
     downtime = 0;
-}).setCriteria("[NPC] Elle: Talk with me to begin!"), () => settings.kuudraProfitTracker !== 0);
+}).setCriteria("[NPC] Elle: Talk with me to begin!"), () => Settings.kuudraProfitTracker !== 0);
 
 /**
  * Updates Kuudra chest profit data and overlay on chest open.
@@ -135,7 +135,7 @@ registerWhen(register("guiOpened", () => {
         secondary = bazaar[secondary.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id")]?.[0] || getItemValue(secondary);
         let essence = container.getStackInSlot(14).getNBT().toObject().tag.display.Name;
         essence = parseInt(essence.slice(essence.indexOf('x') + 1)) * bazaar.ESSENCE_CRIMSON[0];
-        const teeth = settings.maxChili ? (bazaar.ENCHANTMENT_TABASCO_3[0] - 64*bazaar.CHILI_PEPPER[1])/6 * Math.ceil(tier / 2) : 0;
+        const teeth = Settings.maxChili ? (bazaar.ENCHANTMENT_TABASCO_3[0] - 64*bazaar.CHILI_PEPPER[1])/6 * Math.ceil(tier / 2) : 0;
         const cost = KEY_COST[tier - 1][0] + KEY_COST[tier - 1][1] * Math.min(bazaar.ENCHANTED_RED_SAND[1], bazaar.ENCHANTED_MYCELIUM[1]);
         const value = primary + secondary + essence + teeth;
         chestProfit = value - cost;

@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { Json } from "../../utils/Json";
@@ -48,11 +48,11 @@ registerWhen(register("step", () => {
         const y = parseFloat(enigma[4]);
         const z = parseFloat(enigma[5]) + 1;
 
-        if (Math.hypot(Player.getX() - x, Player.getZ() - z) < settings.enigmaWaypoint) {
+        if (Math.hypot(Player.getX() - x, Player.getZ() - z) < Settings.enigmaWaypoint) {
             soulWaypoints.push([x, y, z]);
         }
     });
-}).setFps(1), () => location.getWorld() === "The Rift" && settings.enigmaWaypoint !== 0);
+}).setFps(1), () => location.getWorld() === "The Rift" && Settings.enigmaWaypoint !== 0);
 
 /**
  * Updates the enigma soul array.

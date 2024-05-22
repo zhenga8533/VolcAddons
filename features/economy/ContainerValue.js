@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, YELLOW } from "../../utils/Constants";
 import { formatNumber, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -47,12 +47,12 @@ function setMessage(itemValues) {
         displayedItems++;
 
         // Display only the top containerValue items
-        if (displayedItems === settings.containerValue) {
-            const remainingItems = sortedItems.length - settings.containerValue;
+        if (displayedItems === Settings.containerValue) {
+            const remainingItems = sortedItems.length - Settings.containerValue;
             if (remainingItems > 0) {
                 overlayMessage += `\n${GRAY + ITALIC}+ ${remainingItems} more items...`;
             }
-        } else if (displayedItems < settings.containerValue) {
+        } else if (displayedItems < Settings.containerValue) {
             overlayMessage += `\n${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}`;
         }
     }
@@ -81,7 +81,7 @@ function sackValue(container) {
 
         // Get value and count from item stack
         let id = stack.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
-        let value = bazaar?.[id]?.[settings.priceType] ?? 0;
+        let value = bazaar?.[id]?.[Settings.priceType] ?? 0;
         let count = stack.getLore().find(line => line.startsWith("§5§o§7Stored:"))
             ?.removeFormatting()
             ?.match(/Stored: (\d+(?:,\d{3})*(?:\.\d+)?)/)
@@ -114,7 +114,7 @@ function composterValue(container) {
     const noCrop = crop / (4000 * (1 - costUpgrade/100));
     const noFuel = fuel / (2000 * (1 - costUpgrade/100));
     const composting = Math.min(noCrop, noFuel) * (1 + 0.03 * data.composterUpgrades["Multi Drop"]);
-    const value = bazaar?.["COMPOST"]?.[settings.priceType] ?? 0;
+    const value = bazaar?.["COMPOST"]?.[Settings.priceType] ?? 0;
 
     // Set composting values
     const itemValues = {
@@ -281,4 +281,4 @@ registerWhen(register("guiOpened", (event) => {
 
     mouse.register();
     close.register();
-}), () => settings.containerValue !== 0);
+}), () => Settings.containerValue !== 0);

@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LOGO, WHITE } from "../../utils/Constants";
 import { convertToTitleCase } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -123,11 +123,11 @@ function updateCounter(fish) {
  */
 registerWhen(register("chat", (fish) => {
     updateCounter(fish);
-}).setCriteria("TROPHY FISH! You caught a ${fish}."), () => location.getWorld() === "Crimson Isle" && settings.trophyCounter);
+}).setCriteria("TROPHY FISH! You caught a ${fish}."), () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter);
 
 registerWhen(register("chat", (fish) => {
     updateCounter(fish);
-}).setCriteria("NEW DISCOVERY: ${fish}"), () => location.getWorld() === "Crimson Isle" && settings.trophyCounter);
+}).setCriteria("NEW DISCOVERY: ${fish}"), () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter);
 
 /**
  * Update time for session view
@@ -136,4 +136,4 @@ registerWhen(register("step", () => {
     if (getPaused()) return;
     if (Object.keys(sessionTrophy).length !== 0) timePassed++;
     updateMessage();
-}).setFps(1), () => location.getWorld() === "Crimson Isle" && settings.trophyCounter);
+}).setFps(1), () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter);

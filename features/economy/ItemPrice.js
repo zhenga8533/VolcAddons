@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BLACK, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, NBTTagString, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -192,7 +192,7 @@ export function getItemValue(item, save=true) {
 
                 crimsonEssence += upgradeArray.slice(0, crimsonStars + 1).reduce((acc, value) => acc + value, 0);
             }
-            const crimsonValue = crimsonEssence * (bazaar?.ESSENCE_CRIMSON?.[settings.priceType] ?? 1);
+            const crimsonValue = crimsonEssence * (bazaar?.ESSENCE_CRIMSON?.[Settings.priceType] ?? 1);
             value += crimsonValue;
             if (save) valueMessage += `- ${AQUA}Essence Upgrades: ${GREEN}+${formatNumber(crimsonValue)}\n`;
         } else {
@@ -214,7 +214,7 @@ export function getItemValue(item, save=true) {
                     savedValues[itemUUID] = [value, valueMessage];
                 }
             } else {  // Bazaar Value
-                value = (bazaar?.[itemID]?.[settings.priceType] ?? 0) * amount;
+                value = (bazaar?.[itemID]?.[Settings.priceType] ?? 0) * amount;
                 const order = (bazaar?.[itemID]?.[0] ?? 0) * amount;
                 const insta = (bazaar?.[itemID]?.[1] ?? 0) * amount;
                 if (order !== 0 || insta !== 0 && save) {
@@ -238,7 +238,7 @@ export function getItemValue(item, save=true) {
     }
 
     // Reforge Value
-    const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[settings.priceType] ?? 0;
+    const reforgeValue = bazaar?.[REFORGES?.[itemData?.modifier]]?.[Settings.priceType] ?? 0;
     if (reforgeValue !== 0) {
         value += reforgeValue;
         if (save) valueMessage += `- ${AQUA}Reforge: ${GREEN}+${formatNumber(reforgeValue)}\n`;
@@ -247,14 +247,14 @@ export function getItemValue(item, save=true) {
     if (itemTag?.display?.Lore?.find(line => line.includes("DUNGEON")) !== undefined) {
         let starValue = 0;
         const upgrade_level = itemData?.upgrade_level ?? itemData?.dungeon_item_level ?? 0;
-        for (let i = 0; i < Math.max(upgrade_level - 5, 0); i++)starValue += bazaar?.[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[settings.priceType] ?? 0;
+        for (let i = 0; i < Math.max(upgrade_level - 5, 0); i++)starValue += bazaar?.[`${STAR_PLACEMENT[i]}_MASTER_STAR`]?.[Settings.priceType] ?? 0;
         if (starValue !== 0) {
             value += starValue;
             if (save) valueMessage += `- ${AQUA}Master Stars: ${GREEN}+${formatNumber(starValue)}\n`;
         }
     }
     // Recomb Value
-    const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar?.RECOMBOBULATOR_3000?.[settings.priceType] ?? 0;
+    const recombValue = itemData?.rarity_upgrades === undefined ? 0 : bazaar?.RECOMBOBULATOR_3000?.[Settings.priceType] ?? 0;
     if (recombValue !== 0) {
         value += recombValue;
         if (save) valueMessage += `- ${AQUA}Recomb: ${GREEN}+${formatNumber(recombValue)}\n`;
@@ -281,25 +281,25 @@ export function getItemValue(item, save=true) {
     if (potatoCount !== 0) {
         // Get hot value
         const hotPotatoCount = Math.min(potatoCount, 10);
-        const hotPotatoValue = hotPotatoCount * (bazaar?.HOT_POTATO_BOOK?.[settings.priceType] ?? 0);
+        const hotPotatoValue = hotPotatoCount * (bazaar?.HOT_POTATO_BOOK?.[Settings.priceType] ?? 0);
         if (save) valueMessage += `\n- ${GOLD + BOLD}Books:\n`;
         if (save) valueMessage += `   - ${YELLOW}HPB (${hotPotatoCount}/10): ${GREEN}+${formatNumber(hotPotatoValue)}\n`;
 
         // Get fuming value
         const fumingPotatoCount = Math.max(potatoCount - 10, 0);
-        const fumingPotatoValue = fumingPotatoCount * (bazaar?.FUMING_POTATO_BOOK?.[settings.priceType] ?? 0);
+        const fumingPotatoValue = fumingPotatoCount * (bazaar?.FUMING_POTATO_BOOK?.[Settings.priceType] ?? 0);
         if (fumingPotatoValue !== 0 && save)
             if (save) valueMessage += `   - ${YELLOW}FPB (${fumingPotatoCount}/5): ${GREEN}+${formatNumber(fumingPotatoValue)}\n`;
         value += hotPotatoValue + fumingPotatoValue;
     }
     // Art of War Value
-    const tzuValue = itemData?.art_of_war_count === undefined ? 0 : bazaar?.THE_ART_OF_WAR?.[settings.priceType];
+    const tzuValue = itemData?.art_of_war_count === undefined ? 0 : bazaar?.THE_ART_OF_WAR?.[Settings.priceType];
     if (tzuValue !== 0) {
         value += tzuValue;
         if (save) valueMessage += `   - ${YELLOW}Sun Tzu: ${GREEN}+${formatNumber(tzuValue)}\n`;
     }
     // Art of Peace Value
-    const peaceValue = itemData?.artOfPeaceApplied === undefined ? 0 : bazaar?.THE_ART_OF_PEACE?.[settings.priceType];
+    const peaceValue = itemData?.artOfPeaceApplied === undefined ? 0 : bazaar?.THE_ART_OF_PEACE?.[Settings.priceType];
     if (peaceValue !== 0) {
         value += peaceValue;
         if (save) valueMessage += `   - ${YELLOW}Moon Tzu: ${GREEN}+${formatNumber(peaceValue)}\n`;
@@ -346,11 +346,11 @@ export function getItemValue(item, save=true) {
         if (gemstoneType[0] in GEMSTONE_SLOTS) {
             gemstoneName = `${gemstoneTier}_${gemstoneType?.[0]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[gemstoneType[0]];
-            gemstoneValue = bazaar?.[gemstoneName]?.[settings.priceType] ?? 0;
+            gemstoneValue = bazaar?.[gemstoneName]?.[Settings.priceType] ?? 0;
         } else if (MULTIUSE_SLOTS.has(gemstoneType?.[0]) && gemstoneType?.[gemstoneType.length - 1] !== "gem") {
             gemstoneName = `${gemstoneTier}_${itemData.gems?.[gemstone + "_gem"]}_GEM`;
             gemstoneColor = GEMSTONE_SLOTS[itemData.gems?.[gemstone + "_gem"]];
-            gemstoneValue = bazaar?.[gemstoneName]?.[settings.priceType] ?? 0;
+            gemstoneValue = bazaar?.[gemstoneName]?.[Settings.priceType] ?? 0;
         }
         
         if (gemstoneValue !== 0) {
@@ -375,7 +375,7 @@ export function getItemValue(item, save=true) {
     const witherScrolls = itemData?.ability_scroll ?? [];
     if (witherScrolls.length !== 0 && save) valueMessage += `\n- ${GOLD + BOLD}Wither Scrolls:\n`;
     witherScrolls.forEach(scroll => {
-        const scrollValue = bazaar?.[scroll]?.[settings.priceType];
+        const scrollValue = bazaar?.[scroll]?.[Settings.priceType];
         if (scrollValue !== 0) {
             if (save) valueMessage += `   - ${DARK_GRAY + convertToTitleCase(scroll)}: ${GREEN}+${formatNumber(scrollValue)}\n`;
             value += scrollValue;
@@ -404,7 +404,7 @@ export function getItemValue(item, save=true) {
         }
         
         // Add value and message based on calced values
-        if (attributeLevel > 5 || !settings.singleAttribute) {
+        if (attributeLevel > 5 || !Settings.singleAttribute) {
             attributesValue += attributeValue;
             attributeMessage += `   - ${RED + convertToTitleCase(attribute)} ${attributeLevel}: ${GREEN}+${formatNumber(attributeValue)}\n`;
             doubleCalc = true;
@@ -416,7 +416,7 @@ export function getItemValue(item, save=true) {
     });
     // Attribute combo value
     const comboValue = auctionItem?.attribute_combos?.[attributes.join(" ")] ?? 0;
-    if (comboCalc && comboValue >= settings.minGR * 1_000_000 && settings.minGR !== 0) {
+    if (comboCalc && comboValue >= Settings.minGR * 1_000_000 && Settings.minGR !== 0) {
         if (doubleCalc) {
             attributeMessage += `   - ${RED}Go(o)d Roll: ${GREEN}+${formatNumber(comboValue)}\n`;
             attributesValue += comboValue;
@@ -461,11 +461,11 @@ registerWhen(register("preItemRender", (_, __, ___, gui) => {
     // Add to item lore.
     const value = getItemValue(item);
     valueOverlay.setMessage(savedValues?.[itemUUID]?.[1] ?? "");
-    if (value !== 0 && (settings.itemPrice === 2 || settings.itemPrice === 3)) {
+    if (value !== 0 && (Settings.itemPrice === 2 || Settings.itemPrice === 3)) {
         list.appendTag(new NBTTagString(''));
         list.appendTag(new NBTTagString(`§3§lItem Value: §6${formatNumber(value)}`));
     }
-}), () => settings.itemPrice !== 0);
+}), () => Settings.itemPrice !== 0);
 
 /**
  * Reset data on data transfers.

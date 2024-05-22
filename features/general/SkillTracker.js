@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BOLD, DARK_AQUA, GREEN, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatTime, romanToNum, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -68,14 +68,14 @@ const trackSkills = register("guiOpened", () => {
 
         skillsTracked = true;
         trackSkills.unregister();
-        if (settings.skillTracker !== 0) Client.showTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10);
+        if (Settings.skillTracker !== 0) Client.showTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10);
     });
 });
 
 registerWhen(register("chat", () => {
     skillsTracked = false;
     trackSkills.register();
-}).setCriteria("Switching to profile ${profile}..."), () => settings.skillTracker !== 0);
+}).setCriteria("Switching to profile ${profile}..."), () => Settings.skillTracker !== 0);
 
 /**
  * Resets skill overlay to base state.
@@ -110,7 +110,7 @@ registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
     amount = unformatNumber(amount);
     skill.now = xpTable[skill.level] + amount;
     skill.since = 0;
-}).setCriteria("${health}+${gain} ${type} (${amount}/${next})${mana}"), () => settings.skillTracker !== 0);
+}).setCriteria("${health}+${gain} ${type} (${amount}/${next})${mana}"), () => Settings.skillTracker !== 0);
 
 /**
  * Uses action bar to detect skill xp gains for non maxed out skills.
@@ -131,14 +131,14 @@ registerWhen(register("actionBar", (health, gain, type, percent, mana) => {
     percent = parseFloat(percent) / 100;
     skill.now = xpTable[skill.level + 1] - (xpTable[skill.level + 1] - xpTable[skill.level]) * (1 - percent);
     skill.since = 0;
-}).setCriteria("${health}+${gain} ${type} (${percent}%)${mana}"), () => settings.skillTracker !== 0);
+}).setCriteria("${health}+${gain} ${type} (${percent}%)${mana}"), () => Settings.skillTracker !== 0);
 
 /**
  * Tracks skill level ups
  */
 registerWhen(register("chat", (skill) => {
     skills[skill].level += 1;
-}).setCriteria("  SKILL LEVEL UP ${skill} ${from}➜${to}"), () => settings.skillTracker !== 0);
+}).setCriteria("  SKILL LEVEL UP ${skill} ${from}➜${to}"), () => Settings.skillTracker !== 0);
 
 /**
  * Updates skill tracker data every second.
@@ -151,13 +151,13 @@ registerWhen(register("step", () => {
     if (skill === undefined) return;
     const rate = skill.getRate();
 
-    if (skill.since < settings.skillTracker * 60) {
+    if (skill.since < Settings.skillTracker * 60) {
         skill.since += 1;
         skill.time += 1;
     }
     
     // Set HUD
-    const timeDisplay = skill.since < settings.skillTracker * 60 ? formatTime(skill.time) : `${RED}Inactive`;
+    const timeDisplay = skill.since < Settings.skillTracker * 60 ? formatTime(skill.time) : `${RED}Inactive`;
     let skillMessage = 
 `${DARK_AQUA + BOLD}Skill: ${WHITE + current}
 ${DARK_AQUA + BOLD}Gain: ${WHITE + commafy(skill.getGain())} xp
@@ -173,4 +173,4 @@ ${DARK_AQUA + BOLD}Level Up: `;
     } else skillMessage += `${GREEN}MAXED`;
 
     skillOverlay.setMessage(skillMessage);
-}).setFps(1), () => settings.skillTracker !== 0);
+}).setFps(1), () => Settings.skillTracker !== 0);

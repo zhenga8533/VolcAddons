@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
 
@@ -43,4 +43,4 @@ registerWhen(register("guiOpened", () => {
             }
         });
     });
-}), () => settings.auctionHighlight);
+}), () => Settings.auctionHighlight);

@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AMOGUS, BOLD, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -14,7 +14,7 @@ registerWhen(register("step", () => {
         Client.showTitle(`${RED + BOLD}FEAR UP`, '', 10, 50, 10);
         playSound(AMOGUS, 10000);
     }
-}).setFps(2), () => settings.fearAlert);
+}).setFps(2), () => Settings.fearAlert);
 
 /**
  * Use eval to solve math teacher equation
@@ -22,5 +22,5 @@ registerWhen(register("step", () => {
 registerWhen(register("chat", (equation, event) => {
     ChatLib.chat(`${LOGO}&r&d&lQUICK MATHS! &r&7Solve: &r&e${equation + WHITE} = ${GREEN + eval(equation.replace(/[x]/g, '*'))}&r`);
     cancel(event);
-}).setCriteria("QUICK MATHS! Solve: ${equation}"), () => settings.mathSolver);
+}).setCriteria("QUICK MATHS! Solve: ${equation}"), () => Settings.mathSolver);
 

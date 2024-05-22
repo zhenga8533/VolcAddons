@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AMOGUS, BOLD, GOLD } from "../../utils/Constants";
 import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -14,9 +14,9 @@ let minutes = 0;
  */
 registerWhen(register("step", () => {
     minutes++;
-    if (minutes >= settings.reminderTime) {
-        Client.showTitle(`${GOLD + BOLD + settings.reminderText}`, "", 10, 50, 10);
+    if (minutes >= Settings.reminderTime) {
+        Client.showTitle(`${GOLD + BOLD + Settings.reminderText}`, "", 10, 50, 10);
         playSound(AMOGUS, 1000);
         minutes = 0;
     }
-}).setDelay(60), () => settings.reminderTime !== 0);
+}).setDelay(60), () => Settings.reminderTime !== 0);

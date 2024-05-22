@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/Constants";
 import { formatNumber, formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -86,7 +86,7 @@ registerWhen(register("entityDeath", (death) => {
         updateCounter();
         stands.add(entity.persistentID);
     });
-}), () => settings.killCounter);
+}), () => Settings.killCounter);
 
 /**
  * Track time and reset stand ids
@@ -97,7 +97,7 @@ registerWhen(register("step", () => {
     time++;
     updateCounter();
     stands.clear();
-}).setFps(1), () => settings.vanqCounter !== 0);
+}).setFps(1), () => Settings.vanqCounter !== 0);
 
 /**
  * Command to reset the stats for the overall counter.

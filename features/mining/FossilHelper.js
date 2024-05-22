@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, RED, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatNumber } from "../../utils/functions/format";
@@ -280,4 +280,4 @@ registerWhen(register("guiOpened", () => {
         trackClicks.register();
         untrackFossils.register();
     })
-}), () => settings.fossilHelper);
+}), () => Settings.fossilHelper);

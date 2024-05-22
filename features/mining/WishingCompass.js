@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { GRAY, GREEN, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import Waypoint from "../../utils/Waypoint";
@@ -46,7 +46,7 @@ registerWhen(register("chat", () => {
 
     zone = location.getZone();
     path = [];
-}).setCriteria("Your Wishing Compass shattered into pieces!"), () => location.getWorld() === "Crystal Hollows" && settings.compassLocator);
+}).setCriteria("Your Wishing Compass shattered into pieces!"), () => location.getWorld() === "Crystal Hollows" && Settings.compassLocator);
 
 /**
  * Uses compass particles to track and estimate compass location.
@@ -80,4 +80,4 @@ registerWhen(register("spawnParticle", (particle, type) => {
         const close = Math.hypot(origin[0] - lastPath[0][0], origin[2] - lastPath[0][2]);
         if (close < 16) ChatLib.chat(`${LOGO + GRAY}Location may be incorrect due to proximity of compass uses...`);
     }
-}), () => location.getWorld() === "Crystal Hollows" && settings.compassLocator);
+}), () => location.getWorld() === "Crystal Hollows" && Settings.compassLocator);

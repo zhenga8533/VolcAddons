@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/Constants";
 import { formatTime, isValidDate } from "../../utils/functions/format";
 import { Overlay } from "../../utils/Overlay";
@@ -42,7 +42,7 @@ registerWhen(register("worldLoad", () => {
     kuudraSplit = [0, 0, 0, 0];
     times = ['0s', '0s', '0s', '0s'];
     phase = 0;
-}), () => settings.kuudraSplits);
+}), () => Settings.kuudraSplits);
 
 /**
  * Tracks party on player ready.
@@ -50,7 +50,7 @@ registerWhen(register("worldLoad", () => {
 registerWhen(register("chat", (player) => {
     player = player.toLowerCase();
     if (!party.includes(player)) party.push(player);
-}).setCriteria("${player} is now ready!"), () => settings.kuudraSplits);
+}).setCriteria("${player} is now ready!"), () => Settings.kuudraSplits);
 
 /**
  * First split.
@@ -95,7 +95,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
-    if (!settings.kuudraSplits) return;
+    if (!Settings.kuudraSplits) return;
 
     // Records last split and checks if no fucky wucky
     let broken = false;
@@ -148,7 +148,7 @@ registerWhen(register("chat", () => {
 registerWhen(register("chat", () => {
     kuudraSplit[4] = Date.now() / 1000;
     phase = 5;
-}).setCriteria("${before}DEFEAT${after}"), () => location.getWorld() === "Kuudra" && settings.kuudraSplits);
+}).setCriteria("${before}DEFEAT${after}"), () => location.getWorld() === "Kuudra" && Settings.kuudraSplits);
 
 /**
  * Updates time splits overlay.
@@ -191,7 +191,7 @@ registerWhen(register("step", () => {
 ${AQUA + BOLD}Build: ${RESET + times[1]}
 ${AQUA + BOLD}Fuel/Stun: ${RESET + times[2]}
 ${AQUA + BOLD}Kuudra: ${RESET + times[3]}`);
-}).setFps(19), () => location.getWorld() === "Kuudra" && settings.kuudraSplits);
+}).setFps(19), () => location.getWorld() === "Kuudra" && Settings.kuudraSplits);
 
 /**
  * Party commands for splits.
@@ -199,7 +199,7 @@ ${AQUA + BOLD}Kuudra: ${RESET + times[3]}`);
 let onCD = false;
 registerWhen(register("chat", (player, message) => {
     const name = getPlayerName(player);
-    if ((!settings.partyCommands && !name.equals(Player.getName())) || onCD) return;
+    if ((!Settings.partyCommands && !name.equals(Player.getName())) || onCD) return;
 
     const args = message.split(" ");
     switch (args[0]) {
@@ -230,7 +230,7 @@ registerWhen(register("chat", (player, message) => {
 
     onCD = true;
     delay(() => onCD = false, 500);
-}).setCriteria("Party > ${player}: ?${message}"), () => settings.kuudraSplits);
+}).setCriteria("Party > ${player}: ?${message}"), () => Settings.kuudraSplits);
 
 /**
  * Uses sound name and pitch to determine whenever Ragnarok Ability goes off.

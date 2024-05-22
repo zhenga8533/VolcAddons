@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { data, itemNBTs } from "../../utils/Data";
@@ -41,7 +41,7 @@ registerWhen(register("tick", () => {
     pieces[1] = armor.getChestplate();
     pieces[2] = armor.getLeggings();
     pieces[3] = armor.getBoots();
-}), () => settings.armorDisplay);
+}), () => Settings.armorDisplay);
 
 
 /**
@@ -112,13 +112,13 @@ registerWhen(register("guiOpened", (event) => {
         close.register();
         render.register();
     });
-}), () => settings.equipDisplay);
+}), () => Settings.equipDisplay);
 
 /**
  * Equipment Overlay
  */
 new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay", () => {
-    if (!settings.equipDisplay) return;
+    if (!Settings.equipDisplay) return;
     let yDiff = -15 * data.EQL[2];
 
     equipment.forEach(piece => {
@@ -168,10 +168,10 @@ function updateEquipment() {
 
 registerWhen(register("guiMouseClick", () => {
     Client.scheduleTask(1, updateEquipment);
-}), () => settings.equipDisplay);
+}), () => Settings.equipDisplay);
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, updateEquipment);
-}), () => settings.equipDisplay);
+}), () => Settings.equipDisplay);
 
 /**
  * Persistant armor and equip.

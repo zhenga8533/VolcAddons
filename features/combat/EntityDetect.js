@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { SMA, EntityArmorStand, STAND_CLASS } from "../../utils/Constants";
 import { convertToPascalCase, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -27,7 +27,7 @@ const CLASS_TYPES = ["client.entity", "entity.monster", "entity.boss", "entity.p
 function testClass(entity, health, index=0) {
     // Set color map
     const [uR, uG, uB] = data.colorlist[entity]?.split(' ') ?? [];
-    const rgb = settings.hitboxColor;
+    const rgb = Settings.hitboxColor;
     const r = (isNaN(uR) ? Math.random() * (255 - rgb.blue) : uR) / 255;
     const g = (isNaN(uG) ? Math.random() * (255 - rgb.red) : uG) / 255;
     const b = (isNaN(uB) ? Math.random() * (255 - rgb.green) : uB) / 255;

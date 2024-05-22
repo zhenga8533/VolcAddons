@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { data } from "../../utils/Data";
 import { delay } from "../../utils/ThreadTils";
@@ -82,7 +82,7 @@ function correct(command, event) {
         wordbank[word] -= 2;
         if (wordbank[word] <= 0) delete wordbank[word];
     });
-    if (cd || !settings.autocorrect) return;
+    if (cd || !Settings.autocorrect) return;
 
     // Seperate command into args and correct wordbank
     const corrected = [];
@@ -186,7 +186,7 @@ const close = register("guiClosed", () => {
 }).unregister();
 
 register("guiOpened", () => {
-    if (!settings.autocomplete) return;
+    if (!Settings.autocomplete) return;
 
     Client.scheduleTask(1, () => {
         if (!Client.currentGui.get().toString().includes("GuiChat")) return;

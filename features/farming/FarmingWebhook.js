@@ -3,9 +3,9 @@
  */
 
 import request from "../../../requestV2";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { formatNumber, formatTime, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 import { getBazaar } from "../economy/Economy";
@@ -109,7 +109,7 @@ function sendWebhook() {
     
     // Send data to webhook
     request({
-        url: settings.gardenWebhook,
+        url: Settings.gardenWebhook,
         method: "POST",
         headers: {
             "Content-type": "application/Json",
@@ -187,7 +187,7 @@ registerWhen(register("step", () => {
     const fortune = tablist.find(line => line.includes("Farming Fortune"));
     if (fortune === undefined) return;
     farmingFortune = parseInt(fortune.substring(fortune.indexOf('☘') + 1));
-}).setDelay(10), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}).setDelay(10), () => location.getWorld() === "Garden" && Settings.gardenWebhook !== "" && Settings.webhookTimer !== 0);
 
 /**
  * Updates crop statistics for a harvested crop block.
@@ -205,7 +205,7 @@ registerWhen(register("blockBreak", (block) => {
     farmingStats.cropStats[blockName][0] += dropAmount;
     farmingStats.cropStats[blockName][1] += dropAmount * CROP_DROP[blockName][1];
     downtime = 0;
-}), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}), () => location.getWorld() === "Garden" && Settings.gardenWebhook !== "" && Settings.webhookTimer !== 0);
 
 /**
  * Updates farm visitor statistics based on their arrival.
@@ -227,7 +227,7 @@ registerWhen(register("chat", (visitor) => {
             break;
     }
 }).setCriteria("&r&a&r${visitor} &r&ehas arrived on your &r&bGarden&r&e!&r"),
-() => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+() => location.getWorld() === "Garden" && Settings.gardenWebhook !== "" && Settings.webhookTimer !== 0);
 
 /**
  * Handles mouse click interactions in a GUI related to trade offers.
@@ -273,21 +273,21 @@ registerWhen(register("guiMouseClick", (x, y, button, gui) => {
         }
     }
     farmingStats.visitorStats.accepted++;
-}), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}), () => location.getWorld() === "Garden" && Settings.gardenWebhook !== "" && Settings.webhookTimer !== 0);
 
 /**
  * Function handling for player statistics.
  */
 registerWhen(register("worldUnload", () => {
         farmingStats.playerStats.disconnects++;
-}), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}), () => location.getWorld() === "Garden" && Settings.gardenWebhook !== "" && Settings.webhookTimer !== 0);
 registerWhen(register("chat", () => {
     farmingStats.playerStats.deaths++;
-}).setCriteria(" ☠ You ${death}."), () => location.getWorld() === "Garden" && settings.gardenWebhook && settings.webhookTimer !== 0);
+}).setCriteria(" ☠ You ${death}."), () => location.getWorld() === "Garden" && Settings.gardenWebhook && Settings.webhookTimer !== 0);
 registerWhen(register("chat", (medal, crop) => {
     farmingStats.playerStats[medal]++;
 }).setCriteria("[NPC] Jacob: You earned a ${medal} medal in the ${crop} contest!"),
-() => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+() => location.getWorld() === "Garden" && Settings.gardenWebhook !== "" && Settings.webhookTimer !== 0);
 
 /**
  * Manages time-based events and player downtime tracking.
@@ -296,11 +296,11 @@ registerWhen(register("chat", (medal, crop) => {
 let timePassed = 0;
 registerWhen(register("step", () => {
     timePassed++;
-    if (timePassed >= settings.webhookTimer * 60) {
+    if (timePassed >= Settings.webhookTimer * 60) {
         sendWebhook();
         timePassed = 0;
     }
 
     downtime++;
     if (downtime >= 10) farmingStats.playerStats.downtime++;
-}).setDelay(1), () => location.getWorld() === "Garden" && settings.gardenWebhook !== "" && settings.webhookTimer !== 0);
+}).setDelay(1), () => location.getWorld() === "Garden" && Settings.gardenWebhook !== "" && Settings.webhookTimer !== 0);

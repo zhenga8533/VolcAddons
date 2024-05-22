@@ -1,5 +1,5 @@
 import party from "../../utils/Party";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { GREEN, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/ThreadTils";
@@ -20,4 +20,4 @@ registerWhen(register("messageSent", (message, event) => {
     cancel(event);
     ChatLib.command(`p ${args[1]}`);
     delay(() =>  ChatLib.command(`p ${args.splice(2).join(' ')}`), 500);
-}), () => settings.antiGhostParty);
+}), () => Settings.antiGhostParty);

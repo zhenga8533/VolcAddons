@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { NBTTagString } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import { formatTime } from "../../utils/functions/format";
@@ -20,4 +20,4 @@ registerWhen(register("preItemRender", (_, __, ___, gui) => {
     // Add time tag
     const seconds = itemTag.getCompoundTag("ExtraAttributes").getInteger("bottle_of_jyrre_seconds");
     list.insertTag(9, new NBTTagString(`§7☲ Time: §b${formatTime(seconds, 0, 3)}`));
-}), () => settings.jyrreTimer);
+}), () => Settings.jyrreTimer);

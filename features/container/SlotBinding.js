@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -38,10 +38,10 @@ registerWhen(register("guiKey", (c, keyCode, gui) => {
         data.slotBinds[bind].push(binding);
         binding = undefined;
     }
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 registerWhen(register("guiClosed", () => {
     binding = undefined;
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 
 // Swap binded items
 registerWhen(register("guiMouseClick", (_, __, button, gui, event) => {
@@ -55,7 +55,7 @@ registerWhen(register("guiMouseClick", (_, __, button, gui, event) => {
     Client.getMinecraft().field_71442_b.func_78753_a(Player.getContainer().getWindowId(), hover, bind - 36, 2, Player.getPlayer());
 
     cancel(event);
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 
 // Render bindings
 registerWhen(register("guiRender", (x, y, gui) => {
@@ -96,7 +96,7 @@ registerWhen(register("guiRender", (x, y, gui) => {
         Renderer.translate(0, 0, 300);
         Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);
     }
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 
 /**
  * Slot binding related commands...

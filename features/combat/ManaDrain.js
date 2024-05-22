@@ -1,5 +1,5 @@
 import RenderLib from "../../../RenderLib";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { AQUA, PLAYER_CLASS } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import Waypoint from "../../utils/Waypoint";
@@ -45,4 +45,4 @@ registerWhen(register("step", () => {
     // Show title
     const length = nearWaypoints.getWaypoints().length;
     Client.showTitle(`${length + AQUA} nearby player${length === 1 ? "" : "s"}!`, "", 0, 15, 5);
-}).setFps(2), () => settings.manaDrain);
+}).setFps(2), () => Settings.manaDrain);

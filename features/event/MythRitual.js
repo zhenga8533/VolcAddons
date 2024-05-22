@@ -1,4 +1,4 @@
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import mayor from "../../utils/Mayor";
 import location from "../../utils/Location";
 import { GREEN, LOGO } from "../../utils/Constants";
@@ -17,7 +17,7 @@ let warp = "player";
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 dianaKey.registerKeyPress(() => {
-    if (settings.dianaWarp && warp !== "player") {
+    if (Settings.dianaWarp && warp !== "player") {
         ChatLib.chat(`${LOGO + GREEN}Warping to "${warp}"...`);
         ChatLib.command(`warp ${warp}`);
     }
@@ -104,7 +104,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
     echo = true;
     delay(() => echo = false, 3000);
     path = [[Player.getX(), Player.getY(), Player.getZ()]];
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint);
 
 /**
  * Use Ancestral Spade particles to guess a burrow location.
@@ -122,11 +122,11 @@ registerWhen(register("spawnParticle", (particle, type) => {
     path.push([x, y, z]);
     guessed.clear();
     guessed.push(guessBurrow(path, distance));
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint);
 
 /**
  * Get distance using Echo note pitch.
  */
 registerWhen(register("soundPlay", (_, __, ___, pitch) => {
     distance = (Math.E / pitch) ** (Math.E + (1 - 2 * pitch)) - Math.E ** (1 - pitch ** 2) + Math.E ** (0.8 - Math.E * pitch);
-}).setCriteria("note.harp"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+}).setCriteria("note.harp"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint);

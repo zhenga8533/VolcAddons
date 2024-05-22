@@ -2,9 +2,9 @@
  * ARCHIVED
  */
 
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import location from "../../utils/Location";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
 import { registerWhen } from "../../utils/RegisterTils";
 
@@ -38,10 +38,10 @@ registerWhen(register("guiOpened", () => {
             }
         }        
     })
-}), () => location.getWorld() === "Garden" && settings.jacobReward);
+}), () => location.getWorld() === "Garden" && Settings.jacobReward);
 registerWhen(register("guiClosed", () => {
     unclaimed = [];
-}), () => location.getWorld() === "Garden" && settings.jacobReward);
+}), () => location.getWorld() === "Garden" && Settings.jacobReward);
 
 /**
  * Renders neon green box over unclaimed rewards.
@@ -56,4 +56,4 @@ registerWhen(register("guiRender", () => {
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(...color, 255), x, y, 16, 16);
     });
-}), () => location.getWorld() === "Garden" && settings.jacobReward);
+}), () => location.getWorld() === "Garden" && Settings.jacobReward);

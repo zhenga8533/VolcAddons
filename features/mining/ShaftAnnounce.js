@@ -1,6 +1,6 @@
 import location from "../../utils/Location";
 import party from "../../utils/Party";
-import settings from "../../utils/Settings";
+import Settings from "../../utils/Settings";
 import { STAND_CLASS } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
 import { convertToTitleCase } from "../../utils/functions/format";
@@ -30,7 +30,7 @@ function attemptTransfer(index) {
 registerWhen(register("chat", () => {
     if (!party.getIn()) return;
     attemptTransfer(0);
-}).setCriteria("WOW! You found a Glacite Mineshaft portal!"), () => settings.shaftTransfer && location.getWorld() === "Dwarven Mines");
+}).setCriteria("WOW! You found a Glacite Mineshaft portal!"), () => Settings.shaftTransfer && location.getWorld() === "Dwarven Mines");
 
 
 /**
@@ -60,21 +60,21 @@ function announceCorpse(corpseType) {
 
 registerWhen(register("chat", (type) => {
     looted.push([Player.getX(), Player.getY(), Player.getZ()]);
-    if (settings.corpseAnnounce) announceCorpse(convertToTitleCase(type));
-}).setCriteria("  ${type} CORPSE LOOT! "), () => (settings.corpseAnnounce || settings.corpseWaypoints) && location.getWorld() === "Mineshaft");
+    if (Settings.corpseAnnounce) announceCorpse(convertToTitleCase(type));
+}).setCriteria("  ${type} CORPSE LOOT! "), () => (Settings.corpseAnnounce || Settings.corpseWaypoints) && location.getWorld() === "Mineshaft");
 registerWhen(register("chat", () => {
     announceCorpse("Tungsten");
-}).setCriteria("You need to be holding a Tungsten Key to unlock this corpse!"), () => settings.corpseAnnounce && location.getWorld() === "Mineshaft");
+}).setCriteria("You need to be holding a Tungsten Key to unlock this corpse!"), () => Settings.corpseAnnounce && location.getWorld() === "Mineshaft");
 registerWhen(register("chat", () => {
     announceCorpse("Umber");
-}).setCriteria("You need to be holding an Umber Key to unlock this corpse!"), () => settings.corpseAnnounce && location.getWorld() === "Mineshaft");
+}).setCriteria("You need to be holding an Umber Key to unlock this corpse!"), () => Settings.corpseAnnounce && location.getWorld() === "Mineshaft");
 registerWhen(register("chat", () => {
     announceCorpse("Vanguard");
-}).setCriteria("You need to be holding a Skeleton Key to unlock this corpse!"), () => settings.corpseAnnounce && location.getWorld() === "Mineshaft");
+}).setCriteria("You need to be holding a Skeleton Key to unlock this corpse!"), () => Settings.corpseAnnounce && location.getWorld() === "Mineshaft");
 
 registerWhen(register("chat", (_, x, y, z) => {
     corpses.push([x, y, z.split(' ')[0]]);
-}).setCriteria("${player}: x: ${x}, y: ${y}, z: ${z}"), () => settings.corpseAnnounce && location.getWorld() === "Mineshaft");
+}).setCriteria("${player}: x: ${x}, y: ${y}, z: ${z}"), () => Settings.corpseAnnounce && location.getWorld() === "Mineshaft");
 
 /**
  * Corpse detection 
@@ -110,4 +110,4 @@ registerWhen(register("step", () => {
             corpseWaypoints.push([...color, ...corpsePos]);
         }
     });
-}).setDelay(1), () => settings.corpseWaypoints && location.getWorld() === "Mineshaft");
+}).setDelay(1), () => Settings.corpseWaypoints && location.getWorld() === "Mineshaft");

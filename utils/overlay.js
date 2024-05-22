@@ -1,5 +1,5 @@
 import location from "./Location";
-import settings from "./Settings";
+import Settings from "./Settings";
 import { GREEN, ITALIC, LOGO } from "./Constants";
 import { drawBox } from "./functions/render";
 
@@ -23,8 +23,8 @@ function renderScale(x, y, text, scale=1, align=false, flex=false, z=0) {
     // Scale and render
     Renderer.scale(scale);
     Renderer.translate(0, 0, z ?? 300);
-    if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(settings.textShadow).draw();
-    else Renderer.drawString(text, x, y, settings.textShadow);
+    if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(Settings.textShadow).draw();
+    else Renderer.drawString(text, x, y, Settings.textShadow);
 }
 
 /**
@@ -47,10 +47,10 @@ let worldView = false;
  * Renders overlays on the GUI if it's open.
  */
 const moving = register("renderOverlay", () => {
-    if (!settings.vaToggle) return;
+    if (!Settings.vaToggle) return;
 
     overlays.forEach(o => {
-        if (!settings[o.setting]) return;
+        if (!Settings[o.setting]) return;
 
         // Draw example text and box
         const scale = o.loc[2];
@@ -150,10 +150,10 @@ const renders = {
 }
 Object.keys(renders).forEach(key => {
     register(key, () => {
-        if (!settings.vaToggle) return;
+        if (!Settings.vaToggle) return;
         
         renders[key].forEach(render => {
-            if (settings[render.setting] && !render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
+            if (Settings[render.setting] && !render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
                 if (!(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;
 
                 if (render.loc[5] && render.width !== 0) {

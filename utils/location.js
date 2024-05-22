@@ -1,4 +1,4 @@
-import settings from "./Settings";
+import Settings from "./Settings";
 import { BOLD, DARK_GRAY, GOLD, LOGO, YELLOW } from "./Constants";
 import { setRegisters } from "./RegisterTils";
 import { delay } from "./ThreadTils";
@@ -149,7 +149,7 @@ class Location {
     
             // Call functions when world is loaded
             delay(() => {
-                setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+                setRegisters(off = Settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
                 Client.showTitle(" ", "", 0, 1, 0);  // Fix first title not showing
             }, 1000);
         }
