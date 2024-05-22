@@ -5,6 +5,7 @@ import { registerWhen } from "../../utils/RegisterTils";
 import { printList } from "../../utils/ListTils";
 import { parseTexture } from "../../utils/functions/misc";
 import { drawBox, drawLore } from "../../utils/functions/render";
+import { delay } from "../../utils/ThreadTils";
 
 
 // Container offsets from top left [x, y]
@@ -19,6 +20,7 @@ const OFFSETS = {
     "inv4": [80, 62],
     "eq": [-18, 8],
 };
+let clientCommands = new Set(net.minecraftforge.client.ClientCommandHandler.instance.getCommandSet().map(key => key.func_71517_b()));
 
 const COLOR_SCHEMES = [
     [Renderer.color(139, 139, 139, 128), Renderer.color(198, 198, 198, 255)],  // Default
@@ -135,8 +137,10 @@ export class Button {
      */
     setCommand(command) {
         this.#command = command;
+        const isClient = clientCommands.has(command.split(' ')[0]);
+
         this.#clicked = () => {
-            ChatLib.command(command);
+            ChatLib.command(command, isClient);
         }
     }
 
@@ -274,8 +278,9 @@ function saveEdit() {
         buttons[editing.id].setCommand(command);
         buttons[editing.id].setItem(iconInput.func_146179_b());
     } else {
+        const isClient = clientCommands.has(command.split(' ')[0]);
         buttons[editing.id] = new Button(editing.loc, editing.index, () => {
-            ChatLib.command(command);
+            ChatLib.command(command, isClient);
         }, command, iconInput.func_146179_b());
         delete buttons[editing.id];
     }
@@ -475,8 +480,10 @@ function loadButtons() {
     buttons = {};
     Object.keys(data.buttons).forEach(key => {
         const button = data.buttons[key];
+        const isClient = clientCommands.has(button[2].split(' ')[0]);
+
         buttons[key] = new Button(button[0], button[1], () => {
-            ChatLib.command(button[2])
+            ChatLib.command(button[2], isClient);
         }, button[2], button[3]);
     });
 }

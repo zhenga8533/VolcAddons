@@ -34,9 +34,7 @@ import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/WidgetDisplay";
 // Container Features
-import "./features/container/ArmorDisplay";
 import "./features/container/AttributeAbbrev";
-import { buttonCommands } from "./features/container/ContainerButtons";
 import "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
@@ -458,3 +456,9 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
     }
 }).setName("va", true).setAliases("volcaddons", "volc", "itee");
+
+/**
+ * Final imports
+ */
+import "./features/container/ArmorDisplay";
+import { buttonCommands } from "./features/container/ContainerButtons";
