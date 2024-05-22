@@ -948,13 +948,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     chocoWaypoints = false;
 
-    @SwitchProperty({
-        name: "Worker Highlight",
+    @SelectorProperty({
+        name: "Rabbit Highlight",
         description: "Highlights the worker with the best cost to production ratio.",
         category: "Event",
-        subcategory: "Chocolate Factory"
+        subcategory: "Chocolate Factory",
+        options: ["OFF", "All", "Only Workers", "No Tower"]
     })
-    workerHighlight = false;
+    rabbitHighlight = 0;
     
     // --- Diana ---
     @SwitchProperty({

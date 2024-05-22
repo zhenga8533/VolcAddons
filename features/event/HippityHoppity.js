@@ -182,7 +182,7 @@ function findWorker() {
     // Tower calc
     const tower = items[39].getLore();
     const towerI = tower.findIndex(line => line === "§5§o§7Cost");
-    if (towerI !== 1) {
+    if (settings.rabbitHighlight === 1 && towerI !== 1) {
         const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
         const towerValue = data.chocoProduction / baseMultiplier * 0.0125 / towerCost;
 
@@ -196,7 +196,7 @@ function findWorker() {
     // Jackrabbit calc
     const jackrabbit = items[42].getLore();
     const jackI = jackrabbit.findIndex(line => line === "§5§o§7Cost");
-    if (jackI !== -1) {
+    if (settings.rabbitHighlight !== 3 && jackI !== -1) {
         const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));
         const jackValue = data.chocoProduction / baseMultiplier * 0.01 / jackCost;
 
@@ -250,7 +250,7 @@ registerWhen(register("guiOpened", () => {
         if (Player.getContainer().getName() !== "Chocolate Factory") return;
 
         updateChocolate.register();
-        if (settings.workerHighlight) {
+        if (settings.rabbitHighlight) {
             findWorker();
             coachFind.register();
             towerFind.register();
@@ -259,7 +259,7 @@ registerWhen(register("guiOpened", () => {
             chocomatte.register();
         }
     });
-}), () => settings.workerHighlight || settings.chocoDisplay);
+}), () => settings.rabbitHighlight !== 0 || settings.chocoDisplay);
 
 
 /**
