@@ -166,7 +166,37 @@ function bazaarValue(container) {
             itemValues[name] = [amount, amount * price];
         }
     }
+
+    setMessage(itemValues);
+}
+
+/**
+ * Calculate the value of an auction container.
+ * 
+ * @param {Inventory} container - Player GUI container.
+ */
+function auctionValue(container) {
+    const itemValues = {};
     
+    for (let i = 1; i < 5; i++) {
+        const firstStack = container.getStackInSlot(i * 9 + 1);
+        if (firstStack !== null && firstStack.getUnlocalizedName() === "tile.thinStainedGlass") break;
+        
+        for (let j = 1; j < 9; j++) {
+            // Get item stack or detect no item
+            let stack = container.getStackInSlot(i * 9 + j);
+            if (stack === null) break;
+            const lore = stack.getLore();
+
+            // Get item name, capacity, and price
+            const name = stack.getName();
+            let value = unformatNumber(lore.find(line => line.startsWith("§5§o§7Buy it now:"))?.split(' ')?.[3]?.removeFormatting()) ||
+                unformatNumber(lore.find(line => line.startsWith("§5§o§7Sold for:"))?.split(' ')?.[2]?.removeFormatting());
+                unformatNumber(lore.find(line => line.startsWith("§5§o§7Top bid:"))?.split(' ')?.[2]?.removeFormatting());
+            itemValues[name] = [1, value];
+        }
+    }
+
     setMessage(itemValues);
 }
 
@@ -189,7 +219,10 @@ function updateContainerValue(remove) {
         } else if (containerName.endsWith("Bazaar Orders")) {
             bazaarValue(container);
             return;
-        } else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
+        } else if (containerName === "Manage Auctions") {
+            auctionValue(container);
+            return;
+        }else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
 
         const items = container.getItems();
         const itemValues = {};
