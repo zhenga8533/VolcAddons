@@ -127,7 +127,7 @@ ${GOLD + BOLD}Time:
 ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${WHITE + data.totalEggs}/${data.maxEggs}
  ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
- ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.95).toFixed(2)}%`);
+ ${YELLOW}Completion: ${WHITE + (data.totalEggs / 4.57).toFixed(2)}%`);
 }).setFps(1);
 
 register("chat", (x) => {
@@ -149,12 +149,13 @@ function findWorker() {
 
     // Worker calc
     let maxValue = 0;
-    for (let i = 29; i < 34; i++) {
+    const diff = items[27].getUnlocalizedName() === "tile.thinStainedGlass" ? 0 : 1;
+    for (let i = 29 - diff; i < 34 + diff; i++) {
         let worker = items[i].getLore();
         let index = worker.findIndex(line => line === "§5§o§7Cost");
         if (index === -1) continue;
         let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
-        let value = (i - 28) * baseMultiplier / cost;
+        let value = (i - 28 + diff) * baseMultiplier / cost;
 
         if (value > maxValue) {
             bestWorker = i;
