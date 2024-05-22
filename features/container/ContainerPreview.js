@@ -4,7 +4,7 @@ import { data, itemNBTs } from "../../utils/Data";
 import { compressNBT, parseContainerCache } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
-import { drawLore } from "../../utils/functions/render";
+import { drawContainer, drawLore } from "../../utils/functions/render";
 import { printList } from "../../utils/ListTils";
 
 
@@ -65,38 +65,7 @@ export function previewCommands(args) {
  */
 let previewCache = [];
 const savePreview = register("guiRender", (mouseX, mouseY) => {
-    CONTAINER_PNGS[Settings.containerPreview - 1].draw(data.SPL[0], data.SPL[1]);
-    Renderer.drawString(DARK_GRAY + Player.getContainer().getName(), data.SPL[0] + 7, data.SPL[1] + 6);
-
-    for (let i = 0; i < 6; i++) {
-        for (let j = 0; j < 9; j++) {
-            let index = i * 9 + j;
-            let item = previewCache[index];
-            if (!item) continue;
-
-            let x = data.SPL[0] + 7.5 + j * 18;
-            let y = data.SPL[1] + 17.5 + i * 18;
-            
-            // Draw rarity box
-            if (index >= 9) {
-                let color = COLOR_TABLE[item.getName().substring(0, 2)];
-                if (color !== undefined) Renderer.drawRect(color, x, y, 16, 16);
-            }
-
-            // Draw item and size
-            item.draw(x, y, 1);
-            let size = item.getStackSize();
-            if (size !== 1) {
-                Renderer.translate(0, 0, 500);
-                Renderer.drawString(size, x - Renderer.getStringWidth(size) + 17, y + 9, true);
-            }
-
-            // Draw lore if hovered
-            if (mouseX >= x && mouseX <= x + 16 && mouseY >= y && mouseY <= y + 16) {
-                drawLore(mouseX, mouseY, item.getLore());
-            }
-        }
-    }
+    drawContainer(data.SPL[0], data.SPL[1], Player.getContainer().getName(), CONTAINER_PNGS[Settings.containerPreview - 1], previewCache, mouseX, mouseY);
 }).unregister();
 
 const cacheItems = register("guiMouseClick", () => {
@@ -155,39 +124,8 @@ let previewItems = [];
 const CONTAINER_PNGS = [new Image("container.png"), new Image("container-fs.png")];
 new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "guiRender");
 
-const preview = register("guiRender", (mouseX, mouseY, gui) => {
-    CONTAINER_PNGS[Settings.containerPreview - 1].draw(data.CPL[0], data.CPL[1]);
-    Renderer.drawString(DARK_GRAY + lastPreview.removeFormatting(), data.CPL[0] + 7, data.CPL[1] + 6);
-
-    for (let i = 0; i < 6; i++) {
-        for (let j = 0; j < 9; j++) {
-            let index = i * 9 + j;
-            let item = previewItems[index];
-            if (item === null) continue;
-
-            let x = data.CPL[0] + 7.5 + j * 18;
-            let y = data.CPL[1] + 17.5 + i * 18;
-            
-            // Draw rarity box
-            if (index >= 9) {
-                let color = COLOR_TABLE[item.getName().substring(0, 2)];
-                if (color !== undefined) Renderer.drawRect(color, x, y, 16, 16);
-            }
-
-            // Draw item and size
-            item.draw(x, y, 1);
-            let size = item.getStackSize();
-            if (size !== 1) {
-                Renderer.translate(0, 0, 500);
-                Renderer.drawString(size, x - Renderer.getStringWidth(size) + 17, y + 9, true);
-            }
-
-            // Draw lore if hovered
-            if (mouseX >= x && mouseX <= x + 16 && mouseY >= y && mouseY <= y + 16) {
-                drawLore(mouseX, mouseY, item.getLore());
-            }
-        }
-    }
+const preview = register("guiRender", (mouseX, mouseY) => {
+    drawContainer(data.CPL[0], data.CPL[1], lastPreview, CONTAINER_PNGS[Settings.containerPreview - 1], previewItems, mouseX, mouseY);
 }).unregister();
 
 const clear = register("guiClosed", () => {
