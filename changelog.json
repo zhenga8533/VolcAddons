@@ -16,6 +16,7 @@
     "- Fixed socket reconnections",
     "- Fixed enchanted book calc",
     "- Fixed lore rendering",
+    "- Fixed lore 'ed' spam",
     "- Removed image viewer",
     "= Removed Gurokinetic features",
     "- Removed Jacob highlight",

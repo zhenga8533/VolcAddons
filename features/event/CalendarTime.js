@@ -57,7 +57,7 @@ const tooltip = register("preItemRender", (_, __, slot) => {
                 lore.splice(i + 1, 0, `§7End Date: ${YELLOW + date}, ${time.substring(0, time.length - 3)}`);
             }
         }
-    }
+    } else return;
 
     item.setLore(lore);
 }).unregister();
