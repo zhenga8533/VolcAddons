@@ -3,6 +3,7 @@
     "- Added socket toggle",
     "- Added additional mining event checks",
     "- Added `/va [npc, zone]` scraped info",
+    "- Added `/va preview`",
     "- Added more container value calcs",
     "   - Auction",
     "   - Bazaar",
