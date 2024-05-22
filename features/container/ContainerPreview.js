@@ -78,10 +78,12 @@ const cacheItems = register("guiMouseClick", () => {
 
 const saveCache = register("guiClosed", () => {
     // Save cache
-    if (nameCache[0] === "EC")
-        itemNBTs.enderchests[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
-    else if (nameCache[0] === "BP")
-        itemNBTs.backpacks[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+    if (!itemNBTs.storageCache.hasOwnProperty(nameCache.join(''))) {
+        if (nameCache[0] === "EC")
+            itemNBTs.enderchests[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+        else if (nameCache[0] === "BP")
+            itemNBTs.backpacks[nameCache[1]] = itemsCache.map(item => item === null ? null : compressNBT(item.getNBT().toObject()));
+    }
 
     // Unregister events
     saveCache.unregister();
