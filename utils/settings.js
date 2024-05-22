@@ -1121,6 +1121,15 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     // ████████████████████████████████████████████████████ DUNGEON ████████████████████████████████████████████████████
 
+    // --- Chests ---
+    @SwitchProperty({
+        name: "Croesus Highlight",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights not/partially opened chests in Croesus menu.`,
+        category: "Dungeon",
+        subcategory: "Chests"
+    })
+    croesusHighlight = false;
+
     // --- Star Detect ---
     @SelectorProperty({
         name: "Star Mob Highlight",

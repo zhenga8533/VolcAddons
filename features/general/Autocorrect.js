@@ -1,7 +1,6 @@
 import settings from "../../utils/Settings";
 import { DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { data } from "../../utils/Data";
-import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/ThreadTils";
 
 

@@ -99,6 +99,7 @@ import "./features/crimsonIsle/MythicDetect";
 import "./features/crimsonIsle/TrophyCounter";
 import "./features/crimsonIsle/VanqFeatures";
 // Dungeon Features
+import "./features/dungeon/CroesusHighlight";
 import "./features/dungeon/StarDetect";
 // Kuudra Features
 import "./features/kuudra/CrateEdit";
