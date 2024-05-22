@@ -1,6 +1,6 @@
 import settings from "../../utils/Settings";
 import { AQUA, BLUE, GRAY, DARK_PURPLE, DARK_RED, GOLD, GREEN, LIGHT_PURPLE, RED, WHITE, ITALIC, YELLOW } from "../../utils/Constants";
-import { formatNumber } from "../../utils/functions/format";
+import { formatNumber, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
@@ -30,47 +30,47 @@ containerOverlay.setMessage("");
  * Set the message of the overlay given the items object and value.
  * 
  * @param {Object} itemValues - itemName: [count, value]
- * @param {Number} totalValue - Total value of container
  * @returns 
  */
-function setMessage(itemValues, totalValue) {
-    if (totalValue === 0) {
-        containerOverlay.setMessage("");
-        return;
-    }
-
+function setMessage(itemValues) {
     // Convert itemValues object to an array of [itemName, [count, value]]
     const sortedItems = Object.entries(itemValues).sort((a, b) => b[1][1] - a[1][1]);
             
     // Display the sorted items and total value
-    let overlayMessage = `${GOLD}Total Value: ${YELLOW + formatNumber(totalValue)}\n`;
+    let overlayMessage = '';
     let displayedItems = 0;
+    let totalValue = 0;
 
     // Destructuring here for cleaner loop
     for ([itemName, [itemCount, itemValue]] of sortedItems) {
-        overlayMessage += `\n${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}`;
+        totalValue += itemValue;
         displayedItems++;
-        if (displayedItems >= settings.containerValue) {
+
+        // Display only the top containerValue items
+        if (displayedItems === settings.containerValue) {
             const remainingItems = sortedItems.length - settings.containerValue;
             if (remainingItems > 0) {
                 overlayMessage += `\n${GRAY + ITALIC}+ ${remainingItems} more items...`;
             }
-            break;
+        } else if (displayedItems < settings.containerValue) {
+            overlayMessage += `\n${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}`;
         }
     }
 
-    containerOverlay.setMessage(overlayMessage);
+    if (totalValue === 0)
+        containerOverlay.setMessage("");
+    else
+        containerOverlay.setMessage(`${GOLD}Total Value: ${YELLOW + formatNumber(totalValue)}\n` + overlayMessage);
 }
 
 /**
  * Caclulate the value of a sack container (different stack size)
  * 
- * @param {Inventory} container - players currently opened container
+ * @param {Inventory} container - Player GUI container.
  */
 function sackValue(container) {
     const bazaar = getBazaar();
     const itemValues = {};
-    let totalValue = 0;
 
     for (let i = 0; i < 45; i++) {
         // Get item stack or detect no item
@@ -91,10 +91,35 @@ function sackValue(container) {
         // Add value into container value message
         let stackValue = value * count;
         itemValues[stackName] = [count, stackValue];
-        totalValue += stackValue;
     }
 
-    setMessage(itemValues, totalValue);
+    setMessage(itemValues);
+}
+
+/**
+ * Calculate the value of a composter container.
+ * 
+ * @param {Inventory} container - Player GUI container.
+ */
+function composterValue(container) {
+    const bazaar = getBazaar();
+
+    const compost = container.getStackInSlot(13);
+    const available = parseInt(compost.getLore().find(line => line.startsWith("§5§o§7§7Compost Available:")).split(' ')[2].removeFormatting());
+
+    const crop = unformatNumber(container.getStackInSlot(1).getLore()[1].removeFormatting().trim().split('/')[0]);
+    const fuel = unformatNumber(container.getStackInSlot(7).getLore()[1].removeFormatting().trim().split('/')[0]);
+    const costUpgrade = data.composterUpgrades["Cost Reduction"];
+    const noCrop = crop / (4000 * (1 - costUpgrade/100));
+    const noFuel = fuel / (2000 * (1 - costUpgrade/100));
+    const composting = Math.min(noCrop, noFuel) * (1 + 0.03 * data.composterUpgrades["Multi Drop"]);
+    const value = bazaar?.["COMPOST"]?.[settings.priceType] ?? 0;
+
+    const itemValues = {
+        "Composted": [available, available * value],
+        "Composting": [composting, composting * value]
+    };
+    setMessage(itemValues, value);
 }
 
 /**
@@ -109,11 +134,13 @@ function updateContainerValue(remove) {
         if (containerName.endsWith("Sack")) {
             sackValue(container);
             return;
+        } else if (containerName === "Composter") {
+            composterValue(container);
+            return;
         } else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
 
         const items = container.getItems();
         const itemValues = {};
-        let totalValue = 0;
         for (let i = 0; i < items.length - remove; i++) {
             let item = items[i];
             if (item === null) continue;
@@ -131,11 +158,10 @@ function updateContainerValue(remove) {
                 // Destructuring here for cleaner loop
                 let [existingItemCount = 0, existingItemValue = 0] = itemValues[itemName] || [];
                 itemValues[itemName] = [existingItemCount + itemCount, existingItemValue + value];
-                totalValue += value;
             }
         }
 
-        setMessage(itemValues, totalValue);
+        setMessage(itemValues);
     });
 }
 
