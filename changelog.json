@@ -1,8 +1,10 @@
 [
     "- Added global toggle",
+    "- Added socket toggle",
     "- Added additional mining event checks",
-    "- Updated chococolate factory to latest",
+    "- Added `/va [npc, zone]` scraped info",
     "- Organized util files",
+    "- Changed chocolate factory to support 2.0",
     "- Changed storage preview to be hoverable",
     "- Changed chest tracker to hide opened",
     "- Fixed socket reconnections",

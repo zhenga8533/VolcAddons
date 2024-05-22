@@ -1,3 +1,4 @@
+import settings from "./Settings";
 import { DARK_GRAY, GRAY, LOGO, RED } from "./Constants";
 import { NonPooledThread, delay } from "./ThreadTils";
 
@@ -26,6 +27,8 @@ class WebSocket {
      * https://github.com/Soopyboo32/soopyApis/tree/master
      */
     constructor() {
+        if (!settings.socketToggle) return;
+
         console.log("[VolcAddons] Connecting to socket server...");
         new NonPooledThread(() => {
             this.connect();
@@ -199,6 +202,7 @@ export default new WebSocket();
  */
 import { processAlloy, processEvent } from "../features/mining/EventTracker";
 import { processWaifu } from "../features/party/PartyCommands";
+import Settings from "./Settings";
 
 /**
  * Processes the event received from the server.

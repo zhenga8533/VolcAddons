@@ -101,6 +101,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
         subcategory: "Essential"
     })
     skyblockToggle = true;
+
+    @SwitchProperty({
+        name: "Socket Toggle",
+        description: `Toggle ${GREEN}ON ${GRAY}to send information to VolcSocket server or ${RED}OFF ${GRAY}to prevent. Requires a ${AQUA}/ct load ${GRAY}to take effect.`,
+        category: "General",
+        subcategory: "Essential"
+    })
+    socketToggle = true;
     
     @ButtonProperty({
         name: "Discord",
