@@ -29,7 +29,7 @@ const updateChocolate = register("tick", () => {
     }
 
     // Fetch data related to prestiging
-    const prestigeData = items[28]?.getLore();
+    const prestigeData = items[27]?.getUnlocalizedName() === "tile.thinStainedGlass" ? items[28]?.getLore() : items[27]?.getLore();
     if (prestigeData !== undefined) {
         const prestigeTotal = prestigeData.find(line => line.startsWith("§5§o§7Chocolate this Prestige"))?.removeFormatting()?.split(' ');
         data.chocoTotal = parseFloat(prestigeTotal?.[prestigeTotal?.length - 1]?.replace(/,/g, "") ?? 0);
@@ -39,7 +39,7 @@ const updateChocolate = register("tick", () => {
     }
 
     // Fetch eggs
-    const eggData = items[34]?.getLore();
+    const eggData = items[35]?.getUnlocalizedName() === "tile.thinStainedGlass" ? items[34]?.getLore() : items[35]?.getLore();
     if (eggData !== undefined) {
         const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:"))?.split(' ')?.[2]?.removeFormatting()?.split('/');
         data.totalEggs = parseInt(barnLine?.[0] ?? 0);
@@ -90,7 +90,7 @@ const chocoExample =
  §eDupes: §f0`;
 const chocoOverlay = new Overlay("chocoDisplay", data.CFL, "moveChoco", chocoExample);
 
-register("step", () => {
+registerWhen(register("step", () => {
     const now = Math.floor(Date.now() / 1000);
     const lastOpen = now - data.chocoLast;
 
@@ -128,12 +128,27 @@ ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${WHITE + data.totalEggs}/${data.maxEggs}
  ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
  ${YELLOW}Completion: ${WHITE + (data.totalEggs / 4.57).toFixed(2)}%`);
-}).setFps(1);
+}).setFps(1), () => settings.chocoDisplay);
 
+/**
+ * Rabbit chat detection.
+ */
 register("chat", (x) => {
     data.chocolate += parseInt(x.replace(/,/g, ''));
     data.dupeEggs++;
 }).setCriteria("DUPLICATE RABBIT! +${x} Chocolate");
+
+registerWhen(register("chat", (choco, mult) => {
+    data.chocoMultiplier += parseFloat(mult);
+    data.chocoProduction += parseInt(choco) * data.chocoMultiplier;
+    data.totalEggs++;
+}).setCriteria("NEW RABBIT! +${choco} Chocolate and +${mult}x Chocolate per second!"), () => settings.chocoDisplay);
+
+registerWhen(register("chat", (mult) => {
+    if (isNaN(mult)) return;
+    data.chocoMultiplier += parseFloat(mult);
+    data.totalEggs++;
+}).setCriteria("NEW RABBIT! +${mult}x Chocolate per second!"), () => settings.chocoDisplay);
 
 
 /**
