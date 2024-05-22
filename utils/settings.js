@@ -1130,6 +1130,14 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     })
     croesusHighlight = false;
 
+    @SwitchProperty({
+        name: "Dungeon Profit",
+        description: `${DARK_RED}NEW! ${GRAY}Display overall profit of Dungeon chests.\nMove GUI with ${AQUA}/moveDP${GRAY}.`,
+        category: "Dungeon",
+        subcategory: "Chests"
+    })
+    dungeonProfit = false;
+
     // --- Star Detect ---
     @SelectorProperty({
         name: "Star Mob Highlight",
