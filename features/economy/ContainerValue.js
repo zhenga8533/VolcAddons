@@ -102,11 +102,12 @@ function sackValue(container) {
  * @param {Inventory} container - Player GUI container.
  */
 function composterValue(container) {
+    // Get composting values
     const bazaar = getBazaar();
-
     const compost = container.getStackInSlot(13);
     const available = parseInt(compost.getLore().find(line => line.startsWith("§5§o§7§7Compost Available:")).split(' ')[2].removeFormatting());
 
+    // Get composter upgrades
     const crop = unformatNumber(container.getStackInSlot(1).getLore()[1].removeFormatting().trim().split('/')[0]);
     const fuel = unformatNumber(container.getStackInSlot(7).getLore()[1].removeFormatting().trim().split('/')[0]);
     const costUpgrade = data.composterUpgrades["Cost Reduction"];
@@ -115,6 +116,7 @@ function composterValue(container) {
     const composting = Math.min(noCrop, noFuel) * (1 + 0.03 * data.composterUpgrades["Multi Drop"]);
     const value = bazaar?.["COMPOST"]?.[settings.priceType] ?? 0;
 
+    // Set composting values
     const itemValues = {
         "Composted": [available, available * value],
         "Composting": [composting, composting * value]
@@ -123,11 +125,58 @@ function composterValue(container) {
 }
 
 /**
+ * Calculate the value of a bazaar container.
+ * 
+ * @param {Inventory} container - Player GUI container.
+ */
+function bazaarValue(container) {
+    const itemValues = {};
+    
+    for (let i = 1; i < 5; i++) {
+        const firstStack = container.getStackInSlot(i * 9 + 1);
+        if (firstStack !== null && firstStack.getUnlocalizedName() === "tile.thinStainedGlass") break;
+        
+        for (let j = 1; j < 9; j++) {
+            // Get item stack or detect no item
+            let stack = container.getStackInSlot(i * 9 + j);
+            if (stack === null) break;
+            const lore = stack.getLore();
+
+            // Get item name, capacity, and price
+            const name = stack.getName().split(' ').slice(1).join(' ');
+            let amount = 0;
+            let price = 0;
+
+            // Get capacity and price from lore
+            const amountLine = lore.find(line => line.includes("amount:"));
+            if (amountLine) {
+                const regex = /(Offer|Order) amount: ([0-9,]+)x/;
+                const match = amountLine.removeFormatting().match(regex);
+                if (match) amount = unformatNumber(match[2]);
+            }
+
+            // Get price from lore
+            const priceLine = lore.find(line => line.startsWith("§5§o§7Price per unit:"));
+            if (priceLine) {
+                const regex = /Price per unit: .+?([^\s]+)/;
+                const match = priceLine.removeFormatting().match(regex);
+                if (match) price = unformatNumber(match[1]);
+            }
+
+            itemValues[name] = [amount, amount * price];
+        }
+    }
+    
+    setMessage(itemValues);
+}
+
+/**
  * Calculates and displays the total value of items in the player's container.
  * Generates a formatted overlay message for the containerOverlay.
  */
 function updateContainerValue(remove) {
     Client.scheduleTask(3, () => {
+        // Check if container is valid
         const container = Player.getContainer();
         const containerName = container.getName().removeFormatting();
         const words = containerName.split(" ");
@@ -136,6 +185,9 @@ function updateContainerValue(remove) {
             return;
         } else if (containerName === "Composter") {
             composterValue(container);
+            return;
+        } else if (containerName.endsWith("Bazaar Orders")) {
+            bazaarValue(container);
             return;
         } else if (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) return;
 
@@ -166,27 +218,33 @@ function updateContainerValue(remove) {
 }
 
 /**
- * Handles GUI events in container GUIs, updating value overlay display if a chest GUI is involved.
- */
-registerWhen(register("guiOpened", (event) => {
-    const guiName = event.gui.class.getName();
-    if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
-    else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
-}), () => settings.containerValue !== 0);
-
-/**
  * Handles mouse click interactions within container GUIs.
  * Invokes `updateContainerValue` to update value overlay display.
  */
-registerWhen(register("guiMouseRelease", (x, y, button, gui) => {
+const mouse = register("guiMouseRelease", (_, __, ___, gui) => {
     const guiName = gui.class.getName();
     if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
     else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
-}), () => settings.containerValue !== 0);
+}).unregister();
 
 /**
  * This function clears the content of the container overlay message, effectively removing it from display.
  */
-registerWhen(register("guiClosed", () => {
-    Client.scheduleTask(3, () => containerOverlay.setMessage(""));
+const close = register("guiClosed", () => {
+    mouse.unregister();
+    close.unregister();
+}).unregister();
+
+/**
+ * Handles GUI events in container GUIs, updating value overlay display if a chest GUI is involved.
+ */
+registerWhen(register("guiOpened", (event) => {
+    containerOverlay.setMessage("");
+    const guiName = event.gui.class.getName();
+    if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
+    else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
+    else return;
+
+    mouse.register();
+    close.register();
 }), () => settings.containerValue !== 0);
