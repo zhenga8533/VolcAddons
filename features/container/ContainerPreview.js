@@ -131,7 +131,9 @@ register("guiOpened", () => {
         itemsCache = Player.getContainer().getItems().slice(0, 54);
         
         // Get index of container
-        const i = split[split[1].startsWith("Backpack") ? split.length - 1 : 2][1] - 1;
+        const i = (split[1].startsWith("Backpack") ?
+            split[split.length - 1].replace(/[^0-9]/g, '') :
+            split[2][1]) - 1;
         nameCache = [containerCache[1], i];
 
         // Set registers
