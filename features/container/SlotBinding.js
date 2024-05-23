@@ -18,8 +18,8 @@ HOTBAR.forEach(slot => {
 });
 
 // Bind slots
-registerWhen(register("guiKey", (c, keyCode, gui) => {
-    if (keyCode !== bindKey.getKeyCode()) return;
+registerWhen(register("guiKey", (_, keyCode, gui) => {
+    if (Player.getContainer().getSize() !== 45 || keyCode !== bindKey.getKeyCode()) return;
     const bind = gui?.getSlotUnderMouse()?.field_75222_d;
     if (bind === undefined || bind <= 4) return;
 
