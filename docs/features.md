@@ -42,6 +42,7 @@ subtitle: List of all features and their related commands.
     - Armor Display (`/moveArmor`)
     - Equipment Display (`/moveEq`)
     - Jyrre Timer
+    - Max Supercraft
 
 ### <u>Party Features</u>
 - **General**
