@@ -24,12 +24,13 @@ subtitle: List of every non-gui related commands.
     - `/va whitelist`: Set player party invites to auto join.
     - `/va binds`: Set slot bindings and their presets.
     - `/va buttons`: Set container buttons and their presets.
+    - `/va preview`: Set storage preview keys.
 - **Waypoints**
     - `/va cat`: Controls Montezuma Soul Piece waypoints.
     - `/va enigma`: Controls Enigma Soul waypoints.
     - `/va fairy`: Controls Fairy Soul waypoints.
-    - `/va npc`: Creates waypoints to user inputted rift NPCs.
-    - `/va zone`: Creates waypoints to user inputted rift locations.
+    - `/va npc`: Creates waypoints to user inputted NPCs.
+    - `/va zone`: Creates waypoints to user inputted locations.
     - `/va waypoint`: Creates waypoints to user inputted coordinates.
 - **Economy**
     - `/va attribute`: Various calculations that deal with attribute values.

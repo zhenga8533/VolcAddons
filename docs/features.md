@@ -27,7 +27,6 @@ subtitle: List of all features and their related commands.
     - Autocorrect Commands
     - Custom Emotes (`/va emote`)
     - Discord Webhook
-    - Image Viewer
 
 ### <u>Container Features</u>
 - **General**
@@ -78,9 +77,6 @@ subtitle: List of all features and their related commands.
     - Low Health Alert
     - Mana Drain Range
     - Ragnarok Detection
-- **Gyrokinetic Wand**
-    - Cell Alignment Alert
-    - Cell Alignment Timer (`/moveGyro`)
 - **Slayer**
     - Boss Announce
     - Boss Highlight
@@ -110,8 +106,6 @@ subtitle: List of all features and their related commands.
     - Composter Display (`/moveCompost`)
     - Garden Plot Box
     - Garden Visitor Display (`/moveVisitors`)
-    - Garden Webhook
-    - Jacob Reward Highlight
 - **Pests**
     - Desk Highlight
     - Infestation Alert
@@ -129,7 +123,6 @@ subtitle: List of all features and their related commands.
 - **Great Spook**
     - Math Teacher Solver
     - Primal Fear Alert
-    - Primal Feat Highlight
 - **Inquisitor**
     - Inquisitor Detect
     - Inquisitor Announce
@@ -155,8 +148,12 @@ subtitle: List of all features and their related commands.
     - Vanquisher Detect (`/moveVanq`)
 
 ### <u>Dungeons</u>
+- **Chests**
+    - Croesus Highlight
+    - Dungeon Chest Profit
 - **Star Detect**
     - Star Mob Highlight
+    - Star Custom Color
 
 ### <u>Kuudra</u>
 - **General**
@@ -180,6 +177,5 @@ subtitle: List of all features and their related commands.
 - **Vampire**
     - Announce Mania Phase
     - Effigy Waypoints
-    - Enlarge Impel Message
     - Vampire Attack Display (`/moveVamp`)
     - Vampire Hitbox
