@@ -407,7 +407,7 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
     })
     wardrobeBinding = true;
 
-    // --- Inventory ---
+    // --- Items ---
     @SwitchProperty({
         name: "Attribute Abbreviation",
         description: `Renders abbreviation of attributes over any item that has them.`,
@@ -439,6 +439,14 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
         subcategory: "Items"
     })
     jyrreTimer = true;
+
+    @SwitchProperty({
+        name: "Max Supercraft",
+        description: `${DARK_RED}NEW! ${GRAY}Displays the maximum amount of items that can be crafted using supercraft.`,
+        category: "Container",
+        subcategory: "Items"
+    })
+    maxSupercraft = true;
 
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
