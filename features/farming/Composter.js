@@ -1,10 +1,10 @@
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { data } from "../../utils/data";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
+import { data } from "../../utils/Data";
 import { commafy, formatTime, romanToNum } from "../../utils/functions/format";
-import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
 import { getBazaar } from "../economy/Economy";
 
 
@@ -41,10 +41,10 @@ function updateCompost() {
 }
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => location.getWorld() === "Garden" && settings.compostTab === 2);
+}), () => location.getWorld() === "Garden" && Settings.compostTab === 2);
 registerWhen(register("guiMouseClick", () => {
     Client.scheduleTask(1, updateCompost);
-}), () => location.getWorld() === "Garden" && settings.compostTab === 2);
+}), () => location.getWorld() === "Garden" && Settings.compostTab === 2);
 
 /**
  * Update compost overlay.
@@ -53,7 +53,7 @@ registerWhen(register("step", () => {
     if (!World.isLoaded()) return;
     const tablist = TabList.getNames();
 
-    if (settings.gardenTab === 1) {
+    if (Settings.gardenTab === 1) {
         if (tablist.find(tab => tab.includes("Time Left")) !== undefined)
             Client.showTitle(`${DARK_RED + BOLD} ${WHITE}COMPOSTER INACTIVE!`, "", 0, 25, 5);
         return;
@@ -83,7 +83,7 @@ registerWhen(register("step", () => {
 `${DARK_GREEN + BOLD}Composter:
  ${GREEN}Empty: ${message}
  ${GREEN}Next: ${WHITE + nextCompost}`);
-}).setFps(1), () => location.getWorld() === "Garden" && settings.gardenTab);
+}).setFps(1), () => location.getWorld() === "Garden" && Settings.gardenTab);
 
 /**
  * Tracks whenever player is in the Composter Upgrades gui and saves their upgrade values.

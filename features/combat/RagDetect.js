@@ -1,6 +1,6 @@
-import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, GRAY, RED, WHITE } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
+import Settings from "../../utils/Settings";
+import { BOLD, DARK_GRAY, GOLD, GRAY, RED, WHITE } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
 import { formatNumber } from "../../utils/functions/format";
 
 
@@ -20,11 +20,11 @@ registerWhen(register("actionBar", () => {
         const strength = Player.getHeldItem().getLore().find(line => line.startsWith("§5§o§7Strength:"))?.split(' ')?.[1]?.substring(3) ?? 0;
         Client.showTitle(`${GOLD + BOLD}AWOOGA!`, strength === 0 ? "" : `${DARK_GRAY}+${WHITE + formatNumber(strength * 1.5) + RED} Strength`, 0, 25, 5);
     }
-}).setCriteria("${before}CASTING"), () => settings.ragDetect);
+}).setCriteria("${before}CASTING"), () => Settings.ragDetect);
 
 /**
  * Tracks chat for rag cancelled message to display alert on screen.
  */
 registerWhen(register("chat", () => {
     Client.showTitle(`${RED + BOLD}Ragnarok Cancelled!`, GRAY + "Damage was taken...", 5, 25, 5);
-}).setCriteria("Ragnarock was cancelled due to taking damage!"), () => settings.ragDetect);
+}).setCriteria("Ragnarock was cancelled due to taking damage!"), () => Settings.ragDetect);

@@ -1,9 +1,9 @@
 import axios from "../../../axios";
-import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, DARK_RED, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**
@@ -225,4 +225,4 @@ registerWhen(register("chat", (player) => {
     if (player === Player.getName()) return;
 
     kuudraView(player);
-}).setCriteria("Party Finder > ${player} joined the group! (${combat})"), () => settings.autoKV);
+}).setCriteria("Party Finder > ${player} joined the group! (${combat})"), () => Settings.autoKV);

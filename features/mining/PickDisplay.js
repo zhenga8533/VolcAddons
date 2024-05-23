@@ -1,8 +1,8 @@
-import { DARK_GRAY, GOLD, GRAY, GREEN, RED, WHITE } from "../../utils/constants";
-import { data } from "../../utils/data"
-import { Overlay } from "../../utils/overlay"
-import { registerWhen } from "../../utils/register";
-import settings from "../../utils/settings";
+import { DARK_GRAY, GOLD, GRAY, GREEN, RED, WHITE } from "../../utils/Constants";
+import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 
 const drillExample =
@@ -59,11 +59,11 @@ registerWhen(register("step", () => {
     }
 
     drillOverlay.setMessage(drillMessage);
-}).setFps(1), () => settings.pickDisplay);
+}).setFps(1), () => Settings.pickDisplay);
 
 registerWhen(register("chat", (ability) => {
     cooldowns[ability] = ABILITY_COOLDOWNS[ability];
-}).setCriteria("You used your ${ability} Pickaxe Ability!"), () => settings.pickDisplay);
+}).setCriteria("You used your ${ability} Pickaxe Ability!"), () => Settings.pickDisplay);
 
 register("worldLoad", () => {
     Object.keys(cooldowns).forEach(ability => {

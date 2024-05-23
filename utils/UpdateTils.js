@@ -1,5 +1,5 @@
 import axios from "../../axios";
-import { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY, DARK_RED } from "./constants";
+import { BOLD, GOLD, GREEN, LOGO, WHITE, GRAY, DARK_RED } from "./Constants";
 
 
 /**

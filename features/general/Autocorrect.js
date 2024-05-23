@@ -1,8 +1,7 @@
-import settings from "../../utils/settings";
-import { DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
-import { data } from "../../utils/data";
-import { registerWhen } from "../../utils/register";
-import { delay } from "../../utils/thread";
+import Settings from "../../utils/Settings";
+import { DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
+import { data } from "../../utils/Data";
+import { delay } from "../../utils/ThreadTils";
 
 
 /**
@@ -76,12 +75,14 @@ function autocorrect(inputWord, dictionary) {
 function correct(command, event) {
     // Remove command from cache
     data.commands[command] -= 2;
+    if (data.commands[command] <= 0) delete data.commands[command];
+
     command.split(' ').forEach((word, index) => {
         const wordbank = data.wordbanks[index];
         wordbank[word] -= 2;
         if (wordbank[word] <= 0) delete wordbank[word];
     });
-    if (cd || !settings.autocorrect) return;
+    if (cd || !Settings.autocorrect) return;
 
     // Seperate command into args and correct wordbank
     const corrected = [];
@@ -91,7 +92,7 @@ function correct(command, event) {
     
     // Attempt to run new command
     const newCommand = corrected.join(' ');
-    if (newCommand !== command) {
+    if (newCommand !== command && data.commands.hasOwnProperty(newCommand)) {
         // Run new command
         cancel(event);
         ChatLib.chat(`${LOGO + RED}Invalid command: "/${command}", attempting to run: "/${newCommand}"!`);
@@ -119,21 +120,18 @@ let lastMessage = "";
 register("chat", (event) => correct(lastMessage, event))
 .setCriteria("Unknown destination! Check the Fast Travel menu to view options!");
 
+register("chat", (event) => correct(lastMessage, event))
+.setCriteria("You don't have permission to run that command!");
+
 
 /**
  * Autocomplete
  */
 let selected = 0;
 let suggestions = [];
+let suggesting = false;
+
 const suggest = register("renderChat", () => {
-    const chat = Client.getCurrentChatMessage();
-    if (!chat.startsWith('/') || chat.length < 3) return;
-
-    // Get possible commands and sort by frequency
-    suggestions = Object.keys(data.commands).filter(command => command.startsWith(chat.substring(1)));
-    suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
-    if (suggestions.length === 0) return;
-
     const select = suggestions.length - selected - 1;
     const strings = suggestions.map((command, index) => `${(index === select ? WHITE : GRAY) + command + DARK_GRAY} (${data.commands[command]})`);
 
@@ -149,41 +147,55 @@ const suggest = register("renderChat", () => {
     Renderer.drawString(strings.join('\n'), 9, y, true);
 }).unregister();
 
-const key = register("guiKey", (_, keyCode, __, event) => {
-    const chat = Client.getCurrentChatMessage();
-    if (!chat.startsWith('/') || chat.length < 3) return;
+const key = register("guiKey", (char, keyCode, __, event) => {
+    let chat = Client.getCurrentChatMessage() + (keyCode <= 57 && keyCode !== 15 ? char : '');
+    if (keyCode === 14) chat = chat.substring(0, chat.length - 2);
+    suggestions = Object.keys(data.commands).filter(command => command.startsWith(chat.substring(1)));
+    suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
+    selected = MathLib.clamp(selected, 0, Math.max(0, suggestions.length - 1));
+
+    if (!chat.startsWith('/') || chat.length < 3 || suggestions.length === 0) {
+        suggest.unregister();
+        return;
+    }
 
     if (keyCode === 200) {  // Up Key
         selected = MathLib.clamp(selected + 1, 0, suggestions.length - 1);
-        cancel(event);
+        if (suggesting) cancel(event);
     } else if (keyCode === 208) {  // Down Key
         selected = MathLib.clamp(selected - 1, 0, suggestions.length - 1);
-        cancel(event);
+        if (suggesting) cancel(event);
     } else if (keyCode === 15) {  // Tab Key
         const fill = suggestions[suggestions.length - selected - 1];
         Client.setCurrentChatMessage('/' + fill);
         suggestions = Object.keys(data.commands).filter(command => command.startsWith(fill));
-        selected = suggestions.indexOf(fill);
-        cancel(event);
+        suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
+        selected = suggestions.length - suggestions.indexOf(fill) - 1;
+        if (suggesting) cancel(event);
+    } else {
+        suggest.register();
+        suggesting = true;
     }
-});
+}).unregister();
 
 const close = register("guiClosed", () => {
     key.unregister();
     suggest.unregister();
     close.unregister();
+    suggesting = false;
 }).unregister();
 
-registerWhen(register("guiOpened", () => {
+register("guiOpened", () => {
+    if (!Settings.autocomplete) return;
+
     Client.scheduleTask(1, () => {
-        if (!Client.isInChat()) return;
+        if (!Client.currentGui.get().toString().includes("GuiChat")) return;
 
         selected = 0;
         key.register();
-        suggest.register();
         close.register();
     });
-}), () => settings.autocomplete);
+});
 
 
 /**
@@ -205,7 +217,7 @@ register("messageSent", (message) => {
     // Add to command count
     if (data.commands.hasOwnProperty(lastMessage)) data.commands[lastMessage]++;
     else data.commands[lastMessage] = 1;
-});
+}).setPriority(Priority.HIGHEST);
 
 /**
  * Reset commands.
@@ -223,14 +235,20 @@ register("command", () => {
 /**
  * Parse out uncommon commands/words
  */
-data.wordbanks.forEach(wordbank => {
-    Object.keys(wordbank).forEach(word => {
-        wordbank[word] -= 3;
-        if (wordbank[word] <= 0) delete wordbank[word];
-    });
-});
+try {
+    if (Player.getName() !== "Volcaronitee") {
+        data.wordbanks.forEach(wordbank => {
+            Object.keys(wordbank).forEach(word => {
+                wordbank[word] -= 3;
+                if (wordbank[word] <= 0) delete wordbank[word];
+            });
+        });
 
-Object.keys(data.commands).forEach(command => {
-    data.commands[command] -= 3;
-    if (data.commands[command] <= 0) delete data.commands[command];
-});
+        Object.keys(data.commands).forEach(command => {
+            data.commands[command] -= 3;
+            if (data.commands[command] <= 0) delete data.commands[command];
+        });
+    }
+} catch(e) {
+    console.error(`[VolcAddons] Failed to parse data JSON!`);
+}

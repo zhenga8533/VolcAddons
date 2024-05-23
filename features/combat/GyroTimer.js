@@ -1,8 +1,12 @@
-import settings from "../../utils/settings";
-import { BOLD, DARK_RED, GREEN, RED, RESET } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+/**
+ * ARCHIVED
+ */
+
+import Settings from "../../utils/Settings";
+import { BOLD, DARK_RED, GREEN, RED, RESET } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -29,11 +33,11 @@ register("chat", () => {
  */
 registerWhen(register("tick", () => {
     if (align > 0) {
-        if (settings.gyroAlert && align > 0.5 && align < 1 && cd === 0)
+        if (Settings.gyroAlert && align > 0.5 && align < 1 && cd === 0)
             Client.showTitle(`${DARK_RED + BOLD}USE ALIGN`, "", 0, 25, 5);
         align = (align - 0.05).toFixed(2);
         gyroOverlay.setMessage(`${GREEN + BOLD}Align Timer: ${RESET + align}s`);
     } else gyroOverlay.setMessage(`${GREEN + BOLD}Align Timer: ${RED}NO ALIGN`);
     
     if (cd > 0) cd = (cd - 0.05).toFixed(2);
-}), () => settings.gyroAlert || settings.gyroTimer);
+}), () => Settings.gyroAlert || Settings.gyroTimer);

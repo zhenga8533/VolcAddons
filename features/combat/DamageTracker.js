@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, EntityArmorStand, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { BOLD, DARK_GRAY, EntityArmorStand, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { formatNumber, formatTime } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**
@@ -124,7 +124,7 @@ registerWhen(register("tick", () => {
 
     // Do calcs when no new damage ticks
     if (!ticked && last - start > 1) {
-        if (settings.damageTracker === 2) {
+        if (Settings.damageTracker === 2) {
             const { sum, max, min, range, mean, median, mode, lowerQ, upperQ, iqr, variance, stdDev } = statisticalAnalysis(damages);
             
             const time = Date.now()/1000 - start;
@@ -154,4 +154,4 @@ ${RED + BOLD}Dispersion:
         start = 0;
         last = 0;
     }
-}), () => settings.damageTracker !== 0);
+}), () => Settings.damageTracker !== 0);

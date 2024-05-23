@@ -1,12 +1,12 @@
 import RenderLib from "../../../RenderLib";
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/constants";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, RED, RESET, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatTime, removeNonNumeric } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 
 
 const sprays = {};
@@ -53,10 +53,10 @@ register("command", () => {
  */
 registerWhen(register("chat", (_, plot) => {
     Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`, 10, 50, 10);
-}).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"), () => location.getWorld() === "Garden" && settings.pestAlert);
+}).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"), () => location.getWorld() === "Garden" && Settings.pestAlert);
 registerWhen(register("chat", (_, num, plot) => {
     Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`, 10, 50, 10);
-}).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => location.getWorld() === "Garden" && settings.pestAlert);
+}).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => location.getWorld() === "Garden" && Settings.pestAlert);
 
 
 /**
@@ -64,9 +64,9 @@ registerWhen(register("chat", (_, num, plot) => {
  */
 registerWhen(register("step", () => {
     const count = parseInt(TabList.getNames().find(name => name.startsWith("§r Alive:"))?.split(' ')?.[2]?.removeFormatting() ?? 0);
-    if (count < settings.infestationAlert) return;
+    if (count < Settings.infestationAlert) return;
     Client.showTitle(`${DARK_GREEN + BOLD}SPREADING PLAGUE`, `${count} minions with ${BOLD}Taunt ${RESET}are in the way!`, 0, 25, 5);
-}).setFps(1).unregister(), () => settings.infestationAlert !== 0 && location.getWorld() === "Garden");
+}).setFps(1).unregister(), () => Settings.infestationAlert !== 0 && location.getWorld() === "Garden");
 
 
 /**
@@ -75,7 +75,7 @@ registerWhen(register("step", () => {
 const render = register("guiRender", () => {
     const items = Player.getContainer().getItems();
     Object.keys(highlights).forEach(index => {
-        const [x, y] = getSlotCoords(index, "ContainerChest");
+        const [x, y] = getSlotCoords(index);
     
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(highlights[index][0], x, y, 16, 16);
@@ -119,7 +119,7 @@ registerWhen(register("guiOpened", () => {
             }
         }
 
-        if (settings.deskHighlight) {
+        if (Settings.deskHighlight) {
             render.register();
             close.register();
         }
@@ -174,7 +174,7 @@ registerWhen(register("chat", (_, fortune) => {
     remain = 1800;
     addPests(fortune);
 }).setCriteria("[NPC] Phillip: In exchange for ${pests} Pests, I've given you +${fortune}☘ Farming Fortune for 30m!"),
-() => location.getWorld() === "Garden" && settings.pesthunterBonus);
+() => location.getWorld() === "Garden" && Settings.pesthunterBonus);
 
 /**
  * Track bonus timer
@@ -199,7 +199,7 @@ registerWhen(register("step", () => {
     }
 
     bonusOverlay.setMessage(bonusMessage);
-}).setFps(1), () => location.getWorld() === "Garden" && settings.pesthunterBonus);
+}).setFps(1), () => location.getWorld() === "Garden" && Settings.pesthunterBonus);
 
 /**
  * Garden box rendering.
@@ -221,4 +221,4 @@ registerWhen(register("renderWorld", () => {
     }
 
     RenderLib.drawEspBox(-192 + x * 96, 67, -192 + z * 96, 96, 10, ...color, 1, true);
-}), () => location.getWorld() === "Garden" && settings.gardenBox);
+}), () => location.getWorld() === "Garden" && Settings.gardenBox);

@@ -1,10 +1,10 @@
-import settings from "../../utils/settings";
+import Settings from "../../utils/Settings";
 import { formatTime, romanToNum, unformatNumber } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
-import { BOLD, DARK_GRAY, GOLD, GRAY, RED, UNDERLINE, WHITE, YELLOW } from "../../utils/constants";
-import { Json } from "../../utils/json";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
+import { BOLD, GOLD, GRAY, GREEN, LOGO, WHITE, YELLOW } from "../../utils/Constants";
+import { Json } from "../../utils/Json";
 
 
 /**
@@ -69,19 +69,19 @@ registerWhen(register("guiOpened", () => {
         setLevels.register();
         setHighlight.register();
     });
-}), () => settings.bestiaryGUI);
+}), () => Settings.bestiaryGUI);
 registerWhen(register("guiClosed", () => {
     setLevels.unregister();
     setHighlight.unregister();
     bestiaryData[0] = [];
     bestiaryData[1] = [];
-}), () => settings.bestiaryGUI);
+}), () => Settings.bestiaryGUI);
 
 
 /**
  * Bestiary widget tracker.
  */
-const maxBestiary = new Json("bestiary.json").getData();
+const maxBestiary = new Json("bestiary.json", false).getData();
 register("guiOpened", () => {
     Client.scheduleTask(1, () => {
         const containerName = Player.getContainer().getName();
@@ -98,7 +98,7 @@ register("guiOpened", () => {
                 let lore = item.getLore();
                 let ind = lore.findIndex(line => line.startsWith("§5§o§7Overall Progress: §b"));
                 let max = unformatNumber(lore[ind + 1].removeFormatting().split('/')[1]);
-                maxBestiary[name] = max;
+                if (max !== 0 && name !== '') maxBestiary[name] = max;
             }
         }
     });
@@ -111,11 +111,13 @@ const bestiaryExample =
 const bestiaryOverlay = new Overlay("bestiaryCounter", data.BEL, "moveBe", bestiaryExample);
 
 // Dict of [start, now, next]
-const beCounter = {};
+let beCounter = {};
 let beTime = 0;
 
 register("command", () => {
     beCounter = {};
+    bestiaryOverlay.setMessage("");
+    ChatLib.chat(`${LOGO + GREEN}Successfully reset bestiary counter.`);
 }).setName("resetBe");
 
 registerWhen(register("step", () => {
@@ -135,8 +137,10 @@ registerWhen(register("step", () => {
         let now = unformatNumber(count[0]);
         let next = unformatNumber(count[1]);
 
-        if (beCounter.hasOwnProperty(name)) beCounter[name][1] = now;
-        else beCounter[name] = [now, now, next];
+        if (beCounter.hasOwnProperty(name)) {
+            beCounter[name][1] = now;
+            beCounter[name][2] = Math.max(next, beCounter[name][2]);
+        } else beCounter[name] = [now, now, next];
     }
 
     // Sort by now - start
@@ -165,4 +169,4 @@ registerWhen(register("step", () => {
     });
 
     bestiaryOverlay.setMessage(message);
-}).setFps(1), () => settings.bestiaryCounter);
+}).setFps(1), () => Settings.bestiaryCounter);

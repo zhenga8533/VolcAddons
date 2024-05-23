@@ -1,11 +1,11 @@
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/constants";
-import { Overlay } from "../../utils/overlay";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import toggles from "../../utils/Toggles";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
+import { Overlay } from "../../utils/Overlay";
 import { isPlayer } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -69,7 +69,7 @@ function sendPingRequest() {
 };
 registerWhen(register("step", () => {
     sendPingRequest();
-}).setDelay(3), () => settings.serverStatus || toggles.statusCommand);
+}).setDelay(3), () => Settings.serverStatus || toggles.statusCommand);
 
 /**
  * Calculates the ping (latency) based on the difference between the current time
@@ -120,14 +120,14 @@ registerWhen(register('tick', () => {
         const x = Math.round(Player.getX());
         const y = Math.round(Player.getY());
         const z = Math.round(Player.getZ());
-        statusMessage += `\n${GRAY}[${GOLD}XYZ${GRAY}] ${WHITE + x}, ${y}, ${z}`;
+        statusMessage += `\n${GRAY}[${GOLD}XYZ${GRAY}] ${DARK_GRAY + x}, ${y}, ${z}`;
     }
 
     // Yaw and Pitch
     if (toggles.angleDisplay) {
         const yaw = Player.getYaw();
         const pitch = Player.getPitch();
-        statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${WHITE + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
+        statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${DARK_GRAY + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
     }
 
     // Direction
@@ -136,7 +136,7 @@ registerWhen(register('tick', () => {
         const direction = yaw >= 45 && yaw < 135 ? "West" :
             yaw >= 135 && yaw < 255 ? "North" :
             yaw >= 225 && yaw < 315 ? "East" : "South";
-        statusMessage += `\n${GRAY}[${GOLD}Dir${GRAY}] ${WHITE + direction}`;
+        statusMessage += `\n${GRAY}[${GOLD}Dir${GRAY}] ${DARK_GRAY + direction}`;
     }
 
     // Ping
@@ -146,7 +146,7 @@ registerWhen(register('tick', () => {
             ping < 300 ? YELLOW :
             ping < 420 ? GOLD : 
             ping < 690 ? RED : DARK_RED;
-        statusMessage += `\n${GRAY}[${GOLD}Ping${GRAY}] ${pingColor + ping + WHITE} ms`;
+        statusMessage += `\n${GRAY}[${GOLD}Ping${GRAY}] ${pingColor + ping + DARK_GRAY} ms`;
     }
 
     // FPS
@@ -159,7 +159,7 @@ registerWhen(register('tick', () => {
             fpsRatio > 0.7 ? YELLOW :
             fpsRatio > 0.6 ? GOLD : 
             fpsRatio > 0.5 ? RED : DARK_RED;
-        statusMessage += `\n${GRAY}[${GOLD}FPS${GRAY}] ${fpsColor + fps + WHITE} fps`;
+        statusMessage += `\n${GRAY}[${GOLD}FPS${GRAY}] ${fpsColor + fps + DARK_GRAY} fps`;
     }
 
     // TPS
@@ -169,7 +169,7 @@ registerWhen(register('tick', () => {
             tps > 13 ? YELLOW :
             tps > 10 ? GOLD : 
             tps > 7 ? RED : DARK_RED;
-        statusMessage += `\n${GRAY}[${GOLD}TPS${GRAY}] ${tpsColor + tps.toFixed(1) + WHITE} tps`;
+        statusMessage += `\n${GRAY}[${GOLD}TPS${GRAY}] ${tpsColor + tps.toFixed(1) + DARK_GRAY} tps`;
     }
 
     // CPS
@@ -186,17 +186,17 @@ registerWhen(register('tick', () => {
             rightCPS < 13 ? YELLOW :
             rightCPS < 21 ? GOLD : 
             rightCPS < 30 ? RED : DARK_RED;
-        statusMessage += `\n${GRAY}[${GOLD}CPS${GRAY}] ${leftColor + leftCPS + WHITE} : ${rightColor + rightCPS}`;
+        statusMessage += `\n${GRAY}[${GOLD}CPS${GRAY}] ${leftColor + leftCPS + DARK_GRAY} : ${rightColor + rightCPS}`;
     }
 
     // Day
     if (toggles.dayDisplay) {
         const daytime = (World.getTime() / 24000).toFixed(2);
-        statusMessage += `\n${GRAY}[${GOLD}Day${GRAY}] ${WHITE + daytime}`;
+        statusMessage += `\n${GRAY}[${GOLD}Day${GRAY}] ${DARK_GRAY + daytime}`;
     }
 
     statusOverlay.setMessage(statusMessage.substring(1));
-}), () => settings.serverStatus || toggles.statusCommand);
+}), () => Settings.serverStatus || toggles.statusCommand);
 
 /**
  * Output status to user chat when user requests via command args.
@@ -274,14 +274,14 @@ export function getStatus(status) {
  */
 registerWhen(register("renderEntity", (entity, _, __, event) => {
     const distance = entity.distanceTo(Player.asPlayerMP());
-    if (settings.hideFarEntity !== 0 && distance >= settings.hideFarEntity)
+    if (Settings.hideFarEntity !== 0 && distance >= Settings.hideFarEntity)
         cancel(event);
-    if (settings.hideCloseEntity !== 0 && distance <= settings.hideCloseEntity && entity.name !== Player.name && isPlayer(entity))
+    if (Settings.hideCloseEntity !== 0 && distance <= Settings.hideCloseEntity && entity.name !== Player.name && isPlayer(entity))
         cancel(event);
 }).setPriority(Priority.LOWEST), () => {
-    if (settings.hideFarEntity === 0 && settings.hideCloseEntity === 0) return false;
+    if (Settings.hideFarEntity === 0 && Settings.hideCloseEntity === 0) return false;
     const world = location.getWorld()?.toLowerCase() ?? "";
-    const worlds = settings.hideWorlds.toLowerCase().split(", ");
+    const worlds = Settings.hideWorlds.toLowerCase().split(", ");
     return worlds[0] === "" || worlds.includes(world);
 });
 
@@ -291,4 +291,4 @@ registerWhen(register("renderEntity", (entity, _, __, event) => {
  */
 registerWhen(register("spawnParticle", (particle, type, event) => {
     cancel(event);
-}).setPriority(Priority.LOWEST), () => settings.hideParticles);
+}).setPriority(Priority.LOWEST), () => Settings.hideParticles);

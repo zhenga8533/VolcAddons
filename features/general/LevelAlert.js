@@ -1,6 +1,6 @@
-import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, GRAY, LOGO } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, DARK_AQUA, GRAY, LOGO } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 let lastMessage;
@@ -12,4 +12,4 @@ registerWhen(register("actionBar", (_, amount, category, now, __) => {
 
     ChatLib.chat(message);
     Client.showTitle(`${AQUA + BOLD}+${amount} SkyBlock XP`, `${GRAY}(${category}) ${DARK_AQUA}(${now}/100)`, 10, 50, 10);
-}).setCriteria("${hp}+${amount} SkyBlock XP (${category}) (${now}/100)${mana}"), () => settings.levelAlert);
+}).setCriteria("${hp}+${amount} SkyBlock XP (${category}) (${now}/100)${mana}"), () => Settings.levelAlert);

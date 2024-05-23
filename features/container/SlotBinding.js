@@ -1,9 +1,9 @@
-import settings from "../../utils/settings";
-import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
-import { printList } from "../../utils/list";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
+import { printList } from "../../utils/ListTils";
 
 
 // Bind key
@@ -11,36 +11,43 @@ const bindKey = new KeyBind("Slot Binding", data.bindKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.bindKey = bindKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 let binding = undefined;
 
+const HOTBAR = ["36", "37", "38", "39", "40", "41", "42", "43", "44"];
+HOTBAR.forEach(slot => {
+    if (!data.slotBinds.hasOwnProperty(slot) && !Array.isArray(data.slotBinds[slot]))
+        data.slotBinds[slot] = [];
+});
+
 // Bind slots
 registerWhen(register("guiKey", (c, keyCode, gui) => {
     if (keyCode !== bindKey.getKeyCode()) return;
     const bind = gui?.getSlotUnderMouse()?.field_75222_d;
     if (bind === undefined || bind <= 4) return;
 
-    if (data.slotBinds.hasOwnProperty(bind)) {
-        delete data.slotBinds[data.slotBinds[bind]];
+    if (data.slotBinds.hasOwnProperty(bind) && bind < 36) {
+        const binded = data.slotBinds[bind];
+        data.slotBinds[binded].splice(data.slotBinds[binded].indexOf(bind), 1);
         delete data.slotBinds[bind];
     } else if (binding === undefined) binding = bind;
     else if (binding === bind) binding = undefined;
-    else if ((binding >= 36 && bind < 36) || (binding < 36 && bind >= 36)) {
-        // Delete old binds and set new binds
-        delete data.slotBinds[binding];
-        delete data.slotBinds[bind];
-
+    else if (binding >= 36 && bind < 36) {
+        data.slotBinds[bind] = binding;
+        data.slotBinds[binding].push(bind);
+        binding = undefined;
+    } else if (binding < 36 && bind >= 36) {
         data.slotBinds[binding] = bind;
-        data.slotBinds[bind] = [binding];
+        data.slotBinds[bind].push(binding);
         binding = undefined;
     }
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 registerWhen(register("guiClosed", () => {
     binding = undefined;
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 
 // Swap binded items
-registerWhen(register("guiMouseClick", (x, y, button, gui, event) => {
+registerWhen(register("guiMouseClick", (_, __, button, gui, event) => {
     if (button !== 0 || !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) return;
 
-    const hover = gui?.getSlotUnderMouse()?.field_75222_d;
+    const hover = gui?.getSlotUnderMouse()?.field_75222_d ?? 36;
     const bind = data.slotBinds[hover];
     if (hover >= 36 || bind === undefined) return;
 
@@ -48,43 +55,53 @@ registerWhen(register("guiMouseClick", (x, y, button, gui, event) => {
     Client.getMinecraft().field_71442_b.func_78753_a(Player.getContainer().getWindowId(), hover, bind - 36, 2, Player.getPlayer());
 
     cancel(event);
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 
 // Render bindings
 registerWhen(register("guiRender", (x, y, gui) => {
     if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiInventory") return;
-    const containerType = Player.getContainer().getClassName();
 
     // render binding
     if (binding !== undefined) {
-        const [x, y] = getSlotCoords(binding, containerType);
+        const [x, y] = getSlotCoords(binding);
     
-        Renderer.translate(0, 0, 100);
-        Renderer.drawRect(Renderer.color(0, 255, 255, 200), x, y, 16, 16);
+        Renderer.translate(0, 0, 200);
+        Renderer.drawRect(Renderer.AQUA, x, y, 16, 16);
     }
 
     // render all binds
     Object.keys(data.slotBinds).forEach(bind => {
-        const [x, y] = getSlotCoords(bind, containerType);
+        if (Array.isArray(data.slotBinds[bind]) && data.slotBinds[bind].length === 0) return;
+        const [x, y] = getSlotCoords(bind);
 
-        Renderer.translate(0, 0, 100);
-        Renderer.drawRect(Renderer.color(128, 128, 128, 200), x, y, 16, 16);
+        Renderer.translate(0, 0, 200);
+        Renderer.drawRect(Renderer.GRAY, x, y, 16, 16);
     });
 
     // render hovered binds
     const hover = gui?.getSlotUnderMouse()?.field_75222_d;
     const bind = data.slotBinds[hover];
-    if (bind !== undefined) {
-        const [x, y] = getSlotCoords(hover, containerType);
-        const [dx, dy] = getSlotCoords(bind, containerType);
+    if (Array.isArray(bind)) {
+        bind.forEach(slot => {
+            const [x, y] = getSlotCoords(hover);
+            const [dx, dy] = getSlotCoords(slot);
 
-        Renderer.translate(0, 0, 100);
+            Renderer.translate(0, 0, 300);
+            Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);
+        });
+    } else if (bind !== undefined) {
+        const [x, y] = getSlotCoords(hover);
+        const [dx, dy] = getSlotCoords(bind);
+
+        Renderer.translate(0, 0, 300);
         Renderer.drawLine(Renderer.AQUA, x + 8, y + 8, dx + 8, dy + 8, 1);
     }
-}), () => settings.slotBinding);
+}), () => Settings.slotBinding);
 
 /**
  * Slot binding related commands...
+ * 
+ * @param {string[]} args - Command arguments.
  */
 export function slotCommands(args) {
     const command = args[1];
@@ -114,19 +131,19 @@ export function slotCommands(args) {
             break;
         case "clear":
         case "reset":
-            data.slotBinds = {};
+            data.slotBinds = {"36": [], "37": [], "38": [], "39": [], "40": [], "41": [], "42": [], "43": [], "44": []};
             ChatLib.chat(`${LOGO + GREEN}Successfully reset slot bindings!`);
             break;
         case "help":
         default:
             if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
-            ChatLib.chat(`
-${LOGO + GOLD + BOLD}Container Buttons Commands:
+            ChatLib.chat(
+`${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va bind <command>
 
- ${DARK_GRAY}- ${GOLD}save ${YELLOW}<key>: Save binding data to presets using key.
- ${DARK_GRAY}- ${GOLD}delete ${YELLOW}<key>: Delete binding preset using key.
- ${DARK_GRAY}- ${GOLD}load ${YELLOW}<key>: Load binding preset using key.
+ ${DARK_GRAY}- ${GOLD}save <key>: ${YELLOW}Save binding data to presets using key.
+ ${DARK_GRAY}- ${GOLD}delete <key>: ${YELLOW}Delete binding preset using key.
+ ${DARK_GRAY}- ${GOLD}load <key>: ${YELLOW}Load binding preset using key.
  ${DARK_GRAY}- ${GOLD}list: ${YELLOW}View all available binding presets.
  ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Removes all bindings.
  ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.`);

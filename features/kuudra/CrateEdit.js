@@ -1,8 +1,8 @@
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -19,7 +19,7 @@ registerWhen(register("renderTitle", (title, _, event) => {
 
     crateOverlay.setMessage(title);
     cancel(event);
-}), () => settings.crateEdit && location.getWorld() === "Kuudra");
+}), () => Settings.crateEdit && location.getWorld() === "Kuudra");
 
 /**
  * Reset on crate pickup/cancel

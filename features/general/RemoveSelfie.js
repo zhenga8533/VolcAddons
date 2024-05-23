@@ -1,5 +1,5 @@
-import settings from "../../utils/settings";
-import { registerWhen } from "../../utils/register";
+import Settings from "../../utils/Settings";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**
@@ -26,4 +26,4 @@ registerWhen(register('tick', () => {
         if (Client.settings.getSettings().field_74320_O === 2)
                 Client.settings.getSettings().field_74320_O = 0;
     }
-}), () => settings.removeSelfie === true);
+}), () => Settings.removeSelfie === true);

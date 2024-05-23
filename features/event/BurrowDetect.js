@@ -1,19 +1,18 @@
-import location from "../../utils/location";
-import mayor from "../../utils/mayor";
-import settings from "../../utils/settings";
-import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/constants";
-import { getClosest } from "../../utils/functions/find";
+import location from "../../utils/Location";
+import mayor from "../../utils/Mayor";
+import Settings from "../../utils/Settings";
+import { AMOGUS, GRAY, LOGO, WHITE } from "../../utils/Constants";
 import { playSound } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/register";
-import { delay } from "../../utils/thread";
+import { registerWhen } from "../../utils/RegisterTils";
+import { delay } from "../../utils/ThreadTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
  * Variables used for burrow tracking
  */
 let echo = false;
-const burrows = [];
-export function getBurrows() { return burrows };
+const burrows = new Waypoint([0, 0.5, 0]);  // Green Burrows
 const lastBurrows = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 
 /**
@@ -24,7 +23,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
 
     echo = true;
     delay(() => echo = false, 3000);
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);
 
 /**
  * Detect for mytholigical burrows
@@ -35,7 +34,8 @@ registerWhen(register("spawnParticle", (particle, type) => {
     const pos = particle.getPos();
     const [x, y, z] = [pos.getX(), pos.getY(), pos.getZ()];
     const xyz = [`§6Burrow`, x, y, z];
-    const closest = getClosest(xyz, burrows);
+    const closest = burrows.getClosest(xyz);
+    const waypoints = burrows.getWaypoints();
 
     switch (type.toString()) {
         case "FOOTSTEP":
@@ -52,33 +52,30 @@ registerWhen(register("spawnParticle", (particle, type) => {
                 burrows.push(xyz);
         
                 // Announce burrow depending on settings
-                if (settings.burrowDetect === 2 || settings.burrowDetect === 4) playSound(AMOGUS, 100);
-                if (settings.burrowDetect === 3 || settings.burrowDetect === 4) ChatLib.chat(`${LOGO + WHITE}Burrow Detected at ${GRAY}x: ${x}, y: ${y}, z: ${z}!`);
+                if (Settings.burrowDetect === 2 || Settings.burrowDetect === 4) playSound(AMOGUS, 100);
+                if (Settings.burrowDetect === 3 || Settings.burrowDetect === 4) ChatLib.chat(`${LOGO + WHITE}Burrow Detected at ${GRAY}x: ${x}, y: ${y}, z: ${z}!`);
             }
             break;
         case ("CRIT_MAGIC"):
-            if (closest[1] < 3) burrows[burrows.indexOf(closest[0])][0] = `§aStart`;
+            if (closest[1] < 3) waypoints[waypoints.indexOf(closest[0])][0] = `§aStart`;
             break;
         case ("CRIT"):
-            if (closest[1] < 3) burrows[burrows.indexOf(closest[0])][0] = `§cMob`;
+            if (closest[1] < 3) waypoints[waypoints.indexOf(closest[0])][0] = `§cMob`;
             break;
     }
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);
 
 /**
  * Events to remove burrows from list
  */
 registerWhen(register("chat", () => {
-    const closest = getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()], burrows);
-    if (closest !== undefined) Client.scheduleTask(2, () => burrows.splice(burrows.indexOf(closest[0]), 1));
+    const closest = burrows.getClosest(["Player", Player.getX(), Player.getY(), Player.getZ()]);
+    const waypoints = burrows.getWaypoints();
+    if (closest !== undefined) Client.scheduleTask(2, () => waypoints.splice(waypoints.indexOf(closest[0]), 1));
 }).setCriteria("You ${completed} Griffin ${burrow}! (${x}/4)"),
-() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
-
-register("worldUnload", () => {
-    burrows.length = 0;
-});
+() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);
 
 registerWhen(register("chat", () => {
-    burrows.length = 0;
+    burrows.clear();
 }).setCriteria(" ☠ You ${died}."),
-() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.burrowDetect !== 0);
+() => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.burrowDetect !== 0);

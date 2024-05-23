@@ -1,5 +1,5 @@
-import { GRAY, GREEN, LOGO } from "./constants";
-import { data } from "./data";
+import { GRAY, GREEN, LOGO, RED } from "./Constants";
+import { data } from "./Data";
 
 
 /**
@@ -7,8 +7,9 @@ import { data } from "./data";
  */
 const devKey = new KeyBind("Developer Mode", data.devKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.devKey = devKey.getKeyCode() }).setPriority(Priority.HIGHEST);
+
 devKey.registerKeyPress(() => {
-    if (devKey.getKeyCode() === 0) return;
+    if (devKey.getKeyCode() === 0 || !data.devMode) return;
 
     const view = Player.lookingAt();
     if (view instanceof Entity) {
@@ -36,14 +37,14 @@ devKey.registerKeyPress(() => {
 });
 
 register("guiKey", (_, keyCode, gui) => {
-    if (keyCode === devKey.getKeyCode()) {
-        const slot = gui?.getSlotUnderMouse()?.field_75222_d;
-        if (slot === undefined) return;
-        const item = Player.getContainer().getStackInSlot(slot);
-        if (item === null) return;
-        ChatLib.command(`ct copy ${item.getNBT()}`, true);
-        ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
-    }
+    if (keyCode !== devKey.getKeyCode() || !data.devMode) return;
+    
+    const slot = gui?.getSlotUnderMouse()?.field_75222_d;
+    if (slot === undefined) return;
+    const item = Player.getContainer().getStackInSlot(slot);
+    if (item === null) return;
+    ChatLib.command(`ct copy ${item.getNBT()}`, true);
+    ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
 });
 
 

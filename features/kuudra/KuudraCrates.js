@@ -1,17 +1,16 @@
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { GIANT_CLASS, STAND_CLASS } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import { GIANT_CLASS, STAND_CLASS } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
 import { getPhase } from "./KuudraSplits";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
  * Variables used to track and display crate locations.
  */
-let crates = [];
-export function getCrates() { return crates };
-let builds = [];
-export function getBuilds() { return builds };
+const crates = new Waypoint([1, 1, 1], 1, false, true, false);  // White Crates
+const builds = new Waypoint([1, 0, 0], 1, false, true, false);  // Red Builds
 
 /**
  * Tracks crates near player and colors them depending on how close they are.
@@ -19,18 +18,21 @@ export function getBuilds() { return builds };
 registerWhen(register("tick", () => {
     if (getPhase() !== 1 && getPhase() !== 3) return;
     
+    // Get all giant zombies and filter out the ones that are not on the ground
     const gzs = World.getAllEntitiesOfType(GIANT_CLASS);
     const supplies = gzs.filter(gz => gz.getY() < 67);
     const player = Player.asPlayerMP();
 
-    crates = supplies.map(supply => {
+    // Update waypoints
+    crates.clear();
+    supplies.forEach(supply => {
         const yaw = supply.getYaw();
         const distance = player.distanceTo(supply);
-        const x = supply.getX() + 5 * Math.cos((yaw + 130) * (Math.PI / 180));
-        const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180));
-        return [x, 75, z, distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0];
+        const x = supply.getX() + 5 * Math.cos((yaw + 130) * (Math.PI / 180)) + 0.5;
+        const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180)) + 0.5;
+        crates.push([distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0, x, 75, z]);
     });
-}), () => location.getWorld() === "Kuudra" && settings.kuudraCrates);
+}), () => location.getWorld() === "Kuudra" && Settings.kuudraCrates);
 
 /**
  * Marks build piles that are not completed.
@@ -38,16 +40,8 @@ registerWhen(register("tick", () => {
 registerWhen(register("step", () => {
     if (getPhase() !== 2) return;
 
-    builds = [];
+    builds.clear();
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
     const piles = stands.filter(stand => stand.getName().includes('PUNCH'));
-    piles.forEach((pile) => { builds.push([pile.getX(), pile.getY(), pile.getZ(), 1, 0, 0]) });
-}).setFps(2), () => location.getWorld() === "Kuudra" && settings.kuudraBuild);
-
-/**
- * Marks build piles that are not completed.
- */
-register("worldUnload", () => {
-    crates = [];
-    builds = [];
-});
+    piles.forEach(pile => builds.push([pile.getX() + 0.5, pile.getY(), pile.getZ() + 0.5]) );
+}).setFps(2), () => location.getWorld() === "Kuudra" && Settings.kuudraBuild);

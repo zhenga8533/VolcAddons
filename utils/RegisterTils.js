@@ -1,4 +1,4 @@
-import settings from "./settings";
+import Settings from "./Settings";
 
 
 const registers = [];
@@ -26,7 +26,7 @@ export function registerWhen(trigger, callback) {
  */
 export function setRegisters(off = false) {
     registers.forEach(reg => {
-        if (off || (reg.active && !reg.callback())) {
+        if (!Settings.vaToggle || off || (reg.active && !reg.callback())) {
             reg.trigger.unregister();
             reg.active = false;
         } else if (!reg.active && reg.callback()) {
@@ -40,5 +40,5 @@ export function setRegisters(off = false) {
 register("guiClosed", (event) => {
     if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui")) return;
 
-    setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+    setRegisters(off = Settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
 });

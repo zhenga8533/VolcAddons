@@ -1,7 +1,7 @@
-import settings from "../../settings";
-import { AMOGUS, BOLD, GOLD, GREEN } from "../../utils/constants";
+import Settings from "../../Settings";
+import { AMOGUS, BOLD, GOLD, GREEN } from "../../utils/Constants";
 import { playSound } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**
@@ -12,9 +12,9 @@ registerWhen(register("chat", () => {
     if (cd) return;
     Client.showTitle(`${GREEN + BOLD}BLOOD COMPLETE!`, "", 0, 25, 5);
     playSound(AMOGUS, 3000);
-}).setCriteria("[BOSS] The Watcher: You have proven yourself. You may pass."), () => settings.watcherAlert);
+}).setCriteria("[BOSS] The Watcher: You have proven yourself. You may pass."), () => Settings.watcherAlert);
 registerWhen(register("chat", () => {
     if (cd) return;
     Client.showTitle(`${GOLD + BOLD}BLOOD SPAWNED!`, "", 0, 25, 5);
     playSound(AMOGUS, 3000);
-}).setCriteria("[BOSS] The Watcher: That will be enough for now."), () => settings.watcherAlert);
+}).setCriteria("[BOSS] The Watcher: That will be enough for now."), () => Settings.watcherAlert);

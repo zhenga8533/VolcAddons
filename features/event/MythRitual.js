@@ -1,21 +1,23 @@
-import settings from "../../utils/settings";
-import mayor from "../../utils/mayor";
-import location from "../../utils/location";
-import { GREEN, LOGO } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import mayor from "../../utils/Mayor";
+import location from "../../utils/Location";
+import { GREEN, LOGO } from "../../utils/Constants";
 import { getClosest } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/register";
-import { delay } from "../../utils/thread";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { delay } from "../../utils/ThreadTils";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
  * Key press to warp player to closest burrow.
  */
+const guessed = new Waypoint([1, 1, 0]);  // Yellow Guess
 let warp = "player";
 const dianaKey = new KeyBind("Diana Warp", data.dianaKey, "./VolcAddons.xdd");
 register("gameUnload", () => { data.dianaKey = dianaKey.getKeyCode() }).setPriority(Priority.HIGHEST);
 dianaKey.registerKeyPress(() => {
-    if (settings.dianaWarp && warp !== "player") {
+    if (Settings.dianaWarp && warp !== "player") {
         ChatLib.chat(`${LOGO + GREEN}Warping to "${warp}"...`);
         ChatLib.command(`warp ${warp}`);
     }
@@ -102,10 +104,7 @@ registerWhen(register("clicked", (_, __, button, isButtonDown) => {
     echo = true;
     delay(() => echo = false, 3000);
     path = [[Player.getX(), Player.getY(), Player.getZ()]];
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
-
-let guess = [];
-export function getGuess() { return guess };
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint);
 
 /**
  * Use Ancestral Spade particles to guess a burrow location.
@@ -121,19 +120,13 @@ registerWhen(register("spawnParticle", (particle, type) => {
     
     // Push to particles list and make a guess
     path.push([x, y, z]);
-    guess = [guessBurrow(path, distance)];
-}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
+    guessed.clear();
+    guessed.push(guessBurrow(path, distance));
+}), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint);
 
 /**
  * Get distance using Echo note pitch.
  */
 registerWhen(register("soundPlay", (_, __, ___, pitch) => {
     distance = (Math.E / pitch) ** (Math.E + (1 - 2 * pitch)) - Math.E ** (1 - pitch ** 2) + Math.E ** (0.8 - Math.E * pitch);
-}).setCriteria("note.harp"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && settings.dianaWaypoint);
-
-/**
- * Remove guess on world unload.
- */
-register("worldUnload", () => {
-    guess = [];
-});
+}).setCriteria("note.harp"), () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint);

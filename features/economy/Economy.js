@@ -1,8 +1,8 @@
 import request from "../../../requestV2";
-import settings from "../../utils/settings";
-import { GREEN, LOGO } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { GREEN, LOGO } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**

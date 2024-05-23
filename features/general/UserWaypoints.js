@@ -1,23 +1,22 @@
-import settings from "../../utils/settings";
-import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
-import { delay } from "../../utils/thread";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { delay } from "../../utils/ThreadTils";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
  * Variables used to represent user inputted waypoints.
  */
-let chatWaypoints = [];
-export function getChatWaypoints() { return chatWaypoints };
-let userWaypoints = [];
-export function getUserWaypoints() { return userWaypoints };
+const chatWaypoints = new Waypoint([0, 1, 1]);  // Cyan Chat
+const userWaypoints = new Waypoint([0, 1, 0]);  // Green User
 
 /**
  * Detects any patcher formatted coords sent in chat.
  */
-registerWhen(register("chat", (player, spacing, x, y, z) => {
+registerWhen(register("chat", (player, _, x, y, z) => {
     // Check blacklist
     if (data.blacklist.includes(getPlayerName(player).toLowerCase())) return;
 
@@ -42,8 +41,11 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
     chatWaypoints.push([player, x, y, z]);
 
     // Delete waypoint after 'X' seconds
-    delay(() => { if (chatWaypoints.length) chatWaypoints.shift() }, settings.drawWaypoint * time);
-}).setCriteria("${player}:${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => settings.drawWaypoint !== 0);
+    delay(() => {
+        const waypoints = chatWaypoints.getWaypoints();
+        if (waypoints.length) waypoints.shift();
+    }, Settings.drawWaypoint * time);
+}).setCriteria("${player}:${spacing}x: ${x}, y: ${y}, z: ${z}&r"), () => Settings.drawWaypoint !== 0);
 
 /**
  * Allows user to create waypoints via command.
@@ -51,18 +53,22 @@ registerWhen(register("chat", (player, spacing, x, y, z) => {
  * @param {String[]} args - Array of user input needed for waypoint.
  */
 export function createWaypoint(args) {
-    if (args[1] === "clear") {
-        chatWaypoints = [];
-        userWaypoints = [];
+    const name = args[1];
+    const x = isNaN(args[2]) ? Math.round(Player.getX()) : parseFloat(args[2]);
+    const y = isNaN(args[3]) ? Math.round(Player.getY()) : parseFloat(args[3]);
+    const z = isNaN(args[4]) ? Math.round(Player.getZ()) : parseFloat(args[4]);
+
+    if (name === "clear") {
+        chatWaypoints.clear();
+        userWaypoints.clear();
         NPCs = [];
         zones = [];
         ChatLib.chat(`${LOGO + GREEN}Successfully cleared waypoints!`);
-    } else if (!isNaN(args[2]) && !isNaN(args[3]) && !isNaN(args[4])) {
-        userWaypoints.push([args[1], args[2], args[3], args[4]]);
-        ChatLib.chat(`${GREEN}Successfully added waypoint [${args[1]}] at [x: ${args[2]}, y: ${args[3]}, z: ${args[4]}]!`);
+    } else if (args[2] && args[3] && args[4]) {
+        userWaypoints.push([name, x, y, z]);
+        ChatLib.chat(`${GREEN}Successfully added waypoint [${name}] at [x: ${x}, y: ${y}, z: ${z}]!`);
     } else {
-        ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
+        ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${name}"!`);
         ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va waypoint ${GRAY}<${WHITE}[name] [x] [y] [z], clear${GRAY}>`);
     }
 }
-register("worldUnload", () => { userWaypoints = [] });

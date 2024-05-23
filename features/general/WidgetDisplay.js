@@ -1,8 +1,8 @@
-import settings from "../../utils/settings";
-import { AQUA, BOLD, GREEN } from "../../utils/constants";
-import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, GREEN } from "../../utils/Constants";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 const widgetOverlays = {};
@@ -44,4 +44,4 @@ registerWhen(register("step", () => {
         while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) message += '\n' + tablist[index++];
         widgetOverlays[widget].setMessage(message);
     });
-}).setFps(1), () => settings.widgetDisplay);
+}).setFps(1), () => Settings.widgetDisplay);

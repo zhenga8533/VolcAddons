@@ -1,19 +1,18 @@
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { GRAY, GREEN, LOGO } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import { GRAY, GREEN, LOGO } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
  * Variables used to estimate compass location.
  */
+const compass = new Waypoint([0.75, 0.17, 0.41]);  // Bright Purple Compass
 let path = [];
 let lastPath = [];
-let compass = [];
 let zone = undefined;
-export function getCompass() { return compass };
 register("worldUnload", () => {
-    compass = [];
     zone = undefined;
 });
 
@@ -47,7 +46,7 @@ registerWhen(register("chat", () => {
 
     zone = location.getZone();
     path = [];
-}).setCriteria("Your Wishing Compass shattered into pieces!"), () => location.getWorld() === "Crystal Hollows" && settings.compassLocator);
+}).setCriteria("Your Wishing Compass shattered into pieces!"), () => location.getWorld() === "Crystal Hollows" && Settings.compassLocator);
 
 /**
  * Uses compass particles to track and estimate compass location.
@@ -72,11 +71,13 @@ registerWhen(register("spawnParticle", (particle, type) => {
             zone.startsWith(" ⏣ Goblin") ? "Beard Cutter" :
             zone.startsWith(" ⏣ Jungle") ? "Tarzan's Jarven" :
             zone.startsWith(" ⏣ Magma") ? "Heatran's Cave" : "Important Location";
-        compass = [[name, intersect[0], y, intersect[1]]];
+
+        compass.clear();
+        compass.push([name, intersect[0], y, intersect[1]]);
         ChatLib.chat(`${LOGO + GREEN}Compass location found!`);
 
         // Check if paths are too close
         const close = Math.hypot(origin[0] - lastPath[0][0], origin[2] - lastPath[0][2]);
         if (close < 16) ChatLib.chat(`${LOGO + GRAY}Location may be incorrect due to proximity of compass uses...`);
     }
-}), () => location.getWorld() === "Crystal Hollows" && settings.compassLocator);
+}), () => location.getWorld() === "Crystal Hollows" && Settings.compassLocator);

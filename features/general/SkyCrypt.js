@@ -1,4 +1,4 @@
-import { GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import { GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 
 
 /**

@@ -1,11 +1,11 @@
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/constants";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import { BOLD, GOLD, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { commafy, formatTime } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { Stat, getPaused } from "../../utils/stat";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { Stat, getPaused } from "../../utils/Stat";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -33,7 +33,7 @@ registerWhen(register("step", () => {
     purse = parseInt(purse.getName().removeFormatting().split(" ")[1].replace(/\D/g,''));
 
     // Get starting balance
-    if (piggy.since >= settings.coinTracker * 60) {
+    if (piggy.since >= Settings.coinTracker * 60) {
         piggy.start = purse;
         piggy.time = 1;
     }
@@ -44,9 +44,9 @@ registerWhen(register("step", () => {
     piggy.now = purse;
     
     // Update GUI
-    const timeDisplay = piggy.since < settings.coinTracker * 60 ? formatTime(piggy.time) : `${RED}Inactive`;
+    const timeDisplay = piggy.since < Settings.coinTracker * 60 ? formatTime(piggy.time) : `${RED}Inactive`;
     coinOverlay.setMessage(
 `${GOLD + BOLD}Gained: ${WHITE + commafy(piggy.getGain())} ¢
 ${GOLD + BOLD}Time: ${WHITE + timeDisplay}
 ${GOLD + BOLD}Rate: ${WHITE + commafy(piggy.getRate())} ¢/hr`);
-}).setFps(1), () => settings.coinTracker !== 0);
+}).setFps(1), () => Settings.coinTracker !== 0);

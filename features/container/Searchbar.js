@@ -1,8 +1,8 @@
-import settings from "../../utils/settings";
-import { DARK_GRAY, GuiTextField, ITALIC } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { DARK_GRAY, GuiTextField, ITALIC } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/register";
-import { data, itemNBTs } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data, itemNBTs } from "../../utils/Data";
 import { decompressNBT } from "../../utils/functions/misc";
 
 
@@ -91,22 +91,21 @@ registerWhen(register("guiRender", (x, y, gui) => {
     if (!gui.class.getName().startsWith("net.minecraft.client.gui.inventory.")) return;
     searchbar.func_146194_f();
 
-    const containerType = Player.getContainer().getClassName();
     indexes.forEach(index => {
-        const [x, y] = getSlotCoords(index, containerType);
+        const [x, y] = getSlotCoords(index);
     
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(255, 255, 255, 255), x - 1, y - 1, 18, 18);
     });
     darken.forEach(index => {
-        const [x, y] = getSlotCoords(index, containerType);
+        const [x, y] = getSlotCoords(index);
     
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(0, 0, 0, 255), x, y, 16, 16);
     })
 
     if(calc !== undefined) Renderer.drawString(DARK_GRAY + calc, loc[0] - Renderer.getStringWidth(calc) + 190, loc[1] + 4);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 /**
  * Stuff to move searchbox
@@ -134,13 +133,13 @@ registerWhen(register("guiMouseDrag", (x, y) => {
     loc[1] = y;
     searchbar.field_146209_f = x;
     searchbar.field_146210_g = y;
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Detect mouse click on box
 registerWhen(register("guiMouseClick", (x, y, button) => {
     searchbar.func_146192_a(x, y, button);
     Client.scheduleTask(3, getHighlights);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Searchbox key detects
 registerWhen(register("guiKey", (char, keyCode, _, event) => {
@@ -164,16 +163,16 @@ registerWhen(register("guiKey", (char, keyCode, _, event) => {
 
     // Cancel all but escape key
     if (keyCode != 1) cancel(event);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Reset search when opening gui
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, getHighlights);
-}), () => settings.searchbar);
+}), () => Settings.searchbar);
 
 // Exit search when closing gui
 registerWhen(register("guiClosed", () => {
     if (gui.isOpen()) renderOverlay.unregister();
     searchbar.func_146195_b(false);
     indexes.length = 0;
-}), () => settings.searchbar);
+}), () => Settings.searchbar);

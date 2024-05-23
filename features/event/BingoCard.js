@@ -1,8 +1,8 @@
-import settings from "../../utils/settings";
-import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 
 
 let community = {};
@@ -36,7 +36,7 @@ function updateBingo() {
     let bingoMessage = "";
 
     // Update community bingo goals
-    if (settings.bingoCard === 1 || settings.bingoCard === 3) {
+    if (Settings.bingoCard === 1 || Settings.bingoCard === 3) {
         bingoMessage += `${DARK_GREEN + BOLD}Community Goals\n`;
         Object.keys(community).forEach(goal => {
             bingoMessage += ` ${community[goal]}\n`;
@@ -46,7 +46,7 @@ function updateBingo() {
     bingoMessage += '\n';
 
     // Update peersonal bingo goals
-    if (settings.bingoCard === 1 || settings.bingoCard === 2) {
+    if (Settings.bingoCard === 1 || Settings.bingoCard === 2) {
         bingoMessage += `${DARK_GREEN + BOLD}Bingo Goals\n`;
         Object.keys(personal).forEach(goal => {
             bingoMessage += ` ${personal[goal]}\n`;
@@ -80,13 +80,13 @@ registerWhen(register("guiOpened", () => {
 
         updateBingo();
     });
-}), () => settings.bingoCard !== 0);
+}), () => Settings.bingoCard !== 0);
 
 registerWhen(register("chat", (goal) => {
     if (goal in personal) delete personal[goal];
     updateBingo();
-}).setCriteria("BINGO GOAL COMPLETE! ${goal}"), () => settings.bingoCard !== 0);
+}).setCriteria("BINGO GOAL COMPLETE! ${goal}"), () => Settings.bingoCard !== 0);
 
 registerWhen(register("chat", () => {
     bingoOverlay.setMessage("");
-}).setCriteria("Switching to profile ${profile}..."), () => settings.bingoCard !== 0);
+}).setCriteria("Switching to profile ${profile}..."), () => Settings.bingoCard !== 0);

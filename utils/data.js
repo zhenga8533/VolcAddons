@@ -1,5 +1,5 @@
 import PogObject from "../../PogData";
-import { BUTTON_PRESETS, CAT_SOULS, ENIGMA_SOULS, FAIRY_SOULS } from "./constants";
+import { BUTTON_PRESETS } from "./Constants";
 
 
 // Relocate old data files (<2.9.5)
@@ -13,18 +13,18 @@ const DEFAULT_GUI = {
     "AL": [780, 430, 1.2, false, false, true], // Skill Tracker Location
     "BL": [10, 120, 1.2, false, false, true], // Vampire Location
     "CL": [10, 180, 1.2, false, false, true], // Counter Location
-    "DL": [10, 180, 1.2, false, false, true], // 
+    "DL": [575, 165, 1.2, false, false, true], // Dungeon Profit Location
     "EL": [100, 150, 1.1, false, false, true], // Advanced Value Location
     "FL": [220, 10, 1.2, false, false, true], // Trophy Fish Location
     "GL": [10, 140, 1.2, false, false, true], // Gyro Location
     "HL": [10, 240, 1.2, false, false, true], // Powder Chest Location
     "IL": [10, 180, 1.2, false, false, true], // Inq Location
     "JL": [150, 180, 1.2, false, false, true], // Kill Counter Location
-    "KL": [600, 220, 1.2, false, false, true], // Kuudra Profit Location
+    "KL": [575, 165, 1.2, false, false, true], // Kuudra Profit Location
     "LL": [770, 70, 1.2, false, false, true], // Server Status Location
     "ML": [780, 390, 1.2, false, false, true], // Coins Location
     "OL": [10, 130, 1.2, false, false, true], // Composter Location
-    "PL": [10, 100, 1.2, false, false, true], // Powder Location
+    "PL": [10, 85, 1.2, false, false, true], // Powder Location
     "QL": [250, 225, 4, false, false, true], // Vanquisher Location
     "RL": [600, 175, 1, false, false, true], // Container Value Location
     "SL": [10, 180, 1.2, false, false, true], // Splits Location
@@ -37,9 +37,9 @@ const DEFAULT_GUI = {
     "ZL": [780, 330, 1.2, false, false, true], // Kuudra Profit Tracker Location
     "BCL": [180, 10, 1, false, false, true], // Bingo Card Location
     "BEL": [180, 10, 1.2, false, false, true], // Bestiary Counter Location
-    "CDL": [190, 115, 1.2, false, false, true], // Commission Display Location
+    "CDL": [185, 65, 1.2, false, false, true], // Commission Display Location
     "CEL": [375, 275, 3, false, false, true], // Crate edit location
-    "CFL": [180, 130, 1.2, false, false, true], // Chocolate factory location
+    "CFL": [625, 120, 1.2, false, false, true], // Chocolate factory location
     "CGL": [625, 70, 1.2, false, false, true], // Chocolate egg location
     "CPL": [575, 160, 1, false, false, false], // Container preview location
     "EQL": [905, 65, 1.2, false, false, false], // Equipment Location
@@ -47,24 +47,44 @@ const DEFAULT_GUI = {
     "PDL": [580, 460, 1.2, false, false, true], // Pick display location
     "PHL": [170, 160, 1.2, false, false, true], // Pesthunter Location
     "SDL": [170, 180, 1.2, false, false, true], // Spray Display Location
+    "SPL": [392, 26, 1, false, false, true], // Storage Preview Location
     "TVL": [600, 150, 1.2, false, false, true], // Trade Value Location
 }
 
 // --- PERSISTENT DATA ---
 export let data = new PogObject("VolcAddons", {
-    // Properties with default values for various settings and data
+    // VolcAddons data tracking
     "newUser": true,
     "version": "2.3.1",
-    "wordbanks": [],
-    "comands": {},
-    "lastID" : undefined,
-    "world": "none",
-    "tier": 0,
-    "pet": undefined,
-    "lastMsg": "joe",
     "vision": false,
-    "uuid": undefined,
-    "ign": undefined,
+    "devMode": false,
+    // Container bindings
+    "wardBinds": {},
+    "slotBinds": {
+        "36": [], "37": [], "38": [], "39": [], "40": [], "41": [], "42": [], "43": [], "44": []
+    },
+    "bindPresets": {},
+    "buttons": {},
+    "buttonPresets": BUTTON_PRESETS,
+    // Control keys
+    "dianaKey": 0,
+    "pauseKey": 0,
+    "devKey": 0,
+    "recipeKey": 0,
+    "bindKey": 0,
+    "chunkey": 0,
+    "wardKey": 0,
+    // Hypixel persistant data
+    "commands": {},
+    "equipmentLore": [[], [], [], []],
+    "party": {
+        "in": false,
+        "leader": false,
+        "members": [],
+        "updated": 0
+    },
+    "pet": undefined,
+    "wordbanks": [],
     // playtime tracking
     "playtime": 0,
     "lastDay": 0,
@@ -80,8 +100,8 @@ export let data = new PogObject("VolcAddons", {
     "spamlist": [],
     "ignorelist": [],
     "prefixlist": ["?"],
-    "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune", 
-        "fishing_experience"],
+    "attributelist": ["breeze", "dominance", "fortitude", "lifeline", "magic_find", "mana_pool", 
+        "mana_regeneration", "mending", "speed", "veteran", "blazing_fortune",  "fishing_experience"],
     "widgetlist": [],
     "WGL": {},
     // chocolate factory data
@@ -101,14 +121,21 @@ export let data = new PogObject("VolcAddons", {
         "activeTime": 0,
         "bonus": 0,
     },
-    // kuudra splits stuff
+    // Kuudra data
     "files": [],
     "splits": {
         "last": [0, 0, 0, 0, 0],
         "best": [999, 999, 999, 999, 9999],
         "worst": [0, 0, 0, 0, 0],
     },
-    // tracker data
+    "kuudraSession": {
+        "profit": 0,
+        "chests": 0,
+        "average": 0,
+        "time": 0,
+        "rate": 0
+    },
+    // Mob tracker data
     "vanqSession": {
         "vanqs": 0,
         "kills": 0,
@@ -121,47 +148,22 @@ export let data = new PogObject("VolcAddons", {
         "last": 0,
         "average": 0,
     },
-    "kuudraSession": {
-        "profit": 0,
-        "chests": 0,
-        "average": 0,
-        "time": 0,
-        "rate": 0
-    },
-    // economy calculation stuff
+    // Economy calculator data
     "composterUpgrades": {
         "Composter Speed": -1,
         "Multi Drop": -1,
         "Cost Reduction": -1
     },
-    "apexPrice": 2e9,
-    // control keys
-    "dianaKey": 0,
-    "pauseKey": 0,
-    "devKey": 0,
-    "recipeKey": 0,
-    "bindKey": 0,
-    "chunkey": 0,
-    "wardKey": 0,
-    // Container bindings
-    "wardBinds": {},
-    "slotBinds": {},
-    "bindPresets": {},
-    "buttons": {},
-    "buttonPresets": BUTTON_PRESETS,
     // GUI locations
-    ...DEFAULT_GUI,
-    // Rift waypoint properties
-    "fairySouls": FAIRY_SOULS,
-    "enigmaSouls": ENIGMA_SOULS,
-    "catSouls": CAT_SOULS
+    ...DEFAULT_GUI
 }, "data/datitee.json");
 
 export const itemNBTs = new PogObject("VolcAddons", {
     "armor": [null, null, null, null],
     "equip": [null, null, null, null],
     "backpacks": [],
-    "enderchests": []
+    "enderchests": [],
+    "storageCache": {}
 }, "data/itemNBTs.json");
 
 // Set up storage data

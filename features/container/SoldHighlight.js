@@ -1,6 +1,6 @@
-import settings from "../../utils/settings";
+import Settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 let own = [];
@@ -8,14 +8,14 @@ let coop = [];
 
 const renderSold = register("guiRender", () => {
     own.forEach(index => {
-        const [x, y] = getSlotCoords(index, "ContainerChest");
+        const [x, y] = getSlotCoords(index);
 
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.GREEN, x, y, 16, 16);
     });
 
     coop.forEach(index => {
-        const [x, y] = getSlotCoords(index, "ContainerChest");
+        const [x, y] = getSlotCoords(index);
 
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.GOLD, x, y, 16, 16);
@@ -43,4 +43,4 @@ registerWhen(register("guiOpened", () => {
             }
         });
     });
-}), () => settings.auctionHighlight);
+}), () => Settings.auctionHighlight);

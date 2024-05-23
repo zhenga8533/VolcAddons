@@ -1,4 +1,4 @@
-import { AQUA, BOLD, DARK_AQUA, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE } from "../../utils/constants";
+import { AQUA, BOLD, DARK_AQUA, GRAY, GREEN, LOGO, RED, UNDERLINE, WHITE } from "../../utils/Constants";
 import { commafy } from "../../utils/functions/format";
 import { getBazaar } from "../economy/Economy";
 

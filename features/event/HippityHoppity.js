@@ -1,12 +1,13 @@
-import location from "../../utils/location";
-import settings from "../../utils/settings";
-import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/constants";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
+import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 import { announceMob } from "../../utils/functions/misc";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
@@ -28,7 +29,7 @@ const updateChocolate = register("tick", () => {
     }
 
     // Fetch data related to prestiging
-    const prestigeData = items[28]?.getLore();
+    const prestigeData = items[27]?.getUnlocalizedName() === "tile.thinStainedGlass" ? items[28]?.getLore() : items[27]?.getLore();
     if (prestigeData !== undefined) {
         const prestigeTotal = prestigeData.find(line => line.startsWith("§5§o§7Chocolate this Prestige"))?.removeFormatting()?.split(' ');
         data.chocoTotal = parseFloat(prestigeTotal?.[prestigeTotal?.length - 1]?.replace(/,/g, "") ?? 0);
@@ -38,7 +39,7 @@ const updateChocolate = register("tick", () => {
     }
 
     // Fetch eggs
-    const eggData = items[34]?.getLore();
+    const eggData = items[35]?.getUnlocalizedName() === "tile.thinStainedGlass" ? items[34]?.getLore() : items[35]?.getLore();
     if (eggData !== undefined) {
         const barnLine = eggData.find(line => line.startsWith("§5§o§7Your Barn:"))?.split(' ')?.[2]?.removeFormatting()?.split('/');
         data.totalEggs = parseInt(barnLine?.[0] ?? 0);
@@ -89,14 +90,14 @@ const chocoExample =
  §eDupes: §f0`;
 const chocoOverlay = new Overlay("chocoDisplay", data.CFL, "moveChoco", chocoExample);
 
-register("step", () => {
+registerWhen(register("step", () => {
     const now = Math.floor(Date.now() / 1000);
     const lastOpen = now - data.chocoLast;
 
     // Time tower calc
     const towerData = data.timeTower;
     const timeLeft = towerData.activeTime - lastOpen;
-    const noTower = data.chocoProduction * (data.chocoMultiplier - towerData.bonus) / data.chocoMultiplier;
+    const noTower = data.chocoProduction * (data.chocoMultiplier - (towerData.activeTime > 0 ? towerData.bonus : 0)) / data.chocoMultiplier;
     const production = timeLeft > 0 || towerData.activeTime <= 0 ? data.chocoProduction : noTower;
 
     const charges = parseInt(towerData.charges) + Math.max(0, Math.ceil((lastOpen - towerData.chargeTime) / 28_800));
@@ -108,7 +109,7 @@ register("step", () => {
     const chocoCalc = production * lastOpen + boostedCalc;
     const chocoTotal = chocoCalc + data.chocoTotal;
     const chocoAll = chocoCalc + data.chocoAll;
-    const prestigeTime = (data.chocoPrestige - chocoTotal) / (timeLeft > 0 ? noTower : data.chocoProduction);
+    const prestigeTime = (data.chocoPrestige - chocoTotal) / noTower;
 
     chocoOverlay.setMessage(
 `${GOLD + BOLD}Chocolate:
@@ -126,13 +127,28 @@ ${GOLD + BOLD}Time:
 ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${WHITE + data.totalEggs}/${data.maxEggs}
  ${YELLOW}Dupes: ${GRAY + data.dupeEggs}
- ${YELLOW}Completion: ${WHITE + (data.totalEggs / 3.95).toFixed(2)}%`);
-}).setFps(1);
+ ${YELLOW}Completion: ${WHITE + (data.totalEggs / 4.57).toFixed(2)}%`);
+}).setFps(1), () => Settings.chocoDisplay);
 
+/**
+ * Rabbit chat detection.
+ */
 register("chat", (x) => {
     data.chocolate += parseInt(x.replace(/,/g, ''));
     data.dupeEggs++;
 }).setCriteria("DUPLICATE RABBIT! +${x} Chocolate");
+
+registerWhen(register("chat", (choco, mult) => {
+    data.chocoMultiplier += parseFloat(mult);
+    data.chocoProduction += parseInt(choco) * data.chocoMultiplier;
+    data.totalEggs++;
+}).setCriteria("NEW RABBIT! +${choco} Chocolate and +${mult}x Chocolate per second!"), () => Settings.chocoDisplay);
+
+registerWhen(register("chat", (mult) => {
+    if (isNaN(mult)) return;
+    data.chocoMultiplier += parseFloat(mult);
+    data.totalEggs++;
+}).setCriteria("NEW RABBIT! +${mult}x Chocolate per second!"), () => Settings.chocoDisplay);
 
 
 /**
@@ -144,14 +160,17 @@ let bestCost = 0;
 function findWorker() {
     bestWorker = 0;
     const items = Player.getContainer().getItems();
+    const baseMultiplier = data.chocoMultiplier - data.timeTower.bonus;
 
+    // Worker calc
     let maxValue = 0;
-    for (let i = 29; i < 34; i++) {
+    const diff = items[27].getUnlocalizedName() === "tile.thinStainedGlass" ? 0 : 1;
+    for (let i = 29 - diff; i < 34 + diff; i++) {
         let worker = items[i].getLore();
         let index = worker.findIndex(line => line === "§5§o§7Cost");
         if (index === -1) continue;
         let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
-        let value = (i - 28) / cost;
+        let value = (i - 28 + diff) * baseMultiplier / cost;
 
         if (value > maxValue) {
             bestWorker = i;
@@ -159,18 +178,56 @@ function findWorker() {
             bestCost = cost;
         }
     }
+
+    // Tower calc
+    const tower = items[39].getLore();
+    const towerI = tower.findIndex(line => line === "§5§o§7Cost");
+    if (Settings.rabbitHighlight === 1 && towerI !== 1) {
+        const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
+        const towerValue = data.chocoProduction / baseMultiplier * 0.0125 / towerCost;
+
+        if (towerValue > maxValue) {
+            bestWorker = 39;
+            maxValue = towerValue;
+            bestCost = towerCost;
+        }
+    }
+
+    // Jackrabbit calc
+    const jackrabbit = items[42].getLore();
+    const jackI = jackrabbit.findIndex(line => line === "§5§o§7Cost");
+    if (Settings.rabbitHighlight !== 3 && jackI !== -1) {
+        const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));
+        const jackValue = data.chocoProduction / baseMultiplier * 0.01 / jackCost;
+
+        if (jackValue > maxValue) {
+            bestWorker = 42;
+            bestCost = jackCost;
+        }
+    }
 }
 
 const workerFind = register("chat", () => {
-    Client.scheduleTask(2, () => {
+    Client.scheduleTask(1, () => {
         findWorker();
     });
 }).setCriteria("Rabbit ${rabbit} has been promoted to ${rank}!").unregister();
 
+const coachFind = register("chat", () => {
+    Client.scheduleTask(1, () => {
+        findWorker();
+    });
+}).setCriteria("You upgraded to Coach Jackrabbit ${rank}!").unregister();
+
+const towerFind = register("chat", () => {
+    Client.scheduleTask(1, () => {
+        findWorker();
+    });
+}).setCriteria("You upgraded to Time Tower ${rank}!").unregister();
+
 const workerHighlight = register("guiRender", () => {
     if (bestWorker === 0) return;
-    const containerType = Player.getContainer().getClassName();
-    const [x, y] = getSlotCoords(bestWorker, containerType);
+    const [x, y] = getSlotCoords(bestWorker);
 
     Renderer.translate(0, 0, 100);
     Renderer.drawRect(data.chocolate > bestCost ? Renderer.GREEN : Renderer.RED, x, y, 16, 16);
@@ -182,6 +239,8 @@ const workerHighlight = register("guiRender", () => {
 const chocomatte = register("guiClosed", () => {
     chocomatte.unregister();
     updateChocolate.unregister();
+    coachFind.unregister();
+    towerFind.unregister();
     workerFind.unregister();
     workerHighlight.unregister();
 }).unregister();
@@ -191,20 +250,23 @@ registerWhen(register("guiOpened", () => {
         if (Player.getContainer().getName() !== "Chocolate Factory") return;
 
         updateChocolate.register();
-        if (settings.workerHighlight) {
+        if (Settings.rabbitHighlight) {
             findWorker();
+            coachFind.register();
+            towerFind.register();
             workerFind.register();
             workerHighlight.register();
             chocomatte.register();
         }
     });
-}), () => settings.workerHighlight || settings.chocoDisplay);
+}), () => Settings.rabbitHighlight !== 0 || Settings.chocoDisplay);
 
 
 /**
  * Egglocator
  */
-let eggWaypoints = [];
+const eggWaypoints = new Waypoint([0.25, 0.1, 0]);  // Brown Eggs
+
 const EGGS = {
     "015adc61-0aba-3d4d-b3d1-ca47a68a154b": "Breakfast",
     "55ae5624-c86b-359f-be54-e0ec7c175403": "Lunch",
@@ -215,30 +277,29 @@ let looted = {
     "Lunch": false,
     "Dinner": false
 };
-export function getEggs() { return eggWaypoints };
 
 // Track if egg was looted.
 registerWhen(register("chat", (type) => {
     looted[type] = true;
 }).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"),
-() => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+() => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     looted[type] = true;
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"),
-() => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+() => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     looted[type] = false;
 }).setCriteria("HOPPITY'S HUNT A Chocolate ${type} Egg has appeared!"),
-() => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+() => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("tick", () => {
     const time = World.getTime() % 24_000;
     if (Math.abs(time - 1_000) < 4) looted.Breakfast = false;
     else if (Math.abs(time - 8_000) < 4) looted.Lunch = false;
     else if (Math.abs(time - 15_000) < 4) looted.Dinner = false;
-}), () => (settings.chocoWaypoints || settings.eggTimers) && location.getSeason() === "Spring");
+}), () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 register("worldUnload", () => {
     looted = {
@@ -251,20 +312,16 @@ register("worldUnload", () => {
 // ArmorStand ESP susge, UAYOR
 registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
-    eggWaypoints = [];
+    eggWaypoints.clear();
 
     stands.forEach(stand => {
         const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
         if (helmet !== null) {
             const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id");  // getNBT() +> getNBTTagCompound() => getString()
-            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], ~~stand.getX(), stand.getY() + 2, ~~stand.getZ()]);
+            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()]);
         }
     });
-}).setFps(1), () => settings.chocoWaypoints);
-
-register("worldUnload", () => {
-    eggWaypoints = [];
-});
+}).setFps(1), () => Settings.chocoWaypoints);
 
 
 /**
@@ -274,7 +331,7 @@ let chocoType = "";
 let chocoLoc = "";
 
 const announceOnClose = register("guiClosed", () => {
-    Client.scheduleTask(5, () => announceMob(settings.chocoAlert, chocoType, Player.getX(), Player.getY(), Player.getZ(), chocoLoc));
+    Client.scheduleTask(5, () => announceMob(Settings.chocoAlert, chocoType, Player.getX(), Player.getY(), Player.getZ(), chocoLoc));
     announceOnClose.unregister();
 }).unregister();
 
@@ -282,7 +339,7 @@ registerWhen(register("chat", (type, loc) => {
     chocoType = type + " Egg";
     chocoLoc = convertToTitleCase(loc);
     announceOnClose.register();
-}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => settings.chocoAlert !== 0);
+}).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"), () => Settings.chocoAlert !== 0);
 
 
 /**
@@ -310,8 +367,8 @@ registerWhen(register("step", () => {
  ${YELLOW}Breakfast: ${WHITE + formatTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"}
  ${YELLOW}Lunch: ${WHITE + formatTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"}
  ${YELLOW}Dinner: ${WHITE + formatTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"}`);
-}).setFps(1), () => settings.eggTimers && location.getSeason() === "Spring");
+}).setFps(1), () => Settings.eggTimers && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10);
-}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => settings.eggTimers && location.getSeason() === "Spring");
+}).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => Settings.eggTimers && location.getSeason() === "Spring");

@@ -1,7 +1,7 @@
-import settings from "./settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, LOGO, WHITE } from "./constants";
-import { setRegisters } from "./register";
-import { delay } from "./thread";
+import Settings from "./Settings";
+import { BOLD, DARK_GRAY, GOLD, LOGO, YELLOW } from "./Constants";
+import { setRegisters } from "./RegisterTils";
+import { delay } from "./ThreadTils";
 
 
 class Location {
@@ -36,9 +36,14 @@ class Location {
             this.findWorld();
         }).setPriority(Priority.LOWEST);
 
+        register("worldUnload", () => {
+            this.#world = undefined;
+            setRegisters(off=true);
+        });
+
         register("serverDisconnect", () => {
             this.#world = undefined;
-            setRegisters(true);
+            setRegisters(off=true);
         });
 
         register("command", () => {
@@ -111,11 +116,11 @@ class Location {
      */
     test() {
         ChatLib.chat(
-`${LOGO + DARK_AQUA + BOLD}World Test:
- ${DARK_GRAY} - ${AQUA}World: ${WHITE + this.#world}
- ${DARK_GRAY} - ${AQUA}Tier: ${WHITE + this.#tier}
- ${DARK_GRAY} - ${AQUA}Season: ${WHITE + this.#season}
- ${DARK_GRAY} - ${AQUA}Server: ${WHITE + this.#server}`
+`${LOGO + GOLD + BOLD}World Test:
+ ${DARK_GRAY} - ${GOLD}World: ${YELLOW + this.#world}
+ ${DARK_GRAY} - ${GOLD}Tier: ${YELLOW + this.#tier}
+ ${DARK_GRAY} - ${GOLD}Season: ${YELLOW + this.#season}
+ ${DARK_GRAY} - ${GOLD}Server: ${YELLOW + this.#server}`
         );
     }
 
@@ -144,7 +149,7 @@ class Location {
     
             // Call functions when world is loaded
             delay(() => {
-                setRegisters(off = settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
+                setRegisters(off = Settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"));
                 Client.showTitle(" ", "", 0, 1, 0);  // Fix first title not showing
             }, 1000);
         }

@@ -1,10 +1,10 @@
 import axios from "../../../axios";
-import { AQUA, DARK_GRAY, GREEN, ITALIC, LOGO, RED } from "../../utils/constants";
-import { Json } from "../../utils/json";
+import { AQUA, DARK_GRAY, GREEN, ITALIC, LOGO, RED } from "../../utils/Constants";
+import { Json } from "../../utils/Json";
 import { decode } from "../../utils/functions/misc";
 
 
-const skins = new Json("skins.json").getData();
+const skins = new Json("skins.json", false).getData();
 register("guiOpened", () => {
     Client.scheduleTask(2, () => {
         if (!Player.getContainer().getName().startsWith("Previous Fire Sales")) return;

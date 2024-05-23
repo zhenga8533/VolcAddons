@@ -1,6 +1,6 @@
 
+import { data } from "./Data";
 import { getPlayerName } from "./functions/player";
-import { delay } from "./thread";
 
 
 class Party {
@@ -9,6 +9,20 @@ class Party {
     #members = new Set();
 
     constructor() {
+        // --- PERSISTENT PARTY DATA ---
+        if (data.party.updated - Date.now() < 300_000) {
+            this.#in = data.party.in;
+            this.#leader = data.party.leader;
+            this.#members = new Set(data.party.members);
+        }
+
+        register("gameUnload", () => {
+            data.party.in = this.#in;
+            data.party.leader = this.#leader;
+            data.party.members = [...this.#members];
+            data.party.updated = Date.now();
+        }).setPriority(Priority.HIGHEST);
+
         // --- TRACK EMPTY PARTY ---
         register("chat", () => {
             this.#in = false;
@@ -71,10 +85,6 @@ class Party {
 
 
         // --- CONTROL FOR GAME/CT RS ---
-        register("gameLoad", this.parseParty);
-
-        register("chat", this.parseParty).setCriteria("Welcome to Hypixel SkyBlock!");
-
         register("chat", (leader, event) => {
             this.#in = true;
             const player = getPlayerName(leader);
@@ -135,20 +145,6 @@ class Party {
      */
     getMembers() {
         return this.#members;
-    }
-
-    /**
-     * Private.
-     */
-    parseParty() {
-        const cancelChat = register("chat", (event) => {
-            cancel(event);
-        });
-
-        ChatLib.command("p list");
-        delay(() => {
-            cancelChat.unregister();
-        }, 500);
     }
 }
 export default new Party();

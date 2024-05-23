@@ -1,5 +1,5 @@
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**

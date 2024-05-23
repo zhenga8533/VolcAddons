@@ -1,11 +1,11 @@
-import settings from "../../utils/settings";
-import toggles from "../../utils/toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import toggles from "../../utils/Toggles";
+import { AQUA, BOLD, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { formatNumber, formatTime } from "../../utils/functions/format";
-import { Overlay } from "../../utils/overlay";
+import { Overlay } from "../../utils/Overlay";
 import { isPlayer } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -33,7 +33,7 @@ registerWhen(register("step", () => {
         const petXP = tabNames[petIndex + 2].split(' ')[1];
         if (petXP != "§r§b§lMAX" && !data.pet.startsWith("§r§7No pet")) data.pet += `\n   ${petXP} XP`;
     } else petWidget = false;
-}).setFps(1), () => settings.statsDisplay && toggles.petDisplay);
+}).setFps(1), () => Settings.statsDisplay && toggles.petDisplay);
 
 register("guiOpened", () => {
     Client.scheduleTask(1, () => {
@@ -153,7 +153,7 @@ registerWhen(register("tick", () => {
     }
 
     statsOverlay.setMessage(statsMessage);
-}), () => settings.statsDisplay);
+}), () => Settings.statsDisplay);
 
 /**
  * Output Stats to user chat when user requests via command args.

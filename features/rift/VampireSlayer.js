@@ -1,12 +1,12 @@
-import location from "../../utils/location";
-import party from "../../utils/party";
-import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/constants";
-import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import location from "../../utils/Location";
+import party from "../../utils/Party";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/Constants";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 import { getSlayerBoss } from "../combat/SlayerDetect";
-import { renderEntities } from "../../utils/waypoints";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
@@ -61,10 +61,10 @@ registerWhen(register("tick", () => {
                 const pX = Math.round(Player.getX());
                 const PY = Math.round(Player.getY());
                 const PZ = Math.round(Player.getZ());
-                if (settings.announceMania === 1) {
+                if (Settings.announceMania === 1) {
                     const id = (Math.random() + 1).toString(36).substring(6);
                     ChatLib.command(`ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`);
-                } else if (party.getIn() && settings.announceMania === 2)
+                } else if (party.getIn() && Settings.announceMania === 2)
                     ChatLib.command(`pc x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}!`);
             }
         } else inMania = false;
@@ -96,41 +96,49 @@ registerWhen(register("tick", () => {
             ichorUUID = ichor.persistentID;
         }
     }
-}), () => location.getWorld() === "The Rift" && (settings.vampireAttack || settings.announceMania !== 0));
-
-/**
- * Replaces Hypixel's impel subtitle with a flashy title.
- */
-registerWhen(register("renderTitle", (title, subtitle, event) => {
-    if (subtitle.includes("Impel")) {
-        cancel(event);
-        Client.showTitle(subtitle, "", 0, 20, 0);
-    }
-}), () => location.getWorld() === "The Rift" && settings.vampireImpel);
+}), () => location.getWorld() === "The Rift" && (Settings.vampireAttack || Settings.announceMania !== 0));
 
 /**
  * Highlights vampire bosses with steakable HP.
  */
 const VAMP_HP = new Set([625, 1100, 1800, 2400, 3000]);
-let dracula = [];
-let vamps = [];
+const draculaWaypoints = new Waypoint([1, 0, 0], 2, true, true, false);
+const vampWaypoints = new Waypoint([1, 0, 0], 2, true, true, false);
 
 registerWhen(register("step", () => {
-    dracula = World.getAllEntitiesOfType(PLAYER_CLASS).filter(entity => 
-        VAMP_HP.has(entity.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b())
-    );
+    draculaWaypoints.clear();
+    vampWaypoints.clear();
 
-    vamps = World.getAllEntitiesOfType(PLAYER_CLASS).filter(entity => {
-        entity = entity.getEntity();
+    World.getAllEntitiesOfType(PLAYER_CLASS).forEach(mob => {
+        const entity = mob.getEntity();
         const max = entity.func_110148_a(SMA.field_111267_a).func_111125_b();
-        return max > 210 && entity.func_110143_aJ() / max <= 0.2;
+
+        if (max > 210 && entity.func_110143_aJ() / max <= 0.2) vampWaypoints.push([RED + "Dracule", mob]);
+        else if (VAMP_HP.has(max)) draculaWaypoints.push([RED + "Mihawk", mob]);
     });
-}).setFps(2), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
+}).setFps(2), () => location.getWorld() === "The Rift" && Settings.vampireHitbox);
+
 
 /**
- * Render boxx hitboxes
+ * Variables used to reprsent and track the 6 effigies.
  */
-registerWhen(register("renderWorld", (pt) => {
-    renderEntities(dracula, 1, 0, 0, pt, undefined, false);
-    renderEntities(vamps, 1, 0, 0, pt);
-}), () => location.getWorld() === "The Rift" && settings.vampireHitbox);
+const EFFIGIES = [
+    ["1st Effigy", 151, 73, 96], ["2nd Effigy", 194, 87, 120], ["3rd Effigy", 236, 104, 148],
+    ["4th Effigy", 294, 90, 135], ["5th Effigy", 263, 93, 95], ["6th Effigy", 241, 123, 119]
+];
+const missingEffigies = new Waypoint([0.75, 0.75, 0.75]);  // Silver effigies
+
+/**
+ * Tracks missing effigies and makes a waypoint to them.
+ */
+registerWhen(register("step", () => {
+    missingEffigies.clear();
+    let effigies = Scoreboard?.getLines()?.find((line) => line.getName().includes("Effigies"));
+    if (effigies === undefined) return;
+
+    effigies = effigies.getName().replace(/[^§7⧯]/g,'').split("§");
+    effigies.shift();
+    effigies.forEach((effigy, i) => { 
+        if (effigy.includes('7')) missingEffigies.push(EFFIGIES[i]);
+    });
+}).setFps(1), () => location.getWorld() === "The Rift" && Settings.effigyWaypoint);

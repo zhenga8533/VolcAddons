@@ -1,5 +1,5 @@
 import RenderLib from "../../../RenderLib/index";
-import { data } from "../../utils/data";
+import { data } from "../../utils/Data";
 
 
 /**

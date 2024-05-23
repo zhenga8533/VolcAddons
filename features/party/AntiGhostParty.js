@@ -1,8 +1,8 @@
-import party from "../../utils/party";
-import settings from "../../utils/settings";
-import { GREEN, LOGO } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { delay } from "../../utils/thread";
+import party from "../../utils/Party";
+import Settings from "../../utils/Settings";
+import { GREEN, LOGO } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import { delay } from "../../utils/ThreadTils";
 
 
 /**
@@ -12,7 +12,7 @@ const partyCommands = new Set(["accept", "join", "kick", "promote", "demote"]);
 let cd = false;
 registerWhen(register("messageSent", (message, event) => {
     const args = message.split(' ');
-    if (cd || party.getIn() || args.length < 3 || (args[0] !== "/p" && args[0] !== "/party") || partyCommands.has(args[1].toLowerCase())) return;
+    if (cd || party.getIn() || args.length < 3 || (args[0] !== "/p" && args[0] !== "/Party") || partyCommands.has(args[1].toLowerCase())) return;
     cd = true;
     delay(() => cd = false, 1000);
 
@@ -20,4 +20,4 @@ registerWhen(register("messageSent", (message, event) => {
     cancel(event);
     ChatLib.command(`p ${args[1]}`);
     delay(() =>  ChatLib.command(`p ${args.splice(2).join(' ')}`), 500);
-}), () => settings.antiGhostParty);
+}), () => Settings.antiGhostParty);

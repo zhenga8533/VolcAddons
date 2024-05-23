@@ -1,8 +1,8 @@
-import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { data } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -43,7 +43,7 @@ registerWhen(register("chat", (color, kills, bonus, event) => {
     cancel(event);
     stats[0] = `${color + BOLD + kills}:`;
     updateOverlay();
-}).setCriteria("&r${color}&l+${kills} &r&8${bonus}&r"), () => settings.comboDisplay);
+}).setCriteria("&r${color}&l+${kills} &r&8${bonus}&r"), () => Settings.comboDisplay);
 
 /**
  * Updates overlay with formatted kill combo message.
@@ -51,7 +51,7 @@ registerWhen(register("chat", (color, kills, bonus, event) => {
 registerWhen(register("chat", (color, kills) => {
     stats[0] = `${color + kills} Kill Combo:`;
     updateOverlay();
-}).setCriteria("&r${color}+${kills} Kill Combo&r"), () => settings.comboDisplay);
+}).setCriteria("&r${color}+${kills} Kill Combo&r"), () => Settings.comboDisplay);
 
 /**
  * Resets statistics and overlay message.
@@ -59,8 +59,8 @@ registerWhen(register("chat", (color, kills) => {
 registerWhen(register("chat", () => {
     stats = ["", 0, 0, 0];
     comboOverlay.setMessage("");
-}).setCriteria("Your Kill Combo has expired! You reached a ${kills} Kill Combo!"), () => settings.comboDisplay);
+}).setCriteria("Your Kill Combo has expired! You reached a ${kills} Kill Combo!"), () => Settings.comboDisplay);
 registerWhen(register("worldUnload", () => {
     stats = ["", 0, 0, 0];
     comboOverlay.setMessage("");
-}), () => settings.comboDisplay);
+}), () => Settings.comboDisplay);

@@ -1,10 +1,10 @@
-import settings from "../../utils/settings";
-import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/Constants";
 import { formatNumber, formatTime } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { getPaused } from "../../utils/stat";
-import { data } from "../../utils/data";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { getPaused } from "../../utils/Stat";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -86,7 +86,7 @@ registerWhen(register("entityDeath", (death) => {
         updateCounter();
         stands.add(entity.persistentID);
     });
-}), () => settings.killCounter);
+}), () => Settings.killCounter);
 
 /**
  * Track time and reset stand ids
@@ -97,7 +97,7 @@ registerWhen(register("step", () => {
     time++;
     updateCounter();
     stands.clear();
-}).setFps(1), () => settings.vanqCounter !== 0);
+}).setFps(1), () => Settings.vanqCounter !== 0);
 
 /**
  * Command to reset the stats for the overall counter.

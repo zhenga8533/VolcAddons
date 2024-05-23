@@ -1,7 +1,6 @@
-import settings from "../../utils/settings";
-import { getMVP } from "../../utils/player";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -51,15 +50,13 @@ registerWhen(register("messageSent", (message, event) => {
     let contains = false;
 
     // MVP++ Emotes
-    if (!getMVP()) {
-        Object.keys(MVP).forEach((key) => {
-            if (message.includes(key)) {
-                const reg = new RegExp(key, 'g');
-                message = message.replace(reg, MVP[key]);
-                contains = true;
-            }
-        });
-    }
+    Object.keys(MVP).forEach((key) => {
+        if (message.includes(key)) {
+            const reg = new RegExp(key, 'g');
+            message = message.replace(reg, MVP[key]);
+            contains = true;
+        }
+    });
     // Rank Gifting Emotes
     Object.keys(GIFT).forEach((key) => {
         if (message.includes(key)) {
@@ -82,18 +79,19 @@ registerWhen(register("messageSent", (message, event) => {
         ChatLib.say(message);
         cancel(event);
     }
-}), () => settings.enableEmotes);
+}), () => Settings.enableEmotes);
 
 
 /**
  * Message back last messaged player with `/b ${msg}`
  */
+let lastMsg = "";
 register("command", (...args) => {
-    ChatLib.command(`msg ${data.lastMsg} ${args.join(' ')}`);
+    ChatLib.command(`msg ${lastMsg} ${args.join(' ')}`);
 }).setName("b", true);
 
 register("messageSent", (message) => {
     const args = message.split(' ');
     if (!(args[0] === "/msg" || args[0] === "/message")) return;
-    data.lastMsg = args[1];
+    lastMsg = args[1];
 });

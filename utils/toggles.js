@@ -1,4 +1,4 @@
-import { BLUE, DARK_AQUA, GRAY, HEADER, RED } from "./constants";
+import { BLUE, DARK_AQUA, GRAY, HEADER, RED } from "./Constants";
 import {
     @Vigilant,
     @TextProperty,
@@ -7,7 +7,7 @@ import {
     @SelectorProperty
 } from "../../Vigilance/index";
 
-@Vigilant("VolcAddons/data", "VolcAddons' Toggles", {
+@Vigilant("VolcAddons/Data", "VolcAddons' Toggles", {
     // Function to compare categories for sorting settings
     getCategoryComparator: () => (a, b) => {
         const categories = ["Server Status", "Skyblock Stats", "Leader Commands", "Party Commands", "Kuudra Alerts", "Webhook Chats"];

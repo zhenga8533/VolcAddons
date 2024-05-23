@@ -1,19 +1,18 @@
 // Utility Modules
-import "./utils/dev";
-import "./utils/player";
-import "./utils/waypoints";
-import settings from "./utils/settings";
-import toggles from "./utils/toggles";
-import { AQUA, BOLD, CAT_SOULS, CONTRACT, DARK_AQUA, DARK_GRAY, DARK_RED, ENIGMA_SOULS, FAIRY_SOULS, GOLD, GRAY, GREEN, LOGO, RED, RESET, RIFT_NPCS, RIFT_ZONES, UNDERLINE, WHITE, YELLOW } from "./utils/constants";
-import { data, resetGUI } from "./utils/data";
-import { updateList } from "./utils/list";
-import { openGUI } from "./utils/overlay";
-import { delay } from "./utils/thread";
-import { getLatestReleaseVersion } from "./utils/updates";
+import "./utils/DevTils";
+import socket from "./utils/Socket";
+import Settings from "./utils/Settings";
+import toggles from "./utils/Toggles";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/Constants";
+import { data, resetGUI } from "./utils/Data";
+import { updateList } from "./utils/ListTils";
+import { openGUI } from "./utils/Overlay";
+import { delay } from "./utils/ThreadTils";
+import { getLatestReleaseVersion } from "./utils/UpdateTils";
 // Utility Variable Control
 const CHANGED_SETTINGS = new Set(["itemPrice", "bossAlert", "miniAlert", "vanqCounter"]);
-for (const key in settings) if (CHANGED_SETTINGS.has(key) && typeof settings[key] !== "number") settings[key] = 0;
-if (typeof settings.partyCommands !== "boolean") settings.partyCommands = false;
+for (const key in Settings) if (CHANGED_SETTINGS.has(key) && typeof Settings[key] !== "number") Settings[key] = 0;
+if (typeof Settings.partyCommands !== "boolean") Settings.partyCommands = false;
 
 // General Features
 import "./features/general/Autocorrect";
@@ -21,27 +20,25 @@ import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
 import "./features/general/ChunkBorders";
 import "./features/general/Cooldowns";
-import "./features/general/FairySouls";
-import "./features/general/ImageViewer";
+import { updateFairy } from "./features/general/FairySouls";
 import "./features/general/LevelAlert";
 import { getStatus } from "./features/general/Performance";
 import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
+import { updateSBW } from "./features/general/SkyBlockWaypoints";
 import "./features/general/SkyCrypt";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
 import { createWaypoint } from "./features/general/UserWaypoints";
 import "./features/general/WidgetDisplay";
 // Container Features
-import "./features/container/ArmorDisplay";
 import "./features/container/AttributeAbbrev";
-import { buttonCommands } from "./features/container/ContainerButtons";
-import "./features/container/ContainerPreview";
+import { previewCommands } from "./features/container/ContainerPreview";
 import "./features/container/JyrreTimer";
 import "./features/container/Searchbar";
-import "./features/container/SlotBinding";
+import { slotCommands } from "./features/container/SlotBinding";
 import "./features/container/SoldHighlight";
 import "./features/container/WardrobeHotkey";
 // Party Features
@@ -68,7 +65,6 @@ import "./features/combat/BestiaryDisplay";
 import "./features/combat/ComboDisplay";
 import "./features/combat/DamageTracker";
 import "./features/combat/EntityDetect";
-import "./features/combat/GyroTimer";
 import "./features/combat/HealthAlert";
 import "./features/combat/KillCounter";
 import "./features/combat/ManaDrain";
@@ -76,6 +72,7 @@ import "./features/combat/RagDetect";
 import "./features/combat/SlayerDetect";
 // Mining Features
 import "./features/mining/CommissionsDisplay";
+import "./features/mining/EventTracker";
 import "./features/mining/FossilHelper";
 import "./features/mining/PickDisplay";
 import "./features/mining/PowderChest";
@@ -85,13 +82,13 @@ import "./features/mining/WishingCompass";
 // Farming Features
 import { calcCompost } from "./features/farming/Composter";
 import "./features/farming/GardenTab";
-import "./features/farming/JacobHighlight";
 import "./features/farming/PestTracking";
 // Event Features
 import "./features/event/BingoCard";
 import "./features/event/BurrowDetect";
 import "./features/event/CalendarTime";
 import "./features/event/GreatSpook";
+import "./features/event/HippityHoppity";
 import "./features/event/InquisitorDetect";
 import "./features/event/MythRitual";
 // Crimson Isle Features
@@ -100,6 +97,8 @@ import "./features/crimsonIsle/MythicDetect";
 import "./features/crimsonIsle/TrophyCounter";
 import "./features/crimsonIsle/VanqFeatures";
 // Dungeon Features
+import "./features/dungeon/CroesusHighlight";
+import "./features/dungeon/DungeonProfit";
 import "./features/dungeon/StarDetect";
 // Kuudra Features
 import "./features/kuudra/CrateEdit";
@@ -112,20 +111,23 @@ import "./features/kuudra/KuudraView";
 import { calcTabasco } from "./features/kuudra/TabascoCalc";
 // Rift Features
 import "./features/rift/DDR";
+import { updateEnigma } from "./features/rift/EnigmaSouls";
+import { updateCat } from "./features/rift/MontezumaSouls";
 import "./features/rift/VampireSlayer";
-import { riftWaypointEdit, soulEdit } from "./features/rift/RiftWaypoints";
-import { slotCommands } from "./features/container/SlotBinding";
 
 
 // Launch Tests
-if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
-if (!FileLib.exists("VolcAddons", "data/contract.txt")) FileLib.write("VolcAddons", "data/contract.txt", CONTRACT);
+if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/Data").mkdir();
+if (!FileLib.exists("VolcAddons", "data/contract.txt"))
+    FileLib.write("VolcAddons", "data/contract.txt", FileLib.read("VolcAddons", "assets/contract.txt"));
 
+// First Run
+const version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
 const once = register("worldLoad", () => {
     once.unregister();
     delay(() => {
         // NEW UPDATE - Display update message when a new version is detected
-        if (JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version != data.version) {
+        if (version != data.version) {
             data.version = JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version;
             ChatLib.chat(`\n${LOGO + WHITE + BOLD}LATEST UPDATE ${GRAY}[v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}]!`);
             JSON.parse(FileLib.read("VolcAddons", "changelog.json")).forEach(change => ChatLib.chat(change));
@@ -141,6 +143,12 @@ Instruction manual (i think) => /va help\n`);
             data.newUser = false;
         }
     }, 1000);
+});
+
+// Track unique users
+socket.send({
+    "command": "user",
+    "version": version,
 });
 
 // HELP - Display help message for available commands
@@ -190,9 +198,9 @@ register("guiKey", (_, keyCode, gui) => {
  */
 function openSettings() {
     try {
-        settings.openGUI();
+        Settings.openGUI();
     } catch (err) {
-        ChatLib.chat(`${LOGO + RED}Error opening settings... Please run '/ct reload' to fix!`);
+        ChatLib.chat(`${LOGO + RED}Error opening Settings... Please run '/ct reload' to fix!`);
         register("gameUnload", () => {
             FileLib.delete("VolcAddons", "config.toml");
         }).setPriority(Priority.LOWEST);
@@ -208,23 +216,27 @@ register ("command", (...args) => {
 
     // Parsing command and executing appropriate actions
     const command = args[0] === undefined ? undefined : args[0].toLowerCase();
-    switch (command) {
+    const soleCommand = command.replace(/s$/, '');
+    switch (soleCommand) {
         // Settings
         case undefined:
-        case "settings":
+        case "setting":
             openSettings();
             break;
         case "toggle":
-        case "toggles":
         case "control":
             toggles.openGUI();
+            break;
+        case "dev":
+            data.devMode = !data.devMode;
+            const color = data.devMode ? GREEN : RED;
+            ChatLib.chat(`${LOGO + color}Developer mode is now ${data.devMode ? "enabled" : "disabled"}!`);
             break;
         // Help
         case "help":
             getHelp();
             break;
         case "list":
-        case "lists":
             ChatLib.chat(
 `\n${LOGO + GOLD + BOLD} Lists:
 ${DARK_GRAY}- ${GOLD + BOLD}cd: ${YELLOW}cooldown-list
@@ -252,7 +264,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         case "wdr":
         case "sin":
-            if (!FileLib.read("./VolcAddons/data", "contract.txt").split("\n")[51]?.includes(Player.getName())) {
+            if (!FileLib.read("./VolcAddons/Data", "contract.txt").split("\n")[51]?.includes(Player.getName())) {
                 ChatLib.chat(`${LOGO + RED}The contract, signed it must be. Access granted, for you to see. ${DARK_GRAY}/va contract`);
                 break;
             }
@@ -271,18 +283,19 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Buttons
         case "button":
-        case "buttons":
             buttonCommands(args);
             break;
+        // Container Preview
+        case "preview":
+            previewCommands(args);
+            break;
         // Slot Binding
-        case "slots":
         case "slot":
-        case "binds":
         case "bind":
             slotCommands(args);
             break;
         // Send coords
-        case "coords":
+        case "coord":
         case "xyz":
             const randID = '@' + (Math.random() + 1).toString(36).substring(5);
             ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
@@ -294,7 +307,6 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
         // Attribute Pricing
         case "attribute":
-        case "attributes":
             getAttributes(args);
             break;
         // List Controls
@@ -362,15 +374,20 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             updateList(args, "prefixlist");
             break;
         // Kuudra Splits
-        case "splits": // Kuudra splits
         case "split":
             getSplits(args);
             break;
         // User Waypoints
-        case "waypoints":
         case "waypoint":
         case "wp":
             createWaypoint(args);
+            break;
+        case "npc":
+            updateSBW("NPC", args[1], args.slice(2).join(' '));
+            break;
+        case "location":
+        case "zone":
+            updateSBW(args[0], args[1], args.slice(2).join(' '));
             break;
         // Bazaar Calculations
         case "calculate":
@@ -398,28 +415,19 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
                 }
             } catch (err) { ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)) }
             break;
-        // Configure fairy souls
+        // Configure Fairy souls
         case "fairy":
-        case "soul":
-            soulEdit(args, "fairy", "fairySouls", FAIRY_SOULS, getWorld());
+            updateFairy(args[1], args[2]);
             break;
-        // Configure enigma souls
+        // Configure Enigma souls
         case "enigma":
-            soulEdit(args, "enigma", "enigmaSouls", ENIGMA_SOULS);
+            updateEnigma(args[1], args.splice(2).join(' '));
             break;
-        // Configure enigma souls
+        // Configure Montezuma souls
         case "montezuma":
         case "mont":
         case "cat":
-            soulEdit(args, "cat", "catSouls", CAT_SOULS);
-            break;
-        // Configure npc waypoints
-        case "npc":
-            riftWaypointEdit(args, "npc", RIFT_NPCS);
-            break;
-        // Configure zone waypoints
-        case "zone":
-            riftWaypointEdit(args, "zone", RIFT_ZONES);
+            updateCat(args[1], args[2]);
             break;
         // Party Commands and Else Case
         default:
@@ -445,3 +453,10 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
             break;
     }
 }).setName("va", true).setAliases("volcaddons", "volc", "itee");
+
+
+/**
+ * Final imports
+ */
+import "./features/container/ArmorDisplay";
+import { buttonCommands } from "./features/container/ContainerButtons";

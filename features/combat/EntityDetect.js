@@ -1,49 +1,51 @@
-import settings from "../../utils/settings";
-import { SMA, EntityArmorStand } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { SMA, EntityArmorStand, STAND_CLASS } from "../../utils/Constants";
 import { convertToPascalCase, unformatNumber } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
-import { Hitbox, renderEntities } from "../../utils/waypoints";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
+import Waypoint from "../../utils/Waypoint";
 
 
 /**
  * Variables used to track active entities.
  */
-const USED = new Set(["vanquisher", "jawbus", "thunder"]);
-let colorMap = {};
-let entityList = [];
-let entities = [];
-let standList = [];
-let x = 0;
-let y = 0;
+const USED = new Set(["vanquisher", "jawbus", "thunder", "inquisitor"]);
+const entityWaypoints = {};
+const standWaypoints = {};
+let xBound = 0;
+let yBound = 0;
 
 /**
  * Identifies entity class based on name and adds to list with associated HP value.
  *
  * @param {String} entity - Entity name to test class for.
- * @param {Number} HP - Associated HP value.
+ * @param {Number} health - Associated HP value.
+ * @param {Number} index - Index of class type to test.
  * @returns {Boolean} - True if entity class is identified and added to the list.
  */
 const CLASS_TYPES = ["client.entity", "entity.monster", "entity.boss", "entity.passive"];
-function testClass(entity, HP, index) {
+function testClass(entity, health, index=0) {
+    // Set color map
+    const [uR, uG, uB] = data.colorlist[entity]?.split(' ') ?? [];
+    const rgb = Settings.hitboxColor;
+    const r = (isNaN(uR) ? Math.random() * (255 - rgb.blue) : uR) / 255;
+    const g = (isNaN(uG) ? Math.random() * (255 - rgb.red) : uG) / 255;
+    const b = (isNaN(uB) ? Math.random() * (255 - rgb.green) : uB) / 255;
+
     try {
         const type = `net.minecraft.${CLASS_TYPES[index]}.Entity${entity}`;
-        const mob = Java.type(type).class;
-        World.getAllEntitiesOfType(mob);
-        
-        // Set color map
-        const [uR, uG, uB] = data.colorlist[entity]?.split(' ') ?? [];
-        const rgb = settings.hitboxColor;
-        const r = isNaN(uR) ? Math.random() * (255 - rgb.blue) : uR;
-        const g = isNaN(uG) ? Math.random() * (255 - rgb.red) : uG;
-        const b = isNaN(uB) ? Math.random() * (255 - rgb.green) : uB;
-        colorMap[mob.toString() + HP] = [r / 255, g / 255, b / 255];
+        const entityClass = Java.type(type).class;
+        World.getAllEntitiesOfType(entityClass);
 
-        entityList.push([mob, HP]);
+        entityWaypoints[entity] = [new Waypoint([r, g, b], 3, true, false, false), entityClass, health];
         return true;
     } catch(err) {
-        if (index === CLASS_TYPES.length) return;
-        return testClass(entity, HP, index + 1);
+        if (index === CLASS_TYPES.length - 1) {
+            standWaypoints[entity] = new Waypoint([r, g, b], 3, true, false, false);
+            return false;
+        }
+
+        return testClass(entity, health, index + 1);
     }
 }
 
@@ -51,52 +53,34 @@ function testClass(entity, HP, index) {
  * Updates entity list based on mob data, processing HP and class information.
  */
 export function updateEntityList() {
-    colorMap = {};
-    entityList = [];
-    entities = [];
-    standList = [];
-    x = 0;
-    y = 0;
+    // Reset entity list
+    xBound = 0;
+    yBound = 0;
+    Object.keys(entityWaypoints).forEach(entity => {
+        entityWaypoints[entity][0].delete();
+        delete entityWaypoints[entity];
+    });
+    Object.keys(standWaypoints).forEach(stand => {
+        standWaypoints[stand].delete();
+        delete standWaypoints[stand];
+    });
 
     // Update moblist objects
     data.moblist.forEach(mob => {
         const args = mob.split(' ');
-        const HP = unformatNumber(args.pop());
-        const PascalCaseMob = convertToPascalCase(HP === 0 ? mob : args.join(' '));
+        const health = unformatNumber(args.pop());
+        const entity = convertToPascalCase(health === 0 ? mob : args.join(' '));
         
-        if (!testClass(PascalCaseMob, HP, 0) && !USED.has(mob)) {
+        if (!USED.has(mob) && !testClass(entity, health)) {
             // Check for bounds otherwise set as armor stand detection
             const remaining = parseInt(mob.substring(1));
-
-            // Set armor stand names if not bound number
-            if (isNaN(remaining)) {
-                const rgb = settings.hitboxColor;
-                const r = Math.random() * (255 - rgb.blue);
-                const g = Math.random() * (255 - rgb.red);
-                const b = Math.random() * (255 - rgb.green);
-                colorMap[mob] = [r / 255, g / 255, b / 255];
-
-                standList.push(mob);
-                return;
-            }
-
-            // Set bounds
+            if (isNaN(remaining)) return;
+            
             const front = mob[0].toLowerCase();
-            if (front === 'x') x = remaining;
-            else if (front === 'y') y = remaining;
+            if (front === 'x') xBound = remaining;
+            else if (front === 'y') yBound = remaining;
         }
     });
-
-    // Update primal fear highlight
-    if (settings.fearHighlight) {
-        const rgb = settings.hitboxColor;
-        const r = Math.random() * (255 - rgb.blue);
-        const g = Math.random() * (255 - rgb.red);
-        const b = Math.random() * (255 - rgb.green);
-        colorMap["§c☠"] = [r / 255, g / 255, b / 255];
-
-        standList.push("§c☠");
-    }
 }
 updateEntityList();
 
@@ -104,58 +88,47 @@ updateEntityList();
  * Creates colored entity list from entity data in `entityList`.
  * Determines color based on class and filters by HP if applicable.
  */
-const STAND_CLASS = EntityArmorStand.class;
 registerWhen(register("step", () => {
     // Refresh entities every 0.5s
-    entities = [];
-    entityList.forEach(entityData => {
+    Object.keys(entityWaypoints).forEach(entity => {
         // Match coloring
-        const entityClass = entityData[0];
-        const entityHp = entityData[1];
-        const color = colorMap[entityClass.toString() + entityHp];
-        
+        const entityWaypoint = entityWaypoints[entity][0];
+        const entityClass = entityWaypoints[entity][1];
+        const health = entityWaypoints[entity][2];
+        entityWaypoint.clear();
+
         // Add entities
-        const livingEntities = World.getAllEntitiesOfType(entityClass).filter(entity => entity.getEntity().func_110143_aJ() != 0);
-        let filteredEntities = entityHp === 0 ? livingEntities :
-            livingEntities.filter(entity => entity.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b() === entityHp);
-        if (x !== 0) filteredEntities = filteredEntities.filter(entity => Math.abs(Player.getX() - entity.getX()) <= x);
-        if (y !== 0) filteredEntities = filteredEntities.filter(entity => Math.abs(Player.getY() - entity.getY()) <= y);
-        if (filteredEntities.length === 0) return;
-        entities.push([filteredEntities, color]);
-    });
-
-    // Refresh stands every 0.5s
-    if (standList.length === 0) return;
-    const stands = {};
-    World.getAllEntitiesOfType(STAND_CLASS).forEach(stand => {
-        standList.forEach(name => {
-            if (stand.getName().includes(name)) {
-                // Find closest entity to armor stand
-                const standEntity = stand.getEntity();
-
-                const closestEntity = World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1))
-                .filter(entity => entity && !(entity instanceof EntityArmorStand) && entity !== Player.getPlayer())
-                .reduce((closest, entity) => {
-                    const distance = stand.distanceTo(entity);
-                    return distance < closest.distance ? { entity, distance } : closest;
-                }, { entity: standEntity, distance: 20 });
-
-                // put into stands object
-                stands[name] = stands[name] ?? [];
-                stands[name].push(closestEntity.entity);
-            }
+        World.getAllEntitiesOfType(entityClass).forEach(entity => {
+            const mob = entity.getEntity();
+            if ((health !== 0 && mob.func_110148_a(SMA.field_111267_a).func_111125_b() !== health) || 
+                xBound !== 0 && Math.abs(Player.getX() - entity.getX()) > xBound || 
+                yBound !== 0 && Math.abs(Player.getY() - entity.getY()) > yBound || 
+                mob.func_110143_aJ() === 0) return;
+            
+            entityWaypoint.push(['', entity]);
         });
     });
 
-    for (let stand in stands) entities.push([stands[stand], colorMap[stand]]);
-}).setFps(2), () => entityList.length !== 0 || standList.length !== 0);
+    // Refresh stands every 0.5s
+    const keys = Object.keys(standWaypoints);
+    keys.forEach(key => standWaypoints[key].clear());
+    if (keys.length === 0) return;
 
-/**
- * Register hitbox rendering
- */
-new Hitbox(() => entityList.length !== 0 || standList.length !== 0, (pt) => {
-    entities.forEach(entity => {
-        const color = entity[1];
-        renderEntities(entity[0], color[0], color[1], color[2], pt);
+    World.getAllEntitiesOfType(STAND_CLASS).forEach(stand => {
+        keys.forEach(key => {
+            if (stand.getName().includes(key)) {
+                // Find closest entity to armor stand
+                const standEntity = stand.getEntity();
+                const closestEntity = World.getWorld().func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1))
+                    .filter(entity => entity && !(entity instanceof EntityArmorStand) && entity !== Player.getPlayer())
+                    .reduce((closest, entity) => {
+                        const distance = stand.distanceTo(entity);
+                        return distance < closest.distance ? { entity, distance } : closest;
+                    }, { entity: standEntity, distance: 20 });
+
+                if (!closestEntity) return;
+                standWaypoints[key].push(['', closestEntity.entity]);
+            }
+        });
     });
-});
+}).setFps(2), () => Object.keys(entityWaypoints).length > 0);

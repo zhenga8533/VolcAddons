@@ -1,6 +1,6 @@
-import settings from "../../utils/settings";
-import { AQUA } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
+import Settings from "../../utils/Settings";
+import { AQUA } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 registerWhen(register("renderItemIntoGui", (item, x, y) => {
@@ -20,4 +20,4 @@ registerWhen(register("renderItemIntoGui", (item, x, y) => {
     Renderer.scale(0.8, 0.8);
     Renderer.translate(0, 0, 275);
     Renderer.drawString(overlay, x * 1.25 + 1, y * 1.25 + 1);
-}), () => settings.attributeAbbrev);
+}), () => Settings.attributeAbbrev);

@@ -1,8 +1,12 @@
-import settings from "../../utils/settings";
-import location from "../../utils/location";
-import settings from "../../utils/settings";
+/**
+ * ARCHIVED
+ */
+
+import Settings from "../../utils/Settings";
+import location from "../../utils/Location";
+import Settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/register";
+import { registerWhen } from "../../utils/RegisterTils";
 
 
 /**
@@ -34,23 +38,22 @@ registerWhen(register("guiOpened", () => {
             }
         }        
     })
-}), () => location.getWorld() === "Garden" && settings.jacobReward);
+}), () => location.getWorld() === "Garden" && Settings.jacobReward);
 registerWhen(register("guiClosed", () => {
     unclaimed = [];
-}), () => location.getWorld() === "Garden" && settings.jacobReward);
+}), () => location.getWorld() === "Garden" && Settings.jacobReward);
 
 /**
  * Renders neon green box over unclaimed rewards.
  */
 registerWhen(register("guiRender", () => {
     if (unclaimed.length === 0) return;
-    const containerType = Player.getContainer().getClassName();
 
     unclaimed.forEach(index => {
-        const [x, y] = getSlotCoords(index[0], containerType);
+        const [x, y] = getSlotCoords(index[0]);
     
         const color = index[1];
         Renderer.translate(0, 0, 100);
         Renderer.drawRect(Renderer.color(...color, 255), x, y, 16, 16);
     });
-}), () => location.getWorld() === "Garden" && settings.jacobReward);
+}), () => location.getWorld() === "Garden" && Settings.jacobReward);

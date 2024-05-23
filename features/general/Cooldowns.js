@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
-import { DARK_GREEN, DARK_RED, GREEN, RED, YELLOW } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { DARK_GREEN, DARK_RED, GREEN, RED, YELLOW } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -87,7 +87,7 @@ registerWhen(register("tick", () => {
         const cd = Math.ceil(items[itemID][0]);
         if (isNaN(cd)) delete items[itemID];
         else if (cd <= 0) {
-            if (settings.cooldownAlert)
+            if (Settings.cooldownAlert)
                 Client.showTitle(itemName, `${GREEN}is off cooldown!`, 5, 25, 5);
             delete items[itemID];
         }

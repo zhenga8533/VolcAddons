@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
-import { registerWhen } from "../../utils/register";
-import { Overlay } from "../../utils/overlay";
-import { data, itemNBTs } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { registerWhen } from "../../utils/RegisterTils";
+import { Overlay } from "../../utils/Overlay";
+import { data, itemNBTs } from "../../utils/Data";
 import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
 import { Button } from "./ContainerButtons";
 
@@ -41,7 +41,7 @@ registerWhen(register("tick", () => {
     pieces[1] = armor.getChestplate();
     pieces[2] = armor.getLeggings();
     pieces[3] = armor.getBoots();
-}), () => settings.armorDisplay);
+}), () => Settings.armorDisplay);
 
 
 /**
@@ -64,7 +64,7 @@ let equipment = itemNBTs.equip.map((nbt, index) => {
     // Create inv eq button
     buttons.push(new Button("eq", index * 9, () => {
         ChatLib.command("equipment");
-    }, "equipment", texture));
+    }, "equipment", texture, data.equipmentLore[index] ?? []));
 
     return item;
 });
@@ -73,8 +73,8 @@ let equipment = itemNBTs.equip.map((nbt, index) => {
  * Equipment button handling
  */
 const click = register("guiMouseClick", (x, y, button, gui) => {
-    const left = gui.getGuiLeft();
-    const top = gui.getGuiTop();
+    const left = gui?.getGuiLeft() ?? 0;
+    const top = gui?.getGuiTop() ?? 0;
 
     Object.keys(buttons).forEach(key => {
         buttons[key].click(left, top, x, y, button);
@@ -82,8 +82,8 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
 }).unregister();
 
 const render = register("guiRender", (x, y, gui) => {
-    const top = gui.getGuiTop();
-    const left = gui.getGuiLeft();
+    const top = gui?.getGuiTop() ?? 0;
+    const left = gui?.getGuiLeft() ?? 0;
 
     Object.keys(buttons).forEach(key => {
         buttons[key].draw(left, top);
@@ -112,13 +112,13 @@ registerWhen(register("guiOpened", (event) => {
         close.register();
         render.register();
     });
-}), () => settings.equipDisplay);
+}), () => Settings.equipDisplay);
 
 /**
  * Equipment Overlay
  */
 new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay", () => {
-    if (!settings.equipDisplay) return;
+    if (!Settings.equipDisplay) return;
     let yDiff = -15 * data.EQL[2];
 
     equipment.forEach(piece => {
@@ -156,27 +156,30 @@ function updateEquipment() {
     for (let i = 0; i < 4; i++) {
         let item = equipment[i];
         if(item.getID() === 160) {
-            buttons[i].setItem("stained_glass_pane");
+            buttons[i].setItem("stained_glass_pane", []);
             continue;
         }
 
         let skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
         let texture = skullNBT.getCompoundTag("Properties").getTag("textures").getRawNBT();
-        buttons[i].setItem(texture.func_150305_b(0).func_74779_i("Value"));
+        buttons[i].setItem(texture.func_150305_b(0).func_74779_i("Value"), item.getLore());
     }
 }
 
 registerWhen(register("guiMouseClick", () => {
     Client.scheduleTask(1, updateEquipment);
-}), () => settings.equipDisplay);
+}), () => Settings.equipDisplay);
 registerWhen(register("guiOpened", () => {
     Client.scheduleTask(1, updateEquipment);
-}), () => settings.equipDisplay);
+}), () => Settings.equipDisplay);
 
 /**
  * Persistant armor and equip.
  */
 register("gameUnload", () => {
     itemNBTs.armor = pieces.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
-    itemNBTs.equip = equipment.map(piece => piece === null ? null : compressNBT(piece.getNBT().toObject()));
+    itemNBTs.equip = equipment.map((piece, index) => {
+        if (piece?.getLore()?.length > 1) data.equipmentLore[index] = [...piece.getLore()];
+        return piece === null ? null : compressNBT(piece.getNBT().toObject())
+    });
 }).setPriority(Priority.HIGHEST);;

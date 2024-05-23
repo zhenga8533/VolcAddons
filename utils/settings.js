@@ -1,5 +1,5 @@
-import { AQUA, BLUE, BOLD, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./constants";
-import toggles from "./toggles";
+import { AQUA, BLUE, BOLD, DARK_RED, GOLD, GRAY, GREEN, HEADER, ITALIC, RED } from "./Constants";
+import toggles from "./Toggles";
 import {
     @TextProperty,
 	@PercentSliderProperty,
@@ -49,7 +49,9 @@ ${ITALIC}Related Commands: /va <attribute, calc, nw>`);
         this.setCategoryDescription("Combat", HEADER);
     
         // Mining Category
-        this.setCategoryDescription("Mining", HEADER);
+        this.setCategoryDescription("Mining", 
+        `${HEADER}
+${ITALIC}Related Commands: /va <alloy, chevent, dmevent>`);
 
         // Farming Category
         this.setCategoryDescription("Farming", 
@@ -78,9 +80,6 @@ ${ITALIC}Related Commands: /va <attribute, splits>, /kv`);
         this.setCategoryDescription("Rift",
         `${HEADER}
 ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
-
-        // Dependencies
-        this.addDependency("Vanquisher Detection Sound", "Vanquisher Detection");
     }
     
 
@@ -88,12 +87,28 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     // --- Essential ---
     @SwitchProperty({
-        name: "Skyblock Toggle",
+        name: "VolcAddons Toggle",
+        description: `Toggle ${GREEN}ON ${GRAY}to enable or ${RED}OFF ${GRAY}to disable VolcAddons.`,
+        category: "General",
+        subcategory: "Essential"
+    })
+    vaToggle = true;
+
+    @SwitchProperty({
+        name: "SkyBlock Toggle",
         description: `Toggle ${GREEN}ON ${GRAY}for features to only function in Skyblock or ${RED}OFF ${GRAY}to function anywhere.`,
         category: "General",
         subcategory: "Essential"
     })
     skyblockToggle = true;
+
+    @SwitchProperty({
+        name: "Socket Toggle",
+        description: `Toggle ${GREEN}ON ${GRAY}to send information to VolcSocket server or ${RED}OFF ${GRAY}to prevent. Requires a ${AQUA}/ct load ${GRAY}to take effect.`,
+        category: "General",
+        subcategory: "Essential"
+    })
+    socketToggle = true;
     
     @ButtonProperty({
         name: "Discord",
@@ -140,7 +155,7 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
 
     @SliderProperty({
         name: "Render Waypoint",
-        description: `Creates waypoints out of patcher formated coords in chat. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
+        description: `Creates waypoints out of patcher formated coords. Set seconds until waypoints expire or as 0 to turn ${RED}OFF ${BLUE}(mob waypoints last 1/3 as long)${GRAY}.`,
         category: "General",
         subcategory: "General",
         min: 0,
@@ -161,7 +176,7 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     
     @SwitchProperty({
         name: "SkyBlock XP Alert",
-        description: `${DARK_RED}NEW! ${GRAY}Displays a chat message and title when player gains SkyBlock XP in actionBar.`,
+        description: "Displays a chat message and title when player gains SkyBlock XP in actionBar.",
         category: "General",
         subcategory: "General"
     })
@@ -336,15 +351,6 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
     })
     enableEmotes = false;
 
-    @PercentSliderProperty({
-        name: "Image Viewer",
-        description: `Patcher image viewer but works for every Imgur/Discord image and is laggier :).
-Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
-        category: "General",
-        subcategory: "Yapping"
-    })
-    imageRatio = 0.0;
-
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
 
@@ -359,7 +365,7 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
 
     @SelectorProperty({
         name: "Container Buttons ",
-        description: `${DARK_RED}NEW! ${GRAY}Display buttons that runs a command when pressed. Use ${AQUA}/va buttons ${GRAY}to view related commands.`,
+        description: `Display buttons that runs a command when pressed. Use ${AQUA}/va buttons ${GRAY}to view related commands.`,
         category: "Container",
         subcategory: "Container",
         options: ["OFF", "Default", "Transparent", "Semi-Transparent", "FurfSky"]
@@ -368,7 +374,8 @@ Set percent of screen taken or as 0 to turn ${RED}OFF${GRAY}.`,
 
     @SelectorProperty({
         name: "Container Preview ",
-        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.`,
+        description: `Renders a preview of hovered container besides container GUI. Move GUI with ${AQUA}/movePreview${GRAY}.
+Also ${AQUA}/va preview ${GRAY}can be used to lock previews and show replica. Move GUI with ${AQUA}/moveSP${GRAY}.`,
         category: "Container",
         subcategory: "Container",
         options: ["OFF", "Default", "FurfSky"]
@@ -604,7 +611,7 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // --- Bestiary ---
     @SwitchProperty({
         name: "Bestiary Counter",
-        description: `${DARK_RED}NEW! ${GRAY}Tracks bestiary hourly progress using tablist widget.
+        description: `Tracks bestiary hourly progress using tablist widget.
 Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}.`,
         category: "Combat",
         subcategory: "Bestiary"
@@ -624,7 +631,7 @@ Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}
         description: `Set the seed and opacity used to randomize entity hitbox colors.`,
         category: "Combat",
         subcategory: "Bestiary",
-        hidden: !FileLib.read("./VolcAddons/data", "contract.txt")?.split("\n")?.[51]?.includes(Player.getName()) ?? false
+        hidden: !FileLib.read("./VolcAddons/Data", "contract.txt")?.split("\n")?.[51]?.includes(Player.getName()) ?? false
     })
     hitboxColor = Color.BLACK;
     
@@ -678,22 +685,6 @@ Move GUI with ${AQUA}/moveKills ${GRAY}or reset tracker with ${AQUA}/resetKills$
         subcategory: "Combat"
     })
     ragDetect = true;
-
-    // --- Gyrokinetic Wand ---
-    @SwitchProperty({
-        name: "Cells Alignment Alert",
-        description: "Alerts player when Cells Alignment is about to run out.",
-        category: "Combat",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroAlert = false;
-    @SwitchProperty({
-        name: "Cells Alignment Timer",
-        description: `Displays the time left before Cells Alignment ends.\nMove GUI with ${AQUA}/moveGyro${GRAY}.`,
-        category: "Combat",
-        subcategory: "Gyrokinetic Wand"
-    })
-    gyroTimer = false;
 
     // --- Slayer ---
     @SelectorProperty({
@@ -878,14 +869,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     gardenTab = false;
 
-    @SwitchProperty({
-        name: "Jacob Reward Highlight",
-        description: "Highlights unclaimed Jacob event rewards.",
-        category: "Farming",
-        subcategory: "Garden"
-    })
-    jacobReward = true;
-
     // --- Pests ---
     @SwitchProperty({
         name: "Desk Highlight",
@@ -960,19 +943,20 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
 
     @SwitchProperty({
         name: "Egg Waypoints",
-        description: `Display waypoints for nearby corpses. ${DARK_RED}Technically uses ESP so UAYOR!`,
+        description: `Display waypoints for nearby eggs. ${DARK_RED}Technically uses ESP so UAYOR!`,
         category: "Event",
         subcategory: "Chocolate Factory"
     })
     chocoWaypoints = false;
 
-    @SwitchProperty({
-        name: "Worker Highlight",
+    @SelectorProperty({
+        name: "Rabbit Highlight",
         description: "Highlights the worker with the best cost to production ratio.",
         category: "Event",
-        subcategory: "Chocolate Factory"
+        subcategory: "Chocolate Factory",
+        options: ["OFF", "All", "Only Workers", "No Tower"]
     })
-    workerHighlight = false;
+    rabbitHighlight = 0;
     
     // --- Diana ---
     @SwitchProperty({
@@ -1016,14 +1000,6 @@ Particles must be ${GREEN}ON ${GRAY}and use ${AQUA}/togglemusic ${GRAY}to turn m
         subcategory: "Great Spook"
     })
     fearAlert = false;
-    
-    @SwitchProperty({
-        name: "Primal Fear Highlight",
-        description: "Draws a colorful hitbox around any primal fears.",
-        category: "Event",
-        subcategory: "Great Spook"
-    })
-    fearHighlight = false;
 
     // --- Inquisitor ---
     @SwitchProperty({
@@ -1143,15 +1119,25 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
         subcategory: "Vanquisher"
     })
     vanqDetect = false;
-    @SwitchProperty({
-        name: "Vanquisher Detection Sound",
-        description: "Calls an emergency meeting once a Vanquisher is detected.",
-        category: "Crimson Isles",
-        subcategory: "Vanquisher"
-    })
-    vanqSound = false;
 
     // ████████████████████████████████████████████████████ DUNGEON ████████████████████████████████████████████████████
+
+    // --- Chests ---
+    @SwitchProperty({
+        name: "Croesus Highlight",
+        description: `${DARK_RED}NEW! ${GRAY}Highlights not/partially opened chests in Croesus menu.`,
+        category: "Dungeon",
+        subcategory: "Chests"
+    })
+    croesusHighlight = false;
+
+    @SwitchProperty({
+        name: "Dungeon Profit",
+        description: `${DARK_RED}NEW! ${GRAY}Display overall profit of Dungeon chests.\nMove GUI with ${AQUA}/moveDP${GRAY}.`,
+        category: "Dungeon",
+        subcategory: "Chests"
+    })
+    dungeonProfit = false;
 
     // --- Star Detect ---
     @SelectorProperty({

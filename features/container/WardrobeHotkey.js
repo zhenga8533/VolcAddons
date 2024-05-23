@@ -1,7 +1,7 @@
-import settings from "../../utils/settings";
-import { GREEN, RED } from "../../utils/constants";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import Settings from "../../utils/Settings";
+import { GREEN, RED } from "../../utils/Constants";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 
 
 /**
@@ -26,13 +26,13 @@ registerWhen(register("guiRender", () => {
     if (!Player.getContainer()?.getName()?.startsWith("Wardrobe")) return;
     Renderer.drawString(instructions, (Renderer.screen.getWidth() - Renderer.getStringWidth(instructions)) / 2 , 80, true);
     setKeySize();
-}), () => settings.wardrobeBinding);
+}), () => Settings.wardrobeBinding);
 
 let settingBind = false;
 registerWhen(register("guiClosed", () => {
     instructions = "";
     settingBind = false;
-}), () => settings.wardrobeBinding);
+}), () => Settings.wardrobeBinding);
 
 const C0EPacketClickWindow = Java.type("net.minecraft.network.play.client.C0EPacketClickWindow");
 registerWhen(register("guiKey", (_, code, gui, event) => {
@@ -101,4 +101,4 @@ registerWhen(register("guiKey", (_, code, gui, event) => {
         settingBind = true;
         instructions = "Please hover over wardrobe slot and press hotkey to be binded (press escape to unbind).";
     }
-}), () => settings.wardrobeBinding);
+}), () => Settings.wardrobeBinding);

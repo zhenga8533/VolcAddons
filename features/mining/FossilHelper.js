@@ -1,11 +1,11 @@
-import settings from "../../utils/settings";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, RED, YELLOW } from "../../utils/constants";
+import Settings from "../../utils/Settings";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, RED, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatNumber } from "../../utils/functions/format";
 import { createMatrix, getAllFormations } from "../../utils/functions/matrix";
-import { Overlay } from "../../utils/overlay";
-import { registerWhen } from "../../utils/register";
-import { data } from "../../utils/data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import { data } from "../../utils/Data";
 import { getAuction } from "../economy/Economy";
 
 
@@ -213,8 +213,7 @@ function findTile() {
 
 const highlightTile = register("guiRender", () => {
     if (bestTile[0] === -1) return;
-    const containerType = Player.getContainer().getClassName();
-    const [x, y] = getSlotCoords(bestTile[0] * 9 + bestTile[1], containerType);
+    const [x, y] = getSlotCoords(bestTile[0] * 9 + bestTile[1]);
 
     Renderer.translate(0, 0, 100);
     Renderer.drawRect(Renderer.DARK_GREEN, x, y, 16, 16);
@@ -281,4 +280,4 @@ registerWhen(register("guiOpened", () => {
         trackClicks.register();
         untrackFossils.register();
     })
-}), () => settings.fossilHelper);
+}), () => Settings.fossilHelper);
