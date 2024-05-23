@@ -130,9 +130,9 @@ registerWhen(register("step", () => {
     while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) {
         let beData = tablist[index++].removeFormatting().trim().split(' ');
         let levelData = beData[beData.length - 1];
-        if (levelData === "MAX") continue;
-
         let name = beData.slice(0, -2).join(' ');
+        if (levelData === "MAX" || name === '') continue;
+
         let count = levelData.split('/');
         let now = unformatNumber(count[0]);
         let next = unformatNumber(count[1]);
