@@ -88,6 +88,7 @@ export let data = new PogObject("VolcAddons", {
     // playtime tracking
     "playtime": 0,
     "lastDay": 0,
+    "lastJoin": Date.now(),
     // lists
     "whitelist": [],
     "blacklist": [],
@@ -186,6 +187,7 @@ export function resetGUI() {
 
 // Saving data to persistent storage upon game unload
 register("gameUnload", () => {
+    data.lastJoin = Date.now();
     data.save();
     itemNBTs.save();
 }).setPriority(Priority.LOWEST);

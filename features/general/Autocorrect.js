@@ -236,7 +236,7 @@ register("command", () => {
  * Parse out uncommon commands/words
  */
 try {
-    if (Player.getName() !== "Volcaronitee") {
+    if (Date.now() - data.lastJoin > 3_600_000) {
         data.wordbanks.forEach(wordbank => {
             Object.keys(wordbank).forEach(word => {
                 wordbank[word] -= 3;
