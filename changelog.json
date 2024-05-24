@@ -1,5 +1,5 @@
 [
-    "- Added global toggle test",
+    "- Added global toggle",
     "- Added socket toggle",
     "- Added additional mining event checks",
     "- Added `/va [npc, zone]` scraped info",
