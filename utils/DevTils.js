@@ -43,7 +43,7 @@ register("guiKey", (_, keyCode, gui) => {
     if (slot === undefined) return;
     const item = Player.getContainer().getStackInSlot(slot);
     if (item === null) return;
-    ChatLib.command(`ct copy ${item.getNBT()}`, true);
+    ChatLib.command(`ct copy ${JSON.stringify(item.getNBT().toObject(), null, 2)}`, true);
     ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
 });
 

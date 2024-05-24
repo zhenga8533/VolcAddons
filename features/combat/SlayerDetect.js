@@ -161,7 +161,7 @@ registerWhen(register("step", () => {
     // Check mobs
     World.getAllEntitiesOfType(mobClass).forEach(mob => {
         const hp = mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b();
-        if (bossHP == hp) bossWaypoints.push([RED + "Boss", mob]);
-        else if (miniSet.has(hp)) miniWaypoints.push([RED + "Mini", mob]);
+        if (bossHP == hp && Settings.bossHighlight) bossWaypoints.push([RED + "Boss", mob]);
+        else if (miniSet.has(hp) && Settings.miniHighlight) miniWaypoints.push([RED + "Mini", mob]);
     });
 }).setFps(2), () => Settings.bossHighlight || Settings.miniHighlight);

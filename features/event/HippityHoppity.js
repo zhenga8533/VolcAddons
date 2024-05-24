@@ -277,15 +277,22 @@ let looted = {
     "Lunch": false,
     "Dinner": false
 };
+let lastLooted = {
+    "Breakfast": 0,
+    "Lunch": 0,
+    "Dinner": 0
+}
 
 // Track if egg was looted.
 registerWhen(register("chat", (type) => {
     looted[type] = true;
+    lastLooted[type] = Date.now();
 }).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"),
 () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
     looted[type] = true;
+    lastLooted[type] = Date.now();
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"),
 () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
@@ -296,18 +303,13 @@ registerWhen(register("chat", (type) => {
 
 registerWhen(register("tick", () => {
     const time = World.getTime() % 24_000;
-    if (Math.abs(time - 1_000) < 4) looted.Breakfast = false;
-    else if (Math.abs(time - 8_000) < 4) looted.Lunch = false;
-    else if (Math.abs(time - 15_000) < 4) looted.Dinner = false;
+    if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_200_000)
+        looted.Breakfast = false;
+    else if (Math.abs(time - 8_000) < 4 || Date.now() - lastLooted.Lunch > 1_200_000) 
+        looted.Lunch = false;
+    else if (Math.abs(time - 15_000) < 4 || Date.now() - lastLooted.Dinner > 1_200_000) 
+        looted.Dinner = false;
 }), () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
-
-register("worldUnload", () => {
-    looted = {
-        "Breakfast": false,
-        "Lunch": false,
-        "Dinner": false
-    };
-});
 
 // ArmorStand ESP susge, UAYOR
 registerWhen(register("step", () => {
