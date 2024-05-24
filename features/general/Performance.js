@@ -1,7 +1,7 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import toggles from "../../utils/Toggles";
-import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { Overlay } from "../../utils/Overlay";
 import { isPlayer } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -87,7 +87,7 @@ try {
         calculatePing();
     }).setFilteredClasses([S01PacketJoinGame, S37PacketStatistics]);
 } catch (err) {
-    register('packetReceived', () => {
+    register('packetReceived', (packet) => {
         if (packet !== S01PacketJoinGame || packet !== S37PacketStatistics) return;
         calculatePing();
     });
