@@ -2,7 +2,7 @@ import axios from "../../../axios";
 import { request } from "../../../requestV2";
 import party from "../../utils/Party";
 import Settings from "../../utils/Settings";
-import socket from "../../utils/Socket";
+import Socket from "../../utils/Socket";
 import toggles from "../../utils/Toggles";
 import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { randIndex } from "../../utils/functions/misc";
@@ -71,7 +71,7 @@ function setWaifu() {
         else waifuSet = true;
 
         // Send to socket server
-        socket.send({
+        Socket.send({
             request: "post",
             command: "waifu",
             link: waifu,
@@ -137,8 +137,8 @@ function sendWaifu(category) {
 
     axios.get(`https://api.waifu.pics/sfw/${arg}`).then(w => {
         waifu = w.data.url;
-        if (socket.getConnected())
-            socket.send({
+        if (Socket.getConnected())
+            Socket.send({
                 request: "get",
                 command: "waifu",
                 link: waifu

@@ -1,5 +1,5 @@
 import Settings from "./Settings";
-import socket from "./Socket";
+import Socket from "./Socket";
 import { BOLD, GOLD, GRAY, LOGO, RESET, UNDERLINE, WHITE } from "./Constants";
 import { delay } from "./ThreadTils";
 
@@ -39,7 +39,7 @@ Instruction manual (i think) => /va help\n`);
 });
 
 // Track unique users
-socket.send({
+Socket.send({
     "command": "user",
     "version": version,
 });

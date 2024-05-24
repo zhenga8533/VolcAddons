@@ -1,5 +1,5 @@
 import location from "../../utils/Location";
-import socket from "../../utils/Socket";
+import Socket from "../../utils/Socket";
 import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, WITHER_CLASS, YELLOW } from "../../utils/Constants";
 import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -33,7 +33,7 @@ const findEvent = register("step", () => {
             words[words.length - 1] = words[words.length - 1][0].toUpperCase() + words[words.length - 1].slice(1);
 
             // Send the event data to the server.
-            socket.send({
+            Socket.send({
                 "command": world,
                 "request": "post",
                 "event": words.join(' '),
@@ -68,7 +68,7 @@ register("chat", (event) => {
         loc === "Crystal Hollows" ? "ch" : undefined;
     if (world === undefined) return;
 
-    socket.send({
+    Socket.send({
         "command": world,
         "request": "post",
         "event": event
@@ -96,7 +96,7 @@ export function processEvent(data) {
 }
 
 register("command", () => {
-    socket.send({
+    Socket.send({
         "command": "ch",
         "request": "get",
         "event": "event"
@@ -104,7 +104,7 @@ register("command", () => {
 }).setName("chevent");
 
 register("command", () => {
-    socket.send({
+    Socket.send({
         "command": "dm",
         "request": "get",
         "event": "event"
@@ -116,7 +116,7 @@ register("command", () => {
  * Alloy tracking.
  */
 registerWhen(register("chat", (username) => {
-    socket.send({
+    Socket.send({
         "command": "alloy",
         "request": "post",
         "username": username
@@ -124,7 +124,7 @@ registerWhen(register("chat", (username) => {
 }).setCriteria("ALLOY! ${username} just found a Divan's Alloy!"), () => location.getWorld() === "Crystal Hollows");
 
 register("command", () => {
-    socket.send({
+    Socket.send({
         "command": "alloy",
         "request": "get"
     });
