@@ -20,7 +20,7 @@ const OFFSETS = {
     "inv4": [80, 62],
     "eq": [-18, 8],
 };
-let clientCommands = new Set(net.minecraftforge.client.ClientCommandHandler.instance.getCommandSet().map(key => key.func_71517_b()));
+let clientCommands = new Set(net.minecraftforge.client.ClientCommandHandler.instance?.getCommandSet()?.map(key => key.func_71517_b()) ?? ["va"]);
 
 const COLOR_SCHEMES = [
     [Renderer.color(139, 139, 139, 128), Renderer.color(198, 198, 198, 255)],  // Default
