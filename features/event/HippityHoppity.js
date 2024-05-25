@@ -134,7 +134,7 @@ ${GOLD + BOLD}Rabbits:
  * Rabbit chat detection.
  */
 register("chat", (x) => {
-    data.chocolate += parseInt(x.replace(/,/g, ''));
+    data.chocolate += parseInt(x.replace(/,/g, '') || 0);
     data.dupeEggs++;
 }).setCriteria("DUPLICATE RABBIT! +${x} Chocolate");
 
@@ -286,7 +286,6 @@ let lastLooted = {
 // Track if egg was looted.
 registerWhen(register("chat", (type) => {
     looted[type] = true;
-    lastLooted[type] = Date.now();
 }).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"),
 () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 

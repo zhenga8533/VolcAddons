@@ -5,7 +5,6 @@ import { registerWhen } from "../../utils/RegisterTils";
 import { printList } from "../../utils/ListTils";
 import { parseTexture } from "../../utils/functions/misc";
 import { drawBox, drawLore } from "../../utils/functions/render";
-import { delay } from "../../utils/ThreadTils";
 
 
 // Container offsets from top left [x, y]

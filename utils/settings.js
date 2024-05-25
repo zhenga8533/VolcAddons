@@ -442,7 +442,7 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
 
     @SwitchProperty({
         name: "Max Supercraft",
-        description: `${DARK_RED}NEW! ${GRAY}Displays the maximum amount of items that can be crafted using supercraft.`,
+        description: "Displays the maximum amount of items that can be crafted using supercraft.",
         category: "Container",
         subcategory: "Items"
     })
@@ -1133,7 +1133,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     // --- Chests ---
     @SwitchProperty({
         name: "Croesus Highlight",
-        description: `${DARK_RED}NEW! ${GRAY}Highlights not/partially opened chests in Croesus menu.`,
+        description: "Highlights not/partially opened chests in Croesus menu.",
         category: "Dungeon",
         subcategory: "Chests"
     })
@@ -1141,7 +1141,7 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
 
     @SwitchProperty({
         name: "Dungeon Profit",
-        description: `${DARK_RED}NEW! ${GRAY}Display overall profit of Dungeon chests.\nMove GUI with ${AQUA}/moveDP${GRAY}.`,
+        description: `Display overall profit of Dungeon chests.\nMove GUI with ${AQUA}/moveDP${GRAY}.`,
         category: "Dungeon",
         subcategory: "Chests"
     })
