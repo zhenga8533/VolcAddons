@@ -8,7 +8,7 @@ let craftable = 0;
 
 const tooltip = register("preItemRender", (_, __, slot) => {
     const button = Player.getContainer().getItems()[slot.getSlotIndex()];
-    if (!button.getName().startsWith("§aSupercraft")) return;
+    if (!button?.getName()?.startsWith("§aSupercraft")) return;
 
     // Put the max craftable amount into lore
     const lore = button.getLore().join('\n').split('\n').slice(1);
