@@ -1,5 +1,5 @@
 import Settings from "../../utils/Settings";
-import { BOLD, GOLD, GRAY, GREEN, RED, WHITE, YELLOW } from "../../utils/Constants";
+import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -182,6 +182,7 @@ function findWorker() {
             maxValue = towerValue;
             bestCost = towerCost;
         }
+        cf.workers[7] = LIGHT_PURPLE + romanToNum(items[39].getName().split(' ')[2]);
     }
 
     // Jackrabbit calc
@@ -195,6 +196,7 @@ function findWorker() {
             bestWorker = 42;
             bestCost = jackCost;
         }
+        cf.workers[8] = LIGHT_PURPLE + romanToNum(items[42].getName().split(' ')[2]);
     }
 }
 
@@ -218,7 +220,7 @@ const towerFind = register("chat", () => {
 
 const workerHighlight = register("guiRender", () => {
     if (bestWorker === 0) return;
-    const [x, y] = getSlotCoords(bestWorker);
+    let [x, y] = getSlotCoords(bestWorker);
 
     Renderer.translate(0, 0, 100);
     Renderer.drawRect(data.cf.chocolate > bestCost ? Renderer.GREEN : Renderer.RED, x, y, 16, 16);
@@ -228,10 +230,21 @@ const workerHighlight = register("guiRender", () => {
     Renderer.retainTransforms(true);
     Renderer.scale(0.9, 0.9);
     Renderer.translate(0, 0, 275);
-    data.cf.workers.forEach((worker, i) => {
-        const [wX, wY] = getSlotCoords(28 + i);
-        Renderer.drawString(worker, wX * 10/9, (wY - 4) * 10/9, true);
-    });
+
+    // Draw worker levels
+    const workers = data.cf.workers;
+    for (let i = 0; i < 7; i++) {
+        [x, y] = getSlotCoords(28 + i);
+        Renderer.drawString(workers[i], x * 10/9, (y - 4) * 10/9, true);
+    }
+
+    // Draw tower levels
+    Renderer.scale(10/9, 10/9);
+    [x, y] = getSlotCoords(39);
+    Renderer.drawString(workers[7], x + 13, y + 12, true);
+    [x, y] = getSlotCoords(42);
+    Renderer.drawString(workers[8], x + 13, y + 12, true);
+
     Renderer.retainTransforms(false);
 }).unregister();
 
