@@ -239,13 +239,13 @@ try {
     if (Date.now() - data.lastJoin > 3_600_000) {
         data.wordbanks.forEach(wordbank => {
             Object.keys(wordbank).forEach(word => {
-                wordbank[word] -= 3;
+                wordbank[word]--;
                 if (wordbank[word] <= 0) delete wordbank[word];
             });
         });
 
         Object.keys(data.commands).forEach(command => {
-            data.commands[command] -= 3;
+            data.commands[command]--;
             if (data.commands[command] <= 0) delete data.commands[command];
         });
     }

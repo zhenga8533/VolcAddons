@@ -1,3 +1,5 @@
 [
+    "- Changed word deletion to be less",
+    "- Fixed worker rendering and calc",
     "- Fixed tower calc"
 ]
