@@ -146,13 +146,16 @@ function findWorker() {
 
     // Worker calc
     let maxValue = 0;
-    const diff = items[27].getUnlocalizedName() === "tile.thinStainedGlass" ? 0 : 1;
-    for (let i = 29 - diff; i < 34 + diff; i++) {
+    for (let i = 28; i < 35; i++) {
         let worker = items[i].getLore();
         let index = worker.findIndex(line => line === "§5§o§7Cost");
-        if (index === -1) continue;
+        if (index === -1) {
+            Client.scheduleTask(2, findWorker);
+            return;
+        }
+
         let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
-        let value = (i - 28 + diff) * baseMultiplier / cost;
+        let value = (i - 27) * baseMultiplier / cost;
 
         if (value > maxValue) {
             bestWorker = i;
@@ -213,6 +216,12 @@ const workerHighlight = register("guiRender", () => {
 
     Renderer.translate(0, 0, 100);
     Renderer.drawRect(data.cf.chocolate > bestCost ? Renderer.GREEN : Renderer.RED, x, y, 16, 16);
+
+    // Draw worker levels
+    const items = Player.getContainer().getItems();
+    Object.keys(data.cf.workers).forEach((worker, i) => {
+        ChatLib.chat(worker);
+    });
 }).unregister();
 
 /**

@@ -114,6 +114,7 @@ export let data = new PogObject("VolcAddons", {
         "all": 0,
         "prestige": 0,
         "multiplier": 0,
+        "workers": [0, 0, 0, 0, 0, 0, 0],
     },
     "eggs": {
         "dupe": 0,
