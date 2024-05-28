@@ -182,7 +182,7 @@ function findWorker() {
     // Tower calc
     const tower = items[39].getLore();
     const towerI = tower.findIndex(line => line === "§5§o§7Cost");
-    if (Settings.rabbitHighlight === 1 && towerI !== 1) {
+    if (Settings.rabbitHighlight === 1 && towerI !== -1) {
         const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
         const towerValue = data.chocoProduction / baseMultiplier * 0.0125 / towerCost;
 
