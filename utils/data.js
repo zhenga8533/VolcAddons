@@ -106,16 +106,20 @@ export let data = new PogObject("VolcAddons", {
     "widgetlist": [],
     "WGL": {},
     // chocolate factory data
-    "chocolate": 0,
-    "chocoProduction": 0,
-    "chocoLast": 0,
-    "chocoTotal": 0,
-    "chocoAll": 0,
-    "chocoPrestige": 0,
-    "chocoMultiplier": 0,
-    "dupeEggs": 0,
-    "totalEggs": 0,
-    "maxEggs": 20,
+    "cf": {
+        "chocolate": 0,
+        "production": 0,
+        "last": 0,
+        "total": 0,
+        "all": 0,
+        "prestige": 0,
+        "multiplier": 0,
+    },
+    "eggs": {
+        "dupe": 0,
+        "total": 0,
+        "max": 20,
+    },
     "timeTower": {
         "charges": 0,
         "chargeTime": 0,
@@ -158,6 +162,7 @@ export let data = new PogObject("VolcAddons", {
     // GUI locations
     ...DEFAULT_GUI
 }, "data/datitee.json");
+if (data.eggs.dupe === 0) data.eggs.dupe = data.dupeEggs ?? 0;
 
 export const itemNBTs = new PogObject("VolcAddons", {
     "armor": [null, null, null, null],

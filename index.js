@@ -83,10 +83,11 @@ import "./features/farming/PestTracking";
 import "./features/event/BingoCard";
 import "./features/event/BurrowDetect";
 import "./features/event/CalendarTime";
+import "./features/event/ChocolateFactory";
 import "./features/event/GreatSpook";
-import "./features/event/HippityHoppity";
 import "./features/event/InquisitorDetect";
 import "./features/event/MythRitual";
+import "./features/event/RabbitEggs";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
