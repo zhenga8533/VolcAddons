@@ -147,6 +147,7 @@ function findWorker() {
     // Worker calc
     let maxValue = 0;
     for (let i = 28; i < 35; i++) {
+        // Skip if not a worker
         let worker = items[i].getLore();
         let index = worker.findIndex(line => line === "§5§o§7Cost");
         if (index === -1) {
@@ -154,6 +155,11 @@ function findWorker() {
             return;
         }
 
+        // Get worker name
+        const name = items[i].getName();
+        cf.workers[i - 28] = name.substring(0, 2) + name.split(' ')[3]?.removeFormatting()?.replace(/\[|\]/g, '');
+
+        // Calculate value
         let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
         let value = (i - 27) * baseMultiplier / cost;
 
@@ -219,9 +225,14 @@ const workerHighlight = register("guiRender", () => {
 
     // Draw worker levels
     const items = Player.getContainer().getItems();
-    Object.keys(data.cf.workers).forEach((worker, i) => {
-        ChatLib.chat(worker);
+    Renderer.retainTransforms(true);
+    Renderer.scale(0.9, 0.9);
+    Renderer.translate(0, 0, 275);
+    data.cf.workers.forEach((worker, i) => {
+        const [wX, wY] = getSlotCoords(28 + i);
+        Renderer.drawString(worker, wX * 10/9, (wY - 4) * 10/9, true);
     });
+    Renderer.retainTransforms(false);
 }).unregister();
 
 /**
