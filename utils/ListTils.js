@@ -10,6 +10,8 @@ import { data } from "./Data";
 
 
 export function printList(list, listName, page) {
+    if (isNaN(page)) page = 1;
+
     ChatLib.clearChat(5858);
     const isArray = Array.isArray(list);
     const length = isArray ? list.length : Object.keys(list).length;
