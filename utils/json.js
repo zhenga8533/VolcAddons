@@ -25,6 +25,12 @@ export class Json {
         if (isData && FileLib.exists("VolcAddons", "data/" + file)) {
             this.#data = JSON.parse(FileLib.read("VolcAddons", "data/" + file));
         } else this.reset();
+
+        // Check if the file exists
+        if (this.#data === null) {
+            this.#data = {};
+            FileLib.write("VolcAddons", this.#path, '{}');
+        }
     }
 
     /**
