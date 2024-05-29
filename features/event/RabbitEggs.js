@@ -1,12 +1,60 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
-import { BOLD, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
+import Waypoint from "../../utils/Waypoint";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatTime } from "../../utils/functions/format";
+import { Json } from "../../utils/Json";
+import { printList } from "../../utils/ListTils";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
 import { announceMob } from "../../utils/functions/misc";
-import Waypoint from "../../utils/Waypoint";
+
+
+/**
+ * Missing rabbits
+ */
+const missingRabbits = new Json("rabbits.json", true).getData();
+
+register("guiOpened", () => {
+    Client.scheduleTask(2, () => {
+        if (!Player.getContainer().getName().endsWith("Hoppity's Collection")) return;
+        
+        const items = Player.getContainer().getItems();
+        for (let i = 1; i < 5; i++) {
+            for (let j = 1; j < 8; j++) {
+                // Track rabbits with requirements
+                let item = items[i * 9 + j];
+                let lore = item?.getLore();
+                let index = lore?.findIndex(line => line.includes('Requirement'));
+                if (index === -1) continue;
+
+                // Get rabbit data
+                let complete = !lore[index].startsWith("§5§o§c✖");
+                let name = item.getName();
+
+                // Get requirement
+                let requirement = '';
+                while (lore[++index]?.length > 4) requirement += lore[index] + ' ';
+
+                // Update missing rabbits
+                if (!complete) missingRabbits[name] = requirement;
+                else if (missingRabbits.hasOwnProperty(name)) delete missingRabbits[name];
+            }
+        }
+    })
+});
+
+/**
+ * Print missing rabbits.
+ * 
+ * @param {Number} page - The page number to display.
+ */
+export function printRabbits(page, backup) {
+    printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page);
+    if (Object.keys(missingRabbits).length === 30)
+        ChatLib.chat(`${DARK_GRAY}Remember to go through rabbits menu to initialize tracking!`);
+}
 
 
 /**

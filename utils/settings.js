@@ -61,7 +61,7 @@ ${ITALIC}Realted Commands: /pesttp`);
         // Event Category
         this.setCategoryDescription("Event",
         `${HEADER}
-${ITALIC}Related Commands: /va warplist`);
+${ITALIC}Related Commands: /va <rabbit, warplist>`);
 
         // Crimson Isles Category
         this.setCategoryDescription("Crimson Isles",

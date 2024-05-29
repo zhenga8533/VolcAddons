@@ -87,7 +87,7 @@ import "./features/event/ChocolateFactory";
 import "./features/event/GreatSpook";
 import "./features/event/InquisitorDetect";
 import "./features/event/MythRitual";
-import "./features/event/RabbitEggs";
+import { printRabbits } from "./features/event/RabbitEggs";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
@@ -335,6 +335,11 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
         case "pl":
             updateList(args, "prefixlist");
             break;
+        case "rabbitlist":
+        case "rabbit":
+        case "rl":
+            printRabbits(args[1], args[2]);
+            break;
         // Kuudra Splits
         case "split":
             getSplits(args);
@@ -422,3 +427,4 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
  */
 import "./features/container/ArmorDisplay";
 import { buttonCommands } from "./features/container/ContainerButtons";
+
