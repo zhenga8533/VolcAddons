@@ -102,6 +102,7 @@ let lastLooted = {
 // Track if egg was looted.
 registerWhen(register("chat", (type) => {
     looted[type] = true;
+    if (lastLooted[type] === 0) lastLooted[type] = Date.now();
 }).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"),
 () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
