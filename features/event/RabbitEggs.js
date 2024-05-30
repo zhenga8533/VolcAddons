@@ -34,8 +34,8 @@ register("guiOpened", () => {
                 let name = item.getName();
 
                 // Get requirement
-                let requirement = lore[index] + '\n     ';
-                while (lore[++index]?.length > 4) requirement += lore[index];
+                let requirement = lore[index] + '\n    ';
+                while (lore[++index]?.length > 4) requirement += ' ' + lore[index];
 
                 // Update missing rabbits
                 if (!complete) missingRabbits[name] = requirement;

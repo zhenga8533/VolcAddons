@@ -23,7 +23,7 @@ export function printList(list, listName, page, pagy=12) {
     ChatLib.clearChat(5858);
     const isArray = Array.isArray(list);
     const length = isArray ? list.length : Object.keys(list).length;
-    const total = Math.ceil(length / 12) || 1;
+    const total = Math.ceil(length / pagy) || 1;
     page = MathLib.clamp(page, 1, total);
 
     // Print out header
