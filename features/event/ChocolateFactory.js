@@ -1,3 +1,4 @@
+import Location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
@@ -128,7 +129,8 @@ ${GOLD + BOLD}Time:
 ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${WHITE + eggs.total}/${eggs.max}
  ${YELLOW}Dupes: ${GRAY + eggs.dupe}
- ${YELLOW}Completion: ${WHITE + (eggs.total / 4.57).toFixed(2)}%`);
+ ${YELLOW}Completion: ${WHITE + (eggs.total / 4.57).toFixed(2)}%
+ ${YELLOW}World: ${GRAY + Object.keys(data.eggs.found[Location.getWorld()] ?? {}).length}`);
 }).setFps(1), () => Settings.chocoDisplay);
 
 

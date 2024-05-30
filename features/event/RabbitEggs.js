@@ -17,7 +17,7 @@ import { getClosest } from "../../utils/functions/find";
  */
 const missingRabbits = new Json("rabbits.json", true).getData();
 register("guiOpened", () => {
-    Client.scheduleTask(2, () => {
+    Client.scheduleTask(1, () => {
         if (!Player.getContainer().getName().endsWith("Hoppity's Collection")) return;
         
         const items = Player.getContainer().getItems();
@@ -51,7 +51,7 @@ register("guiOpened", () => {
  * @param {Number} page - The page number to display.
  */
 export function printRabbits(page, backup) {
-    printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page, 8);
+    printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page, 6);
     if (Object.keys(missingRabbits).length === 30)
         ChatLib.chat(`${DARK_GRAY}Remember to go through rabbits menu to initialize tracking!`);
 }
