@@ -137,6 +137,7 @@ ${GOLD + BOLD}Rabbits:
 /**
  * Highlight best worker.
  */
+const workerLevels = [0, 0, 0, 0, 0, 0, 0];
 let bestWorker = 0;
 let bestCost = 0;
 
@@ -159,7 +160,7 @@ function findWorker() {
 
         // Get worker name
         const name = items[i].getName();
-        cf.workers[i - 28] = name.substring(0, 2) + name.split(' ')[3]?.removeFormatting()?.replace(/\[|\]/g, '');
+        workerLevels[i - 28] = name.substring(0, 2) + name.split(' ')[3]?.removeFormatting()?.replace(/\[|\]/g, '');
 
         // Calculate value
         let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
@@ -184,7 +185,7 @@ function findWorker() {
             maxValue = towerValue;
             bestCost = towerCost;
         }
-        cf.workers[7] = LIGHT_PURPLE + romanToNum(items[39].getName().split(' ')[2]);
+        workerLevels[7] = LIGHT_PURPLE + romanToNum(items[39].getName().split(' ')[2]);
     }
 
     // Jackrabbit calc
@@ -198,7 +199,7 @@ function findWorker() {
             bestWorker = 42;
             bestCost = jackCost;
         }
-        cf.workers[8] = LIGHT_PURPLE + romanToNum(items[42].getName().split(' ')[2]);
+        workerLevels[8] = LIGHT_PURPLE + romanToNum(items[42].getName().split(' ')[2]);
     }
 }
 
@@ -234,18 +235,17 @@ const workerHighlight = register("guiRender", () => {
     Renderer.translate(0, 0, 275);
 
     // Draw worker levels
-    const workers = data.cf.workers;
     for (let i = 0; i < 7; i++) {
         [x, y] = getSlotCoords(28 + i);
-        Renderer.drawString(workers[i], x * 10/9, (y - 4) * 10/9, true);
+        Renderer.drawString(workerLevels[i], x * 10/9, (y - 4) * 10/9, true);
     }
 
     // Draw tower levels
     Renderer.scale(10/9, 10/9);
     [x, y] = getSlotCoords(39);
-    Renderer.drawString(workers[7], x + 13, y + 12, true);
+    Renderer.drawString(workerLevels[7], x + 13, y + 12, true);
     [x, y] = getSlotCoords(42);
-    Renderer.drawString(workers[8], x + 13, y + 12, true);
+    Renderer.drawString(workerLevels[8], x + 13, y + 12, true);
 
     Renderer.retainTransforms(false);
 }).unregister();
