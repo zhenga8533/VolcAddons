@@ -9,7 +9,15 @@ import { setRegisters } from "./RegisterTils";
 import { data } from "./Data";
 
 
-export function printList(list, listName, page) {
+/**
+ * Prints a list of items to chat.
+ * 
+ * @param {Object} list - The list to be printed.
+ * @param {String} listName - The name of the list for displaying messages.
+ * @param {Number} page - The page number to display.
+ * @param {Number} pagy - Number of items per page.
+ */
+export function printList(list, listName, page, pagy=12) {
     if (isNaN(page)) page = 1;
 
     ChatLib.clearChat(5858);
@@ -38,10 +46,10 @@ export function printList(list, listName, page) {
     if (page < total) message.addTextComponent(rArrow);
 
     // Loop through variables
-    const pageIndex = (page - 1) * 12;
+    const pageIndex = (page - 1) * pagy;
     if (length === 0) message.addTextComponent(`\n` + ChatLib.getCenteredText(YELLOW + "  404, This list is empty!"));
     else if (isArray) {
-        for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
+        for (let i = pageIndex; i < Math.min(pageIndex + pagy, length); i++) {
             message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
             message.addTextComponent(new TextComponent(`${YELLOW + list[i]}`)
                 .setClickAction("run_command")
@@ -51,7 +59,7 @@ export function printList(list, listName, page) {
         }
     } else {
         const keys = Object.keys(list);
-        for (let i = pageIndex; i < Math.min(pageIndex + 12, length); i++) {
+        for (let i = pageIndex; i < Math.min(pageIndex + pagy, length); i++) {
             let key = keys[i];
             message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
             message.addTextComponent(new TextComponent(`${YELLOW + key}`)

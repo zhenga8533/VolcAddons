@@ -1,7 +1,7 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
-import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatTime } from "../../utils/functions/format";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
@@ -16,7 +16,6 @@ import { getClosest } from "../../utils/functions/find";
  * Missing rabbits
  */
 const missingRabbits = new Json("rabbits.json", true).getData();
-Object.keys(missingRabbits).forEach(key => delete missingRabbits[key]);
 register("guiOpened", () => {
     Client.scheduleTask(2, () => {
         if (!Player.getContainer().getName().endsWith("Hoppity's Collection")) return;
@@ -39,8 +38,6 @@ register("guiOpened", () => {
                 while (lore[++index]?.length > 4) requirement += lore[index];
 
                 // Update missing rabbits
-                missingRabbits[name] = requirement;
-                continue
                 if (!complete) missingRabbits[name] = requirement;
                 else if (missingRabbits.hasOwnProperty(name)) delete missingRabbits[name];
             }
@@ -54,7 +51,7 @@ register("guiOpened", () => {
  * @param {Number} page - The page number to display.
  */
 export function printRabbits(page, backup) {
-    printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page);
+    printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page, 8);
     if (Object.keys(missingRabbits).length === 30)
         ChatLib.chat(`${DARK_GRAY}Remember to go through rabbits menu to initialize tracking!`);
 }
