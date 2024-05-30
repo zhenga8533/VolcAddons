@@ -104,13 +104,26 @@ let lastLooted = {
 // Track if egg was looted.
 registerWhen(register("chat", (type) => {
     looted[type] = true;
-    if (lastLooted[type] === 0) lastLooted[type] = Date.now();
+
+    // Set last looted time
+    if (lastLooted[type] === 0) {
+        const time = World.getTime() % 24_000 + 20;
+        const offset = type === "Breakfast" ? (time > 1_000 ? 1_000 - time : -23_000 - time) : 
+            type === "Lunch" ? (time > 8_000 ? 8_000 - time : -16_000 - time) : 
+            type === "Dinner" ? (time > 15_000 ? 15_000 - time : -9_000 - time) : 0;
+        lastLooted[type] = Date.now() + (offset * 50);
+    }
 }).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"),
 () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
+    // Set looted status and last looted time
     looted[type] = true;
-    lastLooted[type] = Date.now();
+    const time = World.getTime() % 24_000 + 20;
+    const offset = type === "Breakfast" ? (time > 1_000 ? 1_000 - time : -23_000 - time) : 
+        type === "Lunch" ? (time > 8_000 ? 8_000 - time : -16_000 - time) : 
+        type === "Dinner" ? (time > 15_000 ? 15_000 - time : -9_000 - time) : 0;
+    lastLooted[type] = Date.now() + (offset * 50);
 
     // Track egg location
     const found = data.eggs.found;
@@ -130,12 +143,19 @@ registerWhen(register("chat", (type) => {
 
 registerWhen(register("tick", () => {
     const time = World.getTime() % 24_000;
-    if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_200_000)
+
+    if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_200_000) {
         looted.Breakfast = false;
-    else if (Math.abs(time - 8_000) < 4 || Date.now() - lastLooted.Lunch > 1_200_000) 
+        lastLooted.Breakfast = 0;
+    }
+    if (Math.abs(time - 8_000) < 4 || Date.now() - lastLooted.Lunch > 1_200_000) {
         looted.Lunch = false;
-    else if (Math.abs(time - 15_000) < 4 || Date.now() - lastLooted.Dinner > 1_200_000) 
+        lastLooted.Lunch = 0;
+    }
+    if (Math.abs(time - 15_000) < 4 || Date.now() - lastLooted.Dinner > 1_200_000) {
         looted.Dinner = false;
+        lastLooted.Dinner = 0;
+    }
 }), () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
 // ArmorStand ESP susge, UAYOR
