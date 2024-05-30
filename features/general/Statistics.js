@@ -103,7 +103,9 @@ register("step", () => {
         data.lastDay = today;
     }
 
-    data.playtime++;
+    const hours = Math.round(data.playtime / 3_600);
+    if(++data.playtime % 3_600 === 0 && data.playtime >= 10_800)
+        ChatLib.chat(`${LOGO + YELLOW}You have been playing for ${hours} hours. Excessive game playing may cause problems in your normal daily life.`);
 }).setFps(1);
 
 /**
