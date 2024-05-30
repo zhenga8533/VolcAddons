@@ -1,7 +1,7 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
-import { BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
+import { BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatTime } from "../../utils/functions/format";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
@@ -9,13 +9,14 @@ import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
 import { announceMob } from "../../utils/functions/misc";
+import { getClosest } from "../../utils/functions/find";
 
 
 /**
  * Missing rabbits
  */
 const missingRabbits = new Json("rabbits.json", true).getData();
-
+Object.keys(missingRabbits).forEach(key => delete missingRabbits[key]);
 register("guiOpened", () => {
     Client.scheduleTask(2, () => {
         if (!Player.getContainer().getName().endsWith("Hoppity's Collection")) return;
@@ -34,10 +35,12 @@ register("guiOpened", () => {
                 let name = item.getName();
 
                 // Get requirement
-                let requirement = '';
-                while (lore[++index]?.length > 4) requirement += lore[index] + ' ';
+                let requirement = lore[index] + '\n     ';
+                while (lore[++index]?.length > 4) requirement += lore[index];
 
                 // Update missing rabbits
+                missingRabbits[name] = requirement;
+                continue
                 if (!complete) missingRabbits[name] = requirement;
                 else if (missingRabbits.hasOwnProperty(name)) delete missingRabbits[name];
             }
@@ -81,7 +84,9 @@ registerWhen(register("chat", (mult) => {
 /**
  * Egglocator
  */
+const eggLocs = [];
 const eggWaypoints = new Waypoint([0.25, 0.1, 0]);  // Brown Eggs
+const newWaypoints = new Waypoint([0.88, 0.75, 0.72]);  // Rose Gold Eggs
 
 const EGGS = {
     "015adc61-0aba-3d4d-b3d1-ca47a68a154b": "Breakfast",
@@ -109,6 +114,15 @@ registerWhen(register("chat", (type) => {
 registerWhen(register("chat", (type) => {
     looted[type] = true;
     lastLooted[type] = Date.now();
+
+    // Track egg location
+    const found = data.eggs.found;
+    const world = location.getWorld();
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], eggLocs)[0];
+    const wpKey = closest[0] + "," + closest[2];
+    if (!found.hasOwnProperty(world)) found[world] = {};
+    if (!found[world].hasOwnProperty(wpKey)) found[world][wpKey] = 1;
+    else found[world][wpKey]++;
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"),
 () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
@@ -131,13 +145,25 @@ registerWhen(register("tick", () => {
 registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
     eggWaypoints.clear();
+    newWaypoints.clear();
+    eggLocs.length = 0;
 
     stands.forEach(stand => {
+        // Check if valid armor stand
         const helmet = stand.getEntity()?.func_71124_b(4);  // getEquipmentInSlot(0: Tool in Hand; 1-4: Armor)
-        if (helmet !== null) {
-            const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id");  // getNBT() +> getNBTTagCompound() => getString()
-            if (id in EGGS && !looted[EGGS[id]]) eggWaypoints.push([EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()]);
-        }
+        if (helmet === null) return;
+
+        // Check if valid egg ID
+        const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id");  // getNBT() +> getNBTTagCompound() => getString()
+        if (!(id in EGGS) || looted[EGGS[id]]) return;
+
+        // Add waypoint
+        const wp = [EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()];
+        eggLocs.push(wp.slice(1));
+        if (data.eggs.found[location.getWorld()]?.hasOwnProperty(`${stand.getX()},${stand.getZ()}`))
+            eggWaypoints.push(wp);
+        else
+            newWaypoints.push(wp);
     });
 }).setFps(1), () => Settings.chocoWaypoints);
 

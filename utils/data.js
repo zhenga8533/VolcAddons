@@ -120,6 +120,7 @@ export let data = new PogObject("VolcAddons", {
         "dupe": 0,
         "total": 0,
         "max": 20,
+        "found": {}
     },
     "timeTower": {
         "charges": 0,
