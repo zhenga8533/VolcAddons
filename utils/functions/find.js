@@ -37,6 +37,7 @@ export function getClosest(origin, positions) {
  * @returns {Number[]} - [x, y] coords.
  */
 export function getSlotCoords(i) {
+    if (i >= Player.getContainer().getSize()) return [0, 0];
     const gui = Client.currentGui.get();
     const slot = gui.field_147002_h?.func_75139_a(i);
     const x = slot.field_75223_e + gui?.getGuiLeft() ?? 0;
