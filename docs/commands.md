@@ -25,6 +25,7 @@ subtitle: List of every non-gui related commands.
     - `/va binds`: Set slot bindings and their presets.
     - `/va buttons`: Set container buttons and their presets.
     - `/va preview`: Set storage preview keys.
+    - `/va rabbits`: Shows locked rabbits.
 - **Waypoints**
     - `/va cat`: Controls Montezuma Soul Piece waypoints.
     - `/va enigma`: Controls Enigma Soul waypoints.
