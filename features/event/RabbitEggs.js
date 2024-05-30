@@ -107,7 +107,7 @@ registerWhen(register("chat", (type) => {
 
     // Set last looted time
     if (lastLooted[type] === 0) {
-        const time = World.getTime() % 24_000 + 20;
+        const time = World.getTime() % 24_000 + 100;
         const offset = type === "Breakfast" ? (time > 1_000 ? 1_000 - time : -23_000 - time) : 
             type === "Lunch" ? (time > 8_000 ? 8_000 - time : -16_000 - time) : 
             type === "Dinner" ? (time > 15_000 ? 15_000 - time : -9_000 - time) : 0;
@@ -119,7 +119,7 @@ registerWhen(register("chat", (type) => {
 registerWhen(register("chat", (type) => {
     // Set looted status and last looted time
     looted[type] = true;
-    const time = World.getTime() % 24_000 + 20;
+    const time = World.getTime() % 24_000 + 100;
     const offset = type === "Breakfast" ? (time > 1_000 ? 1_000 - time : -23_000 - time) : 
         type === "Lunch" ? (time > 8_000 ? 8_000 - time : -16_000 - time) : 
         type === "Dinner" ? (time > 15_000 ? 15_000 - time : -9_000 - time) : 0;
