@@ -1,4 +1,3 @@
-
 import { data } from "./Data";
 import { getPlayerName } from "./functions/player";
 

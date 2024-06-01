@@ -8,7 +8,6 @@
   "requires": [
     "axios",
     "BeaconBeam",
-    "HypixelModAPI",
     "PogData",
     "RenderLib",
     "requestV2",
