@@ -4,5 +4,6 @@
     "- Added `/VATest`",
     "- Fixed party detection",
     "- Fixed slot index error",
-    "- Fixed persistant profit GUI"
+    "- Fixed persistant profit GUI",
+    "- Fixed spray menu tracking"
 ]

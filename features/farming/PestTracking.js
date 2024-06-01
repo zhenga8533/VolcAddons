@@ -102,9 +102,7 @@ registerWhen(register("guiOpened", () => {
                 const pestLine = lore.find(line => line.startsWith("§5§o§4§lൠ"))?.split(' ');
                 const sprayLine = lore.find(line => line.startsWith("§5§o§7Sprayed"));
 
-                if (pestLine !== undefined)
-                    highlights[index] = [Renderer.color(139, 0, 0, 255), pestLine[pestLine.length - 2].removeFormatting()];
-                else if (sprayLine !== undefined) {
+                if (sprayLine !== undefined) {
                     const splitSpray = sprayLine.split(' ');
                     highlights[index] = [Renderer.color(57, 255, 20, 128), splitSpray[splitSpray.length - 2].removeFormatting().replace(/\D/g, '')];
 
@@ -116,6 +114,8 @@ registerWhen(register("guiOpened", () => {
                     // Set time left on spray (backup)
                     sprays[items[index].getName().removeFormatting().replace(/[^0-9]/g, '')] = minutes * 60 + parseInt(seconds);
                 }
+                if (pestLine !== undefined)
+                    highlights[index] = [Renderer.color(139, 0, 0, 255), pestLine[pestLine.length - 2].removeFormatting()];
             }
         }
 
@@ -152,7 +152,7 @@ registerWhen(register("step", () => {
             time > 600 ? YELLOW : RED;
             sprayMessage += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + formatTime(time) + DARK_GRAY})`
     });
-    if (keys.length === 0) sprayMessage += `\n ${RED + BOLD}None...`;
+    if (keys.length === 0) sprayMessage += `\n ${RED}None...`;
     sprayOverlay.setMessage(sprayMessage);
 }).setFps(1), () => location.getWorld() === "Garden");
 
