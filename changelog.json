@@ -1,4 +1,7 @@
 [
+    "- Added bridge formatter",
     "- Added playtime alerts",
-    "- Fixed slot index error"
+    "- Fixed party detection",
+    "- Fixed slot index error",
+    "- Fixed persistant profit GUI"
 ]

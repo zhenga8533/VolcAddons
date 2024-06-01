@@ -11,6 +11,7 @@ import { getLatestReleaseVersion } from "./utils/UpdateTils";
 
 // General Features
 import "./features/general/Autocorrect";
+import "./features/general/BridgeFormatter";
 import "./features/general/ChangeMessage";
 import "./features/general/ChatWebhook";
 import "./features/general/ChunkBorders";

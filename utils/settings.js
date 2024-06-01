@@ -173,14 +173,6 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
         max: 10
     })
     skillTracker = 0;
-    
-    @SwitchProperty({
-        name: "SkyBlock XP Alert",
-        description: "Displays a chat message and title when player gains SkyBlock XP in actionBar.",
-        category: "General",
-        subcategory: "General"
-    })
-    levelAlert = true;
 
     @SwitchProperty({
         name: "Text Shadow Toggle",
@@ -343,6 +335,14 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     autocorrect = false;
 
     @SwitchProperty({
+        name: "Bridge Formatter",
+        description: "Created for myself, so may or may not work for you. Detects '»' symbol in bridge messages to format them.",
+        category: "General",
+        subcategory: "Yapping"
+    })
+    bridgeFormat = false;
+
+    @SwitchProperty({
         name: "Custom Emotes",
         description: `Replaces parts of chat messages containing emotes in ${AQUA}/emotes${GRAY}.
 Add custom emotes with ${AQUA}/va emote${GRAY}.`,
@@ -350,6 +350,14 @@ Add custom emotes with ${AQUA}/va emote${GRAY}.`,
         subcategory: "Yapping"
     })
     enableEmotes = false;
+    
+    @SwitchProperty({
+        name: "SkyBlock XP Alert",
+        description: "Displays a chat message and title when player gains SkyBlock XP in actionBar.",
+        category: "General",
+        subcategory: "General"
+    })
+    levelAlert = true;
 
 
     // ████████████████████████████████████████████████████ PARTY ████████████████████████████████████████████████████
