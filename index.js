@@ -1,3 +1,12 @@
+register("command", () => {
+    ChatLib.chat(
+`\n§6§lVolcDebug:
+ §eCT Version: §7v${ChatTriggers.MODVERSION}
+ §eVolcAddons §7v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
+§8Please note that the mod may not work if CT is not v2.2.0`);
+}).setName("VATest");
+
+
 // Utility Modules
 import "./utils/Launch";
 import "./utils/DevTils";
