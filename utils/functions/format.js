@@ -72,9 +72,10 @@ export function commafy(num) {
  * Converts a number to a string in k, m, b notation
  * 
  * @param {Number} num - Base number to convert.
+ * @param {Number} significantDigits - Number of significant digits to display.
  * @returns {String} Formatted number if k, m, b notation
  */
-export function formatNumber(num) {
+export function formatNumber(num, significantDigits=5) {
     if (isNaN(num) || num === 0) return "0";
     
     const sign = Math.sign(num);
@@ -85,7 +86,9 @@ export function formatNumber(num) {
     const abbrev = ["", "k", "m", "b", "t", "q", "Q"];
     const index = Math.floor(Math.log10(absNum) / 3);
   
-    const formattedNumber = ((sign === -1 ? -1 : 1) * absNum / Math.pow(10, index * 3)).toFixed(2) + abbrev[index];
+    let formattedNumber = (sign === -1 ? -1 : 1) * absNum / Math.pow(10, index * 3);
+    const digits = formattedNumber.toFixed(0).length;
+    formattedNumber = formattedNumber.toFixed(MathLib.clamp(significantDigits - digits, 0, 2)) + abbrev[index];
 
     // Check if the number is a whole number, and if so, remove the ".00"
     if (Number.isInteger(absNum) && absNum < 1_000) return String(parseInt(formattedNumber));

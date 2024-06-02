@@ -75,8 +75,8 @@ registerWhen(register("step", () => {
     // Set HUD
     const timeDisplay = displayTime !== 0 ? formatTime(displayTime) : `${RED}Inactive`;
     powderOverlay.setMessage( 
-`${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain()) + GRAY} (${formatNumber(powders.Mithril.getRate())} ᠅/hr)
-${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain()) + GRAY} (${formatNumber(powders.Gemstone.getRate())} ᠅/hr)
-${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain()) + GRAY} (${formatNumber(powders.Glacite.getRate())} ᠅/hr)
+`${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain()) + GRAY} (${formatNumber(powders.Mithril.getRate(), 3)} ᠅/hr)
+${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain()) + GRAY} (${formatNumber(powders.Gemstone.getRate(), 3)} ᠅/hr)
+${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain()) + GRAY} (${formatNumber(powders.Glacite.getRate(), 3)} ᠅/hr)
 ${BLUE + BOLD}Time: ${WHITE + timeDisplay}`);
 }).setFps(1), () => (location.getWorld() === "Crystal Hollows" || location.getWorld() === "Dwarven Mines") && Settings.powderTracker !== 0);

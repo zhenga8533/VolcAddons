@@ -2,6 +2,7 @@
     "- Added bridge formatter",
     "- Added playtime alerts",
     "- Added `/VATest`",
+    "- Changed some num format to be compact",
     "- Fixed party detection",
     "- Fixed slot index error",
     "- Fixed persistant profit GUI",
