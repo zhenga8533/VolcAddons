@@ -3,8 +3,10 @@
     "- Added playtime alerts",
     "- Added `/VATest`",
     "- Changed some num format to be compact",
+    "- Fixed title flashing",
     "- Fixed party detection",
     "- Fixed slot index error",
     "- Fixed persistant profit GUI",
-    "- Fixed spray menu tracking"
+    "- Fixed spray menu tracking",
+    "- TBD: Fixed alignment"
 ]

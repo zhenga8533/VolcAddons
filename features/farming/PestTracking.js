@@ -7,6 +7,7 @@ import { formatTime, removeNonNumeric } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
+import { setTitle } from "../../utils/Title";
 
 
 const sprays = {};
@@ -33,18 +34,23 @@ registerWhen(register("step", setPests).setFps(1), () => location.getWorld() ===
 register("command", () => {
     setPests();
     if (pests.length === 0) {
-        Client.showTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10);
+        setTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10, 70);
         return;
     }
 
-    const zone = removeNonNumeric(Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot §7-"))?.getName()?.removeFormatting()?.trim()?.split(' ')?.[2]);
+    const zone = removeNonNumeric(Scoreboard.getLines().find(line => line.getName().startsWith("   §aPlot §7-"))
+        ?.getName()
+        ?.removeFormatting()
+        ?.trim()
+        ?.split(' ')?.[2]
+    );
     const plot = pests.find(plot => plot !== zone);
 
     if (plot !== undefined) {
-        Client.showTitle(`${DARK_GREEN}Warping...`, `Teleporting to plot ${plot}!`, 10, 50, 10);
+        setTitle(`${DARK_GREEN}Warping...`, `Teleporting to plot ${plot}!`, 10, 50, 10, 70);
         ChatLib.command(`plottp ${plot}`);
     } else
-        Client.showTitle(`${DARK_RED}Please Remain Seated.`, "You are in the only plot with pests!", 10, 50, 10);
+    setTitle(`${DARK_RED}Please Remain Seated.`, "You are in the only plot with pests!", 10, 50, 10, 70);
 }).setName("pesttp");
 
 
@@ -52,10 +58,10 @@ register("command", () => {
  * Alerts for pest spawns
  */
 registerWhen(register("chat", (_, plot) => {
-    Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`, 10, 50, 10);
+    setTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`, 10, 50, 10, 71);
 }).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"), () => location.getWorld() === "Garden" && Settings.pestAlert);
 registerWhen(register("chat", (_, num, plot) => {
-    Client.showTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`, 10, 50, 10);
+    setTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD + num} ${RED}Pests ${GRAY}have spawned...`, 10, 50, 10, 71);
 }).setCriteria("${ew}! ${num} Pests have spawned in Plot - ${plot}!"), () => location.getWorld() === "Garden" && Settings.pestAlert);
 
 
@@ -65,7 +71,7 @@ registerWhen(register("chat", (_, num, plot) => {
 registerWhen(register("step", () => {
     const count = parseInt(TabList.getNames().find(name => name.startsWith("§r Alive:"))?.split(' ')?.[2]?.removeFormatting() ?? 0);
     if (count < Settings.infestationAlert) return;
-    Client.showTitle(`${DARK_GREEN + BOLD}SPREADING PLAGUE`, `${count} minions with ${BOLD}Taunt ${RESET}are in the way!`, 0, 25, 5);
+    setTitle(`${DARK_GREEN + BOLD}SPREADING PLAGUE`, `${count} minions with ${BOLD}Taunt ${RESET}are in the way!`, 0, 25, 5, 69);
 }).setFps(1).unregister(), () => Settings.infestationAlert !== 0 && location.getWorld() === "Garden");
 
 
@@ -143,7 +149,7 @@ registerWhen(register("step", () => {
     const keys = Object.keys(sprays)
     keys.forEach(plot => {
         if (--sprays[plot] <= 0) {
-            Client.showTitle(`${RED + BOLD}SPRAY EXPIRED: ${GREEN}Plot ${plot + RED}!`, '', 10, 50, 10);
+            setTitle(`${RED + BOLD}SPRAY EXPIRED: ${GREEN}Plot ${plot + RED}!`, '', 10, 50, 10, 72);
             delete sprays[plot];
         }
 

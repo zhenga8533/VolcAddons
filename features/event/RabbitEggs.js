@@ -10,6 +10,7 @@ import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
 import { announceMob } from "../../utils/functions/misc";
 import { getClosest } from "../../utils/functions/find";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -231,5 +232,5 @@ registerWhen(register("step", () => {
 }).setFps(1), () => Settings.eggTimers && location.getSeason() === "Spring");
 
 registerWhen(register("chat", (type) => {
-    Client.showTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10);
+    setTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10, 40);
 }).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => Settings.eggTimers && location.getSeason() === "Spring");

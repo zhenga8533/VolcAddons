@@ -4,6 +4,7 @@ import { AQUA, PLAYER_CLASS } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import Waypoint from "../../utils/Waypoint";
 import { isPlayer } from "../../utils/functions/player";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -44,5 +45,5 @@ registerWhen(register("step", () => {
 
     // Show title
     const length = nearWaypoints.getWaypoints().length;
-    Client.showTitle(`${length + AQUA} nearby player${length === 1 ? "" : "s"}!`, "", 0, 15, 5);
+    setTitle(`${length + AQUA} nearby player${length === 1 ? "" : "s"}!`, "", 0, 15, 5, 50);
 }).setFps(2), () => Settings.manaDrain);

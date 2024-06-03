@@ -3,6 +3,7 @@ import { data } from "../../utils/Data";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
+import { setTitle } from "../../utils/Title";
 
 
 const drillExample =
@@ -30,7 +31,7 @@ registerWhen(register("step", () => {
         if (cooldowns[key] <= 0) return;
 
         if (--cooldowns[key] === 0)
-            Client.showTitle(`${GOLD + key}`, `${GREEN}is ready to use!`, 10, 50, 10);
+            setTitle(`${GOLD + key}`, `${GREEN}is ready to use!`, 10, 50, 10, 52);
     });
 
     // Check held data

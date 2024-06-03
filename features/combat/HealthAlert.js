@@ -1,6 +1,7 @@
 import Settings from "../../utils/Settings";
 import { BOLD, DARK_RED, RESET } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -14,9 +15,8 @@ let player = undefined;
 registerWhen(register("step", () => {
     if (player === undefined) return;
 
-    if (player.func_110143_aJ() / player.func_110138_aP() < Settings.healthAlert) {
-        Client.showTitle(`${DARK_RED + BOLD}WARNING: HEALTH BELOW ${RESET + Math.round(Settings.healthAlert * 100)}%${DARK_RED}!`, "", 0, 25, 5);
-    }
+    if (player.func_110143_aJ() / player.func_110138_aP() < Settings.healthAlert)
+        setTitle(`${DARK_RED + BOLD}WARNING: HEALTH BELOW ${RESET + Math.round(Settings.healthAlert * 100)}%${DARK_RED}!`, "", 0, 25, 5, 10);
 }).setFps(2), () => Settings.healthAlert !== 0);
 
 /**

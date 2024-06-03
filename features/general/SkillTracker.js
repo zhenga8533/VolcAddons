@@ -5,6 +5,7 @@ import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { Stat, getPaused } from "../../utils/Stat";
 import { data } from "../../utils/Data";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -68,7 +69,7 @@ const trackSkills = register("guiOpened", () => {
 
         skillsTracked = true;
         trackSkills.unregister();
-        if (Settings.skillTracker !== 0) Client.showTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10);
+        if (Settings.skillTracker !== 0) setTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10, 80);
     });
 });
 
@@ -88,7 +89,7 @@ register("command", () => {
         skills[skill].time = 0;
         skills[skill].since = 600;
     });
-    Client.showTitle(`${GREEN}Successfully reset skills!`, "Please open skills menu to retrack.", 10, 50, 10);
+    setTitle(`${GREEN}Successfully reset skills!`, "Please open skills menu to retrack.", 10, 50, 10, 81);
 }).setName("resetSkills");
 
 /**
@@ -96,7 +97,7 @@ register("command", () => {
  */
 registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
     if (!skillsTracked) {
-        Client.showTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10);
+        setTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10, 79);
         return;
     }
     if (getPaused()) return;
@@ -117,7 +118,7 @@ registerWhen(register("actionBar", (health, gain, type, amount, next, mana) => {
  */
 registerWhen(register("actionBar", (health, gain, type, percent, mana) => {
     if (!skillsTracked) {
-        Client.showTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10);
+        setTitle(`${RED}Skills not tracked!`, "Please open skills menu to track.", 0, 50, 10, 79);
         return;
     }
     if (getPaused()) return;

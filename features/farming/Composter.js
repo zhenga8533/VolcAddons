@@ -6,6 +6,7 @@ import { commafy, formatTime, romanToNum } from "../../utils/functions/format";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import { getBazaar } from "../economy/Economy";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -55,7 +56,7 @@ registerWhen(register("step", () => {
 
     if (Settings.gardenTab === 1) {
         if (tablist.find(tab => tab.includes("Time Left")) !== undefined)
-            Client.showTitle(`${DARK_RED + BOLD} ${WHITE}COMPOSTER INACTIVE!`, "", 0, 25, 5);
+            setTitle(`${DARK_RED + BOLD} ${WHITE}COMPOSTER INACTIVE!`, "", 0, 25, 5, 3);
         return;
     }
 

@@ -6,6 +6,7 @@ import { isLookingAway } from "../../utils/functions/matrix";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
+import { setTitle } from "../../utils/Title";
 
 
 const GEMSTONE_WAYPOINTS = {
@@ -121,5 +122,5 @@ registerWhen(register("renderWorld", (pt) => {
  * Commission Complete Annoucne
  */
 registerWhen(register("chat", (commission) => {
-    Client.showTitle(GREEN + BOLD + commission, `${YELLOW}Commission Complete!`, 5, 25, 5);
+    setTitle(GREEN + BOLD + commission, `${YELLOW}Commission Complete!`, 5, 25, 5, 51);
 }).setCriteria("${commission} Commission Complete! Visit the King to claim your rewards!"), () => Settings.commissionAnnounce);

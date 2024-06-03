@@ -1,6 +1,7 @@
 import Settings from "../../utils/Settings";
 import { BOLD, DARK_AQUA, LOGO } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -18,7 +19,7 @@ registerWhen(register("step", () => {
     // Check if current amount matches last
     const amount = bits.getName().removeFormatting().replace(/[^0-9]/g, '');
     if (amount === last) {
-        if (Settings.bitsAlert === 1 || Settings.bitsAlert === 3) Client.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
+        if (Settings.bitsAlert === 1 || Settings.bitsAlert === 3) setTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10, 5);
         if (Settings.bitsAlert === 2 || Settings.bitsAlert === 3) ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}NO MO BITS!`);
     }
     last = amount;
@@ -39,7 +40,7 @@ registerWhen(register("guiOpened", () => {
             if (bits && active) return;
         } else return;
 
-        if (Settings.bitsAlert === 1 || Settings.bitsAlert === 3) Client.showTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10);
+        if (Settings.bitsAlert === 1 || Settings.bitsAlert === 3) setTitle(`${DARK_AQUA + BOLD}NO MO BITS!`, "", 10, 50, 10, 5);
         if (Settings.bitsAlert === 2 || Settings.bitsAlert === 3) ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}NO MO BITS!`);
     });
 }), () => Settings.bitsAlert !== 0);

@@ -1,11 +1,12 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
+import Waypoint from "../../utils/Waypoint";
 import { BLAZE_CLASS, BOLD, DARK_GREEN, ENDERMAN_CLASS, GREEN, RED, SMA, SPIDER_CLASS, WHITE, WOLF_CLASS, ZOMBIE_CLASS } from "../../utils/Constants";
 import { romanToNum } from "../../utils/functions/format";
 import { announceMob } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/ThreadTils";
-import Waypoint from "../../utils/Waypoint";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -23,7 +24,7 @@ export function getSlayerBoss() { return bossCD };
 registerWhen(register("soundPlay", (_, __, vol, pitch) => {
     if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
     
-    if (Settings.miniAlert === 3) Client.showTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5);
+    if (Settings.miniAlert === 3) setTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5, 55);
     else announceMob(Settings.miniAlert, "Miniboss Slayer", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
@@ -38,7 +39,7 @@ registerWhen(register("tick", () => {
         // Announce if boss is dead
         if (!slainCD && Scoreboard?.getLines()?.find(line => line.getName().startsWith("§aBoss slain!")) !== undefined) {
             slainCD = true;
-            if (Settings.bossAlert === 3) Client.showTitle(`${DARK_GREEN + BOLD}SLAYER BOSS SLAIN!`, "", 5, 25, 5);
+            if (Settings.bossAlert === 3) setTitle(`${DARK_GREEN + BOLD}SLAYER BOSS SLAIN!`, "", 5, 25, 5, 56);
             else if (Settings.bossAlert === 2) ChatLib.command("pc Slayer Boss Slain!");
             else if (Settings.bossAlert === 1) {
                 const id = `@${(Math.random() + 1).toString(36).substring(6)} ${(Math.random() + 1).toString(36).substring(9)}`;
@@ -54,7 +55,7 @@ registerWhen(register("tick", () => {
     bossCD = true;
     slainCD = false;
     questStart = false;
-    if (Settings.bossAlert === 3) Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
+    if (Settings.bossAlert === 3) setTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5, 58);
     else if (Settings.bossAlert !== 0) announceMob(Settings.bossAlert, "Boss Slayer", Player.getX(), Player.getY(), Player.getZ());
 }), () => Settings.bossAlert !== 0 || Settings.slayerSpawn !== 0 ||
 (location.getWorld() === "The Rift" && (Settings.vampireAttack || Settings.announceMania)));
@@ -68,7 +69,7 @@ registerWhen(register("step", () => {
 
     if (Settings.slayerSpawn === 100) {
         if (Scoreboard?.getLines()?.find(line => line.getName().includes("Slay the boss!")) !== undefined) {
-            Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5);
+            setTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5, 58);
             warned = true;
         }
         return;
@@ -80,7 +81,7 @@ registerWhen(register("step", () => {
     const percent = Math.round(c/t * 100);
 
     if (percent > Settings.slayerSpawn) {
-        Client.showTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 5, 25, 5);
+        setTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 5, 25, 5, 57);
         warned = true;
     }
 }).setFps(2), () => Settings.slayerSpawn !== 0);

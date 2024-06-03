@@ -5,6 +5,7 @@ import { announceMob } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
 import Waypoint from "../../utils/Waypoint";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -39,8 +40,8 @@ registerWhen(register("step", () => {
         });
 
         // Update HUD
-        if (foundDead) Client.Companion.showTitle(`${DARK_BLUE + BOLD}THUNDER ${RED}DEAD!`, "", 0, 50, 10);
-        else Client.Companion.showTitle(`${DARK_BLUE + BOLD}THUNDER ${WHITE}DETECTED!`, "", 0, 25, 5);
+        if (foundDead) setTitle(`${DARK_BLUE + BOLD}THUNDER ${RED}DEAD!`, "", 0, 50, 10, 38);
+        else setTitle(`${DARK_BLUE + BOLD}THUNDER ${WHITE}DETECTED!`, "", 0, 25, 5, 40);
     }
 
     const jawbussy = World.getAllEntitiesOfType(GOLEM_CLASS);
@@ -53,7 +54,7 @@ registerWhen(register("step", () => {
         });
 
         // Update HUD
-        if (foundDead) Client.Companion.showTitle(`${DARK_RED + BOLD}JAWBUS ${RED}DEAD!`, "", 0, 50, 10);
-        else Client.Companion.showTitle(`${DARK_RED + BOLD}JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5);
+        if (foundDead) setTitle(`${DARK_RED + BOLD}JAWBUS ${RED}DEAD!`, "", 0, 50, 10, 39);
+        else setTitle(`${DARK_RED + BOLD}JAWBUS ${WHITE}DETECTED!`, "", 0, 25, 5, 41);
     }
 }).setFps(2), () => location.getWorld() === "Crimson Isle" && Settings.mythicLavaDetect);

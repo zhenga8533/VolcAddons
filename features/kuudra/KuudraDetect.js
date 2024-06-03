@@ -3,6 +3,7 @@ import Settings from "../../utils/Settings";
 import { CUBE_CLASS } from "../../utils/Constants";
 import { formatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -44,23 +45,13 @@ registerWhen(register("tick", () => {
             x = kuudra.getX();
             z = kuudra.getZ();
 
-            if (x < -128) Client.showTitle("§c§lRIGHT!", "", 0, 25, 5);
-            else if (z > -84) Client.showTitle("§2§lFRONT!", "", 0, 25, 5);
-            else if (x > -72) Client.showTitle("§a§lLEFT!", "", 0, 25, 5);
-            else if (z < -132) Client.showTitle("§4§lBACK!", "", 0, 25, 5);
+            if (x < -128) setTitle("§c§lRIGHT!", "", 0, 25, 5, 81);
+            else if (z > -84) setTitle("§2§lFRONT!", "", 0, 25, 5, 81);
+            else if (x > -72) setTitle("§a§lLEFT!", "", 0, 25, 5, 81);
+            else if (z < -132) setTitle("§4§lBACK!", "", 0, 25, 5, 81);
         }
     } else HPDisplay = ["100k/100k ❤", 0, 0, 0];
 }), () => location.getWorld() === "Kuudra" && (Settings.kuudraHP || Settings.kuudraSpawn));
-
-/**
- * Cancel health rendering when announcing direction
- */
-const DIRECTIONS = new Set(["§c§lRIGHT!", "§2§lFRONT!", "§a§lLEFT!", "§4§lBACK!"]);
-registerWhen(register("renderTitle", (title, _, event) => {
-    if (currentHP > 25_000 || currentHP <= 24_900 || DIRECTIONS.has(title)) return;
-
-    cancel(event);
-}), () => location.getWorld() === "Kuudra" && Settings.kuudraSpawn);
 
 /**
  * Renders Kuudra's percent HP.

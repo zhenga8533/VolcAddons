@@ -2,6 +2,7 @@ import Settings from "../../utils/Settings";
 import { DARK_GREEN, DARK_RED, GREEN, RED, YELLOW } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -88,7 +89,7 @@ registerWhen(register("tick", () => {
         if (isNaN(cd)) delete items[itemID];
         else if (cd <= 0) {
             if (Settings.cooldownAlert)
-                Client.showTitle(itemName, `${GREEN}is off cooldown!`, 5, 25, 5);
+                setTitle(`${GREEN + BOLD}${itemName}`, `${GREEN}is off cooldown!`, 5, 25, 5, 90);
             delete items[itemID];
         }
     });

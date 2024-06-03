@@ -7,6 +7,7 @@ import { announceMob } from "../../utils/functions/misc";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import Waypoint from "../../utils/Waypoint";
+import { setTitle } from "../../utils/Title";
 
 
 /**
@@ -103,7 +104,7 @@ registerWhen(register("step", () => {
         });
 
         // Update HUD
-        if (foundDead) Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${RED}DEAD!`, "", 0, 50, 10);
-        else Client.Companion.showTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5);
+        if (foundDead) setTitle(`${GOLD + BOLD}INQUISITOR ${RED}DEAD!`, "", 0, 50, 10, 59);
+        else setTitle(`${GOLD + BOLD}INQUISITOR ${WHITE}DETECTED!`, "", 0, 25, 5, 60);
     }
 }).setFps(2), () => location.getWorld() === "Hub" && Settings.detectInq && mayor.getPerks().has("Mythological Ritual"));
