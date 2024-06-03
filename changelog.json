@@ -3,6 +3,7 @@
     "- Added playtime alerts",
     "- Added `/VATest`",
     "- Changed some num format to be compact",
+    "- Fixed some container value calcs",
     "- Fixed title flashing",
     "- Fixed party detection",
     "- Fixed slot index error",

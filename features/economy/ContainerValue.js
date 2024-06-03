@@ -158,9 +158,9 @@ function bazaarValue(container) {
             // Get price from lore
             const priceLine = lore.find(line => line.startsWith("§5§o§7Price per unit:"));
             if (priceLine) {
-                const regex = /Price per unit: .+?([^\s]+)/;
-                const match = priceLine.removeFormatting().match(regex);
-                if (match) price = unformatNumber(match[1]);
+                const match = priceLine.removeFormatting().split(' ')[3];
+                price = unformatNumber(match);
+                ChatLib.chat(price)
             }
 
             itemValues[name] = [amount, amount * price];
