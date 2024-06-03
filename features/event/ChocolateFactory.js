@@ -243,9 +243,9 @@ const workerHighlight = register("guiRender", () => {
     // Draw tower levels
     Renderer.scale(10/9, 10/9);
     [x, y] = getSlotCoords(39);
-    Renderer.drawString(workerLevels[7], x + 13, y + 12, true);
+    Renderer.drawString(workerLevels[7], x + 22 - Renderer.getStringWidth(workerLevels[7]), y + 12, true);
     [x, y] = getSlotCoords(42);
-    Renderer.drawString(workerLevels[8], x + 13, y + 12, true);
+    Renderer.drawString(workerLevels[8], x + 22 - Renderer.getStringWidth(workerLevels[8]), y + 12, true);
 
     Renderer.retainTransforms(false);
 }).unregister();
