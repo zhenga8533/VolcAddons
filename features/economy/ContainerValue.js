@@ -160,7 +160,6 @@ function bazaarValue(container) {
             if (priceLine) {
                 const match = priceLine.removeFormatting().split(' ')[3];
                 price = unformatNumber(match);
-                ChatLib.chat(price)
             }
 
             itemValues[name] = [amount, amount * price];
