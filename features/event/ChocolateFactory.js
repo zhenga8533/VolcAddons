@@ -151,12 +151,14 @@ function findWorker() {
     let maxValue = 0;
     for (let i = 28; i < 35; i++) {
         // Skip if not a worker
-        let worker = items[i].getLore();
-        let index = worker.findIndex(line => line === "§5§o§7Cost");
-        if (index === -1) {
+        let worker = items[i]?.getLore();
+        if (worker === undefined) {
             Client.scheduleTask(2, findWorker);
             return;
         }
+
+        let index = worker.findIndex(line => line === "§5§o§7Cost");
+        if (index === -1) return;
 
         // Get worker name
         const name = items[i].getName();
