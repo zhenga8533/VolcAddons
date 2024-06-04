@@ -116,6 +116,7 @@ let beTime = 0;
 
 register("command", () => {
     beCounter = {};
+    beTime = 0;
     bestiaryOverlay.setMessage("");
     ChatLib.chat(`${LOGO + GREEN}Successfully reset bestiary counter.`);
 }).setName("resetBe");
