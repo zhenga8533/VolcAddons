@@ -1,5 +1,6 @@
 const titles = {};
-let prio = "";
+let current = "";
+let prio = 0;
 
 export function setTitle(title, subtitle, fadeIn, time, fadeOut, priority=5) {
     const ticks = fadeIn + time + fadeOut;
@@ -11,6 +12,12 @@ export function setTitle(title, subtitle, fadeIn, time, fadeOut, priority=5) {
         "ticks": ticks,
         "priority": priority
     }
+
+    if (priority > prio) {
+        Client.showTitle(title, subtitle, fadeIn, time, fadeOut);
+        current = title;
+        prio = priority;
+    }
 }
 
 register("tick", () => {
@@ -20,13 +27,24 @@ register("tick", () => {
     });
 
     // Find highest priority title
-    prio = Object.keys(titles).reduce((a, b) => titles[a].priority > titles[b].priority ? a : b, null);
-    const title = titles[prio];
+    if (Object.keys(titles).length === 0) {
+        current = "";
+        return;
+    } else if (current === "" || !titles.hasOwnProperty(current)) {
+        current = Object.keys(titles).reduce((a, b) => {
+            if (titles[a] && titles[b]) {
+                return titles[a].priority > titles[b].priority ? a : b;
+            }
+            return a || b;
+        }, null);
+        prio = titles[current].priority;
+        const title = titles[current];
 
-    // Draw title
-    Client.showTitle(prio, title.subtitle, title.fadeIn, title.time, title.fadeOut);
+        // Draw title
+        Client.showTitle(current, title.subtitle, title.fadeIn, title.time, title.fadeOut);
+    }
 });
 
 register("renderTitle", (title, _, event) => {
-    if (title !== prio) cancel(event);
+    if (current !== "" && title !== current) cancel(event);
 })
