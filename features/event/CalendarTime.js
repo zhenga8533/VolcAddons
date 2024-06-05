@@ -79,7 +79,7 @@ const forge = register("preItemRender", (_, __, slot) => {
     }
 
     item.setLore(lore);
-});
+}).unregister();
 
 const close = register("guiClosed", () => {
     forge.unregister();
