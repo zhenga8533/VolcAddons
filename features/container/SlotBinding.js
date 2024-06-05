@@ -45,7 +45,8 @@ registerWhen(register("guiClosed", () => {
 
 // Swap binded items
 registerWhen(register("guiMouseClick", (_, __, button, gui, event) => {
-    if (button !== 0 || !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) return;
+    if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiInventory" || 
+        button !== 0 || !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) return;
 
     const hover = gui?.getSlotUnderMouse()?.field_75222_d ?? 36;
     const bind = data.slotBinds[hover];

@@ -2,6 +2,7 @@
     "- Added bridge formatter",
     "- Added playtime alerts",
     "- Added `/VATest`",
+    "- Added stray rabbit alert",
     "- Changed some num format to be compact",
     "- Fixed `/resetBe`",
     "- Fixed some container value calcs",
@@ -10,5 +11,6 @@
     "- Fixed slot index error",
     "- Fixed persistant profit GUI",
     "- Fixed spray menu tracking",
-    "- Fixed alignment"
+    "- Fixed alignment",
+    "- Fixed binding working outside inv"
 ]
