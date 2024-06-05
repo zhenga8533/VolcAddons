@@ -1,14 +1,14 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
-import { BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
+import { AMOGUS, BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatTime } from "../../utils/functions/format";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
-import { announceMob } from "../../utils/functions/misc";
+import { announceMob, playSound } from "../../utils/functions/misc";
 import { getClosest } from "../../utils/functions/find";
 import { setTitle } from "../../utils/Title";
 
@@ -234,3 +234,31 @@ registerWhen(register("step", () => {
 registerWhen(register("chat", (type) => {
     setTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10, 40);
 }).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"), () => Settings.eggTimers && location.getSeason() === "Spring");
+
+
+/**
+ * Stray rabbit detection.
+ */
+const strayDetect = register("step", () => {
+    const items = Player.getContainer().getItems();
+    for (let i = 0; i < 27; i++) {
+        if (i === 13) continue;
+
+        let item = items[i];
+        if (item.getRegistryName() !== "minecraft:stained_glass_pane")
+            playSound(AMOGUS, 10_000);
+    }
+}).setDelay(1).unregister();
+
+const strayClose = register("guiClosed", () => {
+    strayDetect.unregister();
+    strayClose.unregister();
+}).unregister();
+
+registerWhen(register("guiOpened", () => {
+    Client.scheduleTask(2, () => {
+        if (Player.getContainer().getName() !== "Chocolate Factory") return;
+        strayClose.register();
+        strayDetect.register();
+    })
+}), () => Settings.strayAlarm);
