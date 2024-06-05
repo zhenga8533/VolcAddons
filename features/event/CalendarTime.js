@@ -62,7 +62,27 @@ const tooltip = register("preItemRender", (_, __, slot) => {
     item.setLore(lore);
 }).unregister();
 
+const forge = register("preItemRender", (_, __, slot) => {
+    const item = Player.getContainer().getItems()[slot.getSlotIndex()];
+    if (item === null) return;
+    const lore = item.getLore().join('\n').split('\n').slice(1).map(line => line.substring(4));
+
+    for (let i = 0; i < lore.length + 1; i++) {
+        if (lore[i]?.startsWith("§7Duration:") && !lore[i + 1]?.startsWith("§7End Date")) {
+            const duration = lore[i].removeFormatting().split(' ').slice(1).join('');
+            const startDate = unformatTime(duration) * 1_000 + Date.now();
+            const start = new Date(Math.round(startDate / 60_000) * 60_000);
+            const date = start.toLocaleDateString();
+            const time = start.toLocaleTimeString();
+            lore.splice(i + 1, 0, `§7End Date: ${YELLOW + date}, ${time.substring(0, time.length - 3)}`);
+        }
+    }
+
+    item.setLore(lore);
+});
+
 const close = register("guiClosed", () => {
+    forge.unregister();
     tooltip.unregister();
     close.unregister();
 }).unregister();
@@ -71,9 +91,11 @@ registerWhen(register("guiOpened", () => {
     Client.scheduleTask(2, () => {
         const name = Player.getContainer().getName();
         const split = Player.getContainer().getName().split(' ');
-        if (split[0] !== "Calendar" && split[name.length - 2] !== "Year" && name !== "SkyBlock Menu") return;
-    
-        tooltip.register();
+        if (split[0] === "Calendar" || split[name.length - 2] === "Year" || name === "SkyBlock Menu")
+            tooltip.register();
+        else if (name.startsWith("Refine (Slot #") || name.startsWith("Item Casting (Slot #"))
+            forge.register();
+        else return;
         close.register();
     });
 }), () => Settings.calendarTime);

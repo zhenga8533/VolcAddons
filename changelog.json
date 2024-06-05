@@ -4,6 +4,7 @@
     "- Added `/VATest`",
     "- Added stray rabbit alert",
     "- Changed some num format to be compact",
+    "- Changed calendar time to work with forge",
     "- Fixed `/resetBe`",
     "- Fixed some container value calcs",
     "- Fixed title flashing",
