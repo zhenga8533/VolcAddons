@@ -120,6 +120,7 @@ subtitle: List of all features and their related commands.
     - Egg Announce
     - Egg Timers
     - Egg Waypoints
+    - Stray Alarm
     - Worker Highlight
 - **Great Spook**
     - Math Teacher Solver

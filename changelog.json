@@ -1,10 +1,10 @@
 [
-    "- Added bridge formatter",
-    "- Added playtime alerts",
     "- Added `/VATest`",
     "- Added stray rabbit alert",
+    "- Added playtime alerts",
     "- Changed some num format to be compact",
     "- Changed calendar time to work with forge",
+    "- Fixed worker highlight",
     "- Fixed `/resetBe`",
     "- Fixed some container value calcs",
     "- Fixed title flashing",
@@ -12,6 +12,6 @@
     "- Fixed slot index error",
     "- Fixed persistant profit GUI",
     "- Fixed spray menu tracking",
-    "- Fixed alignment",
+    "- Fixed some text alignment",
     "- Fixed binding working outside inv"
 ]

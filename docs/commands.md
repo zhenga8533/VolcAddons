@@ -11,6 +11,7 @@ subtitle: List of every non-gui related commands.
     - `/va settings`: Opens the settings' menu.
     - `/va toggles`: Opens the setting toggles' menu.
     - `/va version`: Checks if you are currently on latest version and prints out changelog.
+    - `/VATest`: Prints out CT and VA versions for debugging.
 - **Lists**
     - `/va attributelist`: Set wanted attributes to calculate for.
     - `/va blacklist`: Set players to kick and ignore.
