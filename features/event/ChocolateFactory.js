@@ -158,7 +158,7 @@ function findWorker() {
         }
 
         let index = worker.findIndex(line => line === "§5§o§7Cost");
-        if (index === -1) return;
+        if (index === -1) continue;
 
         // Get worker name
         const name = items[i].getName();
