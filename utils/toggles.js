@@ -62,13 +62,14 @@ class Settings {
         description: "Ooh, black and yellow! Let's shake it up a little."
     })
     xyzDisplay = true;
-    @CheckboxProperty({
-        name: "Angle Display",
+    @SelectorProperty({
+        name: "Y/P Display",
         category: "Server Status",
         subcategory: "Server Status",
-        description: "JANET BENSON: Barry! Breakfast is ready!"
+        description: "JANET BENSON: Barry! Breakfast is ready!",
+        options: ["OFF", "GUI", "Crosshair", "All"]
     })
-    angleDisplay = true;
+    angleDisplay = 0;
     @CheckboxProperty({
         name: "Direction Display",
         category: "Server Status",

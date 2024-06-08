@@ -124,7 +124,7 @@ registerWhen(register('tick', () => {
     }
 
     // Yaw and Pitch
-    if (toggles.angleDisplay) {
+    if (toggles.angleDisplay === 1 || toggles.angleDisplay === 3) {
         const yaw = Player.getYaw();
         const pitch = Player.getPitch();
         statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${DARK_GRAY + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
@@ -267,6 +267,21 @@ export function getStatus(status) {
             break;
     }
 }
+
+
+/**
+ * Crosshair
+ */
+registerWhen(register("renderCrosshair", () => {
+    const yaw = Player.getYaw().toFixed(2);
+    const pitch = Player.getPitch().toFixed(2);
+    const height = Renderer.screen.getHeight();
+    const width = Renderer.screen.getWidth();
+    const offset = 9 * Renderer.screen.getScale() / 2 + Renderer.screen.getScale();
+
+    Renderer.drawString(GRAY + yaw, width / 2 + offset, height / 2 - 4.5, true);
+    Renderer.drawString(GRAY + pitch, (width - Renderer.getStringWidth(pitch)) / 2, height / 2 + offset, true);
+}), () => toggles.angleDisplay > 1);
 
 
 /**

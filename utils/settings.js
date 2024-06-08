@@ -254,21 +254,11 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     
     @SwitchProperty({
         name: "SkyBlock Stats Display",
-        description: `Tracks various SkyBlock statistics.\nMove GUI with ${AQUA}/moveStats${GRAY}.`,
+        description: `Tracks various SkyBlock statistics.\nMove GUI with ${AQUA}/moveStats ${GRAY}and set toggle with ${AQUA}/va toggles${GRAY}.`,
         category: "General",
         subcategory: "Server"
     })
     statsDisplay = false;
-
-    @ButtonProperty({
-        name: "Open Stats Toggles",
-        description: "Press button to open toggles control panel.",
-        category: "General",
-        subcategory: "Server"
-    })
-    openStatus() {
-        toggles.openGUI();
-    }
 
     // --- Timer ---
     @SwitchProperty({
@@ -300,22 +290,12 @@ Move GUI with ${AQUA}/moveSkills ${GRAY}or reset tracker with ${AQUA}/resetSkill
     // --- Webhook ---
     @TextProperty({
         name: "Discord Webhook",
-        description: "Input Discord Webhook link to send the chat messages to.",
+        description: `Input Discord Webhook link to send the chat messages to. Set toggle with ${AQUA}/va toggles${GRAY}.`,
         category: "General",
         subcategory: "Webhook",
         protected: true
     })
     chatWebhook = "";
-
-    @ButtonProperty({
-        name: "Open Webhook Toggles",
-        description: "Press button to open toggles control panel.",
-        category: "General",
-        subcategory: "Webhook"
-    })
-    openWebhooks() {
-        toggles.openGUI();
-    }
 
     // --- Yapping ---
     @SwitchProperty({
@@ -530,27 +510,18 @@ Add players with ${AQUA}/va whitelist${GRAY}.`,
     // --- Party Commands ---
     @SwitchProperty({
         name: "Leader Chat Commands",
-        description: `Allows players in party to use leader commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
+        description: `Allows players in party to use leader commands.\nBanish players with ${AQUA}/va blacklist ${GRAY}and set toggle with ${AQUA}/va toggles${GRAY}.`,
         category: "Party",
         subcategory: "Party Commands"
     })
     leaderCommands = false;
     @SwitchProperty({
         name: "Party Chat Commands",
-        description: `Allows players to use party commands.\nBanish players with ${AQUA}/va blacklist${GRAY}.`,
+        description: `Allows players to use party commands.\nBanish players with ${AQUA}/va blacklist ${GRAY}and set toggle with ${AQUA}/va toggles${GRAY}.`,
         category: "Party",
         subcategory: "Party Commands"
     })
     partyCommands = false;
-    @ButtonProperty({
-        name: "Open Command Toggles",
-        description: "Press button to open toggles control panel.",
-        category: "Party",
-        subcategory: "Party Commands"
-    })
-    openParty() {
-        toggles.openGUI();
-    }
 
 
     // ████████████████████████████████████████████████████ ECONOMY ████████████████████████████████████████████████████
@@ -1243,20 +1214,11 @@ Move GUI with ${AQUA}/moveCounter ${GRAY}or reset tracker with ${AQUA}/resetCoun
     // --- Kuudra Alert ---
     @SwitchProperty({
         name: "Kuudra Alerts",
-        description: "Alerts player of important events Kuudra.",
+        description: `Alerts player of important events Kuudra. Set toggle with ${AQUA}/va toggles${GRAY}.`,
         category: "Kuudra",
         subcategory: "Kuudra Alert"
     })
     kuudraAlerts = false;
-    @ButtonProperty({
-        name: "Open Alert Toggles",
-        description: "Press button to open toggles control panel.",
-        category: "Kuudra",
-        subcategory: "Kuudra Alert"
-    })
-    openAlerts() {
-        toggles.openGUI();
-    }
     
     // --- Kuudra Profit ---
     @SliderProperty({

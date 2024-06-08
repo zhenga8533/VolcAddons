@@ -90,7 +90,7 @@ export const DataFlavor = Java.type("java.awt.datatransfer.DataFlavor");
  * VolcAddons setting constants.
  */
 export const HEADER = 
-`${GOLD}VolcAddons ${YELLOW}v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
+`${GRAY}[${GOLD}VolcAddons${GRAY}] ${YELLOW}v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
 ${WHITE}Made By Volcaronitee
 `;
 export const LOGO = `${GRAY}[${GOLD}VolcAddons${GRAY}] `;
