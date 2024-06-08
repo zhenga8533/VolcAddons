@@ -178,24 +178,31 @@ class Settings {
 
     // --- PARTY COMMANDS ---
     @CheckboxProperty({
-        name: "Party Chat",
+        name: "All Chat",
         category: "Party Commands",
         subcategory: "Chat Options",
         description: "Somebody once told me the world is gonna roll me"
+    })
+    allCommands = true;
+    @CheckboxProperty({
+        name: "Party Chat",
+        category: "Party Commands",
+        subcategory: "Chat Options",
+        description: "I ain't the sharpest tool in the shed"
     })
     partyCommands = true;
     @CheckboxProperty({
         name: "Guild Chat",
         category: "Party Commands",
         subcategory: "Chat Options",
-        description: "I ain't the sharpest tool in the shed"
+        description: "She was lookin' kind of dumb with her finger and her thumb"
     })
     guildCommands = true;
     @CheckboxProperty({
         name: "DM Chat",
         category: "Party Commands",
         subcategory: "Chat Options",
-        description: "She was lookin' kind of dumb with her finger and her thumb"
+        description: "In the shape of an \"L\" on her forehead"
     })
     dmCommands = true;
 

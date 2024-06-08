@@ -249,9 +249,14 @@ export function executeCommand(name, args, sendTo) {
  * Detects when player inputs a ?command and set the chat 
  */
 data.prefixlist.forEach(prefix => {
+    const colorRegex = "&${color}";
     const playerRegex = "${player}";
     const messageRegex = "${message}";
 
+    registerWhen(register("chat", (player, _, message) => {
+        if (onCD) return;
+        executeCommand(getPlayerName(player), message.split(" "), "ac");
+    }).setCriteria(`&r${playerRegex + colorRegex}: ${prefix + messageRegex}&r`), () => Settings.partyCommands && toggles.allCommands);
     registerWhen(register("chat", (player, message) => {
         if (onCD) return;
         executeCommand(getPlayerName(player), message.split(" "), "pc");
