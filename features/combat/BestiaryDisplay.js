@@ -37,6 +37,7 @@ const setLevels = register("guiRender", () => {
     bestiaryData[0].forEach((level, i) => {
         let index = 2*parseInt(i/7) + 10 + i;
         let item = container.getStackInSlot(index);
+        if (item === null) return;
         item.setStackSize(isNaN(level) ? 0 : level);
     })
 }).unregister();
