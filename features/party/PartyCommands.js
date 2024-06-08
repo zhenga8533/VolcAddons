@@ -108,7 +108,8 @@ export function executeCommand(name, args, sendTo) {
             const category = toggles.womenCommand;
             if (category === 0) return;
             
-            const arg = category === 1 ? W[Math.floor(Math.random() * (W.length - 1))] : W[category - 2];
+            const arg = W.includes(args[1]) ? args[1] :
+                category === 1 ? W[Math.floor(Math.random() * (W.length - 1))] : W[category - 2];
             axios.get(`https://api.waifu.pics/sfw/${arg}`).then(w => {
                 const waifu = w.data.url.split('/')[3].replace('.', '@');
                 if (sendTo !== false) ChatLib.command(`${sendTo} va-${waifu}-w ${randID}`);
@@ -286,9 +287,14 @@ data.prefixlist.forEach(prefix => {
  * ?w image rendering.
  */
 let img = undefined;
+let imgUrl = undefined;
 
 const render = register("renderOverlay", () => {
-    if (img === undefined) return;
+    if (img === undefined) {
+        Renderer.translate(0, 0, 999);
+        Renderer.drawString("Loading...", Client.getMouseX() + 9, Client.getMouseY() + 3, true);
+        return;
+    }
 
     const SCREEN_WIDTH = Renderer.screen.getWidth();
     const SCREEN_HEIGHT = Renderer.screen.getHeight();
@@ -306,27 +312,29 @@ const render = register("renderOverlay", () => {
 
 const close = register("guiClosed", () => {
     img = undefined;
+    imgUrl = undefined;
     render.unregister();
     close.unregister()
 }).unregister();
 
-register("command", (link) => {
+register("chatComponentHovered", (text) => {
+    const hoverValue = text.getHoverValue().removeFormatting();
+    
+    if (hoverValue === imgUrl || !hoverValue.startsWith("https://i.waifu.pics")) return;
+    imgUrl = hoverValue;
     delay(() => {
         try {
-            img = Image.fromUrl('https://i.waifu.pics/' + link.replace('@', '.'));
             render.register();
             close.register();
+            img = Image.fromUrl(hoverValue);
         } catch (err) {
             ChatLib.chat(`${LOGO + RED}Error: Unable to load image!`);
         }
     }, 1);
-}).setName("setw");
+})
 
-register("chat", (player, _, link, __, event) => {
+register("chat", (player, _, id, __, event) => {
     cancel(event);
-    new Message(`&${player}&f: `, new TextComponent(link)
-        .setClickAction("run_command")
-        .setClickValue(`/setw ${link}`)
-        .setHoverValue(`${LOGO + YELLOW}Click to view image`)
-    ).chat();
-}).setCriteria("&${player}:${space}va-${link}-w${end}");
+    const link = `https://i.waifu.pics/${id.replace('@', '.')}`;
+    new TextComponent(`&${player}&f: ${link}`).setHoverValue(link).chat();
+}).setCriteria("&${player}:${space}va-${id}-w${end}");
