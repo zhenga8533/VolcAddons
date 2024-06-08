@@ -1,5 +1,7 @@
 [
     "- Added crosshair Y/P display",
+    "- Changed party commands to work in AC",
+    "- Changed rand IDs to be parsed out",
     "- Fixed Hypixel ?w counter",
     "- Fixed ?w upload failing"
 ]

@@ -246,6 +246,16 @@ export function executeCommand(name, args, sendTo) {
 }
 
 /**
+ * Parse out rand ID of messages
+ */
+register("chat", (player, msg, id, event) => {
+    if (id.length !== 12 || id.includes(' ') || msg.endsWith('-w ')) return;
+
+    cancel(event);
+    ChatLib.chat(`&${player}:${msg}`);
+}).setCriteria("&${player}:${msg}@${id}");
+
+/**
  * Detects when player inputs a ?command and set the chat 
  */
 data.prefixlist.forEach(prefix => {
@@ -311,7 +321,6 @@ register("command", (link) => {
 
 register("chat", (player, _, link, __, event) => {
     cancel(event);
-
     new Message(`&${player}&f: `, new TextComponent(link)
         .setClickAction("run_command")
         .setClickValue(`/setw ${link}`)
