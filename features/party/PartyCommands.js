@@ -289,6 +289,7 @@ let img = undefined;
 
 const render = register("renderOverlay", () => {
     if (img === undefined) return;
+
     const SCREEN_WIDTH = Renderer.screen.getWidth();
     const SCREEN_HEIGHT = Renderer.screen.getHeight();
     const imgWidth = img.getTextureWidth();
@@ -296,9 +297,11 @@ const render = register("renderOverlay", () => {
     const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT);
     const width = imgWidth / ratio;
     const height = imgHeight / ratio;
+    const x = Client.getMouseX() + width > SCREEN_WIDTH ? SCREEN_WIDTH - width : Client.getMouseX();
+    const y = Client.getMouseY() - height < 0 ? 0 : Client.getMouseY() - height;
 
     Renderer.translate(0, 0, 999);
-    img.draw(Client.getMouseX(), Client.getMouseY() - height, width, height);
+    img.draw(x, y, width, height);
 }).unregister();
 
 const close = register("guiClosed", () => {
