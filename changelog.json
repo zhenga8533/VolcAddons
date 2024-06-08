@@ -1,3 +1,5 @@
 [
-    "- Added crosshair Y/P display"
+    "- Added crosshair Y/P display",
+    "- Fixed Hypixel ?w counter",
+    "- Fixed ?w upload failing"
 ]

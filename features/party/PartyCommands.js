@@ -1,11 +1,8 @@
 import axios from "../../../axios";
-import { request } from "../../../requestV2";
 import party from "../../utils/Party";
 import Settings from "../../utils/Settings";
-import Socket from "../../utils/Socket";
 import toggles from "../../utils/Toggles";
-import { AQUA, DARK_AQUA, DARK_GRAY, DARK_GREEN, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
-import { randIndex } from "../../utils/functions/misc";
+import { AQUA, DARK_AQUA, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/ThreadTils";
@@ -22,131 +19,6 @@ const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("VolcAddons", "json/quotes.json"));
 const W = ["waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", 
     "blush", "smile", "wave", "highfive", "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"];
-
-/**
- * Makes a POST request to upload an image to Imgur.
- *
- * @param {String} image - Link of the image.
- */
-function upload(image) {
-    return request({
-        url: "https://api.imgur.com/3/image",
-        method: "POST",
-        headers: {
-            Authorization: "Client-ID 43f3f362c8963a0",
-        },
-        body: {
-            image
-        },
-        json: true
-    });
-};
-
-let waifu = "";
-let imgur = "";
-let waifuSet = false;
-
-/**
- * Makes a PULL request to get a random waifu image >.<
- * 
- * @param {Number} category - Category of waifu to get.
- */
-function setWaifu() {
-    if (waifuSet)
-        new Message(`\n${LOGO + DARK_GREEN}Uploading `,
-            new TextComponent(waifu).setHoverValue(waifu),
-            ` ${DARK_GREEN}to Imgur!`).setChatLineId(11997).chat();
-
-    upload(waifu).then(res => {
-        ChatLib.clearChat(11997);
-        const link = res.data.link;
-
-        // Success
-        imgur = link;
-        if (waifuSet)
-            new Message(`\n${LOGO + GREEN}Uploaded `,
-                new TextComponent(imgur).setHoverValue(imgur),
-                ` ${GREEN}to Imgur successfully! `,
-                new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
-        else waifuSet = true;
-
-        // Send to socket server
-        Socket.send({
-            request: "post",
-            command: "waifu",
-            link: waifu,
-            imgur: link
-        });
-    }).catch(_ => {
-        // Attempt to use base Imgur API
-        ChatLib.clearChat(11997);
-        if (waifuSet) {
-            ChatLib.chat(`${LOGO + RED}Imgur Upload Failed!`);
-            ChatLib.chat(`${LOGO + DARK_GRAY}Attempting to fetch using Imgur API...`);
-        }
-        
-        request({
-            url: "https://api.imgur.com/3/gallery/t/waifu/viral/1?showViral=true",
-            method: "GET",
-            headers: {
-                Authorization: "Client-ID 43f3f362c8963a0",
-            },
-            json: true
-        }).then(res => {
-            const items = res.data.items;
-            const images = items[randIndex(items)]?.images;
-            const id = images[randIndex(images)]?.id;
-
-            imgur = `https://i.imgur.com/${id}.png`;
-            if (waifuSet)
-                new Message(`\n${LOGO + GREEN}Uploaded `,
-                    new TextComponent(imgur).setHoverValue(imgur),
-                    ` ${GREEN}to Imgur successfully! `,
-                    new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
-            else waifuSet = true;
-        }).catch(_ => {
-            if (waifuSet) ChatLib.chat(`${LOGO + DARK_RED}Imgur fetch failed!`);
-            else waifuSet = true;
-        });
-    });
-}
-
-/**
- * Processes the waifu data received from the socket server.
- * 
- * @param {Object} data - Data received from the socket server.
- */
-export function processWaifu(data) {
-    imgur = data.imgur;
-
-    if (!imgur) {
-        setWaifu();
-    } else if (waifuSet) {
-        new Message(`\n${LOGO + GREEN}Uploaded `,
-            new TextComponent(imgur).setHoverValue(imgur),
-            ` ${GREEN}to Imgur successfully! `,
-            new TextComponent(`${DARK_GRAY}[click to regenerate]`).setClick("run_command", "/va w").setHoverValue("Click me!")).chat();
-    } else waifuSet = true;
-}
-
-/**
- * Makes a GET request to get a random waifu image >.<
- */
-function sendWaifu(category) {
-    const arg = category === 1 ? W[Math.floor(Math.random() * (W.length - 1))] : W[category - 2];
-
-    axios.get(`https://api.waifu.pics/sfw/${arg}`).then(w => {
-        waifu = w.data.url;
-        if (Socket.getConnected())
-            Socket.send({
-                request: "get",
-                command: "waifu",
-                link: waifu
-            });
-        else setWaifu();
-    });
-}
-sendWaifu(toggles.womenCommand);
 
 /**
  * Various party and leader commands.
@@ -233,11 +105,15 @@ export function executeCommand(name, args, sendTo) {
         case "waifu":
         case "women":
         case "w":
-            if (toggles.womenCommand === 0) return;
+            const category = toggles.womenCommand;
+            if (category === 0) return;
             
-            if (sendTo !== false) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
-            // Randomize end to avoid duplicate message ^
-            sendWaifu(toggles.womenCommand);
+            const arg = category === 1 ? W[Math.floor(Math.random() * (W.length - 1))] : W[category - 2];
+            axios.get(`https://api.waifu.pics/sfw/${arg}`).then(w => {
+                const waifu = w.data.url.split('/')[3].replace('.', '@');
+                if (sendTo !== false) ChatLib.command(`${sendTo} va-${waifu}-w ${randID}`);
+                else ChatLib.command(`msg ${Player.getName()} va-${waifu}-w`);
+            });
             break;
         case "coords":
         case "waypoint":
@@ -389,3 +265,51 @@ data.prefixlist.forEach(prefix => {
         executeCommand(getPlayerName(player), message.split(" "), "r");
     }).setCriteria(`From ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && toggles.dmCommands);
 });
+
+
+/**
+ * ?w image rendering.
+ */
+let img = undefined;
+
+const render = register("renderOverlay", () => {
+    if (img === undefined) return;
+    const SCREEN_WIDTH = Renderer.screen.getWidth();
+    const SCREEN_HEIGHT = Renderer.screen.getHeight();
+    const imgWidth = img.getTextureWidth();
+    const imgHeight = img.getTextureHeight();
+    const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT);
+    const width = imgWidth / ratio;
+    const height = imgHeight / ratio;
+
+    Renderer.translate(0, 0, 999);
+    img.draw(Client.getMouseX(), Client.getMouseY() - height, width, height);
+}).unregister();
+
+const close = register("guiClosed", () => {
+    img = undefined;
+    render.unregister();
+    close.unregister()
+}).unregister();
+
+register("command", (link) => {
+    delay(() => {
+        try {
+            img = Image.fromUrl('https://i.waifu.pics/' + link.replace('@', '.'));
+            render.register();
+            close.register();
+        } catch (err) {
+            ChatLib.chat(`${LOGO + RED}Error: Unable to load image!`);
+        }
+    }, 1);
+}).setName("setw");
+
+register("chat", (player, _, link, __, event) => {
+    cancel(event);
+
+    new Message(`&${player}&f: `, new TextComponent(link)
+        .setClickAction("run_command")
+        .setClickValue(`/setw ${link}`)
+        .setHoverValue(`${LOGO + YELLOW}Click to view image`)
+    ).chat();
+}).setCriteria("&${player}:${space}va-${link}-w${end}");

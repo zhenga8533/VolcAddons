@@ -201,7 +201,6 @@ export default new WebSocket();
  * Run callback and prevent circular dependency.
  */
 import { processAlloy, processEvent } from "../features/mining/EventTracker";
-import { processWaifu } from "../features/party/PartyCommands";
 import Settings from "./Settings";
 
 /**
@@ -219,9 +218,6 @@ function callback(data) {
         case "ch":
         case "dm":
             processEvent(data);
-            break;
-        case "waifu":
-            processWaifu(data);
             break;
         default:
             ChatLib.chat(`${LOGO + DARK_GRAY}Received unknown command: ${GRAY + command}`);
