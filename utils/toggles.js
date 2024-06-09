@@ -4,7 +4,8 @@ import {
     @TextProperty,
     @CheckboxProperty,
     @SliderProperty,
-    @SelectorProperty
+    @SelectorProperty,
+    @PercentSliderProperty
 } from "../../Vigilance/index";
 
 @Vigilant("VolcAddons/Data", "VolcAddons' Toggles", {
@@ -280,11 +281,18 @@ class Settings {
         name: `Gyatt Command ${DARK_AQUA}?<w, waifu, women>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "The most important command deserves the only description. This will only control '?w', you can access any of the other commands by using '?<toggle>'. Note that it will only send on next command for speed purposes :)",
+        description: "This will only control '?w', you can access any of the other commands by using '?<toggle>'.",
         options: ["OFF", "random", "waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", "blush", 
             "smile", "wave", "highfive", "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"]
     })
     womenCommand = 0;
+    @PercentSliderProperty({
+        name: "W Scale",
+        description: `Set the scale of the rendered images or as 0 to turn ${RED}OFF${GRAY}. If this does not work, please try: https://github.com/ChatTriggers/ChatTriggers/wiki/Fixing-broken-imports.`,
+        category: "Party Commands",
+        subcategory: "Party Commands",
+    })
+    wScale = 1;
 
     // --- KUUDRA ALERTS ---
     

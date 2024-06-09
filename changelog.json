@@ -1,6 +1,7 @@
 [
     "- Added `/va eggs`",
     "- Added crosshair Y/P display",
+    "- TBD: Update toggle descriptions",
     "- TBD: Changed stray alert to toggle gold",
     "- Changed zone and npc list format",
     "- Changed egg waypoints to show in chat",

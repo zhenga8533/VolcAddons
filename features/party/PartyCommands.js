@@ -309,7 +309,7 @@ const render = register("renderOverlay", () => {
     const SCREEN_HEIGHT = Renderer.screen.getHeight();
     const imgWidth = img.getTextureWidth();
     const imgHeight = img.getTextureHeight();
-    const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT);
+    const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) / toggles.wScale;
     const width = imgWidth / ratio;
     const height = imgHeight / ratio;
     const x = Client.getMouseX() + width > SCREEN_WIDTH ? SCREEN_WIDTH - width : Client.getMouseX();
@@ -326,7 +326,7 @@ const close = register("guiClosed", () => {
     close.unregister()
 }).unregister();
 
-register("chatComponentHovered", (text) => {
+registerWhen(register("chatComponentHovered", (text) => {
     const hoverValue = text.getHoverValue().removeFormatting();
     
     if (hoverValue === imgUrl || !hoverValue.startsWith("https://i.waifu.pics")) return;
@@ -340,7 +340,7 @@ register("chatComponentHovered", (text) => {
             ChatLib.chat(`${LOGO + RED}Error: Unable to load image!`);
         }
     }, 1);
-})
+}), () => toggles.wScale !== 0);
 
 register("chat", (player, _, id, __, event) => {
     cancel(event);
