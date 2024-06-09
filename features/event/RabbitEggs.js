@@ -33,7 +33,7 @@ register("guiOpened", () => {
                 // Track duplicates
                 let dupeI = lore?.findIndex(line => line.endsWith("§7duplicate Rabbits."));
                 if (dupeI !== -1) {
-                    let dupes = unformatNumber(lore[dupeI - 1].removeFormatting().split(' ')[2].split('/')[0]);
+                    let dupes = unformatNumber(lore[dupeI - 1]?.removeFormatting()?.split(' ')?.[2]?.split('/')?.[0]);
                     if (dupes !== 0) data.eggs.dupe = dupes;
                 }
 
