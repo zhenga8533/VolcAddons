@@ -2,7 +2,7 @@ import axios from "../../../axios";
 import party from "../../utils/Party";
 import Settings from "../../utils/Settings";
 import Toggles from "../../utils/Toggles";
-import { AQUA, DARK_AQUA, DARK_GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
+import { AQUA, DARK_AQUA, DARK_GRAY, DARK_RED, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/ThreadTils";
@@ -19,6 +19,20 @@ const RPS = ["rock", "paper", "scissors"];
 const QUOTES = JSON.parse(FileLib.read("VolcAddons", "json/quotes.json"));
 const W = ["waifu", "neko", "shinobu", "megumin", "bully", "cuddle", "cry", "hug", "awoo", "kiss", "lick", "pat", "smug", "bonk", "yeet", 
     "blush", "smile", "wave", "highfive", "handhold", "nom", "bite", "glomp", "slap", "kill", "kick", "happy", "wink", "poke", "dance", "cringe"];
+
+register("command", (send, id, randID, command) => {
+    if (send !== "false") ChatLib.command(`${send} va-${id}-${command === "nsfw" ? "nw" : "w"} ${randID}`);
+    else {
+        const link = `https://i.waifu.pics/${id.replace('@', '.')}`;
+        new Message(
+            new TextComponent(LOGO + link).setHoverValue(link),
+            new TextComponent(` ${DARK_GRAY}[BOOP]`)
+                .setClickAction("run_command")
+                .setClickValue(`/va w ${command}`)
+                .setHoverValue(`${YELLOW}Click to regenerate image.`)
+        ).chat();
+    }
+}).setName("sendWaifu")
 
 /**
  * Various party and leader commands.
@@ -110,19 +124,20 @@ export function executeCommand(name, args, sendTo) {
             
             const arg = W.includes(args[1]) ? args[1] :
                 category === 1 ? W[Math.floor(Math.random() * (W.length - 1))] : W[category - 2];
-            axios.get(`https://api.waifu.pics/sfw/${arg}`).then(w => {
+            const nsfw = args[1] === "nsfw";
+            const link = nsfw ? `https://api.waifu.pics/nsfw/waifu` : `https://api.waifu.pics/sfw/${arg}`;
+            if (nsfw && !Toggles.r18) return;
+
+            axios.get(link).then(w => {
                 const waifu = w.data.url.split('/')[3].replace('.', '@');
-                if (sendTo !== false) ChatLib.command(`${sendTo} va-${waifu}-w ${randID}`);
-                else {
-                    const link = `https://i.waifu.pics/${waifu.replace('@', '.')}`;
-                    new Message(
-                        new TextComponent(LOGO + link).setHoverValue(link),
-                        new TextComponent(` ${DARK_GRAY}[BOOP]`)
-                            .setClickAction("run_command")
-                            .setClickValue(`/va w ${args[1]}`)
-                            .setHoverValue(`${YELLOW}Click to regenerate image.`)
-                    ).chat();
-                }
+
+                if (nsfw) {
+                    new TextComponent(`${LOGO + RED}Click to send NSFW image.`)
+                        .setClickAction("run_command")
+                        .setClickValue(`/sendWaifu ${sendTo} ${waifu} ${randID} ${args[1]}`)
+                        .setHoverValue(`${DARK_RED}WARNING: NSFW content!\nContinue at your own risk.`)
+                        .chat();
+                } else ChatLib.command(`sendWaifu ${sendTo} ${waifu} ${randID} ${args[1]}`, true);
             });
             break;
         case "coords":
@@ -166,15 +181,6 @@ export function executeCommand(name, args, sendTo) {
             ChatLib.command(`${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, xyz, help> ${randID}`);
             if (party.getLeader() && Settings.leaderCommands)
                 delay(() => ChatLib.command(`${sendTo} Leader Commands: ?<warp, transfer, promote, demote, allinv, stream> ${randID}`), 690);
-            break;
-        default:
-            // Check for unique ?w commands
-            const wIndex = W.indexOf(command)
-            if (Toggles.womenCommand === 0 || wIndex === -1) return;
-
-            if (sendTo !== false) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
-            // Randomize end to avoid duplicate message ^
-            sendWaifu(wIndex + 2);
             break;
     } }, 690);
     
@@ -347,3 +353,10 @@ register("chat", (player, _, id, __, event) => {
     const link = `https://i.waifu.pics/${id.replace('@', '.')}`;
     new TextComponent(`&${player}&f: ${link}`).setHoverValue(link).chat();
 }).setCriteria("&${player}:${space}va-${id}-w${end}");
+
+register("chat", (player, _, id, __, event) => {
+    cancel(event);
+    if (!Toggles.r18) return;
+    const link = `https://i.waifu.pics/${id.replace('@', '.')}`;
+    new TextComponent(`&${player}&f: ${link}`).setHoverValue(link).chat();
+}).setCriteria("&${player}:${space}va-${id}-nw${end}");

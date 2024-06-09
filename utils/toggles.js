@@ -293,6 +293,14 @@ class Settings {
         subcategory: "Party Commands",
     })
     wScale = 1;
+    @CheckboxProperty({
+        name: "R18",
+        description: "Controls if NSFW content is rendered.",
+        category: "Party Commands",
+        subcategory: "Party Commands",
+        hidden: !FileLib.read("./VolcAddons/Data", "contract.txt")?.split("\n")?.[51]?.includes(Player.getName()) ?? false
+    })
+    r18 = false;
 
     // --- KUUDRA ALERTS ---
     
