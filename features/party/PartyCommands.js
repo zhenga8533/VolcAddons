@@ -2,7 +2,7 @@ import axios from "../../../axios";
 import party from "../../utils/Party";
 import Settings from "../../utils/Settings";
 import toggles from "../../utils/Toggles";
-import { AQUA, DARK_AQUA, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
+import { AQUA, DARK_AQUA, DARK_GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
 import { delay } from "../../utils/ThreadTils";
@@ -113,7 +113,16 @@ export function executeCommand(name, args, sendTo) {
             axios.get(`https://api.waifu.pics/sfw/${arg}`).then(w => {
                 const waifu = w.data.url.split('/')[3].replace('.', '@');
                 if (sendTo !== false) ChatLib.command(`${sendTo} va-${waifu}-w ${randID}`);
-                else ChatLib.command(`msg ${Player.getName()} va-${waifu}-w`);
+                else {
+                    const link = `https://i.waifu.pics/${waifu.replace('@', '.')}`;
+                    new Message(
+                        new TextComponent(LOGO + link).setHoverValue(link),
+                        new TextComponent(` ${DARK_GRAY}[BOOP]`)
+                            .setClickAction("run_command")
+                            .setClickValue(`/va w ${args[1]}`)
+                            .setHoverValue(`${YELLOW}Click to regenerate image.`)
+                    ).chat();
+                }
             });
             break;
         case "coords":
