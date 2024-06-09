@@ -296,10 +296,12 @@ export function updateEggs(command, page) {
     }
 
     switch (command) {
+        case "all":
         case "show":
             // Show all waypoints
             eggPoints.clear();
             base.forEach(wp => eggPoints.push([wp[0], ...wp.slice(2)]));
+            ChatLib.chat(`${LOGO + GREEN}Showing all egg waypoints.`);
             break;
         case "unique":
             // Show all unique waypoints
@@ -311,12 +313,13 @@ export function updateEggs(command, page) {
                     eggPoints.push([wp[0], ...wp.slice(2)]);
             });
             updateUniques = true;
+            ChatLib.chat(`${LOGO + GREEN}Showing all missing unique eggs.`);
             break;
         case "clear":
             // Clear all waypoints
             eggPoints.clear();
-            ChatLib.chat(`${LOGO + GREEN}Cleared egg waypoints.`);
             updateUniques = false;
+            ChatLib.chat(`${LOGO + GREEN}Cleared egg waypoints.`);
             break;
         case "list":
             // List all waypoints
