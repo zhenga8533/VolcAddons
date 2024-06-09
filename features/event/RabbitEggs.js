@@ -256,8 +256,10 @@ const strayDetect = register("step", () => {
         if (i === 13) continue;
 
         let item = items[i];
-        if (item.getRegistryName() !== "minecraft:stained_glass_pane")
+        if (item.getRegistryName() !== "minecraft:stained_glass_pane") {
+            ChatLib.chat(item.getName());
             playSound(AMOGUS, 10_000);
+        }
     }
 }).setDelay(1).unregister();
 
@@ -272,7 +274,7 @@ registerWhen(register("guiOpened", () => {
         strayClose.register();
         strayDetect.register();
     })
-}), () => Settings.strayAlarm);
+}), () => Settings.strayAlert !== 0);
 
 
 /**

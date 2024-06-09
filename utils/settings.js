@@ -944,13 +944,14 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
     })
     rabbitHighlight = 0;
 
-    @SwitchProperty({
-        name: "Stray Alarm",
+    @SelectorProperty({
+        name: "Stray Alert",
         description: `Calls an emergency meeting whenever a stray rabbit appears.`,
         category: "Event",
-        subcategory: "Chocolate Factory"
+        subcategory: "Chocolate Factory",
+        options: ["OFF", "All", "Gold"]
     })
-    strayAlarm = false;
+    strayAlert = 0;
     
     // --- Diana ---
     @SwitchProperty({
