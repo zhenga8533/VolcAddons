@@ -129,17 +129,17 @@ function getHelp() {
 `\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}
 
 ${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}
-${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, Toggles, version, help${GRAY}>
-${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>
-${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}lists, cd, wl, bl, el, vl, dl, sl, il, pl, wgl${GRAY}>
-${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute, nw${GRAY}>
-${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}splits, be${GRAY}>
-${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>
+ ${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>
+ ${AQUA + BOLD}Container: ${WHITE}/va ${GRAY}<${WHITE}button, preview, slot${GRAY}>
+ ${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}wp, fairy, enigma, egg, npc, zone, cat${GRAY}>
+ ${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute, nw${GRAY}>
+ ${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}dev, lists, splits${GRAY}>
+ ${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>
     
 ${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}
-${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch${GRAY}>
-${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>
-${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va Toggles'`);
+ ${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch, xyz${GRAY}>
+ ${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>
+ ${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
 }
 
 // `viewrecipe` GUI Button
@@ -220,7 +220,8 @@ ${DARK_GRAY}- ${GOLD + BOLD}dl: ${YELLOW}diana-list
 ${DARK_GRAY}- ${GOLD + BOLD}sl: ${YELLOW}spam-list
 ${DARK_GRAY}- ${GOLD + BOLD}il: ${YELLOW}ignore-list
 ${DARK_GRAY}- ${GOLD + BOLD}wgl: ${YELLOW}widget-list
-${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
+${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list
+${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`);
             break;
         // Update
         case "update":

@@ -29,6 +29,7 @@ subtitle: List of every non-gui related commands.
     - `/va rabbits`: Shows locked rabbits.
 - **Waypoints**
     - `/va cat`: Controls Montezuma Soul Piece waypoints.
+    - `/va eggs`: Controls chocolate egg waypoints.
     - `/va enigma`: Controls Enigma Soul waypoints.
     - `/va fairy`: Controls Fairy Soul waypoints.
     - `/va npc`: Creates waypoints to user inputted NPCs.

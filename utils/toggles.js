@@ -288,7 +288,7 @@ class Settings {
     womenCommand = 0;
     @PercentSliderProperty({
         name: "W Scale",
-        description: `Set the scale of the rendered images or as 0 to turn ${RED}OFF${GRAY}. If this does not work, please try: https://github.com/ChatTriggers/ChatTriggers/wiki/Fixing-broken-imports.`,
+        description: `Set the scale of the rendered images or as 0 to turn ${RED}OFF${GRAY}.`,
         category: "Party Commands",
         subcategory: "Party Commands",
     })
