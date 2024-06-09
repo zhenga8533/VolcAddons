@@ -52,7 +52,7 @@ register("guiOpened", () => {
  * @param {Number} page - The page number to display.
  */
 export function printRabbits(page, backup) {
-    printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page, 6);
+    printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page, 6, false);
     if (Object.keys(missingRabbits).length === 30)
         ChatLib.chat(`${DARK_GRAY}Remember to go through rabbits menu to initialize tracking!`);
 }
@@ -337,7 +337,7 @@ export function updateEggs(command, page) {
 
             const formatted = unique.map(wp => `${GOLD + wp[0]} ${RED}✘\n    ${YELLOW + wp.slice(2).join(', ')} ${GRAY}(${wp[1]})`)
                 .concat(dupe.map(wp => `${GOLD + wp[0]} ${GREEN}✔\n    ${YELLOW + wp.slice(2).join(', ')} ${GRAY}(${wp[1]})`));
-            printList(formatted, "eggs", page, 6);
+            printList(formatted, "eggs", page, 6, false);
             break;
         case "help":
         default:

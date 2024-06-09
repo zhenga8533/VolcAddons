@@ -17,7 +17,7 @@ import { data } from "./Data";
  * @param {Number} page - The page number to display.
  * @param {Number} pagy - Number of items per page.
  */
-export function printList(list, listName, page, pagy=12) {
+export function printList(list, listName, page, pagy=12, action=true, command="remove") {
     if (isNaN(page)) page = 1;
 
     ChatLib.clearChat(5858);
@@ -50,24 +50,28 @@ export function printList(list, listName, page, pagy=12) {
     if (length === 0) message.addTextComponent(`\n` + ChatLib.getCenteredText(YELLOW + "  404, This list is empty!"));
     else if (isArray) {
         for (let i = pageIndex; i < Math.min(pageIndex + pagy, length); i++) {
-            message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
-            message.addTextComponent(new TextComponent(`${YELLOW + list[i]}`)
-                .setClickAction("run_command")
-                .setClickValue(`/va ${listName} remove ${list[i]}`)
-                .setHoverValue(`${YELLOW}Click to remove ${AQUA + list[i] + YELLOW} from list.`)
-            );
+            if (action) {
+                message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
+                message.addTextComponent(new TextComponent(`${YELLOW + list[i]}`)
+                    .setClickAction("run_command")
+                    .setClickValue(`/va ${listName} ${command} ${list[i]}`)
+                    .setHoverValue(`${YELLOW}Click to ${command} ${AQUA + list[i] + YELLOW} from list.`)
+                );
+            } else message.addTextComponent(`\n ${DARK_GRAY}⁍ ${YELLOW + list[i]}`);
         }
     } else {
         const keys = Object.keys(list);
         for (let i = pageIndex; i < Math.min(pageIndex + pagy, length); i++) {
             let key = keys[i];
-            message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
-            message.addTextComponent(new TextComponent(`${YELLOW + key}`)
-                .setClickAction("run_command")
-                .setClickValue(`/va ${listName} remove ${key}`)
-                .setHoverValue(`${YELLOW}Click to remove ${YELLOW + key + YELLOW} from list.`)
-            );
-            message.addTextComponent(new TextComponent(`${GRAY} => ${YELLOW + list[key]}`));
+            if (action) {
+                message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
+                message.addTextComponent(new TextComponent(`${YELLOW + key}`)
+                    .setClickAction("run_command")
+                    .setClickValue(`/va ${listName} remove ${key}`)
+                    .setHoverValue(`${YELLOW}Click to remove ${YELLOW + key + YELLOW} from list.`)
+                );
+                message.addTextComponent(new TextComponent(`${GRAY} => ${YELLOW + list[key]}`));
+            } else message.addTextComponent(`\n ${DARK_GRAY}⁍ ${YELLOW + key + GRAY} => ${YELLOW + list[key]}`);
         }
     }
 
