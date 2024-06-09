@@ -1,7 +1,7 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
-import { AMOGUS, BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, LOGO, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
+import { AMOGUS, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatTime } from "../../utils/functions/format";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
@@ -269,3 +269,79 @@ registerWhen(register("guiOpened", () => {
         strayDetect.register();
     })
 }), () => Settings.strayAlarm);
+
+
+/**
+ * Egg waypoints.
+ */
+const EGGPOINTS = new Json("eggs.json", false, false).getData();
+const eggPoints = new Waypoint([1, 1, 0], 1);  // Yellow Eggs
+
+/**
+ * Update Skyblock Waypoints.
+ * 
+ * @param {String} command - add, clear, list, help.
+ * @param {String} name - Name of the NPC or Zone.
+ */
+export function updateEggs(command, page) {
+    const world = location.getWorld();
+    const base = EGGPOINTS[world];
+    if (base === undefined) {
+        ChatLib.chat(`${LOGO + RED}Error: No eggs found in ${world}.`);
+        return;
+    }
+
+    switch (command) {
+        case "show":
+            // Show all waypoints
+            eggPoints.clear();
+            base.forEach(wp => eggPoints.push(wp));
+            break;
+        case "unique":
+            // Show all unique waypoints
+            eggPoints.clear();
+            base.forEach(wp => {
+                const x = parseInt(wp[2]);
+                const z = parseInt(wp[4]);
+                if (!data.eggs.found[world]?.hasOwnProperty(`${x + (x < 0)}.5,${z + (z < 0)}.5`))
+                    eggPoints.push(wp);
+            });
+            break;
+        case "clear":
+            // Clear all waypoints
+            eggPoints.clear();
+            ChatLib.chat(`${LOGO + GREEN}Cleared egg waypoints.`);
+            break;
+        case "list":
+            // List all waypoints
+            const found = data.eggs.found[world];
+            const unique = base.filter(wp => {
+                const x = parseInt(wp[2]);
+                const z = parseInt(wp[4]);
+                return !found.hasOwnProperty(`${x + (x < 0)}.5,${z + (z < 0)}.5`);
+            });
+            const dupe = base.filter(wp => {
+                const x = parseInt(wp[2]);
+                const z = parseInt(wp[4]);
+                return found.hasOwnProperty(`${x + (x < 0)}.5,${z + (z < 0)}.5`);
+            });
+
+            const formatted = unique.map(wp => `${GOLD + wp[0]} ${RED}✘\n    ${YELLOW + wp.slice(2).join(', ')} ${GRAY}(${wp[1]})`)
+                .concat(dupe.map(wp => `${GOLD + wp[0]} ${GREEN}✔\n    ${YELLOW + wp.slice(2).join(', ')} ${GRAY}(${wp[1]})`));
+            printList(formatted, "eggs", page, 6);
+            break;
+        case "help":
+        default:
+            if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+            ChatLib.chat(
+`${LOGO + GOLD + BOLD}Waypoint Commands:
+ ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va [npc, zone] <command>
+
+ ${DARK_GRAY}- ${GOLD}show: ${YELLOW}Show all waypoints.
+ ${DARK_GRAY}- ${GOLD}unique: ${YELLOW}Show all missing unique eggs.
+ ${DARK_GRAY}- ${GOLD}clear: ${YELLOW}Delete all waypoints.
+ ${DARK_GRAY}- ${GOLD}list: ${YELLOW}List all valid keys.
+ ${DARK_GRAY}- ${GOLD}help: ${YELLOW}Displays this help message.`);
+            break;
+    }
+}

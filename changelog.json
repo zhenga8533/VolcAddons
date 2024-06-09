@@ -1,5 +1,7 @@
 [
+    "- Added `/va eggs`",
     "- Added crosshair Y/P display",
+    "- TBD: Changed zone and npc list format",
     "- Changed egg waypoints to show in chat",
     "- Changed party commands to work in AC",
     "- Changed rand IDs to be parsed out",

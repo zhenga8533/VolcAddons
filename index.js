@@ -97,7 +97,7 @@ import "./features/event/ChocolateFactory";
 import "./features/event/GreatSpook";
 import "./features/event/InquisitorDetect";
 import "./features/event/MythRitual";
-import { printRabbits } from "./features/event/RabbitEggs";
+import { printRabbits, updateEggs } from "./features/event/RabbitEggs";
 // Crimson Isle Features
 import "./features/crimsonIsle/GoldenFishTimer";
 import "./features/crimsonIsle/MythicDetect";
@@ -405,6 +405,10 @@ ${DARK_GRAY}- ${GOLD + BOLD}pl: ${YELLOW}prefix-list`);
         case "mont":
         case "cat":
             updateCat(args[1], args[2]);
+            break;
+        // Configure egg waypoints
+        case "egg":
+            updateEggs(args[1], args[2]);
             break;
         // Party Commands and Else Case
         default:
