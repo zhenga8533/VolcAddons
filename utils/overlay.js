@@ -14,6 +14,8 @@ const gui = new Gui();
 const BORDER_COLOR = Renderer.color(128, 128, 128, 128);
 const RECT_COLOR = Renderer.color(0, 0, 0, 128);
 const EDIT_COLOR = Renderer.color(64, 64, 64, 128);
+const BOX_HIGHLIGHT = Renderer.color(0, 255, 255, 64);
+const BORDER_HIGHLIGHT = Renderer.color(0, 255, 255, 255);
 
 let overlays = [];
 let overlaid = [];
@@ -26,6 +28,11 @@ let guiView = 0;
 const moving = register("renderOverlay", () => {
     if (!Settings.vaToggle) return;
 
+    // Hover detection
+    let hovered = false;
+    const mouseX = Client.getMouseX();
+    const mouseY = Client.getMouseY();
+
     overlays.forEach(o => {
         if (!Settings[o.setting]) return;
 
@@ -33,11 +40,15 @@ const moving = register("renderOverlay", () => {
         const scale = o.loc[2];
         const x = o.loc[0] - (o.loc[3] ? o.ewidth : 0);
         const y = o.loc[1];
+        const highlight = !hovered && 
+            mouseX > x - 3 * scale && mouseX < x + o.ewidth + 3 * scale && 
+            mouseY > y - 3 * scale && mouseY < y + o.eheight + 3 * scale;
+        if (highlight) hovered = true;
 
         drawBox(
             x - 3 * scale, y - 3 * scale, 0, 
             o.ewidth + 5 * scale, o.eheight + 5 * scale, 
-            o.loc[5] ? RECT_COLOR : EDIT_COLOR, BORDER_COLOR
+            highlight ? BOX_HIGHLIGHT : o.loc[5] ? RECT_COLOR : EDIT_COLOR, highlight ? BORDER_HIGHLIGHT : BORDER_COLOR
         );
         renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 0);
     });
