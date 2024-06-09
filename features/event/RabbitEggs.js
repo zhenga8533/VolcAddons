@@ -275,7 +275,7 @@ registerWhen(register("guiOpened", () => {
  * Egg waypoints.
  */
 const EGGPOINTS = new Json("eggs.json", false, false).getData();
-const eggPoints = new Waypoint([1, 1, 0], 1);  // Yellow Eggs
+const eggPoints = new Waypoint([1, 1, 0]);  // Yellow Eggs
 
 /**
  * Update Skyblock Waypoints.
@@ -295,7 +295,7 @@ export function updateEggs(command, page) {
         case "show":
             // Show all waypoints
             eggPoints.clear();
-            base.forEach(wp => eggPoints.push(wp));
+            base.forEach(wp => eggPoints.push([wp[0], ...wp.slice(2)]));
             break;
         case "unique":
             // Show all unique waypoints
@@ -304,7 +304,7 @@ export function updateEggs(command, page) {
                 const x = parseInt(wp[2]);
                 const z = parseInt(wp[4]);
                 if (!data.eggs.found[world]?.hasOwnProperty(`${x + (x < 0)}.5,${z + (z < 0)}.5`))
-                    eggPoints.push(wp);
+                    eggPoints.push([wp[0], ...wp.slice(2)]);
             });
             break;
         case "clear":
