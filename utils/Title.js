@@ -13,12 +13,7 @@ let prio = 0;
  * @param {Number} priority - Higher number means higher priority.
  */
 export function setTitle(title, subtitle, fadeIn, time, fadeOut, priority=5) {
-    if (fadeIn > 0) {
-        if (priority >= prio) Client.showTitle(title, subtitle, fadeIn, time, fadeOut);
-        return;
-    }
-
-    const ticks = fadeIn + time;
+    const ticks = fadeIn + time + fadeOut;
     titles[title] = {
         "subtitle": subtitle,
         "fadeIn": fadeIn,
@@ -28,7 +23,7 @@ export function setTitle(title, subtitle, fadeIn, time, fadeOut, priority=5) {
         "priority": priority
     }
 
-    if (priority > prio) {
+    if (priority >= prio) {
         Client.showTitle(title, subtitle, fadeIn, time, fadeOut);
         current = title;
         prio = priority;
@@ -44,6 +39,7 @@ register("tick", () => {
     // Find highest priority title
     if (Object.keys(titles).length === 0) {
         current = "";
+        prio = 0;
         return;
     } else if (current === "" || !titles.hasOwnProperty(current)) {
         current = Object.keys(titles).reduce((a, b) => {
@@ -63,4 +59,4 @@ register("tick", () => {
 register("renderTitle", (title, _, event) => {
     if (current !== "" && title !== current)
         cancel(event);
-});
+}).setPriority(Priority.LOWEST);
