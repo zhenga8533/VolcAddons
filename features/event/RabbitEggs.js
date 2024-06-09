@@ -2,7 +2,7 @@ import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
 import { AMOGUS, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
-import { convertToTitleCase, formatTime } from "../../utils/functions/format";
+import { convertToTitleCase, formatTime, unformatNumber } from "../../utils/functions/format";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -29,6 +29,13 @@ register("guiOpened", () => {
                 let lore = item?.getLore();
                 let index = lore?.findIndex(line => line.includes('Requirement'));
                 if (index === -1) continue;
+
+                // Track duplicates
+                let dupeI = lore?.findIndex(line => line.endsWith("§7duplicate Rabbits."));
+                if (dupeI !== -1) {
+                    let dupes = unformatNumber(lore[dupeI - 1].removeFormatting().split(' ')[2].split('/')[0]);
+                    if (dupes !== 0) data.eggs.dupe = dupes;
+                }
 
                 // Get rabbit data
                 let complete = !lore[index].startsWith("§5§o§c✖");
