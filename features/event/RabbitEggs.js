@@ -1,7 +1,7 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
-import { AMOGUS, BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
+import { AMOGUS, BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, LOGO, RED, STAND_CLASS, WHITE, YELLOW } from "../../utils/Constants";
 import { convertToTitleCase, formatTime } from "../../utils/functions/format";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
@@ -164,6 +164,7 @@ registerWhen(register("step", () => {
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
     eggWaypoints.clear();
     newWaypoints.clear();
+    const eggOld = [...eggLocs];
     eggLocs.length = 0;
 
     stands.forEach(stand => {
@@ -177,11 +178,17 @@ registerWhen(register("step", () => {
 
         // Add waypoint
         const wp = [EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()];
-        eggLocs.push(wp.slice(1));
+        const coords = wp.slice(1);
+        eggLocs.push(coords);
         if (data.eggs.found[location.getWorld()]?.hasOwnProperty(`${stand.getX()},${stand.getZ()}`))
             eggWaypoints.push(wp);
         else
             newWaypoints.push(wp);
+    
+        // Announce egg if new
+        const coordsStr = coords.toString();
+        if (eggOld.find(egg => coordsStr === egg.toString()) === undefined)
+            ChatLib.chat(`${LOGO + YELLOW}Found a ${EGGS[id]} Egg: ${coords.map(c => Math.round(c)).join(', ')}!`);
     });
 }).setFps(1), () => Settings.chocoWaypoints);
 

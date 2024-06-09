@@ -1,5 +1,6 @@
 [
     "- Added crosshair Y/P display",
+    "- Changed egg waypoints to show in chat",
     "- Changed party commands to work in AC",
     "- Changed rand IDs to be parsed out",
     "- Changed span of pt alerts",
