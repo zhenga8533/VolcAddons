@@ -14,8 +14,10 @@ const gui = new Gui();
 const BORDER_COLOR = Renderer.color(128, 128, 128, 128);
 const RECT_COLOR = Renderer.color(0, 0, 0, 128);
 const EDIT_COLOR = Renderer.color(64, 64, 64, 128);
-const BOX_HIGHLIGHT = Renderer.color(0, 255, 255, 64);
-const BORDER_HIGHLIGHT = Renderer.color(0, 255, 255, 255);
+const HOVER_BOX = Renderer.color(0, 255, 255, 64);
+const HOVER_BORDER = Renderer.color(0, 255, 255, 255);
+const EDIT_BOX = Renderer.color(255, 255, 0, 64);
+const EDIT_BORDER = Renderer.color(255, 255, 0, 255);
 
 let overlays = [];
 let overlaid = [];
@@ -38,6 +40,7 @@ const moving = register("renderOverlay", () => {
 
         // Draw example text and box
         const scale = o.loc[2];
+        const editing = o === currentOverlay;
         const x = o.loc[0] - (o.loc[3] ? o.ewidth : 0);
         const y = o.loc[1];
         const highlight = !hovered && 
@@ -48,7 +51,8 @@ const moving = register("renderOverlay", () => {
         drawBox(
             x - 3 * scale, y - 3 * scale, 0, 
             o.ewidth + 5 * scale, o.eheight + 5 * scale, 
-            highlight ? BOX_HIGHLIGHT : o.loc[5] ? RECT_COLOR : EDIT_COLOR, highlight ? BORDER_HIGHLIGHT : BORDER_COLOR
+            editing ? EDIT_BOX : highlight ? HOVER_BOX : o.loc[5] ? RECT_COLOR : EDIT_COLOR, 
+            editing ? EDIT_BORDER : highlight ? HOVER_BORDER : BORDER_COLOR
         );
         renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 0);
     });
