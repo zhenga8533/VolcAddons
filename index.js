@@ -11,7 +11,7 @@ register("command", () => {
 import "./utils/Launch";
 import "./utils/DevTils";
 import Settings from "./utils/Settings";
-import toggles from "./utils/Toggles";
+import Toggles from "./utils/Toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, RESET, UNDERLINE, WHITE, YELLOW } from "./utils/Constants";
 import { data, resetGUI } from "./utils/Data";
 import { updateList } from "./utils/ListTils";
@@ -129,7 +129,7 @@ function getHelp() {
 `\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}
 
 ${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}
-${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>
+${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, Toggles, version, help${GRAY}>
 ${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}waypoint, enigma, npc, zone, cat${GRAY}>
 ${AQUA + BOLD}Lists: ${WHITE}/va ${GRAY}<${WHITE}lists, cd, wl, bl, el, vl, dl, sl, il, pl, wgl${GRAY}>
 ${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute, nw${GRAY}>
@@ -139,7 +139,7 @@ ${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>
 ${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}
 ${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch${GRAY}>
 ${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>
-${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`);
+${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va Toggles'`);
 }
 
 // `viewrecipe` GUI Button
@@ -197,7 +197,7 @@ register ("command", (...args) => {
             break;
         case "toggle":
         case "control":
-            toggles.openGUI();
+            Toggles.openGUI();
             break;
         case "dev":
             data.devMode = !data.devMode;

@@ -1,7 +1,7 @@
 import axios from "../../../axios";
 import party from "../../utils/Party";
 import Settings from "../../utils/Settings";
-import toggles from "../../utils/Toggles";
+import Toggles from "../../utils/Toggles";
 import { AQUA, DARK_AQUA, DARK_GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
 import { registerWhen } from "../../utils/RegisterTils";
@@ -41,7 +41,7 @@ export function executeCommand(name, args, sendTo) {
         case "femboy":
         case "trans":
         case "transphobic":
-            if (!toggles.slanderCommand) return;
+            if (!Toggles.slanderCommand) return;
 
             const slandering = args[1] ?? name;
             const percentage = Math.floor(Math.random() * 100) + 1;
@@ -50,7 +50,7 @@ export function executeCommand(name, args, sendTo) {
             break;
         case "dice": // Dice roll
         case "roll":
-            if (!toggles.diceCommand) return;
+            if (!Toggles.diceCommand) return;
 
             const roll = Math.floor(Math.random() * 6) + 1;
             if (sendTo !== false) ChatLib.command(`${sendTo} ${name} rolled a ${roll}! ${randID}`);
@@ -60,20 +60,20 @@ export function executeCommand(name, args, sendTo) {
         case "flip":
         case "coinflip":
         case "cf":
-            if (!toggles.coinCommand) return;
+            if (!Toggles.coinCommand) return;
 
             const flip = Math.floor(Math.random() * 2) ? "heads" : "tails";
             if (sendTo !== false) ChatLib.command(`${sendTo} ${name} flipped ${flip}! ${randID}`);
             else ChatLib.chat(`${LOGO + DARK_AQUA}You flipped ${WHITE + flip + DARK_AQUA}!`);
             break;
         case "8ball": // 8ball
-            if (!toggles.ballCommand) return;
+            if (!Toggles.ballCommand) return;
 
             if (sendTo !== false) ChatLib.command(`${sendTo} ${RESPONSES[Math.floor(Math.random() * 20) + 1]}. ${randID}`);
             else ChatLib.chat(`${LOGO + DARK_AQUA + RESPONSES[Math.floor(Math.random() * 20) + 1]}.`)
             break;
         case "rps": // Rock Paper Siccors
-            if (!toggles.rpsCommand) return;
+            if (!Toggles.rpsCommand) return;
 
             const player = args[1] === undefined ? -1 : RPS.indexOf(args[1].toLowerCase());
             let reply = player === -1 ? `なんと、 ${args[1]}?` : "zzz...";
@@ -105,7 +105,7 @@ export function executeCommand(name, args, sendTo) {
         case "waifu":
         case "women":
         case "w":
-            const category = toggles.womenCommand;
+            const category = Toggles.womenCommand;
             if (category === 0) return;
             
             const arg = W.includes(args[1]) ? args[1] :
@@ -128,40 +128,40 @@ export function executeCommand(name, args, sendTo) {
         case "coords":
         case "waypoint":
         case "xyz":
-            if (!toggles.coordsCommand || Player.getName() === name) return;
+            if (!Toggles.coordsCommand || Player.getName() === name) return;
 
             if (sendTo !== false) ChatLib.command(`${sendTo} x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`);
             else ChatLib.command(`r x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
             break;
         case "fps":
-            if (!toggles.statusCommand) return;
+            if (!Toggles.statusCommand) return;
 
             if (sendTo !== false) ChatLib.command(`${sendTo} ${Client.getFPS()}fps`);
             break;
         case "ping":
-            if (!toggles.statusCommand) return;
+            if (!Toggles.statusCommand) return;
 
             if (sendTo !== false) ChatLib.command(`${sendTo} ${getPing()}ms`);
             break;
         case "tps":
-            if (!toggles.statusCommand) return;
+            if (!Toggles.statusCommand) return;
 
             if (sendTo !== false) ChatLib.command(`${sendTo} ${getTPS().toFixed(2)}tps`);
             break;
         case "limbo":
         case "lobby":
         case "l":
-            if (!toggles.limboCommand || party.getLeader() || Player.getName() === name) return;
+            if (!Toggles.limboCommand || party.getLeader() || Player.getName() === name) return;
 
             ChatLib.command("l");
             break;
         case "leave":
-            if (!toggles.limboCommand || party.getLeader() || Player.getName() === name) return;
+            if (!Toggles.limboCommand || party.getLeader() || Player.getName() === name) return;
 
             ChatLib.command("p leave");
             break;
         case "help":
-            if (!toggles.helpCommand || !sendTo) return;
+            if (!Toggles.helpCommand || !sendTo) return;
 
             ChatLib.command(`${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, xyz, help> ${randID}`);
             if (party.getLeader() && Settings.leaderCommands)
@@ -170,7 +170,7 @@ export function executeCommand(name, args, sendTo) {
         default:
             // Check for unique ?w commands
             const wIndex = W.indexOf(command)
-            if (toggles.womenCommand === 0 || wIndex === -1) return;
+            if (Toggles.womenCommand === 0 || wIndex === -1) return;
 
             if (sendTo !== false) ChatLib.command(`${sendTo} ${imgur} ${randID}-vaw`);
             // Randomize end to avoid duplicate message ^
@@ -182,42 +182,42 @@ export function executeCommand(name, args, sendTo) {
     if (!sendTo || (sendTo === "pc" && party.getLeader() && Settings.leaderCommands && Player.getName() !== name)) {
         switch (command) {
             case "mute":
-                if (!toggles.warpCommand) return;
+                if (!Toggles.warpCommand) return;
                 ChatLib.command("p mute");
                 break;
             case "warp":
-                if (!toggles.warpCommand) return;
+                if (!Toggles.warpCommand) return;
                 ChatLib.command("p warp");
                 break;
             case "transfer":
             case "ptme":
             case "pt":
             case "pm":
-                if (!toggles.transferCommand) return;
+                if (!Toggles.transferCommand) return;
                 ChatLib.command("p transfer " + name);
                 break;
             case "promote":
-                if (!toggles.promoteCommand) return;
+                if (!Toggles.promoteCommand) return;
                 ChatLib.command("p promote " + name);
                 break;
             case "demote":
-                if (!toggles.demoteCommand) return;
+                if (!Toggles.demoteCommand) return;
                 ChatLib.command("p demote " + name);
                 break;
             case "allinvite":
             case "allinv":
-                if (!toggles.allinvCommand) return;
+                if (!Toggles.allinvCommand) return;
                 ChatLib.command("p settings allinvite");
                 break;
             case "streamopen":
             case "stream":
-                if (!toggles.streamCommand) return;
+                if (!Toggles.streamCommand) return;
 
                 num = isNaN(args[1]) ? 10 : args[1];
                 ChatLib.command(`stream open ${args[1]}`);
                 break;
             default:  // Join instance commands
-                if (toggles.instanceCommand == false) return;
+                if (Toggles.instanceCommand == false) return;
                 const floors = {
                     1: "one",
                     2: "two",
@@ -246,7 +246,7 @@ export function executeCommand(name, args, sendTo) {
     }
     
     // MODERATOR COMMANDS
-    if (Settings.leaderCommands && toggles.inviteCommand && (command === "inv" || command === "invite")) {
+    if (Settings.leaderCommands && Toggles.inviteCommand && (command === "inv" || command === "invite")) {
         if (data.whitelist.includes(name.toLowerCase())) ChatLib.command(`p ${name}`);
         else ChatLib.command(`r You are not in the whitelist! ${randID}`);
     }
@@ -276,19 +276,19 @@ data.prefixlist.forEach(prefix => {
     registerWhen(register("chat", (player, _, message) => {
         if (onCD) return;
         executeCommand(getPlayerName(player), message.split(" "), "ac");
-    }).setCriteria(`&r${playerRegex + colorRegex}: ${prefix + messageRegex}&r`), () => Settings.partyCommands && toggles.allCommands);
+    }).setCriteria(`&r${playerRegex + colorRegex}: ${prefix + messageRegex}&r`), () => Settings.partyCommands && Toggles.allCommands);
     registerWhen(register("chat", (player, message) => {
         if (onCD) return;
         executeCommand(getPlayerName(player), message.split(" "), "pc");
-    }).setCriteria(`Party > ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && toggles.partyCommands);
+    }).setCriteria(`Party > ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && Toggles.partyCommands);
     registerWhen(register("chat", (player, message) => {
         if (onCD) return;
         executeCommand(getGuildName(player), message.split(" "), "gc");
-    }).setCriteria(`Guild > ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && toggles.guildCommands);
+    }).setCriteria(`Guild > ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && Toggles.guildCommands);
     registerWhen(register("chat", (player, message) => {
         if (onCD) return;
         executeCommand(getPlayerName(player), message.split(" "), "r");
-    }).setCriteria(`From ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && toggles.dmCommands);
+    }).setCriteria(`From ${playerRegex}: ${prefix + messageRegex}`), () => Settings.partyCommands && Toggles.dmCommands);
 });
 
 
@@ -309,7 +309,7 @@ const render = register("renderOverlay", () => {
     const SCREEN_HEIGHT = Renderer.screen.getHeight();
     const imgWidth = img.getTextureWidth();
     const imgHeight = img.getTextureHeight();
-    const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) / toggles.wScale;
+    const ratio =  (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) / Toggles.wScale;
     const width = imgWidth / ratio;
     const height = imgHeight / ratio;
     const x = Client.getMouseX() + width > SCREEN_WIDTH ? SCREEN_WIDTH - width : Client.getMouseX();
@@ -340,7 +340,7 @@ registerWhen(register("chatComponentHovered", (text) => {
             ChatLib.chat(`${LOGO + RED}Error: Unable to load image!`);
         }
     }, 1);
-}), () => toggles.wScale !== 0);
+}), () => Toggles.wScale !== 0);
 
 register("chat", (player, _, id, __, event) => {
     cancel(event);

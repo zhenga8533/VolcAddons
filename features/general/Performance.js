@@ -1,6 +1,6 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
-import toggles from "../../utils/Toggles";
+import Toggles from "../../utils/Toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { Overlay } from "../../utils/Overlay";
 import { isPlayer } from "../../utils/functions/player";
@@ -69,7 +69,7 @@ function sendPingRequest() {
 };
 registerWhen(register("step", () => {
     sendPingRequest();
-}).setDelay(3), () => Settings.serverStatus || toggles.statusCommand);
+}).setDelay(3), () => Settings.serverStatus || Toggles.statusCommand);
 
 /**
  * Calculates the ping (latency) based on the difference between the current time
@@ -116,7 +116,7 @@ registerWhen(register('tick', () => {
     let statusMessage = "";
 
     // XYZ
-    if (toggles.xyzDisplay) {
+    if (Toggles.xyzDisplay) {
         const x = Math.round(Player.getX());
         const y = Math.round(Player.getY());
         const z = Math.round(Player.getZ());
@@ -124,14 +124,14 @@ registerWhen(register('tick', () => {
     }
 
     // Yaw and Pitch
-    if (toggles.angleDisplay === 1 || toggles.angleDisplay === 3) {
+    if (Toggles.angleDisplay === 1 || Toggles.angleDisplay === 3) {
         const yaw = Player.getYaw();
         const pitch = Player.getPitch();
         statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${DARK_GRAY + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
     }
 
     // Direction
-    if (toggles.dirDisplay) {
+    if (Toggles.dirDisplay) {
         const yaw = (Player.getYaw() + 360) % 360;
         const direction = yaw >= 45 && yaw < 135 ? "West" :
             yaw >= 135 && yaw < 255 ? "North" :
@@ -140,7 +140,7 @@ registerWhen(register('tick', () => {
     }
 
     // Ping
-    if (toggles.pingDisplay) {
+    if (Toggles.pingDisplay) {
         const pingColor = ping < 100 ? GREEN :
             ping < 200 ? DARK_GREEN :
             ping < 300 ? YELLOW :
@@ -150,7 +150,7 @@ registerWhen(register('tick', () => {
     }
 
     // FPS
-    if (toggles.fpsDisplay) {
+    if (Toggles.fpsDisplay) {
         const fps = Client.getFPS();
         const fpsMax = SETTINGS.field_74350_i;
         const fpsRatio = fps / fpsMax;
@@ -163,7 +163,7 @@ registerWhen(register('tick', () => {
     }
 
     // TPS
-    if (toggles.tpsDisplay) {
+    if (Toggles.tpsDisplay) {
         const tpsColor = tps > 19 ? GREEN :
             tps > 16 ? DARK_GREEN :
             tps > 13 ? YELLOW :
@@ -173,7 +173,7 @@ registerWhen(register('tick', () => {
     }
 
     // CPS
-    if (toggles.cpsDisplay) {
+    if (Toggles.cpsDisplay) {
         const leftCPS = CPS.getLeftClicks();
         const leftColor = leftCPS < 3 ? GREEN :
             leftCPS < 7 ? DARK_GREEN :
@@ -190,13 +190,13 @@ registerWhen(register('tick', () => {
     }
 
     // Day
-    if (toggles.dayDisplay) {
+    if (Toggles.dayDisplay) {
         const daytime = (World.getTime() / 24000).toFixed(2);
         statusMessage += `\n${GRAY}[${GOLD}Day${GRAY}] ${DARK_GRAY + daytime}`;
     }
 
     statusOverlay.setMessage(statusMessage.substring(1));
-}), () => Settings.serverStatus || toggles.statusCommand);
+}), () => Settings.serverStatus || Toggles.statusCommand);
 
 /**
  * Output status to user chat when user requests via command args.
@@ -281,7 +281,7 @@ registerWhen(register("renderCrosshair", () => {
 
     Renderer.drawString(GRAY + yaw, width / 2 + offset, height / 2 - 4.5, true);
     Renderer.drawString(GRAY + pitch, (width - Renderer.getStringWidth(pitch)) / 2, height / 2 + offset, true);
-}), () => toggles.angleDisplay > 1);
+}), () => Toggles.angleDisplay > 1);
 
 
 /**

@@ -1,5 +1,5 @@
 import Settings from "../../utils/Settings";
-import toggles from "../../utils/Toggles";
+import Toggles from "../../utils/Toggles";
 import { AQUA, BOLD, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN, DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LOGO, PLAYER_CLASS, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { formatNumber, formatTime } from "../../utils/functions/format";
 import { Overlay } from "../../utils/Overlay";
@@ -33,7 +33,7 @@ registerWhen(register("step", () => {
         const petXP = tabNames[petIndex + 2].split(' ')[1];
         if (petXP != "§r§b§lMAX" && !data.pet.startsWith("§r§7No pet")) data.pet += `\n   ${petXP} XP`;
     } else petWidget = false;
-}).setFps(1), () => Settings.statsDisplay && toggles.petDisplay);
+}).setFps(1), () => Settings.statsDisplay && Toggles.petDisplay);
 
 register("guiOpened", () => {
     Client.scheduleTask(1, () => {
@@ -115,13 +115,13 @@ registerWhen(register("tick", () => {
     let statsMessage = "";
 
     // Pet
-    if (toggles.petDisplay) {
+    if (Toggles.petDisplay) {
         let pet = data.pet.length > 36 && !data.pet.startsWith("§r§7No pet") ? data.pet.split(' ').slice(2).join(' ') : data.pet;
         statsMessage += `${GRAY}[${GOLD}Pet${GRAY}] ${pet}\n`;
     }
 
     // Legion
-    if (toggles.legionDisplay) {
+    if (Toggles.legionDisplay) {
         const player = Player.asPlayerMP();
         const legionCount = World.getAllEntitiesOfType(PLAYER_CLASS).filter(other => isPlayer(other) && player.distanceTo(other) < 30).length;
         const legionPercent = Math.round(Math.min(1, legionCount / 20) * 100);
@@ -134,7 +134,7 @@ registerWhen(register("tick", () => {
     }
 
     // Soulflow
-    if (toggles.soulflowDisplay) {
+    if (Toggles.soulflowDisplay) {
         const soulflowColor = soulflow > 100_000 ? GREEN :
             soulflow > 75_000 ? DARK_GREEN :
             soulflow > 50_000 ? YELLOW :
@@ -144,7 +144,7 @@ registerWhen(register("tick", () => {
     }
 
     // Playtime
-    if (toggles.trackPlaytime) {
+    if (Toggles.trackPlaytime) {
         const ptColor = data.playtime < 3_600 ? GREEN :
             data.playtime < 7_200 ? DARK_GREEN :
             data.playtime < 10_800 ? YELLOW :
