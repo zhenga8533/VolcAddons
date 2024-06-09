@@ -1,4 +1,5 @@
 import { COLOR_TABLE, DARK_GRAY } from "../Constants";
+import Settings from "../Settings";
 
 
 /**

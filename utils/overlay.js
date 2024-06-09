@@ -18,7 +18,7 @@ const EDIT_COLOR = Renderer.color(64, 64, 64, 128);
 let overlays = [];
 let overlaid = [];
 let currentOverlay = undefined;
-let worldView = false;
+let guiView = 0;
 
 /**
  * Renders overlays on the GUI if it's open.
@@ -78,20 +78,25 @@ const dragging = register("dragged", (dx, dy) => {
 const keying = register("guiKey", (_, keyCode) => {
     // View Change
     if (keyCode === 17) {
-        worldView = !worldView;
-        if (worldView) {
-            overlays = overlays.filter(overlay => {
-                if (!overlay.requires.has("all") && !overlay.requires.has(location.getWorld())) {
-                    overlaid.push(overlay);
-                    return false;
-                }
-                return true;
-            });
-            ChatLib.chat(`${LOGO + GREEN}Successfully changed to world view!`);
-        } else {
-            overlays.push(...overlaid);
+        if (guiView === 0) overlaid = overlays;
+
+        guiView = (guiView + 1) % 5;
+        if (guiView === 0) {  // All
+            overlays = overlaid;
             overlaid = [];
             ChatLib.chat(`${LOGO + GREEN}Successfully changed to global view!`);
+        } else if (guiView === 1) {  // World
+            overlays = overlaid.filter(overlay => overlay.requires.has("all") || overlay.requires.has(location.getWorld()));
+            ChatLib.chat(`${LOGO + GREEN}Successfully changed to world view!`);
+        } else if (guiView === 2) {  // Visible
+            overlays = overlays.filter(overlay => overlay.message !== "");
+            ChatLib.chat(`${LOGO + GREEN}Successfully changed to visible view!`);
+        } else if (guiView === 3) {  // Overlay
+            overlays = overlaid.filter(overlay => overlay.trigger === "renderOverlay");
+            ChatLib.chat(`${LOGO + GREEN}Successfully changed to overlay view!`);
+        } else if (guiView === 4) {  // GUI
+            overlays = overlaid.filter(overlay => overlay.trigger === "guiRender");
+            ChatLib.chat(`${LOGO + GREEN}Successfully changed to GUI view!`);
         }
     } else if (keyCode === 1) {
         currentOverlay = undefined;
@@ -171,6 +176,7 @@ export class Overlay {
         this.example = example;
         this.setSize("example");
         this.requires = new Set(requires);
+        this.trigger = trigger;
         this.special = special;
         this.gui = new Gui();
 
