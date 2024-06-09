@@ -93,3 +93,26 @@ export function drawContainer(bX, bY, title, bg, items, mX, mY) {
         }
     }
 }
+
+/**
+ * Render scaled text on a graphical canvas or rendering context.
+ *
+ * @param {Number} x - The x-coordinate where the text will be rendered.
+ * @param {Number} y - The y-coordinate where the text will be rendered.
+ * @param {String} text - The text to be rendered.
+ * @param {Number} scale - The scale factor to apply to the text.
+ * @param {Boolean} align - True for right align, or false for left align.
+ * @param {Boolean} flex - True for vertical flex, or false for horizontal flex.
+ */
+export function renderScale(x, y, text, scale=1, align=false, flex=false, z=0) {
+    // Apply parameters
+    x /= scale;
+    y /= scale;
+    if (flex) text = text.replace(/\n/g, "  ");
+
+    // Scale and render
+    Renderer.scale(scale);
+    Renderer.translate(0, 0, z ?? 300);
+    if (align) new Text(text.replace(/&l/g, ''), x, y).setAlign("right").setShadow(Settings.textShadow).draw();
+    else Renderer.drawString(text, x, y, Settings.textShadow);
+}
