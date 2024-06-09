@@ -134,7 +134,14 @@ ${ITALIC}Related Commands: /va <enigma, npc, zone>`);
     
     @ButtonProperty({
         name: "Move GUI",
-        description: `Moves all current active GUIs.\nRuns ${AQUA}/va gui${GRAY}.`,
+        description: `Moves all current active GUIs. Runs ${AQUA}/va gui${GRAY}.
+Controls:
+ ${AQUA}+/- ${GRAY}to scale.
+ ${AQUA}L ${GRAY}to swap align.
+ ${AQUA}H ${GRAY}to swap flex.
+ ${AQUA}B ${GRAY}to show BG.
+ ${AQUA}W ${GRAY}to change view.
+ ${AQUA}RC ${GRAY}to hide in editor.`,
         category: "General",
         subcategory: "Essential",
         placeholder: "Move GUI"

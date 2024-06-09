@@ -1,9 +1,10 @@
 [
     "- Added `/va eggs`",
     "- Added crosshair Y/P display",
+    "- Added bestiary counter world option",
     "- Added more views in `/va gui`",
     "- Added highlight colors in `/va gui`",
-    "- Added bestiary counter world option",
+    "- Changed right click to hide element in `/va gui`",
     "- Changed stray alert to toggle gold",
     "- Changed zone and npc list format",
     "- Changed egg waypoints to show in chat",

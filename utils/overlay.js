@@ -7,8 +7,6 @@ import { drawBox, renderScale } from "./functions/render";
 /**
  * Variables used to move all active GUIs.
  */
-const GUI_INSTRUCT = "Use +/- to scale, R to reset, L to swap align, H to swap flex, B to show BG, or W to change view";
-const INSTRUCT_WIDTH = Renderer.getStringWidth(GUI_INSTRUCT);
 const gui = new Gui();
 
 const BORDER_COLOR = Renderer.color(128, 128, 128, 128);
@@ -56,16 +54,13 @@ const moving = register("renderOverlay", () => {
         );
         renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 0);
     });
-
-    // GUI Instructions
-    renderScale((Renderer.screen.getWidth() - INSTRUCT_WIDTH) / 2, Renderer.screen.getHeight() / 2, GUI_INSTRUCT, 1, false, false, 500);
 }).unregister();
 
 /**
  * Handles overlay selection when clicking on the screen.
  */
-const clicking = register("guiMouseClick", (x, y) => {
-    currentOverlay = overlays.find(o => {
+const clicking = register("guiMouseClick", (x, y, button) => {
+    const clicked = overlays.find(o => {
         const scale = o.loc[2];
         const oX = o.loc[0] - (o.loc[3] ? o.ewidth : 0);
         const oY = o.loc[1];
@@ -75,6 +70,11 @@ const clicking = register("guiMouseClick", (x, y) => {
             y > oY - 3 * scale &&
             y < oY + o.eheight + 3 * scale;
     });
+    
+    if (button === 0)
+        currentOverlay = clicked;
+    else if (button === 1 && clicked !== undefined)
+        overlays.splice(overlays.indexOf(clicked), 1);
 }).unregister();
 
 /**
@@ -93,12 +93,9 @@ const dragging = register("dragged", (dx, dy) => {
 const keying = register("guiKey", (_, keyCode) => {
     // View Change
     if (keyCode === 17) {
-        if (guiView === 0) overlaid = overlays;
-
         guiView = (guiView + 1) % 5;
         if (guiView === 0) {  // All
-            overlays = overlaid;
-            overlaid = [];
+            overlays = [...overlaid];
             ChatLib.chat(`${LOGO + GREEN}Successfully changed to global view!`);
         } else if (guiView === 1) {  // World
             overlays = overlaid.filter(overlay => overlay.requires.has("all") || overlay.requires.has(location.getWorld()));
@@ -119,6 +116,8 @@ const keying = register("guiKey", (_, keyCode) => {
         clicking.unregister();
         dragging.unregister();
         keying.unregister();
+        overlays = overlaid;
+        guiView = 0;
         return;
     }
     
@@ -130,11 +129,13 @@ const keying = register("guiKey", (_, keyCode) => {
  * Opens gui to move all overlays
  */
 export function openGUI() {
+    overlaid = [...overlays];
     gui.open();
     moving.register();
     clicking.register();
     dragging.register();
     keying.register();
+    close.register();
 };
 
 
@@ -227,9 +228,6 @@ export class Overlay {
                 );
             }
             renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4], 0);
-
-            // GUI Instructions
-            renderScale((width - INSTRUCT_WIDTH) / 2, height / 2, GUI_INSTRUCT, 1, false, false, 500);
         }).unregister();
 
         // Register editing stuff
@@ -258,7 +256,6 @@ export class Overlay {
     handleKey(keyCode) {
         if (keyCode === 13) this.loc[2] = Math.round((this.loc[2] + 0.05) * 100) / 100;  // Increase Scale (+ key)
         else if (keyCode === 12) this.loc[2] = Math.round((this.loc[2] - 0.05) * 100) / 100;  // Decrease Scale (- key)
-        else if (keyCode === 19) this.loc[2] = 1;  // Reset Scale (r key)
         else if (keyCode === 38) this.loc[3] = !this.loc[3];  // Swap align (l key)
         else if (keyCode === 35) this.loc[4] = !this.loc[4];  // Swap flex (h key)
         else if (keyCode === 48) this.loc[5] = !this.loc[5];  // Swap flex (b key)
