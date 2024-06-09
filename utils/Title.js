@@ -2,8 +2,23 @@ const titles = {};
 let current = "";
 let prio = 0;
 
+/**
+ * Set the title of the player.
+ * 
+ * @param {String} title - Title of the message.
+ * @param {String} subtitle - Subtitle of the message.
+ * @param {Number} fadeIn - Fade in time in ticks.
+ * @param {Number} time - Display time in ticks.
+ * @param {Number} fadeOut - Fade out time in ticks.
+ * @param {Number} priority - Higher number means higher priority.
+ */
 export function setTitle(title, subtitle, fadeIn, time, fadeOut, priority=5) {
-    const ticks = fadeIn + time + fadeOut;
+    if (fadeIn > 0) {
+        if (priority >= prio) Client.showTitle(title, subtitle, fadeIn, time, fadeOut);
+        return;
+    }
+
+    const ticks = fadeIn + time;
     titles[title] = {
         "subtitle": subtitle,
         "fadeIn": fadeIn,
@@ -46,5 +61,6 @@ register("tick", () => {
 });
 
 register("renderTitle", (title, _, event) => {
-    if (current !== "" && title !== current) cancel(event);
-})
+    if (current !== "" && title !== current)
+        cancel(event);
+});

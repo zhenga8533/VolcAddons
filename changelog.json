@@ -9,5 +9,6 @@
     "- Changed span of pt alerts",
     "- Fixed Hypixel ?w counter",
     "- Fixed worker highlight bricking",
-    "- Fixed ?w upload failing"
+    "- Fixed ?w upload failing",
+    "- Fixed title canceling"
 ]
