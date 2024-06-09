@@ -83,35 +83,35 @@ export default class Waypoint {
             let z = parseFloat(this.#rounded ? Math.round(waypoint[n - 1]) : waypoint[n - 1]) - 0.5;
             const color = waypoint.length < 6 && !isNaN(waypoint[2]) ? this.#color : waypoint.slice(0, 3);
 
+            // Calculate the render distance of the waypoint
+            const distance = Math.hypot(pX - x, pY - y, pZ - z);
+            const renderDistance = Math.min(distance, 50);
+            const distanceColor = distance < 10 ? GREEN :
+                distance < 25 ? DARK_GREEN :
+                distance < 50 ? YELLOW :
+                distance < 100 ? GOLD :
+                distance < 200 ? RED : DARK_RED;
+
+            // Credit: https://github.com/Soopyboo32/SoopyV2/blob/master/src/utils/renderUtils.js
+            const rX = pX + (x - pX) / (distance / renderDistance);
+            const rY1 = pY + pEye + (y + 1 + (20 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
+            const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (10 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
+            const rZ = pZ + (z - pZ) / (distance / renderDistance);
+
             // Render waypoint box
             if (this.#box) {
-                RenderLib.drawEspBox(x, y, z, 1, 1, ...color, 1, data.vision || this.#type === 0);
-                RenderLib.drawInnerEspBox(x, y, z, 1, 1, ...color, 0.25, data.vision || this.#type === 0);
+                RenderLib.drawEspBox(rX, distance > 50 ? rY1 : y, rZ, 1, 1, ...color, 1, data.vision || this.#type === 0);
+                RenderLib.drawInnerEspBox(rX, distance > 50 ? rY1 : y, rZ, 1, 1, ...color, 0.25, data.vision || this.#type === 0);
             }
 
             // Render waypoint text
             if (this.#type === 0) {
-                // Calculate the render distance of the waypoint
-                const distance = Math.hypot(pX - x, pY - y, pZ - z);
-                const renderDistance = Math.min(distance, 50);
-                const distanceColor = distance < 10 ? GREEN :
-                    distance < 25 ? DARK_GREEN :
-                    distance < 50 ? YELLOW :
-                    distance < 100 ? GOLD :
-                    distance < 200 ? RED : DARK_RED;
-    
-                // Credit: https://github.com/Soopyboo32/SoopyV2/blob/master/src/utils/renderUtils.js
-                const rX = pX + (x - pX) / (distance / renderDistance);
-                const rY1 = pY + pEye + (y + 1 + (20 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
-                const rY2 = pY + pEye + (y + 1 + (20 * distance / 300) - (10 * distance / 300) - (pY + pEye)) / (distance / renderDistance);
-                const rZ = pZ + (z - pZ) / (distance / renderDistance);
-
                 Tessellator.drawString(GOLD + title, rX, rY1, rZ);
                 Tessellator.drawString(`${DARK_GRAY}[${distanceColor + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
             }
 
             // Render beacon beam
-            if (this.#beam) renderBeaconBeam(x - 0.5, y, z - 0.5, ...color, 0.5, false);
+            if (this.#beam) renderBeaconBeam(rX - 0.5, rY1, rZ - 0.5, ...color, 0.5, false);
         });
     }
 
