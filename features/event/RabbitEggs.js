@@ -183,16 +183,16 @@ registerWhen(register("step", () => {
         // Add waypoint
         const wp = [EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()];
         const coords = wp.slice(1);
+        const dupe = data.eggs.found[location.getWorld()]?.hasOwnProperty(`${wp[1]},${wp[3]}`);
+
         eggLocs.push(coords);
-        if (data.eggs.found[location.getWorld()]?.hasOwnProperty(`${stand.getX()},${stand.getZ()}`))
-            eggWaypoints.push(wp);
-        else
-            newWaypoints.push(wp);
+        if (dupe) eggWaypoints.push(wp);
+        else newWaypoints.push(wp);
     
         // Announce egg if new
         const coordsStr = coords.toString();
         if (eggOld.find(egg => coordsStr === egg.toString()) === undefined)
-            ChatLib.chat(`${LOGO + YELLOW}Found a ${EGGS[id]} Egg: ${coords.map(c => Math.round(c)).join(', ')}!`);
+            ChatLib.chat(`${LOGO + YELLOW}Found a ${EGGS[id]} Egg: ${coords.map(c => Math.round(c)).join(', ')}! ${dupe ? GREEN + "✔" : RED + "✘"}`);
     });
 }).setFps(1), () => Settings.chocoWaypoints);
 
