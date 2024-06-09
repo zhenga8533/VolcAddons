@@ -32,7 +32,7 @@ import "./features/general/ReminderTimer";
 import "./features/general/RemoveSelfie";
 import "./features/general/ServerAlert";
 import "./features/general/SkillTracker";
-import { updateSBW } from "./features/general/SkyBlockWaypoints";
+import { updateSBW } from "./features/general/SkyblockWaypoints";
 import "./features/general/SkyCrypt";
 import "./features/general/SpamHider";
 import { getStat } from "./features/general/Statistics";
