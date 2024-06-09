@@ -142,6 +142,7 @@ let bestWorker = 0;
 let bestCost = 0;
 
 function findWorker() {
+    if (Player.getContainer().getName() !== "Chocolate Factory") return;
     bestWorker = 0;
     const cf = data.cf;
     const items = Player.getContainer().getItems();
@@ -153,7 +154,7 @@ function findWorker() {
         // Skip if not a worker
         let worker = items[i]?.getLore();
         if (worker === undefined) {
-            Client.scheduleTask(2, findWorker);
+            Client.scheduleTask(1, findWorker);
             return;
         }
 
@@ -177,6 +178,11 @@ function findWorker() {
 
     // Tower calc
     const tower = items[39].getLore();
+    if (tower === undefined) {
+        Client.scheduleTask(1, findWorker);
+        return;
+    }
+
     const towerI = tower.findIndex(line => line === "§5§o§7Cost");
     if (Settings.rabbitHighlight === 1 && towerI !== -1) {
         const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
@@ -192,6 +198,11 @@ function findWorker() {
 
     // Jackrabbit calc
     const jackrabbit = items[42].getLore();
+    if (jackrabbit === undefined) {
+        Client.scheduleTask(1, findWorker);
+        return;
+    }
+
     const jackI = jackrabbit.findIndex(line => line === "§5§o§7Cost");
     if (Settings.rabbitHighlight !== 3 && jackI !== -1) {
         const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));

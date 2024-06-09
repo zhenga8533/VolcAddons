@@ -1,13 +1,13 @@
 [
     "- Added `/va eggs`",
     "- Added crosshair Y/P display",
-    "- TBD: Update toggle descriptions",
-    "- TBD: Changed stray alert to toggle gold",
+    "- Changed stray alert to toggle gold",
     "- Changed zone and npc list format",
     "- Changed egg waypoints to show in chat",
     "- Changed party commands to work in AC",
     "- Changed rand IDs to be parsed out",
     "- Changed span of pt alerts",
     "- Fixed Hypixel ?w counter",
+    "- Fixed worker highlight bricking",
     "- Fixed ?w upload failing"
 ]
