@@ -85,6 +85,7 @@ registerWhen(register("chat", (mult) => {
 const eggLocs = [];
 const eggWaypoints = new Waypoint([0.25, 0.1, 0]);  // Brown Eggs
 const newWaypoints = new Waypoint([0.88, 0.75, 0.72]);  // Rose Gold Eggs
+let updateUniques = false;
 
 const EGGS = {
     "015adc61-0aba-3d4d-b3d1-ca47a68a154b": "Breakfast",
@@ -132,8 +133,11 @@ registerWhen(register("chat", (type) => {
     const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], eggLocs)[0];
     const wpKey = closest[0] + "," + closest[2];
     if (!found.hasOwnProperty(world)) found[world] = {};
-    if (!found[world].hasOwnProperty(wpKey)) found[world][wpKey] = 1;
-    else found[world][wpKey]++;
+
+    if (!found[world].hasOwnProperty(wpKey)) {
+        found[world][wpKey] = 1;
+        if (updateUniques) ChatLib.command("va eggs unique", true);
+    } else found[world][wpKey]++;
 }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"),
 () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring");
 
@@ -306,11 +310,13 @@ export function updateEggs(command, page) {
                 if (!data.eggs.found[world]?.hasOwnProperty(`${x + (x < 0)}.5,${z + (z < 0)}.5`))
                     eggPoints.push([wp[0], ...wp.slice(2)]);
             });
+            updateUniques = true;
             break;
         case "clear":
             // Clear all waypoints
             eggPoints.clear();
             ChatLib.chat(`${LOGO + GREEN}Cleared egg waypoints.`);
+            updateUniques = false;
             break;
         case "list":
             // List all waypoints
