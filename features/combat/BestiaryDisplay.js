@@ -5,6 +5,7 @@ import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
 import { BOLD, GOLD, GRAY, GREEN, LOGO, WHITE, YELLOW } from "../../utils/Constants";
 import { Json } from "../../utils/Json";
+import Location from "../../utils/Location";
 
 
 /**
@@ -112,11 +113,11 @@ const bestiaryExample =
 const bestiaryOverlay = new Overlay("bestiaryCounter", data.BEL, "moveBe", bestiaryExample);
 
 // Dict of [start, now, next]
-let beCounter = {};
+let beCounter = {"all": {}};
 let beTime = 0;
 
 register("command", () => {
-    beCounter = {};
+    beCounter = {"all": {}};
     beTime = 0;
     bestiaryOverlay.setMessage("");
     ChatLib.chat(`${LOGO + GREEN}Successfully reset bestiary counter.`);
@@ -127,6 +128,14 @@ registerWhen(register("step", () => {
     const tablist = TabList.getNames();
     let index = tablist.findIndex(name => name.startsWith("§r§6§lBestiary:§r")) + 1;
     if (index === 0) return;
+
+    // Set counter specified in settings
+    let counter = beCounter["all"];
+    if (Settings.bestiaryCounter === 2) {
+        const location = Location.getWorld();
+        if (!beCounter.hasOwnProperty(location)) beCounter[location] = {};
+        counter = beCounter[location];
+    }
 
     // Update bestiary data using widget
     while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r")) {
@@ -139,17 +148,17 @@ registerWhen(register("step", () => {
         let now = unformatNumber(count[0]);
         let next = unformatNumber(count[1]);
 
-        if (beCounter.hasOwnProperty(name)) {
-            beCounter[name][1] = now;
-            beCounter[name][2] = Math.max(next, beCounter[name][2]);
-        } else beCounter[name] = [now, now, next];
+        if (counter.hasOwnProperty(name)) {
+            counter[name][1] = now;
+            counter[name][2] = Math.max(next, counter[name][2]);
+        } else counter[name] = [now, now, next];
     }
 
     // Sort by now - start
-    const keys = Object.keys(beCounter).filter(key => {
-        return beCounter[key][0] !== beCounter[key][1];
+    const keys = Object.keys(counter).filter(key => {
+        return counter[key][0] !== counter[key][1];
     }).sort((a, b) => {
-        return beCounter[b][1] - beCounter[b][0] - beCounter[a][1] + beCounter[a][0];
+        return counter[b][1] - counter[b][0] - counter[a][1] + counter[a][0];
     });
 
     // Update time if not empty
@@ -159,10 +168,10 @@ registerWhen(register("step", () => {
     // Set overlay message
     let message = '';
     keys.forEach(key => {
-        let kills = beCounter[key][1] - beCounter[key][0];
+        let kills = counter[key][1] - counter[key][0];
         let rate = kills / beTime;
-        let next = (beCounter[key][2] - beCounter[key][1]) / rate;
-        let max = ((maxBestiary[key] ?? 0) - beCounter[key][1]) / rate;
+        let next = (counter[key][2] - counter[key][1]) / rate;
+        let max = ((maxBestiary[key] ?? 0) - counter[key][1]) / rate;
 
         if (message !== "") message += '\n';
         message += `${GOLD + BOLD + key}: ${WHITE + kills} (${(rate * 3600).toFixed(2)}/hr)`;
@@ -171,4 +180,4 @@ registerWhen(register("step", () => {
     });
 
     bestiaryOverlay.setMessage(message);
-}).setFps(1), () => Settings.bestiaryCounter);
+}).setFps(1), () => Settings.bestiaryCounter !== 0);

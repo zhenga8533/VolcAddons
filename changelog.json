@@ -1,6 +1,8 @@
 [
     "- Added `/va eggs`",
     "- Added crosshair Y/P display",
+    "- Added more views in `/va gui`",
+    "- Added bestiary counter world option",
     "- Changed stray alert to toggle gold",
     "- Changed zone and npc list format",
     "- Changed egg waypoints to show in chat",

@@ -595,14 +595,15 @@ Move GUI with ${AQUA}/moveCoins ${GRAY}or reset tracker with ${AQUA}/resetCoins$
     // ████████████████████████████████████████████████████ COMBAT ████████████████████████████████████████████████████
 
     // --- Bestiary ---
-    @SwitchProperty({
-        name: "Bestiary Counter",
+    @SelectorProperty({
+        name: "Bestiary Counters",
         description: `Tracks bestiary hourly progress using tablist widget.
 Move GUI with ${AQUA}/moveBe ${GRAY}or reset tracker with ${AQUA}/resetBe${GRAY}.`,
         category: "Combat",
-        subcategory: "Bestiary"
+        subcategory: "Bestiary",
+        options: ["OFF", "Cumulative", "World"]
     })
-    bestiaryCounter = false;
+    bestiaryCounter = 0;
 
     @SwitchProperty({
         name: "Bestiary GUI",
