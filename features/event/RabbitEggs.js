@@ -125,7 +125,7 @@ registerWhen(register("chat", (type) => {
     const offset = type === "Breakfast" ? (time > 1_000 ? 1_000 - time : -23_000 - time) : 
         type === "Lunch" ? (time > 8_000 ? 8_000 - time : -16_000 - time) : 
         type === "Dinner" ? (time > 15_000 ? 15_000 - time : -9_000 - time) : 0;
-    lastLooted[type] = Date.now() + (offset * 50);
+    lastLooted[type] = Date.now() + (offset * 50) + 5_000;
 
     // Track egg location
     const found = data.eggs.found;
@@ -149,15 +149,15 @@ registerWhen(register("chat", (type) => {
 registerWhen(register("tick", () => {
     const time = World.getTime() % 24_000;
 
-    if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_200_000) {
+    if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_205_000) {
         looted.Breakfast = false;
         lastLooted.Breakfast = 0;
     }
-    if (Math.abs(time - 8_000) < 4 || Date.now() - lastLooted.Lunch > 1_200_000) {
+    if (Math.abs(time - 8_000) < 4 || Date.now() - lastLooted.Lunch > 1_205_000) {
         looted.Lunch = false;
         lastLooted.Lunch = 0;
     }
-    if (Math.abs(time - 15_000) < 4 || Date.now() - lastLooted.Dinner > 1_200_000) {
+    if (Math.abs(time - 15_000) < 4 || Date.now() - lastLooted.Dinner > 1_205_000) {
         looted.Dinner = false;
         lastLooted.Dinner = 0;
     }
@@ -251,13 +251,16 @@ registerWhen(register("chat", (type) => {
  * Stray rabbit detection.
  */
 const strayDetect = register("step", () => {
+    if (Player.getContainer().getName() !== "Chocolate Factory") return;
     const items = Player.getContainer().getItems();
     for (let i = 0; i < 27; i++) {
         if (i === 13) continue;
 
         let item = items[i];
         if (item.getRegistryName() !== "minecraft:stained_glass_pane") {
+            // Gold: 794465b5-3bd2-38fc-b02f-0b51d782e201
             ChatLib.chat(item.getName());
+            ChatLib.chat(item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner").getString("Id"));
             playSound(AMOGUS, 10_000);
         }
     }
