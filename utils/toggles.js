@@ -211,70 +211,70 @@ class Settings {
         name: `8ball Command ${DARK_AQUA}?8ball`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "In the shape of an \"L\" on her forehead"
+        description: "The years start comin' and they don't stop comin'"
     })
     ballCommand = true;
     @CheckboxProperty({
         name: `Coinflip Command ${DARK_AQUA}?<coin, flip, coinflip, cf>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "The years start comin' and they don't stop comin'"
+        description: "Fed to the rules and I hit the ground runnin'"
     })
     coinCommand = true;
     @CheckboxProperty({
         name: `Coords Command ${DARK_AQUA}?<coords, xyz>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Fed to the rules and hit the ground runnin'"
+        description: "Didn't make sense not to live for fun"
     })
     coordsCommand = true;
     @CheckboxProperty({
         name: `Dice Command ${DARK_AQUA}?<dice, roll>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Didn't make sense not to live for fun"
+        description: "Your brain gets smart but your head gets dumb"
     })
     diceCommand = true;
     @CheckboxProperty({
         name: `Help Command ${DARK_AQUA}?help`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Your brain gets smart but your head gets dumb"
+        description: "So much to do, so much to see"
     })
     helpCommand = true;
     @CheckboxProperty({
         name: `Limbo Command ${DARK_AQUA}?<limbo, lobby, l>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "So much to do so much to see"
+        description: "So what's wrong with taking the backstreets?"
     })
     limboCommand = false;
     @CheckboxProperty({
         name: `Leave Command ${DARK_AQUA}?leave`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "So what's wrong with takin' the backstreets"
+        description: "You'll never know if you don't go"
     })
     leaveCommand = false;
     @CheckboxProperty({
         name: `RPS Command ${DARK_AQUA}?rps`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "You'll never know if you don't go"
+        description: "You'll never shine if you don't glow"
     })
     rpsCommand = true;
     @CheckboxProperty({
         name: `Slander Commands ${DARK_AQUA}(i plead the fifth.)`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "You'll never shine if you don't glow"
+        description: "Hey now, you're an all-star, get your game on, go play"
     })
     slanderCommand = true;
     @CheckboxProperty({
         name: `Status Commands ${DARK_AQUA}?<fps, ping, tps>`,
         category: "Party Commands",
         subcategory: "Party Commands",
-        description: "Hey, now You're an all-star"
+        description: "Hey now, you're a rock star, get the show on, get paid"
     })
     statusCommand = true;
     @SelectorProperty({
