@@ -17,7 +17,7 @@ import { data } from "./Data";
  * @param {Number} page - The page number to display.
  * @param {Number} pagy - Number of items per page.
  */
-export function printList(list, listName, page, pagy=12, action=true, command="remove") {
+export function printList(list, listName, page, pagy=12, action=true, command="remove", hoverKey=false) {
     if (isNaN(page)) page = 1;
 
     ChatLib.clearChat(5858);
@@ -48,7 +48,18 @@ export function printList(list, listName, page, pagy=12, action=true, command="r
     // Loop through variables
     const pageIndex = (page - 1) * pagy;
     if (length === 0) message.addTextComponent(`\n` + ChatLib.getCenteredText(YELLOW + "  404, This list is empty!"));
-    else if (isArray) {
+    else if (hoverKey) {
+        const keys = Object.keys(list);
+        for (let i = pageIndex; i < Math.min(pageIndex + pagy, length); i++) {
+            let key = keys[i];
+            message.addTextComponent(`\n ${DARK_GRAY}⁍ `);
+            message.addTextComponent(new TextComponent(`${YELLOW + key}`)
+                .setClickAction("run_command")
+                .setClickValue(`/va ${listName} ${command} ${key}`)
+                .setHoverValue(list[key])
+            );
+        }
+    } else if (isArray) {
         for (let i = pageIndex; i < Math.min(pageIndex + pagy, length); i++) {
             if (action) {
                 message.addTextComponent(`\n ${DARK_GRAY}⁍ `);

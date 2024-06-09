@@ -1,7 +1,8 @@
 import location from "../../utils/Location";
+import Waypoint from "../../utils/Waypoint";
 import { AQUA, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, ITALIC, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { Json } from "../../utils/Json";
-import Waypoint from "../../utils/Waypoint";
+import { printList } from "../../utils/ListTils";
 
 
 const NPCS = new Json("npcs.json", false, false).getData();
@@ -53,32 +54,20 @@ export function updateSBW(type, command, name) {
             ChatLib.chat(`${LOGO + GREEN}Cleared ${type} waypoints.`);
             break;
         case "list":
-            ChatLib.clearChat(5858);
-            const message = new Message(`\n${LOGO + GOLD + BOLD + type}s in ${world}:`).setChatLineId(5858);
-
+            const formatted = {};
             Object.keys(base).forEach(key => {
-                // Create hover text
-                let hover = `${AQUA + key}:`;
+                let value = `${AQUA + key}:`;
                 if (type === "NPC")
                     base[key].forEach(loc => {
                         const x = loc[1] === "" ? RED + "?" : WHITE + loc[1];
                         const y = loc[2] === "" ? "?" : loc[2];
                         const z = loc[3] === "" ? "?" : loc[3];
-                        hover += `\n${DARK_GRAY} - ${YELLOW + loc[0]}: ${x}, ${y}, ${z}`;
+                        value += `\n${DARK_GRAY} - ${YELLOW + loc[0]}: ${x}, ${y}, ${z}`;
                     });
-                else hover += `\n${DARK_GRAY} - ${YELLOW}Origin: ${WHITE + base[key][0]}, ${base[key][1]}, ${base[key][2]}`;
-                hover += `\n\n${YELLOW}Click to add ${AQUA + key + YELLOW} to waypoints.`;
-
-                // Add text component
-                message.addTextComponent(`\n${DARK_GRAY} - `);
-                message.addTextComponent(new TextComponent(YELLOW + key)
-                    .setClick("run_command", `/va ${type} add ${key}`)
-                    .setHoverValue(hover));
+                else value += `\n${DARK_GRAY} - ${YELLOW}Origin: ${WHITE + base[key][0]}, ${base[key][1]}, ${base[key][2]}`;
+                formatted[key] = value + `\n\n${YELLOW}Click to add ${AQUA + key + YELLOW} to waypoints.`;;
             });
-
-            // Print message
-            message.addTextComponent(`\n${GRAY + ITALIC}Hover over names to view and add to waypoints.`);
-            message.chat();
+            printList(formatted, type, name, 12, true, "add", true);
             break;
         case "help":
         default:
