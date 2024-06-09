@@ -111,7 +111,7 @@ export default class Waypoint {
             }
 
             // Render beacon beam
-            if (this.#beam) renderBeaconBeam(rX - 0.5, rY1, rZ - 0.5, ...color, 0.5, false);
+            if (this.#beam) renderBeaconBeam(rX - 0.5, distance > 50 ? rY1 : y, rZ - 0.5, ...color, 0.5, false);
         });
     }
 
