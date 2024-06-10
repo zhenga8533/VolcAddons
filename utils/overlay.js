@@ -135,7 +135,6 @@ export function openGUI() {
     clicking.register();
     dragging.register();
     keying.register();
-    close.register();
 };
 
 
