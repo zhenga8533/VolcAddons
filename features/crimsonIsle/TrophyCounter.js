@@ -1,18 +1,28 @@
 import location from "../../utils/Location";
 import Settings from "../../utils/Settings";
-import { AQUA, BLUE, BOLD, DARK_AQUA, DARK_GRAY, DARK_PURPLE, GOLD, GRAY, GREEN, LOGO, WHITE } from "../../utils/Constants";
+import {
+  AQUA,
+  BLUE,
+  BOLD,
+  DARK_AQUA,
+  DARK_GRAY,
+  DARK_PURPLE,
+  GOLD,
+  GRAY,
+  GREEN,
+  LOGO,
+  WHITE,
+} from "../../utils/Constants";
 import { convertToTitleCase } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
 import { Overlay } from "../../utils/Overlay";
 import { getPaused } from "../../utils/Stat";
 import { data } from "../../utils/Data";
 
-
 /**
  * Variables used to format and display trophy fishes.
  */
-const trophyExample =
-`&6&lTrophy Fishing:
+const trophyExample = `&6&lTrophy Fishing:
 &fBlobfish&f: &323477 &816649 &76249 &6518 &b61
 &fGusher&f: &39627 &86838 &72556 &6210 &b23
 &9Lava Horse&f: &36831 &84939 &71733 &6143 &b16
@@ -31,45 +41,51 @@ const trophyExample =
 &fSteaming Hot Flounder&f: &3111 &879 &730 &61 &b1
 &5Soul Fish&f: &373 &850 &720 &61 &b2
 &5Moldfin&f: &360 &837 &721 &61 &b1`;
-const trophyOverlay = new Overlay("trophyCounter", data.FL, "moveTrophy", trophyExample, ["Crimson Isle"]);
+const trophyOverlay = new Overlay(
+  "trophyCounter",
+  data.FL,
+  "moveTrophy",
+  trophyExample,
+  ["Crimson Isle"]
+);
 trophyOverlay.setMessage("");
 
 /**
  * Variables used for formatting
  */
 const TROPHY_COLORS = {
-    blobfish: WHITE,
-    gusher: WHITE,
-    skeleton_fish: DARK_PURPLE,
-    lava_horse: BLUE,
-    golden_fish: GOLD,
-    mana_ray: BLUE,
-    flyfish: GREEN,
-    obfuscated_fish_1: WHITE,
-    obfuscated_fish_2: GREEN,
-    volcanic_stonefish: BLUE,
-    steaming_hot_flounder: WHITE,
-    sulphur_skitter: WHITE,
-    moldfin: DARK_PURPLE,
-    soul_fish: DARK_PURPLE,
-    vanille: BLUE,
-    obfuscated_fish_3: BLUE,
-    karate_fish: DARK_PURPLE,
-    slugfish: GREEN
-}
+  blobfish: WHITE,
+  gusher: WHITE,
+  skeleton_fish: DARK_PURPLE,
+  lava_horse: BLUE,
+  golden_fish: GOLD,
+  mana_ray: BLUE,
+  flyfish: GREEN,
+  obfuscated_fish_1: WHITE,
+  obfuscated_fish_2: GREEN,
+  volcanic_stonefish: BLUE,
+  steaming_hot_flounder: WHITE,
+  sulphur_skitter: WHITE,
+  moldfin: DARK_PURPLE,
+  soul_fish: DARK_PURPLE,
+  vanille: BLUE,
+  obfuscated_fish_3: BLUE,
+  karate_fish: DARK_PURPLE,
+  slugfish: GREEN,
+};
 const TROPHY_ID = {
-    "lavahorse": "lava_horse",
-    "obfuscated_1": "obfuscated_fish_1",
-    "obfuscated_2": "obfuscated_fish_2",
-    "obfuscated_3": "obfuscated_fish_3",
-    "steaming-hot_flounder": "steaming_hot_flounder"
-}
+  lavahorse: "lava_horse",
+  obfuscated_1: "obfuscated_fish_1",
+  obfuscated_2: "obfuscated_fish_2",
+  obfuscated_3: "obfuscated_fish_3",
+  "steaming-hot_flounder": "steaming_hot_flounder",
+};
 const TIER_INDEX = {
-    "bronze": 1,
-    "silver": 2,
-    "gold": 3,
-    "diamond": 4
-}
+  bronze: 1,
+  silver: 2,
+  gold: 3,
+  diamond: 4,
+};
 
 /**
  * Variables used to track trophy fishes/
@@ -77,63 +93,83 @@ const TIER_INDEX = {
 let sessionTrophy = {};
 let timePassed = 0;
 register("command", () => {
-    sessionTrophy = {};
-    timePassed = 0;
-    trophyOverlay.setMessage("");
-    ChatLib.chat(`${LOGO + GREEN}Successfully reset trophy fish counter!`);
+  sessionTrophy = {};
+  timePassed = 0;
+  trophyOverlay.setMessage("");
+  ChatLib.chat(`${LOGO + GREEN}Successfully reset trophy fish counter!`);
 }).setName("resetTrophy");
 
 /**
  * Update trophyOverlay message using inputted trophy data.
  */
 function updateMessage() {
-    const sortedTrophy = Object.entries(sessionTrophy).sort((a, b) => b[1][0] - a[1][0]).reduce((sorted, [fish, fishData]) => {
-        if (fishData[0] !== 0) {
-            const title = TROPHY_COLORS[fish] + convertToTitleCase(fish);
-            const [total, bronze, silver, gold, diamond] = fishData;
-            const rate = `${GRAY}- ${WHITE + (total * 3600 / timePassed).toFixed(0)}/hr`;
-            sorted.push(`${title + WHITE}: ${DARK_AQUA + total} ${DARK_GRAY + bronze} ${GRAY + silver} ${GOLD + gold} ${AQUA + diamond} ${rate}`);
-        }
-        return sorted;
+  const sortedTrophy = Object.entries(sessionTrophy)
+    .sort((a, b) => b[1][0] - a[1][0])
+    .reduce((sorted, [fish, fishData]) => {
+      if (fishData[0] !== 0) {
+        const title = TROPHY_COLORS[fish] + convertToTitleCase(fish);
+        const [total, bronze, silver, gold, diamond] = fishData;
+        const rate = `${GRAY}- ${
+          WHITE + ((total * 3600) / timePassed).toFixed(0)
+        }/hr`;
+        sorted.push(
+          `${title + WHITE}: ${DARK_AQUA + total} ${DARK_GRAY + bronze} ${
+            GRAY + silver
+          } ${GOLD + gold} ${AQUA + diamond} ${rate}`
+        );
+      }
+      return sorted;
     }, []);
-  
-    if (sortedTrophy.length != 0) trophyOverlay.setMessage(`${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`);
+
+  if (sortedTrophy.length != 0)
+    trophyOverlay.setMessage(
+      `${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`
+    );
 }
 
 /**
  * Update counter variables.
- * 
+ *
  * @param {String} fish - Fish type and tier.
  */
 function updateCounter(fish) {
-    const args = fish.toLowerCase().split(' ');
-    const tier = args.pop();
-    let type = args.join('_');
-    if (type in TROPHY_ID) type = TROPHY_ID[type];
+  const args = fish.toLowerCase().split(" ");
+  const tier = args.pop();
+  let type = args.join("_");
+  if (type in TROPHY_ID) type = TROPHY_ID[type];
 
-    // Update Session
-    if (!(type in sessionTrophy)) sessionTrophy[type] = [0, 0, 0, 0, 0];
-    sessionTrophy[type][0]++;
-    sessionTrophy[type][TIER_INDEX[tier]]++;
-    updateMessage();
+  // Update Session
+  if (!(type in sessionTrophy)) sessionTrophy[type] = [0, 0, 0, 0, 0];
+  sessionTrophy[type][0]++;
+  sessionTrophy[type][TIER_INDEX[tier]]++;
+  updateMessage();
 }
 
 /**
  * Track fishing messages to update counter.
  */
-registerWhen(register("chat", (fish) => {
+registerWhen(
+  register("chat", (fish) => {
     updateCounter(fish);
-}).setCriteria("TROPHY FISH! You caught a ${fish}."), () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter);
+  }).setCriteria("TROPHY FISH! You caught a ${fish}."),
+  () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter
+);
 
-registerWhen(register("chat", (fish) => {
+registerWhen(
+  register("chat", (fish) => {
     updateCounter(fish);
-}).setCriteria("NEW DISCOVERY: ${fish}"), () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter);
+  }).setCriteria("NEW DISCOVERY: ${fish}"),
+  () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter
+);
 
 /**
  * Update time for session view
  */
-registerWhen(register("step", () => {
+registerWhen(
+  register("step", () => {
     if (getPaused()) return;
     if (Object.keys(sessionTrophy).length !== 0) timePassed++;
     updateMessage();
-}).setFps(1), () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter);
+  }).setFps(1),
+  () => location.getWorld() === "Crimson Isle" && Settings.trophyCounter
+);

@@ -1,1214 +1,350 @@
 {
-    "Hub": [
-        [
-            "Bazaar Alley",
-            "in the Bazaar Alley",
-            "-40",
-            "70",
-            "-74"
-        ],
-        [
-            "Blacksmith's House",
-            "behind the Blacksmith building",
-            "-38",
-            "70",
-            "-135"
-        ],
-        [
-            "Colosseum",
-            "atop the Colosseum",
-            "160",
-            "97",
-            "-71"
-        ],
-        [
-            "Farm",
-            "near the Wheat Minion",
-            "44",
-            "71",
-            "-137"
-        ],
-        [
-            "Farmhouse",
-            "to the right of the Farmhouse building",
-            "18",
-            "70",
-            "-77"
-        ],
-        [
-            "Fisherman's Hut",
-            "at the Fisherman's Hut",
-            "169",
-            "72",
-            "36"
-        ],
-        [
-            "Forest",
-            "near the lumber piles",
-            "-153",
-            "74",
-            "-40"
-        ],
-        [
-            "Graveyard",
-            "on the emerald altar",
-            "-127",
-            "73",
-            "-126"
-        ],
-        [
-            "Mountain",
-            "on the Mountain path",
-            "-1",
-            "144",
-            "51"
-        ],
-        [
-            "Mountain",
-            "on the second highest Mountain peak",
-            "-38",
-            "193",
-            "35"
-        ],
-        [
-            "Ruins",
-            "within the Ruins",
-            "-186",
-            "87",
-            "81"
-        ],
-        [
-            "Unincorporated",
-            "in Unincorporated Territory",
-            "-7",
-            "70",
-            "188"
-        ],
-        [
-            "Village",
-            "on the crane",
-            "-61",
-            "80",
-            "-38"
-        ],
-        [
-            "Wilderness",
-            "near the Dark Auction",
-            "125",
-            "74",
-            "168"
-        ],
-        [
-            "Wilderness",
-            "within the emerald treehouse",
-            "147",
-            "113",
-            "117"
-        ],
-        [
-            "Wilderness",
-            "within the wither cage",
-            "161",
-            "71",
-            "157"
-        ],
-        [
-            "Wizard Tower",
-            "at the base of the Wizard Tower",
-            "35",
-            "72",
-            "79"
-        ]
+  "Hub": [
+    ["Bazaar Alley", "in the Bazaar Alley", "-40", "70", "-74"],
+    [
+      "Blacksmith's House",
+      "behind the Blacksmith building",
+      "-38",
+      "70",
+      "-135"
     ],
-    "The Farming Islands": [
-        [
-            "The Barn",
-            "in the pasture",
-            "152",
-            "72",
-            "-217"
-        ],
-        [
-            "The Barn",
-            "on the second floor of The Barn",
-            "146",
-            "81",
-            "-242"
-        ],
-        [
-            "Glowing Mushroom Cave",
-            "in Moby's attic",
-            "204",
-            "54",
-            "-503"
-        ],
-        [
-            "Jake's House",
-            "overlooking the oasis from above",
-            "256",
-            "184",
-            "-564"
-        ],
-        [
-            "Trapper's Den",
-            "outside the Trapper's Den",
-            "284",
-            "102",
-            "-573"
-        ],
-        [
-            "Desert Settlement",
-            "beside the well",
-            "175",
-            "77",
-            "-373"
-        ],
-        [
-            "Mushroom Desert",
-            "beside an animal skull",
-            "143",
-            "77",
-            "-404"
-        ],
-        [
-            "Oasis",
-            "beneath an oasis bridge",
-            "142",
-            "71",
-            "-453"
-        ],
-        [
-            "Windmill",
-            "within the windmill",
-            "95",
-            "83",
-            "-284"
-        ],
-        [
-            "The Barn",
-            "behind the tallest hill",
-            "168",
-            "92",
-            "-319"
-        ],
-        [
-            "The Barn",
-            "among the path through carrots",
-            "142",
-            "90",
-            "-300"
-        ],
-        [
-            "The Barn",
-            "on top of a scarecrow",
-            "136",
-            "74",
-            "-215"
-        ],
-        [
-            "Desert Settlement",
-            "in Mason's house",
-            "174",
-            "78",
-            "-357"
-        ],
-        [
-            "Mushroom Desert",
-            "on Farmer Jon's table",
-            "163",
-            "92",
-            "-599"
-        ],
-        [
-            "The Barn",
-            "at the end of the aqueduct",
-            "116",
-            "87",
-            "-222"
-        ]
+    ["Colosseum", "atop the Colosseum", "160", "97", "-71"],
+    ["Farm", "near the Wheat Minion", "44", "71", "-137"],
+    ["Farmhouse", "to the right of the Farmhouse building", "18", "70", "-77"],
+    ["Fisherman's Hut", "at the Fisherman's Hut", "169", "72", "36"],
+    ["Forest", "near the lumber piles", "-153", "74", "-40"],
+    ["Graveyard", "on the emerald altar", "-127", "73", "-126"],
+    ["Mountain", "on the Mountain path", "-1", "144", "51"],
+    ["Mountain", "on the second highest Mountain peak", "-38", "193", "35"],
+    ["Ruins", "within the Ruins", "-186", "87", "81"],
+    ["Unincorporated", "in Unincorporated Territory", "-7", "70", "188"],
+    ["Village", "on the crane", "-61", "80", "-38"],
+    ["Wilderness", "near the Dark Auction", "125", "74", "168"],
+    ["Wilderness", "within the emerald treehouse", "147", "113", "117"],
+    ["Wilderness", "within the wither cage", "161", "71", "157"],
+    ["Wizard Tower", "at the base of the Wizard Tower", "35", "72", "79"]
+  ],
+  "The Farming Islands": [
+    ["The Barn", "in the pasture", "152", "72", "-217"],
+    ["The Barn", "on the second floor of The Barn", "146", "81", "-242"],
+    ["Glowing Mushroom Cave", "in Moby's attic", "204", "54", "-503"],
+    ["Jake's House", "overlooking the oasis from above", "256", "184", "-564"],
+    ["Trapper's Den", "outside the Trapper's Den", "284", "102", "-573"],
+    ["Desert Settlement", "beside the well", "175", "77", "-373"],
+    ["Mushroom Desert", "beside an animal skull", "143", "77", "-404"],
+    ["Oasis", "beneath an oasis bridge", "142", "71", "-453"],
+    ["Windmill", "within the windmill", "95", "83", "-284"],
+    ["The Barn", "behind the tallest hill", "168", "92", "-319"],
+    ["The Barn", "among the path through carrots", "142", "90", "-300"],
+    ["The Barn", "on top of a scarecrow", "136", "74", "-215"],
+    ["Desert Settlement", "in Mason's house", "174", "78", "-357"],
+    ["Mushroom Desert", "on Farmer Jon's table", "163", "92", "-599"],
+    ["The Barn", "at the end of the aqueduct", "116", "87", "-222"]
+  ],
+  "Gold Mine": [
+    ["Gold Mine", "on top of the entrance", "-15", "104", "-313"],
+    ["Gold Mine", "next to the Lazy Miner's pickaxe", "-19", "25", "-305"],
+    ["Gold Mine", "on the top of the mountain", "-19", "143", "-361"],
+    ["Gold Mine", "near Rusty", "-25", "78", "-328"],
+    ["Gold Mine", "behind the Gold Forger", "-30", "74", "-293"],
+    ["Gold Mine", "in the Blacksmith's forge", "-44", "77", "-303"],
+    ["Gold Mine", "beside a pile of coal", "15", "75", "-290"],
+    ["Gold Mine", "[More Info Needed]", "-1", "78", "-325"],
+    ["Gold Mine", "[More Info Needed]", "0", "76", "-307"],
+    ["Gold Mine", "on top of platforms near a Fairy Soul", "17", "57", "-340"],
+    ["Gold Mine", "[More Info Needed]", "-35", "77", "-313"],
+    ["Gold Mine", "at the bottom of the stairs", "-18", "62", "-353"],
+    ["Gold Mine", "behind the Deep Caverns launch pad", "-11", "68", "-397"],
+    ["Gold Mine", "next to a hot fire underground", "-22", "37", "-336"],
+    ["Gold Mine", "on top of a giant crate", "-25", "79", "-282"],
+    ["Gold Mine", "looking towards the windmill", "41", "80", "-311"],
+    ["Gold Mine", "near a fork in the lava", "-49", "94", "-335"],
+    ["Gold Mine", "above the Iron Forger", "-2", "82", "-309"]
+  ],
+  "Deep Caverns": [
+    ["Deep Caverns", "beneath the launch portal", "4", "148", "88"],
+    ["Gunpowder Mines", "beside Walter", "24", "156", "-38"],
+    ["Gunpowder Mines", "atop a platform", "22", "159", "27"],
+    ["Gunpowder Mines", "beside the Gunpowder Mines lift", "56", "151", "23"],
+    [
+      "Gunpowder Mines",
+      "beside a fire at the entrance to the mines",
+      "1",
+      "153",
+      "37"
     ],
-    "Gold Mine": [
-        [
-            "Gold Mine",
-            "on top of the entrance",
-            "-15",
-            "104",
-            "-313"
-        ],
-        [
-            "Gold Mine",
-            "next to the Lazy Miner's pickaxe",
-            "-19",
-            "25",
-            "-305"
-        ],
-        [
-            "Gold Mine",
-            "on the top of the mountain",
-            "-19",
-            "143",
-            "-361"
-        ],
-        [
-            "Gold Mine",
-            "near Rusty",
-            "-25",
-            "78",
-            "-328"
-        ],
-        [
-            "Gold Mine",
-            "behind the Gold Forger",
-            "-30",
-            "74",
-            "-293"
-        ],
-        [
-            "Gold Mine",
-            "in the Blacksmith's forge",
-            "-44",
-            "77",
-            "-303"
-        ],
-        [
-            "Gold Mine",
-            "beside a pile of coal",
-            "15",
-            "75",
-            "-290"
-        ],
-        [
-            "Gold Mine",
-            "[More Info Needed]",
-            "-1",
-            "78",
-            "-325"
-        ],
-        [
-            "Gold Mine",
-            "[More Info Needed]",
-            "0",
-            "76",
-            "-307"
-        ],
-        [
-            "Gold Mine",
-            "on top of platforms near a Fairy Soul",
-            "17",
-            "57",
-            "-340"
-        ],
-        [
-            "Gold Mine",
-            "[More Info Needed]",
-            "-35",
-            "77",
-            "-313"
-        ],
-        [
-            "Gold Mine",
-            "at the bottom of the stairs",
-            "-18",
-            "62",
-            "-353"
-        ],
-        [
-            "Gold Mine",
-            "behind the Deep Caverns launch pad",
-            "-11",
-            "68",
-            "-397"
-        ],
-        [
-            "Gold Mine",
-            "next to a hot fire underground",
-            "-22",
-            "37",
-            "-336"
-        ],
-        [
-            "Gold Mine",
-            "on top of a giant crate",
-            "-25",
-            "79",
-            "-282"
-        ],
-        [
-            "Gold Mine",
-            "looking towards the windmill",
-            "41",
-            "80",
-            "-311"
-        ],
-        [
-            "Gold Mine",
-            "near a fork in the lava",
-            "-49",
-            "94",
-            "-335"
-        ],
-        [
-            "Gold Mine",
-            "above the Iron Forger",
-            "-2",
-            "82",
-            "-309"
-        ]
+    ["Deep Caverns", "on top of the entrance", "11", "176", "58"],
+    ["Deep Caverns", "atop of the shortest mountain peak", "-34", "207", "38"],
+    ["Diamond Reserve", "beside the Diamond Reserve lift", "46", "38", "22"],
+    ["Slimehill", "next to a lily pad pond in Slimehill", "20", "68", "43"],
+    ["Pigmen's Den", "[More Info Needed]", "21", "104", "17"],
+    ["Lapis Quarry", "next to the lapis miner", "-11", "120", "37"],
+    ["Pigmen's Den", "in front of the Pigmen sign", "1", "110", "45"],
+    ["Obsidian Sanctuary", "adjacent to a fossil", "38", "12", "20"],
+    ["Obsidian Sanctuary", "next to Rhys", "31", "12", "13"],
+    ["Deep Caverns", "beside the entrance steps", "7", "157", "63"]
+  ],
+  "Dwarven Mines": [
+    ["Dwarven Village", "behind Banker Broadjaw", "13", "201", "-150"],
+    ["Cliffside Veins", "overlooking The Mist", "36", "128", "50"],
+    [
+      "Divan's Gateway",
+      "atop the right massive dwarf statue",
+      "32",
+      "179",
+      "103"
     ],
-    "Deep Caverns": [
-        [
-            "Deep Caverns",
-            "beneath the launch portal",
-            "4",
-            "148",
-            "88"
-        ],
-        [
-            "Gunpowder Mines",
-            "beside Walter",
-            "24",
-            "156",
-            "-38"
-        ],
-        [
-            "Gunpowder Mines",
-            "atop a platform",
-            "22",
-            "159",
-            "27"
-        ],
-        [
-            "Gunpowder Mines",
-            "beside the Gunpowder Mines lift",
-            "56",
-            "151",
-            "23"
-        ],
-        [
-            "Gunpowder Mines",
-            "beside a fire at the entrance to the mines",
-            "1",
-            "153",
-            "37"
-        ],
-        [
-            "Deep Caverns",
-            "on top of the entrance",
-            "11",
-            "176",
-            "58"
-        ],
-        [
-            "Deep Caverns",
-            "atop of the shortest mountain peak",
-            "-34",
-            "207",
-            "38"
-        ],
-        [
-            "Diamond Reserve",
-            "beside the Diamond Reserve lift",
-            "46",
-            "38",
-            "22"
-        ],
-        [
-            "Slimehill",
-            "next to a lily pad pond in Slimehill",
-            "20",
-            "68",
-            "43"
-        ],
-        [
-            "Pigmen's Den",
-            "[More Info Needed]",
-            "21",
-            "104",
-            "17"
-        ],
-        [
-            "Lapis Quarry",
-            "next to the lapis miner",
-            "-11",
-            "120",
-            "37"
-        ],
-        [
-            "Pigmen's Den",
-            "in front of the Pigmen sign",
-            "1",
-            "110",
-            "45"
-        ],
-        [
-            "Obsidian Sanctuary",
-            "adjacent to a fossil",
-            "38",
-            "12",
-            "20"
-        ],
-        [
-            "Obsidian Sanctuary",
-            "next to Rhys",
-            "31",
-            "12",
-            "13"
-        ],
-        [
-            "Deep Caverns",
-            "beside the entrance steps",
-            "7",
-            "157",
-            "63"
-        ]
+    ["Great Ice Wall", "under Divan's Gateway", "-17", "128", "177"],
+    ["Dwarven Mines", "underneath a massive crystal", "-1", "183", "26"],
+    ["Dwarven Mines", "underneath the gold gate", "87", "193", "-44"],
+    ["Dwarven Mines", "near Geo", "91", "199", "-123"],
+    ["Miner's Guild", "in the Miner's Guild", "-73", "222", "-139"],
+    ["Royal Palace", "on the Royal Palace table", "126", "197", "187"],
+    ["Upper Mines", "behind Emissary Fraiser", "-134", "174", "-51"],
+    ["Goblin Burrows", "in the Goblin Burrows gold room", "-146", "144", "148"],
+    ["Hanging Court", "looking off the Hanging Court", "78", "188", "126"],
+    ["The Lift", "behind the Lift", "-93", "200", "-122"],
+    [
+      "Aristocrat Passage",
+      "In the passage underneath the Royal Palace",
+      "104",
+      "151",
+      "142"
     ],
-    "Dwarven Mines": [
-        [
-            "Dwarven Village",
-            "behind Banker Broadjaw",
-            "13",
-            "201",
-            "-150"
-        ],
-        [
-            "Cliffside Veins",
-            "overlooking The Mist",
-            "36",
-            "128",
-            "50"
-        ],
-        [
-            "Divan's Gateway",
-            "atop the right massive dwarf statue",
-            "32",
-            "179",
-            "103"
-        ],
-        [
-            "Great Ice Wall",
-            "under Divan's Gateway",
-            "-17",
-            "128",
-            "177"
-        ],
-        [
-            "Dwarven Mines",
-            "underneath a massive crystal",
-            "-1",
-            "183",
-            "26"
-        ],
-        [
-            "Dwarven Mines",
-            "underneath the gold gate",
-            "87",
-            "193",
-            "-44"
-        ],
-        [
-            "Dwarven Mines",
-            "near Geo",
-            "91",
-            "199",
-            "-123"
-        ],
-        [
-            "Miner's Guild",
-            "in the Miner's Guild",
-            "-73",
-            "222",
-            "-139"
-        ],
-        [
-            "Royal Palace",
-            "on the Royal Palace table",
-            "126",
-            "197",
-            "187"
-        ],
-        [
-            "Upper Mines",
-            "behind Emissary Fraiser",
-            "-134",
-            "174",
-            "-51"
-        ],
-        [
-            "Goblin Burrows",
-            "in the Goblin Burrows gold room",
-            "-146",
-            "144",
-            "148"
-        ],
-        [
-            "Hanging Court",
-            "looking off the Hanging Court",
-            "78",
-            "188",
-            "126"
-        ],
-        [
-            "The Lift",
-            "behind the Lift",
-            "-93",
-            "200",
-            "-122"
-        ],
-        [
-            "Aristocrat Passage",
-            "In the passage underneath the Royal Palace",
-            "104",
-            "151",
-            "142"
-        ],
-        [
-            "The Forge",
-            "near lava in The Forge",
-            "-2",
-            "147",
-            "-52"
-        ]
+    ["The Forge", "near lava in The Forge", "-2", "147", "-52"]
+  ],
+  "Crystal Hollows": [
+    ["Crystal Nucleus", "near the Diamond Essence Shop", "472", "106", "518"],
+    [
+      "Crystal Nucleus",
+      "at an entrance to the Magma Fields near Amethyst",
+      "485",
+      "65",
+      "479"
     ],
-    "Crystal Hollows": [
-        [
-            "Crystal Nucleus",
-            "near the Diamond Essence Shop",
-            "472",
-            "106",
-            "518"
-        ],
-        [
-            "Crystal Nucleus",
-            "at an entrance to the Magma Fields near Amethyst",
-            "485",
-            "65",
-            "479"
-        ],
-        [
-            "Crystal Nucleus",
-            "on a ledge next to the stairwell",
-            "510",
-            "93",
-            "470"
-        ],
-        [
-            "Crystal Nucleus",
-            "behind Emissary Sisko",
-            "494",
-            "106",
-            "556"
-        ],
-        [
-            "Crystal Nucleus",
-            "in between Jade and Sapphire crystals",
-            "553",
-            "106",
-            "513"
-        ],
-        [
-            "Crystal Nucleus",
-            "on top of the Crystal Nucleus",
-            "508",
-            "115",
-            "564"
-        ],
-        [
-            "Crystal Nucleus",
-            "on the arms of the Amethyst statue",
-            "463",
-            "127",
-            "505"
-        ],
-        [
-            "Crystal Nucleus",
-            "at the base of the Sapphire pillar",
-            "532",
-            "69",
-            "528"
-        ],
-        [
-            "Crystal Nucleus",
-            "next to a lava waterfall",
-            "530",
-            "71",
-            "465"
-        ],
-        [
-            "Crystal Nucleus",
-            "underneath the stairwell",
-            "509",
-            "71",
-            "480"
-        ],
-        [
-            "Crystal Nucleus",
-            "near Geonathan Greatforge",
-            "533",
-            "108",
-            "556"
-        ],
-        [
-            "Crystal Nucleus",
-            "on a lower platform!",
-            "477",
-            "82",
-            "532"
-        ],
-        [
-            "Crystal Nucleus",
-            "near the Mithril Deposits entrance",
-            "557",
-            "117",
-            "463"
-        ],
-        [
-            "Crystal Nucleus",
-            "on top of some Gold Ore",
-            "553",
-            "100",
-            "489"
-        ],
-        [
-            "Crystal Nucleus",
-            "in the middle of the Crystal Nucleus !",
-            "513",
-            "70",
-            "513"
-        ]
+    ["Crystal Nucleus", "on a ledge next to the stairwell", "510", "93", "470"],
+    ["Crystal Nucleus", "behind Emissary Sisko", "494", "106", "556"],
+    [
+      "Crystal Nucleus",
+      "in between Jade and Sapphire crystals",
+      "553",
+      "106",
+      "513"
     ],
-    "Spider's Den": [
-        [
-            "Arachne's Sanctuary",
-            "higher up in Arachne's Sanctuary",
-            "-303",
-            "65",
-            "-182"
-        ],
-        [
-            "Arachne's Sanctuary",
-            "behind an egg in Arachne's Sanctuary",
-            "-266",
-            "72",
-            "-191"
-        ],
-        [
-            "Archaeologist's Camp",
-            "within the Archaeologist's Camp",
-            "-355",
-            "111",
-            "-293"
-        ],
-        [
-            "Spider Mound",
-            "behind the Spider's Den",
-            "-155",
-            "86",
-            "-351"
-        ],
-        [
-            "Spider's Den",
-            "behind the Crimson Isle launch pad",
-            "-360",
-            "85",
-            "-356"
-        ],
-        [
-            "Spider's Den",
-            "on top of the dragon skeleton's horn",
-            "-353",
-            "124",
-            "-250"
-        ],
-        [
-            "Arachne's Burrows",
-            "near a Fairy Soul and Relic",
-            "-293",
-            "36",
-            "-271"
-        ],
-        [
-            "Gravel Mines",
-            "within a Gravel Mines fossil",
-            "-181",
-            "61",
-            "-312"
-        ],
-        [
-            "Gravel Mines",
-            "atop a mushroom in the Gravel Mines",
-            "-217",
-            "75",
-            "-345"
-        ],
-        [
-            "Spider's Den",
-            "beside Haymitch",
-            "-202",
-            "83",
-            "-238"
-        ],
-        [
-            "Spider's Den",
-            "on top of the pond boulder",
-            "-299",
-            "97",
-            "-167"
-        ],
-        [
-            "Grandma's House",
-            "near slain spiders",
-            "-280",
-            "115",
-            "-181"
-        ],
-        [
-            "Spider's Den",
-            "near the stray Fairy Soul",
-            "-398",
-            "139",
-            "-250"
-        ],
-        [
-            "Grandma's House",
-            "on top of the house",
-            "-283",
-            "129",
-            "-185"
-        ],
-        [
-            "Spider Mound",
-            "at the top of the Spider's Den",
-            "-200",
-            "174",
-            "-313"
-        ]
+    ["Crystal Nucleus", "on top of the Crystal Nucleus", "508", "115", "564"],
+    [
+      "Crystal Nucleus",
+      "on the arms of the Amethyst statue",
+      "463",
+      "127",
+      "505"
     ],
-    "The End": [
-        [
-            "The End",
-            "atop a obsidian spike near the entrance",
-            "-451",
-            "50",
-            "-274"
-        ],
-        [
-            "The End",
-            "overlooking the drop down",
-            "-539",
-            "102",
-            "-271"
-        ],
-        [
-            "Zealot Bruiser Hideout",
-            "in the Bruiser Hideout chokepoint",
-            "-551",
-            "56",
-            "-239"
-        ],
-        [
-            "The End",
-            "by the warp to Void Sepulture",
-            "-566",
-            "7",
-            "-316"
-        ],
-        [
-            "The End",
-            "at the highest point",
-            "-584",
-            "211",
-            "-272"
-        ],
-        [
-            "Void Slate",
-            "behind the Draconic Altar",
-            "-591",
-            "5",
-            "-276"
-        ],
-        [
-            "Dragon's Nest",
-            "at the start of the parkour",
-            "-600",
-            "21",
-            "-255"
-        ],
-        [
-            "Dragon's Nest",
-            "atop The Peak",
-            "-667",
-            "33",
-            "-210"
-        ],
-        [
-            "Dragon's Nest",
-            "on top of the Dragon Egg",
-            "-672",
-            "77",
-            "-276"
-        ],
-        [
-            "Dragon's Nest",
-            "at the Dragon's View",
-            "-714",
-            "41",
-            "-315"
-        ],
-        [
-            "Dragon's Nest",
-            "on the End Spire",
-            "-722",
-            "56",
-            "-232"
-        ],
-        [
-            "The End",
-            "behind the race checkpoint",
-            "-778",
-            "101",
-            "-300"
-        ],
-        [
-            "The End",
-            "on the stairs up to the race",
-            "-510",
-            "110",
-            "-250"
-        ],
-        [
-            "Dragon's Nest",
-            "near Zealots and Watchers",
-            "-661",
-            "5",
-            "-248"
-        ],
-        [
-            "The End",
-            "in the Pearl Dealer's shop",
-            "-502",
-            "103",
-            "-299"
-        ]
+    [
+      "Crystal Nucleus",
+      "at the base of the Sapphire pillar",
+      "532",
+      "69",
+      "528"
     ],
-    "Crimson Isle": [
-        [
-            "Stronghold",
-            "in the corner of Bladesoul's room",
-            "-270",
-            "83",
-            "-496"
-        ],
-        [
-            "The Wasteland",
-            "beside the Desperate Engineer",
-            "-289",
-            "127",
-            "-985"
-        ],
-        [
-            "Odger's Hut",
-            "in Odger's Hut",
-            "-376",
-            "207",
-            "-809"
-        ],
-        [
-            "Cathedral",
-            "in front row seats of the Cathedral",
-            "-33",
-            "114",
-            "-937"
-        ],
-        [
-            "Dojo",
-            "behind Master Tao",
-            "-237",
-            "108",
-            "-605"
-        ],
-        [
-            "Dragontail",
-            "within the Dragontail colosseum",
-            "-694",
-            "98",
-            "-794"
-        ],
-        [
-            "Minion Shop",
-            "in the Dragontail Minion Shop",
-            "-641",
-            "101",
-            "-822"
-        ],
-        [
-            "Forgotten Skull",
-            "on the Forgotten Skull's tooth",
-            "-375",
-            "121",
-            "-1009"
-        ],
-        [
-            "Mage Outpost",
-            "on the path through the Mage Outpost",
-            "-295",
-            "93",
-            "-689"
-        ],
-        [
-            "Magma Chamber",
-            "the middle of the Magma Chamber",
-            "-376",
-            "63",
-            "-802"
-        ],
-        [
-            "Ruins of Ashfang",
-            "in the Ruins of Ashfang",
-            "-469",
-            "135",
-            "-1020"
-        ],
-        [
-            "Plhlegblast Pool",
-            "in the Plhlegblast Pool",
-            "-375",
-            "83",
-            "-709"
-        ],
-        [
-            "Scarleton Plaza",
-            "in front of the Statue of the Hero",
-            "-62",
-            "107",
-            "-811"
-        ],
-        [
-            "The Bastion",
-            "on the snout of The Bastion skeleton",
-            "-631",
-            "141",
-            "-926"
-        ],
-        [
-            "Stronghold",
-            "on the entrance bridge",
-            "-358",
-            "80",
-            "-442"
-        ]
+    ["Crystal Nucleus", "next to a lava waterfall", "530", "71", "465"],
+    ["Crystal Nucleus", "underneath the stairwell", "509", "71", "480"],
+    ["Crystal Nucleus", "near Geonathan Greatforge", "533", "108", "556"],
+    ["Crystal Nucleus", "on a lower platform!", "477", "82", "532"],
+    [
+      "Crystal Nucleus",
+      "near the Mithril Deposits entrance",
+      "557",
+      "117",
+      "463"
     ],
-    "The Park": [
-        [
-            "Savanna Woodland",
-            "where the jungle meets the savannah",
-            "-440",
-            "110",
-            "-40"
-        ],
-        [
-            "Savanna Woodland",
-            "behind Master Tactician Funk's bunks",
-            "-461",
-            "110",
-            "-9"
-        ],
-        [
-            "Jungle Island",
-            "near mossy cobblestone",
-            "-406",
-            "121",
-            "-90"
-        ],
-        [
-            "None",
-            "within the clay tunnel",
-            "-455",
-            "94",
-            "-1"
-        ],
-        [
-            "Dark Thicket",
-            "within the cultist's tent",
-            "-327",
-            "104",
-            "-113"
-        ],
-        [
-            "Viking Longhouse",
-            "in the back of Lonely Island",
-            "-362",
-            "91",
-            "76"
-        ],
-        [
-            "Melody's Plateau",
-            "behind Melody",
-            "-400",
-            "110",
-            "35"
-        ],
-        [
-            "Birch Park",
-            "behind the flower pot",
-            "-309",
-            "82",
-            "18"
-        ],
-        [
-            "Birch Park",
-            "on the birch launch pad",
-            "-276",
-            "87",
-            "-17"
-        ],
-        [
-            "Birch Park",
-            "next to the pond bridge",
-            "-285",
-            "82",
-            "-41"
-        ],
-        [
-            "Jungle Island",
-            "at the race checkpoint",
-            "-407",
-            "129",
-            "-123"
-        ],
-        [
-            "Jungle Island",
-            "between islands tethered by leaves",
-            "-441",
-            "124",
-            "-109"
-        ],
-        [
-            "Birch Park",
-            "within the Rainmaker shrine",
-            "-312",
-            "83",
-            "-72"
-        ],
-        [
-            "Howling Cave",
-            "in front of Old Shaman Nyko",
-            "-380",
-            "61",
-            "35"
-        ],
-        [
-            "Jungle Island",
-            "on top of a stone sculpture",
-            "-454",
-            "138",
-            "-121"
-        ]
-    ],
-    "Dungeon Hub": [
-        [
-            "Dungeon Hub",
-            "at the Crystal Core",
-            "5",
-            "11",
-            "-1"
-        ],
-        [
-            "Dungeon Hub",
-            "atop a tall statue",
-            "0",
-            "146",
-            "-78"
-        ],
-        [
-            "Dungeon Hub",
-            "next to Croesus",
-            "-21",
-            "120",
-            "-16"
-        ],
-        [
-            "Dungeon Hub",
-            "near the Hub Selector",
-            "-34",
-            "119",
-            "9"
-        ],
-        [
-            "Dungeon Hub",
-            "by the race start",
-            "-23",
-            "86",
-            "-3"
-        ],
-        [
-            "Dungeon Hub",
-            "atop the Catacombs gate",
-            "-52",
-            "156",
-            "0"
-        ],
-        [
-            "Dungeon Hub",
-            "near Saul",
-            "-54",
-            "119",
-            "-13"
-        ],
-        [
-            "Dungeon Hub",
-            "under the entrance bridge",
-            "0",
-            "108",
-            "0"
-        ],
-        [
-            "Dungeon Hub",
-            "atop the Giant Mushroom",
-            "-5",
-            "23",
-            "98"
-        ],
-        [
-            "Dungeon Hub",
-            "in the Precursor Ruins",
-            "-138",
-            "21",
-            "-7"
-        ],
-        [
-            "Dungeon Hub",
-            "behind Ophelia's desk",
-            "-62",
-            "121",
-            "-7"
-        ],
-        [
-            "Dungeon Hub",
-            "near something that will never arrive",
-            "-62",
-            "122",
-            "28"
-        ],
-        [
-            "Dungeon Hub",
-            "beside the Hub Island portal",
-            "16",
-            "125",
-            "3"
-        ],
-        [
-            "Dungeon Hub",
-            "behind leaderboards",
-            "-18",
-            "87",
-            "-27"
-        ],
-        [
-            "Dungeon Hub",
-            "near Malik",
-            "-66",
-            "121",
-            "6"
-        ]
+    ["Crystal Nucleus", "on top of some Gold Ore", "553", "100", "489"],
+    [
+      "Crystal Nucleus",
+      "in the middle of the Crystal Nucleus !",
+      "513",
+      "70",
+      "513"
     ]
+  ],
+  "Spider's Den": [
+    [
+      "Arachne's Sanctuary",
+      "higher up in Arachne's Sanctuary",
+      "-303",
+      "65",
+      "-182"
+    ],
+    [
+      "Arachne's Sanctuary",
+      "behind an egg in Arachne's Sanctuary",
+      "-266",
+      "72",
+      "-191"
+    ],
+    [
+      "Archaeologist's Camp",
+      "within the Archaeologist's Camp",
+      "-355",
+      "111",
+      "-293"
+    ],
+    ["Spider Mound", "behind the Spider's Den", "-155", "86", "-351"],
+    [
+      "Spider's Den",
+      "behind the Crimson Isle launch pad",
+      "-360",
+      "85",
+      "-356"
+    ],
+    [
+      "Spider's Den",
+      "on top of the dragon skeleton's horn",
+      "-353",
+      "124",
+      "-250"
+    ],
+    ["Arachne's Burrows", "near a Fairy Soul and Relic", "-293", "36", "-271"],
+    ["Gravel Mines", "within a Gravel Mines fossil", "-181", "61", "-312"],
+    [
+      "Gravel Mines",
+      "atop a mushroom in the Gravel Mines",
+      "-217",
+      "75",
+      "-345"
+    ],
+    ["Spider's Den", "beside Haymitch", "-202", "83", "-238"],
+    ["Spider's Den", "on top of the pond boulder", "-299", "97", "-167"],
+    ["Grandma's House", "near slain spiders", "-280", "115", "-181"],
+    ["Spider's Den", "near the stray Fairy Soul", "-398", "139", "-250"],
+    ["Grandma's House", "on top of the house", "-283", "129", "-185"],
+    ["Spider Mound", "at the top of the Spider's Den", "-200", "174", "-313"]
+  ],
+  "The End": [
+    [
+      "The End",
+      "atop a obsidian spike near the entrance",
+      "-451",
+      "50",
+      "-274"
+    ],
+    ["The End", "overlooking the drop down", "-539", "102", "-271"],
+    [
+      "Zealot Bruiser Hideout",
+      "in the Bruiser Hideout chokepoint",
+      "-551",
+      "56",
+      "-239"
+    ],
+    ["The End", "by the warp to Void Sepulture", "-566", "7", "-316"],
+    ["The End", "at the highest point", "-584", "211", "-272"],
+    ["Void Slate", "behind the Draconic Altar", "-591", "5", "-276"],
+    ["Dragon's Nest", "at the start of the parkour", "-600", "21", "-255"],
+    ["Dragon's Nest", "atop The Peak", "-667", "33", "-210"],
+    ["Dragon's Nest", "on top of the Dragon Egg", "-672", "77", "-276"],
+    ["Dragon's Nest", "at the Dragon's View", "-714", "41", "-315"],
+    ["Dragon's Nest", "on the End Spire", "-722", "56", "-232"],
+    ["The End", "behind the race checkpoint", "-778", "101", "-300"],
+    ["The End", "on the stairs up to the race", "-510", "110", "-250"],
+    ["Dragon's Nest", "near Zealots and Watchers", "-661", "5", "-248"],
+    ["The End", "in the Pearl Dealer's shop", "-502", "103", "-299"]
+  ],
+  "Crimson Isle": [
+    ["Stronghold", "in the corner of Bladesoul's room", "-270", "83", "-496"],
+    ["The Wasteland", "beside the Desperate Engineer", "-289", "127", "-985"],
+    ["Odger's Hut", "in Odger's Hut", "-376", "207", "-809"],
+    ["Cathedral", "in front row seats of the Cathedral", "-33", "114", "-937"],
+    ["Dojo", "behind Master Tao", "-237", "108", "-605"],
+    ["Dragontail", "within the Dragontail colosseum", "-694", "98", "-794"],
+    ["Minion Shop", "in the Dragontail Minion Shop", "-641", "101", "-822"],
+    [
+      "Forgotten Skull",
+      "on the Forgotten Skull's tooth",
+      "-375",
+      "121",
+      "-1009"
+    ],
+    [
+      "Mage Outpost",
+      "on the path through the Mage Outpost",
+      "-295",
+      "93",
+      "-689"
+    ],
+    ["Magma Chamber", "the middle of the Magma Chamber", "-376", "63", "-802"],
+    ["Ruins of Ashfang", "in the Ruins of Ashfang", "-469", "135", "-1020"],
+    ["Plhlegblast Pool", "in the Plhlegblast Pool", "-375", "83", "-709"],
+    [
+      "Scarleton Plaza",
+      "in front of the Statue of the Hero",
+      "-62",
+      "107",
+      "-811"
+    ],
+    [
+      "The Bastion",
+      "on the snout of The Bastion skeleton",
+      "-631",
+      "141",
+      "-926"
+    ],
+    ["Stronghold", "on the entrance bridge", "-358", "80", "-442"]
+  ],
+  "The Park": [
+    [
+      "Savanna Woodland",
+      "where the jungle meets the savannah",
+      "-440",
+      "110",
+      "-40"
+    ],
+    [
+      "Savanna Woodland",
+      "behind Master Tactician Funk's bunks",
+      "-461",
+      "110",
+      "-9"
+    ],
+    ["Jungle Island", "near mossy cobblestone", "-406", "121", "-90"],
+    ["None", "within the clay tunnel", "-455", "94", "-1"],
+    ["Dark Thicket", "within the cultist's tent", "-327", "104", "-113"],
+    ["Viking Longhouse", "in the back of Lonely Island", "-362", "91", "76"],
+    ["Melody's Plateau", "behind Melody", "-400", "110", "35"],
+    ["Birch Park", "behind the flower pot", "-309", "82", "18"],
+    ["Birch Park", "on the birch launch pad", "-276", "87", "-17"],
+    ["Birch Park", "next to the pond bridge", "-285", "82", "-41"],
+    ["Jungle Island", "at the race checkpoint", "-407", "129", "-123"],
+    [
+      "Jungle Island",
+      "between islands tethered by leaves",
+      "-441",
+      "124",
+      "-109"
+    ],
+    ["Birch Park", "within the Rainmaker shrine", "-312", "83", "-72"],
+    ["Howling Cave", "in front of Old Shaman Nyko", "-380", "61", "35"],
+    ["Jungle Island", "on top of a stone sculpture", "-454", "138", "-121"]
+  ],
+  "Dungeon Hub": [
+    ["Dungeon Hub", "at the Crystal Core", "5", "11", "-1"],
+    ["Dungeon Hub", "atop a tall statue", "0", "146", "-78"],
+    ["Dungeon Hub", "next to Croesus", "-21", "120", "-16"],
+    ["Dungeon Hub", "near the Hub Selector", "-34", "119", "9"],
+    ["Dungeon Hub", "by the race start", "-23", "86", "-3"],
+    ["Dungeon Hub", "atop the Catacombs gate", "-52", "156", "0"],
+    ["Dungeon Hub", "near Saul", "-54", "119", "-13"],
+    ["Dungeon Hub", "under the entrance bridge", "0", "108", "0"],
+    ["Dungeon Hub", "atop the Giant Mushroom", "-5", "23", "98"],
+    ["Dungeon Hub", "in the Precursor Ruins", "-138", "21", "-7"],
+    ["Dungeon Hub", "behind Ophelia's desk", "-62", "121", "-7"],
+    [
+      "Dungeon Hub",
+      "near something that will never arrive",
+      "-62",
+      "122",
+      "28"
+    ],
+    ["Dungeon Hub", "beside the Hub Island portal", "16", "125", "3"],
+    ["Dungeon Hub", "behind leaderboards", "-18", "87", "-27"],
+    ["Dungeon Hub", "near Malik", "-66", "121", "6"]
+  ]
 }

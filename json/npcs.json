@@ -1,4946 +1,903 @@
 {
-    "Hub": {
-        "Aatrox": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Adventurer": [
-            [
-                "Hub",
-                "-41",
-                "70",
-                "-64"
-            ]
-        ],
-        "Alchemist": [
-            [
-                "Village",
-                "41",
-                "70",
-                "-63"
-            ]
-        ],
-        "Alixer": [
-            [
-                "Village",
-                "0",
-                "70",
-                "-93"
-            ]
-        ],
-        "Amelia": [
-            [
-                "Village",
-                "-45",
-                "85",
-                "-5"
-            ]
-        ],
-        "Anita": [
-            [
-                "Farmhouse",
-                "23",
-                "77",
-                "-69"
-            ]
-        ],
-        "Andrew": [
-            [
-                "Village",
-                "38.5",
-                "68",
-                "-46.5"
-            ]
-        ],
-        "Apprentice": [
-            [
-                "Village",
-                "20",
-                "61",
-                "-9"
-            ]
-        ],
-        "Arthur": [
-            [
-                "Farm",
-                "51",
-                "71",
-                "-136"
-            ]
-        ],
-        "Auction Agents": [
-            [
-                "Auction House (Zone)",
-                "-36",
-                "73",
-                "-86"
-            ],
-            [
-                "Auction House (Zone)",
-                "-36",
-                "73",
-                "-95"
-            ],
-            [
-                "Auction House (Zone)",
-                "-31",
-                "73",
-                "-86"
-            ],
-            [
-                "Auction House (Zone)",
-                "-31",
-                "73",
-                "-95"
-            ]
-        ],
-        "Auction Master": [
-            [
-                "Auction House (Zone)",
-                "-46",
-                "73",
-                "-90"
-            ]
-        ],
-        "Baker": [
-            [
-                "Village",
-                "-6",
-                "70",
-                "-47"
-            ]
-        ],
-        "Banker": [
-            [
-                "Bank",
-                "-24",
-                "71",
-                "-58"
-            ]
-        ],
-        "Bartender": [
-            [
-                "Forest",
-                "-83",
-                "71",
-                "-47"
-            ],
-            [
-                "Tavern",
-                "-73",
-                "71",
-                "-55"
-            ]
-        ],
-        "Bazaar": [
-            [
-                "Bazaar Alley",
-                "-32",
-                "71",
-                "-76"
-            ]
-        ],
-        "Bea": [
-            [
-                "Pet Care",
-                "31.5",
-                "70",
-                "-94.5"
-            ]
-        ],
-        "Biblio": [
-            [
-                "Community Center",
-                "7.6",
-                "71",
-                "-99.8"
-            ]
-        ],
-        "Billy Joe": [
-            [
-                "Village",
-                "-78",
-                "70",
-                "-70"
-            ]
-        ],
-        "Bobby Joe": [
-            [
-                "Village",
-                "62.5",
-                "71",
-                "-115.5"
-            ]
-        ],
-        "Builder": [
-            [
-                "Builder's House",
-                "-51.5",
-                "71",
-                "-28"
-            ]
-        ],
-        "Carpenter": [
-            [
-                "Village",
-                "15",
-                "72",
-                "-21"
-            ]
-        ],
-        "Christopher": [
-            [
-                "Hub",
-                "-60",
-                "89",
-                "-17"
-            ]
-        ],
-        "Clerk Seraphine": [
-            [
-                "Community Center",
-                "11",
-                "71",
-                "-102"
-            ],
-            [
-                "Election Room",
-                "9",
-                "32",
-                "-120"
-            ]
-        ],
-        "Cole": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Curator": [
-            [
-                "Museum",
-                "-63",
-                "77",
-                "84"
-            ]
-        ],
-        "Dusk": [
-            [
-                "Blacksmith (Zone)",
-                "-38",
-                "68",
-                "-126"
-            ]
-        ],
-        "Derpy": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-110"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Diana": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Diaz": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Duke": [
-            [
-                "Village",
-                "-6.5",
-                "70",
-                "-89.5"
-            ]
-        ],
-        "Elizabeth": [
-            [
-                "Community Center",
-                "0",
-                "71",
-                "-101"
-            ]
-        ],
-        "Erihann": [
-            [
-                "Wizard Tower",
-                "40",
-                "100",
-                "69.5"
-            ]
-        ],
-        "Fann": [
-            [
-                "Pet Care",
-                "38.5",
-                "70",
-                "-88.5"
-            ]
-        ],
-        "Farm Merchant": [
-            [
-                "Hub",
-                "15",
-                "70",
-                "-71"
-            ]
-        ],
-        "Farmer": [
-            [
-                "Farm",
-                "44",
-                "72",
-                "-162"
-            ]
-        ],
-        "Fear Mongerer": [
-            [
-                "Village",
-                "-2",
-                "70",
-                "-43"
-            ]
-        ],
-        "Felix": [
-            [
-                "Village",
-                "-25.75",
-                "68",
-                "-103"
-            ]
-        ],
-        "Finnegan": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Fish Merchant": [
-            [
-                "Village",
-                "52",
-                "68",
-                "-83"
-            ]
-        ],
-        "Fisherman": [
-            [
-                "Fisherman's Hut",
-                "155",
-                "68",
-                "47"
-            ]
-        ],
-        "Foxy": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "George": [
-            [
-                "Pet Care",
-                "39.5",
-                "71",
-                "-100.5"
-            ]
-        ],
-        "Gladiator": [
-            [
-                "Wilderness",
-                "123",
-                "79",
-                "165"
-            ]
-        ],
-        "Guy": [
-            [
-                "Village",
-                "51",
-                "79",
-                "-14"
-            ]
-        ],
-        "Hootie": [
-            [
-                "Pet Care",
-                "38.5",
-                "70",
-                "-90.5"
-            ]
-        ],
-        "Hub Selector": [
-            [
-                "Village",
-                "-10",
-                "70",
-                "67"
-            ]
-        ],
-        "Jack": [
-            [
-                "Village",
-                "-0.5",
-                "70",
-                "-54.5"
-            ]
-        ],
-        "Jacob": [
-            [
-                "Farmhouse",
-                "23",
-                "71",
-                "-69"
-            ]
-        ],
-        "Jacobus": [
-            [
-                "Thaumaturgist",
-                "52",
-                "69",
-                "-43"
-            ]
-        ],
-        "Jamie": [
-            [
-                "Village",
-                "-36",
-                "68",
-                "-39"
-            ]
-        ],
-        "Jax": [
-            [
-                "Archery Range",
-                "5",
-                "61",
-                "-134"
-            ]
-        ],
-        "Mayor Jerry": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-110"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Jim Bob": [
-            [
-                "Village",
-                "65.5",
-                "71",
-                "-61.5"
-            ]
-        ],
-        "Kat": [
-            [
-                "Pet Care",
-                "31",
-                "70",
-                "-102"
-            ]
-        ],
-        "Leo": [
-            [
-                "Village",
-                "-7.5",
-                "70",
-                "-75.5"
-            ]
-        ],
-        "Liam": [
-            [
-                "Village",
-                "10.5",
-                "70",
-                "-41.5"
-            ]
-        ],
-        "Librarian": [
-            [
-                "Library",
-                "-36",
-                "69",
-                "-113"
-            ]
-        ],
-        "Lonely Philosopher": [
-            [
-                "Ruins",
-                "-250",
-                "130",
-                "41"
-            ]
-        ],
-        "Lucius": [
-            [
-                "Wilderness",
-                "124",
-                "73",
-                "165"
-            ]
-        ],
-        "Lumber Jack": [
-            [
-                "Forest",
-                "-112",
-                "74",
-                "-36"
-            ]
-        ],
-        "Lumber Merchant": [
-            [
-                "Village",
-                "-49",
-                "70",
-                "-68"
-            ]
-        ],
-        "Lynn": [
-            [
-                "Village",
-                "21.5",
-                "69",
-                "-124.5"
-            ]
-        ],
-        "Mad Redstone Engineer": [
-            [
-                "Builder's House",
-                "-52",
-                "65",
-                "-29"
-            ]
-        ],
-        "Madame Eleanor Q. Goldsworth III": [
-            [
-                "Museum",
-                "-50",
-                "77",
-                "76"
-            ]
-        ],
-        "Maddox the Slayer": [
-            [
-                "Tavern",
-                "-74",
-                "65",
-                "-51"
-            ]
-        ],
-        "Malik": [
-            [
-                "Dungeon Hub",
-                "-64",
-                "121",
-                "5"
-            ],
-            [
-                "Catacombs Entrance (Zone)",
-                "-81",
-                "56",
-                "-120"
-            ]
-        ],
-        "Marco": [
-            [
-                "Flower House",
-                "-10",
-                "71",
-                "-14"
-            ]
-        ],
-        "Marina": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Maths Enjoyer": [
-            [
-                "Village",
-                "56",
-                "69",
-                "-40"
-            ]
-        ],
-        "Maxwell": [
-            [
-                "Thaumaturgist",
-                "46",
-                "69",
-                "-34"
-            ]
-        ],
-        "Mine Merchant": [
-            [
-                "Weaponsmith (Zone)",
-                "",
-                "68",
-                "-125"
-            ]
-        ],
-        "Minikloon": [
-            [
-                "Farm",
-                "83.5",
-                "72",
-                "-117.5"
-            ]
-        ],
-        "Mort": [
-            [
-                "Dungeon Hub",
-                "-69",
-                "123",
-                "0"
-            ],
-            [
-                "Catacombs Entrance (Zone)",
-                "-89",
-                "55",
-                "-129"
-            ]
-        ],
-        "Nicole": [
-            [
-                "Wizard Tower",
-                "39.5",
-                "90",
-                "72.5"
-            ]
-        ],
-        "Ophelia": [
-            [
-                "Dungeon Hub",
-                "-64",
-                "121",
-                "-7"
-            ],
-            [
-                "Catacombs Entrance (Zone)",
-                "-86",
-                "55",
-                "-140"
-            ]
-        ],
-        "Oringo": [
-            [
-                "Village",
-                "-4",
-                "70",
-                "-44"
-            ]
-        ],
-        "Ozanne": [
-            [
-                "Thaumaturgist",
-                "41",
-                "70",
-                "-39"
-            ]
-        ],
-        "Pat": [
-            [
-                "Graveyard",
-                "-134",
-                "73",
-                "-97"
-            ]
-        ],
-        "Paul": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-111"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ]
-        ],
-        "Plumber Joe": [
-            [
-                "Village",
-                "56",
-                "70",
-                "-78"
-            ]
-        ],
-        "Romero": [
-            [
-                "The Park",
-                "-450",
-                "91",
-                "2"
-            ],
-            [
-                "Flower House",
-                "-18",
-                "71",
-                "-28"
-            ],
-            [
-                "Graveyard",
-                "-124",
-                "72",
-                "-123"
-            ],
-            [
-                "Crimson Isle",
-                "-388",
-                "95",
-                "-478"
-            ],
-            [
-                "Mountain",
-                "-55",
-                "169",
-                "43"
-            ],
-            [
-                "Gold Mine",
-                "-22",
-                "36",
-                "-339"
-            ],
-            [
-                "Wilderness",
-                "146",
-                "112",
-                "113"
-            ],
-            [
-                "Colosseum",
-                "129",
-                "61",
-                "-103"
-            ],
-            [
-                "Mushroom Desert",
-                "297",
-                "87",
-                "-563"
-            ],
-            [
-                "The Park",
-                "-477",
-                "134",
-                "-117"
-            ]
-        ],
-        "Rosetta": [
-            [
-                "Weaponsmith (Zone)",
-                "-12",
-                "68",
-                "-141"
-            ]
-        ],
-        "Ryu": [
-            [
-                "Village",
-                "28",
-                "70",
-                "-116"
-            ]
-        ],
-        "Salesman": [
-            [
-                "Village",
-                "7",
-                "70",
-                "-85"
-            ],
-            [
-                "Village",
-                "7",
-                "70",
-                "-85"
-            ],
-            [
-                "Village",
-                "7",
-                "70",
-                "-85"
-            ],
-            [
-                "Village",
-                "7",
-                "70",
-                "-85"
-            ],
-            [
-                "Village",
-                "7",
-                "70",
-                "-85"
-            ]
-        ],
-        "Scoop": [
-            [
-                "Mountain",
-                "5",
-                "181",
-                "25"
-            ]
-        ],
-        "Scorpius": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-110"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ],
-            [
-                "Dark Auction",
-                "88",
-                "50",
-                "145"
-            ]
-        ],
-        "Security Sloth": [
-            [
-                "Village",
-                "2",
-                "70",
-                "-76"
-            ]
-        ],
-        "Seymour": [
-            [
-                "Fashion Shop",
-                "25",
-                "64",
-                "-41"
-            ]
-        ],
-        "Shania": [
-            [
-                "Farm",
-                "48",
-                "72",
-                "-160"
-            ]
-        ],
-        "Simon": [
-            [
-                "Village",
-                "6.5",
-                "70",
-                "-91.5"
-            ]
-        ],
-        "Sirius": [
-            [
-                "Wilderness",
-                "91",
-                "75",
-                "176"
-            ],
-            [
-                "Dark Auction",
-                "88",
-                "50",
-                "145"
-            ]
-        ],
-        "SkyBlock Animation": [
-            [
-                "Village",
-                "-5.5",
-                "70",
-                "-91.5"
-            ]
-        ],
-        "Smithmonger": [
-            [
-                "Blacksmith (Zone)",
-                "-32",
-                "69",
-                "-135"
-            ]
-        ],
-        "Stella": [
-            [
-                "Village",
-                "17.5",
-                "70",
-                "-99.5"
-            ]
-        ],
-        "Taylor": [
-            [
-                "Fashion Shop",
-                "22",
-                "71",
-                "-45.5"
-            ]
-        ],
-        "The Handler": [
-            [
-                "Hexatorum",
-                "-65",
-                "70",
-                "-127"
-            ]
-        ],
-        "Tia the Fairy": [
-            [
-                "Wilderness",
-                "129",
-                "66",
-                "137"
-            ]
-        ],
-        "Tom": [
-            [
-                "Village",
-                "28.5",
-                "69",
-                "-57.5"
-            ]
-        ],
-        "Udium": [
-            [
-                "Wizard Tower",
-                "44.8",
-                "104",
-                "76"
-            ]
-        ],
-        "Vex": [
-            [
-                "Village",
-                "-16.5",
-                "70",
-                "-81.5"
-            ]
-        ],
-        "Weaponsmith": [
-            [
-                "Weaponsmith (Zone)",
-                "-9",
-                "68",
-                "-140"
-            ]
-        ],
-        "Wizard": [
-            [
-                "Wizard Tower",
-                "46",
-                "122",
-                "75"
-            ]
-        ],
-        "Wool Weaver": [
-            [
-                "Builder's House",
-                "-47",
-                "74",
-                "-30"
-            ]
-        ],
-        "Zog": [
-            [
-                "Pet Care",
-                "34",
-                "71",
-                "-99"
-            ]
-        ]
-    },
-    "Dark Auction": {
-        "Bob": [
-            [
-                "Dark Auction",
-                "84",
-                "50",
-                "140"
-            ],
-            [
-                "Dark Auction",
-                "92",
-                "50",
-                "140"
-            ]
-        ],
-        "Scorpius": [
-            [
-                "Community Center",
-                "6",
-                "73",
-                "-110"
-            ],
-            [
-                "Election Room",
-                "1",
-                "32",
-                "-119"
-            ],
-            [
-                "Dark Auction",
-                "88",
-                "50",
-                "145"
-            ]
-        ],
-        "Sirius": [
-            [
-                "Wilderness",
-                "91",
-                "75",
-                "176"
-            ],
-            [
-                "Dark Auction",
-                "88",
-                "50",
-                "145"
-            ]
-        ]
-    },
-    "The Park": {
-        "Campfire Adept": [
-            [
-                "Dark Thicket",
-                "-327",
-                "103",
-                "-105"
-            ]
-        ],
-        "Campfire Initiate": [
-            [
-                "Dark Thicket",
-                "-326",
-                "103",
-                "-108"
-            ],
-            [
-                "Dark Thicket",
-                "-334",
-                "103",
-                "-109"
-            ]
-        ],
-        "Charlie": [
-            [
-                "Birch Park",
-                "-286",
-                "82",
-                "-17"
-            ]
-        ],
-        "Gustave": [
-            [
-                "The Park",
-                "-386",
-                "89",
-                "55"
-            ]
-        ],
-        "Juliette": [
-            [
-                "The Park",
-                "-477",
-                "134",
-                "-117"
-            ]
-        ],
-        "Master Tactician Funk": [
-            [
-                "Savanna Woodland",
-                "-462.5",
-                "110",
-                "-15.5"
-            ]
-        ],
-        "Melancholic Viking": [
-            [
-                "Viking Longhouse",
-                "-360",
-                "91",
-                "76"
-            ]
-        ],
-        "Melody": [
-            [
-                "Melody's Plateau",
-                "-399",
-                "110",
-                "34"
-            ]
-        ],
-        "Old Shaman Nyko": [
-            [
-                "Howling Cave",
-                "-379",
-                "60",
-                "36"
-            ]
-        ],
-        "Romero": [
-            [
-                "The Park",
-                "-450",
-                "91",
-                "2"
-            ],
-            [
-                "Flower House",
-                "-18",
-                "71",
-                "-28"
-            ],
-            [
-                "Graveyard",
-                "-124",
-                "72",
-                "-123"
-            ],
-            [
-                "Crimson Isle",
-                "-388",
-                "95",
-                "-478"
-            ],
-            [
-                "Mountain",
-                "-55",
-                "169",
-                "43"
-            ],
-            [
-                "Gold Mine",
-                "-22",
-                "36",
-                "-339"
-            ],
-            [
-                "Wilderness",
-                "146",
-                "112",
-                "113"
-            ],
-            [
-                "Colosseum",
-                "129",
-                "61",
-                "-103"
-            ],
-            [
-                "Mushroom Desert",
-                "297",
-                "87",
-                "-563"
-            ],
-            [
-                "The Park",
-                "-477",
-                "134",
-                "-117"
-            ]
-        ],
-        "Ryan": [
-            [
-                "Dark Thicket",
-                "-330",
-                "103",
-                "-103"
-            ]
-        ],
-        "Vanessa": [
-            [
-                "Birch Park",
-                "-312",
-                "83",
-                "-70"
-            ]
-        ]
-    },
-    "The Barn": {
-        "Farmhand": [
-            [
-                "The Barn",
-                "144",
-                "73",
-                "-240"
-            ]
-        ],
-        "Windmill Operator": [
-            [
-                "The Barn",
-                "97",
-                "89",
-                "-283"
-            ],
-            [
-                "The Barn",
-                "102",
-                "82",
-                "-283"
-            ]
-        ]
-    },
-    "Mushroom Desert": {
-        "Beth": [
-            [
-                "Mushroom Desert",
-                "163",
-                "77",
-                "-359"
-            ]
-        ],
-        "Friendly Hiker": [
-            [
-                "Desert Settlement",
-                "182",
-                "77",
-                "-379"
-            ]
-        ],
-        "Hungry Hiker": [
-            [
-                "Mushroom Gorge",
-                "269",
-                "48",
-                "-480"
-            ],
-            [
-                "Desert Settlement",
-                "148",
-                "76",
-                "-375"
-            ]
-        ],
-        "Hunter Ava": [
-            [
-                "Mushroom Desert",
-                "321",
-                "102",
-                "-470"
-            ]
-        ],
-        "Jake": [
-            [
-                "Jake's House",
-                "261",
-                "184",
-                "-565"
-            ]
-        ],
-        "Mason": [
-            [
-                "Mushroom Desert",
-                "177",
-                "77",
-                "-356"
-            ]
-        ],
-        "Moby": [
-            [
-                "Glowing Mushroom Cave",
-                "206",
-                "43",
-                "-500"
-            ]
-        ],
-        "Romero": [
-            [
-                "The Park",
-                "-450",
-                "91",
-                "2"
-            ],
-            [
-                "Flower House",
-                "-18",
-                "71",
-                "-28"
-            ],
-            [
-                "Graveyard",
-                "-124",
-                "72",
-                "-123"
-            ],
-            [
-                "Crimson Isle",
-                "-388",
-                "95",
-                "-478"
-            ],
-            [
-                "Mountain",
-                "-55",
-                "169",
-                "43"
-            ],
-            [
-                "Gold Mine",
-                "-22",
-                "36",
-                "-339"
-            ],
-            [
-                "Wilderness",
-                "146",
-                "112",
-                "113"
-            ],
-            [
-                "Colosseum",
-                "129",
-                "61",
-                "-103"
-            ],
-            [
-                "Mushroom Desert",
-                "297",
-                "87",
-                "-563"
-            ],
-            [
-                "The Park",
-                "-477",
-                "134",
-                "-117"
-            ]
-        ],
-        "Shepherd": [
-            [
-                "Shepherd's Keep",
-                "388",
-                "85",
-                "-373"
-            ]
-        ],
-        "Talbot": [
-            [
-                "Trapper's Den",
-                "285",
-                "104",
-                "-549"
-            ]
-        ],
-        "Tammy": [
-            [
-                "Trapper's Den",
-                "284",
-                "104",
-                "-545"
-            ]
-        ],
-        "Tony": [
-            [
-                "Trapper's Den",
-                "278",
-                "104",
-                "-545"
-            ]
-        ],
-        "Treasure Hunter": [
-            [
-                "Mushroom Desert",
-                "200",
-                "92",
-                "-437"
-            ]
-        ],
-        "Trevor The Trapper": [
-            [
-                "Trapper's Den",
-                "281",
-                "104",
-                "-543"
-            ]
-        ]
-    },
-    "Spider's Den": {
-        "Archaeologist": [
-            [
-                "Spider's Den",
-                "-360",
-                "111",
-                "-290"
-            ]
-        ],
-        "Bramass Beastslayer": [
-            [
-                "Grandma's House",
-                "-271",
-                "113",
-                "-196"
-            ]
-        ],
-        "Grandma Wolf": [
-            [
-                "Grandma's House",
-                "-282",
-                "122",
-                "-191"
-            ]
-        ],
-        "Haymitch": [
-            [
-                "Spider's Den",
-                "-203",
-                "83",
-                "-237"
-            ]
-        ],
-        "Rick": [
-            [
-                "Gravel Mines",
-                "-251",
-                "70",
-                "-325"
-            ]
-        ],
-        "Shaggy": [
-            [
-                "Grandma's House",
-                "-278",
-                "121",
-                "-182"
-            ]
-        ],
-        "Spider Tamer": [
-            [
-                "Arachne's Sanctuary",
-                "-298.5",
-                "62",
-                "-194.5"
-            ]
-        ]
-    },
-    "The End": {
-        "Gregory": [
-            [
-                "Dragon's Nest",
-                "-608",
-                "22",
-                "-285"
-            ]
-        ],
-        "Guber": [
-            [
-                "The End",
-                "-495",
-                "121",
-                "-242"
-            ]
-        ],
-        "Lone Adventurer": [
-            [
-                "The End",
-                "-524",
-                "101",
-                "-275"
-            ],
-            [
-                "The End",
-                "-588",
-                "22",
-                "-270"
-            ]
-        ],
-        "Pearl Dealer": [
-            [
-                "The End",
-                "-504",
-                "101",
-                "-284"
-            ]
-        ],
-        "Tyzzo": [
-            [
-                "Void Slate",
-                "-597",
-                "5",
-                "-272"
-            ]
-        ]
-    },
-    "Crimson Isle": {
-        "Aranya": [
-            [
-                "The Wasteland",
-                "-323",
-                "152",
-                "-1008"
-            ]
-        ],
-        "Aura": [
-            [
-                "Aura's Lab",
-                "-402.5",
-                "69",
-                "-883.5"
-            ]
-        ],
-        "Desperate Engineer": [
-            [
-                "The Wasteland",
-                "-289.5",
-                "127",
-                "-981.75"
-            ]
-        ],
-        "Kuudra Believer": [
-            [
-                "Plhlegblast Pool",
-                "-390.5",
-                "81",
-                "-701.5"
-            ]
-        ],
-        "Kuudra Gatekeeper": [
-            [
-                "Forgotten Skull",
-                "-371",
-                "114",
-                "-1039"
-            ]
-        ],
-        "Master Tao": [
-            [
-                "Dojo",
-                "-235",
-                "108",
-                "-602"
-            ]
-        ],
-        "Odger": [
-            [
-                "Odger's Hut",
-                "-373.5",
-                "207",
-                "-810.5"
-            ]
-        ],
-        "Romero": [
-            [
-                "The Park",
-                "-450",
-                "91",
-                "2"
-            ],
-            [
-                "Flower House",
-                "-18",
-                "71",
-                "-28"
-            ],
-            [
-                "Graveyard",
-                "-124",
-                "72",
-                "-123"
-            ],
-            [
-                "Crimson Isle",
-                "-388",
-                "95",
-                "-478"
-            ],
-            [
-                "Mountain",
-                "-55",
-                "169",
-                "43"
-            ],
-            [
-                "Gold Mine",
-                "-22",
-                "36",
-                "-339"
-            ],
-            [
-                "Wilderness",
-                "146",
-                "112",
-                "113"
-            ],
-            [
-                "Colosseum",
-                "129",
-                "61",
-                "-103"
-            ],
-            [
-                "Mushroom Desert",
-                "297",
-                "87",
-                "-563"
-            ],
-            [
-                "The Park",
-                "-477",
-                "134",
-                "-117"
-            ]
-        ],
-        "Vulcan": [
-            [
-                "Forgotten Skull",
-                "-364",
-                "114",
-                "-1028"
-            ]
-        ],
-        "Alchemage": [
-            [
-                "Scarleton",
-                "-86",
-                "118",
-                "-771"
-            ]
-        ],
-        "Alwin": [
-            [
-                "Scarleton",
-                "-82",
-                "92",
-                "-734"
-            ]
-        ],
-        "Arba": [
-            [
-                "Scarleton",
-                "-3.5",
-                "93",
-                "-820.5"
-            ]
-        ],
-        "Arbadak": [
-            [
-                "Scarleton",
-                "-0.5",
-                "93",
-                "-824.5"
-            ]
-        ],
-        "Aviar": [
-            [
-                "The Wasteland",
-                "-360.5",
-                "117",
-                "-971.5"
-            ]
-        ],
-        "Avorius": [
-            [
-                "Scarleton",
-                "-152",
-                "128",
-                "-809"
-            ]
-        ],
-        "Belanor": [
-            [
-                "Scarleton Bank",
-                "-84",
-                "108",
-                "-776"
-            ]
-        ],
-        "Carrolyn": [
-            [
-                "Scarleton",
-                "1",
-                "103",
-                "-803"
-            ]
-        ],
-        "Colore": [
-            [
-                "Scarleton",
-                "-131",
-                "89",
-                "-711"
-            ]
-        ],
-        "Cyndarin": [
-            [
-                "The Wasteland",
-                "-205",
-                "112",
-                "-957"
-            ]
-        ],
-        "Dean": [
-            [
-                "Cathedral",
-                "-16",
-                "123",
-                "-882"
-            ]
-        ],
-        "Drakuu": [
-            [
-                "The Wasteland",
-                "-324.5",
-                "191",
-                "-1015.5"
-            ]
-        ],
-        "Edelis": [
-            [
-                "Scarleton",
-                "-61.5",
-                "107",
-                "-812.5"
-            ],
-            [
-                "Scarleton",
-                "-92.5",
-                "104",
-                "-821.5"
-            ]
-        ],
-        "Elmar": [
-            [
-                "Scarleton Auction House",
-                "-60.5",
-                "108",
-                "-746.5"
-            ]
-        ],
-        "Eludore": [
-            [
-                "Scarleton",
-                "-101.5",
-                "91",
-                "-872.5"
-            ]
-        ],
-        "Ezekiel": [
-            [
-                "Scarleton",
-                "-27.5",
-                "107",
-                "-770.5"
-            ]
-        ],
-        "Grelius": [
-            [
-                "Scarleton",
-                "-131.5",
-                "101",
-                "-755.5"
-            ]
-        ],
-        "Gnyl": [
-            [
-                "The Wasteland",
-                "-376.5",
-                "117",
-                "-971.5"
-            ]
-        ],
-        "Hilda": [
-            [
-                "Scarleton Minion Shop",
-                "-46",
-                "107",
-                "-779"
-            ]
-        ],
-        "Igrupan": [
-            [
-                "Igrupan's Chicken Coop",
-                "-31",
-                "93",
-                "-824"
-            ]
-        ],
-        "Kheharad": [
-            [
-                "Scarleton",
-                "-111.5",
-                "99",
-                "-827.5"
-            ]
-        ],
-        "Kuudra Loremaster": [
-            [
-                "Scarleton",
-                "-106.5",
-                "126",
-                "-817.5"
-            ],
-            [
-                "Deep Caverns",
-                "-256.5",
-                "146",
-                "120.5"
-            ]
-        ],
-        "Lys": [
-            [
-                "Scarleton",
-                "-108",
-                "99",
-                "-803"
-            ]
-        ],
-        "Mage Emissary": [
-            [
-                "Scarleton",
-                "-131.5",
-                "89",
-                "-722.5"
-            ]
-        ],
-        "Mazakala": [
-            [
-                "Scarleton",
-                "-3.5",
-                "93",
-                "-825.5"
-            ]
-        ],
-        "Mollim": [
-            [
-                "Scarleton",
-                "-132.5",
-                "100",
-                "-789.5"
-            ]
-        ],
-        "Nuvian": [
-            [
-                "Dragontail",
-                "-693.5",
-                "102",
-                "-735.5"
-            ]
-        ],
-        "Pablo": [
-            [
-                "Scarleton",
-                "-131",
-                "128",
-                "-816"
-            ]
-        ],
-        "Queen Nyx": [
-            [
-                "Scarleton",
-                "-117.5",
-                "105",
-                "-754.5"
-            ]
-        ],
-        "Rescue Recruiter": [
-            [
-                "Scarleton",
-                "-120.5",
-                "92",
-                "-751.5"
-            ],
-            [
-                "Dragontail",
-                "-581.5",
-                "100",
-                "-690.5"
-            ]
-        ],
-        "Rhanora": [
-            [
-                "Scarleton",
-                "-144",
-                "100",
-                "-829"
-            ]
-        ],
-        "Rollim": [
-            [
-                "Scarleton",
-                "-147",
-                "106",
-                "-854"
-            ]
-        ],
-        "Rulenor": [
-            [
-                "Scarleton",
-                "-26.5",
-                "122",
-                "-769.5"
-            ]
-        ],
-        "Scholar Alluin": [
-            [
-                "Cathedral",
-                "-15.5",
-                "114",
-                "-915.5"
-            ]
-        ],
-        "Seffea": [
-            [
-                "Scarleton",
-                "-139",
-                "99",
-                "-816.5"
-            ]
-        ],
-        "Selenar": [
-            [
-                "Scarleton Bazaar",
-                "-71",
-                "107",
-                "-757"
-            ]
-        ],
-        "Udel": [
-            [
-                "Scarleton Bank",
-                "-78.5",
-                "107",
-                "-788.5"
-            ]
-        ],
-        "Ulyn": [
-            [
-                "Scarleton",
-                "-126",
-                "99",
-                "-784"
-            ]
-        ],
-        "Undercover Agent": [
-            [
-                "The Bastion",
-                "-624.5",
-                "120",
-                "-961.5"
-            ],
-            [
-                "Cathedral",
-                "-15",
-                "93",
-                "-845.0"
-            ]
-        ],
-        "Velyna": [
-            [
-                "Scarleton",
-                "-86.5",
-                "104.5",
-                "-820.5"
-            ]
-        ],
-        "Ziri": [
-            [
-                "Scarleton Bank",
-                "-82",
-                "114",
-                "-793"
-            ]
-        ],
-        "An": [
-            [
-                "Dragontail",
-                "-621",
-                "108",
-                "-741"
-            ]
-        ],
-        "Baar": [
-            [
-                "Dragontail Auction House",
-                "-638",
-                "123",
-                "-791"
-            ]
-        ],
-        "Barbarian Emissary": [
-            [
-                "Dragontail",
-                "-580.5",
-                "99",
-                "-710.5"
-            ]
-        ],
-        "Barter": [
-            [
-                "Dragontail Bazaar",
-                "-624.5",
-                "101",
-                "-794.5"
-            ]
-        ],
-        "Bromm": [
-            [
-                "Dragontail Auction House",
-                "-636.5",
-                "103",
-                "-784.5"
-            ]
-        ],
-        "Bruto": [
-            [
-                "Dragontail Bank",
-                "-613",
-                "100",
-                "-787"
-            ]
-        ],
-        "Bruuh": [
-            [
-                "Dragontail",
-                "-635",
-                "124",
-                "-688"
-            ]
-        ],
-        "Chief Scorn": [
-            [
-                "Dragontail",
-                "-580.5",
-                "115.5",
-                "-687.5"
-            ]
-        ],
-        "Chihai": [
-            [
-                "Dragontail",
-                "-604",
-                "107",
-                "-861"
-            ]
-        ],
-        "Chak": [
-            [
-                "Dragontail",
-                "-602",
-                "107",
-                "-868"
-            ]
-        ],
-        "Chuk": [
-            [
-                "Dragontail",
-                "-604",
-                "107",
-                "-869"
-            ]
-        ],
-        "Corm": [
-            [
-                "The Bastion",
-                "-668",
-                "126",
-                "-924"
-            ]
-        ],
-        "Deng": [
-            [
-                "Dragontail",
-                "-686.5",
-                "102",
-                "-765.5"
-            ]
-        ],
-        "Etc": [
-            [
-                "Dragontail",
-                "-606",
-                "107",
-                "-868"
-            ]
-        ],
-        "Gris": [
-            [
-                "Dragontail",
-                "-684.5",
-                "124",
-                "-828.5"
-            ],
-            [
-                "Dragontail",
-                "-686",
-                "116",
-                "-832"
-            ]
-        ],
-        "Grog": [
-            [
-                "Dragontail",
-                "-663.5",
-                "107",
-                "-736.5"
-            ]
-        ],
-        "Igor": [
-            [
-                "Dragontail",
-                "-549",
-                "98",
-                "-707"
-            ]
-        ],
-        "Jine": [
-            [
-                "Dragontail",
-                "-545.5",
-                "119",
-                "-854.5"
-            ]
-        ],
-        "Kaus": [
-            [
-                "Dragontail",
-                "-595",
-                "113",
-                "-640"
-            ]
-        ],
-        "Keran": [
-            [
-                "Dragontail",
-                "-561.5",
-                "98",
-                "-687.5"
-            ],
-            [
-                "Dragontail",
-                "-612.5",
-                "108",
-                "-669.5"
-            ]
-        ],
-        "Kutral": [
-            [
-                "Dragontail",
-                "-658.5",
-                "107",
-                "-741.5"
-            ]
-        ],
-        "Kuudra Archaeologist": [
-            [
-                "Dragontail",
-                "-570.5",
-                "111",
-                "-642.5"
-            ]
-        ],
-        "Lasea": [
-            [
-                "Dragontail",
-                "-566",
-                "108",
-                "-657"
-            ]
-        ],
-        "Maggie": [
-            [
-                "Dragontail",
-                "-592.5",
-                "123",
-                "-846.5"
-            ]
-        ],
-        "Marthos": [
-            [
-                "Minion Shop",
-                "-644",
-                "101",
-                "-825"
-            ]
-        ],
-        "Nall": [
-            [
-                "Dragontail",
-                "-657.5",
-                "107",
-                "-738.5"
-            ]
-        ],
-        "Pam": [
-            [
-                "Dragontail",
-                "-673.5",
-                "102",
-                "-767.5"
-            ],
-            [
-                "Dragontail",
-                "-662.5",
-                "102",
-                "-829.5"
-            ],
-            [
-                "Dragontail",
-                "-598.5",
-                "109",
-                "-665.5"
-            ],
-            [
-                "Dragontail",
-                "-592.5",
-                "107",
-                "-723.5"
-            ],
-            [
-                "Dragontail",
-                "-575.5",
-                "111",
-                "-754.5"
-            ],
-            [
-                "Dragontail",
-                "-631.5",
-                "100",
-                "-805.5"
-            ]
-        ],
-        "Piglin Guard": [
-            [
-                "The Wasteland",
-                "-367.5",
-                "117",
-                "-977.5"
-            ]
-        ],
-        "Plenk": [
-            [
-                "Dragontail",
-                "-572.5",
-                "118",
-                "-739.5"
-            ]
-        ],
-        "Pomtair": [
-            [
-                "Dragontail",
-                "-569.5",
-                "120",
-                "-775.5"
-            ]
-        ],
-        "Porc": [
-            [
-                "Dragontail",
-                "-577",
-                "118",
-                "-857"
-            ]
-        ],
-        "Prie": [
-            [
-                "Dragontail",
-                "-561.5",
-                "98",
-                "-689.5"
-            ],
-            [
-                "Dragontail",
-                "-612.5",
-                "108",
-                "-661.5"
-            ]
-        ],
-        "Sirih": [
-            [
-                "Dragontail",
-                "-699.5",
-                "131",
-                "-887.5"
-            ],
-            [
-                "Dragontail",
-                "-699.5",
-                "131",
-                "-887.5"
-            ]
-        ],
-        "Strux": [
-            [
-                "Dragontail",
-                "-596",
-                "123",
-                "-845"
-            ]
-        ],
-        "Suus": [
-            [
-                "Dragontail",
-                "-615",
-                "115",
-                "-706"
-            ]
-        ],
-        "Truu": [
-            [
-                "Dragontail",
-                "-613.5",
-                "122",
-                "-765.5"
-            ]
-        ],
-        "Turd": [
-            [
-                "Dragontail",
-                "-616",
-                "115",
-                "-708"
-            ]
-        ],
-        "Ugo": [
-            [
-                "Dragontail",
-                "-508.5",
-                "98",
-                "-633.5"
-            ]
-        ],
-        "Yoink": [
-            [
-                "Dragontail",
-                "-613.5",
-                "123",
-                "-786.5"
-            ]
-        ]
-    },
-    "Kuudra's Hollow": {
-        "Weird Sailor": [
-            [
-                "Kuudra's Hollow",
-                "-131",
-                "92",
-                "-178"
-            ]
-        ]
-    },
-    "Gold Mine": {
-        "Blacksmith": [
-            [
-                "Blacksmith (Zone)",
-                "-28",
-                "69",
-                "-125"
-            ],
-            [
-                "Gold Mine",
-                "-39.5",
-                "77",
-                "-299.5"
-            ],
-            [
-                "Dwarven Village",
-                "-6.5",
-                "201",
-                "-154.5"
-            ]
-        ],
-        "Gold Forger": [
-            [
-                "Gold Mine",
-                "-28",
-                "74",
-                "-295"
-            ]
-        ],
-        "Iron Forger": [
-            [
-                "Gold Mine",
-                "-2",
-                "75",
-                "-308"
-            ]
-        ],
-        "Lazy Miner": [
-            [
-                "Gold Mine",
-                "-12",
-                "78",
-                "-338"
-            ]
-        ],
-        "Romero": [
-            [
-                "The Park",
-                "-450",
-                "91",
-                "2"
-            ],
-            [
-                "Flower House",
-                "-18",
-                "71",
-                "-28"
-            ],
-            [
-                "Graveyard",
-                "-124",
-                "72",
-                "-123"
-            ],
-            [
-                "Crimson Isle",
-                "-388",
-                "95",
-                "-478"
-            ],
-            [
-                "Mountain",
-                "-55",
-                "169",
-                "43"
-            ],
-            [
-                "Gold Mine",
-                "-22",
-                "36",
-                "-339"
-            ],
-            [
-                "Wilderness",
-                "146",
-                "112",
-                "113"
-            ],
-            [
-                "Colosseum",
-                "129",
-                "61",
-                "-103"
-            ],
-            [
-                "Mushroom Desert",
-                "297",
-                "87",
-                "-563"
-            ],
-            [
-                "The Park",
-                "-477",
-                "134",
-                "-117"
-            ]
-        ],
-        "Rusty": [
-            [
-                "Gold Mine",
-                "-21",
-                "78",
-                "-326"
-            ]
-        ]
-    },
-    "Deep Caverns": {
-        "Lapis Miner": [
-            [
-                "Lapis Quarry",
-                "-10",
-                "120",
-                "35"
-            ]
-        ],
-        "Lift Operator": [
-            [
-                "Gunpowder Mines",
-                "45",
-                "150",
-                "15"
-            ],
-            [
-                "Lapis Quarry",
-                "45",
-                "121",
-                "15"
-            ],
-            [
-                "Pigmen's Den",
-                "45",
-                "101",
-                "17"
-            ],
-            [
-                "Slimehill",
-                "45",
-                "66",
-                "15"
-            ],
-            [
-                "Diamond Reserve",
-                "45",
-                "38",
-                "15"
-            ],
-            [
-                "Obsidian Sanctuary",
-                "45",
-                "13",
-                "15"
-            ],
-            [
-                "Dwarven Mines",
-                "-80",
-                "200",
-                "-124"
-            ]
-        ],
-        "Kuudra Loremaster": [
-            [
-                "Scarleton",
-                "-106.5",
-                "126",
-                "-817.5"
-            ],
-            [
-                "Deep Caverns",
-                "-256.5",
-                "146",
-                "120.5"
-            ]
-        ],
-        "Redstone Miner": [
-            [
-                "Pigmen's Den",
-                "24",
-                "104",
-                "16"
-            ]
-        ],
-        "Rhys": [
-            [
-                "Deep Caverns",
-                "31",
-                "12",
-                "14"
-            ],
-            [
-                "Dwarven Mines",
-                "-39",
-                "200",
-                "-120"
-            ]
-        ],
-        "Walter": [
-            [
-                "Deep Caverns",
-                "18",
-                "156",
-                "-37"
-            ]
-        ]
-    },
-    "Dwarven Mines": {
-        "Banker Broadjaw": [
-            [
-                "Dwarven Village",
-                "13",
-                "201",
-                "-148"
-            ]
-        ],
-        "Bednom": [
-            [
-                "Dwarven Village",
-                "-30",
-                "214",
-                "-89"
-            ]
-        ],
-        "Blacksmith": [
-            [
-                "Blacksmith (Zone)",
-                "-28",
-                "69",
-                "-125"
-            ],
-            [
-                "Gold Mine",
-                "-39.5",
-                "77",
-                "-299.5"
-            ],
-            [
-                "Dwarven Village",
-                "-6.5",
-                "201",
-                "-154.5"
-            ]
-        ],
-        "Brammor": [
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ]
-        ],
-        "Brarnas": [
-            [
-                "Dwarven Mines",
-                "-45",
-                "192",
-                "47"
-            ],
-            [
-                "Dwarven Mines",
-                "-48",
-                "192",
-                "46"
-            ],
-            [
-                "Dwarven Mines",
-                "-47",
-                "192",
-                "42"
-            ]
-        ],
-        "Bubu": [
-            [
-                "Dwarven Mines",
-                "-10",
-                "201",
-                "-103"
-            ]
-        ],
-        "Bulvar": [
-            [
-                "Dwarven Village",
-                "-16",
-                "201",
-                "-99"
-            ]
-        ],
-        "Bylma": [
-            [
-                "Dwarven Mines",
-                "-9",
-                "128",
-                "59"
-            ]
-        ],
-        "Dalbrek": [
-            [
-                "Grand Library",
-                "190",
-                "216",
-                "154"
-            ]
-        ],
-        "Dalir": [
-            [
-                "Dwarven Mines",
-                "-45",
-                "192",
-                "47"
-            ],
-            [
-                "Dwarven Mines",
-                "-48",
-                "192",
-                "46"
-            ],
-            [
-                "Dwarven Mines",
-                "-47",
-                "192",
-                "42"
-            ]
-        ],
-        "Dirt Guy": [
-            [
-                "Dwarven Mines",
-                "43",
-                "108",
-                "175"
-            ]
-        ],
-        "Don Expresso": [
-            [
-                "Dwarven Mines",
-                "37",
-                "202",
-                "-123"
-            ]
-        ],
-        "Emissary Braum": [
-            [
-                "Dwarven Mines",
-                "89.5",
-                "198",
-                "-92.5"
-            ]
-        ],
-        "Emissary Carlton": [
-            [
-                "Rampart's Quarry",
-                "-72",
-                "153",
-                "-10"
-            ]
-        ],
-        "Emissary Ceanna": [
-            [
-                "Cliffside Veins",
-                "42",
-                "134",
-                "22"
-            ]
-        ],
-        "Emissary Eliza": [
-            [
-                "Dwarven Village",
-                "-37",
-                "200",
-                "-131"
-            ]
-        ],
-        "Emissary Fraiser": [
-            [
-                "Upper Mines",
-                "-132",
-                "174",
-                "-50"
-            ]
-        ],
-        "Emissary Lilith": [
-            [
-                "Lava Springs",
-                "58",
-                "198",
-                "-8"
-            ]
-        ],
-        "Emissary Wilson": [
-            [
-                "Royal Mines",
-                "171",
-                "150",
-                "31"
-            ]
-        ],
-        "Emkam": [
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ]
-        ],
-        "Emmor": [
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ]
-        ],
-        "Erren": [
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ]
-        ],
-        "Fetchur": [
-            [
-                "Dwarven Mines",
-                "84",
-                "224",
-                "-118"
-            ]
-        ],
-        "Forger": [
-            [
-                "The Forge",
-                "-23",
-                "151",
-                "-50"
-            ],
-            [
-                "The Forge",
-                "-23",
-                "151",
-                "-80"
-            ],
-            [
-                "The Forge",
-                "23",
-                "151",
-                "-58"
-            ],
-            [
-                "The Forge",
-                "23",
-                "151",
-                "-88"
-            ]
-        ],
-        "Fragilis": [
-            [
-                "Dwarven Mines",
-                "88",
-                "199",
-                "-108"
-            ]
-        ],
-        "Fred": [
-            [
-                "The Forge",
-                "-2.5",
-                "149",
-                "-68.5"
-            ]
-        ],
-        "Geo": [
-            [
-                "Dwarven Mines",
-                "87",
-                "199",
-                "-116"
-            ]
-        ],
-        "Gimley": [
-            [
-                "Dwarven Tavern",
-                "29",
-                "202",
-                "-148"
-            ]
-        ],
-        "Grandan": [
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ]
-        ],
-        "Gwendolyn": [
-            [
-                "Dwarven Mines",
-                "89",
-                "198",
-                "-99"
-            ]
-        ],
-        "Hornum": [
-            [
-                "Dwarven Tavern",
-                "34",
-                "202",
-                "-145"
-            ]
-        ],
-        "Jotraeline Greatforge": [
-            [
-                "Forge Basin",
-                "-7",
-                "145",
-                "-19"
-            ]
-        ],
-        "Lift Operator": [
-            [
-                "Gunpowder Mines",
-                "45",
-                "150",
-                "15"
-            ],
-            [
-                "Lapis Quarry",
-                "45",
-                "121",
-                "15"
-            ],
-            [
-                "Pigmen's Den",
-                "45",
-                "101",
-                "17"
-            ],
-            [
-                "Slimehill",
-                "45",
-                "66",
-                "15"
-            ],
-            [
-                "Diamond Reserve",
-                "45",
-                "38",
-                "15"
-            ],
-            [
-                "Obsidian Sanctuary",
-                "45",
-                "13",
-                "15"
-            ],
-            [
-                "Dwarven Mines",
-                "-80",
-                "200",
-                "-124"
-            ]
-        ],
-        "Lumina": [
-            [
-                "Dwarven Mines",
-                "77",
-                "199",
-                "-110"
-            ]
-        ],
-        "Malmar": [
-            [
-                "Rampart's Quarry",
-                "-115",
-                "150",
-                "-25"
-            ],
-            [
-                "Aristocrat Passage",
-                "105",
-                "151",
-                "141"
-            ],
-            [
-                "Far Reserve",
-                "-96",
-                "155",
-                "88"
-            ]
-        ],
-        "Marigold": [
-            [
-                "Royal Mines",
-                "181.5",
-                "150",
-                "60.5"
-            ]
-        ],
-        "Old Man Garry": [
-            [
-                "Dwarven Village",
-                "5",
-                "200",
-                "-109"
-            ]
-        ],
-        "Puzzler": [
-            [
-                "Grand Library",
-                "181",
-                "196",
-                "135"
-            ]
-        ],
-        "Queen Mismyla": [
-            [
-                "Royal Palace",
-                "126",
-                "195",
-                "195"
-            ]
-        ],
-        "Redros": [
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ]
-        ],
-        "Rhys": [
-            [
-                "Deep Caverns",
-                "31",
-                "12",
-                "14"
-            ],
-            [
-                "Dwarven Mines",
-                "-39",
-                "200",
-                "-120"
-            ]
-        ],
-        "Royal Guard": [
-            [
-                "The Lift",
-                "-46",
-                "200",
-                "-119"
-            ],
-            [
-                "The Lift",
-                "-45",
-                "200",
-                "-124"
-            ]
-        ],
-        "Royal Resident": [
-            [
-                "Barracks Of Heroes",
-                "62",
-                "204",
-                "200"
-            ],
-            [
-                "Barracks Of Heroes",
-                "65",
-                "211",
-                "198"
-            ]
-        ],
-        "Royal Residents": [
-            [
-                "Royal Quarters",
-                "164",
-                "202",
-                "278"
-            ],
-            [
-                "Royal Quarters",
-                "92",
-                "202",
-                "276"
-            ]
-        ],
-        "Sargwyn": [
-            [
-                "Dwarven Tavern",
-                "34",
-                "202",
-                "-149"
-            ]
-        ],
-        "Silnar": [
-            [
-                "Cliffside Veins",
-                "53",
-                "141.5",
-                "19.5"
-            ]
-        ],
-        "Station Master": [
-            [
-                "Dwarven Village",
-                "38",
-                "201",
-                "-86"
-            ]
-        ],
-        "Tal Ker": [
-            [
-                "Grand Library",
-                "193",
-                "196",
-                "205"
-            ]
-        ],
-        "Tarwen": [
-            [
-                "Dwarven Tavern",
-                "33",
-                "202",
-                "-140"
-            ]
-        ],
-        "Thondin": [
-            [
-                "Dwarven Mines",
-                "-45",
-                "192",
-                "47"
-            ],
-            [
-                "Dwarven Mines",
-                "-48",
-                "192",
-                "46"
-            ],
-            [
-                "Dwarven Mines",
-                "-47",
-                "192",
-                "42"
-            ]
-        ],
-        "Thormyr": [
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ],
-            [
-                "Royal Palace",
-                "129",
-                "196",
-                "196"
-            ]
-        ],
-        "Ticket Master": [
-            [
-                "Aristocrat Passage",
-                "102",
-                "151",
-                "143"
-            ],
-            [
-                "Hanging Court",
-                "85",
-                "187",
-                "115"
-            ],
-            [
-                "Upper Mines",
-                "-149",
-                "169",
-                "-54"
-            ],
-            [
-                "Forge Basin",
-                "0",
-                "145",
-                "23"
-            ],
-            [
-                "Gates To The Mines",
-                "43",
-                "177",
-                "-42"
-            ],
-            [
-                "Far Reserve",
-                "-96",
-                "142",
-                "111"
-            ]
-        ],
-        "Tornora": [
-            [
-                "Royal Palace",
-                "136",
-                "196",
-                "166"
-            ]
-        ]
-    },
-    "Crystal Hollows": {
-        "Emissary Sisko": [
-            [
-                "Crystal Nucleus",
-                "495",
-                "105",
-                "556"
-            ]
-        ],
-        "Gemma": [
-            [
-                "Crystal Nucleus",
-                "475.5",
-                "106",
-                "513.5"
-            ]
-        ],
-        "Geonathan Greatforge": [
-            [
-                "Crystal Nucleus",
-                "530",
-                "106",
-                "556"
-            ]
-        ],
-        "Kalhuiki Door Guardian": [
-            [
-                "Jungle Temple",
-                "",
-                "",
-                ""
-            ],
-            [
-                "Jungle Temple",
-                "",
-                "",
-                ""
-            ]
-        ],
-        "Professor Robot": [
-            [
-                "Lost Precursor City",
-                "",
-                "",
-                ""
-            ]
-        ],
-        "Queen's Guards": [
-            [
-                "Goblin Queen's Den",
-                "",
-                "",
-                ""
-            ],
-            [
-                "Goblin Queen's Den",
-                "",
-                "",
-                ""
-            ],
-            [
-                "Goblin Queen's Den",
-                "",
-                "",
-                ""
-            ]
-        ]
-    },
-    "The Rift": {
-        "Alabaster": [
-            [
-                "Shifted Tavern",
-                "-130.3",
-                "73",
-                "166.5"
-            ]
-        ],
-        "Alatar": [
-            [
-                "Wizard Tower (Rift)",
-                "-46.5",
-                "116",
-                "70.5"
-            ]
-        ],
-        "Alchemist (Rift)": [
-            [
-                "West Village",
-                "-49.5",
-                "70",
-                "-65.5"
-            ]
-        ],
-        "Argofay Bughunter": [
-            [
-                "Wyld Woods",
-                "-85",
-                "108",
-                "97"
-            ]
-        ],
-        "Argofay Bugshopper": [
-            [
-                "Wyld Woods",
-                "-95",
-                "110",
-                "95.25"
-            ]
-        ],
-        "Argofay Serialbather": [
-            [
-                "Wyld Woods",
-                "-137.5",
-                "119.3",
-                "115.5"
-            ]
-        ],
-        "Argofay Sonfather": [
-            [
-                "Wyld Woods",
-                "-96",
-                "100",
-                "156.2"
-            ]
-        ],
-        "Argofay Threebrother": [
-            [
-                "Wyld Woods",
-                "-98.5",
-                "76.3",
-                "153.9"
-            ],
-            [
-                "Wyld Woods",
-                "-92.8",
-                "76",
-                "108.6"
-            ],
-            [
-                "Wyld Woods",
-                "-136",
-                "75",
-                "113"
-            ]
-        ],
-        "Argofay Trafficker": [
-            [
-                "Wyld Woods",
-                "-150.7",
-                "112",
-                "114.5"
-            ],
-            [
-                "Wyld Woods",
-                "-137.5",
-                "97",
-                "112.5"
-            ],
-            [
-                "Wyld Woods",
-                "-91.5",
-                "90",
-                "106.5"
-            ],
-            [
-                "Wyld Woods",
-                "-136.4",
-                "88",
-                "114"
-            ]
-        ],
-        "Argofay Trailblazer": [
-            [
-                "Wyld Woods",
-                "-97.5",
-                "66",
-                "147.5"
-            ]
-        ],
-        "Argofay Tencounter": [
-            [
-                "Wyld Woods",
-                "-93",
-                "99",
-                "95"
-            ]
-        ],
-        "Argofay Treemerger": [
-            [
-                "Wyld Woods",
-                "-145",
-                "93",
-                "140"
-            ]
-        ],
-        "Arora": [
-            [
-                "Shifted Tavern",
-                "-128.5",
-                "73.3",
-                "168.6"
-            ]
-        ],
-        "Ashera": [
-            [
-                "Shifted Tavern",
-                "-124.3",
-                "73",
-                "172.5"
-            ]
-        ],
-        "Barry": [
-            [
-                "Barry HQ",
-                "-45.5",
-                "54",
-                "-142.5"
-            ]
-        ],
-        "Blacksmith (Rift)": [
-            [
-                "D\u00e9j\u00e0 Vu Alley",
-                "-1.5",
-                "68",
-                "-142"
-            ]
-        ],
-        "Chef": [
-            [
-                "West Village",
-                "-103",
-                "72",
-                "-104"
-            ]
-        ],
-        "Chester": [
-            [
-                "Shifted Tavern",
-                "-130.5",
-                "73.3",
-                "173.3"
-            ]
-        ],
-        "Chicken (Rift NPC)": [
-            [
-                "Dreadfarm",
-                "-53.9",
-                "72",
-                "-158"
-            ],
-            [
-                "Dreadfarm",
-                "-57.1",
-                "72.2",
-                "-161.1"
-            ]
-        ],
-        "Cosmo": [
-            [
-                "West Village",
-                "-66.5",
-                "70",
-                "-92.3"
-            ]
-        ],
-        "Cow (Rift)": [
-            [
-                "Dreadfarm",
-                "-42.5",
-                "72",
-                "-167"
-            ],
-            [
-                "Dreadfarm",
-                "-38.4",
-                "71.7",
-                "-164.3"
-            ]
-        ],
-        "Cowboy Nick": [
-            [
-                "Village Plaza",
-                "-13",
-                "70",
-                "-7.1"
-            ]
-        ],
-        "Creed": [
-            [
-                "Barry Center",
-                "-15.2",
-                "73",
-                "-112"
-            ],
-            [
-                "Barry HQ",
-                "-51.5",
-                "54",
-                "-137.5"
-            ]
-        ],
-        "Cryptosis": [
-            [
-                "Village Plaza",
-                "27.5",
-                "71",
-                "-77"
-            ]
-        ],
-        "Dackinoru": [
-            [
-                "Shifted Tavern",
-                "-118.3",
-                "73.0",
-                "172.5"
-            ]
-        ],
-        "Damia (Rift)": [
-            [
-                "Barrier Street",
-                "30.5",
-                "72",
-                "-94.5"
-            ]
-        ],
-        "Deer": [
-            [
-                "Photon Pathway",
-                "139",
-                "70",
-                "-12"
-            ]
-        ],
-        "Detective Amog": [
-            [
-                "Murder House",
-                "-49.8",
-                "68",
-                "-37.2"
-            ],
-            [
-                "Village Plaza",
-                "0.5",
-                "71",
-                "-13"
-            ],
-            [
-                "Around Colosseum",
-                "-188",
-                "71",
-                "-56.7"
-            ],
-            [
-                "D\u00e9j\u00e0 Vu Alley",
-                "1.5",
-                "68",
-                "-139.5"
-            ],
-            [
-                "Murder House",
-                "-49.5",
-                "68",
-                "-38.75"
-            ],
-            [
-                "Taylor's",
-                "-28.5",
-                "64",
-                "-40.5"
-            ],
-            [
-                "Village Plaza",
-                "-53",
-                "68",
-                "-49.3"
-            ],
-            [
-                "Murder House",
-                "-51.1",
-                "68",
-                "-40.7"
-            ]
-        ],
-        "Disinfestor": [
-            [
-                "Infested House",
-                "-38",
-                "71",
-                "-103"
-            ],
-            [
-                "Infested House",
-                "-40",
-                "70",
-                "-88"
-            ],
-            [
-                "Infested House",
-                "-37.5",
-                "77",
-                "-93.5"
-            ],
-            [
-                "Infested House",
-                "-32.5",
-                "77",
-                "-88.5"
-            ]
-        ],
-        "Dr. Emmett": [
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ],
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ],
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ],
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ],
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ],
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ],
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ],
-            [
-                "Mirrorverse",
-                "",
-                "",
-                "To be added"
-            ]
-        ],
-        "Dr. Hibble": [
-            [
-                "Black Lagoon",
-                "-79.5",
-                "73",
-                "9.5"
-            ]
-        ],
-        "Dr. Phear": [
-            [
-                "Leeches Lair",
-                "-146.3",
-                "36",
-                "27.5"
-            ]
-        ],
-        "Dust": [
-            [
-                "Barry Center",
-                "-12",
-                "71",
-                "-100.2"
-            ],
-            [
-                "Barry HQ",
-                "-54.5",
-                "54",
-                "-138.5"
-            ]
-        ],
-        "Elise (Rift)": [
-            [
-                "Wizard Tower (Rift)",
-                "-50.5",
-                "122",
-                "69.5"
-            ],
-            [
-                "Rift Gallery",
-                "9.8",
-                "55",
-                "76"
-            ]
-        ],
-        "Enigma": [
-            [
-                "Enigma's Crib",
-                "",
-                "",
-                "Moves around"
-            ]
-        ],
-        "Fafnir": [
-            [
-                "Shifted Tavern",
-                "-127.5",
-                "73",
-                "172.6"
-            ]
-        ],
-        "Fairylosopher": [
-            [
-                "Fairylosopher Tower",
-                "252",
-                "106",
-                "76"
-            ],
-            [
-                "Fairylosopher Tower",
-                "256",
-                "130",
-                "75"
-            ],
-            [
-                "Fairylosopher Tower",
-                "256",
-                "123",
-                "84"
-            ],
-            [
-                "Fairylosopher Tower",
-                "256",
-                "123",
-                "87"
-            ],
-            [
-                "Fairylosopher Tower",
-                "253",
-                "123",
-                "90"
-            ],
-            [
-                "Fairylosopher Tower",
-                "250",
-                "123",
-                "88"
-            ],
-            [
-                "Fairylosopher Tower",
-                "250",
-                "123",
-                "85"
-            ]
-        ],
-        "Frankie": [
-            [
-                "Barry Center",
-                "-4",
-                "73",
-                "-111.4"
-            ],
-            [
-                "Barry HQ",
-                "-44.5",
-                "54",
-                "-146.5"
-            ]
-        ],
-        "Finplex": [
-            [
-                "West Village",
-                "-57.5",
-                "68",
-                "-82.5"
-            ]
-        ],
-        "Garlacius": [
-            [
-                "Shifted Tavern",
-                "-128.5",
-                "79.3",
-                "170.6"
-            ]
-        ],
-        "Grandma": [
-            [
-                "West Village",
-                "-70.5",
-                "64.5",
-                "-60"
-            ]
-        ],
-        "Gunther": [
-            [
-                "West Village",
-                "-68.7",
-                "71",
-                "-61.5"
-            ]
-        ],
-        "Harriette": [
-            [
-                "Barry Center",
-                "-1.7",
-                "74",
-                "-108.9"
-            ],
-            [
-                "Barry HQ",
-                "-39.5",
-                "54",
-                "-138.5"
-            ]
-        ],
-        "Hound": [
-            [
-                "Wyld Woods",
-                "-70",
-                "66",
-                "147.5"
-            ]
-        ],
-        "Inverted Sirius": [
-            [
-                "Wyld Woods",
-                "-96.5",
-                "75",
-                "190.5"
-            ]
-        ],
-        "Jerry (Rift)": [
-            [
-                "\"Your\" Island",
-                "-85.5",
-                "20",
-                "4.5"
-            ]
-        ],
-        "Joey McPizza": [
-            [
-                "West Village",
-                "-105.5",
-                "72.3",
-                "-102.5"
-            ]
-        ],
-        "Joliet": [
-            [
-                "Taylor's",
-                "-31.5",
-                "64.5",
-                "-43"
-            ]
-        ],
-        "Julian": [
-            [
-                "Oubliette",
-                "207",
-                "82",
-                "130.3"
-            ]
-        ],
-        "Kat (Rift)": [
-            [
-                "Infested House",
-                "-34.5",
-                "70",
-                "-90.5"
-            ]
-        ],
-        "Kay": [
-            [
-                "Lagoon Hut",
-                "-191",
-                "68",
-                "58.5"
-            ]
-        ],
-        "Kiermet": [
-            [
-                "Wyld Woods",
-                "-134.5",
-                "67",
-                "157.5"
-            ]
-        ],
-        "Lazarus": [
-            [
-                "Shifted Tavern",
-                "-127.6",
-                "79.3",
-                "166.3"
-            ]
-        ],
-        "Lonely \u00c4vae\u00eckx": [
-            [
-                "Lonely Terrace",
-                "",
-                "",
-                "Moves Between Chairs"
-            ]
-        ],
-        "Maddox The Slayer (Rift)": [
-            [
-                "Stillgore Ch\u00e2teau",
-                "204.5",
-                "77",
-                "45"
-            ]
-        ],
-        "Marcia": [
-            [
-                "Village Plaza",
-                "2.5",
-                "71",
-                "-10.5"
-            ]
-        ],
-        "Mole": [
-            [
-                "Colosseum (Rift)",
-                "-159.5",
-                "97",
-                "-75.5"
-            ]
-        ],
-        "Motes Grubber": [
-            [
-                "Wyld Woods",
-                "-92.5",
-                "65",
-                "156.5"
-            ],
-            [
-                "West Village",
-                "-93",
-                "70.5",
-                "-73"
-            ],
-            [
-                "Stillgore Ch\u00e2teau",
-                "164.5",
-                "77",
-                "125.5"
-            ]
-        ],
-        "Mushroom Guy": [
-            [
-                "Black Lagoon",
-                "-178.3125",
-                "75",
-                "12.5"
-            ]
-        ],
-        "Nene": [
-            [
-                "Village Plaza",
-                "23.5",
-                "88.5",
-                "-90.5"
-            ]
-        ],
-        "Phaser": [
-            [
-                "Photon Pathway",
-                "59.6",
-                "70",
-                "-88.5"
-            ]
-        ],
-        "Plumber Joe (Rift)": [
-            [
-                "West Village",
-                "-62",
-                "70",
-                "-78"
-            ]
-        ],
-        "Porhtal": [
-            [
-                "Broken Cage",
-                "-157.5",
-                "70.5",
-                "162"
-            ]
-        ],
-        "Ramero": [
-            [
-                "Murder House",
-                "-48.5",
-                "68",
-                "-38.5"
-            ]
-        ],
-        "Reed": [
-            [
-                "Lagoon Hut",
-                "-212",
-                "72",
-                "60.5"
-            ]
-        ],
-        "Ribbit": [
-            [
-                "Wyld Woods",
-                "-136.5",
-                "67",
-                "158.5"
-            ]
-        ],
-        "Rock": [
-            [
-                "Living Stillness",
-                "13.5",
-                "48.5",
-                "-186.5"
-            ],
-            [
-                "Living Stillness",
-                "-15.5",
-                "45.6",
-                "-174.5"
-            ],
-            [
-                "Living Stillness",
-                "-24.5",
-                "46.5",
-                "-203.5"
-            ],
-            [
-                "Living Stillness",
-                "19.5",
-                "45.3",
-                "-221.5"
-            ],
-            [
-                "Living Stillness",
-                "55.5",
-                "45.2",
-                "-199.5"
-            ],
-            [
-                "Living Stillness",
-                "55.5",
-                "45.3",
-                "-198.5"
-            ],
-            [
-                "Living Stillness",
-                "45.5",
-                "47.1",
-                "-180.5"
-            ],
-            [
-                "Living Stillness",
-                "27.6",
-                "49",
-                "-191.5"
-            ]
-        ],
-        "Roger": [
-            [
-                "Village Plaza",
-                "-2.5",
-                "70",
-                "-43.5"
-            ]
-        ],
-        "Roy": [
-            [
-                "Lagoon Hut",
-                "-204.6",
-                "75",
-                "49.2"
-            ]
-        ],
-        "Seraphine (Rift)": [
-            [
-                "Barry Center",
-                "-16.5",
-                "71",
-                "-101"
-            ],
-            [
-                "Barry Center",
-                "-16.5",
-                "71",
-                "-101"
-            ]
-        ],
-        "Seskel": [
-            [
-                "Shifted Tavern",
-                "-128.5",
-                "73.3",
-                "164.3"
-            ]
-        ],
-        "Seymour (Rift)": [
-            [
-                "Taylor's",
-                "-27",
-                "71",
-                "-44.5"
-            ]
-        ],
-        "Shania (Rift)": [
-            [
-                "Dreadfarm",
-                "-47.5",
-                "72",
-                "-161"
-            ]
-        ],
-        "Sheep (Rift)": [
-            [
-                "Dreadfarm",
-                "-58.5",
-                "72",
-                "-166.6"
-            ],
-            [
-                "Dreadfarm",
-                "-55.1",
-                "73.4",
-                "-167.1"
-            ],
-            [
-                "Dreadfarm",
-                "-55.1",
-                "73.4",
-                "-167.1"
-            ]
-        ],
-        "Shifted": [
-            [
-                "Shifted Tavern",
-                "-120.5",
-                "73",
-                "174.5"
-            ]
-        ],
-        "Sick Farmer": [
-            [
-                "Dreadfarm",
-                "-43",
-                "72",
-                "-160"
-            ]
-        ],
-        "Skylark": [
-            [
-                "West Village",
-                "-71.5",
-                "71.15",
-                "-115"
-            ]
-        ],
-        "Soma": [
-            [
-                "Barry Center",
-                "-17",
-                "74",
-                "-108"
-            ],
-            [
-                "Barry HQ",
-                "-52",
-                "54",
-                "-141"
-            ]
-        ],
-        "Sorcerer Okron": [
-            [
-                "West Village",
-                "-70.5",
-                "81",
-                "-110.5"
-            ]
-        ],
-        "Stain": [
-            [
-                "Barry Center",
-                "-6.5",
-                "73.5",
-                "-100.2"
-            ],
-            [
-                "Barry HQ",
-                "-57.6",
-                "54",
-                "-146.1"
-            ]
-        ],
-        "Taylor (Rift)": [
-            [
-                "Taylor's",
-                "-32.3",
-                "71",
-                "-38.5"
-            ],
-            [
-                "Taylor's",
-                "-28.6",
-                "64",
-                "-44.9"
-            ]
-        ],
-        "Tel Kar": [
-            [
-                "Wyld Woods",
-                "-113",
-                "69",
-                "62"
-            ]
-        ],
-        "Tybalt": [
-            [
-                "Shifted Tavern",
-                "-129.3",
-                "79",
-                "168.5"
-            ]
-        ],
-        "Unbound Explorer": [
-            [
-                "Otherside",
-                "-28.5",
-                "72",
-                "315.5"
-            ]
-        ],
-        "Unhinged Kloon": [
-            [
-                "West Village",
-                "-56.5",
-                "79",
-                "-13.7"
-            ]
-        ],
-        "Violetta": [
-            [
-                "Barry Center",
-                "-4.2",
-                "73",
-                "-105.4"
-            ],
-            [
-                "Barry HQ",
-                "-51.5",
-                "54",
-                "-147.5"
-            ]
-        ],
-        "Vreike": [
-            [
-                "Shifted Tavern",
-                "-124.3",
-                "73",
-                "172.5"
-            ]
-        ],
-        "Wizard (Rift)": [
-            [
-                "Wizard Tower (Rift)",
-                "-47.5",
-                "122.5",
-                "77.5"
-            ]
-        ],
-        "Wizardman": [
-            [
-                "Wizard Tower",
-                "-45",
-                "90",
-                "69.5"
-            ]
-        ],
-        "Yoshua": [
-            [
-                "West Village",
-                "-69",
-                "71.15",
-                "-117.5"
-            ]
-        ]
-    },
-    "Dungeon Hub": {
-        "Adventurer Saul": [
-            [
-                "Dungeon Hub",
-                "-53",
-                "119",
-                "-9"
-            ]
-        ],
-        "Croesus": [
-            [
-                "Dungeon Hub",
-                "-21",
-                "120",
-                "-14"
-            ]
-        ],
-        "Dungeon Hub Selector": [
-            [
-                "Dungeon Hub",
-                "-37",
-                "119",
-                "10"
-            ]
-        ],
-        "Guildford": [
-            [
-                "Dungeon Hub",
-                "-19",
-                "86",
-                "4"
-            ]
-        ],
-        "Malik": [
-            [
-                "Dungeon Hub",
-                "-64",
-                "121",
-                "5"
-            ],
-            [
-                "Catacombs Entrance (Zone)",
-                "-81",
-                "56",
-                "-120"
-            ]
-        ],
-        "Mort": [
-            [
-                "Dungeon Hub",
-                "-69",
-                "123",
-                "0"
-            ],
-            [
-                "Catacombs Entrance (Zone)",
-                "-89",
-                "55",
-                "-129"
-            ]
-        ],
-        "Ophelia": [
-            [
-                "Dungeon Hub",
-                "-64",
-                "121",
-                "-7"
-            ],
-            [
-                "Catacombs Entrance (Zone)",
-                "-86",
-                "55",
-                "-140"
-            ]
-        ]
-    },
-    "Winter Island": {
-        "Banker Barry": [
-            [
-                "Jerry's Workshop",
-                "20",
-                "77",
-                "44"
-            ]
-        ],
-        "Daan": [
-            [
-                "Glacial Cave",
-                "80",
-                "78.5",
-                "110"
-            ]
-        ],
-        "Dirk": [
-            [
-                "Glacial Cave",
-                "79",
-                "80.5",
-                "55"
-            ]
-        ],
-        "Einary": [
-            [
-                "Einary's Emporium",
-                "-16.5",
-                "76",
-                "63.5"
-            ]
-        ],
-        "Frosty": [
-            [
-                "Jerry's Workshop",
-                "-2",
-                "76",
-                "92"
-            ]
-        ],
-        "Frozen Alex": [
-            [
-                "Reflective Pond",
-                "-74.5",
-                "74",
-                "-6.5"
-            ]
-        ],
-        "Gary": [
-            [
-                "Gary's Shack",
-                "53",
-                "103",
-                "56"
-            ]
-        ],
-        "Generow": [
-            [
-                "Jerry's Workshop",
-                "-10.5",
-                "76",
-                "93.5"
-            ]
-        ],
-        "Gulliver": [
-            [
-                "Jerry's Workshop",
-                "68",
-                "105",
-                "33"
-            ]
-        ],
-        "Helena": [
-            [
-                "Glacial Cave",
-                "36",
-                "79",
-                "75"
-            ]
-        ],
-        "Hendrik": [
-            [
-                "Hot Springs",
-                "16.5",
-                "62",
-                "-30.5"
-            ]
-        ],
-        "Jerry": [
-            [
-                "Private Island",
-                "9",
-                "100",
-                "33"
-            ],
-            [
-                "Jerry's Workshop",
-                "-34",
-                "76",
-                "77"
-            ],
-            [
-                "Jerry's Workshop",
-                "6",
-                "76",
-                "72"
-            ],
-            [
-                "Jerry's Workshop",
-                "-15",
-                "76",
-                "49"
-            ],
-            [
-                "Jerry's Workshop",
-                "18",
-                "76",
-                "31"
-            ],
-            [
-                "Jerry's Workshop",
-                "-12",
-                "76",
-                "13"
-            ],
-            [
-                "Village",
-                "-3",
-                "70",
-                "-47"
-            ]
-        ],
-        "Maaike": [
-            [
-                "Glacial Cave",
-                "49",
-                "81",
-                "50"
-            ]
-        ],
-        "Mees": [
-            [
-                "Glacial Cave",
-                "80",
-                "79",
-                "72"
-            ]
-        ],
-        "Sherry": [
-            [
-                "Jerry's Workshop",
-                "9",
-                "76",
-                "99"
-            ]
-        ],
-        "St. Jerry": [
-            [
-                "Jerry's Workshop",
-                "-23",
-                "76",
-                "92"
-            ]
-        ],
-        "Terry": [
-            [
-                "Jerry Pond",
-                "-92",
-                "78",
-                "25"
-            ]
-        ]
-    },
-    "Private Island": {
-        "Jerry": [
-            [
-                "Private Island",
-                "9",
-                "100",
-                "33"
-            ],
-            [
-                "Jerry's Workshop",
-                "-34",
-                "76",
-                "77"
-            ],
-            [
-                "Jerry's Workshop",
-                "6",
-                "76",
-                "72"
-            ],
-            [
-                "Jerry's Workshop",
-                "-15",
-                "76",
-                "49"
-            ],
-            [
-                "Jerry's Workshop",
-                "18",
-                "76",
-                "31"
-            ],
-            [
-                "Jerry's Workshop",
-                "-12",
-                "76",
-                "13"
-            ],
-            [
-                "Village",
-                "-3",
-                "70",
-                "-47"
-            ]
-        ],
-        "Sam": [
-            [
-                "Private Island",
-                "8.5",
-                "100",
-                "41.5"
-            ],
-            [
-                "Garden",
-                "-7.5",
-                "71",
-                "-6.5"
-            ],
-            [
-                "Garden",
-                "-14.5",
-                "72",
-                "-27.5"
-            ],
-            [
-                "Garden",
-                "4.5",
-                "72",
-                "-21.5"
-            ]
-        ]
-    },
-    "Garden": {
-        "Anita": [
-            [
-                "Farmhouse",
-                "23",
-                "77",
-                "-69"
-            ]
-        ],
-        "Jacob": [
-            [
-                "Farmhouse",
-                "23",
-                "71",
-                "-69"
-            ]
-        ],
-        "Pesthunter Pamela": [
-            [
-                "Garden",
-                "-24",
-                "71",
-                "-14"
-            ]
-        ],
-        "Pesthunter Phillip": [
-            [
-                "Garden",
-                "-26",
-                "71",
-                "-14"
-            ]
-        ],
-        "Sam": [
-            [
-                "Private Island",
-                "8.5",
-                "100",
-                "41.5"
-            ],
-            [
-                "Garden",
-                "-7.5",
-                "71",
-                "-6.5"
-            ],
-            [
-                "Garden",
-                "-14.5",
-                "72",
-                "-27.5"
-            ],
-            [
-                "Garden",
-                "4.5",
-                "72",
-                "-21.5"
-            ]
-        ]
-    }
+  "Hub": {
+    "Aatrox": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Adventurer": [["Hub", "-41", "70", "-64"]],
+    "Alchemist": [["Village", "41", "70", "-63"]],
+    "Alixer": [["Village", "0", "70", "-93"]],
+    "Amelia": [["Village", "-45", "85", "-5"]],
+    "Anita": [["Farmhouse", "23", "77", "-69"]],
+    "Andrew": [["Village", "38.5", "68", "-46.5"]],
+    "Apprentice": [["Village", "20", "61", "-9"]],
+    "Arthur": [["Farm", "51", "71", "-136"]],
+    "Auction Agents": [
+      ["Auction House (Zone)", "-36", "73", "-86"],
+      ["Auction House (Zone)", "-36", "73", "-95"],
+      ["Auction House (Zone)", "-31", "73", "-86"],
+      ["Auction House (Zone)", "-31", "73", "-95"]
+    ],
+    "Auction Master": [["Auction House (Zone)", "-46", "73", "-90"]],
+    "Baker": [["Village", "-6", "70", "-47"]],
+    "Banker": [["Bank", "-24", "71", "-58"]],
+    "Bartender": [
+      ["Forest", "-83", "71", "-47"],
+      ["Tavern", "-73", "71", "-55"]
+    ],
+    "Bazaar": [["Bazaar Alley", "-32", "71", "-76"]],
+    "Bea": [["Pet Care", "31.5", "70", "-94.5"]],
+    "Biblio": [["Community Center", "7.6", "71", "-99.8"]],
+    "Billy Joe": [["Village", "-78", "70", "-70"]],
+    "Bobby Joe": [["Village", "62.5", "71", "-115.5"]],
+    "Builder": [["Builder's House", "-51.5", "71", "-28"]],
+    "Carpenter": [["Village", "15", "72", "-21"]],
+    "Christopher": [["Hub", "-60", "89", "-17"]],
+    "Clerk Seraphine": [
+      ["Community Center", "11", "71", "-102"],
+      ["Election Room", "9", "32", "-120"]
+    ],
+    "Cole": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Curator": [["Museum", "-63", "77", "84"]],
+    "Dusk": [["Blacksmith (Zone)", "-38", "68", "-126"]],
+    "Derpy": [
+      ["Community Center", "6", "73", "-110"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Diana": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Diaz": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Duke": [["Village", "-6.5", "70", "-89.5"]],
+    "Elizabeth": [["Community Center", "0", "71", "-101"]],
+    "Erihann": [["Wizard Tower", "40", "100", "69.5"]],
+    "Fann": [["Pet Care", "38.5", "70", "-88.5"]],
+    "Farm Merchant": [["Hub", "15", "70", "-71"]],
+    "Farmer": [["Farm", "44", "72", "-162"]],
+    "Fear Mongerer": [["Village", "-2", "70", "-43"]],
+    "Felix": [["Village", "-25.75", "68", "-103"]],
+    "Finnegan": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Fish Merchant": [["Village", "52", "68", "-83"]],
+    "Fisherman": [["Fisherman's Hut", "155", "68", "47"]],
+    "Foxy": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "George": [["Pet Care", "39.5", "71", "-100.5"]],
+    "Gladiator": [["Wilderness", "123", "79", "165"]],
+    "Guy": [["Village", "51", "79", "-14"]],
+    "Hootie": [["Pet Care", "38.5", "70", "-90.5"]],
+    "Hub Selector": [["Village", "-10", "70", "67"]],
+    "Jack": [["Village", "-0.5", "70", "-54.5"]],
+    "Jacob": [["Farmhouse", "23", "71", "-69"]],
+    "Jacobus": [["Thaumaturgist", "52", "69", "-43"]],
+    "Jamie": [["Village", "-36", "68", "-39"]],
+    "Jax": [["Archery Range", "5", "61", "-134"]],
+    "Mayor Jerry": [
+      ["Community Center", "6", "73", "-110"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Jim Bob": [["Village", "65.5", "71", "-61.5"]],
+    "Kat": [["Pet Care", "31", "70", "-102"]],
+    "Leo": [["Village", "-7.5", "70", "-75.5"]],
+    "Liam": [["Village", "10.5", "70", "-41.5"]],
+    "Librarian": [["Library", "-36", "69", "-113"]],
+    "Lonely Philosopher": [["Ruins", "-250", "130", "41"]],
+    "Lucius": [["Wilderness", "124", "73", "165"]],
+    "Lumber Jack": [["Forest", "-112", "74", "-36"]],
+    "Lumber Merchant": [["Village", "-49", "70", "-68"]],
+    "Lynn": [["Village", "21.5", "69", "-124.5"]],
+    "Mad Redstone Engineer": [["Builder's House", "-52", "65", "-29"]],
+    "Madame Eleanor Q. Goldsworth III": [["Museum", "-50", "77", "76"]],
+    "Maddox the Slayer": [["Tavern", "-74", "65", "-51"]],
+    "Malik": [
+      ["Dungeon Hub", "-64", "121", "5"],
+      ["Catacombs Entrance (Zone)", "-81", "56", "-120"]
+    ],
+    "Marco": [["Flower House", "-10", "71", "-14"]],
+    "Marina": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Maths Enjoyer": [["Village", "56", "69", "-40"]],
+    "Maxwell": [["Thaumaturgist", "46", "69", "-34"]],
+    "Mine Merchant": [["Weaponsmith (Zone)", "", "68", "-125"]],
+    "Minikloon": [["Farm", "83.5", "72", "-117.5"]],
+    "Mort": [
+      ["Dungeon Hub", "-69", "123", "0"],
+      ["Catacombs Entrance (Zone)", "-89", "55", "-129"]
+    ],
+    "Nicole": [["Wizard Tower", "39.5", "90", "72.5"]],
+    "Ophelia": [
+      ["Dungeon Hub", "-64", "121", "-7"],
+      ["Catacombs Entrance (Zone)", "-86", "55", "-140"]
+    ],
+    "Oringo": [["Village", "-4", "70", "-44"]],
+    "Ozanne": [["Thaumaturgist", "41", "70", "-39"]],
+    "Pat": [["Graveyard", "-134", "73", "-97"]],
+    "Paul": [
+      ["Community Center", "6", "73", "-111"],
+      ["Election Room", "1", "32", "-119"]
+    ],
+    "Plumber Joe": [["Village", "56", "70", "-78"]],
+    "Romero": [
+      ["The Park", "-450", "91", "2"],
+      ["Flower House", "-18", "71", "-28"],
+      ["Graveyard", "-124", "72", "-123"],
+      ["Crimson Isle", "-388", "95", "-478"],
+      ["Mountain", "-55", "169", "43"],
+      ["Gold Mine", "-22", "36", "-339"],
+      ["Wilderness", "146", "112", "113"],
+      ["Colosseum", "129", "61", "-103"],
+      ["Mushroom Desert", "297", "87", "-563"],
+      ["The Park", "-477", "134", "-117"]
+    ],
+    "Rosetta": [["Weaponsmith (Zone)", "-12", "68", "-141"]],
+    "Ryu": [["Village", "28", "70", "-116"]],
+    "Salesman": [
+      ["Village", "7", "70", "-85"],
+      ["Village", "7", "70", "-85"],
+      ["Village", "7", "70", "-85"],
+      ["Village", "7", "70", "-85"],
+      ["Village", "7", "70", "-85"]
+    ],
+    "Scoop": [["Mountain", "5", "181", "25"]],
+    "Scorpius": [
+      ["Community Center", "6", "73", "-110"],
+      ["Election Room", "1", "32", "-119"],
+      ["Dark Auction", "88", "50", "145"]
+    ],
+    "Security Sloth": [["Village", "2", "70", "-76"]],
+    "Seymour": [["Fashion Shop", "25", "64", "-41"]],
+    "Shania": [["Farm", "48", "72", "-160"]],
+    "Simon": [["Village", "6.5", "70", "-91.5"]],
+    "Sirius": [
+      ["Wilderness", "91", "75", "176"],
+      ["Dark Auction", "88", "50", "145"]
+    ],
+    "SkyBlock Animation": [["Village", "-5.5", "70", "-91.5"]],
+    "Smithmonger": [["Blacksmith (Zone)", "-32", "69", "-135"]],
+    "Stella": [["Village", "17.5", "70", "-99.5"]],
+    "Taylor": [["Fashion Shop", "22", "71", "-45.5"]],
+    "The Handler": [["Hexatorum", "-65", "70", "-127"]],
+    "Tia the Fairy": [["Wilderness", "129", "66", "137"]],
+    "Tom": [["Village", "28.5", "69", "-57.5"]],
+    "Udium": [["Wizard Tower", "44.8", "104", "76"]],
+    "Vex": [["Village", "-16.5", "70", "-81.5"]],
+    "Weaponsmith": [["Weaponsmith (Zone)", "-9", "68", "-140"]],
+    "Wizard": [["Wizard Tower", "46", "122", "75"]],
+    "Wool Weaver": [["Builder's House", "-47", "74", "-30"]],
+    "Zog": [["Pet Care", "34", "71", "-99"]]
+  },
+  "Dark Auction": {
+    "Bob": [
+      ["Dark Auction", "84", "50", "140"],
+      ["Dark Auction", "92", "50", "140"]
+    ],
+    "Scorpius": [
+      ["Community Center", "6", "73", "-110"],
+      ["Election Room", "1", "32", "-119"],
+      ["Dark Auction", "88", "50", "145"]
+    ],
+    "Sirius": [
+      ["Wilderness", "91", "75", "176"],
+      ["Dark Auction", "88", "50", "145"]
+    ]
+  },
+  "The Park": {
+    "Campfire Adept": [["Dark Thicket", "-327", "103", "-105"]],
+    "Campfire Initiate": [
+      ["Dark Thicket", "-326", "103", "-108"],
+      ["Dark Thicket", "-334", "103", "-109"]
+    ],
+    "Charlie": [["Birch Park", "-286", "82", "-17"]],
+    "Gustave": [["The Park", "-386", "89", "55"]],
+    "Juliette": [["The Park", "-477", "134", "-117"]],
+    "Master Tactician Funk": [["Savanna Woodland", "-462.5", "110", "-15.5"]],
+    "Melancholic Viking": [["Viking Longhouse", "-360", "91", "76"]],
+    "Melody": [["Melody's Plateau", "-399", "110", "34"]],
+    "Old Shaman Nyko": [["Howling Cave", "-379", "60", "36"]],
+    "Romero": [
+      ["The Park", "-450", "91", "2"],
+      ["Flower House", "-18", "71", "-28"],
+      ["Graveyard", "-124", "72", "-123"],
+      ["Crimson Isle", "-388", "95", "-478"],
+      ["Mountain", "-55", "169", "43"],
+      ["Gold Mine", "-22", "36", "-339"],
+      ["Wilderness", "146", "112", "113"],
+      ["Colosseum", "129", "61", "-103"],
+      ["Mushroom Desert", "297", "87", "-563"],
+      ["The Park", "-477", "134", "-117"]
+    ],
+    "Ryan": [["Dark Thicket", "-330", "103", "-103"]],
+    "Vanessa": [["Birch Park", "-312", "83", "-70"]]
+  },
+  "The Barn": {
+    "Farmhand": [["The Barn", "144", "73", "-240"]],
+    "Windmill Operator": [
+      ["The Barn", "97", "89", "-283"],
+      ["The Barn", "102", "82", "-283"]
+    ]
+  },
+  "Mushroom Desert": {
+    "Beth": [["Mushroom Desert", "163", "77", "-359"]],
+    "Friendly Hiker": [["Desert Settlement", "182", "77", "-379"]],
+    "Hungry Hiker": [
+      ["Mushroom Gorge", "269", "48", "-480"],
+      ["Desert Settlement", "148", "76", "-375"]
+    ],
+    "Hunter Ava": [["Mushroom Desert", "321", "102", "-470"]],
+    "Jake": [["Jake's House", "261", "184", "-565"]],
+    "Mason": [["Mushroom Desert", "177", "77", "-356"]],
+    "Moby": [["Glowing Mushroom Cave", "206", "43", "-500"]],
+    "Romero": [
+      ["The Park", "-450", "91", "2"],
+      ["Flower House", "-18", "71", "-28"],
+      ["Graveyard", "-124", "72", "-123"],
+      ["Crimson Isle", "-388", "95", "-478"],
+      ["Mountain", "-55", "169", "43"],
+      ["Gold Mine", "-22", "36", "-339"],
+      ["Wilderness", "146", "112", "113"],
+      ["Colosseum", "129", "61", "-103"],
+      ["Mushroom Desert", "297", "87", "-563"],
+      ["The Park", "-477", "134", "-117"]
+    ],
+    "Shepherd": [["Shepherd's Keep", "388", "85", "-373"]],
+    "Talbot": [["Trapper's Den", "285", "104", "-549"]],
+    "Tammy": [["Trapper's Den", "284", "104", "-545"]],
+    "Tony": [["Trapper's Den", "278", "104", "-545"]],
+    "Treasure Hunter": [["Mushroom Desert", "200", "92", "-437"]],
+    "Trevor The Trapper": [["Trapper's Den", "281", "104", "-543"]]
+  },
+  "Spider's Den": {
+    "Archaeologist": [["Spider's Den", "-360", "111", "-290"]],
+    "Bramass Beastslayer": [["Grandma's House", "-271", "113", "-196"]],
+    "Grandma Wolf": [["Grandma's House", "-282", "122", "-191"]],
+    "Haymitch": [["Spider's Den", "-203", "83", "-237"]],
+    "Rick": [["Gravel Mines", "-251", "70", "-325"]],
+    "Shaggy": [["Grandma's House", "-278", "121", "-182"]],
+    "Spider Tamer": [["Arachne's Sanctuary", "-298.5", "62", "-194.5"]]
+  },
+  "The End": {
+    "Gregory": [["Dragon's Nest", "-608", "22", "-285"]],
+    "Guber": [["The End", "-495", "121", "-242"]],
+    "Lone Adventurer": [
+      ["The End", "-524", "101", "-275"],
+      ["The End", "-588", "22", "-270"]
+    ],
+    "Pearl Dealer": [["The End", "-504", "101", "-284"]],
+    "Tyzzo": [["Void Slate", "-597", "5", "-272"]]
+  },
+  "Crimson Isle": {
+    "Aranya": [["The Wasteland", "-323", "152", "-1008"]],
+    "Aura": [["Aura's Lab", "-402.5", "69", "-883.5"]],
+    "Desperate Engineer": [["The Wasteland", "-289.5", "127", "-981.75"]],
+    "Kuudra Believer": [["Plhlegblast Pool", "-390.5", "81", "-701.5"]],
+    "Kuudra Gatekeeper": [["Forgotten Skull", "-371", "114", "-1039"]],
+    "Master Tao": [["Dojo", "-235", "108", "-602"]],
+    "Odger": [["Odger's Hut", "-373.5", "207", "-810.5"]],
+    "Romero": [
+      ["The Park", "-450", "91", "2"],
+      ["Flower House", "-18", "71", "-28"],
+      ["Graveyard", "-124", "72", "-123"],
+      ["Crimson Isle", "-388", "95", "-478"],
+      ["Mountain", "-55", "169", "43"],
+      ["Gold Mine", "-22", "36", "-339"],
+      ["Wilderness", "146", "112", "113"],
+      ["Colosseum", "129", "61", "-103"],
+      ["Mushroom Desert", "297", "87", "-563"],
+      ["The Park", "-477", "134", "-117"]
+    ],
+    "Vulcan": [["Forgotten Skull", "-364", "114", "-1028"]],
+    "Alchemage": [["Scarleton", "-86", "118", "-771"]],
+    "Alwin": [["Scarleton", "-82", "92", "-734"]],
+    "Arba": [["Scarleton", "-3.5", "93", "-820.5"]],
+    "Arbadak": [["Scarleton", "-0.5", "93", "-824.5"]],
+    "Aviar": [["The Wasteland", "-360.5", "117", "-971.5"]],
+    "Avorius": [["Scarleton", "-152", "128", "-809"]],
+    "Belanor": [["Scarleton Bank", "-84", "108", "-776"]],
+    "Carrolyn": [["Scarleton", "1", "103", "-803"]],
+    "Colore": [["Scarleton", "-131", "89", "-711"]],
+    "Cyndarin": [["The Wasteland", "-205", "112", "-957"]],
+    "Dean": [["Cathedral", "-16", "123", "-882"]],
+    "Drakuu": [["The Wasteland", "-324.5", "191", "-1015.5"]],
+    "Edelis": [
+      ["Scarleton", "-61.5", "107", "-812.5"],
+      ["Scarleton", "-92.5", "104", "-821.5"]
+    ],
+    "Elmar": [["Scarleton Auction House", "-60.5", "108", "-746.5"]],
+    "Eludore": [["Scarleton", "-101.5", "91", "-872.5"]],
+    "Ezekiel": [["Scarleton", "-27.5", "107", "-770.5"]],
+    "Grelius": [["Scarleton", "-131.5", "101", "-755.5"]],
+    "Gnyl": [["The Wasteland", "-376.5", "117", "-971.5"]],
+    "Hilda": [["Scarleton Minion Shop", "-46", "107", "-779"]],
+    "Igrupan": [["Igrupan's Chicken Coop", "-31", "93", "-824"]],
+    "Kheharad": [["Scarleton", "-111.5", "99", "-827.5"]],
+    "Kuudra Loremaster": [
+      ["Scarleton", "-106.5", "126", "-817.5"],
+      ["Deep Caverns", "-256.5", "146", "120.5"]
+    ],
+    "Lys": [["Scarleton", "-108", "99", "-803"]],
+    "Mage Emissary": [["Scarleton", "-131.5", "89", "-722.5"]],
+    "Mazakala": [["Scarleton", "-3.5", "93", "-825.5"]],
+    "Mollim": [["Scarleton", "-132.5", "100", "-789.5"]],
+    "Nuvian": [["Dragontail", "-693.5", "102", "-735.5"]],
+    "Pablo": [["Scarleton", "-131", "128", "-816"]],
+    "Queen Nyx": [["Scarleton", "-117.5", "105", "-754.5"]],
+    "Rescue Recruiter": [
+      ["Scarleton", "-120.5", "92", "-751.5"],
+      ["Dragontail", "-581.5", "100", "-690.5"]
+    ],
+    "Rhanora": [["Scarleton", "-144", "100", "-829"]],
+    "Rollim": [["Scarleton", "-147", "106", "-854"]],
+    "Rulenor": [["Scarleton", "-26.5", "122", "-769.5"]],
+    "Scholar Alluin": [["Cathedral", "-15.5", "114", "-915.5"]],
+    "Seffea": [["Scarleton", "-139", "99", "-816.5"]],
+    "Selenar": [["Scarleton Bazaar", "-71", "107", "-757"]],
+    "Udel": [["Scarleton Bank", "-78.5", "107", "-788.5"]],
+    "Ulyn": [["Scarleton", "-126", "99", "-784"]],
+    "Undercover Agent": [
+      ["The Bastion", "-624.5", "120", "-961.5"],
+      ["Cathedral", "-15", "93", "-845.0"]
+    ],
+    "Velyna": [["Scarleton", "-86.5", "104.5", "-820.5"]],
+    "Ziri": [["Scarleton Bank", "-82", "114", "-793"]],
+    "An": [["Dragontail", "-621", "108", "-741"]],
+    "Baar": [["Dragontail Auction House", "-638", "123", "-791"]],
+    "Barbarian Emissary": [["Dragontail", "-580.5", "99", "-710.5"]],
+    "Barter": [["Dragontail Bazaar", "-624.5", "101", "-794.5"]],
+    "Bromm": [["Dragontail Auction House", "-636.5", "103", "-784.5"]],
+    "Bruto": [["Dragontail Bank", "-613", "100", "-787"]],
+    "Bruuh": [["Dragontail", "-635", "124", "-688"]],
+    "Chief Scorn": [["Dragontail", "-580.5", "115.5", "-687.5"]],
+    "Chihai": [["Dragontail", "-604", "107", "-861"]],
+    "Chak": [["Dragontail", "-602", "107", "-868"]],
+    "Chuk": [["Dragontail", "-604", "107", "-869"]],
+    "Corm": [["The Bastion", "-668", "126", "-924"]],
+    "Deng": [["Dragontail", "-686.5", "102", "-765.5"]],
+    "Etc": [["Dragontail", "-606", "107", "-868"]],
+    "Gris": [
+      ["Dragontail", "-684.5", "124", "-828.5"],
+      ["Dragontail", "-686", "116", "-832"]
+    ],
+    "Grog": [["Dragontail", "-663.5", "107", "-736.5"]],
+    "Igor": [["Dragontail", "-549", "98", "-707"]],
+    "Jine": [["Dragontail", "-545.5", "119", "-854.5"]],
+    "Kaus": [["Dragontail", "-595", "113", "-640"]],
+    "Keran": [
+      ["Dragontail", "-561.5", "98", "-687.5"],
+      ["Dragontail", "-612.5", "108", "-669.5"]
+    ],
+    "Kutral": [["Dragontail", "-658.5", "107", "-741.5"]],
+    "Kuudra Archaeologist": [["Dragontail", "-570.5", "111", "-642.5"]],
+    "Lasea": [["Dragontail", "-566", "108", "-657"]],
+    "Maggie": [["Dragontail", "-592.5", "123", "-846.5"]],
+    "Marthos": [["Minion Shop", "-644", "101", "-825"]],
+    "Nall": [["Dragontail", "-657.5", "107", "-738.5"]],
+    "Pam": [
+      ["Dragontail", "-673.5", "102", "-767.5"],
+      ["Dragontail", "-662.5", "102", "-829.5"],
+      ["Dragontail", "-598.5", "109", "-665.5"],
+      ["Dragontail", "-592.5", "107", "-723.5"],
+      ["Dragontail", "-575.5", "111", "-754.5"],
+      ["Dragontail", "-631.5", "100", "-805.5"]
+    ],
+    "Piglin Guard": [["The Wasteland", "-367.5", "117", "-977.5"]],
+    "Plenk": [["Dragontail", "-572.5", "118", "-739.5"]],
+    "Pomtair": [["Dragontail", "-569.5", "120", "-775.5"]],
+    "Porc": [["Dragontail", "-577", "118", "-857"]],
+    "Prie": [
+      ["Dragontail", "-561.5", "98", "-689.5"],
+      ["Dragontail", "-612.5", "108", "-661.5"]
+    ],
+    "Sirih": [
+      ["Dragontail", "-699.5", "131", "-887.5"],
+      ["Dragontail", "-699.5", "131", "-887.5"]
+    ],
+    "Strux": [["Dragontail", "-596", "123", "-845"]],
+    "Suus": [["Dragontail", "-615", "115", "-706"]],
+    "Truu": [["Dragontail", "-613.5", "122", "-765.5"]],
+    "Turd": [["Dragontail", "-616", "115", "-708"]],
+    "Ugo": [["Dragontail", "-508.5", "98", "-633.5"]],
+    "Yoink": [["Dragontail", "-613.5", "123", "-786.5"]]
+  },
+  "Kuudra's Hollow": {
+    "Weird Sailor": [["Kuudra's Hollow", "-131", "92", "-178"]]
+  },
+  "Gold Mine": {
+    "Blacksmith": [
+      ["Blacksmith (Zone)", "-28", "69", "-125"],
+      ["Gold Mine", "-39.5", "77", "-299.5"],
+      ["Dwarven Village", "-6.5", "201", "-154.5"]
+    ],
+    "Gold Forger": [["Gold Mine", "-28", "74", "-295"]],
+    "Iron Forger": [["Gold Mine", "-2", "75", "-308"]],
+    "Lazy Miner": [["Gold Mine", "-12", "78", "-338"]],
+    "Romero": [
+      ["The Park", "-450", "91", "2"],
+      ["Flower House", "-18", "71", "-28"],
+      ["Graveyard", "-124", "72", "-123"],
+      ["Crimson Isle", "-388", "95", "-478"],
+      ["Mountain", "-55", "169", "43"],
+      ["Gold Mine", "-22", "36", "-339"],
+      ["Wilderness", "146", "112", "113"],
+      ["Colosseum", "129", "61", "-103"],
+      ["Mushroom Desert", "297", "87", "-563"],
+      ["The Park", "-477", "134", "-117"]
+    ],
+    "Rusty": [["Gold Mine", "-21", "78", "-326"]]
+  },
+  "Deep Caverns": {
+    "Lapis Miner": [["Lapis Quarry", "-10", "120", "35"]],
+    "Lift Operator": [
+      ["Gunpowder Mines", "45", "150", "15"],
+      ["Lapis Quarry", "45", "121", "15"],
+      ["Pigmen's Den", "45", "101", "17"],
+      ["Slimehill", "45", "66", "15"],
+      ["Diamond Reserve", "45", "38", "15"],
+      ["Obsidian Sanctuary", "45", "13", "15"],
+      ["Dwarven Mines", "-80", "200", "-124"]
+    ],
+    "Kuudra Loremaster": [
+      ["Scarleton", "-106.5", "126", "-817.5"],
+      ["Deep Caverns", "-256.5", "146", "120.5"]
+    ],
+    "Redstone Miner": [["Pigmen's Den", "24", "104", "16"]],
+    "Rhys": [
+      ["Deep Caverns", "31", "12", "14"],
+      ["Dwarven Mines", "-39", "200", "-120"]
+    ],
+    "Walter": [["Deep Caverns", "18", "156", "-37"]]
+  },
+  "Dwarven Mines": {
+    "Banker Broadjaw": [["Dwarven Village", "13", "201", "-148"]],
+    "Bednom": [["Dwarven Village", "-30", "214", "-89"]],
+    "Blacksmith": [
+      ["Blacksmith (Zone)", "-28", "69", "-125"],
+      ["Gold Mine", "-39.5", "77", "-299.5"],
+      ["Dwarven Village", "-6.5", "201", "-154.5"]
+    ],
+    "Brammor": [
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"]
+    ],
+    "Brarnas": [
+      ["Dwarven Mines", "-45", "192", "47"],
+      ["Dwarven Mines", "-48", "192", "46"],
+      ["Dwarven Mines", "-47", "192", "42"]
+    ],
+    "Bubu": [["Dwarven Mines", "-10", "201", "-103"]],
+    "Bulvar": [["Dwarven Village", "-16", "201", "-99"]],
+    "Bylma": [["Dwarven Mines", "-9", "128", "59"]],
+    "Dalbrek": [["Grand Library", "190", "216", "154"]],
+    "Dalir": [
+      ["Dwarven Mines", "-45", "192", "47"],
+      ["Dwarven Mines", "-48", "192", "46"],
+      ["Dwarven Mines", "-47", "192", "42"]
+    ],
+    "Dirt Guy": [["Dwarven Mines", "43", "108", "175"]],
+    "Don Expresso": [["Dwarven Mines", "37", "202", "-123"]],
+    "Emissary Braum": [["Dwarven Mines", "89.5", "198", "-92.5"]],
+    "Emissary Carlton": [["Rampart's Quarry", "-72", "153", "-10"]],
+    "Emissary Ceanna": [["Cliffside Veins", "42", "134", "22"]],
+    "Emissary Eliza": [["Dwarven Village", "-37", "200", "-131"]],
+    "Emissary Fraiser": [["Upper Mines", "-132", "174", "-50"]],
+    "Emissary Lilith": [["Lava Springs", "58", "198", "-8"]],
+    "Emissary Wilson": [["Royal Mines", "171", "150", "31"]],
+    "Emkam": [
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"]
+    ],
+    "Emmor": [
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"]
+    ],
+    "Erren": [
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"]
+    ],
+    "Fetchur": [["Dwarven Mines", "84", "224", "-118"]],
+    "Forger": [
+      ["The Forge", "-23", "151", "-50"],
+      ["The Forge", "-23", "151", "-80"],
+      ["The Forge", "23", "151", "-58"],
+      ["The Forge", "23", "151", "-88"]
+    ],
+    "Fragilis": [["Dwarven Mines", "88", "199", "-108"]],
+    "Fred": [["The Forge", "-2.5", "149", "-68.5"]],
+    "Geo": [["Dwarven Mines", "87", "199", "-116"]],
+    "Gimley": [["Dwarven Tavern", "29", "202", "-148"]],
+    "Grandan": [
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"]
+    ],
+    "Gwendolyn": [["Dwarven Mines", "89", "198", "-99"]],
+    "Hornum": [["Dwarven Tavern", "34", "202", "-145"]],
+    "Jotraeline Greatforge": [["Forge Basin", "-7", "145", "-19"]],
+    "Lift Operator": [
+      ["Gunpowder Mines", "45", "150", "15"],
+      ["Lapis Quarry", "45", "121", "15"],
+      ["Pigmen's Den", "45", "101", "17"],
+      ["Slimehill", "45", "66", "15"],
+      ["Diamond Reserve", "45", "38", "15"],
+      ["Obsidian Sanctuary", "45", "13", "15"],
+      ["Dwarven Mines", "-80", "200", "-124"]
+    ],
+    "Lumina": [["Dwarven Mines", "77", "199", "-110"]],
+    "Malmar": [
+      ["Rampart's Quarry", "-115", "150", "-25"],
+      ["Aristocrat Passage", "105", "151", "141"],
+      ["Far Reserve", "-96", "155", "88"]
+    ],
+    "Marigold": [["Royal Mines", "181.5", "150", "60.5"]],
+    "Old Man Garry": [["Dwarven Village", "5", "200", "-109"]],
+    "Puzzler": [["Grand Library", "181", "196", "135"]],
+    "Queen Mismyla": [["Royal Palace", "126", "195", "195"]],
+    "Redros": [
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"]
+    ],
+    "Rhys": [
+      ["Deep Caverns", "31", "12", "14"],
+      ["Dwarven Mines", "-39", "200", "-120"]
+    ],
+    "Royal Guard": [
+      ["The Lift", "-46", "200", "-119"],
+      ["The Lift", "-45", "200", "-124"]
+    ],
+    "Royal Resident": [
+      ["Barracks Of Heroes", "62", "204", "200"],
+      ["Barracks Of Heroes", "65", "211", "198"]
+    ],
+    "Royal Residents": [
+      ["Royal Quarters", "164", "202", "278"],
+      ["Royal Quarters", "92", "202", "276"]
+    ],
+    "Sargwyn": [["Dwarven Tavern", "34", "202", "-149"]],
+    "Silnar": [["Cliffside Veins", "53", "141.5", "19.5"]],
+    "Station Master": [["Dwarven Village", "38", "201", "-86"]],
+    "Tal Ker": [["Grand Library", "193", "196", "205"]],
+    "Tarwen": [["Dwarven Tavern", "33", "202", "-140"]],
+    "Thondin": [
+      ["Dwarven Mines", "-45", "192", "47"],
+      ["Dwarven Mines", "-48", "192", "46"],
+      ["Dwarven Mines", "-47", "192", "42"]
+    ],
+    "Thormyr": [
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"],
+      ["Royal Palace", "129", "196", "196"]
+    ],
+    "Ticket Master": [
+      ["Aristocrat Passage", "102", "151", "143"],
+      ["Hanging Court", "85", "187", "115"],
+      ["Upper Mines", "-149", "169", "-54"],
+      ["Forge Basin", "0", "145", "23"],
+      ["Gates To The Mines", "43", "177", "-42"],
+      ["Far Reserve", "-96", "142", "111"]
+    ],
+    "Tornora": [["Royal Palace", "136", "196", "166"]]
+  },
+  "Crystal Hollows": {
+    "Emissary Sisko": [["Crystal Nucleus", "495", "105", "556"]],
+    "Gemma": [["Crystal Nucleus", "475.5", "106", "513.5"]],
+    "Geonathan Greatforge": [["Crystal Nucleus", "530", "106", "556"]],
+    "Kalhuiki Door Guardian": [
+      ["Jungle Temple", "", "", ""],
+      ["Jungle Temple", "", "", ""]
+    ],
+    "Professor Robot": [["Lost Precursor City", "", "", ""]],
+    "Queen's Guards": [
+      ["Goblin Queen's Den", "", "", ""],
+      ["Goblin Queen's Den", "", "", ""],
+      ["Goblin Queen's Den", "", "", ""]
+    ]
+  },
+  "The Rift": {
+    "Alabaster": [["Shifted Tavern", "-130.3", "73", "166.5"]],
+    "Alatar": [["Wizard Tower (Rift)", "-46.5", "116", "70.5"]],
+    "Alchemist (Rift)": [["West Village", "-49.5", "70", "-65.5"]],
+    "Argofay Bughunter": [["Wyld Woods", "-85", "108", "97"]],
+    "Argofay Bugshopper": [["Wyld Woods", "-95", "110", "95.25"]],
+    "Argofay Serialbather": [["Wyld Woods", "-137.5", "119.3", "115.5"]],
+    "Argofay Sonfather": [["Wyld Woods", "-96", "100", "156.2"]],
+    "Argofay Threebrother": [
+      ["Wyld Woods", "-98.5", "76.3", "153.9"],
+      ["Wyld Woods", "-92.8", "76", "108.6"],
+      ["Wyld Woods", "-136", "75", "113"]
+    ],
+    "Argofay Trafficker": [
+      ["Wyld Woods", "-150.7", "112", "114.5"],
+      ["Wyld Woods", "-137.5", "97", "112.5"],
+      ["Wyld Woods", "-91.5", "90", "106.5"],
+      ["Wyld Woods", "-136.4", "88", "114"]
+    ],
+    "Argofay Trailblazer": [["Wyld Woods", "-97.5", "66", "147.5"]],
+    "Argofay Tencounter": [["Wyld Woods", "-93", "99", "95"]],
+    "Argofay Treemerger": [["Wyld Woods", "-145", "93", "140"]],
+    "Arora": [["Shifted Tavern", "-128.5", "73.3", "168.6"]],
+    "Ashera": [["Shifted Tavern", "-124.3", "73", "172.5"]],
+    "Barry": [["Barry HQ", "-45.5", "54", "-142.5"]],
+    "Blacksmith (Rift)": [["D\u00e9j\u00e0 Vu Alley", "-1.5", "68", "-142"]],
+    "Chef": [["West Village", "-103", "72", "-104"]],
+    "Chester": [["Shifted Tavern", "-130.5", "73.3", "173.3"]],
+    "Chicken (Rift NPC)": [
+      ["Dreadfarm", "-53.9", "72", "-158"],
+      ["Dreadfarm", "-57.1", "72.2", "-161.1"]
+    ],
+    "Cosmo": [["West Village", "-66.5", "70", "-92.3"]],
+    "Cow (Rift)": [
+      ["Dreadfarm", "-42.5", "72", "-167"],
+      ["Dreadfarm", "-38.4", "71.7", "-164.3"]
+    ],
+    "Cowboy Nick": [["Village Plaza", "-13", "70", "-7.1"]],
+    "Creed": [
+      ["Barry Center", "-15.2", "73", "-112"],
+      ["Barry HQ", "-51.5", "54", "-137.5"]
+    ],
+    "Cryptosis": [["Village Plaza", "27.5", "71", "-77"]],
+    "Dackinoru": [["Shifted Tavern", "-118.3", "73.0", "172.5"]],
+    "Damia (Rift)": [["Barrier Street", "30.5", "72", "-94.5"]],
+    "Deer": [["Photon Pathway", "139", "70", "-12"]],
+    "Detective Amog": [
+      ["Murder House", "-49.8", "68", "-37.2"],
+      ["Village Plaza", "0.5", "71", "-13"],
+      ["Around Colosseum", "-188", "71", "-56.7"],
+      ["D\u00e9j\u00e0 Vu Alley", "1.5", "68", "-139.5"],
+      ["Murder House", "-49.5", "68", "-38.75"],
+      ["Taylor's", "-28.5", "64", "-40.5"],
+      ["Village Plaza", "-53", "68", "-49.3"],
+      ["Murder House", "-51.1", "68", "-40.7"]
+    ],
+    "Disinfestor": [
+      ["Infested House", "-38", "71", "-103"],
+      ["Infested House", "-40", "70", "-88"],
+      ["Infested House", "-37.5", "77", "-93.5"],
+      ["Infested House", "-32.5", "77", "-88.5"]
+    ],
+    "Dr. Emmett": [
+      ["Mirrorverse", "", "", "To be added"],
+      ["Mirrorverse", "", "", "To be added"],
+      ["Mirrorverse", "", "", "To be added"],
+      ["Mirrorverse", "", "", "To be added"],
+      ["Mirrorverse", "", "", "To be added"],
+      ["Mirrorverse", "", "", "To be added"],
+      ["Mirrorverse", "", "", "To be added"],
+      ["Mirrorverse", "", "", "To be added"]
+    ],
+    "Dr. Hibble": [["Black Lagoon", "-79.5", "73", "9.5"]],
+    "Dr. Phear": [["Leeches Lair", "-146.3", "36", "27.5"]],
+    "Dust": [
+      ["Barry Center", "-12", "71", "-100.2"],
+      ["Barry HQ", "-54.5", "54", "-138.5"]
+    ],
+    "Elise (Rift)": [
+      ["Wizard Tower (Rift)", "-50.5", "122", "69.5"],
+      ["Rift Gallery", "9.8", "55", "76"]
+    ],
+    "Enigma": [["Enigma's Crib", "", "", "Moves around"]],
+    "Fafnir": [["Shifted Tavern", "-127.5", "73", "172.6"]],
+    "Fairylosopher": [
+      ["Fairylosopher Tower", "252", "106", "76"],
+      ["Fairylosopher Tower", "256", "130", "75"],
+      ["Fairylosopher Tower", "256", "123", "84"],
+      ["Fairylosopher Tower", "256", "123", "87"],
+      ["Fairylosopher Tower", "253", "123", "90"],
+      ["Fairylosopher Tower", "250", "123", "88"],
+      ["Fairylosopher Tower", "250", "123", "85"]
+    ],
+    "Frankie": [
+      ["Barry Center", "-4", "73", "-111.4"],
+      ["Barry HQ", "-44.5", "54", "-146.5"]
+    ],
+    "Finplex": [["West Village", "-57.5", "68", "-82.5"]],
+    "Garlacius": [["Shifted Tavern", "-128.5", "79.3", "170.6"]],
+    "Grandma": [["West Village", "-70.5", "64.5", "-60"]],
+    "Gunther": [["West Village", "-68.7", "71", "-61.5"]],
+    "Harriette": [
+      ["Barry Center", "-1.7", "74", "-108.9"],
+      ["Barry HQ", "-39.5", "54", "-138.5"]
+    ],
+    "Hound": [["Wyld Woods", "-70", "66", "147.5"]],
+    "Inverted Sirius": [["Wyld Woods", "-96.5", "75", "190.5"]],
+    "Jerry (Rift)": [["\"Your\" Island", "-85.5", "20", "4.5"]],
+    "Joey McPizza": [["West Village", "-105.5", "72.3", "-102.5"]],
+    "Joliet": [["Taylor's", "-31.5", "64.5", "-43"]],
+    "Julian": [["Oubliette", "207", "82", "130.3"]],
+    "Kat (Rift)": [["Infested House", "-34.5", "70", "-90.5"]],
+    "Kay": [["Lagoon Hut", "-191", "68", "58.5"]],
+    "Kiermet": [["Wyld Woods", "-134.5", "67", "157.5"]],
+    "Lazarus": [["Shifted Tavern", "-127.6", "79.3", "166.3"]],
+    "Lonely \u00c4vae\u00eckx": [
+      ["Lonely Terrace", "", "", "Moves Between Chairs"]
+    ],
+    "Maddox The Slayer (Rift)": [
+      ["Stillgore Ch\u00e2teau", "204.5", "77", "45"]
+    ],
+    "Marcia": [["Village Plaza", "2.5", "71", "-10.5"]],
+    "Mole": [["Colosseum (Rift)", "-159.5", "97", "-75.5"]],
+    "Motes Grubber": [
+      ["Wyld Woods", "-92.5", "65", "156.5"],
+      ["West Village", "-93", "70.5", "-73"],
+      ["Stillgore Ch\u00e2teau", "164.5", "77", "125.5"]
+    ],
+    "Mushroom Guy": [["Black Lagoon", "-178.3125", "75", "12.5"]],
+    "Nene": [["Village Plaza", "23.5", "88.5", "-90.5"]],
+    "Phaser": [["Photon Pathway", "59.6", "70", "-88.5"]],
+    "Plumber Joe (Rift)": [["West Village", "-62", "70", "-78"]],
+    "Porhtal": [["Broken Cage", "-157.5", "70.5", "162"]],
+    "Ramero": [["Murder House", "-48.5", "68", "-38.5"]],
+    "Reed": [["Lagoon Hut", "-212", "72", "60.5"]],
+    "Ribbit": [["Wyld Woods", "-136.5", "67", "158.5"]],
+    "Rock": [
+      ["Living Stillness", "13.5", "48.5", "-186.5"],
+      ["Living Stillness", "-15.5", "45.6", "-174.5"],
+      ["Living Stillness", "-24.5", "46.5", "-203.5"],
+      ["Living Stillness", "19.5", "45.3", "-221.5"],
+      ["Living Stillness", "55.5", "45.2", "-199.5"],
+      ["Living Stillness", "55.5", "45.3", "-198.5"],
+      ["Living Stillness", "45.5", "47.1", "-180.5"],
+      ["Living Stillness", "27.6", "49", "-191.5"]
+    ],
+    "Roger": [["Village Plaza", "-2.5", "70", "-43.5"]],
+    "Roy": [["Lagoon Hut", "-204.6", "75", "49.2"]],
+    "Seraphine (Rift)": [
+      ["Barry Center", "-16.5", "71", "-101"],
+      ["Barry Center", "-16.5", "71", "-101"]
+    ],
+    "Seskel": [["Shifted Tavern", "-128.5", "73.3", "164.3"]],
+    "Seymour (Rift)": [["Taylor's", "-27", "71", "-44.5"]],
+    "Shania (Rift)": [["Dreadfarm", "-47.5", "72", "-161"]],
+    "Sheep (Rift)": [
+      ["Dreadfarm", "-58.5", "72", "-166.6"],
+      ["Dreadfarm", "-55.1", "73.4", "-167.1"],
+      ["Dreadfarm", "-55.1", "73.4", "-167.1"]
+    ],
+    "Shifted": [["Shifted Tavern", "-120.5", "73", "174.5"]],
+    "Sick Farmer": [["Dreadfarm", "-43", "72", "-160"]],
+    "Skylark": [["West Village", "-71.5", "71.15", "-115"]],
+    "Soma": [
+      ["Barry Center", "-17", "74", "-108"],
+      ["Barry HQ", "-52", "54", "-141"]
+    ],
+    "Sorcerer Okron": [["West Village", "-70.5", "81", "-110.5"]],
+    "Stain": [
+      ["Barry Center", "-6.5", "73.5", "-100.2"],
+      ["Barry HQ", "-57.6", "54", "-146.1"]
+    ],
+    "Taylor (Rift)": [
+      ["Taylor's", "-32.3", "71", "-38.5"],
+      ["Taylor's", "-28.6", "64", "-44.9"]
+    ],
+    "Tel Kar": [["Wyld Woods", "-113", "69", "62"]],
+    "Tybalt": [["Shifted Tavern", "-129.3", "79", "168.5"]],
+    "Unbound Explorer": [["Otherside", "-28.5", "72", "315.5"]],
+    "Unhinged Kloon": [["West Village", "-56.5", "79", "-13.7"]],
+    "Violetta": [
+      ["Barry Center", "-4.2", "73", "-105.4"],
+      ["Barry HQ", "-51.5", "54", "-147.5"]
+    ],
+    "Vreike": [["Shifted Tavern", "-124.3", "73", "172.5"]],
+    "Wizard (Rift)": [["Wizard Tower (Rift)", "-47.5", "122.5", "77.5"]],
+    "Wizardman": [["Wizard Tower", "-45", "90", "69.5"]],
+    "Yoshua": [["West Village", "-69", "71.15", "-117.5"]]
+  },
+  "Dungeon Hub": {
+    "Adventurer Saul": [["Dungeon Hub", "-53", "119", "-9"]],
+    "Croesus": [["Dungeon Hub", "-21", "120", "-14"]],
+    "Dungeon Hub Selector": [["Dungeon Hub", "-37", "119", "10"]],
+    "Guildford": [["Dungeon Hub", "-19", "86", "4"]],
+    "Malik": [
+      ["Dungeon Hub", "-64", "121", "5"],
+      ["Catacombs Entrance (Zone)", "-81", "56", "-120"]
+    ],
+    "Mort": [
+      ["Dungeon Hub", "-69", "123", "0"],
+      ["Catacombs Entrance (Zone)", "-89", "55", "-129"]
+    ],
+    "Ophelia": [
+      ["Dungeon Hub", "-64", "121", "-7"],
+      ["Catacombs Entrance (Zone)", "-86", "55", "-140"]
+    ]
+  },
+  "Winter Island": {
+    "Banker Barry": [["Jerry's Workshop", "20", "77", "44"]],
+    "Daan": [["Glacial Cave", "80", "78.5", "110"]],
+    "Dirk": [["Glacial Cave", "79", "80.5", "55"]],
+    "Einary": [["Einary's Emporium", "-16.5", "76", "63.5"]],
+    "Frosty": [["Jerry's Workshop", "-2", "76", "92"]],
+    "Frozen Alex": [["Reflective Pond", "-74.5", "74", "-6.5"]],
+    "Gary": [["Gary's Shack", "53", "103", "56"]],
+    "Generow": [["Jerry's Workshop", "-10.5", "76", "93.5"]],
+    "Gulliver": [["Jerry's Workshop", "68", "105", "33"]],
+    "Helena": [["Glacial Cave", "36", "79", "75"]],
+    "Hendrik": [["Hot Springs", "16.5", "62", "-30.5"]],
+    "Jerry": [
+      ["Private Island", "9", "100", "33"],
+      ["Jerry's Workshop", "-34", "76", "77"],
+      ["Jerry's Workshop", "6", "76", "72"],
+      ["Jerry's Workshop", "-15", "76", "49"],
+      ["Jerry's Workshop", "18", "76", "31"],
+      ["Jerry's Workshop", "-12", "76", "13"],
+      ["Village", "-3", "70", "-47"]
+    ],
+    "Maaike": [["Glacial Cave", "49", "81", "50"]],
+    "Mees": [["Glacial Cave", "80", "79", "72"]],
+    "Sherry": [["Jerry's Workshop", "9", "76", "99"]],
+    "St. Jerry": [["Jerry's Workshop", "-23", "76", "92"]],
+    "Terry": [["Jerry Pond", "-92", "78", "25"]]
+  },
+  "Private Island": {
+    "Jerry": [
+      ["Private Island", "9", "100", "33"],
+      ["Jerry's Workshop", "-34", "76", "77"],
+      ["Jerry's Workshop", "6", "76", "72"],
+      ["Jerry's Workshop", "-15", "76", "49"],
+      ["Jerry's Workshop", "18", "76", "31"],
+      ["Jerry's Workshop", "-12", "76", "13"],
+      ["Village", "-3", "70", "-47"]
+    ],
+    "Sam": [
+      ["Private Island", "8.5", "100", "41.5"],
+      ["Garden", "-7.5", "71", "-6.5"],
+      ["Garden", "-14.5", "72", "-27.5"],
+      ["Garden", "4.5", "72", "-21.5"]
+    ]
+  },
+  "Garden": {
+    "Anita": [["Farmhouse", "23", "77", "-69"]],
+    "Jacob": [["Farmhouse", "23", "71", "-69"]],
+    "Pesthunter Pamela": [["Garden", "-24", "71", "-14"]],
+    "Pesthunter Phillip": [["Garden", "-26", "71", "-14"]],
+    "Sam": [
+      ["Private Island", "8.5", "100", "41.5"],
+      ["Garden", "-7.5", "71", "-6.5"],
+      ["Garden", "-14.5", "72", "-27.5"],
+      ["Garden", "4.5", "72", "-21.5"]
+    ]
+  }
 }
