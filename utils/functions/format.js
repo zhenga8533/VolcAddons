@@ -118,7 +118,7 @@ export function formatNumber(num, significantDigits = 5) {
  * @returns {Number} - Numeric value represented by the input string, considering the notation.
  */
 export function unformatNumber(str) {
-  if (str === undefined) return 0;
+  if (typeof str !== "string") return 0;
 
   const notationMap = {
     k: 1_000,

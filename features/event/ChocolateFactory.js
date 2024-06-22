@@ -245,10 +245,9 @@ function findWorker() {
     if (index === -1) continue;
 
     // Get worker name
-    const name = items[i].getName();
-    workerLevels[i - 28] =
-      name.substring(0, 2) +
-      name.split(" ")[3]?.removeFormatting()?.replace(/\[|\]/g, "");
+    let name = items[i].getName();
+    let level = name.split(" ")[3]?.removeFormatting()?.replace(/\[|\]/g, "");
+    workerLevels[i - 28] = name.substring(0, 2) + (isNaN(level) ? 0 : level);
 
     // Calculate value
     let cost = parseInt(
@@ -305,7 +304,7 @@ function findWorker() {
       bestCost = jackCost;
     }
     workerLevels[8] =
-      LIGHT_PURPLE + romanToNum(items[42].getName().split(" ")[2]);
+      LIGHT_PURPLE + (romanToNum(items[42].getName().split(" ")[2]) ?? 0);
   }
 }
 
