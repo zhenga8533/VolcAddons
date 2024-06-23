@@ -7,6 +7,7 @@ import {
   WHITE,
 } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import Location from "../../utils/Location";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
@@ -84,7 +85,11 @@ registerWhen(
 
     drillOverlay.setMessage(drillMessage);
   }).setFps(1),
-  () => Settings.pickDisplay
+  () =>
+    Settings.pickDisplay &&
+    ["Dwarven Mines", "Crystal Hollows", "Mineshaft"].includes(
+      Location.getWorld()
+    )
 );
 
 registerWhen(
