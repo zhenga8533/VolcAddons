@@ -97,7 +97,7 @@ class WebSocket {
     try {
       this.#socket = new Socket("volca.dev", 3389);
     } catch (e) {
-      const time = 10_000 * 1.5 ** attempts;
+      const time = 10_000 * Math.pow(1.5, attempts);
       console.error(
         `[VolcAddons] Error connecting to socket server: ${e}. Retrying in ${(
           time / 1_000

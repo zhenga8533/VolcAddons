@@ -73,7 +73,7 @@ function findAttributes(page, command) {
         // Add attribute costs
         keys.forEach((key) => {
           const tier = attributes[key];
-          const value = starting_bid / 2 ** (tier - 1);
+          const value = starting_bid / Math.pow(2, tier - 1);
           if (key in category) category[key].push([uuid, value, tier]);
           else category[key] = [[uuid, value, tier]];
         });
@@ -146,7 +146,7 @@ export function getAttributes(args) {
     );
     Object.entries(attributes).forEach(([attributeName, attributeValue]) => {
       if (!data.attributelist.includes(attributeName)) return;
-      const adjustedValue = attributeValue * 2 ** (tier - 1);
+      const adjustedValue = attributeValue * Math.pow(2, tier - 1);
       if (adjustedValue !== 0) {
         ChatLib.chat(
           `-${AQUA + convertToTitleCase(attributeName)}: ${
