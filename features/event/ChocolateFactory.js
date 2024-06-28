@@ -1,26 +1,11 @@
-import Location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import {
-  BOLD,
-  GOLD,
-  GRAY,
-  GREEN,
-  LIGHT_PURPLE,
-  RED,
-  WHITE,
-  YELLOW,
-} from "../../utils/Constants";
-import { getSlotCoords } from "../../utils/functions/find";
-import {
-  formatNumber,
-  formatTime,
-  romanToNum,
-  unformatNumber,
-  unformatTime,
-} from "../../utils/functions/format";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
+import { BOLD, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import Location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { getSlotCoords } from "../../utils/functions/find";
+import { formatNumber, formatTime, romanToNum, unformatNumber, unformatTime } from "../../utils/functions/format";
 
 /**
  * Choco latte
@@ -33,9 +18,7 @@ const updateChocolate = register("tick", () => {
   // Fetch the meaning of life
   const chocoData = items[13];
   if (chocoData) {
-    cf.chocolate = parseInt(
-      chocoData.getName().removeFormatting().replace(/\D/g, "")
-    );
+    cf.chocolate = parseInt(chocoData.getName().removeFormatting().replace(/\D/g, ""));
     cf.production = parseFloat(
       chocoData
         .getLore()
@@ -50,24 +33,18 @@ const updateChocolate = register("tick", () => {
       .find((line) => line.startsWith("§5§o§7All-time"))
       ?.removeFormatting()
       ?.split(" ");
-    cf.all = parseFloat(
-      allTime?.[2]?.removeFormatting()?.replace(/,/g, "") ?? 0
-    );
+    cf.all = parseFloat(allTime?.[2]?.removeFormatting()?.replace(/,/g, "") ?? 0);
   }
 
   // Fetch data related to prestiging
   const prestigeData =
-    items[27]?.getUnlocalizedName() === "tile.thinStainedGlass"
-      ? items[28]?.getLore()
-      : items[27]?.getLore();
+    items[27]?.getUnlocalizedName() === "tile.thinStainedGlass" ? items[28]?.getLore() : items[27]?.getLore();
   if (prestigeData !== undefined) {
     const prestigeTotal = prestigeData
       .find((line) => line.startsWith("§5§o§7Chocolate this Prestige"))
       ?.removeFormatting()
       ?.split(" ");
-    cf.total = parseFloat(
-      prestigeTotal?.[prestigeTotal?.length - 1]?.replace(/,/g, "") ?? 0
-    );
+    cf.total = parseFloat(prestigeTotal?.[prestigeTotal?.length - 1]?.replace(/,/g, "") ?? 0);
 
     const pestige = prestigeData
       .find((line) => line.startsWith("§5§o§7§cRequires"))
@@ -78,9 +55,7 @@ const updateChocolate = register("tick", () => {
 
   // Fetch eggs
   const eggData =
-    items[35]?.getUnlocalizedName() === "tile.thinStainedGlass"
-      ? items[34]?.getLore()
-      : items[35]?.getLore();
+    items[35]?.getUnlocalizedName() === "tile.thinStainedGlass" ? items[34]?.getLore() : items[35]?.getLore();
   if (eggData !== undefined) {
     const eggs = data.eggs;
     const barnLine = eggData
@@ -106,21 +81,13 @@ const updateChocolate = register("tick", () => {
   const towerData = items[39]?.getLore();
   if (towerData !== undefined) {
     const timeTower = data.timeTower;
-    timeTower.bonus =
-      romanToNum(items[39]?.getName()?.removeFormatting()?.split(" ")?.[2]) /
-      10;
+    timeTower.bonus = romanToNum(items[39]?.getName()?.removeFormatting()?.split(" ")?.[2]) / 10;
 
     const charges = towerData.find((line) => line.startsWith("§5§o§7Charges:"));
-    timeTower.charges = parseInt(
-      charges?.split(" ")?.[1]?.removeFormatting()?.split("/")?.[0] ?? 0
-    );
+    timeTower.charges = parseInt(charges?.split(" ")?.[1]?.removeFormatting()?.split("/")?.[0] ?? 0);
 
-    const chargeTime = towerData.find((line) =>
-      line.startsWith("§5§o§7Next Charge:")
-    );
-    timeTower.chargeTime = unformatTime(
-      chargeTime?.split(" ")?.[2]?.removeFormatting() ?? 28_800
-    );
+    const chargeTime = towerData.find((line) => line.startsWith("§5§o§7Next Charge:"));
+    timeTower.chargeTime = unformatTime(chargeTime?.split(" ")?.[2]?.removeFormatting() ?? 28_800);
 
     const status = towerData
       .find((line) => line.startsWith("§5§o§7Status: §a§lACTIVE"))
@@ -147,12 +114,7 @@ const chocoExample = `§6§lChocolate:
 §6§lRabbits:
  §eTotal: §7101
  §eDupes: §f0`;
-const chocoOverlay = new Overlay(
-  "chocoDisplay",
-  data.CFL,
-  "moveChoco",
-  chocoExample
-);
+const chocoOverlay = new Overlay("chocoDisplay", data.CFL, "moveChoco", chocoExample);
 
 registerWhen(
   register("step", () => {
@@ -165,15 +127,10 @@ registerWhen(
     const towerData = data.timeTower;
     const timeLeft = towerData.activeTime - lastOpen;
     const noTower =
-      (cf.production *
-        (cf.multiplier - (towerData.activeTime > 0 ? towerData.bonus : 0))) /
-      cf.multiplier;
-    const production =
-      timeLeft > 0 || towerData.activeTime <= 0 ? cf.production : noTower;
+      (cf.production * (cf.multiplier - (towerData.activeTime > 0 ? towerData.bonus : 0))) / cf.multiplier;
+    const production = timeLeft > 0 || towerData.activeTime <= 0 ? cf.production : noTower;
 
-    const charges =
-      parseInt(towerData.charges) +
-      Math.max(0, Math.ceil((lastOpen - towerData.chargeTime) / 28_800));
+    const charges = parseInt(towerData.charges) + Math.max(0, Math.ceil((lastOpen - towerData.chargeTime) / 28_800));
     const towerStr =
       timeLeft > 0
         ? formatTime(timeLeft) + GREEN + " ✔"
@@ -194,14 +151,10 @@ registerWhen(
  ${YELLOW}Production: ${GRAY + formatNumber(production)}
  ${YELLOW}Total: ${WHITE + formatNumber(chocoTotal)}
  ${YELLOW}All-time: ${GRAY + formatNumber(chocoAll)}
- ${YELLOW}Prestige: ${
-        cf.prestige > 0 ? WHITE + formatNumber(cf.prestige) : GREEN + "✔"
-      }
+ ${YELLOW}Prestige: ${cf.prestige > 0 ? WHITE + formatNumber(cf.prestige) : GREEN + "✔"}
 
 ${GOLD + BOLD}Time:
- ${YELLOW}Prestige: ${
-        GRAY + (prestigeTime > 0 ? formatTime(prestigeTime, 0, 3) : GREEN + "✔")
-      }
+ ${YELLOW}Prestige: ${GRAY + (prestigeTime > 0 ? formatTime(prestigeTime, 0, 3) : GREEN + "✔")}
  ${YELLOW}Tower: ${WHITE + towerStr}
  ${YELLOW}Last Open: ${GRAY + formatTime(lastOpen)}
 
@@ -209,9 +162,7 @@ ${GOLD + BOLD}Rabbits:
  ${YELLOW}Total: ${WHITE + eggs.total}/${eggs.max}
  ${YELLOW}Dupes: ${GRAY + eggs.dupe}
  ${YELLOW}Completion: ${WHITE + (eggs.total / 4.57).toFixed(2)}%
- ${YELLOW}World: ${
-        GRAY + Object.keys(data.eggs.found[Location.getWorld()] ?? {}).length
-      }`
+ ${YELLOW}World: ${GRAY + Object.keys(data.eggs.found[Location.getWorld()] ?? {}).length}`
     );
   }).setFps(1),
   () => Settings.chocoDisplay
@@ -250,9 +201,7 @@ function findWorker() {
     workerLevels[i - 28] = name.substring(0, 2) + (isNaN(level) ? 0 : level);
 
     // Calculate value
-    let cost = parseInt(
-      worker[index + 1].removeFormatting().replace(/\D/g, "")
-    );
+    let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));
     let value = ((i - 27) * baseMultiplier) / cost;
 
     if (value > maxValue) {
@@ -271,9 +220,7 @@ function findWorker() {
 
   const towerI = tower.findIndex((line) => line === "§5§o§7Cost");
   if (Settings.rabbitHighlight === 1 && towerI !== -1) {
-    const towerCost = parseInt(
-      tower[towerI + 1].removeFormatting().replace(/\D/g, "")
-    );
+    const towerCost = parseInt(tower[towerI + 1].removeFormatting().replace(/\D/g, ""));
     const towerValue = ((cf.production / baseMultiplier) * 0.0125) / towerCost;
 
     if (towerValue > maxValue) {
@@ -281,8 +228,7 @@ function findWorker() {
       maxValue = towerValue;
       bestCost = towerCost;
     }
-    workerLevels[7] =
-      LIGHT_PURPLE + romanToNum(items[39].getName().split(" ")[2]);
+    workerLevels[7] = LIGHT_PURPLE + (romanToNum(items[39].getName().split(" ")[2]) ?? "15");
   }
 
   // Jackrabbit calc
@@ -294,17 +240,14 @@ function findWorker() {
 
   const jackI = jackrabbit.findIndex((line) => line === "§5§o§7Cost");
   if (Settings.rabbitHighlight !== 3 && jackI !== -1) {
-    const jackCost = parseInt(
-      jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, "")
-    );
+    const jackCost = parseInt(jackrabbit[jackI + 1].removeFormatting().replace(/\D/g, ""));
     const jackValue = ((cf.production / baseMultiplier) * 0.01) / jackCost;
 
     if (jackValue > maxValue) {
       bestWorker = 42;
       bestCost = jackCost;
     }
-    workerLevels[8] =
-      LIGHT_PURPLE + (romanToNum(items[42].getName().split(" ")[2]) ?? 0);
+    workerLevels[8] = LIGHT_PURPLE + (romanToNum(items[42].getName().split(" ")[2]) ?? 0);
   }
 }
 
@@ -337,16 +280,9 @@ const workerHighlight = register("guiRender", () => {
   let [x, y] = getSlotCoords(bestWorker);
 
   Renderer.translate(0, 0, 100);
-  Renderer.drawRect(
-    data.cf.chocolate > bestCost ? Renderer.GREEN : Renderer.RED,
-    x,
-    y,
-    16,
-    16
-  );
+  Renderer.drawRect(data.cf.chocolate > bestCost ? Renderer.GREEN : Renderer.RED, x, y, 16, 16);
 
   // Draw worker levels
-  const items = Player.getContainer().getItems();
   Renderer.retainTransforms(true);
   Renderer.scale(0.9, 0.9);
   Renderer.translate(0, 0, 275);
@@ -354,30 +290,15 @@ const workerHighlight = register("guiRender", () => {
   // Draw worker levels
   for (let i = 0; i < 7; i++) {
     [x, y] = getSlotCoords(28 + i);
-    Renderer.drawString(
-      workerLevels[i],
-      (x * 10) / 9,
-      ((y - 4) * 10) / 9,
-      true
-    );
+    Renderer.drawString(workerLevels[i], (x * 10) / 9, ((y - 4) * 10) / 9, true);
   }
 
   // Draw tower levels
   Renderer.scale(10 / 9, 10 / 9);
   [x, y] = getSlotCoords(39);
-  Renderer.drawString(
-    workerLevels[7],
-    x + 22 - Renderer.getStringWidth(workerLevels[7]),
-    y + 12,
-    true
-  );
+  Renderer.drawString(workerLevels[7], x + 22 - Renderer.getStringWidth(workerLevels[7]), y + 12, true);
   [x, y] = getSlotCoords(42);
-  Renderer.drawString(
-    workerLevels[8],
-    x + 22 - Renderer.getStringWidth(workerLevels[8]),
-    y + 12,
-    true
-  );
+  Renderer.drawString(workerLevels[8], x + 22 - Renderer.getStringWidth(workerLevels[8]), y + 12, true);
 
   Renderer.retainTransforms(false);
 }).unregister();
