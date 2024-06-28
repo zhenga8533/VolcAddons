@@ -1,20 +1,14 @@
+import { data } from "../../utils/Data";
 import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/Data";
+import Settings from "../../utils/Settings";
 
 /**
  * Crate overlay variables.
  */
 const crateExample = "§8[§a|||||||||||||§f|||||||§8] §b69%§r";
-const crateOverlay = new Overlay(
-  "crateEdit",
-  data.CEL,
-  "moveCrate",
-  crateExample,
-  ["Kuudra"]
-);
+const crateOverlay = new Overlay("crateEdit", data.CEL, "moveCrate", crateExample, ["Kuudra"]);
 
 /**
  * Cancel crate title render and replay with overlay render.

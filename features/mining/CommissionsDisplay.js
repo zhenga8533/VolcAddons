@@ -1,12 +1,12 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { BOLD, GOLD, GREEN, UNDERLINE, YELLOW } from "../../utils/Constants";
-import { getClosest } from "../../utils/functions/find";
-import { isLookingAway } from "../../utils/functions/matrix";
+import { data } from "../../utils/Data";
+import location from "../../utils/Location";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/Data";
+import Settings from "../../utils/Settings";
 import { setTitle } from "../../utils/Title";
+import { getClosest } from "../../utils/functions/find";
+import { isLookingAway } from "../../utils/functions/matrix";
 
 const GEMSTONE_WAYPOINTS = {
   Citrine: [
@@ -43,13 +43,11 @@ const commissionExample = `§r§9§lCommissions:§r
 §r §r§fCorpse Looter: §r§c0%§r
 §r §r§fScrap Collector: §r§c0%§r
 §r §r§fCitrine Gemstone Collector: §r§c0%§r`;
-const commissionOverlay = new Overlay(
-  "commissionsDisplay",
-  data.CDL,
-  "moveCommissions",
-  commissionExample,
-  ["Crystal Hollows", "Dwarven Mines", "Mineshaft"]
-);
+const commissionOverlay = new Overlay("commissionsDisplay", data.CDL, "moveCommissions", commissionExample, [
+  "Crystal Hollows",
+  "Dwarven Mines",
+  "Mineshaft",
+]);
 
 registerWhen(
   register("renderWorld", () => {
@@ -57,10 +55,7 @@ registerWhen(
       Tessellator.drawString(gem[0], gem[2], gem[3], gem[4], gem[1], true);
     });
   }),
-  () =>
-    (location.getWorld() === "Crystal Hollows" ||
-      location.getWorld() === "Dwarven Mines") &&
-    Settings.commissionWaypoints !== 0
+  () => ["Crystal Hollows", "Dwarven Mines"].includes(location.getWorld()) && Settings.commissionWaypoints !== 0
 );
 
 registerWhen(
@@ -79,20 +74,14 @@ registerWhen(
       let comm = parsed[0];
       if (comm in GEMSTONE_WAYPOINTS && parsed[1] !== "Walker") {
         let commWaypoints = GEMSTONE_WAYPOINTS[comm];
-        let closest = getClosest(
-          [Player.getX(), Player.getY(), Player.getZ()],
-          commWaypoints
-        )[0];
-        commissionWaypoints = commissionWaypoints.concat(
-          commWaypoints.filter((wp) => wp != closest)
-        );
+        let closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], commWaypoints)[0];
+        commissionWaypoints = commissionWaypoints.concat(commWaypoints.filter((wp) => wp != closest));
 
         // Change style for closest waypoint
         let closestCopy = [...closest];
         closestWaypoints.push(closestCopy);
         closestCopy[0] = `${BOLD + UNDERLINE}${closestCopy[0]}`;
-        if (Settings.commissionWaypoints !== 2)
-          commissionWaypoints.push(closestCopy);
+        if (Settings.commissionWaypoints !== 2) commissionWaypoints.push(closestCopy);
 
         commissionMessage += `\n${tab[index].replace("§f", GOLD)}`;
       } else commissionMessage += `\n${tab[index]}`;
@@ -104,9 +93,7 @@ registerWhen(
     commissionOverlay.setMessage(commissionMessage);
   }).setFps(4),
   () =>
-    (location.getWorld() === "Crystal Hollows" ||
-      location.getWorld() === "Dwarven Mines" ||
-      location.getWorld() === "Mineshaft") &&
+    ["Crystal Hollows", "Dwarven Mines", "Mineshaft"].includes(location.getWorld()) &&
     (Settings.commissionsDisplay || Settings.commissionWaypoints !== 0)
 );
 
@@ -116,18 +103,11 @@ registerWhen(
   register("renderWorld", (pt) => {
     const player = Player.asPlayerMP().getEntity();
     const x = player.field_70165_t * pt - player.field_70142_S * (pt - 1);
-    const y =
-      player.field_70163_u * pt -
-      player.field_70137_T * (pt - 1) +
-      Player.asPlayerMP().getEyeHeight();
+    const y = player.field_70163_u * pt - player.field_70137_T * (pt - 1) + Player.asPlayerMP().getEyeHeight();
     const z = player.field_70161_v * pt - player.field_70136_U * (pt - 1);
 
     closestWaypoints.forEach((close) => {
-      if (
-        isLookingAway(x, y, z, Player.getYaw(), close[2], close[3], close[4]) ||
-        SKIP.has(close[0])
-      )
-        return;
+      if (isLookingAway(x, y, z, Player.getYaw(), close[2], close[3], close[4]) || SKIP.has(close[0])) return;
 
       GL11.glBlendFunc(770, 771);
       GL11.glEnable(GL11.GL_BLEND);
@@ -137,12 +117,7 @@ registerWhen(
       GlStateManager.func_179094_E(); // pushMatrix()
 
       const hex = close[1];
-      Tessellator.begin(3).colorize(
-        ((hex >> 16) & 0xff) / 255,
-        ((hex >> 8) & 0xff) / 255,
-        (hex & 0xff) / 255,
-        1
-      );
+      Tessellator.begin(3).colorize(((hex >> 16) & 0xff) / 255, ((hex >> 8) & 0xff) / 255, (hex & 0xff) / 255, 1);
       Tessellator.pos(x, y, z);
       Tessellator.pos(close[2], close[3], close[4]);
       Tessellator.draw();
@@ -162,16 +137,7 @@ registerWhen(
  */
 registerWhen(
   register("chat", (commission) => {
-    setTitle(
-      GREEN + BOLD + commission,
-      `${YELLOW}Commission Complete!`,
-      5,
-      25,
-      5,
-      51
-    );
-  }).setCriteria(
-    "${commission} Commission Complete! Visit the King to claim your rewards!"
-  ),
+    setTitle(GREEN + BOLD + commission, `${YELLOW}Commission Complete!`, 5, 25, 5, 51);
+  }).setCriteria("${commission} Commission Complete! Visit the King to claim your rewards!"),
   () => Settings.commissionAnnounce
 );

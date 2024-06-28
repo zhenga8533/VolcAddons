@@ -1,7 +1,7 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { GRAY, GREEN, LOGO } from "../../utils/Constants";
+import location from "../../utils/Location";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
 
 /**
@@ -30,12 +30,8 @@ function findIntersection(line1, line2) {
   if (determinant === 0) return undefined;
 
   // Calc intersection
-  const x =
-    ((x1 * z2 - z1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * z4 - z3 * x4)) /
-    determinant;
-  const z =
-    ((x1 * z2 - z1 * x2) * (z3 - z4) - (z1 - z2) * (x3 * z4 - z3 * x4)) /
-    determinant;
+  const x = ((x1 * z2 - z1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * z4 - z3 * x4)) / determinant;
+  const z = ((x1 * z2 - z1 * x2) * (z3 - z4) - (z1 - z2) * (x3 * z4 - z3 * x4)) / determinant;
 
   return [x, z];
 }
@@ -69,10 +65,7 @@ registerWhen(
 
       // Find y of location
       const origin = path[0];
-      const distance = Math.hypot(
-        intersect[0] - origin[0],
-        intersect[1] - origin[2]
-      );
+      const distance = Math.hypot(intersect[0] - origin[0], intersect[1] - origin[2]);
       const y = origin[1] + distance * (path[1][1] - origin[1]);
 
       // Get location name
@@ -93,16 +86,8 @@ registerWhen(
       ChatLib.chat(`${LOGO + GREEN}Compass location found!`);
 
       // Check if paths are too close
-      const close = Math.hypot(
-        origin[0] - lastPath[0][0],
-        origin[2] - lastPath[0][2]
-      );
-      if (close < 16)
-        ChatLib.chat(
-          `${
-            LOGO + GRAY
-          }Location may be incorrect due to proximity of compass uses...`
-        );
+      const close = Math.hypot(origin[0] - lastPath[0][0], origin[2] - lastPath[0][2]);
+      if (close < 16) ChatLib.chat(`${LOGO + GRAY}Location may be incorrect due to proximity of compass uses...`);
     }
   }),
   () => location.getWorld() === "Crystal Hollows" && Settings.compassLocator

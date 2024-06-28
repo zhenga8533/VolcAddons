@@ -1,9 +1,9 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { CUBE_CLASS } from "../../utils/Constants";
-import { formatNumber } from "../../utils/functions/format";
+import location from "../../utils/Location";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { setTitle } from "../../utils/Title";
+import { formatNumber } from "../../utils/functions/format";
 
 /**
  * Variables used to track and display Kuudra HP and entity.
@@ -29,9 +29,7 @@ registerWhen(
 
     // Find Kuudra based off size and HP
     const kuudra = cubes.find(
-      (cube) =>
-        cube.getWidth().toFixed(1) == 15.3 &&
-        cube.getEntity().func_110143_aJ() <= 100_000
+      (cube) => cube.getWidth().toFixed(1) == 15.3 && cube.getEntity().func_110143_aJ() <= 100_000
     );
     if (kuudra !== undefined) {
       currentHP = kuudra.getEntity().func_110143_aJ().toFixed(0);
@@ -50,29 +48,15 @@ registerWhen(
             : currentHP > 10_000
             ? "§c"
             : "§4";
-        HPDisplay = [
-          `${color + formatNumber(currentHP)}§7/§a100k §c❤`,
-          kuudra.getX(),
-          kuudra.getY(),
-          kuudra.getZ(),
-        ];
+        HPDisplay = [`${color + formatNumber(currentHP)}§7/§a100k §c❤`, kuudra.getX(), kuudra.getY(), kuudra.getZ()];
 
         // Boss Health Bar Percentage
         const percent = `${((currentHP / 100_000) * 100).toFixed(2)}%`;
-        percentHP = new Text(
-          percent,
-          Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(percent) / 2,
-          10
-        );
+        percentHP = new Text(percent, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(percent) / 2, 10);
       }
 
       // KUUDRA SPAWN DETECT
-      if (
-        Settings.kuudraSpawn &&
-        location.getTier() === 5 &&
-        currentHP <= 25_000 &&
-        currentHP > 24_900
-      ) {
+      if (Settings.kuudraSpawn && location.getTier() === 5 && currentHP <= 25_000 && currentHP > 24_900) {
         x = kuudra.getX();
         z = kuudra.getZ();
 
@@ -83,9 +67,7 @@ registerWhen(
       }
     } else HPDisplay = ["100k/100k ❤", 0, 0, 0];
   }),
-  () =>
-    location.getWorld() === "Kuudra" &&
-    (Settings.kuudraHP || Settings.kuudraSpawn)
+  () => location.getWorld() === "Kuudra" && (Settings.kuudraHP || Settings.kuudraSpawn)
 );
 
 /**
@@ -104,16 +86,7 @@ registerWhen(
 registerWhen(
   register("renderWorld", () => {
     if (HPDisplay[1])
-      Tessellator.drawString(
-        HPDisplay[0],
-        HPDisplay[1],
-        HPDisplay[2] + 10,
-        HPDisplay[3],
-        0xa7171a,
-        true,
-        0.25,
-        false
-      );
+      Tessellator.drawString(HPDisplay[0], HPDisplay[1], HPDisplay[2] + 10, HPDisplay[3], 0xa7171a, true, 0.25, false);
   }),
   () => location.getWorld() === "Kuudra" && Settings.kuudraHP
 );
@@ -124,8 +97,7 @@ registerWhen(
 register("worldUnload", () => {
   percentHP = new Text(
     `One Cycleable`,
-    Renderer.screen.getWidth() / 2 -
-      Renderer.getStringWidth(`One Cycleable`) / 2,
+    Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(`One Cycleable`) / 2,
     10
   );
   HPDisplay = ["100k/100k ❤", 0, 0, 0];

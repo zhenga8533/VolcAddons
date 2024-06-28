@@ -2,18 +2,12 @@ register("command", () => {
   ChatLib.chat(
     `\n§6§lVolcDebug:
  §eCT Version: §7v${ChatTriggers.MODVERSION}
- §eVolcAddons §7v${
-   JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version
- }
+ §eVolcAddons §7v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version}
 §8Please note that the mod may not work if CT is not v2.2.0`
   );
 }).setName("VATest");
 
 // Utility Modules
-import "./utils/Launch";
-import "./utils/DevTils";
-import Settings from "./utils/Settings";
-import Toggles from "./utils/Toggles";
 import {
   AQUA,
   BOLD,
@@ -31,8 +25,12 @@ import {
   YELLOW,
 } from "./utils/Constants";
 import { data, resetGUI } from "./utils/Data";
+import "./utils/DevTils";
+import "./utils/Launch";
 import { updateList } from "./utils/ListTils";
 import { openGUI } from "./utils/Overlay";
+import Settings from "./utils/Settings";
+import Toggles from "./utils/Toggles";
 import { getLatestReleaseVersion } from "./utils/UpdateTils";
 
 // General Features
@@ -142,41 +140,25 @@ import "./features/rift/VampireSlayer";
 // HELP - Display help message for available commands
 function getHelp() {
   ChatLib.chat(
-    `\n${GOLD + BOLD + UNDERLINE}VolcAddons v${
-      JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET
-    }
+    `\n${GOLD + BOLD + UNDERLINE}VolcAddons v${JSON.parse(FileLib.read("VolcAddons", "metadata.json")).version + RESET}
 
 ${DARK_AQUA + BOLD}GENERAL COMMANDS:${RESET}
- ${
-   AQUA + BOLD
- }Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>
- ${
-   AQUA + BOLD
- }Container: ${WHITE}/va ${GRAY}<${WHITE}button, preview, slot${GRAY}>
- ${
-   AQUA + BOLD
- }Waypoints: ${WHITE}/va ${GRAY}<${WHITE}wp, fairy, enigma, egg, npc, zone, cat${GRAY}>
+ ${AQUA + BOLD}Settings: ${WHITE}/va ${GRAY}<${WHITE}gui, settings, toggles, version, help${GRAY}>
+ ${AQUA + BOLD}Container: ${WHITE}/va ${GRAY}<${WHITE}button, preview, slot${GRAY}>
+ ${AQUA + BOLD}Waypoints: ${WHITE}/va ${GRAY}<${WHITE}wp, fairy, enigma, egg, npc, zone, cat${GRAY}>
  ${AQUA + BOLD}Economy: ${WHITE}/va ${GRAY}<${WHITE}calc, attribute, nw${GRAY}>
  ${AQUA + BOLD}Misc: ${WHITE}/va ${GRAY}<${WHITE}dev, lists, splits${GRAY}>
  ${AQUA + BOLD}Etc: ${WHITE}/<sk, pesttp>
     
 ${DARK_AQUA + BOLD}GENERAL FEATURES:${RESET}
- ${
-   AQUA + BOLD
- }Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch, xyz${GRAY}>
- ${
-   AQUA + BOLD
- }Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>
+ ${AQUA + BOLD}Status Commands: ${WHITE}/va ${GRAY}<${WHITE}ping, fps, tps, yaw, pitch, xyz${GRAY}>
+ ${AQUA + BOLD}Stats Commands: ${WHITE}/va ${GRAY}<${WHITE}pet, stats, pt, sf${GRAY}>
  ${AQUA + BOLD}Party Commands: ${WHITE}Refer to '/va toggles'`
   );
 }
 
 // `viewrecipe` GUI Button
-const recipeKey = new KeyBind(
-  "View Recipe",
-  data.recipeKey,
-  "./VolcAddons.xdd"
-);
+const recipeKey = new KeyBind("View Recipe", data.recipeKey, "./VolcAddons.xdd");
 register("gameUnload", () => {
   data.recipeKey = recipeKey.getKeyCode();
 }).setPriority(Priority.HIGHEST);
@@ -195,11 +177,7 @@ register("guiKey", (_, keyCode, gui) => {
     }
 
     // Viewrecipe using item NBT ID
-    const id = item
-      .getNBT()
-      .getCompoundTag("tag")
-      .getCompoundTag("ExtraAttributes")
-      .getString("id");
+    const id = item.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
     ChatLib.command(`viewrecipe ${id}`);
   }
 });
@@ -211,9 +189,7 @@ function openSettings() {
   try {
     Settings.openGUI();
   } catch (err) {
-    ChatLib.chat(
-      `${LOGO + RED}Error opening Settings... Please run '/ct reload' to fix!`
-    );
+    ChatLib.chat(`${LOGO + RED}Error opening Settings... Please run '/ct reload' to fix!`);
     register("gameUnload", () => {
       FileLib.delete("VolcAddons", "config.toml");
     }).setPriority(Priority.LOWEST);
@@ -243,11 +219,7 @@ register("command", (...args) => {
     case "dev":
       data.devMode = !data.devMode;
       const color = data.devMode ? GREEN : RED;
-      ChatLib.chat(
-        `${LOGO + color}Developer mode is now ${
-          data.devMode ? "enabled" : "disabled"
-        }!`
-      );
+      ChatLib.chat(`${LOGO + color}Developer mode is now ${data.devMode ? "enabled" : "disabled"}!`);
       break;
     // Help
     case "help":
@@ -278,9 +250,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
     case "contract":
       const Desktop = Java.type("java.awt.Desktop");
       const File = Java.type("java.io.File");
-      Desktop.getDesktop().open(
-        new File(Config.modulesFolder + "/VolcAddons/data/contract.txt")
-      );
+      Desktop.getDesktop().open(new File(Config.modulesFolder + "/VolcAddons/data/contract.txt"));
       ChatLib.chat(
         `${
           LOGO + RED
@@ -289,26 +259,16 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
       break;
     case "wdr":
     case "sin":
-      if (
-        !FileLib.read("./VolcAddons/Data", "contract.txt")
-          .split("\n")[51]
-          ?.includes(Player.getName())
-      ) {
+      if (!FileLib.read("./VolcAddons/Data", "contract.txt").split("\n")[51]?.includes(Player.getName())) {
         ChatLib.chat(
-          `${
-            LOGO + RED
-          }The contract, signed it must be. Access granted, for you to see. ${DARK_GRAY}/va contract`
+          `${LOGO + RED}The contract, signed it must be. Access granted, for you to see. ${DARK_GRAY}/va contract`
         );
         break;
       }
 
       data.vision = !data.vision;
-      if (data.vision)
-        ChatLib.chat(`${LOGO + GREEN}The white eye has been activated.`);
-      else
-        ChatLib.chat(
-          `${LOGO + RED}See no evil, hear no evil, speak no evil...`
-        );
+      if (data.vision) ChatLib.chat(`${LOGO + GREEN}The white eye has been activated.`);
+      else ChatLib.chat(`${LOGO + RED}See no evil, hear no evil, speak no evil...`);
       break;
     // Move GUI
     case "gui":
@@ -336,9 +296,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
     case "xyz":
       const randID = "@" + (Math.random() + 1).toString(36).substring(5);
       ChatLib.say(
-        `x: ${Math.round(Player.getX())}, y: ${Math.round(
-          Player.getY()
-        )}, z: ${Math.round(Player.getZ())} ${randID}`
+        `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())} ${randID}`
       );
       break;
     // Networth
@@ -439,15 +397,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
     case "calculate":
     case "calc":
       try {
-        const MINION_ARGS = new Set([
-          "hypergolic",
-          "hg",
-          "inferno",
-          "gabagool",
-          "gaba",
-          "vampire",
-          "vamp",
-        ]);
+        const MINION_ARGS = new Set(["hypergolic", "hg", "inferno", "gabagool", "gaba", "vampire", "vamp"]);
         switch (args[1]) {
           case "composter":
           case "compost":
@@ -462,9 +412,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
           default:
             if (MINION_ARGS.has(args[1])) calcMinions(args);
             else {
-              ChatLib.chat(
-                `\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`
-              );
+              ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
               ChatLib.chat(
                 `${
                   LOGO + RED
@@ -549,41 +497,16 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
         "cringe",
       ]);
       const INSTANCES = new Set(["f", "m", "t"]);
-      const STATUS_ARGS = new Set([
-        "ping",
-        "tps",
-        "fps",
-        "cps",
-        "yaw",
-        "pitch",
-        "dir",
-        "direction",
-        "day",
-      ]);
-      const STAT_ARGS = new Set([
-        "pet",
-        "stats",
-        "soulflow",
-        "sf",
-        "playtime",
-        "pt",
-        "legion",
-      ]);
+      const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps", "yaw", "pitch", "dir", "direction", "day"]);
+      const STAT_ARGS = new Set(["pet", "stats", "soulflow", "sf", "playtime", "pt", "legion"]);
 
-      if (
-        PARTY_COMMANDS.has(command) ||
-        (INSTANCES.has(command[0]) && !isNaN(command[1]))
-      )
+      if (PARTY_COMMANDS.has(command) || (INSTANCES.has(command[0]) && !isNaN(command[1])))
         executeCommand(Player.getName(), args, false);
       else if (STATUS_ARGS.has(command)) getStatus(command);
       else if (STAT_ARGS.has(command)) getStat(command);
       else {
-        ChatLib.chat(
-          `${LOGO + RED}Unkown command: "${command}" was not found!`
-        );
-        ChatLib.chat(
-          `${LOGO + RED}Use '/va help' for a full list of commands.`
-        );
+        ChatLib.chat(`${LOGO + RED}Unkown command: "${command}" was not found!`);
+        ChatLib.chat(`${LOGO + RED}Use '/va help' for a full list of commands.`);
       }
       break;
   }

@@ -1,8 +1,8 @@
-import Settings from "../../utils/Settings";
 import { AMOGUS, BOLD, GOLD } from "../../utils/Constants";
-import { playSound } from "../../utils/functions/misc";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { setTitle } from "../../utils/Title";
+import { playSound } from "../../utils/functions/misc";
 
 /**
  * Variable to represent minutes passed for timer.

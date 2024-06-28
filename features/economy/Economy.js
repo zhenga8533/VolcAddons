@@ -1,7 +1,5 @@
 import request from "../../../requestV2";
-import Settings from "../../utils/Settings";
 import { GREEN, LOGO } from "../../utils/Constants";
-import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
 
 /**
@@ -26,9 +24,7 @@ export function updateAuction() {
   })
     .then((response) => {
       items = response.items;
-      Object.keys(data.valuelist).forEach(
-        (key) => (items[key] = { lbin: data.valuelist[key] })
-      );
+      Object.keys(data.valuelist).forEach((key) => (items[key] = { lbin: data.valuelist[key] }));
     })
     .catch((err) => console.error(`VolcAddons: ${err.cause ?? err}`));
 }

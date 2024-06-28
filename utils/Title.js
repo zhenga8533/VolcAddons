@@ -51,13 +51,7 @@ register("tick", () => {
     const title = titles[current];
 
     // Draw title
-    Client.showTitle(
-      current,
-      title.subtitle,
-      title.fadeIn,
-      title.time,
-      title.fadeOut
-    );
+    Client.showTitle(current, title.subtitle, title.fadeIn, title.time, title.fadeOut);
   }
 });
 

@@ -1,17 +1,9 @@
-import Settings from "../../utils/Settings";
-import {
-  BOLD,
-  DARK_GRAY,
-  GOLD,
-  GREEN,
-  LOGO,
-  RED,
-  YELLOW,
-} from "../../utils/Constants";
-import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/RegisterTils";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { data } from "../../utils/Data";
 import { printList } from "../../utils/ListTils";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { getSlotCoords } from "../../utils/functions/find";
 
 // Bind key
 const bindKey = new KeyBind("Slot Binding", data.bindKey, "./VolcAddons.xdd");
@@ -22,21 +14,13 @@ let binding = undefined;
 
 const HOTBAR = ["36", "37", "38", "39", "40", "41", "42", "43", "44"];
 HOTBAR.forEach((slot) => {
-  if (
-    !data.slotBinds.hasOwnProperty(slot) &&
-    !Array.isArray(data.slotBinds[slot])
-  )
-    data.slotBinds[slot] = [];
+  if (!data.slotBinds.hasOwnProperty(slot) && !Array.isArray(data.slotBinds[slot])) data.slotBinds[slot] = [];
 });
 
 // Bind slots
 registerWhen(
   register("guiKey", (_, keyCode, gui) => {
-    if (
-      Player.getContainer().getSize() !== 45 ||
-      keyCode !== bindKey.getKeyCode()
-    )
-      return;
+    if (Player.getContainer().getSize() !== 45 || keyCode !== bindKey.getKeyCode()) return;
     const bind = gui?.getSlotUnderMouse()?.field_75222_d;
     if (bind === undefined || bind <= 4) return;
 
@@ -69,8 +53,7 @@ registerWhen(
 registerWhen(
   register("guiMouseClick", (_, __, button, gui, event) => {
     if (
-      gui.class.getName() !==
-        "net.minecraft.client.gui.inventory.GuiInventory" ||
+      gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiInventory" ||
       button !== 0 ||
       !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
     )
@@ -97,10 +80,7 @@ registerWhen(
 // Render bindings
 registerWhen(
   register("guiRender", (x, y, gui) => {
-    if (
-      gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiInventory"
-    )
-      return;
+    if (gui.class.getName() !== "net.minecraft.client.gui.inventory.GuiInventory") return;
 
     // render binding
     if (binding !== undefined) {
@@ -112,11 +92,7 @@ registerWhen(
 
     // render all binds
     Object.keys(data.slotBinds).forEach((bind) => {
-      if (
-        Array.isArray(data.slotBinds[bind]) &&
-        data.slotBinds[bind].length === 0
-      )
-        return;
+      if (Array.isArray(data.slotBinds[bind]) && data.slotBinds[bind].length === 0) return;
       const [x, y] = getSlotCoords(bind);
 
       Renderer.translate(0, 0, 200);
@@ -157,32 +133,19 @@ export function slotCommands(args) {
   switch (command) {
     case "save":
       data.bindPresets[name] = data.slotBinds;
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully saved slot bindings using key: "${name}".`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully saved slot bindings using key: "${name}".`);
       break;
     case "delete":
       if (data.bindPresets.hasOwnProperty(name)) {
         delete data.bindPresets[name];
-        ChatLib.chat(
-          `${
-            LOGO + GREEN
-          }Succesfully deleted slot bindings using key: "${name}"`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Succesfully deleted slot bindings using key: "${name}"`);
       } else ChatLib.chat(`${LOGO + RED}Invalid bind key: "${name}"`);
       break;
     case "load":
       if (data.bindPresets.hasOwnProperty(name)) {
         data.slotBinds = data.bindPresets[name];
-        ChatLib.chat(
-          `${
-            LOGO + GREEN
-          }Succesfully loaded slot bindings using key: "${name}".`
-        );
-      } else
-        ChatLib.chat(
-          `${LOGO + RED}Error: There are no presets using "${name}" key.`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Succesfully loaded slot bindings using key: "${name}".`);
+      } else ChatLib.chat(`${LOGO + RED}Error: There are no presets using "${name}" key.`);
       break;
     case "list":
     case "view":
@@ -206,8 +169,7 @@ export function slotCommands(args) {
       break;
     case "help":
     default:
-      if (command !== "help")
-        ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+      if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
       ChatLib.chat(
         `${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va bind <command>

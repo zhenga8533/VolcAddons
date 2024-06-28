@@ -1,5 +1,5 @@
-import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
 
 let unopened = {};
@@ -33,15 +33,8 @@ registerWhen(
           if (lore === undefined) continue;
 
           // Check if the chest is unopened, opened, or empty
-          if (
-            lore.find((line) => line === "§5§o§8No Chests Opened!") !==
-            undefined
-          )
-            unopened[index] = Renderer.GREEN;
-          else if (
-            lore.find((line) => line.startsWith("§5§o§8Opened Chest:")) !==
-            undefined
-          )
+          if (lore.find((line) => line === "§5§o§8No Chests Opened!") !== undefined) unopened[index] = Renderer.GREEN;
+          else if (lore.find((line) => line.startsWith("§5§o§8Opened Chest:")) !== undefined)
             unopened[index] = Renderer.YELLOW;
         }
       }

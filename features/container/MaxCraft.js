@@ -1,6 +1,6 @@
-import Settings from "../../utils/Settings";
 import { GOLD, YELLOW } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { commafy, unformatNumber } from "../../utils/functions/format";
 
 let craftable = 0;
@@ -12,9 +12,7 @@ const tooltip = register("preItemRender", (_, __, slot) => {
   // Put the max craftable amount into lore
   const lore = button.getLore().join("\n").split("\n").slice(1);
   const i = lore.findIndex(
-    (line, index) =>
-      line.startsWith("§5§o§7§aCrafting") &&
-      !lore[index + 1]?.startsWith(`§5§o${GOLD} Max Craftable:`)
+    (line, index) => line.startsWith("§5§o§7§aCrafting") && !lore[index + 1]?.startsWith(`§5§o${GOLD} Max Craftable:`)
   );
   if (i === -1) return;
 
@@ -39,8 +37,7 @@ registerWhen(
       // Get the max craft amount
       maxCraft = Infinity;
       button.getLore().forEach((line) => {
-        if (!line.startsWith("§5§o §a✔") && !line.startsWith("§5§o §c✖"))
-          return;
+        if (!line.startsWith("§5§o §a✔") && !line.startsWith("§5§o §c✖")) return;
 
         const ratio = line.split(" ")[2].removeFormatting().split("/");
         const current = unformatNumber(ratio[0]);
@@ -54,9 +51,7 @@ registerWhen(
       const crafting =
         name === "§aSupercraft"
           ? container.getStackInSlot(25).getStackSize()
-          : unformatNumber(
-              name.split(" ")[1].removeFormatting().replace(/[x(]/g, "")
-            );
+          : unformatNumber(name.split(" ")[1].removeFormatting().replace(/[x(]/g, ""));
       const freeSpace =
         64 *
         Player.getInventory()

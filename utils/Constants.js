@@ -59,57 +59,25 @@ export const MUSIC = new Sound({ source: "music.ogg" });
 export let SMA = Java.type("net.minecraft.entity.SharedMonsterAttributes");
 export let NBTTagString = Java.type("net.minecraft.nbt.NBTTagString");
 export const EntityWither = Java.type("net.minecraft.entity.boss.EntityWither");
-export const EntityArmorStand = Java.type(
-  "net.minecraft.entity.item.EntityArmorStand"
-);
-export const PLAYER_CLASS = Java.type(
-  "net.minecraft.client.entity.EntityOtherPlayerMP"
-).class;
-export const WOLF_CLASS = Java.type(
-  "net.minecraft.entity.passive.EntityWolf"
-).class;
-export const GIANT_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityGiantZombie"
-).class;
-export const ZOMBIE_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityZombie"
-).class;
-export const SPIDER_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntitySpider"
-).class;
-export const ENDERMAN_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityEnderman"
-).class;
-export const BLAZE_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityBlaze"
-).class;
-export const GOLEM_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityIronGolem"
-).class;
-export const GUARDIAN_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityGuardian"
-).class;
-export const GHAST_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityGhast"
-).class;
-export const CUBE_CLASS = Java.type(
-  "net.minecraft.entity.monster.EntityMagmaCube"
-).class;
-export const CHEST_CLASS = Java.type(
-  "net.minecraft.tileentity.TileEntityChest"
-).class;
+export const EntityArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
+export const PLAYER_CLASS = Java.type("net.minecraft.client.entity.EntityOtherPlayerMP").class;
+export const WOLF_CLASS = Java.type("net.minecraft.entity.passive.EntityWolf").class;
+export const GIANT_CLASS = Java.type("net.minecraft.entity.monster.EntityGiantZombie").class;
+export const ZOMBIE_CLASS = Java.type("net.minecraft.entity.monster.EntityZombie").class;
+export const SPIDER_CLASS = Java.type("net.minecraft.entity.monster.EntitySpider").class;
+export const ENDERMAN_CLASS = Java.type("net.minecraft.entity.monster.EntityEnderman").class;
+export const BLAZE_CLASS = Java.type("net.minecraft.entity.monster.EntityBlaze").class;
+export const GOLEM_CLASS = Java.type("net.minecraft.entity.monster.EntityIronGolem").class;
+export const GUARDIAN_CLASS = Java.type("net.minecraft.entity.monster.EntityGuardian").class;
+export const GHAST_CLASS = Java.type("net.minecraft.entity.monster.EntityGhast").class;
+export const CUBE_CLASS = Java.type("net.minecraft.entity.monster.EntityMagmaCube").class;
+export const CHEST_CLASS = Java.type("net.minecraft.tileentity.TileEntityChest").class;
 export const STAND_CLASS = EntityArmorStand.class;
 export const WITHER_CLASS = EntityWither.class;
 
-export const InventoryBasic = Java.type(
-  "net.minecraft.inventory.InventoryBasic"
-);
-export const GuiInventory = Java.type(
-  "net.minecraft.client.gui.inventory.GuiInventory"
-);
-export const GuiChest = Java.type(
-  "net.minecraft.client.gui.inventory.GuiChest"
-);
+export const InventoryBasic = Java.type("net.minecraft.inventory.InventoryBasic");
+export const GuiInventory = Java.type("net.minecraft.client.gui.inventory.GuiInventory");
+export const GuiChest = Java.type("net.minecraft.client.gui.inventory.GuiChest");
 export const GuiTextField = Java.type("net.minecraft.client.gui.GuiTextField");
 
 /**

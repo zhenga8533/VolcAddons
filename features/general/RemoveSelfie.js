@@ -1,5 +1,5 @@
-import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 /**
  * Variables used to represent F5 key bind.
@@ -13,17 +13,13 @@ let keyPressed = false;
 registerWhen(
   register("tick", () => {
     try {
-      if (Client.settings.getSettings().field_74320_O === 2)
-        Client.settings.getSettings().field_74320_O = 0;
+      if (Client.settings.getSettings().field_74320_O === 2) Client.settings.getSettings().field_74320_O = 0;
       else if (Keyboard.isKeyDown(key.getKeyCode()) && !keyPressed) {
-        if (Client.settings.getSettings().field_74320_O === 1)
-          Client.settings.getSettings().field_74320_O = 2;
+        if (Client.settings.getSettings().field_74320_O === 1) Client.settings.getSettings().field_74320_O = 2;
         keyPressed = true;
-      } else if (!Keyboard.isKeyDown(key.getKeyCode()) && keyPressed)
-        keyPressed = false;
+      } else if (!Keyboard.isKeyDown(key.getKeyCode()) && keyPressed) keyPressed = false;
     } catch (err) {
-      if (Client.settings.getSettings().field_74320_O === 2)
-        Client.settings.getSettings().field_74320_O = 0;
+      if (Client.settings.getSettings().field_74320_O === 2) Client.settings.getSettings().field_74320_O = 0;
     }
   }),
   () => Settings.removeSelfie === true

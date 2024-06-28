@@ -1,27 +1,13 @@
-import {
-  BOLD,
-  DARK_GREEN,
-  DARK_RED,
-  GOLD,
-  GREEN,
-  RED,
-} from "../../utils/Constants";
-import { formatNumber } from "../../utils/functions/format";
-import { Overlay } from "../../utils/Overlay";
+import { BOLD, DARK_GREEN, DARK_RED, GOLD, GREEN, RED } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { formatNumber } from "../../utils/functions/format";
 import { getItemValue } from "./ItemPrice";
 
 const tradeExample = `${DARK_RED + BOLD}Giving: ${RED}Nah
 ${DARK_GREEN + BOLD}Receiving: ${GREEN}I'd
 ${GOLD + BOLD}Profit: ${GREEN}Win`;
-const tradeOverlay = new Overlay(
-  "tradeValue",
-  data.TVL,
-  "moveTrade",
-  tradeExample,
-  ["all"],
-  "guiRender"
-);
+const tradeOverlay = new Overlay("tradeValue", data.TVL, "moveTrade", tradeExample, ["all"], "guiRender");
 tradeOverlay.setMessage("");
 
 const updateTrade = register("step", () => {
@@ -40,9 +26,7 @@ const updateTrade = register("step", () => {
   }
 
   const profit = receiving - giving;
-  tradeOverlay.setMessage(`${DARK_RED + BOLD}Giving: ${
-    RED + formatNumber(giving)
-  }
+  tradeOverlay.setMessage(`${DARK_RED + BOLD}Giving: ${RED + formatNumber(giving)}
 ${DARK_GREEN + BOLD}Receiving: ${GREEN + formatNumber(receiving)}
 ${GOLD + BOLD}Profit: ${(profit > 0 ? GREEN : RED) + formatNumber(profit)}`);
 })

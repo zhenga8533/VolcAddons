@@ -1,9 +1,9 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { GIANT_CLASS, STAND_CLASS } from "../../utils/Constants";
+import location from "../../utils/Location";
 import { registerWhen } from "../../utils/RegisterTils";
-import { getPhase } from "./KuudraSplits";
+import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
+import { getPhase } from "./KuudraSplits";
 
 /**
  * Variables used to track and display crate locations.
@@ -28,10 +28,8 @@ registerWhen(
     supplies.forEach((supply) => {
       const yaw = supply.getYaw();
       const distance = player.distanceTo(supply);
-      const x =
-        supply.getX() + 5 * Math.cos((yaw + 130) * (Math.PI / 180)) + 0.5;
-      const z =
-        supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180)) + 0.5;
+      const x = supply.getX() + 5 * Math.cos((yaw + 130) * (Math.PI / 180)) + 0.5;
+      const z = supply.getZ() + 5 * Math.sin((yaw + 130) * (Math.PI / 180)) + 0.5;
       crates.push([distance > 32 ? 1 : 0, 1, distance > 32 ? 1 : 0, x, 75, z]);
     });
   }),
@@ -48,9 +46,7 @@ registerWhen(
     builds.clear();
     const stands = World.getAllEntitiesOfType(STAND_CLASS);
     const piles = stands.filter((stand) => stand.getName().includes("PUNCH"));
-    piles.forEach((pile) =>
-      builds.push([pile.getX() + 0.5, pile.getY(), pile.getZ() + 0.5])
-    );
+    piles.forEach((pile) => builds.push([pile.getX() + 0.5, pile.getY(), pile.getZ() + 0.5]));
   }).setFps(2),
   () => location.getWorld() === "Kuudra" && Settings.kuudraBuild
 );

@@ -1,20 +1,10 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import {
-  AQUA,
-  BOLD,
-  DARK_GRAY,
-  GOLD,
-  GREEN,
-  LIGHT_PURPLE,
-  LOGO,
-  RED,
-  YELLOW,
-} from "../../utils/Constants";
-import { getClosest } from "../../utils/functions/find";
+import { AQUA, BOLD, DARK_GRAY, GOLD, GREEN, LIGHT_PURPLE, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { Json } from "../../utils/Json";
+import location from "../../utils/Location";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
+import { getClosest } from "../../utils/functions/find";
 
 /**
  * Variables used to represent soul waypoints.
@@ -31,12 +21,8 @@ registerWhen(
     if (souls.length === 0) return;
 
     // Delete closest soul
-    const closest = getClosest(
-      [Player.getX(), Player.getY(), Player.getZ()],
-      souls
-    );
-    if (closest !== undefined && closest[1] < 10)
-      souls.splice(souls.indexOf(closest[0]), 1);
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
+    if (closest !== undefined && closest[1] < 10) souls.splice(souls.indexOf(closest[0]), 1);
   }).setCriteria("SOUL! You found a Fairy Soul!"),
   () => Settings.fairyWaypoint !== 0
 );
@@ -50,12 +36,8 @@ registerWhen(
     if (souls.length === 0) return;
 
     // Delete duplicate soul
-    const closest = getClosest(
-      [Player.getX(), Player.getY(), Player.getZ()],
-      souls
-    );
-    if (closest !== undefined && closest[1] < 10)
-      souls.splice(souls.indexOf(closest[0]), 1);
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
+    if (closest !== undefined && closest[1] < 10) souls.splice(souls.indexOf(closest[0]), 1);
   }).setCriteria("You have already found that Fairy Soul!"),
   () => Settings.fairyWaypoint !== 0
 );
@@ -72,10 +54,7 @@ registerWhen(
       const y = parseFloat(fairy[2]);
       const z = parseFloat(fairy[3]) + 1;
 
-      if (
-        Math.hypot(Player.getX() - x, Player.getZ() - z) <
-        Settings.fairyWaypoint
-      ) {
+      if (Math.hypot(Player.getX() - x, Player.getZ() - z) < Settings.fairyWaypoint) {
         soulWaypoints.push([x, y, z]);
       }
     });
@@ -99,15 +78,11 @@ export function updateFairy(command, index) {
       Object.keys(data).forEach((world) => {
         data[world].length = 0;
       });
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully cleared out all Fairy Soul waypoints.`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully cleared out all Fairy Soul waypoints.`);
       break;
     case "delete": // Delete the specified soul
       if (souls[index] === undefined) {
-        ChatLib.chat(
-          `${LOGO + RED}Error: Invalid Fairy Soul index "${index}"!`
-        );
+        ChatLib.chat(`${LOGO + RED}Error: Invalid Fairy Soul index "${index}"!`);
         return;
       }
       souls.splice(index, 1);
@@ -115,9 +90,7 @@ export function updateFairy(command, index) {
       ChatLib.chat(`${LOGO + GREEN}Successfully removed Fairy Soul.`);
       break;
     case "list": // List all missing fairy souls
-      const message = new Message(
-        `\n${LOGO + GOLD + BOLD}Fairy Souls:`
-      ).setChatLineId(5858);
+      const message = new Message(`\n${LOGO + GOLD + BOLD}Fairy Souls:`).setChatLineId(5858);
       souls.forEach((soul, i) => {
         // Get the soul data
         const zone = soul[0];
@@ -127,22 +100,15 @@ export function updateFairy(command, index) {
 
         // Add the text component
         message.addTextComponent(
-          new TextComponent(
-            `\n${DARK_GRAY}- ${AQUA}${zone}: ${YELLOW}(${x}, ${y}, ${z})`
-          )
-            .setHoverValue(
-              `${YELLOW}Click to remove ${LIGHT_PURPLE}Fairy Soul${YELLOW}.`
-            )
+          new TextComponent(`\n${DARK_GRAY}- ${AQUA}${zone}: ${YELLOW}(${x}, ${y}, ${z})`)
+            .setHoverValue(`${YELLOW}Click to remove ${LIGHT_PURPLE}Fairy Soul${YELLOW}.`)
             .setClick("run_command", `/va fairy delete ${i}`)
         );
       });
       message.chat();
       break;
     case "pop": // Delete closest soul
-      const closest = getClosest(
-        [Player.getX(), Player.getY(), Player.getZ()],
-        souls
-      );
+      const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
       if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
       ChatLib.chat(`${LOGO + GREEN}Successfully removed closest Fairy Soul.`);
       break;
@@ -152,8 +118,7 @@ export function updateFairy(command, index) {
       break;
     case "help": // Display help message
     default:
-      if (command !== "help")
-        ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+      if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
       ChatLib.chat(
         `${LOGO + GOLD + BOLD}Fairy Soul Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va fairy <command>

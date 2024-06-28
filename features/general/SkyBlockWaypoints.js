@@ -1,20 +1,8 @@
-import location from "../../utils/Location";
-import Waypoint from "../../utils/Waypoint";
-import {
-  AQUA,
-  BOLD,
-  DARK_GRAY,
-  GOLD,
-  GRAY,
-  GREEN,
-  ITALIC,
-  LOGO,
-  RED,
-  WHITE,
-  YELLOW,
-} from "../../utils/Constants";
+import { AQUA, BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
+import location from "../../utils/Location";
+import Waypoint from "../../utils/Waypoint";
 
 const NPCS = new Json("npcs.json", false, false).getData();
 const npcWaypoints = new Waypoint([1, 1, 1]); // White NPCs
@@ -42,9 +30,7 @@ export function updateSBW(type, command, name) {
       // Check if the name exists
       const locs = base[name];
       if (locs === undefined) {
-        ChatLib.chat(
-          `${LOGO + RED}Error: Could not find ${type} "${name}" in ${world}.`
-        );
+        ChatLib.chat(`${LOGO + RED}Error: Could not find ${type} "${name}" in ${world}.`);
         return;
       }
 
@@ -77,20 +63,14 @@ export function updateSBW(type, command, name) {
             const z = loc[3] === "" ? "?" : loc[3];
             value += `\n${DARK_GRAY} - ${YELLOW + loc[0]}: ${x}, ${y}, ${z}`;
           });
-        else
-          value += `\n${DARK_GRAY} - ${YELLOW}Origin: ${
-            WHITE + base[key][0]
-          }, ${base[key][1]}, ${base[key][2]}`;
-        formatted[key] =
-          value +
-          `\n\n${YELLOW}Click to add ${AQUA + key + YELLOW} to waypoints.`;
+        else value += `\n${DARK_GRAY} - ${YELLOW}Origin: ${WHITE + base[key][0]}, ${base[key][1]}, ${base[key][2]}`;
+        formatted[key] = value + `\n\n${YELLOW}Click to add ${AQUA + key + YELLOW} to waypoints.`;
       });
       printList(formatted, type, name, 12, true, "add", true);
       break;
     case "help":
     default:
-      if (command !== "help")
-        ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+      if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
       ChatLib.chat(
         `${LOGO + GOLD + BOLD}Waypoint Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va [npc, zone] <command>

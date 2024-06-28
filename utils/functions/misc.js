@@ -44,16 +44,12 @@ export function announceMob(chat, mob, x, y, z, area) {
     const zoneLine =
       Scoreboard?.getLines()?.find((line) => line.getName().includes("⏣")) ??
       Scoreboard?.getLines()?.find((line) => line.getName().includes("ф"));
-    area =
-      zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
+    area = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting();
   }
 
-  const id =
-    chat === 2 ? "" : ` @${(Math.random() + 1).toString(36).substring(2)}`;
+  const id = chat === 2 ? "" : ` @${(Math.random() + 1).toString(36).substring(2)}`;
   const CHATS = ["OFF", "ac", "pc", `msg ${Player.getName()}`];
-  ChatLib.command(
-    `${CHATS[chat]} x: ${x}, y: ${y}, z: ${z} | ${mob} spawned at [${area} ]!${id}`
-  );
+  ChatLib.command(`${CHATS[chat]} x: ${x}, y: ${y}, z: ${z} | ${mob} spawned at [${area} ]!${id}`);
 }
 
 const decoder = java.util.Base64.getDecoder();
@@ -72,12 +68,8 @@ export function decode(bytes) {
   return nbt.func_150295_c("i", 10);
 }
 
-const GzipCompressorOutputStream = Java.type(
-  "org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream"
-);
-const GzipCompressorInputStream = Java.type(
-  "org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream"
-);
+const GzipCompressorOutputStream = Java.type("org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream");
+const GzipCompressorInputStream = Java.type("org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream");
 const ByteArrayOutputStream = Java.type("java.io.ByteArrayOutputStream");
 const ByteArrayInputStream = Java.type("java.io.ByteArrayInputStream");
 const IOUtils = Java.type("org.apache.commons.io.IOUtils");
@@ -120,8 +112,7 @@ export function compressNBT(nbtObject) {
 export function decompressNBT(compressedData) {
   try {
     // Decode base64 string to byte array
-    const compressedBytes =
-      java.util.Base64.getDecoder().decode(compressedData);
+    const compressedBytes = java.util.Base64.getDecoder().decode(compressedData);
     const byteArrayInputStream = new ByteArrayInputStream(compressedBytes);
     const decompressor = new GzipCompressorInputStream(byteArrayInputStream);
     const byteArrayOutputStream = new ByteArrayOutputStream();
@@ -157,18 +148,13 @@ export function parseTexture(nbt) {
   const skullOwner = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
   const properties = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
   const textures = new NBTTagList(new net.minecraft.nbt.NBTTagList());
-  const textureString = new NBTTagCompound(
-    new net.minecraft.nbt.NBTTagCompound()
-  );
+  const textureString = new NBTTagCompound(new net.minecraft.nbt.NBTTagCompound());
 
   const url = decoded.textures?.SKIN?.url?.split("/");
   const skin = url?.[url?.length - 1];
   const backup = Math.random().toString(36).substring(2, 12);
   skullOwner.setString("Id", decoded.profileId ?? skin ?? backup);
-  skullOwner.setString(
-    "Name",
-    (decoded.profileName + decoded.timestamp || skin) ?? backup
-  );
+  skullOwner.setString("Name", (decoded.profileName + decoded.timestamp || skin) ?? backup);
 
   textureString.setString("Value", nbt);
   textures.appendTag(textureString);
@@ -191,10 +177,7 @@ export function parseContainerCache(cache) {
     const parsedNBT = NBT.parse(decompressNBT(nbt)).rawNBT;
     const item = new Item(net.minecraft.item.ItemStack.func_77949_a(parsedNBT));
     try {
-      const loreTag = parsedNBT
-        .func_74775_l("tag")
-        .func_74775_l("display")
-        .field_74784_a.get("Lore");
+      const loreTag = parsedNBT.func_74775_l("tag").func_74775_l("display").field_74784_a.get("Lore");
       const lore = [item.getLore()[0]];
       if (loreTag !== null) {
         for (let i = 0; i < loreTag.func_74745_c(); i++) {
@@ -208,10 +191,7 @@ export function parseContainerCache(cache) {
 
     if (item.getUnlocalizedName() === "item.skull") {
       // Fix skull textures not rendering
-      const skullNBT = item
-        .getNBT()
-        .getCompoundTag("tag")
-        .getCompoundTag("SkullOwner");
+      const skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
       const texture = skullNBT
         .getCompoundTag("Properties")
         .getTagList("textures", 0)

@@ -1,6 +1,6 @@
+import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/RegisterTils";
 
 let own = [];
 let coop = [];
@@ -39,17 +39,8 @@ registerWhen(
       Player.getContainer()
         .getItems()
         .forEach((item, index) => {
-          if (
-            item !== null &&
-            item.getLore().find((line) => line === "§5§o§7Status: §aSold!") !==
-              undefined
-          ) {
-            if (
-              item
-                .getLore()
-                .find((line) => line === "§5§o§aThis is your own auction!") !==
-              undefined
-            )
+          if (item !== null && item.getLore().find((line) => line === "§5§o§7Status: §aSold!") !== undefined) {
+            if (item.getLore().find((line) => line === "§5§o§aThis is your own auction!") !== undefined)
               own.push(index);
             else coop.push(index);
           }

@@ -1,13 +1,6 @@
-import Settings from "../../utils/Settings";
-import {
-  DARK_GRAY,
-  GRAY,
-  GREEN,
-  LOGO,
-  RED,
-  WHITE,
-} from "../../utils/Constants";
+import { DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import Settings from "../../utils/Settings";
 import { delay } from "../../utils/ThreadTils";
 
 /**
@@ -100,11 +93,7 @@ function correct(command, event) {
   if (newCommand !== command && data.commands.hasOwnProperty(newCommand)) {
     // Run new command
     cancel(event);
-    ChatLib.chat(
-      `${
-        LOGO + RED
-      }Invalid command: "/${command}", attempting to run: "/${newCommand}"!`
-    );
+    ChatLib.chat(`${LOGO + RED}Invalid command: "/${command}", attempting to run: "/${newCommand}"!`);
     ChatLib.command(newCommand);
 
     // Put invalid command on CD for 3 seconds
@@ -131,9 +120,7 @@ register("chat", (event) => correct(lastMessage, event)).setCriteria(
   "Unknown destination! Check the Fast Travel menu to view options!"
 );
 
-register("chat", (event) => correct(lastMessage, event)).setCriteria(
-  "You don't have permission to run that command!"
-);
+register("chat", (event) => correct(lastMessage, event)).setCriteria("You don't have permission to run that command!");
 
 /**
  * Autocomplete
@@ -145,44 +132,27 @@ let suggesting = false;
 const suggest = register("renderChat", () => {
   const select = suggestions.length - selected - 1;
   const strings = suggestions.map(
-    (command, index) =>
-      `${(index === select ? WHITE : GRAY) + command + DARK_GRAY} (${
-        data.commands[command]
-      })`
+    (command, index) => `${(index === select ? WHITE : GRAY) + command + DARK_GRAY} (${data.commands[command]})`
   );
 
   // Draw suggestions
   const width = Renderer.getStringWidth(
-    strings.reduce(
-      (longest, current) =>
-        current.length > longest.length ? current : longest,
-      ""
-    )
+    strings.reduce((longest, current) => (current.length > longest.length ? current : longest), "")
   );
   const height = strings.length * 9;
   const y = Renderer.screen.getHeight() - 18 - height;
 
   Renderer.translate(0, 0, 300);
-  Renderer.drawRect(
-    Renderer.color(0, 0, 0, 128),
-    7,
-    y - 2,
-    width + 4,
-    height + 4
-  );
+  Renderer.drawRect(Renderer.color(0, 0, 0, 128), 7, y - 2, width + 4, height + 4);
 
   Renderer.translate(0, 0, 300);
   Renderer.drawString(strings.join("\n"), 9, y, true);
 }).unregister();
 
 const key = register("guiKey", (char, keyCode, __, event) => {
-  let chat =
-    Client.getCurrentChatMessage() +
-    (keyCode <= 57 && keyCode !== 15 ? char : "");
+  let chat = Client.getCurrentChatMessage() + (keyCode <= 57 && keyCode !== 15 ? char : "");
   if (keyCode === 14) chat = chat.substring(0, chat.length - 2);
-  suggestions = Object.keys(data.commands).filter((command) =>
-    command.startsWith(chat.substring(1))
-  );
+  suggestions = Object.keys(data.commands).filter((command) => command.startsWith(chat.substring(1)));
   suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
   selected = MathLib.clamp(selected, 0, Math.max(0, suggestions.length - 1));
 
@@ -203,9 +173,7 @@ const key = register("guiKey", (char, keyCode, __, event) => {
     // Tab Key
     const fill = suggestions[suggestions.length - selected - 1];
     Client.setCurrentChatMessage("/" + fill);
-    suggestions = Object.keys(data.commands).filter((command) =>
-      command.startsWith(fill)
-    );
+    suggestions = Object.keys(data.commands).filter((command) => command.startsWith(fill));
     suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
     selected = suggestions.length - suggestions.indexOf(fill) - 1;
     if (suggesting) cancel(event);

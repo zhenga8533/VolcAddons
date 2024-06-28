@@ -1,5 +1,3 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import {
   AQUA,
   BLUE,
@@ -13,11 +11,13 @@ import {
   LOGO,
   WHITE,
 } from "../../utils/Constants";
-import { convertToTitleCase } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
-import { getPaused } from "../../utils/Stat";
 import { data } from "../../utils/Data";
+import location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { getPaused } from "../../utils/Stat";
+import { convertToTitleCase } from "../../utils/functions/format";
 
 /**
  * Variables used to format and display trophy fishes.
@@ -41,13 +41,7 @@ const trophyExample = `&6&lTrophy Fishing:
 &fSteaming Hot Flounder&f: &3111 &879 &730 &61 &b1
 &5Soul Fish&f: &373 &850 &720 &61 &b2
 &5Moldfin&f: &360 &837 &721 &61 &b1`;
-const trophyOverlay = new Overlay(
-  "trophyCounter",
-  data.FL,
-  "moveTrophy",
-  trophyExample,
-  ["Crimson Isle"]
-);
+const trophyOverlay = new Overlay("trophyCounter", data.FL, "moveTrophy", trophyExample, ["Crimson Isle"]);
 trophyOverlay.setMessage("");
 
 /**
@@ -109,22 +103,17 @@ function updateMessage() {
       if (fishData[0] !== 0) {
         const title = TROPHY_COLORS[fish] + convertToTitleCase(fish);
         const [total, bronze, silver, gold, diamond] = fishData;
-        const rate = `${GRAY}- ${
-          WHITE + ((total * 3600) / timePassed).toFixed(0)
-        }/hr`;
+        const rate = `${GRAY}- ${WHITE + ((total * 3600) / timePassed).toFixed(0)}/hr`;
         sorted.push(
-          `${title + WHITE}: ${DARK_AQUA + total} ${DARK_GRAY + bronze} ${
-            GRAY + silver
-          } ${GOLD + gold} ${AQUA + diamond} ${rate}`
+          `${title + WHITE}: ${DARK_AQUA + total} ${DARK_GRAY + bronze} ${GRAY + silver} ${GOLD + gold} ${
+            AQUA + diamond
+          } ${rate}`
         );
       }
       return sorted;
     }, []);
 
-  if (sortedTrophy.length != 0)
-    trophyOverlay.setMessage(
-      `${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`
-    );
+  if (sortedTrophy.length != 0) trophyOverlay.setMessage(`${GOLD + BOLD}Trophy Fishing:\n${sortedTrophy.join("\n")}`);
 }
 
 /**

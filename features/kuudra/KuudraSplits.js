@@ -1,22 +1,12 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import {
-  AQUA,
-  BOLD,
-  DARK_GREEN,
-  GOLD,
-  GRAY,
-  GREEN,
-  LOGO,
-  RED,
-  RESET,
-} from "../../utils/Constants";
-import { formatTime, isValidDate } from "../../utils/functions/format";
-import { Overlay } from "../../utils/Overlay";
-import { getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/ThreadTils";
+import { AQUA, BOLD, DARK_GREEN, GOLD, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { delay } from "../../utils/ThreadTils";
+import { formatTime, isValidDate } from "../../utils/functions/format";
+import { getPlayerName } from "../../utils/functions/player";
 import { getKuudraHP } from "./KuudraDetect";
 
 /**
@@ -33,13 +23,7 @@ const splitsExample = `${AQUA + BOLD}Supplies: ${RESET}Bei
 ${AQUA + BOLD}Build: ${RESET}Feng
 ${AQUA + BOLD}Fuel/Stun: ${RESET}Xiao
 ${AQUA + BOLD}Kuudra: ${RESET}Xiao`;
-const splitsOverlay = new Overlay(
-  "kuudraSplits",
-  data.SL,
-  "moveSplits",
-  splitsExample,
-  ["Kuudra"]
-);
+const splitsOverlay = new Overlay("kuudraSplits", data.SL, "moveSplits", splitsExample, ["Kuudra"]);
 
 /**
  * Variables used to represent current date.
@@ -116,9 +100,7 @@ registerWhen(
   register("chat", () => {
     kuudraSplit[3] = Date.now() / 1000;
     phase = 4;
-  }).setCriteria(
-    "[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"
-  ),
+  }).setCriteria("[NPC] Elle: POW! SURELY THAT'S IT! I don't think he has any more in him!"),
   () => location.getWorld() === "Kuudra"
 );
 
@@ -135,21 +117,13 @@ registerWhen(
     // Records last split and checks if no fucky wucky
     let broken = false;
     for (let i = 0; i < data.splits.last.length - 1; i++) {
-      data.splits.last[i] = parseFloat(
-        Math.abs(kuudraSplit[i + 1] - kuudraSplit[i]).toFixed(2)
-      );
-      if (data.splits.last[i] > 69420 || data.splits.last[i] === 0)
-        broken = true;
+      data.splits.last[i] = parseFloat(Math.abs(kuudraSplit[i + 1] - kuudraSplit[i]).toFixed(2));
+      if (data.splits.last[i] > 69420 || data.splits.last[i] === 0) broken = true;
     }
 
     // Record Total
     data.splits.last[4] = parseFloat(
-      (
-        data.splits.last[0] +
-        data.splits.last[1] +
-        data.splits.last[2] +
-        data.splits.last[3]
-      ).toFixed(2)
+      (data.splits.last[0] + data.splits.last[1] + data.splits.last[2] + data.splits.last[3]).toFixed(2)
     );
 
     // Record splits
@@ -159,16 +133,10 @@ registerWhen(
       for (let i = 0; i < data.splits.last.length; i++) {
         if (!broken) splitFormat += `${data.splits.last[i]}, `;
         // Record best splits
-        if (
-          data.splits.last[i] < data.splits.best[i] &&
-          data.splits.last[i] !== 0
-        )
+        if (data.splits.last[i] < data.splits.best[i] && data.splits.last[i] !== 0)
           data.splits.best[i] = data.splits.last[i];
         // Record worst splits
-        if (
-          data.splits.last[i] > data.splits.worst[i] &&
-          data.splits.last[i] < 999
-        )
+        if (data.splits.last[i] > data.splits.worst[i] && data.splits.last[i] < 999)
           data.splits.worst[i] = data.splits.last[i];
       }
       // Tracks when timer not infinite
@@ -257,8 +225,7 @@ let onCD = false;
 registerWhen(
   register("chat", (player, message) => {
     const name = getPlayerName(player);
-    if ((!Settings.partyCommands && !name.equals(Player.getName())) || onCD)
-      return;
+    if ((!Settings.partyCommands && !name.equals(Player.getName())) || onCD) return;
 
     const args = message.split(" ");
     switch (args[0]) {
@@ -288,13 +255,7 @@ registerWhen(
           formatTime(data.splits.best[3], 2),
           formatTime(data.splits.best[4], 2),
         ];
-        theory = formatTime(
-          data.splits.best[0] +
-            data.splits.best[1] +
-            data.splits.best[2] +
-            data.splits.best[3],
-          2
-        );
+        theory = formatTime(data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3], 2);
         delay(
           () =>
             ChatLib.command(
@@ -319,8 +280,7 @@ registerWhen(
  * @param {Number} runs - Amount of runs to average.
  */
 function formatSplits(splits, color, runs) {
-  if (color === GREEN)
-    ChatLib.chat(`${DARK_GREEN + BOLD}Average for last ${runs} runs:`);
+  if (color === GREEN) ChatLib.chat(`${DARK_GREEN + BOLD}Average for last ${runs} runs:`);
   ChatLib.chat(
     `${color + BOLD}Supplies: ${RESET + formatTime(splits[0], 2)}
 ${color + BOLD}Build: ${RESET + formatTime(splits[1], 2)}
@@ -329,15 +289,8 @@ ${color + BOLD}Kuudra: ${RESET + formatTime(splits[3], 2)}
 ${color + BOLD}Overall Run: ${RESET + formatTime(splits[4], 2)}`
   );
   if (color === GOLD) {
-    const theory = (
-      data.splits.best[0] +
-      data.splits.best[1] +
-      data.splits.best[2] +
-      data.splits.best[3]
-    ).toFixed(2);
-    ChatLib.chat(
-      `${color + BOLD}Theoretical Best: ${RESET + formatTime(theory, 2)}`
-    );
+    const theory = (data.splits.best[0] + data.splits.best[1] + data.splits.best[2] + data.splits.best[3]).toFixed(2);
+    ChatLib.chat(`${color + BOLD}Theoretical Best: ${RESET + formatTime(theory, 2)}`);
   }
   if (color === RED) {
     const conjecture = (
@@ -346,9 +299,7 @@ ${color + BOLD}Overall Run: ${RESET + formatTime(splits[4], 2)}`
       data.splits.worst[2] +
       data.splits.worst[3]
     ).toFixed(2);
-    ChatLib.chat(
-      `${color + BOLD}Theoretical Worst: ${RESET + formatTime(conjecture, 2)}`
-    );
+    ChatLib.chat(`${color + BOLD}Theoretical Worst: ${RESET + formatTime(conjecture, 2)}`);
   }
 }
 
@@ -394,12 +345,9 @@ export function getSplits(args) {
         runs.pop();
 
         // Filter by date
-        if (isValidDate(args[2]))
-          runs = runs.filter((run) => run.split(", ")[5] === args[2]);
+        if (isValidDate(args[2])) runs = runs.filter((run) => run.split(", ")[5] === args[2]);
         if (today || args[2] === "today")
-          runs = runs.filter(
-            (run) => run.split(", ")[5] === mm + "/" + dd + "/" + yyyy
-          );
+          runs = runs.filter((run) => run.split(", ")[5] === mm + "/" + dd + "/" + yyyy);
 
         // Get # of runs to average
         let runsWanted = runs.length;
@@ -410,12 +358,9 @@ export function getSplits(args) {
         let run = undefined;
         for (let i = runs.length - 1; i >= runs.length - runsWanted; i--) {
           run = runs[i].split(", ");
-          if (run.length > 1)
-            for (let j = 0; j < average.length; j++)
-              average[j] += parseFloat(run[j]);
+          if (run.length > 1) for (let j = 0; j < average.length; j++) average[j] += parseFloat(run[j]);
         }
-        for (let i = 0; i < average.length; i++)
-          average[i] = average[i] / runsWanted;
+        for (let i = 0; i < average.length; i++) average[i] = average[i] / runsWanted;
 
         formatSplits(average, GREEN, runsWanted);
       } else ChatLib.chat(`${RED}File [${fileName + RED}] not found!`);

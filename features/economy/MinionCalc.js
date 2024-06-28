@@ -1,4 +1,3 @@
-import Settings from "../../utils/Settings";
 import {
   AQUA,
   BOLD,
@@ -14,6 +13,7 @@ import {
   UNDERLINE,
   WHITE,
 } from "../../utils/Constants";
+import Settings from "../../utils/Settings";
 import { commafy, formatNumber } from "../../utils/functions/format";
 import { getBazaar } from "./Economy";
 
@@ -37,9 +37,7 @@ const VAMPIRE_ACTIONS = [190, 175, 160, 140, 117, 95];
 const MAX_UPGRADES = 1.41;
 const MAX_INFERNO = 3.41;
 const MAX_CATALYST = 6.44;
-const PSA = `${
-  GRAY + ITALIC
-}Note that these calculations are done with max upgrades!\n`;
+const PSA = `${GRAY + ITALIC}Note that these calculations are done with max upgrades!\n`;
 
 /**
  * Hypergolic gabagool calculation.
@@ -57,9 +55,7 @@ const PSA = `${
 function calcHypergolic(type) {
   const bazaar = getBazaar();
   return (
-    1202 * bazaar.ENCHANTED_COAL[type] +
-    75.125 * bazaar.ENCHANTED_SULPHUR[type] +
-    6912 * bazaar.CRUDE_GABAGOOL[type]
+    1202 * bazaar.ENCHANTED_COAL[type] + 75.125 * bazaar.ENCHANTED_SULPHUR[type] + 6912 * bazaar.CRUDE_GABAGOOL[type]
   );
 }
 
@@ -75,11 +71,8 @@ export function calcMinions(args) {
   // Universal variables
   const minions = isNaN(args[2]) ? 31 : args[2];
   const tier = isNaN(args[3]) || args[3] > 11 ? 3 : args[3];
-  let infernoAction =
-    (1.1 * (INFERNO_ACTION_BASE - tier * INFERNO_ACTION_UPGRADE)) / MAX_INFERNO;
-  const vampAction =
-    (86400 / ((VAMPIRE_ACTIONS[Math.ceil(tier / 2) - 1] * 2) / MAX_CATALYST)) *
-    minions;
+  let infernoAction = (1.1 * (INFERNO_ACTION_BASE - tier * INFERNO_ACTION_UPGRADE)) / MAX_INFERNO;
+  const vampAction = (86400 / ((VAMPIRE_ACTIONS[Math.ceil(tier / 2) - 1] * 2) / MAX_CATALYST)) * minions;
 
   // Different Calcs
   switch (args[1]) {
@@ -134,8 +127,7 @@ ${AQUA}Sell Offer + Insta Buy: ${WHITE + commafy(p4)}\n`
         REAPER: (actions / (458182 / eyedrop)).toFixed(2),
       };
       const profit = {
-        GABAGOOL:
-          drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1 - Settings.priceType],
+        GABAGOOL: drops.GABAGOOL * bazaar.CRUDE_GABAGOOL[1 - Settings.priceType],
         CHILI: drops.CHILI * bazaar.CHILI_PEPPER[1 - Settings.priceType],
         VERTEX: drops.VERTEX * bazaar.INFERNO_VERTEX[1 - Settings.priceType],
         APEX: drops.APEX * bazaar.INFERNO_APEX[1 - Settings.priceType],
@@ -153,24 +145,12 @@ ${AQUA}Sell Offer + Insta Buy: ${WHITE + commafy(p4)}\n`
 
       // ChatLib the values
       ChatLib.chat(
-        `\n${GOLD + BOLD + minions} Inferno Minion(s) t${tier} ${
-          DARK_GRAY + BOLD
-        }[Hypergolic]:
-${AQUA}Crude Gabagool ${GRAY}[${formatNumber(drops.GABAGOOL)}]${AQUA}: ${
-          RESET + commafy(profit.GABAGOOL)
-        }
-${AQUA}Chili Pepper ${GRAY}[${formatNumber(drops.CHILI)}]${AQUA}: ${
-          RESET + commafy(profit.CHILI)
-        }
-${AQUA}Inferno Vertex ${GRAY}[${drops.VERTEX}]${AQUA}: ${
-          RESET + commafy(profit.VERTEX)
-        }
-${AQUA}Inferno Apex ${GRAY}[${drops.APEX}]${AQUA}: ${
-          RESET + commafy(profit.APEX)
-        }
-${AQUA}Reaper Pepper ${GRAY}[${drops.REAPER}]${AQUA}: ${
-          RESET + commafy(profit.REAPER)
-        }\n
+        `\n${GOLD + BOLD + minions} Inferno Minion(s) t${tier} ${DARK_GRAY + BOLD}[Hypergolic]:
+${AQUA}Crude Gabagool ${GRAY}[${formatNumber(drops.GABAGOOL)}]${AQUA}: ${RESET + commafy(profit.GABAGOOL)}
+${AQUA}Chili Pepper ${GRAY}[${formatNumber(drops.CHILI)}]${AQUA}: ${RESET + commafy(profit.CHILI)}
+${AQUA}Inferno Vertex ${GRAY}[${drops.VERTEX}]${AQUA}: ${RESET + commafy(profit.VERTEX)}
+${AQUA}Inferno Apex ${GRAY}[${drops.APEX}]${AQUA}: ${RESET + commafy(profit.APEX)}
+${AQUA}Reaper Pepper ${GRAY}[${drops.REAPER}]${AQUA}: ${RESET + commafy(profit.REAPER)}\n
 ${RED}Fuel Price: ${RESET + commafy(fuel)}
 ${GREEN}Total Profit: ${RESET + commafy(net)}\n${PSA}`
       );
@@ -180,8 +160,7 @@ ${GREEN}Total Profit: ${RESET + commafy(net)}\n${PSA}`
       // Heavy 15x
       infernoAction /= 16;
       const gabagool = (minions * 86400) / (2 * infernoAction);
-      const heavyGabagool =
-        gabagool * bazaar.CRUDE_GABAGOOL[1 - Settings.priceType];
+      const heavyGabagool = gabagool * bazaar.CRUDE_GABAGOOL[1 - Settings.priceType];
       const heavyPrice =
         minions *
         (bazaar.HEAVY_GABAGOOL[Settings.priceType] +
@@ -191,42 +170,28 @@ ${GREEN}Total Profit: ${RESET + commafy(net)}\n${PSA}`
 
       // Format ChatLib.chat
       ChatLib.chat(
-        `\n${GOLD + BOLD}${minions} Inferno Minion(s) t${tier} ${
-          DARK_GRAY + BOLD
-        }[Heavy]:
-${AQUA}Gabagool ${GRAY}[${commafy(gabagool)}]${AQUA}: ${
-          RESET + commafy(heavyGabagool)
-        }\n
+        `\n${GOLD + BOLD}${minions} Inferno Minion(s) t${tier} ${DARK_GRAY + BOLD}[Heavy]:
+${AQUA}Gabagool ${GRAY}[${commafy(gabagool)}]${AQUA}: ${RESET + commafy(heavyGabagool)}\n
 ${RED}Fuel Price: ${RESET + commafy(heavyPrice)}
 ${GREEN}Total Profit: ${RESET + commafy(heavyProfit)}\n${PSA}`
       );
       break;
     case "vampire":
     case "vamp":
-      const hemovibe = [
-        vampAction.toFixed(4),
-        vampAction * bazaar.HEMOVIBE[1 - Settings.priceType],
-      ];
+      const hemovibe = [vampAction.toFixed(4), vampAction * bazaar.HEMOVIBE[1 - Settings.priceType]];
       const hemoglass = [
         (hemovibe[0] / 160).toFixed(4),
         (hemovibe[0] / 160) * bazaar.HEMOGLASS[1 - Settings.priceType],
       ];
-      const hemobomb = [
-        (hemoglass[0] / 15).toFixed(4),
-        (hemoglass[0] / 15) * bazaar.HEMOBOMB[1 - Settings.priceType],
-      ];
+      const hemobomb = [(hemoglass[0] / 15).toFixed(4), (hemoglass[0] / 15) * bazaar.HEMOBOMB[1 - Settings.priceType]];
       const vampCost = bazaar.HYPER_CATALYST[Settings.priceType] * 4 * minions;
       const vampProfit = hemovibe[1] - vampCost;
 
       ChatLib.chat(
         `\n${GOLD + BOLD}Drops for ${minions} Vampire Minion(s) t${tier}
 ${AQUA}Hemovibe ${GRAY}[${hemovibe[0]}]${AQUA}: ${RESET + commafy(hemovibe[1])}
-${AQUA}Hemoglass ${GRAY}[${hemoglass[0]}]${AQUA}: ${
-          RESET + commafy(hemoglass[1])
-        }
-${AQUA}Hemobomb ${GRAY}[${hemobomb[0]}]${AQUA}: ${
-          RESET + commafy(hemobomb[1])
-        }\n
+${AQUA}Hemoglass ${GRAY}[${hemoglass[0]}]${AQUA}: ${RESET + commafy(hemoglass[1])}
+${AQUA}Hemobomb ${GRAY}[${hemobomb[0]}]${AQUA}: ${RESET + commafy(hemobomb[1])}\n
 ${RED}Hyper Catalyst Cost: ${RESET + commafy(vampCost)}
 ${GREEN}Total Profit: ${RESET + commafy(vampProfit)}\n${PSA}`
       );

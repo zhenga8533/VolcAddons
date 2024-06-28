@@ -1,33 +1,18 @@
-import Settings from "../../utils/Settings";
-import {
-  BOLD,
-  DARK_GRAY,
-  GOLD,
-  GREEN,
-  LOGO,
-  RED,
-  YELLOW,
-} from "../../utils/Constants";
+import { BOLD, DARK_GRAY, GOLD, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { data, itemNBTs } from "../../utils/Data";
-import { compressNBT, parseContainerCache } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
-import { drawContainer, drawLore } from "../../utils/functions/render";
 import { printList } from "../../utils/ListTils";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { compressNBT, parseContainerCache } from "../../utils/functions/misc";
+import { drawContainer } from "../../utils/functions/render";
 
 /**
  * Log item data as compressed NBT.
  */
 let nameCache = ["T1", 0];
 let itemsCache = [];
-new Overlay(
-  "containerPreview",
-  data.SPL,
-  "moveSP",
-  "Saved Preview",
-  ["all"],
-  "guiRender"
-);
+new Overlay("containerPreview", data.SPL, "moveSP", "Saved Preview", ["all"], "guiRender");
 
 /**
  * Preview commands for container data.
@@ -43,16 +28,12 @@ export function previewCommands(args) {
       itemNBTs.storageCache[name] = itemsCache.map((item) =>
         item === null ? null : compressNBT(item.getNBT().toObject())
       );
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully saved preview data using key: "${name}".`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully saved preview data using key: "${name}".`);
       break;
     case "delete":
     case "remove":
       delete itemNBTs.storageCache[name];
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully removed preview data using key: "${name}".`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully removed preview data using key: "${name}".`);
       break;
     case "clear":
     case "reset":
@@ -66,8 +47,7 @@ export function previewCommands(args) {
       break;
     case "help":
     default:
-      if (command !== "help")
-        ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+      if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
       ChatLib.chat(
         `${LOGO + GOLD + BOLD}Container Preview Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va preview <command>
@@ -140,19 +120,14 @@ register("guiOpened", () => {
     itemsCache = Player.getContainer().getItems().slice(0, 54);
 
     // Get index of container
-    const i =
-      (split[1].startsWith("Backpack")
-        ? split[split.length - 1].replace(/[^0-9]/g, "")
-        : split[2][1]) - 1;
+    const i = (split[1].startsWith("Backpack") ? split[split.length - 1].replace(/[^0-9]/g, "") : split[2][1]) - 1;
     nameCache = [containerCache[1], i];
 
     // Set registers
     saveCache.register();
     cacheItems.register();
     if (itemNBTs.storageCache.hasOwnProperty(nameCache.join(""))) {
-      previewCache = parseContainerCache(
-        itemNBTs.storageCache[nameCache.join("")]
-      );
+      previewCache = parseContainerCache(itemNBTs.storageCache[nameCache.join("")]);
       savePreview.register();
     }
   });
@@ -163,18 +138,8 @@ register("guiOpened", () => {
  */
 let lastPreview = "0";
 let previewItems = [];
-const CONTAINER_PNGS = [
-  new Image("container.png"),
-  new Image("container-fs.png"),
-];
-new Overlay(
-  "containerPreview",
-  data.CPL,
-  "movePreview",
-  "Preview",
-  ["all"],
-  "guiRender"
-);
+const CONTAINER_PNGS = [new Image("container.png"), new Image("container-fs.png")];
+new Overlay("containerPreview", data.CPL, "movePreview", "Preview", ["all"], "guiRender");
 
 const preview = register("guiRender", (mouseX, mouseY) => {
   drawContainer(
@@ -199,18 +164,13 @@ registerWhen(
   register("itemTooltip", (_, item) => {
     const name = item.getName();
 
-    if (
-      name.startsWith("§aEnder Chest Page") ||
-      name.startsWith("§6Backpack Slot")
-    ) {
+    if (name.startsWith("§aEnder Chest Page") || name.startsWith("§6Backpack Slot")) {
       const split = name.split(" ");
       const i = parseInt(split[split.length - 1]) - 1;
       if (lastPreview === name) return;
 
       lastPreview = name;
-      previewItems = parseContainerCache(
-        itemNBTs[name.startsWith("§a") ? "enderchests" : "backpacks"][i]
-      );
+      previewItems = parseContainerCache(itemNBTs[name.startsWith("§a") ? "enderchests" : "backpacks"][i]);
 
       preview.register();
       clear.register();

@@ -1,23 +1,17 @@
+import { STAND_CLASS } from "../../utils/Constants";
 import location from "../../utils/Location";
 import party from "../../utils/Party";
-import Settings from "../../utils/Settings";
-import { STAND_CLASS } from "../../utils/Constants";
-import { getClosest } from "../../utils/functions/find";
-import { convertToTitleCase } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { delay } from "../../utils/ThreadTils";
 import Waypoint from "../../utils/Waypoint";
+import { getClosest } from "../../utils/functions/find";
+import { convertToTitleCase } from "../../utils/functions/format";
 
 /**
  * Shaft Transfer
  */
-const TRANSFER_COMMANDS = [
-  "?transfer",
-  "!ptme",
-  "!pt",
-  ".transfer",
-  "Mineshaft, I found. Transfer party, you will.",
-];
+const TRANSFER_COMMANDS = ["?transfer", "!ptme", "!pt", ".transfer", "Mineshaft, I found. Transfer party, you will."];
 
 /**
  * Recursively calls party chat transfer commands until player becomes leader.
@@ -70,16 +64,12 @@ registerWhen(
     looted.push([Player.getX(), Player.getY(), Player.getZ()]);
     if (Settings.corpseAnnounce) announceCorpse(convertToTitleCase(type));
   }).setCriteria("  ${type} CORPSE LOOT! "),
-  () =>
-    (Settings.corpseAnnounce || Settings.corpseWaypoints) &&
-    location.getWorld() === "Mineshaft"
+  () => (Settings.corpseAnnounce || Settings.corpseWaypoints) && location.getWorld() === "Mineshaft"
 );
 registerWhen(
   register("chat", () => {
     announceCorpse("Tungsten");
-  }).setCriteria(
-    "You need to be holding a Tungsten Key to unlock this corpse!"
-  ),
+  }).setCriteria("You need to be holding a Tungsten Key to unlock this corpse!"),
   () => Settings.corpseAnnounce && location.getWorld() === "Mineshaft"
 );
 registerWhen(
@@ -91,9 +81,7 @@ registerWhen(
 registerWhen(
   register("chat", () => {
     announceCorpse("Vanguard");
-  }).setCriteria(
-    "You need to be holding a Skeleton Key to unlock this corpse!"
-  ),
+  }).setCriteria("You need to be holding a Skeleton Key to unlock this corpse!"),
   () => Settings.corpseAnnounce && location.getWorld() === "Mineshaft"
 );
 
@@ -132,12 +120,7 @@ registerWhen(
         const type = helmet.func_82833_r().removeFormatting().split(" ")[0]; // getDisplayName for ItemStack
         if (!(type in CORPSE_COLORS)) return;
 
-        const corpsePos = [
-          ARMOR_MATCH[type],
-          stand.getX(),
-          stand.getY() + 1,
-          stand.getZ(),
-        ];
+        const corpsePos = [ARMOR_MATCH[type], stand.getX(), stand.getY() + 1, stand.getZ()];
         if (getClosest(corpsePos, looted)[1] < 10) return;
 
         const color = CORPSE_COLORS[type];

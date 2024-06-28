@@ -20,11 +20,7 @@ export function getClosest(origin, positions) {
 
   positions.forEach((position) => {
     const m = position.length;
-    distance = Math.hypot(
-      oX - position[m - 3],
-      oY - position[m - 2],
-      oZ - position[m - 1]
-    );
+    distance = Math.hypot(oX - position[m - 3], oY - position[m - 2], oZ - position[m - 1]);
     if (distance < closestDistance) {
       closestDistance = distance;
       closestPosition = position;

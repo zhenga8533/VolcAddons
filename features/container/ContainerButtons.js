@@ -1,4 +1,3 @@
-import Settings from "../../utils/Settings";
 import {
   BOLD,
   BUTTON_PRESETS,
@@ -18,8 +17,9 @@ import {
   YELLOW,
 } from "../../utils/Constants";
 import { data } from "../../utils/Data";
-import { registerWhen } from "../../utils/RegisterTils";
 import { printList } from "../../utils/ListTils";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { parseTexture } from "../../utils/functions/misc";
 import { drawBox, drawLore } from "../../utils/functions/render";
 
@@ -36,9 +36,7 @@ const OFFSETS = {
   eq: [-18, 8],
 };
 let clientCommands = new Set(
-  net.minecraftforge.client.ClientCommandHandler.instance
-    ?.getCommandSet()
-    ?.map((key) => key.func_71517_b()) ?? ["va"]
+  net.minecraftforge.client.ClientCommandHandler.instance?.getCommandSet()?.map((key) => key.func_71517_b()) ?? ["va"]
 );
 
 const COLOR_SCHEMES = [
@@ -57,22 +55,8 @@ const editing = {
   index: 0,
   active: false,
 };
-const commandInput = new GuiTextField(
-  0,
-  Client.getMinecraft().field_71466_p,
-  10,
-  10,
-  176,
-  16
-);
-const iconInput = new GuiTextField(
-  0,
-  Client.getMinecraft().field_71466_p,
-  10,
-  30,
-  176,
-  16
-);
+const commandInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 10, 176, 16);
+const iconInput = new GuiTextField(0, Client.getMinecraft().field_71466_p, 10, 30, 176, 16);
 
 // Local cache
 let buttons = {};
@@ -141,9 +125,7 @@ export class Button {
       this.#edit = icon === "barrier";
       const texture =
         icon === "skull"
-          ? Toolkit.getDefaultToolkit()
-              .getSystemClipboard()
-              .getData(DataFlavor.stringFlavor)
+          ? Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor)
           : icon.length > 32
           ? icon
           : icon.length === 32
@@ -207,18 +189,11 @@ export class Button {
 
     const size = Player.getContainer().getSize();
     const x = dx + this.#x;
-    const y =
-      dy +
-      this.#y +
-      (this.#loc !== "bottom" ? 0 : 18 * ~~(size / 9) + (size > 45 ? 0 : 36));
+    const y = dy + this.#y + (this.#loc !== "bottom" ? 0 : 18 * ~~(size / 9) + (size > 45 ? 0 : 36));
 
     // Draw box
-    const boxColor = this.#hovered
-      ? BOX_HIGHLIGHT
-      : COLOR_SCHEMES[Settings.containerButtons - 1][0];
-    const borderColor = this.#hovered
-      ? BORDER_HIGHLIGHT
-      : COLOR_SCHEMES[Settings.containerButtons - 1][1];
+    const boxColor = this.#hovered ? BOX_HIGHLIGHT : COLOR_SCHEMES[Settings.containerButtons - 1][0];
+    const borderColor = this.#hovered ? BORDER_HIGHLIGHT : COLOR_SCHEMES[Settings.containerButtons - 1][1];
     drawBox(x, y, 100, 16, 16, boxColor, borderColor);
     this.#item.draw(x, y, 1, 100);
   }
@@ -236,10 +211,7 @@ export class Button {
 
     const size = Player.getContainer().getSize();
     const x = dx + this.#x;
-    const y =
-      dy +
-      this.#y +
-      (this.#loc !== "bottom" ? 0 : 18 * ~~(size / 9) + (size > 45 ? 0 : 36));
+    const y = dy + this.#y + (this.#loc !== "bottom" ? 0 : 18 * ~~(size / 9) + (size > 45 ? 0 : 36));
     if (hx < x || hx > x + 16 || hy < y || hy > y + 16) {
       this.#hovered = false;
       return;
@@ -256,11 +228,7 @@ export class Button {
         14
       );
       Renderer.translate(0, 0, 500);
-      Renderer.drawString(
-        UNDERLINE + (this.#edit ? `Edit ${this.#id}` : "/" + this.#command),
-        hx + 5,
-        hy - 13
-      );
+      Renderer.drawString(UNDERLINE + (this.#edit ? `Edit ${this.#id}` : "/" + this.#command), hx + 5, hy - 13);
     } else drawLore(hx, hy, this.#item.getLore());
   }
 
@@ -279,10 +247,7 @@ export class Button {
 
     const size = Player.getContainer().getSize();
     const x = dx + this.#x;
-    const y =
-      dy +
-      this.#y +
-      (this.#loc !== "bottom" ? 0 : 18 * ~~(size / 9) + (size > 45 ? 0 : 36));
+    const y = dy + this.#y + (this.#loc !== "bottom" ? 0 : 18 * ~~(size / 9) + (size > 45 ? 0 : 36));
     if (cx < x || cx > x + 16 || cy < y || cy > y + 16) return false;
 
     if (editing.active) {
@@ -339,11 +304,7 @@ function resetEdit() {
  * Creates a button using input fields as arguments.
  */
 function saveEdit() {
-  if (
-    commandInput.func_146179_b() === "" ||
-    iconInput.func_146179_b() === "barrier"
-  )
-    return;
+  if (commandInput.func_146179_b() === "" || iconInput.func_146179_b() === "barrier") return;
 
   let command = commandInput.func_146179_b(); // This is also a pointer for some reason
   if (buttons.hasOwnProperty(editing.id)) {
@@ -372,8 +333,7 @@ const inputClick = register("guiMouseClick", (x, y, button, gui, event) => {
     saveEdit();
     const left = gui?.getGuiLeft() ?? 0;
     const top = gui?.getGuiTop() ?? 0;
-    const size =
-      Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
+    const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
 
     if (
       !Object.keys(buttons).some((key) => {
@@ -515,8 +475,7 @@ function setButtons(type) {
 const click = register("guiMouseClick", (x, y, button, gui) => {
   const left = gui?.getGuiLeft() ?? 0;
   const top = gui?.getGuiTop() ?? 0;
-  const size =
-    Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
+  const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
 
   Object.keys(buttons).forEach((key) => {
     if (buttons[key].getIndex() > size) return;
@@ -527,8 +486,7 @@ const click = register("guiMouseClick", (x, y, button, gui) => {
 const render = register("guiRender", (x, y, gui) => {
   const top = gui?.getGuiTop() ?? 0;
   const left = gui?.getGuiLeft() ?? 0;
-  const size =
-    Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
+  const size = Player.getContainer().getSize() + (container === "GuiInventory" ? 18 : 0);
 
   Object.keys(buttons).forEach((key) => {
     if (buttons[key].getIndex() > size) return;
@@ -626,37 +584,21 @@ export function buttonCommands(args) {
       Object.keys(buttons).forEach((key) => {
         buttons[key].save(data.buttonPresets[name]);
       });
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully saved buttons data using key: "${name}".`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully saved buttons data using key: "${name}".`);
       break;
     case "delete":
     case "remove":
       if (data.buttonPresets.hasOwnProperty(name)) {
         delete data.buttonPresets[name];
-        ChatLib.chat(
-          `${
-            LOGO + GREEN
-          }Successfully deleted button preset using key: "${name}".`
-        );
-      } else
-        ChatLib.chat(
-          `${LOGO + RED}Error: There are no presets using "${name}" key.`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully deleted button preset using key: "${name}".`);
+      } else ChatLib.chat(`${LOGO + RED}Error: There are no presets using "${name}" key.`);
       break;
     case "load":
       if (data.buttonPresets.hasOwnProperty(name)) {
         data.buttons = data.buttonPresets[name];
         loadButtons();
-        ChatLib.chat(
-          `${
-            LOGO + GREEN
-          }Successfully loaded button preset using key: "${name}".`
-        );
-      } else
-        ChatLib.chat(
-          `${LOGO + RED}Error: There are no presets using "${name}" key.`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully loaded button preset using key: "${name}".`);
+      } else ChatLib.chat(`${LOGO + RED}Error: There are no presets using "${name}" key.`);
       break;
     case "list":
     case "view":
@@ -668,22 +610,14 @@ export function buttonCommands(args) {
       const backup = data.buttons;
       try {
         const decoded = JSON.parse(
-          FileLib.decodeBase64(
-            Toolkit.getDefaultToolkit()
-              .getSystemClipboard()
-              .getData(DataFlavor.stringFlavor)
-          )
+          FileLib.decodeBase64(Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor))
         );
         data.buttons = decoded;
         loadButtons();
-        ChatLib.chat(
-          `${LOGO + GREEN}Successfully loaded button preset from clipboard!`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully loaded button preset from clipboard!`);
       } catch (err) {
         data.buttons = backup;
-        ChatLib.chat(
-          `${LOGO + RED}Error: Unable to process clipboard content!`
-        );
+        ChatLib.chat(`${LOGO + RED}Error: Unable to process clipboard content!`);
       }
       break;
     case "export":
@@ -707,8 +641,7 @@ export function buttonCommands(args) {
       break;
     case "help":
     default:
-      if (command !== "help")
-        ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+      if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
       ChatLib.chat(
         `${LOGO + GOLD + BOLD}Container Buttons Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va buttons <command>

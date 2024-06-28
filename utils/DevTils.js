@@ -1,4 +1,4 @@
-import { GRAY, GREEN, LOGO, RED } from "./Constants";
+import { GRAY, GREEN, LOGO } from "./Constants";
 import { data } from "./Data";
 
 /**
@@ -29,10 +29,7 @@ devKey.registerKeyPress(() => {
     const textComponent = entity.func_145748_c_();
     let extraString = "";
     for (data in extraData) extraString += `${data}=${extraData[data]}, `;
-    ChatLib.command(
-      `ct copy ${view.toString()} ⦿ ${textComponent} ⦿ ExtraData[${extraString}]`,
-      true
-    );
+    ChatLib.command(`ct copy ${view.toString()} ⦿ ${textComponent} ⦿ ExtraData[${extraString}]`, true);
     ChatLib.chat(`${LOGO + GREEN}Successfully copied entity data!`);
   } else {
     ChatLib.command(`ct copy ${view.toString()}`, true);
@@ -47,15 +44,8 @@ register("guiKey", (_, keyCode, gui) => {
   if (slot === undefined) return;
   const item = Player.getContainer().getStackInSlot(slot);
   if (item === null) return;
-  ChatLib.command(
-    `ct copy ${JSON.stringify(item.getNBT().toObject(), null, 2)}`,
-    true
-  );
-  ChatLib.chat(
-    `${LOGO + GREEN}Successfully copied ${GRAY}[${
-      item.getName() + GRAY
-    }] ${GREEN}NBT!`
-  );
+  ChatLib.command(`ct copy ${JSON.stringify(item.getNBT().toObject(), null, 2)}`, true);
+  ChatLib.chat(`${LOGO + GREEN}Successfully copied ${GRAY}[${item.getName() + GRAY}] ${GREEN}NBT!`);
 });
 
 /**
@@ -77,9 +67,7 @@ register("command", () => {
   Scoreboard.getLines().forEach((line) => {
     print(line.getName());
   });
-  ChatLib.chat(
-    `${LOGO + GREEN}Succesfully printed Scoreboard lines to console!`
-  );
+  ChatLib.chat(`${LOGO + GREEN}Succesfully printed Scoreboard lines to console!`);
 }).setName("printScore");
 
 export function printKeys(object) {

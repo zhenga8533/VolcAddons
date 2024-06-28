@@ -1,20 +1,12 @@
 import axios from "../../../axios";
-import {
-  AQUA,
-  DARK_GRAY,
-  GREEN,
-  ITALIC,
-  LOGO,
-  RED,
-} from "../../utils/Constants";
+import { AQUA, DARK_GRAY, GREEN, ITALIC, LOGO, RED } from "../../utils/Constants";
 import { Json } from "../../utils/Json";
 import { decode } from "../../utils/functions/misc";
 
 const skins = new Json("skins.json", false).getData();
 register("guiOpened", () => {
   Client.scheduleTask(2, () => {
-    if (!Player.getContainer().getName().startsWith("Previous Fire Sales"))
-      return;
+    if (!Player.getContainer().getName().startsWith("Previous Fire Sales")) return;
     const items = Player.getContainer().getItems();
 
     for (let i = 1; i < 5; i++) {
@@ -22,17 +14,8 @@ register("guiOpened", () => {
         let skin = items[i * 9 + j];
         if (skin === null) break;
 
-        let skinID = skin
-          .getNBT()
-          .getCompoundTag("tag")
-          .getCompoundTag("ExtraAttributes")
-          .getString("id");
-        if (
-          skinID.endsWith("RUNE") ||
-          skinID.startsWith("DYE") ||
-          skinID.endsWith("BARN_SKIN")
-        )
-          continue;
+        let skinID = skin.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
+        if (skinID.endsWith("RUNE") || skinID.startsWith("DYE") || skinID.endsWith("BARN_SKIN")) continue;
 
         if (!skins.includes(skinID)) skins.push(skinID);
       }
@@ -42,11 +25,7 @@ register("guiOpened", () => {
 
 register("command", () => {
   if (skins.length === 0) {
-    ChatLib.chat(
-      `${
-        LOGO + RED
-      }Please open all Fire Sale menus first to register all valid skins!`
-    );
+    ChatLib.chat(`${LOGO + RED}Please open all Fire Sale menus first to register all valid skins!`);
     return;
   }
 
@@ -60,9 +39,7 @@ register("command", () => {
 
         let items = decode(contents);
         for (let i = 0; i < items.func_74745_c(); i++) {
-          let nbt = new NBTTagCompound(items.func_150305_b(i))
-            .getCompoundTag("tag")
-            .getCompoundTag("ExtraAttributes");
+          let nbt = new NBTTagCompound(items.func_150305_b(i)).getCompoundTag("tag").getCompoundTag("ExtraAttributes");
 
           let skin = nbt.getString("skin");
           if (skin) {
@@ -79,9 +56,7 @@ register("command", () => {
       }
 
       const profiles = response.data.profiles;
-      const player =
-        profiles[Object.keys(profiles).find((prof) => profiles[prof].current)]
-          ?.raw;
+      const player = profiles[Object.keys(profiles).find((prof) => profiles[prof].current)]?.raw;
       if (player === undefined) {
         ChatLib.chat(`${LOGO + RED}Error fetching player profile!`);
         return;

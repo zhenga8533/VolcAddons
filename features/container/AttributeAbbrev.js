@@ -1,6 +1,6 @@
-import Settings from "../../utils/Settings";
 import { AQUA } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 registerWhen(
   register("renderItemIntoGui", (item, x, y) => {

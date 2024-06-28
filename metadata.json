@@ -5,12 +5,5 @@
   "description": "joe.",
   "entry": "index.js",
   "version": "2.9.13",
-  "requires": [
-    "axios",
-    "BeaconBeam",
-    "PogData",
-    "RenderLib",
-    "requestV2",
-    "Vigilance"
-  ]
+  "requires": ["axios", "BeaconBeam", "PogData", "RenderLib", "requestV2", "Vigilance"]
 }

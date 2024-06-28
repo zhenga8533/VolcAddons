@@ -38,19 +38,10 @@ export function drawLore(hx, hy, lore) {
   lore = lore.slice(1);
   if (lore.length === 0) return;
 
-  const width = lore.reduce(
-    (max, line) => Math.max(max, Renderer.getStringWidth(line)),
-    0
-  );
+  const width = lore.reduce((max, line) => Math.max(max, Renderer.getStringWidth(line)), 0);
   const height = lore.length * 9 + 4;
-  const x =
-    hx + 18 + width > Renderer.screen.getWidth()
-      ? Renderer.screen.getWidth() - width - 10
-      : hx + 8;
-  const y =
-    hy - 14 + height > Renderer.screen.getHeight()
-      ? Renderer.screen.getHeight() - height - 2
-      : hy - 16;
+  const x = hx + 18 + width > Renderer.screen.getWidth() ? Renderer.screen.getWidth() - width - 10 : hx + 8;
+  const y = hy - 14 + height > Renderer.screen.getHeight() ? Renderer.screen.getHeight() - height - 2 : hy - 16;
 
   drawBox(x + 2, y, 999, width + 6, height, Renderer.BLACK, BORDER_COLOR);
   Renderer.translate(0, 0, 999);
@@ -92,12 +83,7 @@ export function drawContainer(bX, bY, title, bg, items, mX, mY) {
       let size = item.getStackSize();
       if (size !== 1) {
         Renderer.translate(0, 0, 500);
-        Renderer.drawString(
-          size,
-          x - Renderer.getStringWidth(size) + 17,
-          y + 9,
-          true
-        );
+        Renderer.drawString(size, x - Renderer.getStringWidth(size) + 17, y + 9, true);
       }
 
       // Draw lore if hovered
@@ -118,15 +104,7 @@ export function drawContainer(bX, bY, title, bg, items, mX, mY) {
  * @param {Boolean} align - True for right align, or false for left align.
  * @param {Boolean} flex - True for vertical flex, or false for horizontal flex.
  */
-export function renderScale(
-  x,
-  y,
-  text,
-  scale = 1,
-  align = false,
-  flex = false,
-  z = 0
-) {
+export function renderScale(x, y, text, scale = 1, align = false, flex = false, z = 0) {
   // Apply parameters
   x /= scale;
   y /= scale;
@@ -135,10 +113,6 @@ export function renderScale(
   // Scale and render
   Renderer.scale(scale);
   Renderer.translate(0, 0, z ?? 300);
-  if (align)
-    new Text(text.replace(/&l/g, ""), x, y)
-      .setAlign("right")
-      .setShadow(Settings.textShadow)
-      .draw();
+  if (align) new Text(text.replace(/&l/g, ""), x, y).setAlign("right").setShadow(Settings.textShadow).draw();
   else Renderer.drawString(text, x, y, Settings.textShadow);
 }

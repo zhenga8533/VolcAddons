@@ -1,8 +1,8 @@
-import Settings from "../../utils/Settings";
 import { AQUA, BOLD, GREEN } from "../../utils/Constants";
+import { data } from "../../utils/Data";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/Data";
+import Settings from "../../utils/Settings";
 
 const widgetOverlays = {};
 
@@ -38,20 +38,14 @@ registerWhen(
     const tablist = TabList.getNames();
 
     Object.keys(widgetOverlays).forEach((widget) => {
-      let index = tablist.findIndex(
-        (line) =>
-          line.removeFormatting().toLowerCase() === `${widget.toLowerCase()}:`
-      );
+      let index = tablist.findIndex((line) => line.removeFormatting().toLowerCase() === `${widget.toLowerCase()}:`);
       if (index === -1) {
         widgetOverlays[widget].setMessage("");
         return;
       }
 
       let message = tablist[index++];
-      while (
-        tablist[index].startsWith("§r ") &&
-        !tablist[index].endsWith("§r§3§lInfo§r")
-      )
+      while (tablist[index].startsWith("§r ") && !tablist[index].endsWith("§r§3§lInfo§r"))
         message += "\n" + tablist[index++];
       widgetOverlays[widget].setMessage(message);
     });

@@ -1,7 +1,7 @@
-import party from "../../utils/Party";
-import Settings from "../../utils/Settings";
 import { GREEN, LOGO } from "../../utils/Constants";
+import party from "../../utils/Party";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { delay } from "../../utils/ThreadTils";
 
 /**

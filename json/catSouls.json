@@ -8,14 +8,7 @@
     56,
     63
   ],
-  [
-    "Soul Piece #3",
-    "Black Lagoon",
-    "Found behind the entry-point to the Leeches Lair.",
-    -139,
-    45,
-    15
-  ],
+  ["Soul Piece #3", "Black Lagoon", "Found behind the entry-point to the Leeches Lair.", -139, 45, 15],
   [
     "Soul Piece #4",
     "West Village",
@@ -32,14 +25,7 @@
     72,
     -198
   ],
-  [
-    "Soul Piece #6",
-    "Otherside",
-    "Found adjacent to the Déjà Vu Alley.",
-    38,
-    65,
-    -118
-  ],
+  ["Soul Piece #6", "Otherside", "Found adjacent to the Déjà Vu Alley.", 38, 65, -118],
   [
     "Soul Piece #7",
     "Book In A Book",
@@ -48,20 +34,6 @@
     72,
     -15
   ],
-  [
-    "Soul Piece #8",
-    "Living Stillness",
-    "Found underneath a destroyable snow block next to a Rock.",
-    22,
-    43,
-    -220
-  ],
-  [
-    "Soul Piece #9",
-    "Photon Pathway",
-    "Found in the second floor of the house at the end of the parkour.",
-    152,
-    80,
-    -14
-  ]
+  ["Soul Piece #8", "Living Stillness", "Found underneath a destroyable snow block next to a Rock.", 22, 43, -220],
+  ["Soul Piece #9", "Photon Pathway", "Found in the second floor of the house at the end of the parkour.", 152, 80, -14]
 ]

@@ -1,5 +1,3 @@
-import Settings from "../../utils/Settings";
-import Toggles from "../../utils/Toggles";
 import {
   AQUA,
   BOLD,
@@ -15,14 +13,15 @@ import {
   LOGO,
   PLAYER_CLASS,
   RED,
-  WHITE,
   YELLOW,
 } from "../../utils/Constants";
-import { formatNumber, formatTime } from "../../utils/functions/format";
-import { Overlay } from "../../utils/Overlay";
-import { isPlayer } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import Toggles from "../../utils/Toggles";
+import { formatNumber, formatTime } from "../../utils/functions/format";
+import { isPlayer } from "../../utils/functions/player";
 
 /**
  * Stats display overlay variables
@@ -31,12 +30,7 @@ const statsExample = `${GRAY}[${GOLD}Pet${GRAY}] ${GREEN}-..-
 ${GRAY}[${GOLD}Legion${GRAY}] ${RED}0 ${DARK_GRAY}(0%)
 ${GRAY}[${GOLD}SF${GRAY}] ${GREEN}/ -.. ${AQUA}⸎
 ${GRAY}[${GOLD}Daily PT${GRAY}] ${GREEN}/ -..`;
-const statsOverlay = new Overlay(
-  "statsDisplay",
-  data.YL,
-  "moveStats",
-  statsExample
-);
+const statsOverlay = new Overlay("statsDisplay", data.YL, "moveStats", statsExample);
 
 /**
  * Get equipped pet through tab widget, menu, or chat.
@@ -52,8 +46,7 @@ registerWhen(
       data.pet = tabNames[petIndex + 1].substring(3);
 
       const petXP = tabNames[petIndex + 2].split(" ")[1];
-      if (petXP != "§r§b§lMAX" && !data.pet.startsWith("§r§7No pet"))
-        data.pet += `\n   ${petXP} XP`;
+      if (petXP != "§r§b§lMAX" && !data.pet.startsWith("§r§7No pet")) data.pet += `\n   ${petXP} XP`;
     } else petWidget = false;
   }).setFps(1),
   () => Settings.statsDisplay && Toggles.petDisplay
@@ -69,10 +62,7 @@ register("guiOpened", () => {
     for (let i = 1; i <= 4; i++) {
       for (let j = 1; j <= 7; j++) {
         let pet = pets[i * 9 + j];
-        if (
-          pet.getLore().find((lore) => lore === "§5§o§7§cClick to despawn!") !==
-          undefined
-        ) {
+        if (pet.getLore().find((lore) => lore === "§5§o§7§cClick to despawn!") !== undefined) {
           let name = pet.getName();
           data.pet = name.substring(name.indexOf("]") + 2);
         }
@@ -94,9 +84,7 @@ const revertPet = register("worldUnload", () => {
   revertPet.unregister();
 }).unregister();
 register("chat", () => {
-  const mont = TabList.getNames().find((name) =>
-    name.startsWith("§r Montezuma:")
-  );
+  const mont = TabList.getNames().find((name) => name.startsWith("§r Montezuma:"));
   if (mont !== undefined) {
     lastPet = data.pet;
     data.pet = (mont[18] >= 6 ? DARK_PURPLE : DARK_BLUE) + "Montezuma";
@@ -115,8 +103,7 @@ register("step", () => {
   container.getItems().forEach((item) => {
     if (item !== null && item.getName().includes("Soulflow")) {
       const internal = item.getLore()[1].removeFormatting();
-      if (internal.startsWith("Internalized:"))
-        soulflow = internal.replace(/[^0-9]/g, "");
+      if (internal.startsWith("Internalized:")) soulflow = internal.replace(/[^0-9]/g, "");
     }
   });
 }).setDelay(5);
@@ -152,9 +139,7 @@ registerWhen(
     // Pet
     if (Toggles.petDisplay) {
       let pet =
-        data.pet.length > 36 && !data.pet.startsWith("§r§7No pet")
-          ? data.pet.split(" ").slice(2).join(" ")
-          : data.pet;
+        data.pet.length > 36 && !data.pet.startsWith("§r§7No pet") ? data.pet.split(" ").slice(2).join(" ") : data.pet;
       statsMessage += `${GRAY}[${GOLD}Pet${GRAY}] ${pet}\n`;
     }
 
@@ -177,9 +162,7 @@ registerWhen(
           : legionColor > 0
           ? RED
           : DARK_RED;
-      statsMessage += `${GRAY}[${GOLD}Legion${GRAY}] ${
-        legionColor + legionCount + DARK_GRAY
-      } (${legionPercent}%)\n`;
+      statsMessage += `${GRAY}[${GOLD}Legion${GRAY}] ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)\n`;
     }
 
     // Soulflow
@@ -196,9 +179,7 @@ registerWhen(
           : soulflow > 10_000
           ? RED
           : DARK_RED;
-      statsMessage += `${GRAY}[${GOLD}SF${GRAY}] ${
-        soulflowColor + formatNumber(soulflow) + AQUA
-      } ⸎\n`;
+      statsMessage += `${GRAY}[${GOLD}SF${GRAY}] ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎\n`;
     }
 
     // Playtime
@@ -215,10 +196,7 @@ registerWhen(
           : data.playtime < 28_800
           ? RED
           : DARK_RED;
-      const formattedPlaytime = formatTime(data.playtime).replace(
-        /\d+/g,
-        (match) => `${ptColor}${match}${DARK_GRAY}`
-      );
+      const formattedPlaytime = formatTime(data.playtime).replace(/\d+/g, (match) => `${ptColor}${match}${DARK_GRAY}`);
       statsMessage += `${GRAY}[${GOLD}Daily PT${GRAY}] ${formattedPlaytime}`;
     }
 
@@ -252,11 +230,7 @@ export function getStat(stat) {
           ? RED
           : DARK_RED;
 
-      ChatLib.chat(
-        `${LOGO + DARK_AQUA + BOLD}SF: ${
-          soulflowColor + formatNumber(soulflow) + AQUA
-        } ⸎`
-      );
+      ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}SF: ${soulflowColor + formatNumber(soulflow) + AQUA} ⸎`);
       break;
     case "playtime":
     case "pt":
@@ -273,19 +247,13 @@ export function getStat(stat) {
           ? RED
           : DARK_RED;
 
-      ChatLib.chat(
-        `${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${
-          ptColor + formatTime(data.playtime)
-        }`
-      );
+      ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Daily Playtime: ${ptColor + formatTime(data.playtime)}`);
       break;
     case "legion":
       const player = Player.asPlayerMP();
       const legionCount =
         World.getAllEntitiesOfType(PLAYER_CLASS).filter(
-          (other) =>
-            other.getEntity().func_110143_aJ() !== 20 &&
-            player.distanceTo(other) < 30
+          (other) => other.getEntity().func_110143_aJ() !== 20 && player.distanceTo(other) < 30
         ).length - 1;
       const legionPercent = Math.min(1, legionCount / 20).toFixed(2) * 100;
       const legionColor =
@@ -300,11 +268,7 @@ export function getStat(stat) {
           : legionColor > 0
           ? RED
           : DARK_RED;
-      ChatLib.chat(
-        `${DARK_AQUA + BOLD}Legion: ${
-          legionColor + legionCount + DARK_GRAY
-        } (${legionPercent}%)`
-      );
+      ChatLib.chat(`${DARK_AQUA + BOLD}Legion: ${legionColor + legionCount + DARK_GRAY} (${legionPercent}%)`);
       break;
   }
 }

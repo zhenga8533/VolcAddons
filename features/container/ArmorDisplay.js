@@ -1,12 +1,8 @@
-import Settings from "../../utils/Settings";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
 import { data, itemNBTs } from "../../utils/Data";
-import {
-  compressNBT,
-  decompressNBT,
-  parseTexture,
-} from "../../utils/functions/misc";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { compressNBT, decompressNBT, parseTexture } from "../../utils/functions/misc";
 import { Button } from "./ContainerButtons";
 
 /**
@@ -14,39 +10,26 @@ import { Button } from "./ContainerButtons";
  */
 const barrier = new Item("minecraft:barrier");
 const pieces = [null, null, null, null];
-new Overlay(
-  "armorDisplay",
-  data.UL,
-  "moveArmor",
-  "Armor",
-  ["all"],
-  "renderOverlay",
-  () => {
-    let yDiff = -15 * data.UL[2];
+new Overlay("armorDisplay", data.UL, "moveArmor", "Armor", ["all"], "renderOverlay", () => {
+  let yDiff = -15 * data.UL[2];
 
-    pieces.forEach((piece) => {
-      yDiff += 15 * data.UL[2];
-      if (piece === null) {
-        barrier.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
-        return;
-      }
+  pieces.forEach((piece) => {
+    yDiff += 15 * data.UL[2];
+    if (piece === null) {
+      barrier.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
+      return;
+    }
 
-      // Draw icon
-      piece.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
+    // Draw icon
+    piece.draw(data.UL[0], data.UL[1] + yDiff, data.UL[2]);
 
-      // Draw cd/stars
-      const size = piece.getStackSize();
-      if (size > 1)
-        Renderer.drawString(
-          size,
-          data.UL[0] - Renderer.getStringWidth(size),
-          data.UL[1] + yDiff
-        );
-    });
+    // Draw cd/stars
+    const size = piece.getStackSize();
+    if (size > 1) Renderer.drawString(size, data.UL[0] - Renderer.getStringWidth(size), data.UL[1] + yDiff);
+  });
 
-    return true;
-  }
-);
+  return true;
+});
 
 /**
  * Get player armor pieces
@@ -69,24 +52,13 @@ const buttons = [];
 let equipment = itemNBTs.equip.map((nbt, index) => {
   if (nbt === null) return null;
 
-  const item = new Item(
-    net.minecraft.item.ItemStack.func_77949_a(
-      NBT.parse(decompressNBT(nbt)).rawNBT
-    )
-  );
+  const item = new Item(net.minecraft.item.ItemStack.func_77949_a(NBT.parse(decompressNBT(nbt)).rawNBT));
   let texture;
 
   if (item.getUnlocalizedName() === "item.skull") {
     // Fix skull textures not rendering
-    const skullNBT = item
-      .getNBT()
-      .getCompoundTag("tag")
-      .getCompoundTag("SkullOwner");
-    texture = skullNBT
-      .getCompoundTag("Properties")
-      .getTagList("textures", 0)
-      .func_150305_b(0)
-      .func_74779_i("Value");
+    const skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
+    texture = skullNBT.getCompoundTag("Properties").getTagList("textures", 0).func_150305_b(0).func_74779_i("Value");
     const skull = parseTexture(texture);
     item.getNBT().getCompoundTag("tag").set("SkullOwner", skull);
   } else texture = "stained_glass_pane";
@@ -159,40 +131,27 @@ registerWhen(
 /**
  * Equipment Overlay
  */
-new Overlay(
-  "equipDisplay",
-  data.EQL,
-  "moveEq",
-  "Equip",
-  ["all"],
-  "renderOverlay",
-  () => {
-    if (!Settings.equipDisplay) return;
-    let yDiff = -15 * data.EQL[2];
+new Overlay("equipDisplay", data.EQL, "moveEq", "Equip", ["all"], "renderOverlay", () => {
+  if (!Settings.equipDisplay) return;
+  let yDiff = -15 * data.EQL[2];
 
-    equipment.forEach((piece) => {
-      yDiff += 15 * data.EQL[2];
-      if (piece === null) {
-        barrier.draw(data.EQL[0], data.EQL[1] + yDiff, data.EQL[2]);
-        return;
-      }
+  equipment.forEach((piece) => {
+    yDiff += 15 * data.EQL[2];
+    if (piece === null) {
+      barrier.draw(data.EQL[0], data.EQL[1] + yDiff, data.EQL[2]);
+      return;
+    }
 
-      // Draw icon
-      piece.draw(data.EQL[0], data.EQL[1] + yDiff, data.EQL[2]);
+    // Draw icon
+    piece.draw(data.EQL[0], data.EQL[1] + yDiff, data.EQL[2]);
 
-      // Draw cd/stars
-      const size = piece.getStackSize();
-      if (size > 1)
-        Renderer.drawString(
-          size,
-          data.EQL[0] - Renderer.getStringWidth(size),
-          data.EQL[1] + yDiff
-        );
-    });
+    // Draw cd/stars
+    const size = piece.getStackSize();
+    if (size > 1) Renderer.drawString(size, data.EQL[0] - Renderer.getStringWidth(size), data.EQL[1] + yDiff);
+  });
 
-    return true;
-  }
-);
+  return true;
+});
 
 /**
  * Get player equipment pieces
@@ -215,18 +174,9 @@ function updateEquipment() {
       continue;
     }
 
-    let skullNBT = item
-      .getNBT()
-      .getCompoundTag("tag")
-      .getCompoundTag("SkullOwner");
-    let texture = skullNBT
-      .getCompoundTag("Properties")
-      .getTag("textures")
-      .getRawNBT();
-    buttons[i].setItem(
-      texture.func_150305_b(0).func_74779_i("Value"),
-      item.getLore()
-    );
+    let skullNBT = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner");
+    let texture = skullNBT.getCompoundTag("Properties").getTag("textures").getRawNBT();
+    buttons[i].setItem(texture.func_150305_b(0).func_74779_i("Value"), item.getLore());
   }
 }
 
@@ -247,12 +197,9 @@ registerWhen(
  * Persistant armor and equip.
  */
 register("gameUnload", () => {
-  itemNBTs.armor = pieces.map((piece) =>
-    piece === null ? null : compressNBT(piece.getNBT().toObject())
-  );
+  itemNBTs.armor = pieces.map((piece) => (piece === null ? null : compressNBT(piece.getNBT().toObject())));
   itemNBTs.equip = equipment.map((piece, index) => {
-    if (piece?.getLore()?.length > 1)
-      data.equipmentLore[index] = [...piece.getLore()];
+    if (piece?.getLore()?.length > 1) data.equipmentLore[index] = [...piece.getLore()];
     return piece === null ? null : compressNBT(piece.getNBT().toObject());
   });
 }).setPriority(Priority.HIGHEST);

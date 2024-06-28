@@ -1,19 +1,10 @@
-import Settings from "../../utils/Settings";
-import {
-  BOLD,
-  DARK_RED,
-  EntityArmorStand,
-  GRAY,
-  GREEN,
-  LOGO,
-  RED,
-  RESET,
-} from "../../utils/Constants";
-import { formatNumber, formatTime } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
-import { getPaused } from "../../utils/Stat";
+import { BOLD, DARK_RED, EntityArmorStand, GRAY, GREEN, LOGO, RED, RESET } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { getPaused } from "../../utils/Stat";
+import { formatNumber, formatTime } from "../../utils/functions/format";
 
 /**
  * Variables used to track and display item and vanquisher kill counts.
@@ -33,12 +24,7 @@ ${RED + BOLD}ゴウセル: ${RESET}0^0
 
 ${DARK_RED + BOLD}Total: ${RESET}∞^∞
 ${DARK_RED + BOLD}Time: ${RESET}-∞`;
-const counterOverlay = new Overlay(
-  "killCounter",
-  data.JL,
-  "moveKills",
-  counterExample
-);
+const counterOverlay = new Overlay("killCounter", data.JL, "moveKills", counterExample);
 counterOverlay.setMessage("");
 
 function updateCounter() {
@@ -48,16 +34,12 @@ function updateCounter() {
   // Format overlay + change message
   const messageLines = sortedMobs.map((mob) => {
     const kills = mobs[mob];
-    return `${RED + BOLD + mob}: ${
-      RESET + formatNumber(kills) + GRAY
-    } (${formatNumber((kills / time) * 3600)}/hr)`;
+    return `${RED + BOLD + mob}: ${RESET + formatNumber(kills) + GRAY} (${formatNumber((kills / time) * 3600)}/hr)`;
   });
 
   counterOverlay.setMessage(
     messageLines.join("\n") +
-      `\n\n${DARK_RED + BOLD}Total: ${
-        RESET + formatNumber(total) + GRAY
-      } (${formatNumber((total / time) * 3600)}/hr)` +
+      `\n\n${DARK_RED + BOLD}Total: ${RESET + formatNumber(total) + GRAY} (${formatNumber((total / time) * 3600)}/hr)` +
       `\n${DARK_RED + BOLD}Time: ${RESET + formatTime(time)}`
   );
 }
@@ -71,18 +53,10 @@ registerWhen(
     const held = Player.getHeldItem();
     if (held === null) return;
     const heldName = held.getRegistryName();
-    if (
-      Player.asPlayerMP().distanceTo(death) > 16 &&
-      !heldName.endsWith("hoe") &&
-      !heldName.endsWith("bow")
-    )
-      return;
+    if (Player.asPlayerMP().distanceTo(death) > 16 && !heldName.endsWith("hoe") && !heldName.endsWith("bow")) return;
 
     // Load held item stats (book of stats)
-    const extraAttributes = held
-      .getNBT()
-      .getCompoundTag("tag")
-      .getCompoundTag("ExtraAttributes");
+    const extraAttributes = held.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
     const heldItemId = extraAttributes.getString("id");
     const newKills = extraAttributes.getInteger("stats_book");
 
@@ -97,10 +71,7 @@ registerWhen(
     // Get surrounding death to find title stand
     const deathEntity = death.getEntity();
     World.getWorld()
-      .func_72839_b(
-        deathEntity,
-        deathEntity.func_174813_aQ().func_72314_b(1, 3, 1)
-      )
+      .func_72839_b(deathEntity, deathEntity.func_174813_aQ().func_72314_b(1, 3, 1))
       .filter(
         (entity) =>
           entity instanceof EntityArmorStand &&

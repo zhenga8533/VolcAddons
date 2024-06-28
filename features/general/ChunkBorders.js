@@ -10,18 +10,7 @@ const renderBorders = register("renderWorld", () => {
   const z = Math.floor(Player.getZ() / 16);
 
   RenderLib.drawEspBox(x * 16 + 8, 0, z * 16 + 8, 16, 256, 1, 1, 0, 1, false);
-  RenderLib.drawInnerEspBox(
-    x * 16 + 8,
-    0,
-    z * 16 + 8,
-    16,
-    256,
-    1,
-    1,
-    0,
-    0.2,
-    false
-  );
+  RenderLib.drawInnerEspBox(x * 16 + 8, 0, z * 16 + 8, 16, 256, 1, 1, 0, 0.2, false);
 }).unregister();
 
 const chunkey = new KeyBind("Chunk Border", data.chunkey, "./VolcAddons.xdd");

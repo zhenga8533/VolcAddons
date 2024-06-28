@@ -2,11 +2,11 @@
  * ARCHIVED
  */
 
-import Settings from "../../utils/Settings";
 import { BOLD, DARK_RED, GREEN, RED, RESET } from "../../utils/Constants";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 /**
  * Variables used to track and display Cells Alignment time.

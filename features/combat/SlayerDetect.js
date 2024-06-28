@@ -1,6 +1,3 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import Waypoint from "../../utils/Waypoint";
 import {
   BLAZE_CLASS,
   BOLD,
@@ -14,11 +11,14 @@ import {
   WOLF_CLASS,
   ZOMBIE_CLASS,
 } from "../../utils/Constants";
-import { romanToNum } from "../../utils/functions/format";
-import { announceMob } from "../../utils/functions/misc";
+import location from "../../utils/Location";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { delay } from "../../utils/ThreadTils";
 import { setTitle } from "../../utils/Title";
+import Waypoint from "../../utils/Waypoint";
+import { romanToNum } from "../../utils/functions/format";
+import { announceMob } from "../../utils/functions/misc";
 
 /**
  * Slayer alert variables.
@@ -36,19 +36,10 @@ export function getSlayerBoss() {
  */
 registerWhen(
   register("soundPlay", (_, __, vol, pitch) => {
-    if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872)
-      return;
+    if (miniCD || vol != 0.6000000238418579 || pitch != 1.2857142686843872) return;
 
-    if (Settings.miniAlert === 3)
-      setTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5, 55);
-    else
-      announceMob(
-        Settings.miniAlert,
-        "Miniboss Slayer",
-        Player.getX(),
-        Player.getY(),
-        Player.getZ()
-      );
+    if (Settings.miniAlert === 3) setTitle(`${GREEN + BOLD}SLAYER MINIBOSS SPAWNED!`, "", 5, 25, 5, 55);
+    else announceMob(Settings.miniAlert, "Miniboss Slayer", Player.getX(), Player.getY(), Player.getZ());
 
     miniCD = true;
     delay(() => (miniCD = false), 3000);
@@ -65,19 +56,13 @@ registerWhen(
       // Announce if boss is dead
       if (
         !slainCD &&
-        Scoreboard?.getLines()?.find((line) =>
-          line.getName().startsWith("§aBoss slain!")
-        ) !== undefined
+        Scoreboard?.getLines()?.find((line) => line.getName().startsWith("§aBoss slain!")) !== undefined
       ) {
         slainCD = true;
-        if (Settings.bossAlert === 3)
-          setTitle(`${DARK_GREEN + BOLD}SLAYER BOSS SLAIN!`, "", 5, 25, 5, 56);
-        else if (Settings.bossAlert === 2)
-          ChatLib.command("pc Slayer Boss Slain!");
+        if (Settings.bossAlert === 3) setTitle(`${DARK_GREEN + BOLD}SLAYER BOSS SLAIN!`, "", 5, 25, 5, 56);
+        else if (Settings.bossAlert === 2) ChatLib.command("pc Slayer Boss Slain!");
         else if (Settings.bossAlert === 1) {
-          const id = `@${(Math.random() + 1).toString(36).substring(6)} ${(
-            Math.random() + 1
-          )
+          const id = `@${(Math.random() + 1).toString(36).substring(6)} ${(Math.random() + 1)
             .toString(36)
             .substring(9)}`;
           ChatLib.command("ac Slayer Boss Slain! " + id);
@@ -89,31 +74,21 @@ registerWhen(
     // Check for slain boss line to reset tracker
     if (
       !questStart ||
-      Scoreboard?.getLines()?.find((line) =>
-        line.getName().startsWith("§eSlay the boss!")
-      ) === undefined
+      Scoreboard?.getLines()?.find((line) => line.getName().startsWith("§eSlay the boss!")) === undefined
     )
       return;
 
     bossCD = true;
     slainCD = false;
     questStart = false;
-    if (Settings.bossAlert === 3)
-      setTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5, 58);
+    if (Settings.bossAlert === 3) setTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5, 58);
     else if (Settings.bossAlert !== 0)
-      announceMob(
-        Settings.bossAlert,
-        "Boss Slayer",
-        Player.getX(),
-        Player.getY(),
-        Player.getZ()
-      );
+      announceMob(Settings.bossAlert, "Boss Slayer", Player.getX(), Player.getY(), Player.getZ());
   }),
   () =>
     Settings.bossAlert !== 0 ||
     Settings.slayerSpawn !== 0 ||
-    (location.getWorld() === "The Rift" &&
-      (Settings.vampireAttack || Settings.announceMania))
+    (location.getWorld() === "The Rift" && (Settings.vampireAttack || Settings.announceMania))
 );
 
 /**
@@ -125,20 +100,14 @@ registerWhen(
     if (warned) return;
 
     if (Settings.slayerSpawn === 100) {
-      if (
-        Scoreboard?.getLines()?.find((line) =>
-          line.getName().includes("Slay the boss!")
-        ) !== undefined
-      ) {
+      if (Scoreboard?.getLines()?.find((line) => line.getName().includes("Slay the boss!")) !== undefined) {
         setTitle(`${RED + BOLD}SLAYER BOSS SPAWNED!`, "", 5, 25, 5, 58);
         warned = true;
       }
       return;
     }
 
-    const bossLine = Scoreboard?.getLines()?.find((line) =>
-      line.getName().endsWith("lls")
-    );
+    const bossLine = Scoreboard?.getLines()?.find((line) => line.getName().endsWith("lls"));
     if (bossLine === undefined) return;
     const [_, c, t] = bossLine
       .getName()
@@ -147,14 +116,7 @@ registerWhen(
     const percent = Math.round((c / t) * 100);
 
     if (percent > Settings.slayerSpawn) {
-      setTitle(
-        `${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`,
-        "",
-        5,
-        25,
-        5,
-        57
-      );
+      setTitle(`${RED + BOLD}SLAYER BOSS SPAWNING SOON (${WHITE + percent}%${RED})`, "", 5, 25, 5, 57);
       warned = true;
     }
   }).setFps(2),
@@ -195,11 +157,7 @@ const BOSS_HPS = {
   Inferno: [2_500_000, 10_000_000, 75_000_000, 150_000_000],
 };
 const MINI_HPS = {
-  Revenant: [
-    new Set([24_000]),
-    new Set([90_000, 360_000]),
-    new Set([600_000, 2_400_000]),
-  ],
+  Revenant: [new Set([24_000]), new Set([90_000, 360_000]), new Set([600_000, 2_400_000])],
   Tarantula: [new Set([54_000]), new Set([144_000, 576_000])],
   Sven: [new Set([45_000]), new Set([120_000, 480_000])],
   Voidgloom: [new Set([12_000_000]), new Set([25_000_000, 75_000_000])],
@@ -222,17 +180,11 @@ registerWhen(
   register("step", () => {
     bossWaypoints.clear();
     miniWaypoints.clear();
-    const index =
-      Scoreboard.getLines().findIndex((line) =>
-        line.getName().startsWith("Slayer Quest")
-      ) - 1;
+    const index = Scoreboard.getLines().findIndex((line) => line.getName().startsWith("Slayer Quest")) - 1;
     if (index === -2) return;
 
     // Get slayer data
-    const quest = Scoreboard.getLineByIndex(index)
-      .getName()
-      .removeFormatting()
-      .split(" ");
+    const quest = Scoreboard.getLineByIndex(index).getName().removeFormatting().split(" ");
     const tier = romanToNum(quest[quest.length - 1]);
     const type = quest[0];
     const mobClass = MOB_CLASSES[type];
@@ -248,14 +200,9 @@ registerWhen(
 
     // Check mobs
     World.getAllEntitiesOfType(mobClass).forEach((mob) => {
-      const hp = mob
-        .getEntity()
-        .func_110148_a(SMA.field_111267_a)
-        .func_111125_b();
-      if (bossHP == hp && Settings.bossHighlight)
-        bossWaypoints.push([RED + "Boss", mob]);
-      else if (miniSet.has(hp) && Settings.miniHighlight)
-        miniWaypoints.push([RED + "Mini", mob]);
+      const hp = mob.getEntity().func_110148_a(SMA.field_111267_a).func_111125_b();
+      if (bossHP == hp && Settings.bossHighlight) bossWaypoints.push([RED + "Boss", mob]);
+      else if (miniSet.has(hp) && Settings.miniHighlight) miniWaypoints.push([RED + "Mini", mob]);
     });
   }).setFps(2),
   () => Settings.bossHighlight || Settings.miniHighlight

@@ -1,10 +1,10 @@
-import Settings from "../../utils/Settings";
 import { GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
-import { getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/ThreadTils";
 import { data } from "../../utils/Data";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { delay } from "../../utils/ThreadTils";
 import Waypoint from "../../utils/Waypoint";
+import { getPlayerName } from "../../utils/functions/player";
 
 /**
  * Variables used to represent user inputted waypoints.
@@ -22,10 +22,7 @@ registerWhen(
 
     // Gets colors and titles in name
     const bracketIndex = player.indexOf("[") - 2;
-    if (bracketIndex >= 0)
-      player = player
-        .replaceAll("&", "§")
-        .substring(bracketIndex, player.length);
+    if (bracketIndex >= 0) player = player.replaceAll("&", "§").substring(bracketIndex, player.length);
     else player = player.replaceAll("&", "§");
 
     // Remove anything after z coords
@@ -69,15 +66,11 @@ export function createWaypoint(args) {
     ChatLib.chat(`${LOGO + GREEN}Successfully cleared waypoints!`);
   } else if (args[2] && args[3] && args[4]) {
     userWaypoints.push([name, x, y, z]);
-    ChatLib.chat(
-      `${GREEN}Successfully added waypoint [${name}] at [x: ${x}, y: ${y}, z: ${z}]!`
-    );
+    ChatLib.chat(`${GREEN}Successfully added waypoint [${name}] at [x: ${x}, y: ${y}, z: ${z}]!`);
   } else {
     ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${name}"!`);
     ChatLib.chat(
-      `${
-        LOGO + RED
-      }Please input as: ${WHITE}/va waypoint ${GRAY}<${WHITE}[name] [x] [y] [z], clear${GRAY}>`
+      `${LOGO + RED}Please input as: ${WHITE}/va waypoint ${GRAY}<${WHITE}[name] [x] [y] [z], clear${GRAY}>`
     );
   }
 }

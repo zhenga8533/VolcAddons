@@ -1,5 +1,5 @@
-import Settings from "./Settings";
 import { DARK_GRAY, GRAY, LOGO, RED } from "./Constants";
+import Settings from "./Settings";
 import { NonPooledThread, delay } from "./ThreadTils";
 
 const Socket = Java.type("java.net.Socket");
@@ -87,9 +87,7 @@ class WebSocket {
     }
 
     if (attempts > 9) {
-      console.error(
-        "[VolcAddons] Failed to connect to socket server after 10 attempts."
-      );
+      console.error("[VolcAddons] Failed to connect to socket server after 10 attempts.");
       return;
     }
 
@@ -99,9 +97,7 @@ class WebSocket {
     } catch (e) {
       const time = 10_000 * Math.pow(1.5, attempts);
       console.error(
-        `[VolcAddons] Error connecting to socket server: ${e}. Retrying in ${(
-          time / 1_000
-        ).toFixed(2)} seconds...`
+        `[VolcAddons] Error connecting to socket server: ${e}. Retrying in ${(time / 1_000).toFixed(2)} seconds...`
       );
       delay(() => {
         this.connect(attempts + 1);
@@ -131,9 +127,7 @@ class WebSocket {
             break;
           }
         } catch (e) {
-          console.error(
-            "[VolcAddons] Error reading data from socket server: " + e
-          );
+          console.error("[VolcAddons] Error reading data from socket server: " + e);
           this.disconnect();
           break;
         }
@@ -152,18 +146,14 @@ class WebSocket {
       this.expected = 0;
 
       try {
-        this.#input.println(
-          `{ "command": "disconnect", "player": "${Player.getName()}" }`
-        );
+        this.#input.println(`{ "command": "disconnect", "player": "${Player.getName()}" }`);
         this.#input.close();
         this.#output.close();
         this.#socket.close();
         this.#socket = null;
         console.log("[VolcAddons] Disconnected from socket server.");
       } catch (e) {
-        console.error(
-          "[VolcAddons] Error disconnecting from socket server: " + e
-        );
+        console.error("[VolcAddons] Error disconnecting from socket server: " + e);
       }
 
       // Attempt reconnect
@@ -199,8 +189,7 @@ class WebSocket {
    * @param {String} json - The data received from the server.
    */
   receive(json) {
-    if (!json.startsWith("{") || !json.endsWith("}") || this.expected === 0)
-      return;
+    if (!json.startsWith("{") || !json.endsWith("}") || this.expected === 0) return;
 
     this.expected--;
     callback(JSON.parse(json));
@@ -212,7 +201,6 @@ export default new WebSocket();
  * Run callback and prevent circular dependency.
  */
 import { processAlloy, processEvent } from "../features/mining/EventTracker";
-import Settings from "./Settings";
 
 /**
  * Processes the event received from the server.
@@ -231,8 +219,6 @@ function callback(data) {
       processEvent(data);
       break;
     default:
-      ChatLib.chat(
-        `${LOGO + DARK_GRAY}Received unknown command: ${GRAY + command}`
-      );
+      ChatLib.chat(`${LOGO + DARK_GRAY}Received unknown command: ${GRAY + command}`);
   }
 }

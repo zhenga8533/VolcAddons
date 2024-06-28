@@ -46,11 +46,7 @@ export function getPaused() {
 }
 
 // Key binding for pausing or unpausing trackers
-const pauseKey = new KeyBind(
-  "Pause Trackers",
-  data.pauseKey,
-  "./VolcAddons.xdd"
-);
+const pauseKey = new KeyBind("Pause Trackers", data.pauseKey, "./VolcAddons.xdd");
 
 pauseKey.registerKeyPress(() => {
   paused = !paused;

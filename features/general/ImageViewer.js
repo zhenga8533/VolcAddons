@@ -2,8 +2,8 @@
  * ARCHIVED
  */
 
-import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 /**
  * Variables used to determine image rendering.
@@ -30,9 +30,8 @@ registerWhen(
     const imgWidth = img.getTextureWidth();
     const imgHeight = img.getTextureHeight();
     const ratio =
-      (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT
-        ? imgWidth / SCREEN_WIDTH
-        : imgHeight / SCREEN_HEIGHT) / Settings.imageRatio;
+      (imgWidth / SCREEN_WIDTH > imgHeight / SCREEN_HEIGHT ? imgWidth / SCREEN_WIDTH : imgHeight / SCREEN_HEIGHT) /
+      Settings.imageRatio;
     const width = imgWidth / ratio;
     const height = imgHeight / ratio;
     img.draw(
@@ -51,14 +50,7 @@ registerWhen(
 registerWhen(
   register("chatComponentHovered", (text) => {
     const hoverValue = text.getHoverValue().removeFormatting();
-    if (
-      hoverValue === imgUrl ||
-      !(
-        hoverValue.includes("imgur.com") ||
-        hoverValue.includes("cdn.discordapp")
-      )
-    )
-      return;
+    if (hoverValue === imgUrl || !(hoverValue.includes("imgur.com") || hoverValue.includes("cdn.discordapp"))) return;
     imgUrl = hoverValue;
     try {
       img = Image.fromUrl(imgUrl);

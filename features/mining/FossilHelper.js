@@ -1,20 +1,11 @@
+import { AQUA, BOLD, DARK_AQUA, DARK_GRAY, GOLD, GRAY, RED, YELLOW } from "../../utils/Constants";
+import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
-import {
-  AQUA,
-  BOLD,
-  DARK_AQUA,
-  DARK_GRAY,
-  GOLD,
-  GRAY,
-  RED,
-  YELLOW,
-} from "../../utils/Constants";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatNumber } from "../../utils/functions/format";
 import { createMatrix, getAllFormations } from "../../utils/functions/matrix";
-import { Overlay } from "../../utils/Overlay";
-import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/Data";
 import { getAuction } from "../economy/Economy";
 
 const FOSSILS = {
@@ -222,16 +213,11 @@ function findTile() {
     let profit = 0;
     Object.keys(fossilProbability).forEach((fossil) => {
       const possibility = fossilProbability[fossil] / totalPossible;
-      profit +=
-        possibility * (auction[fossil.toUpperCase() + "_FOSSIL"]?.lbin ?? 0);
+      profit += possibility * (auction[fossil.toUpperCase() + "_FOSSIL"]?.lbin ?? 0);
       if (possibility !== 0)
-        fossilMessage += `\n ${DARK_GRAY}- ${GOLD + fossil} ${GRAY}(${(
-          possibility * 100
-        ).toFixed(2)}%)`;
+        fossilMessage += `\n ${DARK_GRAY}- ${GOLD + fossil} ${GRAY}(${(possibility * 100).toFixed(2)}%)`;
     });
-    fossilMessage += ` \n\n${AQUA + BOLD}Profit: ${
-      YELLOW + formatNumber(profit)
-    }`;
+    fossilMessage += ` \n\n${AQUA + BOLD}Profit: ${YELLOW + formatNumber(profit)}`;
   }
   fossilOverlay.setMessage(fossilMessage);
 
@@ -294,11 +280,7 @@ registerWhen(
   register("guiOpened", () => {
     Client.scheduleTask(2, () => {
       const container = Player.getContainer();
-      if (
-        container.getName() !== "Fossil Excavator" ||
-        container.getItems()[49].getName() === "§cClose"
-      )
-        return;
+      if (container.getName() !== "Fossil Excavator" || container.getItems()[49].getName() === "§cClose") return;
 
       board = [];
       for (let i = 0; i < 6; i++) {

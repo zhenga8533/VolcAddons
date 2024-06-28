@@ -1,6 +1,6 @@
+import { GREEN, ITALIC, LOGO } from "./Constants";
 import location from "./Location";
 import Settings from "./Settings";
-import { GREEN, ITALIC, LOGO } from "./Constants";
 import { drawBox, renderScale } from "./functions/render";
 
 /**
@@ -54,13 +54,7 @@ const moving = register("renderOverlay", () => {
       0,
       o.ewidth + 5 * scale,
       o.eheight + 5 * scale,
-      editing
-        ? EDIT_BOX
-        : highlight
-        ? HOVER_BOX
-        : o.loc[5]
-        ? RECT_COLOR
-        : EDIT_COLOR,
+      editing ? EDIT_BOX : highlight ? HOVER_BOX : o.loc[5] ? RECT_COLOR : EDIT_COLOR,
       editing ? EDIT_BORDER : highlight ? HOVER_BORDER : BORDER_COLOR
     );
     renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 0);
@@ -76,17 +70,11 @@ const clicking = register("guiMouseClick", (x, y, button) => {
     const oX = o.loc[0] - (o.loc[3] ? o.ewidth : 0);
     const oY = o.loc[1];
 
-    return (
-      x > oX - 3 * scale &&
-      x < oX + o.ewidth + 3 * scale &&
-      y > oY - 3 * scale &&
-      y < oY + o.eheight + 3 * scale
-    );
+    return x > oX - 3 * scale && x < oX + o.ewidth + 3 * scale && y > oY - 3 * scale && y < oY + o.eheight + 3 * scale;
   });
 
   if (button === 0) currentOverlay = clicked;
-  else if (button === 1 && clicked !== undefined)
-    overlays.splice(overlays.indexOf(clicked), 1);
+  else if (button === 1 && clicked !== undefined) overlays.splice(overlays.indexOf(clicked), 1);
 }).unregister();
 
 /**
@@ -112,11 +100,7 @@ const keying = register("guiKey", (_, keyCode) => {
       ChatLib.chat(`${LOGO + GREEN}Successfully changed to global view!`);
     } else if (guiView === 1) {
       // World
-      overlays = overlaid.filter(
-        (overlay) =>
-          overlay.requires.has("all") ||
-          overlay.requires.has(location.getWorld())
-      );
+      overlays = overlaid.filter((overlay) => overlay.requires.has("all") || overlay.requires.has(location.getWorld()));
       ChatLib.chat(`${LOGO + GREEN}Successfully changed to world view!`);
     } else if (guiView === 2) {
       // Visible
@@ -124,9 +108,7 @@ const keying = register("guiKey", (_, keyCode) => {
       ChatLib.chat(`${LOGO + GREEN}Successfully changed to visible view!`);
     } else if (guiView === 3) {
       // Overlay
-      overlays = overlaid.filter(
-        (overlay) => overlay.trigger === "renderOverlay"
-      );
+      overlays = overlaid.filter((overlay) => overlay.trigger === "renderOverlay");
       ChatLib.chat(`${LOGO + GREEN}Successfully changed to overlay view!`);
     } else if (guiView === 4) {
       // GUI
@@ -171,26 +153,12 @@ Object.keys(renders).forEach((key) => {
     if (!Settings.vaToggle) return;
 
     renders[key].forEach((render) => {
-      if (
-        Settings[render.setting] &&
-        !render.special() &&
-        !gui.isOpen() &&
-        !render.gui.isOpen() &&
-        render.message
-      ) {
-        if (
-          !(
-            render.requires.has(location.getWorld()) ||
-            render.requires.has("all")
-          )
-        )
-          return;
+      if (Settings[render.setting] && !render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
+        if (!(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;
 
         if (render.loc[5] && render.width !== 0) {
           drawBox(
-            render.loc[0] -
-              (render.loc[3] ? render.ewidth : 0) -
-              3 * render.loc[2],
+            render.loc[0] - (render.loc[3] ? render.ewidth : 0) - 3 * render.loc[2],
             render.loc[1] - 3 * render.loc[2],
             0,
             render.width + 5 * render.loc[2],
@@ -199,15 +167,7 @@ Object.keys(renders).forEach((key) => {
             BORDER_COLOR
           );
         }
-        renderScale(
-          render.loc[0],
-          render.loc[1],
-          render.message,
-          render.loc[2],
-          render.loc[3],
-          render.loc[4],
-          0
-        );
+        renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4], 0);
       }
     });
   });
@@ -263,38 +223,16 @@ export class Overlay {
       const height = Renderer.screen.getHeight();
 
       // Coords and scale
-      const coords = `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(
-        this.loc[1]
-      )}, s: ${this.loc[2].toFixed(2)}`;
+      const coords = `${ITALIC}x: ${Math.round(this.loc[0])}, y: ${Math.round(this.loc[1])}, s: ${this.loc[2].toFixed(
+        2
+      )}`;
       const align = this.loc[0] + Renderer.getStringWidth(coords) > width;
-      renderScale(
-        this.loc[0] + (align ? -2 : 2),
-        this.loc[1] - 10,
-        coords,
-        1,
-        align,
-        false,
-        300
-      );
+      renderScale(this.loc[0] + (align ? -2 : 2), this.loc[1] - 10, coords, 1, align, false, 300);
 
       Renderer.translate(0, 0, 300);
-      Renderer.drawLine(
-        Renderer.WHITE,
-        this.loc[0],
-        1,
-        this.loc[0],
-        height,
-        0.5
-      );
+      Renderer.drawLine(Renderer.WHITE, this.loc[0], 1, this.loc[0], height, 0.5);
       Renderer.translate(0, 0, 300);
-      Renderer.drawLine(
-        Renderer.WHITE,
-        width,
-        this.loc[1],
-        1,
-        this.loc[1],
-        0.5
-      );
+      Renderer.drawLine(Renderer.WHITE, width, this.loc[1], 1, this.loc[1], 0.5);
 
       // Draw example text
       if (this.loc[5]) {
@@ -308,15 +246,7 @@ export class Overlay {
           BORDER_COLOR
         );
       }
-      renderScale(
-        this.loc[0],
-        this.loc[1],
-        this.example,
-        this.loc[2],
-        this.loc[3],
-        this.loc[4],
-        0
-      );
+      renderScale(this.loc[0], this.loc[1], this.example, this.loc[2], this.loc[3], this.loc[4], 0);
     }).unregister();
 
     // Register editing stuff
@@ -343,12 +273,10 @@ export class Overlay {
   }
 
   handleKey(keyCode) {
-    if (keyCode === 13)
-      this.loc[2] =
-        Math.round((this.loc[2] + 0.05) * 100) / 100; // Increase Scale (+ key)
-    else if (keyCode === 12)
-      this.loc[2] =
-        Math.round((this.loc[2] - 0.05) * 100) / 100; // Decrease Scale (- key)
+    if (keyCode === 13) this.loc[2] = Math.round((this.loc[2] + 0.05) * 100) / 100;
+    // Increase Scale (+ key)
+    else if (keyCode === 12) this.loc[2] = Math.round((this.loc[2] - 0.05) * 100) / 100;
+    // Decrease Scale (- key)
     else if (keyCode === 38) this.loc[3] = !this.loc[3]; // Swap align (l key)
     else if (keyCode === 35) this.loc[4] = !this.loc[4]; // Swap flex (h key)
     else if (keyCode === 48) this.loc[5] = !this.loc[5]; // Swap flex (b key)
@@ -407,17 +335,9 @@ export class Overlay {
           if (i === 0) stringWidth += Renderer.getStringWidth(splitLine[i]);
           else {
             let clearIndex = splitLine[i].indexOf("§");
-            let boldedString =
-              clearIndex !== -1
-                ? splitLine[i].substring(0, clearIndex)
-                : splitLine[i];
-            let unboldedString =
-              clearIndex !== -1
-                ? splitLine[i].substring(clearIndex, splitLine[i].length)
-                : "";
-            stringWidth +=
-              Renderer.getStringWidth(boldedString) * 1.2 +
-              Renderer.getStringWidth(unboldedString);
+            let boldedString = clearIndex !== -1 ? splitLine[i].substring(0, clearIndex) : splitLine[i];
+            let unboldedString = clearIndex !== -1 ? splitLine[i].substring(clearIndex, splitLine[i].length) : "";
+            stringWidth += Renderer.getStringWidth(boldedString) * 1.2 + Renderer.getStringWidth(unboldedString);
           }
         }
 

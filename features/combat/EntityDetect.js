@@ -1,12 +1,9 @@
-import Settings from "../../utils/Settings";
-import { SMA, EntityArmorStand, STAND_CLASS } from "../../utils/Constants";
-import {
-  convertToPascalCase,
-  unformatNumber,
-} from "../../utils/functions/format";
-import { registerWhen } from "../../utils/RegisterTils";
+import { EntityArmorStand, SMA, STAND_CLASS } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
+import { convertToPascalCase, unformatNumber } from "../../utils/functions/format";
 
 /**
  * Variables used to track active entities.
@@ -25,12 +22,7 @@ let yBound = 0;
  * @param {Number} index - Index of class type to test.
  * @returns {Boolean} - True if entity class is identified and added to the list.
  */
-const CLASS_TYPES = [
-  "client.entity",
-  "entity.monster",
-  "entity.boss",
-  "entity.passive",
-];
+const CLASS_TYPES = ["client.entity", "entity.monster", "entity.boss", "entity.passive"];
 function testClass(entity, health, index = 0) {
   // Set color map
   const [uR, uG, uB] = data.colorlist[entity]?.split(" ") ?? [];
@@ -44,11 +36,7 @@ function testClass(entity, health, index = 0) {
     const entityClass = Java.type(type).class;
     World.getAllEntitiesOfType(entityClass);
 
-    entityWaypoints[entity] = [
-      new Waypoint([r, g, b], 3, true, false, false),
-      entityClass,
-      health,
-    ];
+    entityWaypoints[entity] = [new Waypoint([r, g, b], 3, true, false, false), entityClass, health];
     return true;
   } catch (err) {
     if (index === CLASS_TYPES.length - 1) {
@@ -113,8 +101,7 @@ registerWhen(
       World.getAllEntitiesOfType(entityClass).forEach((entity) => {
         const mob = entity.getEntity();
         if (
-          (health !== 0 &&
-            mob.func_110148_a(SMA.field_111267_a).func_111125_b() !== health) ||
+          (health !== 0 && mob.func_110148_a(SMA.field_111267_a).func_111125_b() !== health) ||
           (xBound !== 0 && Math.abs(Player.getX() - entity.getX()) > xBound) ||
           (yBound !== 0 && Math.abs(Player.getY() - entity.getY()) > yBound) ||
           mob.func_110143_aJ() === 0
@@ -136,22 +123,12 @@ registerWhen(
           // Find closest entity to armor stand
           const standEntity = stand.getEntity();
           const closestEntity = World.getWorld()
-            .func_72839_b(
-              standEntity,
-              standEntity.func_174813_aQ().func_72314_b(1, 5, 1)
-            )
-            .filter(
-              (entity) =>
-                entity &&
-                !(entity instanceof EntityArmorStand) &&
-                entity !== Player.getPlayer()
-            )
+            .func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1))
+            .filter((entity) => entity && !(entity instanceof EntityArmorStand) && entity !== Player.getPlayer())
             .reduce(
               (closest, entity) => {
                 const distance = stand.distanceTo(entity);
-                return distance < closest.distance
-                  ? { entity, distance }
-                  : closest;
+                return distance < closest.distance ? { entity, distance } : closest;
               },
               { entity: standEntity, distance: 20 }
             );

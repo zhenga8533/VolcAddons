@@ -1,6 +1,6 @@
-import Settings from "../../utils/Settings";
-import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 /**
  * Variables used to represent MVP+ and MVP++ emotes.

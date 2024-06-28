@@ -1,6 +1,4 @@
 import RenderLib from "../../../RenderLib";
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import {
   AQUA,
   BOLD,
@@ -14,12 +12,14 @@ import {
   RESET,
   YELLOW,
 } from "../../utils/Constants";
+import { data } from "../../utils/Data";
+import location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { setTitle } from "../../utils/Title";
 import { getSlotCoords } from "../../utils/functions/find";
 import { formatTime, removeNonNumeric } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
-import { data } from "../../utils/Data";
-import { setTitle } from "../../utils/Title";
 
 const sprays = {};
 let pests = [];
@@ -31,18 +31,13 @@ function setPests() {
   pests = [];
   if (!World.isLoaded()) return;
 
-  const pestLine = TabList.getNames().find((tab) =>
-    tab.startsWith("§r Plots:")
-  );
+  const pestLine = TabList.getNames().find((tab) => tab.startsWith("§r Plots:"));
   if (pestLine === undefined) return;
 
   pests = pestLine.removeFormatting().trim().split(", ");
   if (pests.length > 0) pests[0] = pests[0].split(" ")[1];
 }
-registerWhen(
-  register("step", setPests).setFps(1),
-  () => location.getWorld() === "Garden"
-);
+registerWhen(register("step", setPests).setFps(1), () => location.getWorld() === "Garden");
 
 /**
  * Command to teleport to plot with pests.
@@ -50,14 +45,7 @@ registerWhen(
 register("command", () => {
   setPests();
   if (pests.length === 0) {
-    setTitle(
-      `${DARK_RED}Pests Controlled!`,
-      "No plots have any pests!",
-      10,
-      50,
-      10,
-      70
-    );
+    setTitle(`${DARK_RED}Pests Controlled!`, "No plots have any pests!", 10, 50, 10, 70);
     return;
   }
 
@@ -72,24 +60,9 @@ register("command", () => {
   const plot = pests.find((plot) => plot !== zone);
 
   if (plot !== undefined) {
-    setTitle(
-      `${DARK_GREEN}Warping...`,
-      `Teleporting to plot ${plot}!`,
-      10,
-      50,
-      10,
-      70
-    );
+    setTitle(`${DARK_GREEN}Warping...`, `Teleporting to plot ${plot}!`, 10, 50, 10, 70);
     ChatLib.command(`plottp ${plot}`);
-  } else
-    setTitle(
-      `${DARK_RED}Please Remain Seated.`,
-      "You are in the only plot with pests!",
-      10,
-      50,
-      10,
-      70
-    );
+  } else setTitle(`${DARK_RED}Please Remain Seated.`, "You are in the only plot with pests!", 10, 50, 10, 70);
 }).setName("pesttp");
 
 /**
@@ -97,14 +70,7 @@ register("command", () => {
  */
 registerWhen(
   register("chat", (_, plot) => {
-    setTitle(
-      `${GREEN}Plot ${GRAY}- ${AQUA + plot}`,
-      `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`,
-      10,
-      50,
-      10,
-      71
-    );
+    setTitle(`${GREEN}Plot ${GRAY}- ${AQUA + plot}`, `${GOLD}1 ${RED}Pest ${GRAY}has spawned...`, 10, 50, 10, 71);
   }).setCriteria("${ew}! A Pest has appeared in Plot - ${plot}!"),
   () => location.getWorld() === "Garden" && Settings.pestAlert
 );
@@ -179,26 +145,18 @@ registerWhen(
           let index = i * 9 + j;
           let lore = items[index].getLore();
 
-          const pestLine = lore
-            .find((line) => line.startsWith("§5§o§4§lൠ"))
-            ?.split(" ");
-          const sprayLine = lore.find((line) =>
-            line.startsWith("§5§o§7Sprayed")
-          );
+          const pestLine = lore.find((line) => line.startsWith("§5§o§4§lൠ"))?.split(" ");
+          const sprayLine = lore.find((line) => line.startsWith("§5§o§7Sprayed"));
 
           if (sprayLine !== undefined) {
             const splitSpray = sprayLine.split(" ");
             highlights[index] = [
               Renderer.color(57, 255, 20, 128),
-              splitSpray[splitSpray.length - 2]
-                .removeFormatting()
-                .replace(/\D/g, ""),
+              splitSpray[splitSpray.length - 2].removeFormatting().replace(/\D/g, ""),
             ];
 
             // Get time left on spray
-            let time = sprayLine
-              .removeFormatting()
-              .match(/(?: (\d+)m)? (\d+)s/);
+            let time = sprayLine.removeFormatting().match(/(?: (\d+)m)? (\d+)s/);
             let minutes = time[1] ? parseInt(time[1], 10) : 0;
             let seconds = parseInt(time[2], 10);
 
@@ -211,10 +169,7 @@ registerWhen(
             ] = minutes * 60 + parseInt(seconds);
           }
           if (pestLine !== undefined)
-            highlights[index] = [
-              Renderer.color(139, 0, 0, 255),
-              pestLine[pestLine.length - 2].removeFormatting(),
-            ];
+            highlights[index] = [Renderer.color(139, 0, 0, 255), pestLine[pestLine.length - 2].removeFormatting()];
         }
       }
 
@@ -233,13 +188,7 @@ registerWhen(
 const sprayExample = `${GREEN + BOLD}Sprays:
  ${AQUA}Plot 0 ${DARK_GRAY}(${GREEN}1m10s${DARK_GRAY})
  ${AQUA}Plot 0 ${DARK_GRAY}(${GREEN}1m01s${DARK_GRAY})`;
-const sprayOverlay = new Overlay(
-  "sprayDisplay",
-  data.SDL,
-  "moveSpray",
-  sprayExample,
-  ["Garden"]
-);
+const sprayOverlay = new Overlay("sprayDisplay", data.SDL, "moveSpray", sprayExample, ["Garden"]);
 
 registerWhen(
   register("step", () => {
@@ -249,22 +198,13 @@ registerWhen(
     const keys = Object.keys(sprays);
     keys.forEach((plot) => {
       if (--sprays[plot] <= 0) {
-        setTitle(
-          `${RED + BOLD}SPRAY EXPIRED: ${GREEN}Plot ${plot + RED}!`,
-          "",
-          10,
-          50,
-          10,
-          72
-        );
+        setTitle(`${RED + BOLD}SPRAY EXPIRED: ${GREEN}Plot ${plot + RED}!`, "", 10, 50, 10, 72);
         delete sprays[plot];
       }
 
       const time = sprays[plot];
       const sprayColor = time > 1200 ? GREEN : time > 600 ? YELLOW : RED;
-      sprayMessage += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${
-        sprayColor + formatTime(time) + DARK_GRAY
-      })`;
+      sprayMessage += `\n ${AQUA}Plot ${plot + DARK_GRAY} (${sprayColor + formatTime(time) + DARK_GRAY})`;
     });
     if (keys.length === 0) sprayMessage += `\n ${RED}None...`;
     sprayOverlay.setMessage(sprayMessage);
@@ -285,19 +225,14 @@ registerWhen(
 const bonuses = {};
 let remain = 0;
 function addPests(pest) {
-  if (pest in bonuses)
-    addPests(
-      pest.toString() + String.fromCharCode(Math.floor(Math.random() * 26) + 97)
-    );
+  if (pest in bonuses) addPests(pest.toString() + String.fromCharCode(Math.floor(Math.random() * 26) + 97));
   else bonuses[pest] = 1800;
 }
 registerWhen(
   register("chat", (_, fortune) => {
     remain = 1800;
     addPests(fortune);
-  }).setCriteria(
-    "[NPC] Phillip: In exchange for ${pests} Pests, I've given you +${fortune}☘ Farming Fortune for 30m!"
-  ),
+  }).setCriteria("[NPC] Phillip: In exchange for ${pests} Pests, I've given you +${fortune}☘ Farming Fortune for 30m!"),
   () => location.getWorld() === "Garden" && Settings.pesthunterBonus
 );
 
@@ -305,13 +240,7 @@ registerWhen(
  * Track bonus timer
  */
 const bonusExample = `${YELLOW + BOLD}Pest Bonus: ${GREEN}T1 FIGHTING`;
-const bonusOverlay = new Overlay(
-  "pesthunterBonus",
-  data.PHL,
-  "moveBonus",
-  bonusExample,
-  ["Garden"]
-);
+const bonusOverlay = new Overlay("pesthunterBonus", data.PHL, "moveBonus", bonusExample, ["Garden"]);
 
 registerWhen(
   register("step", () => {
@@ -326,9 +255,7 @@ registerWhen(
     if (fortune === 0) bonusMessage += `${RED + BOLD}Inactive!`;
     else {
       const bonusColor = remain > 1200 ? GREEN : remain > 600 ? YELLOW : RED;
-      bonusMessage += `${GOLD + fortune}☘ ${bonusColor}(${formattime(
-        --remain
-      )})`;
+      bonusMessage += `${GOLD + fortune}☘ ${bonusColor}(${formattime(--remain)})`;
     }
 
     bonusOverlay.setMessage(bonusMessage);
@@ -341,9 +268,7 @@ registerWhen(
  */
 registerWhen(
   register("renderWorld", () => {
-    const plotLine = Scoreboard.getLines().find((line) =>
-      line.getName().startsWith("   §aPlot")
-    );
+    const plotLine = Scoreboard.getLines().find((line) => line.getName().startsWith("   §aPlot"));
     const zone =
       plotLine
         ?.getName()
@@ -369,29 +294,11 @@ registerWhen(
       );
       color = [1, 0, 0];
     } else if (sprays.hasOwnProperty(zone)) {
-      Tessellator.drawString(
-        GREEN + formatTime(sprays[zone]),
-        x * 96 - 192,
-        77,
-        z * 96 - 192,
-        0,
-        true,
-        0.5,
-        false
-      );
+      Tessellator.drawString(GREEN + formatTime(sprays[zone]), x * 96 - 192, 77, z * 96 - 192, 0, true, 0.5, false);
       color = [0, 1, 0];
     }
 
-    RenderLib.drawEspBox(
-      -192 + x * 96,
-      67,
-      -192 + z * 96,
-      96,
-      10,
-      ...color,
-      1,
-      true
-    );
+    RenderLib.drawEspBox(-192 + x * 96, 67, -192 + z * 96, 96, 10, ...color, 1, true);
   }),
   () => location.getWorld() === "Garden" && Settings.gardenBox
 );

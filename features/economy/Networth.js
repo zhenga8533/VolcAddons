@@ -16,11 +16,11 @@ import {
   WHITE,
   YELLOW,
 } from "../../utils/Constants";
+import Settings from "../../utils/Settings";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
-import Settings from "../../utils/Settings";
-import { getItemValue } from "./ItemPrice";
 import { getAuction, getBazaar } from "./Economy";
+import { getItemValue } from "./ItemPrice";
 
 /**
  * Decodes inventory NBT into an array of items and add their value up.
@@ -31,8 +31,7 @@ import { getAuction, getBazaar } from "./Economy";
  */
 function getInvValue(inv, type) {
   // Check if API is on
-  if (inv === undefined)
-    return [0, ` ${DARK_GRAY}- ${RED + type} API is turned off!\n`];
+  if (inv === undefined) return [0, ` ${DARK_GRAY}- ${RED + type} API is turned off!\n`];
 
   // Decode inventory NBT
   let items = decode(inv);
@@ -46,10 +45,7 @@ function getInvValue(inv, type) {
 
   // Return value and message
   const color = total === 0 ? RED : GREEN;
-  return [
-    total,
-    ` ${DARK_GRAY}- ${AQUA + type} Value: ${color + formatNumber(total)}\n`,
-  ];
+  return [total, ` ${DARK_GRAY}- ${AQUA + type} Value: ${color + formatNumber(total)}\n`];
 }
 
 /**
@@ -65,8 +61,7 @@ function setInv(name, values, extra = undefined) {
   let msg = `${DARK_AQUA + name} Value:\n`;
 
   // Add up category values
-  if (values.length === 0)
-    msg += ` ${DARK_GRAY}- ${RED}${name} API is turned off!`;
+  if (values.length === 0) msg += ` ${DARK_GRAY}- ${RED}${name} API is turned off!`;
   for (let i = 0; i < values.length; i++) {
     value += values[i][0];
     if (i < 48) msg += values[i][1];
@@ -74,9 +69,7 @@ function setInv(name, values, extra = undefined) {
   }
   if (extra !== undefined) msg += extra;
 
-  new TextComponent(
-    ` ${DARK_GRAY}- ${AQUA + name} Value: ${GREEN + formatNumber(value)}`
-  )
+  new TextComponent(` ${DARK_GRAY}- ${AQUA + name} Value: ${GREEN + formatNumber(value)}`)
     .setHoverValue(msg.trim())
     .chat();
   values.length = 0;
@@ -92,9 +85,7 @@ let networthIDs = [3745];
  */
 export function getNetworth(username, fruit) {
   // Get UUID of entered username
-  new Message(`${LOGO + YELLOW}Fetching API data...`)
-    .setChatLineId(3745)
-    .chat();
+  new Message(`${LOGO + YELLOW}Fetching API data...`).setChatLineId(3745).chat();
   axios
     .get(`https://sky.shiiyu.moe/api/v2/profile/${username}`)
     .then((response) => {
@@ -105,9 +96,7 @@ export function getNetworth(username, fruit) {
       // Check if user exists
       if (response.data.error !== undefined) {
         networthIDs.push(networthID);
-        new Message(
-          `${LOGO + RED}Couldn't find any profile with name ${username}...`
-        )
+        new Message(`${LOGO + RED}Couldn't find any profile with name ${username}...`)
           .setChatLineId(networthID++)
           .chat();
         return;
@@ -117,9 +106,7 @@ export function getNetworth(username, fruit) {
       const profiles = response.data.profiles;
       if (fruit === undefined) {
         networthIDs.push(networthID);
-        new Message(`\n${LOGO + DARK_AQUA}Please select desired profile:`)
-          .setChatLineId(networthID++)
-          .chat();
+        new Message(`\n${LOGO + DARK_AQUA}Please select desired profile:`).setChatLineId(networthID++).chat();
 
         let i = 1;
         Object.keys(profiles).forEach((key) => {
@@ -130,9 +117,7 @@ export function getNetworth(username, fruit) {
             new TextComponent((profiles[key].current ? GREEN : AQUA) + fruit)
               .setClickAction("run_command")
               .setClickValue(`/va nw ${username} ${fruit}`)
-              .setHoverValue(
-                `${YELLOW}Click to calculate networth for ${fruit} profile.`
-              )
+              .setHoverValue(`${YELLOW}Click to calculate networth for ${fruit} profile.`)
           )
             .setChatLineId(networthID++)
             .chat();
@@ -172,43 +157,29 @@ export function getNetworth(username, fruit) {
       const currencies = player.currencies;
       invValues.push([
         currencies?.coin_purse,
-        ` ${DARK_GRAY}- ${AQUA}Purse Value: ${
-          GREEN + formatNumber(currencies?.coin_purse)
-        }\n`,
+        ` ${DARK_GRAY}- ${AQUA}Purse Value: ${GREEN + formatNumber(currencies?.coin_purse)}\n`,
       ]);
 
-      if (currencies?.bank === undefined)
-        invValues.push([0, ` ${DARK_GRAY}- ${RED}Bank API is turned off!\n`]);
+      if (currencies?.bank === undefined) invValues.push([0, ` ${DARK_GRAY}- ${RED}Bank API is turned off!\n`]);
       else
         invValues.push([
           currencies?.bank,
-          ` ${DARK_GRAY}- ${AQUA}Bank Value: ${
-            GREEN + formatNumber(currencies?.bank)
-          }\n`,
+          ` ${DARK_GRAY}- ${AQUA}Bank Value: ${GREEN + formatNumber(currencies?.bank)}\n`,
         ]);
 
       const essences = currencies?.essence;
       let essenceValue = 0;
       if (essences !== undefined)
         Object.keys(essences).forEach((essence) => {
-          essenceValue +=
-            bazaar["ESSENCE_" + essence][Settings.priceType] *
-            essences[essence].current;
+          essenceValue += bazaar["ESSENCE_" + essence][Settings.priceType] * essences[essence].current;
         });
-      invValues.push([
-        essenceValue,
-        ` ${DARK_GRAY}- ${AQUA}Essence Value: ${
-          GREEN + formatNumber(essenceValue)
-        }\n`,
-      ]);
+      invValues.push([essenceValue, ` ${DARK_GRAY}- ${AQUA}Essence Value: ${GREEN + formatNumber(essenceValue)}\n`]);
 
       total += setInv("Currency", invValues);
 
       // Storage value
       invValues.push(getInvValue(inv.wardrobe_contents?.data, "Wardrobe"));
-      invValues.push(
-        getInvValue(inv.ender_chest_contents?.data, "Ender Chest")
-      );
+      invValues.push(getInvValue(inv.ender_chest_contents?.data, "Ender Chest"));
       invValues.push(getInvValue(inv.personal_vault_contents?.data, "Vault"));
       total += setInv("Storage", invValues);
 
@@ -226,23 +197,14 @@ export function getNetworth(username, fruit) {
       // Bag values
       const bags = inv.bag_contents;
       if (bags !== undefined)
-        Object.keys(bags).forEach((bag) =>
-          invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag)))
-        );
+        Object.keys(bags).forEach((bag) => invValues.push(getInvValue(bags[bag]?.data, convertToTitleCase(bag))));
       const sacks = inv.sacks_counts;
       let sacksValue = 0;
       if (sacks !== undefined)
         Object.keys(sacks).forEach(
-          (product) =>
-            (sacksValue +=
-              (bazaar[product]?.[Settings.priceType] ?? 0) * sacks[product])
+          (product) => (sacksValue += (bazaar[product]?.[Settings.priceType] ?? 0) * sacks[product])
         );
-      invValues.push([
-        sacksValue,
-        ` ${DARK_GRAY}- ${AQUA}Sacks Value: ${
-          GREEN + formatNumber(sacksValue)
-        }`,
-      ]);
+      invValues.push([sacksValue, ` ${DARK_GRAY}- ${AQUA}Sacks Value: ${GREEN + formatNumber(sacksValue)}`]);
       total += setInv("Bag", invValues);
 
       // Pets values
@@ -269,27 +231,14 @@ export function getNetworth(username, fruit) {
           if (skinValue === 0) mia++;
           lbin += skinValue;
         }
-        invValues.push([
-          lbin,
-          `${color + convertToTitleCase(petName) + DARK_GRAY}: ${
-            GREEN + formatNumber(lbin)
-          }\n`,
-        ]);
+        invValues.push([lbin, `${color + convertToTitleCase(petName) + DARK_GRAY}: ${GREEN + formatNumber(lbin)}\n`]);
       });
       invValues.sort((a, b) => b[0] - a[0]);
-      total += setInv(
-        "Pet",
-        invValues,
-        mia === 0 ? undefined : `\n${DARK_GRAY}also ${mia} unaccounted skins...`
-      );
+      total += setInv("Pet", invValues, mia === 0 ? undefined : `\n${DARK_GRAY}also ${mia} unaccounted skins...`);
 
       // Total
       ChatLib.chat(`${DARK_GRAY}Hover over values to see breakdown.`);
-      ChatLib.chat(
-        `\n${LOGO + DARK_AQUA}Total Networth: ${
-          DARK_GREEN + formatNumber(total)
-        }`
-      );
+      ChatLib.chat(`\n${LOGO + DARK_AQUA}Total Networth: ${DARK_GREEN + formatNumber(total)}`);
     })
     .catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
 }

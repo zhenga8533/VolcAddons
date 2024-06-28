@@ -2,11 +2,10 @@
  * ARCHIVED
  */
 
-import Settings from "../../utils/Settings";
 import location from "../../utils/Location";
+import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
 import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/RegisterTils";
 
 /**
  * Track and reset all unclaimed rewards on Jacob reward menu open.
@@ -32,9 +31,7 @@ registerWhen(
           .getLore()
           .filter(
             (line) =>
-              line.startsWith("§5§o§7You ") ||
-              line.startsWith("§5§o§7§7You") ||
-              line === "§5§o§eClick to claim reward!"
+              line.startsWith("§5§o§7You ") || line.startsWith("§5§o§7§7You") || line === "§5§o§eClick to claim reward!"
           );
 
         if (lore[1] !== undefined) {

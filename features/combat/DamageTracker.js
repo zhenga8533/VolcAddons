@@ -1,17 +1,7 @@
-import Settings from "../../utils/Settings";
-import {
-  BOLD,
-  DARK_GRAY,
-  EntityArmorStand,
-  GOLD,
-  GRAY,
-  LOGO,
-  RED,
-  WHITE,
-  YELLOW,
-} from "../../utils/Constants";
-import { formatNumber, formatTime } from "../../utils/functions/format";
+import { BOLD, DARK_GRAY, EntityArmorStand, GOLD, GRAY, LOGO, RED, WHITE, YELLOW } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { formatNumber } from "../../utils/functions/format";
 
 /**
  * Variable used to track all damage ticks around the player.
@@ -27,9 +17,7 @@ let last = 0;
 
 function statisticalAnalysis(arr) {
   // Sort array
-  const sortedArray = arr
-    .map((value) => parseFloat(value / 20))
-    .sort((a, b) => a - b);
+  const sortedArray = arr.map((value) => parseFloat(value / 20)).sort((a, b) => a - b);
 
   // Max, Min, and Range
   const max = sortedArray[sortedArray.length - 1];
@@ -37,18 +25,13 @@ function statisticalAnalysis(arr) {
   const range = max - min;
 
   // Mean
-  const sum = sortedArray.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
-  );
+  const sum = sortedArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
   const mean = sum / sortedArray.length;
 
   // Median
   const median =
     sortedArray.length % 2 === 0
-      ? (sortedArray[sortedArray.length / 2 - 1] +
-          sortedArray[sortedArray.length / 2]) /
-        2
+      ? (sortedArray[sortedArray.length / 2 - 1] + sortedArray[sortedArray.length / 2]) / 2
       : sortedArray[Math.floor(sortedArray.length / 2)];
 
   // Inter Quartiles
@@ -133,11 +116,7 @@ registerWhen(
     stands.forEach((stand) => {
       const name = stand.func_95999_t();
 
-      if (
-        name.startsWith("§7") &&
-        !isNaN(name.removeFormatting().replace(/,/g, ""))
-      )
-        nonCrits.push(name);
+      if (name.startsWith("§7") && !isNaN(name.removeFormatting().replace(/,/g, ""))) nonCrits.push(name);
       else if (name.startsWith("§f✧")) crits.push(name);
       else if (name.startsWith("§f✯")) overloads.push(name);
       else return;
@@ -160,26 +139,12 @@ registerWhen(
     // Do calcs when no new damage ticks
     if (!ticked && last - start > 1) {
       if (Settings.damageTracker === 2) {
-        const {
-          sum,
-          max,
-          min,
-          range,
-          mean,
-          median,
-          mode,
-          lowerQ,
-          upperQ,
-          iqr,
-          variance,
-          stdDev,
-        } = statisticalAnalysis(damages);
+        const { sum, max, min, range, mean, median, mode, lowerQ, upperQ, iqr, variance, stdDev } =
+          statisticalAnalysis(damages);
 
         const time = Date.now() / 1000 - start;
         ChatLib.chat(
-          `\n${
-            LOGO + GOLD + BOLD
-          }Damage Statistical Analysis ${GRAY}[${formattime(time, 2)}]
+          `\n${LOGO + GOLD + BOLD}Damage Statistical Analysis ${GRAY}[${formattime(time, 2)}]
             
 ${RED + BOLD}Extremas:
   ${DARK_GRAY}- ${YELLOW}Max Damage: ${WHITE + formatNumber(max * 20)}
@@ -190,12 +155,8 @@ ${RED + BOLD}Central Tendency:
   ${DARK_GRAY}- ${YELLOW}Median: ${WHITE + formatNumber(median * 20)}
   ${DARK_GRAY}- ${YELLOW}Mode: ${WHITE + formatNumber(mode * 20)}
 ${RED + BOLD}Interquartiles:
-  ${DARK_GRAY}- ${YELLOW}Upper Quartile ${GRAY}(75%): ${
-            WHITE + formatNumber(upperQ * 20)
-          }
-  ${DARK_GRAY}- ${YELLOW}Lower Quartile ${GRAY}(25%): ${
-            WHITE + formatNumber(lowerQ * 20)
-          }
+  ${DARK_GRAY}- ${YELLOW}Upper Quartile ${GRAY}(75%): ${WHITE + formatNumber(upperQ * 20)}
+  ${DARK_GRAY}- ${YELLOW}Lower Quartile ${GRAY}(25%): ${WHITE + formatNumber(lowerQ * 20)}
   ${DARK_GRAY}- ${YELLOW}Interquartile Range: ${WHITE + formatNumber(iqr * 20)}
 ${RED + BOLD}Dispersion:
   ${DARK_GRAY}- ${YELLOW}Variance: ${WHITE + formatNumber(variance)}

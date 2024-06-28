@@ -6,11 +6,7 @@ registerWhen(
   register("chat", (_, player, msg, event) => {
     cancel(event);
     player = player.replace("replying to", GRAY + "replying to" + GOLD);
-    ChatLib.chat(
-      `${DARK_GREEN}Guild > ${GOLD}[BDG${YELLOW}++${GOLD}] ${
-        player + WHITE
-      }: ${msg}`
-    );
+    ChatLib.chat(`${DARK_GREEN}Guild > ${GOLD}[BDG${YELLOW}++${GOLD}] ${player + WHITE}: ${msg}`);
   }).setCriteria("Guild > ${bridge}: ${player} » ${msg}"),
   () => Settings.bridgeFormat
 );

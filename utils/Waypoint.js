@@ -1,14 +1,6 @@
 import renderBeaconBeam from "../../BeaconBeam";
 import RenderLib from "../../RenderLib/index";
-import {
-  DARK_GRAY,
-  DARK_GREEN,
-  DARK_RED,
-  GOLD,
-  GREEN,
-  RED,
-  YELLOW,
-} from "./Constants";
+import { DARK_GRAY, DARK_GREEN, DARK_RED, GOLD, GREEN, RED, YELLOW } from "./Constants";
 import { data } from "./Data";
 import Settings from "./Settings";
 
@@ -33,8 +25,7 @@ register("worldUnload", () => {
 });
 
 register("guiClosed", (event) => {
-  if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui"))
-    return;
+  if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui")) return;
   waypoints.forEach((waypoint) => waypoint.clear());
 });
 
@@ -56,13 +47,7 @@ export default class Waypoint {
    * @param {Boolean} rounded - Whether or not to round the waypoint coordinates.
    * @returns {Waypoint} The new waypoint.
    */
-  constructor(
-    color = [1, 1, 1],
-    type = 0,
-    box = true,
-    beam = true,
-    rounded = true
-  ) {
+  constructor(color = [1, 1, 1], type = 0, box = true, beam = true, rounded = true) {
     waypoints.push(this);
     this.#waypoints = [];
     this.#color = color;
@@ -92,21 +77,10 @@ export default class Waypoint {
       const title = waypoint[n - 4];
 
       // Calculate the position of the waypoint
-      let x =
-        parseFloat(
-          this.#rounded ? Math.round(waypoint[n - 3]) : waypoint[n - 3]
-        ) - 0.5;
-      let y = parseFloat(
-        this.#rounded ? Math.round(waypoint[n - 2]) : waypoint[n - 2]
-      );
-      let z =
-        parseFloat(
-          this.#rounded ? Math.round(waypoint[n - 1]) : waypoint[n - 1]
-        ) - 0.5;
-      const color =
-        waypoint.length < 6 && !isNaN(waypoint[2])
-          ? this.#color
-          : waypoint.slice(0, 3);
+      let x = parseFloat(this.#rounded ? Math.round(waypoint[n - 3]) : waypoint[n - 3]) - 0.5;
+      let y = parseFloat(this.#rounded ? Math.round(waypoint[n - 2]) : waypoint[n - 2]);
+      let z = parseFloat(this.#rounded ? Math.round(waypoint[n - 1]) : waypoint[n - 1]) - 0.5;
+      const color = waypoint.length < 6 && !isNaN(waypoint[2]) ? this.#color : waypoint.slice(0, 3);
 
       // Calculate the render distance of the waypoint
       const distance = Math.hypot(pX - x, pY - y, pZ - z);
@@ -126,30 +100,14 @@ export default class Waypoint {
 
       // Credit: https://github.com/Soopyboo32/SoopyV2/blob/master/src/utils/renderUtils.js
       const rX = pX + (x - pX) / (distance / renderDistance);
-      const rY1 =
-        pY +
-        pEye +
-        (y + 1 + (20 * distance) / 300 - (pY + pEye)) /
-          (distance / renderDistance);
+      const rY1 = pY + pEye + (y + 1 + (20 * distance) / 300 - (pY + pEye)) / (distance / renderDistance);
       const rY2 =
-        pY +
-        pEye +
-        (y + 1 + (20 * distance) / 300 - (10 * distance) / 300 - (pY + pEye)) /
-          (distance / renderDistance);
+        pY + pEye + (y + 1 + (20 * distance) / 300 - (10 * distance) / 300 - (pY + pEye)) / (distance / renderDistance);
       const rZ = pZ + (z - pZ) / (distance / renderDistance);
 
       // Render waypoint box
       if (this.#box) {
-        RenderLib.drawEspBox(
-          rX,
-          distance > 50 ? rY1 : y,
-          rZ,
-          1,
-          1,
-          ...color,
-          1,
-          data.vision || this.#type === 0
-        );
+        RenderLib.drawEspBox(rX, distance > 50 ? rY1 : y, rZ, 1, 1, ...color, 1, data.vision || this.#type === 0);
         RenderLib.drawInnerEspBox(
           rX,
           distance > 50 ? rY1 : y,
@@ -165,24 +123,11 @@ export default class Waypoint {
       // Render waypoint text
       if (this.#type === 0) {
         Tessellator.drawString(GOLD + title, rX, rY1, rZ);
-        Tessellator.drawString(
-          `${DARK_GRAY}[${distanceColor + Math.round(distance)}m${DARK_GRAY}]`,
-          rX,
-          rY2,
-          rZ
-        );
+        Tessellator.drawString(`${DARK_GRAY}[${distanceColor + Math.round(distance)}m${DARK_GRAY}]`, rX, rY2, rZ);
       }
 
       // Render beacon beam
-      if (this.#beam)
-        renderBeaconBeam(
-          rX - 0.5,
-          distance > 50 ? rY1 : y,
-          rZ - 0.5,
-          ...color,
-          0.5,
-          false
-        );
+      if (this.#beam) renderBeaconBeam(rX - 0.5, distance > 50 ? rY1 : y, rZ - 0.5, ...color, 0.5, false);
     });
   }
 
@@ -203,16 +148,7 @@ export default class Waypoint {
       const height = entity.field_70131_O;
 
       // Render the entity box
-      RenderLib.drawEspBox(
-        x,
-        y,
-        z,
-        width,
-        height,
-        ...this.#color,
-        1,
-        data.vision
-      );
+      RenderLib.drawEspBox(x, y, z, width, height, ...this.#color, 1, data.vision);
       if (this.#box)
         RenderLib.drawInnerEspBox(
           x,
@@ -240,9 +176,7 @@ export default class Waypoint {
               : distance < 200
               ? RED
               : DARK_RED;
-          text = `${DARK_GRAY}[${
-            distanceColor + Math.round(distance)
-          }m${DARK_GRAY}]`;
+          text = `${DARK_GRAY}[${distanceColor + Math.round(distance)}m${DARK_GRAY}]`;
         }
         Tessellator.drawString(text, x, y + height + 1, z, 0xffffff, true);
       }

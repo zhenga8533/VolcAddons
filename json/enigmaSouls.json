@@ -1,12 +1,5 @@
 [
-  [
-    "Tough Bark",
-    "The Bastion",
-    "Clicking on the tree with 20 Muted Bark .",
-    "-15",
-    "91",
-    "94"
-  ],
+  ["Tough Bark", "The Bastion", "Clicking on the tree with 20 Muted Bark .", "-15", "91", "94"],
   [
     "Next to Enigma",
     "Enigma's Crib",
@@ -55,14 +48,7 @@
     "89",
     "136"
   ],
-  [
-    "Up in the Sky",
-    "Wyld Woods",
-    "Reached by jumping on the launch pad.",
-    "-137",
-    "133",
-    "156"
-  ],
+  ["Up in the Sky", "Wyld Woods", "Reached by jumping on the launch pad.", "-137", "133", "156"],
   [
     "Between Branches",
     "Wyld Woods",
@@ -79,30 +65,9 @@
     "69",
     "61"
   ],
-  [
-    "Lagoon Cave",
-    "Lagoon Cave",
-    "Found at the end of the parkour course.",
-    "43",
-    "91",
-    "56"
-  ],
-  [
-    "Mushroom Guy",
-    "Black Lagoon",
-    "Found on a tree near Mushroom Guy .",
-    "-168",
-    "81",
-    "12"
-  ],
-  [
-    "Roy",
-    "Lagoon Hut",
-    "Can be purchased from Roy for 4,000 Motes and 8 Deadgehog Spines .",
-    "-204",
-    "75",
-    "49"
-  ],
+  ["Lagoon Cave", "Lagoon Cave", "Found at the end of the parkour course.", "43", "91", "56"],
+  ["Mushroom Guy", "Black Lagoon", "Found on a tree near Mushroom Guy .", "-168", "81", "12"],
+  ["Roy", "Lagoon Hut", "Can be purchased from Roy for 4,000 Motes and 8 Deadgehog Spines .", "-204", "75", "49"],
   [
     "Spinning Runes",
     "Black Lagoon",
@@ -119,14 +84,7 @@
     "72",
     "-103"
   ],
-  [
-    "Fake Neuroscience",
-    "Infested House",
-    "Requires a Key To Infested House Soul from Kat .",
-    "-34",
-    "71",
-    "-88"
-  ],
+  ["Fake Neuroscience", "Infested House", "Requires a Key To Infested House Soul from Kat .", "-34", "71", "-88"],
   [
     "2 Players Soul",
     "West Village",
@@ -135,22 +93,8 @@
     "78",
     "-101"
   ],
-  [
-    "Cake House #1",
-    "Cake House",
-    "Requires you to eat through a lot cake.",
-    "-95",
-    "76",
-    "-82"
-  ],
-  [
-    "Cake House #2",
-    "Cake House",
-    "Requires you to eat through a lot cake.",
-    "-94",
-    "70",
-    "-84"
-  ],
+  ["Cake House #1", "Cake House", "Requires you to eat through a lot cake.", "-95", "76", "-82"],
+  ["Cake House #2", "Cake House", "Requires you to eat through a lot cake.", "-94", "70", "-84"],
   [
     "Dolphin Parkour",
     "Dolphin Trainer",
@@ -191,14 +135,7 @@
     "65",
     "-119"
   ],
-  [
-    "Farm Balloons",
-    "Dreadfarm",
-    "Unlocked by shooting down balloons with the Berberis Blowgun .",
-    "-77",
-    "72",
-    "-176"
-  ],
+  ["Farm Balloons", "Dreadfarm", "Unlocked by shooting down balloons with the Berberis Blowgun .", "-77", "72", "-176"],
   [
     "Rabbit in the Hat!",
     "Village Plaza",
@@ -287,14 +224,7 @@
     "98",
     "-72"
   ],
-  [
-    "Standing there",
-    "Stillgore Chateau",
-    "Found in a hidden cave around the cliffside.",
-    "255",
-    "74",
-    "160"
-  ],
+  ["Standing there", "Stillgore Chateau", "Found in a hidden cave around the cliffside.", "255", "74", "160"],
   [
     "Between Towers",
     "Stillgore Chateau",

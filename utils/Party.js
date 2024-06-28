@@ -32,9 +32,7 @@ class Party {
       this.#in = false;
       this.#leader = false;
       this.#members.clear();
-    }).setCriteria(
-      "The party was disbanded because all invites expired and the party was empty."
-    );
+    }).setCriteria("The party was disbanded because all invites expired and the party was empty.");
 
     register("chat", () => {
       this.#in = false;
@@ -57,9 +55,7 @@ class Party {
     register("chat", (player1) => {
       this.#leader = Player.getName() === getPlayerName(player1);
       this.#in = true;
-    }).setCriteria(
-      "The party was transferred to ${player1} because ${player2} left"
-    );
+    }).setCriteria("The party was transferred to ${player1} because ${player2} left");
 
     register("chat", (_, player2) => {
       this.#leader = Player.getName() === getPlayerName(player2);
@@ -69,9 +65,7 @@ class Party {
     register("chat", (player1) => {
       this.#leader = Player.getName() === getPlayerName(player1);
       this.#in = true;
-    }).setCriteria(
-      "${player1} invited ${player2} to the party! They have 60 seconds to accept."
-    );
+    }).setCriteria("${player1} invited ${player2} to the party! They have 60 seconds to accept.");
 
     // --- TRACK PARTY INTERACTIONS ---
     register("chat", (player) => {

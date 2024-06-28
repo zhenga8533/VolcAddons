@@ -1,16 +1,5 @@
 import request from "../../../requestV2";
-import {
-  BLUE,
-  BOLD,
-  DARK_GRAY,
-  DARK_RED,
-  GOLD,
-  GRAY,
-  GREEN,
-  LOGO,
-  RED,
-  WHITE,
-} from "../../utils/Constants";
+import { BLUE, BOLD, DARK_GRAY, DARK_RED, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { formatNumber } from "../../utils/functions/format";
 import { decode } from "../../utils/functions/misc";
 
@@ -28,17 +17,11 @@ function findGdrag(page, minLvl) {
   })
     .then((response) => {
       ChatLib.clearChat(888);
-      new Message(
-        `${LOGO + RED}Auction Looping (${page + 1}/${response.totalPages})`
-      )
-        .setChatLineId(888)
-        .chat();
+      new Message(`${LOGO + RED}Auction Looping (${page + 1}/${response.totalPages})`).setChatLineId(888).chat();
 
       response.auctions.forEach((auction) => {
         const { uuid, item_name, bin, starting_bid, item_bytes } = auction;
-        const level = parseInt(
-          item_name.match(/\[Lvl (\d+)\] Golden Dragon/)?.[1]
-        );
+        const level = parseInt(item_name.match(/\[Lvl (\d+)\] Golden Dragon/)?.[1]);
         if (!bin || isNaN(level) || level < 100) return; // Skip non-bin auctions
 
         // Checks for pet candy.
@@ -61,9 +44,7 @@ function findGdrag(page, minLvl) {
 
         ChatLib.chat(`${LOGO + GREEN}Auction loop complete!`);
         if (minLvl != 0) calcGdrag(minLvl);
-        ChatLib.chat(
-          `${DARK_GRAY}GDrag values saved, use '/refreshGdrag' to refresh auction data!`
-        );
+        ChatLib.chat(`${DARK_GRAY}GDrag values saved, use '/refreshGdrag' to refresh auction data!`);
       }
     })
     .catch((err) => ChatLib.chat(LOGO + DARK_RED + (err.cause ?? err)));
@@ -90,11 +71,7 @@ export function calcGdrag(minLvl) {
   // Clear chat
   let chatID = 8008;
   ChatLib.clearChat([8008]);
-  new Message(
-    `\n${
-      LOGO + GOLD + BOLD
-    }Top ${amount} Golden Dragons [${WHITE}lvl ${minLvl}+${GOLD}]:`
-  )
+  new Message(`\n${LOGO + GOLD + BOLD}Top ${amount} Golden Dragons [${WHITE}lvl ${minLvl}+${GOLD}]:`)
     .setChatLineId(chatID++)
     .chat();
 

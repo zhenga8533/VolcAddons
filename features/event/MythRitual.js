@@ -1,12 +1,12 @@
-import Settings from "../../utils/Settings";
-import mayor from "../../utils/Mayor";
-import location from "../../utils/Location";
 import { GREEN, LOGO } from "../../utils/Constants";
-import { getClosest } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/ThreadTils";
 import { data } from "../../utils/Data";
+import location from "../../utils/Location";
+import mayor from "../../utils/Mayor";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { delay } from "../../utils/ThreadTils";
 import Waypoint from "../../utils/Waypoint";
+import { getClosest } from "../../utils/functions/find";
 
 /**
  * Key press to warp player to closest burrow.
@@ -40,8 +40,7 @@ export function setWarps() {
   warps = [["player", 0, 0, 0]];
 
   data.dianalist.forEach((loc) => {
-    if (loc in WARPS)
-      warps.push([loc, WARPS[loc][0], WARPS[loc][1], WARPS[loc][2]]);
+    if (loc in WARPS) warps.push([loc, WARPS[loc][0], WARPS[loc][1], WARPS[loc][2]]);
   });
 }
 setWarps();
@@ -84,11 +83,7 @@ function guessBurrow(coordinates, distance) {
   const y2 = coordinates[n - 1][1];
   const z2 = coordinates[n - 1][2];
 
-  const guess = [
-    x1 + (x2 - x1) * distance,
-    y1 + (y2 - y1) * distance - distance,
-    z1 + (z2 - z1) * distance,
-  ];
+  const guess = [x1 + (x2 - x1) * distance, y1 + (y2 - y1) * distance - distance, z1 + (z2 - z1) * distance];
 
   // Get closest warp location
   warps[0] = ["player", Player.getX(), Player.getY(), Player.getZ()];
@@ -109,22 +104,13 @@ let distance = 0;
 let echo = false;
 registerWhen(
   register("clicked", (_, __, button, isButtonDown) => {
-    if (
-      button !== 1 ||
-      !isButtonDown ||
-      echo ||
-      !Player.getHeldItem().getName().endsWith("Ancestral Spade")
-    )
-      return;
+    if (button !== 1 || !isButtonDown || echo || !Player.getHeldItem().getName().endsWith("Ancestral Spade")) return;
 
     echo = true;
     delay(() => (echo = false), 3000);
     path = [[Player.getX(), Player.getY(), Player.getZ()]];
   }),
-  () =>
-    location.getWorld() === "Hub" &&
-    mayor.getPerks().has("Mythological Ritual") &&
-    Settings.dianaWaypoint
+  () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint
 );
 
 /**
@@ -145,10 +131,7 @@ registerWhen(
     guessed.clear();
     guessed.push(guessBurrow(path, distance));
   }),
-  () =>
-    location.getWorld() === "Hub" &&
-    mayor.getPerks().has("Mythological Ritual") &&
-    Settings.dianaWaypoint
+  () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint
 );
 
 /**
@@ -157,12 +140,7 @@ registerWhen(
 registerWhen(
   register("soundPlay", (_, __, ___, pitch) => {
     distance =
-      (Math.E / pitch) ** (Math.E + (1 - 2 * pitch)) -
-      Math.E ** (1 - pitch ** 2) +
-      Math.E ** (0.8 - Math.E * pitch);
+      (Math.E / pitch) ** (Math.E + (1 - 2 * pitch)) - Math.E ** (1 - pitch ** 2) + Math.E ** (0.8 - Math.E * pitch);
   }).setCriteria("note.harp"),
-  () =>
-    location.getWorld() === "Hub" &&
-    mayor.getPerks().has("Mythological Ritual") &&
-    Settings.dianaWaypoint
+  () => location.getWorld() === "Hub" && mayor.getPerks().has("Mythological Ritual") && Settings.dianaWaypoint
 );

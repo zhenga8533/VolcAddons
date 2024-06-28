@@ -1,6 +1,6 @@
-import Settings from "./Settings";
 import { BOLD, DARK_GRAY, GOLD, LOGO, YELLOW } from "./Constants";
 import { setRegisters } from "./RegisterTils";
+import Settings from "./Settings";
 import { delay } from "./ThreadTils";
 
 class Location {
@@ -23,16 +23,9 @@ class Location {
       if (!World.isLoaded()) return;
 
       let zoneLine =
-        Scoreboard?.getLines()?.find((line) =>
-          line.getName().startsWith(" §7⏣")
-        ) ??
-        Scoreboard?.getLines()?.find((line) =>
-          line.getName().startsWith(" §5ф")
-        );
-      this.#zone =
-        zoneLine === undefined
-          ? "None"
-          : zoneLine.getName().removeFormatting().substring(3);
+        Scoreboard?.getLines()?.find((line) => line.getName().startsWith(" §7⏣")) ??
+        Scoreboard?.getLines()?.find((line) => line.getName().startsWith(" §5ф"));
+      this.#zone = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting().substring(3);
     });
 
     register("step", this.setSeason).setDelay(10);
@@ -112,14 +105,7 @@ class Location {
     // const sbDay = (this.#time % 37_200) / 1_200;
     const ratio = this.#time / 446_400;
 
-    this.#season =
-      ratio < 0.25
-        ? "Spring"
-        : ratio < 0.5
-        ? "Summer"
-        : ratio < 0.75
-        ? "Autumn"
-        : "Winter";
+    this.#season = ratio < 0.25 ? "Spring" : ratio < 0.5 ? "Summer" : ratio < 0.75 ? "Autumn" : "Winter";
   }
 
   /**
@@ -144,9 +130,7 @@ class Location {
     else if (!World.isLoaded()) delay(() => this.findWorld(noFind + 1), 1000);
 
     // Get world from tab list
-    let world = TabList.getNames()?.find(
-      (tab) => tab.startsWith("§r§b§lArea:") || tab.startsWith("§r§b§lDungeon:")
-    );
+    let world = TabList.getNames()?.find((tab) => tab.startsWith("§r§b§lArea:") || tab.startsWith("§r§b§lDungeon:"));
     if (world === undefined) delay(() => this.findWorld(noFind + 1), 1000);
     else {
       // Get world formatted
@@ -162,11 +146,7 @@ class Location {
 
       // Call functions when world is loaded
       delay(() => {
-        setRegisters(
-          (off =
-            Settings.skyblockToggle &&
-            !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"))
-        );
+        setRegisters((off = Settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")));
         Client.showTitle(" ", "", 0, 1, 0); // Fix first title not showing
       }, 1000);
     }

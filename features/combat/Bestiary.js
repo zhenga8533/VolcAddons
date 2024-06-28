@@ -3,17 +3,9 @@
  */
 
 import request from "../../../requestV2";
-import {
-  BOLD,
-  GOLD,
-  GRAY,
-  GREEN,
-  LOGO,
-  RED,
-  WHITE,
-} from "../../utils/Constants";
-import { formatTime } from "../../utils/functions/format";
+import { BOLD, GOLD, GRAY, GREEN, LOGO, RED, WHITE } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import { formatTime } from "../../utils/functions/format";
 
 /**
  * Makes a PULL request to get bestiary data from the player's info using the Hypixel API.
@@ -42,34 +34,24 @@ function updateBestiary(profileId, args) {
  */
 const KILL_BRACKETS = [
   [
-    20, 40, 60, 100, 200, 400, 800, 1400, 2000, 3000, 6000, 12000, 20000, 30000,
-    40000, 50000, 60000, 72000, 86000, 100000, 200000, 400000, 600000, 800000,
-    1000000,
+    20, 40, 60, 100, 200, 400, 800, 1400, 2000, 3000, 6000, 12000, 20000, 30000, 40000, 50000, 60000, 72000, 86000,
+    100000, 200000, 400000, 600000, 800000, 1000000,
   ],
   [
-    5, 10, 15, 25, 50, 100, 200, 350, 500, 750, 1500, 3000, 5000, 7500, 10000,
-    12500, 15000, 18000, 21500, 25000, 50000, 100000, 150000, 200000, 250000,
+    5, 10, 15, 25, 50, 100, 200, 350, 500, 750, 1500, 3000, 5000, 7500, 10000, 12500, 15000, 18000, 21500, 25000, 50000,
+    100000, 150000, 200000, 250000,
   ],
   [
-    4, 8, 12, 16, 20, 40, 80, 140, 200, 300, 600, 1200, 2000, 3000, 4000, 5000,
-    6000, 7200, 8600, 10000, 20000, 40000, 60000, 80000, 100000,
+    4, 8, 12, 16, 20, 40, 80, 140, 200, 300, 600, 1200, 2000, 3000, 4000, 5000, 6000, 7200, 8600, 10000, 20000, 40000,
+    60000, 80000, 100000,
   ],
   [
-    2, 4, 6, 10, 15, 20, 25, 35, 50, 75, 150, 300, 500, 750, 1000, 1350, 1650,
-    2000, 2500, 3000, 5000, 10000, 15000, 20000, 25000,
+    2, 4, 6, 10, 15, 20, 25, 35, 50, 75, 150, 300, 500, 750, 1000, 1350, 1650, 2000, 2500, 3000, 5000, 10000, 15000,
+    20000, 25000,
   ],
-  [
-    1, 2, 3, 5, 7, 10, 20, 25, 30, 60, 120, 200, 300, 400, 500, 600, 720, 860,
-    1000, 2000, 4000, 6000, 8000, 10000,
-  ],
-  [
-    1, 2, 3, 5, 7, 9, 14, 17, 21, 25, 50, 80, 125, 175, 250, 325, 425, 525, 625,
-    750, 1500, 3000, 4500, 6000, 7500,
-  ],
-  [
-    1, 2, 3, 5, 7, 9, 11, 14, 17, 20, 30, 40, 55, 75, 100, 150, 200, 275, 375,
-    500, 1000, 1500, 2000, 2500, 3000,
-  ],
+  [1, 2, 3, 5, 7, 10, 20, 25, 30, 60, 120, 200, 300, 400, 500, 600, 720, 860, 1000, 2000, 4000, 6000, 8000, 10000],
+  [1, 2, 3, 5, 7, 9, 14, 17, 21, 25, 50, 80, 125, 175, 250, 325, 425, 525, 625, 750, 1500, 3000, 4500, 6000, 7500],
+  [1, 2, 3, 5, 7, 9, 11, 14, 17, 20, 30, 40, 55, 75, 100, 150, 200, 275, 375, 500, 1000, 1500, 2000, 2500, 3000],
 ];
 
 /**
@@ -117,10 +99,7 @@ class Mob {
     }
 
     // Calculate the number of kills needed for the next level and the time required for it
-    this.next = Math.max(
-      this.bracket[Math.min(this.level + 1, this.maxLevel - 1)] - this.kills,
-      0
-    );
+    this.next = Math.max(this.bracket[Math.min(this.level + 1, this.maxLevel - 1)] - this.kills, 0);
     this.nextTime = this.next * this.time;
   }
 }
@@ -171,13 +150,7 @@ const bestiary = {
   "Dasher Spider": new Mob(["dasher_spider"], [4, 42, 45, 50], 2, 15, 1),
   "Gravel Skeleton": new Mob(["respawning_skeleton"], [2], 3, 15, 1),
   "Rain Slime": new Mob(["random_slime"], [8], 4, 15, 5),
-  Silverfish: new Mob(
-    ["jockey_shot_silverfish", "splitter_spider_silverfish"],
-    [2, 3, 42, 45, 50],
-    1,
-    15,
-    1
-  ),
+  Silverfish: new Mob(["jockey_shot_silverfish", "splitter_spider_silverfish"], [2, 3, 42, 45, 50], 1, 15, 1),
   "Spider Jockey": new Mob(["spider_jockey"], [3, 42], 2, 15, 1),
   "Splitter Spider": new Mob(["splitter_spider"], [4, 42, 45, 50], 2, 15, 1),
   "Voracious Spider": new Mob(["voracious_spider"], [10, 42, 45, 50], 1, 15, 1),
@@ -210,13 +183,7 @@ const bestiary = {
   Ashfang: new Mob(["ashfang"], [200], 5, 20, 90),
   "Barbarian Duke X": new Mob(["barbarian_duke_x"], [200], 5, 20, 45),
   Bladesoul: new Mob(["bladesoul"], [200], 5, 20, 45),
-  Blaze: new Mob(
-    ["blaze", "bezal", "mutated_blaze"],
-    [25, 70, 80, 70],
-    4,
-    20,
-    3
-  ),
+  Blaze: new Mob(["blaze", "bezal", "mutated_blaze"], [25, 70, 80, 70], 4, 20, 3),
   "Flaming Spider": new Mob(["flaming_spider"], [80], 3, 20, 3),
   Flare: new Mob(["flare"], [90], 1, 20, 0.5),
   Ghast: new Mob(["ghast", "dive_ghast"], [85, 90], 4, 20, 4),
@@ -319,13 +286,7 @@ const bestiary = {
     30
   ),
   Bat: new Mob(["dungeon_secret_bat"], [1], 4, 15, 180),
-  "Cellar Spider": new Mob(
-    ["cellar_spider", "master_cellar_spider"],
-    [45, 65, 75, 85, 95, 105, 115, 125],
-    4,
-    15,
-    60
-  ),
+  "Cellar Spider": new Mob(["cellar_spider", "master_cellar_spider"], [45, 65, 75, 85, 95, 105, 115, 125], 4, 15, 60),
   "Crypt Dreadlord": new Mob(
     ["crypt_dreadlord", "master_cryptdreadlord"],
     [47, 67, 77, 87, 97, 107, 117, 127],
@@ -333,13 +294,7 @@ const bestiary = {
     25,
     5
   ),
-  "Crypt Lurker": new Mob(
-    ["crypt_lurker", "master_crypt_lurker"],
-    [41, 61, 71, 81, 91, 101, 111, 121],
-    4,
-    25,
-    5
-  ),
+  "Crypt Lurker": new Mob(["crypt_lurker", "master_crypt_lurker"], [41, 61, 71, 81, 91, 101, 111, 121], 4, 25, 5),
   "Crypt Souleater": new Mob(
     ["crypt_souleater", "master_crypt_souleater"],
     [45, 65, 75, 85, 95, 105, 115, 125],
@@ -349,20 +304,8 @@ const bestiary = {
   ),
   Fels: new Mob(["tentaclees", "master_tentaclees"], [90, 100, 110], 4, 25, 10),
   Golem: new Mob(["sadan_golem", "master_sadan_golem"], [1], 4, 15, 45),
-  "King Midas": new Mob(
-    ["king_midas", "master_king_midas"],
-    [130, 140, 150, 160, 170],
-    5,
-    10,
-    600
-  ),
-  "Lonely Spider": new Mob(
-    ["lonely_spider", "master_lonely_spider"],
-    [35, 55, 65, 75, 85, 95, 105, 115],
-    4,
-    25,
-    15
-  ),
+  "King Midas": new Mob(["king_midas", "master_king_midas"], [130, 140, 150, 160, 170], 5, 10, 600),
+  "Lonely Spider": new Mob(["lonely_spider", "master_lonely_spider"], [35, 55, 65, 75, 85, 95, 105, 115], 4, 25, 15),
   "Lost Adventurer": new Mob(
     ["lost_adventurer", "master_lost_adventurer"],
     [80, 85, 90, 100, 110, 120, 130, 140, 150, 160],
@@ -371,13 +314,7 @@ const bestiary = {
     30
   ),
   Mimic: new Mob(["mimic", "master_mimic"], [115, 125], 4, 15, 300),
-  "Scared Skeleton": new Mob(
-    ["scared_skeleton", "master_scared_skeleton"],
-    [42, 60, 62, 70, 72],
-    3,
-    15,
-    5
-  ),
+  "Scared Skeleton": new Mob(["scared_skeleton", "master_scared_skeleton"], [42, 60, 62, 70, 72], 3, 15, 5),
   "Shadow Assassin": new Mob(
     ["shadow_assassin", "master_shadow_assassin"],
     [120, 130, 140, 150, 160, 170, 171],
@@ -385,27 +322,9 @@ const bestiary = {
     25,
     30
   ),
-  "Skeleton Grunt": new Mob(
-    ["skeleton_grunt", "master_skeleton_grunt"],
-    [40, 60, 70, 80],
-    3,
-    15,
-    5
-  ),
-  "Skeleton Lord": new Mob(
-    ["skeleton_lord", "master_skeleton_lord"],
-    [150],
-    5,
-    20,
-    10
-  ),
-  "Skeleton Master": new Mob(
-    ["skeleton_master", "master_skeleton_master"],
-    [78, 88, 98, 108, 118, 128],
-    4,
-    25,
-    5
-  ),
+  "Skeleton Grunt": new Mob(["skeleton_grunt", "master_skeleton_grunt"], [40, 60, 70, 80], 3, 15, 5),
+  "Skeleton Lord": new Mob(["skeleton_lord", "master_skeleton_lord"], [150], 5, 20, 10),
+  "Skeleton Master": new Mob(["skeleton_master", "master_skeleton_master"], [78, 88, 98, 108, 118, 128], 4, 25, 5),
   "Skeleton Soldier": new Mob(
     ["skeleton_soldier", "master_skeleton_soldier"],
     [66, 76, 86, 96, 106, 116, 126],
@@ -420,42 +339,12 @@ const bestiary = {
     25,
     5
   ),
-  Sniper: new Mob(
-    ["sniper_skeleton", "master_sniper_skeleton"],
-    [43, 63, 73, 83, 93, 103, 113, 123],
-    3,
-    15,
-    60
-  ),
-  "Super Archer": new Mob(
-    ["super_archer", "master_super_archer"],
-    [90, 100, 110, 120],
-    5,
-    25,
-    30
-  ),
-  "Super Tank Zombie": new Mob(
-    ["super_tank_zombie", "master_super_tank_zombie"],
-    [90, 100, 110, 120],
-    4,
-    25,
-    5
-  ),
-  "Tank Zombie": new Mob(
-    ["crypt_tank_zombie", "master_crypt_tank_zombie"],
-    [40, 60, 70, 80, 90],
-    3,
-    15,
-    5
-  ),
+  Sniper: new Mob(["sniper_skeleton", "master_sniper_skeleton"], [43, 63, 73, 83, 93, 103, 113, 123], 3, 15, 60),
+  "Super Archer": new Mob(["super_archer", "master_super_archer"], [90, 100, 110, 120], 5, 25, 30),
+  "Super Tank Zombie": new Mob(["super_tank_zombie", "master_super_tank_zombie"], [90, 100, 110, 120], 4, 25, 5),
+  "Tank Zombie": new Mob(["crypt_tank_zombie", "master_crypt_tank_zombie"], [40, 60, 70, 80, 90], 3, 15, 5),
   Terracotta: new Mob(["sadan_statue", "master_sadan_statue"], [1], 1, 15, 3),
-  Undead: new Mob(
-    ["watcher_summon_undead", "master_watcher_summon_undead"],
-    [1, 2, 3, 4, 5, 6, 7, 8],
-    2,
-    15,
-    10
-  ),
+  Undead: new Mob(["watcher_summon_undead", "master_watcher_summon_undead"], [1, 2, 3, 4, 5, 6, 7, 8], 2, 15, 10),
   "Undead Skeleton": new Mob(
     ["dungeon_respawning_skeleton", "master_dungeon_respawning_skeleton"],
     [40, 60, 61, 70, 71, 80, 81, 90, 91, 100, 101, 110, 111, 120],
@@ -463,63 +352,15 @@ const bestiary = {
     25,
     5
   ),
-  "Wither Guard": new Mob(
-    ["wither_guard", "master_wither_guard"],
-    [100],
-    5,
-    25,
-    5
-  ),
+  "Wither Guard": new Mob(["wither_guard", "master_wither_guard"], [100], 5, 25, 5),
   "Wither Husk": new Mob(["master_wither_husk"], [100], 5, 25, 5),
-  "Wither Miner": new Mob(
-    ["wither_miner", "master_wither_miner"],
-    [100],
-    4,
-    25,
-    5
-  ),
-  Withermancer: new Mob(
-    ["crypt_witherskeleton", "master_crypt_witherskeleton"],
-    [90, 100, 110, 120],
-    4,
-    25,
-    5
-  ),
-  "Zombie Commander": new Mob(
-    ["zombie_commander", "master_zombie_commander"],
-    [110, 120],
-    4,
-    20,
-    15
-  ),
-  "Zombie Grunt": new Mob(
-    ["zombie_grunt", "master_zombie_grunt"],
-    [40, 60, 70],
-    3,
-    15,
-    5
-  ),
-  "Zombie Knight": new Mob(
-    ["zombie_knight", "master_zombie_knight"],
-    [86, 96, 106, 116, 126],
-    4,
-    25,
-    5
-  ),
-  "Zombie Lord": new Mob(
-    ["zombie_lord", "master_zombie_lord"],
-    [150],
-    5,
-    20,
-    15
-  ),
-  "Zombie Soldier": new Mob(
-    ["zombie_soldier", "master_zombie_soldier"],
-    [83, 93, 103, 113, 123],
-    1,
-    15,
-    5
-  ),
+  "Wither Miner": new Mob(["wither_miner", "master_wither_miner"], [100], 4, 25, 5),
+  Withermancer: new Mob(["crypt_witherskeleton", "master_crypt_witherskeleton"], [90, 100, 110, 120], 4, 25, 5),
+  "Zombie Commander": new Mob(["zombie_commander", "master_zombie_commander"], [110, 120], 4, 20, 15),
+  "Zombie Grunt": new Mob(["zombie_grunt", "master_zombie_grunt"], [40, 60, 70], 3, 15, 5),
+  "Zombie Knight": new Mob(["zombie_knight", "master_zombie_knight"], [86, 96, 106, 116, 126], 4, 25, 5),
+  "Zombie Lord": new Mob(["zombie_lord", "master_zombie_lord"], [150], 5, 20, 15),
+  "Zombie Soldier": new Mob(["zombie_soldier", "master_zombie_soldier"], [83, 93, 103, 113, 123], 1, 15, 5),
   // Fishing
   Squid: new Mob(["pond_squid"], [1], 2, 15, 7),
   "Night Squid": new Mob(["night_squid"], [6], 4, 15, 20),
@@ -582,85 +423,19 @@ const bestiary = {
   "Green Jerry": new Mob(["mayor_jerry_green"], [1], 4, 10, 720),
   "Purple Jerry": new Mob(["mayor_jerry_purple"], [3], 6, 10, 2880),
   // Kuudra
-  "Blazing Golem": new Mob(
-    ["blazing_golem"],
-    [100, 200, 300, 400, 500],
-    3,
-    10,
-    30
-  ),
+  "Blazing Golem": new Mob(["blazing_golem"], [100, 200, 300, 400, 500], 3, 10, 30),
   Blight: new Mob(["blight"], [100, 200, 300, 400, 500], 3, 20, 15),
   Dropship: new Mob(["dropship"], [100, 200, 300, 400, 500], 3, 10, 30),
-  "Explosive Imp": new Mob(
-    ["explosive_imp"],
-    [100, 200, 300, 400, 500],
-    3,
-    20,
-    30
-  ),
-  "Inferno Magma Cube": new Mob(
-    ["inferno_magma_cube"],
-    [100, 200, 300, 400, 500],
-    3,
-    20,
-    15
-  ),
-  "Kuudra Berserker": new Mob(
-    ["kuudra_berserker"],
-    [100, 200, 300, 400, 500],
-    3,
-    20,
-    15
-  ),
-  "Kuudra Follower": new Mob(
-    ["kuudra_follower"],
-    [100, 200, 300, 400, 500],
-    2,
-    20,
-    15
-  ),
-  "Kuudra Knocker": new Mob(
-    ["kuudra_knocker"],
-    [100, 200, 300, 400, 500],
-    3,
-    20,
-    15
-  ),
-  "Kuudra Landmine": new Mob(
-    ["kuudra_landmine"],
-    [100, 200, 300, 400, 500],
-    3,
-    20,
-    15
-  ),
-  "Kuudra Slasher": new Mob(
-    ["kuudra_slasher"],
-    [100, 200, 300, 400, 500],
-    5,
-    10,
-    60
-  ),
-  "Magma Follower": new Mob(
-    ["magma_follower"],
-    [100, 200, 300, 400, 500],
-    5,
-    10,
-    30
-  ),
-  "Wandering Blaze": new Mob(
-    ["wandering_blaze"],
-    [100, 200, 300, 400, 500],
-    4,
-    20,
-    15
-  ),
-  "Wither Sentry": new Mob(
-    ["wither_sentry"],
-    [100, 200, 300, 400, 500],
-    4,
-    10,
-    30
-  ),
+  "Explosive Imp": new Mob(["explosive_imp"], [100, 200, 300, 400, 500], 3, 20, 30),
+  "Inferno Magma Cube": new Mob(["inferno_magma_cube"], [100, 200, 300, 400, 500], 3, 20, 15),
+  "Kuudra Berserker": new Mob(["kuudra_berserker"], [100, 200, 300, 400, 500], 3, 20, 15),
+  "Kuudra Follower": new Mob(["kuudra_follower"], [100, 200, 300, 400, 500], 2, 20, 15),
+  "Kuudra Knocker": new Mob(["kuudra_knocker"], [100, 200, 300, 400, 500], 3, 20, 15),
+  "Kuudra Landmine": new Mob(["kuudra_landmine"], [100, 200, 300, 400, 500], 3, 20, 15),
+  "Kuudra Slasher": new Mob(["kuudra_slasher"], [100, 200, 300, 400, 500], 5, 10, 60),
+  "Magma Follower": new Mob(["magma_follower"], [100, 200, 300, 400, 500], 5, 10, 30),
+  "Wandering Blaze": new Mob(["wandering_blaze"], [100, 200, 300, 400, 500], 4, 20, 15),
+  "Wither Sentry": new Mob(["wither_sentry"], [100, 200, 300, 400, 500], 4, 10, 30),
 };
 
 /**
@@ -672,18 +447,12 @@ const bestiary = {
 function sortBestiary(val, amount) {
   // Filtering the bestiary based on the provided criteria and amount
   const filteredBestiary = Object.entries(bestiary).filter(([key, value]) =>
-    val === "bracket"
-      ? value.bracket === KILL_BRACKETS[amount - 1] && value.next !== 0
-      : value.next !== 0
+    val === "bracket" ? value.bracket === KILL_BRACKETS[amount - 1] && value.next !== 0 : value.next !== 0
   );
 
   // Sorting the filtered bestiary in descending order based on the provided criteria
   const sortedBestiary = filteredBestiary
-    .sort(
-      (a, b) =>
-        b[1][val === "bracket" ? "next" : val] -
-        a[1][val === "bracket" ? "next" : val]
-    )
+    .sort((a, b) => b[1][val === "bracket" ? "next" : val] - a[1][val === "bracket" ? "next" : val])
     .slice(val === "bracket" ? -10 : -amount)
     .reduce((acc, [key, value]) => {
       acc[key] = value;
@@ -694,9 +463,9 @@ function sortBestiary(val, amount) {
   ChatLib.chat(`\n${LOGO + WHITE + BOLD}Leftover Bestiary: `);
   Object.keys(sortedBestiary).forEach((key) => {
     ChatLib.chat(
-      `${GOLD + BOLD + key}: ${GREEN}Needs ${
-        RED + sortedBestiary[key].next + GREEN
-      } kills! (${RED + formatTime(sortedBestiary[key].nextTime) + GREEN})`
+      `${GOLD + BOLD + key}: ${GREEN}Needs ${RED + sortedBestiary[key].next + GREEN} kills! (${
+        RED + formatTime(sortedBestiary[key].nextTime) + GREEN
+      })`
     );
   });
 }
@@ -736,9 +505,9 @@ export function getBestiary(args) {
           );
         } else
           ChatLib.chat(
-            `${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${
-              RED + mob.next + GREEN
-            } kills! (${RED + formatTime(mob.nextTime) + GREEN})`
+            `${LOGO + GOLD + BOLD + key}: ${GREEN}Needs ${RED + mob.next + GREEN} kills! (${
+              RED + formatTime(mob.nextTime) + GREEN
+            })`
           );
         break;
     }

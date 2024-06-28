@@ -1,6 +1,6 @@
-import Settings from "../../utils/Settings";
 import { BOLD, DARK_RED, RESET } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { setTitle } from "../../utils/Title";
 
 /**
@@ -15,14 +15,9 @@ registerWhen(
   register("step", () => {
     if (player === undefined) return;
 
-    if (
-      player.func_110143_aJ() / player.func_110138_aP() <
-      Settings.healthAlert
-    )
+    if (player.func_110143_aJ() / player.func_110138_aP() < Settings.healthAlert)
       setTitle(
-        `${DARK_RED + BOLD}WARNING: HEALTH BELOW ${
-          RESET + Math.round(Settings.healthAlert * 100)
-        }%${DARK_RED}!`,
+        `${DARK_RED + BOLD}WARNING: HEALTH BELOW ${RESET + Math.round(Settings.healthAlert * 100)}%${DARK_RED}!`,
         "",
         0,
         25,

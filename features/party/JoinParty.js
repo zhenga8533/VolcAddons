@@ -1,8 +1,8 @@
-import Settings from "../../utils/Settings";
-import { getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/ThreadTils";
 import { data } from "../../utils/Data";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { delay } from "../../utils/ThreadTils";
+import { getPlayerName } from "../../utils/functions/player";
 
 /**
  * Variables used to detect disbanded parties in past minute.
@@ -44,8 +44,7 @@ registerWhen(
   register("chat", (player1, player2) => {
     const name1 = getPlayerName(player1).toLowerCase();
     const name2 = getPlayerName(player2).toLowerCase();
-    if (!data.whitelist.includes(name1) && !data.whitelist.includes(name2))
-      return;
+    if (!data.whitelist.includes(name1) && !data.whitelist.includes(name2)) return;
 
     delay(() => ChatLib.command("p accept " + name1), 500);
   }).setCriteria(

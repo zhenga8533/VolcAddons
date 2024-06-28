@@ -12,9 +12,7 @@ class Mayor {
       })
         .then((response) => {
           this.#mayor = response.mayor.name;
-          this.#perks = new Set([
-            ...response.mayor.perks.map((perk) => perk.name),
-          ]);
+          this.#perks = new Set([...response.mayor.perks.map((perk) => perk.name)]);
         })
         .catch((err) => console.error(`VolcAddons: ${err.cause ?? err}`));
     });

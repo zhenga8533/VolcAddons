@@ -1,8 +1,8 @@
-import Settings from "../../utils/Settings";
 import { BOLD, DARK_GREEN, GRAY, GREEN } from "../../utils/Constants";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 let community = {};
 let personal = {};
@@ -22,17 +22,10 @@ ${DARK_GREEN}Bingo Goals
  ${GRAY + BOLD}楽しいビンゴタイム${GREEN}！
  ${GRAY + BOLD}地球は素晴らしい場所だよ${GREEN}、${GRAY + BOLD}よ${GREEN}！
  ${GRAY + BOLD}食べ物も美味しいですよ${GREEN}！
- ${GRAY + BOLD}遊びに行きましょう${GREEN}、${
-  GRAY + BOLD
-}友達になりましょう${GREEN}！
+ ${GRAY + BOLD}遊びに行きましょう${GREEN}、${GRAY + BOLD}友達になりましょう${GREEN}！
  ${GRAY + BOLD}楽しい時間${GREEN}、${GRAY + BOLD}ビンゴ${GREEN}！
  ${GRAY + BOLD}ビンゴをする時間です${GREEN}！`;
-const bingoOverlay = new Overlay(
-  "bingoCard",
-  data.BCL,
-  "moveBingo",
-  bingoExample
-);
+const bingoOverlay = new Overlay("bingoCard", data.BCL, "moveBingo", bingoExample);
 
 /**
  * Updates bingo overlay based on current uncompleted goals.

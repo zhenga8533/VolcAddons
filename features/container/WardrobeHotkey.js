@@ -1,7 +1,7 @@
-import Settings from "../../utils/Settings";
 import { GREEN, RED } from "../../utils/Constants";
-import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 /**
  * Key press to warp player to closest burrow.
@@ -46,17 +46,13 @@ registerWhen(
   () => Settings.wardrobeBinding
 );
 
-const C0EPacketClickWindow = Java.type(
-  "net.minecraft.network.play.client.C0EPacketClickWindow"
-);
+const C0EPacketClickWindow = Java.type("net.minecraft.network.play.client.C0EPacketClickWindow");
 registerWhen(
   register("guiKey", (_, code, gui, event) => {
     if (settingBind) {
       cancel(event);
       const slot = gui?.getSlotUnderMouse()?.field_75222_d - 35;
-      const linkedKey = Object.keys(data.wardBinds).find(
-        (key) => data.wardBinds[key] === slot
-      );
+      const linkedKey = Object.keys(data.wardBinds).find((key) => data.wardBinds[key] === slot);
 
       // Check if hovering over valid slot
       if (isNaN(slot) || slot < 0 || slot > 9) {
@@ -88,17 +84,13 @@ registerWhen(
 
       // Check if key is already used
       if (data.wardBinds.hasOwnProperty(code)) {
-        instructions = `${RED}Key #${code - 1} is already binded to slot ${
-          data.wardBinds[code]
-        }`;
+        instructions = `${RED}Key #${code - 1} is already binded to slot ${data.wardBinds[code]}`;
         return;
       }
 
       // Set bind
       data.wardBinds[code] = slot;
-      instructions = `${GREEN}Successfully binded slot ${slot} to key #${
-        code - 1
-      }.`;
+      instructions = `${GREEN}Successfully binded slot ${slot} to key #${code - 1}.`;
 
       // Remove any key already bound
       if (linkedKey !== undefined) {
@@ -116,32 +108,15 @@ registerWhen(
     if (data.wardBinds.hasOwnProperty(code)) {
       cancel(event);
       Client.sendPacket(
-        new C0EPacketClickWindow(
-          Player.getContainer().getWindowId(),
-          data.wardBinds[code] + 35,
-          0,
-          0,
-          null,
-          0
-        )
+        new C0EPacketClickWindow(Player.getContainer().getWindowId(), data.wardBinds[code] + 35, 0, 0, null, 0)
       );
       Client.scheduleTask(3, () =>
-        Client.sendPacket(
-          new C0EPacketClickWindow(
-            Player.getContainer().getWindowId(),
-            49,
-            0,
-            0,
-            null,
-            0
-          )
-        )
+        Client.sendPacket(new C0EPacketClickWindow(Player.getContainer().getWindowId(), 49, 0, 0, null, 0))
       );
     } else if (code === wardKey.getKeyCode()) {
       cancel(event);
       settingBind = true;
-      instructions =
-        "Please hover over wardrobe slot and press hotkey to be binded (press escape to unbind).";
+      instructions = "Please hover over wardrobe slot and press hotkey to be binded (press escape to unbind).";
     }
   }),
   () => Settings.wardrobeBinding

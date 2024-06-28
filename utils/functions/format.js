@@ -14,17 +14,14 @@ export function formatTime(seconds, fixed = 0, units = 4) {
 
   const timeString = [
     days > 0 && units-- > 0 ? `${days}d` : "",
-    (hours > 0 || days > 0) && units-- > 0
-      ? `${(hours < 10 && days > 0 ? "0" : "") + hours}h`
-      : "",
+    (hours > 0 || days > 0) && units-- > 0 ? `${(hours < 10 && days > 0 ? "0" : "") + hours}h` : "",
     (minutes > 0 || hours > 0 || days > 0) && units-- > 0
       ? `${(minutes < 10 && (days > 0 || hours > 0) ? "0" : "") + minutes}m`
       : "",
     units-- > 0
       ? `${
-          (remainingSeconds < 9.5 && (days > 0 || hours > 0 || minutes > 0)
-            ? "0"
-            : "") + remainingSeconds.toFixed(fixed)
+          (remainingSeconds < 9.5 && (days > 0 || hours > 0 || minutes > 0) ? "0" : "") +
+          remainingSeconds.toFixed(fixed)
         }s`
       : "",
   ].join("");
@@ -98,16 +95,12 @@ export function formatNumber(num, significantDigits = 5) {
   const abbrev = ["", "k", "m", "b", "t", "q", "Q"];
   const index = Math.floor(Math.log10(absNum) / 3);
 
-  let formattedNumber =
-    ((sign === -1 ? -1 : 1) * absNum) / Math.pow(10, index * 3);
+  let formattedNumber = ((sign === -1 ? -1 : 1) * absNum) / Math.pow(10, index * 3);
   const digits = formattedNumber.toFixed(0).length;
-  formattedNumber =
-    formattedNumber.toFixed(MathLib.clamp(significantDigits - digits, 0, 2)) +
-    abbrev[index];
+  formattedNumber = formattedNumber.toFixed(MathLib.clamp(significantDigits - digits, 0, 2)) + abbrev[index];
 
   // Check if the number is a whole number, and if so, remove the ".00"
-  if (Number.isInteger(absNum) && absNum < 1_000)
-    return String(parseInt(formattedNumber));
+  if (Number.isInteger(absNum) && absNum < 1_000) return String(parseInt(formattedNumber));
   return formattedNumber;
 }
 
@@ -173,12 +166,8 @@ export function numToRoman(num) {
  * @returns {String} String in title case format.
  */
 export function convertToTitleCase(input) {
-  const args = input.includes("_")
-    ? input.toLowerCase().split("_")
-    : input.toLowerCase().split(" ");
-  return args
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const args = input.includes("_") ? input.toLowerCase().split("_") : input.toLowerCase().split(" ");
+  return args.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 }
 
 /**
@@ -206,9 +195,7 @@ export function convertToPascalCase(input) {
 export function removeReforges(itemType, itemString) {
   // Get the corresponding reforges Set based on the item type
   const reforgesSet =
-    itemType === "all"
-      ? new Set([...REFORGES.weapon, ...REFORGES.armor, ...REFORGES.misc])
-      : REFORGES[itemType];
+    itemType === "all" ? new Set([...REFORGES.weapon, ...REFORGES.armor, ...REFORGES.misc]) : REFORGES[itemType];
 
   // If the item type is not valid or the reforges Set is empty, return the original item string
   if (reforgesSet === undefined || !itemString) return itemString;
@@ -244,8 +231,7 @@ export function isValidDate(dateString) {
   var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   // Adjust for leap years
-  if (year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0))
-    monthLength[1] = 29;
+  if (year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0)) monthLength[1] = 29;
 
   // Check the range of the day
   return day > 0 && day <= monthLength[month - 1];

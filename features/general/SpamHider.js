@@ -1,5 +1,5 @@
-import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
+import { registerWhen } from "../../utils/RegisterTils";
 
 /**
  * Removes any identical chat messages in spamlist from chat.

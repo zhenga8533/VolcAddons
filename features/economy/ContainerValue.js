@@ -1,37 +1,29 @@
-import Settings from "../../utils/Settings";
 import {
   AQUA,
   BLUE,
-  GRAY,
   DARK_PURPLE,
   DARK_RED,
   GOLD,
+  GRAY,
   GREEN,
+  ITALIC,
   LIGHT_PURPLE,
   RED,
   WHITE,
-  ITALIC,
   YELLOW,
 } from "../../utils/Constants";
-import { formatNumber, unformatNumber } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { formatNumber, unformatNumber } from "../../utils/functions/format";
 import { getBazaar } from "./Economy";
 import { getItemValue } from "./ItemPrice";
 
 /**
  * Variables used to track and display container value.
  */
-const VALID_CONTAINERS = new Set([
-  "Chest",
-  "Backpack",
-  "Bag",
-  "Wardrobe",
-  "Pets",
-  "Vault",
-  "Museum",
-]);
+const VALID_CONTAINERS = new Set(["Chest", "Backpack", "Bag", "Wardrobe", "Pets", "Vault", "Museum"]);
 const containerExample = `${WHITE}Item 1${GRAY} - ${WHITE}Be
 ${GREEN}Item 2${GRAY} - ${WHITE}Extremely
 ${BLUE}Item 3${GRAY} - ${WHITE}Subtle
@@ -60,9 +52,7 @@ containerOverlay.setMessage("");
  */
 function setMessage(itemValues) {
   // Convert itemValues object to an array of [itemName, [count, value]]
-  const sortedItems = Object.entries(itemValues).sort(
-    (a, b) => b[1][1] - a[1][1]
-  );
+  const sortedItems = Object.entries(itemValues).sort((a, b) => b[1][1] - a[1][1]);
 
   // Display the sorted items and total value
   let overlayMessage = "";
@@ -81,18 +71,12 @@ function setMessage(itemValues) {
         overlayMessage += `\n${GRAY + ITALIC}+ ${remainingItems} more items...`;
       }
     } else if (displayedItems < Settings.containerValue) {
-      overlayMessage += `\n${itemName} ${GRAY}x${formatNumber(
-        itemCount
-      )} ${WHITE}= ${GREEN + formatNumber(itemValue)}`;
+      overlayMessage += `\n${itemName} ${GRAY}x${formatNumber(itemCount)} ${WHITE}= ${GREEN + formatNumber(itemValue)}`;
     }
   }
 
   if (totalValue === 0) containerOverlay.setMessage("");
-  else
-    containerOverlay.setMessage(
-      `${GOLD}Total Value: ${YELLOW + formatNumber(totalValue)}\n` +
-        overlayMessage
-    );
+  else containerOverlay.setMessage(`${GOLD}Total Value: ${YELLOW + formatNumber(totalValue)}\n` + overlayMessage);
 }
 
 /**
@@ -112,11 +96,7 @@ function sackValue(container) {
     if (stack.getName() === " ") continue;
 
     // Get value and count from item stack
-    let id = stack
-      .getNBT()
-      .getCompoundTag("tag")
-      .getCompoundTag("ExtraAttributes")
-      .getString("id");
+    let id = stack.getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id");
     let value = bazaar?.[id]?.[Settings.priceType] ?? 0;
     let count = stack
       .getLore()
@@ -152,28 +132,12 @@ function composterValue(container) {
   );
 
   // Get composter upgrades
-  const crop = unformatNumber(
-    container
-      .getStackInSlot(1)
-      .getLore()[1]
-      .removeFormatting()
-      .trim()
-      .split("/")[0]
-  );
-  const fuel = unformatNumber(
-    container
-      .getStackInSlot(7)
-      .getLore()[1]
-      .removeFormatting()
-      .trim()
-      .split("/")[0]
-  );
+  const crop = unformatNumber(container.getStackInSlot(1).getLore()[1].removeFormatting().trim().split("/")[0]);
+  const fuel = unformatNumber(container.getStackInSlot(7).getLore()[1].removeFormatting().trim().split("/")[0]);
   const costUpgrade = data.composterUpgrades["Cost Reduction"];
   const noCrop = crop / (4000 * (1 - costUpgrade / 100));
   const noFuel = fuel / (2000 * (1 - costUpgrade / 100));
-  const composting =
-    Math.min(noCrop, noFuel) *
-    (1 + 0.03 * data.composterUpgrades["Multi Drop"]);
+  const composting = Math.min(noCrop, noFuel) * (1 + 0.03 * data.composterUpgrades["Multi Drop"]);
   const value = bazaar?.["COMPOST"]?.[Settings.priceType] ?? 0;
 
   // Set composting values
@@ -194,11 +158,7 @@ function bazaarValue(container) {
 
   for (let i = 1; i < 5; i++) {
     const firstStack = container.getStackInSlot(i * 9 + 1);
-    if (
-      firstStack !== null &&
-      firstStack.getUnlocalizedName() === "tile.thinStainedGlass"
-    )
-      break;
+    if (firstStack !== null && firstStack.getUnlocalizedName() === "tile.thinStainedGlass") break;
 
     for (let j = 1; j < 9; j++) {
       // Get item stack or detect no item
@@ -220,9 +180,7 @@ function bazaarValue(container) {
       }
 
       // Get price from lore
-      const priceLine = lore.find((line) =>
-        line.startsWith("§5§o§7Price per unit:")
-      );
+      const priceLine = lore.find((line) => line.startsWith("§5§o§7Price per unit:"));
       if (priceLine) {
         const match = priceLine.removeFormatting().split(" ")[3];
         price = unformatNumber(match);
@@ -245,11 +203,7 @@ function auctionValue(container) {
 
   for (let i = 1; i < 5; i++) {
     const firstStack = container.getStackInSlot(i * 9 + 1);
-    if (
-      firstStack !== null &&
-      firstStack.getUnlocalizedName() === "tile.thinStainedGlass"
-    )
-      break;
+    if (firstStack !== null && firstStack.getUnlocalizedName() === "tile.thinStainedGlass") break;
 
     for (let j = 1; j < 9; j++) {
       // Get item stack or detect no item
@@ -309,9 +263,7 @@ function updateContainerValue(remove) {
       auctionValue(container);
       return;
     } else if (
-      (!VALID_CONTAINERS.has(words[0]) &&
-        !VALID_CONTAINERS.has(words[1]) &&
-        remove !== 0) ||
+      (!VALID_CONTAINERS.has(words[0]) && !VALID_CONTAINERS.has(words[1]) && remove !== 0) ||
       items[31]?.getName() === "§aOpen Reward Chest"
     )
       return;
@@ -324,11 +276,7 @@ function updateContainerValue(remove) {
       // Change name if attribute shard or enchanted book
       let itemName = item.getName();
       if (itemName === "§fAttribute Shard" || itemName === "§fEnchanted Book")
-        itemName = item
-          .getNBT()
-          .getCompoundTag("tag")
-          .getCompoundTag("display")
-          .toObject().Lore[0];
+        itemName = item.getNBT().getCompoundTag("tag").getCompoundTag("display").toObject().Lore[0];
 
       // Get item value + item count
       let value = getItemValue(item, false);
@@ -336,12 +284,8 @@ function updateContainerValue(remove) {
         let itemCount = item.getStackSize();
 
         // Destructuring here for cleaner loop
-        let [existingItemCount = 0, existingItemValue = 0] =
-          itemValues[itemName] || [];
-        itemValues[itemName] = [
-          existingItemCount + itemCount,
-          existingItemValue + value,
-        ];
+        let [existingItemCount = 0, existingItemValue = 0] = itemValues[itemName] || [];
+        itemValues[itemName] = [existingItemCount + itemCount, existingItemValue + value];
       }
     }
 
@@ -355,10 +299,8 @@ function updateContainerValue(remove) {
  */
 const mouse = register("guiMouseRelease", (_, __, ___, gui) => {
   const guiName = gui.class.getName();
-  if (guiName === "net.minecraft.client.gui.inventory.GuiInventory")
-    updateContainerValue(0);
-  else if (guiName === "net.minecraft.client.gui.inventory.GuiChest")
-    updateContainerValue(36);
+  if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
+  else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
 }).unregister();
 
 /**
@@ -376,10 +318,8 @@ registerWhen(
   register("guiOpened", (event) => {
     containerOverlay.setMessage("");
     const guiName = event.gui.class.getName();
-    if (guiName === "net.minecraft.client.gui.inventory.GuiInventory")
-      updateContainerValue(0);
-    else if (guiName === "net.minecraft.client.gui.inventory.GuiChest")
-      updateContainerValue(36);
+    if (guiName === "net.minecraft.client.gui.inventory.GuiInventory") updateContainerValue(0);
+    else if (guiName === "net.minecraft.client.gui.inventory.GuiChest") updateContainerValue(36);
     else return;
 
     mouse.register();

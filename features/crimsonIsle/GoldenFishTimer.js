@@ -1,10 +1,10 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { BOLD, DARK_RED, GOLD, RESET, WHITE } from "../../utils/Constants";
-import { formatTime } from "../../utils/functions/format";
-import { registerWhen } from "../../utils/RegisterTils";
-import { Overlay } from "../../utils/Overlay";
 import { data } from "../../utils/Data";
+import location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { formatTime } from "../../utils/functions/format";
 
 /**
  * Variables used to track and display fishing timer.
@@ -13,13 +13,7 @@ let lastCast = 0;
 let lastFish = 0;
 const fishExample = `${GOLD + BOLD}Last Cast: ${RESET}Yee
 ${GOLD + BOLD}Last Fish: ${RESET}Haw`;
-const fishOverlay = new Overlay(
-  "goldenFishAlert",
-  data.TL,
-  "moveGolden",
-  fishExample,
-  ["Crimson Isle"]
-);
+const fishOverlay = new Overlay("goldenFishAlert", data.TL, "moveGolden", fishExample, ["Crimson Isle"]);
 
 /**
  * Increments time and updates Golden Fish Overlay every second.
@@ -31,9 +25,7 @@ registerWhen(
     if (lastCast > 270) lastFish = 0;
 
     fishOverlay.setMessage(
-      `${GOLD + BOLD}Last Cast: ${
-        lastCast > 240 ? DARK_RED : WHITE + formatTime(lastCast)
-      }
+      `${GOLD + BOLD}Last Cast: ${lastCast > 240 ? DARK_RED : WHITE + formatTime(lastCast)}
 ${GOLD + BOLD}Last Fish: ${RESET + formatTime(lastCast > 270 ? 0 : lastFish)}`
     );
   }).setFps(1),

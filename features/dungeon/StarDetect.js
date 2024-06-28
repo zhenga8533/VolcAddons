@@ -1,19 +1,13 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { EntityArmorStand, EntityWither } from "../../utils/Constants";
+import location from "../../utils/Location";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
 
 /**
  * Variables used to detect and store star mob data.
  */
-const starMobs = new Waypoint(
-  [0, 0, 0],
-  3,
-  Settings.starDetect === 2,
-  false,
-  false
-);
+const starMobs = new Waypoint([0, 0, 0], 3, Settings.starDetect === 2, false, false);
 const starHighlight = new Set();
 
 /**
@@ -27,8 +21,7 @@ function setStar() {
 setStar();
 
 register("guiClosed", (event) => {
-  if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui"))
-    return;
+  if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui")) return;
   setStar();
 });
 
@@ -47,10 +40,7 @@ registerWhen(
 
       // Find closest mob
       const closestEntity = World.getWorld()
-        .func_72839_b(
-          standEntity,
-          standEntity.func_174813_aQ().func_72314_b(1, 5, 1)
-        )
+        .func_72839_b(standEntity, standEntity.func_174813_aQ().func_72314_b(1, 5, 1))
         .filter((entity) => {
           return (
             entity &&
@@ -83,12 +73,7 @@ registerWhen(
   register("renderEntity", (entity) => {
     if (!starHighlight.has(entity.getEntity().func_145782_y())) return;
     const c = Settings.starColor;
-    Tessellator.colorize(
-      c.getRed() / 255,
-      c.getGreen() / 255,
-      c.getBlue() / 255,
-      1
-    );
+    Tessellator.colorize(c.getRed() / 255, c.getGreen() / 255, c.getBlue() / 255, 1);
   }),
   () => location.getWorld() === "Catacombs" && Settings.starDetect === 1
 );

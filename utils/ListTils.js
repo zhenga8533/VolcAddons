@@ -1,26 +1,12 @@
-import Settings from "./Settings";
-import {
-  AQUA,
-  DARK_AQUA,
-  DARK_GRAY,
-  GRAY,
-  GREEN,
-  LOGO,
-  RED,
-  WHITE,
-  YELLOW,
-} from "./Constants";
-import {
-  convertToPascalCase,
-  convertToTitleCase,
-  unformatNumber,
-} from "./functions/format";
-import { updateAuction } from "../features/economy/Economy";
 import { updateEntityList } from "../features/combat/EntityDetect";
+import { updateAuction } from "../features/economy/Economy";
 import { setWarps } from "../features/event/MythRitual";
 import { updateWidgetList } from "../features/general/WidgetDisplay";
-import { setRegisters } from "./RegisterTils";
+import { AQUA, DARK_AQUA, DARK_GRAY, GRAY, GREEN, LOGO, RED, WHITE, YELLOW } from "./Constants";
 import { data } from "./Data";
+import { setRegisters } from "./RegisterTils";
+import Settings from "./Settings";
+import { convertToPascalCase, convertToTitleCase, unformatNumber } from "./functions/format";
 
 /**
  * Prints a list of items to chat.
@@ -30,15 +16,7 @@ import { data } from "./Data";
  * @param {Number} page - The page number to display.
  * @param {Number} pagy - Number of items per page.
  */
-export function printList(
-  list,
-  listName,
-  page,
-  pagy = 12,
-  action = true,
-  command = "remove",
-  hoverKey = false
-) {
+export function printList(list, listName, page, pagy = 12, action = true, command = "remove", hoverKey = false) {
   if (isNaN(page)) page = 1;
 
   ChatLib.clearChat(5858);
@@ -48,13 +26,9 @@ export function printList(
   page = MathLib.clamp(page, 1, total);
 
   // Print out header
-  const message = new Message(
-    "\n&c&m-----------------------------------------------------&r"
-  ).setChatLineId(5858);
+  const message = new Message("\n&c&m-----------------------------------------------------&r").setChatLineId(5858);
   const header = ChatLib.getCenteredText(
-    `${listName} ${page > 1 ? "<< " : ""}(Page ${page} of ${total})${
-      page < total ? " >>" : ""
-    }`
+    `${listName} ${page > 1 ? "<< " : ""}(Page ${page} of ${total})${page < total ? " >>" : ""}`
   );
   const whitespace = header.match(/^\s+/)[0];
 
@@ -69,17 +43,12 @@ export function printList(
   message.addTextComponent(whitespace);
 
   if (page > 1) message.addTextComponent(lArrow);
-  message.addTextComponent(
-    ` §6${convertToTitleCase(listName)} §8(§fPage §7${page} §fof §7${total}§8) `
-  );
+  message.addTextComponent(` §6${convertToTitleCase(listName)} §8(§fPage §7${page} §fof §7${total}§8) `);
   if (page < total) message.addTextComponent(rArrow);
 
   // Loop through variables
   const pageIndex = (page - 1) * pagy;
-  if (length === 0)
-    message.addTextComponent(
-      `\n` + ChatLib.getCenteredText(YELLOW + "  404, This list is empty!")
-    );
+  if (length === 0) message.addTextComponent(`\n` + ChatLib.getCenteredText(YELLOW + "  404, This list is empty!"));
   else if (hoverKey) {
     const keys = Object.keys(list);
     for (let i = pageIndex; i < Math.min(pageIndex + pagy, length); i++) {
@@ -100,11 +69,7 @@ export function printList(
           new TextComponent(`${YELLOW + list[i]}`)
             .setClickAction("run_command")
             .setClickValue(`/va ${listName} ${command} ${list[i]}`)
-            .setHoverValue(
-              `${YELLOW}Click to ${command} ${
-                AQUA + list[i] + YELLOW
-              } from list.`
-            )
+            .setHoverValue(`${YELLOW}Click to ${command} ${AQUA + list[i] + YELLOW} from list.`)
         );
       } else message.addTextComponent(`\n ${DARK_GRAY}⁍ ${YELLOW + list[i]}`);
     }
@@ -118,24 +83,15 @@ export function printList(
           new TextComponent(`${YELLOW + key}`)
             .setClickAction("run_command")
             .setClickValue(`/va ${listName} remove ${key}`)
-            .setHoverValue(
-              `${YELLOW}Click to remove ${YELLOW + key + YELLOW} from list.`
-            )
+            .setHoverValue(`${YELLOW}Click to remove ${YELLOW + key + YELLOW} from list.`)
         );
-        message.addTextComponent(
-          new TextComponent(`${GRAY} => ${YELLOW + list[key]}`)
-        );
-      } else
-        message.addTextComponent(
-          `\n ${DARK_GRAY}⁍ ${YELLOW + key + GRAY} => ${YELLOW + list[key]}`
-        );
+        message.addTextComponent(new TextComponent(`${GRAY} => ${YELLOW + list[key]}`));
+      } else message.addTextComponent(`\n ${DARK_GRAY}⁍ ${YELLOW + key + GRAY} => ${YELLOW + list[key]}`);
     }
   }
 
   // Footer
-  message.addTextComponent(
-    "&c&m-----------------------------------------------------&r"
-  );
+  message.addTextComponent("&c&m-----------------------------------------------------&r");
   message.chat();
 }
 
@@ -152,9 +108,7 @@ export function updateList(args, listName) {
   const isArray = Array.isArray(list);
   const command = args[1];
   const item =
-    listName === "moblist" || listName === "spamlist"
-      ? args.slice(2).join(" ")
-      : args.slice(2).join(" ").toLowerCase();
+    listName === "moblist" || listName === "spamlist" ? args.slice(2).join(" ") : args.slice(2).join(" ").toLowerCase();
 
   // Object pairs
   const held = Player?.getHeldItem()
@@ -162,15 +116,11 @@ export function updateList(args, listName) {
     ?.getCompoundTag("tag")
     ?.getCompoundTag("ExtraAttributes")
     ?.getString("id");
-  const value =
-    listName === "valuelist" || listName === "cdlist"
-      ? unformatNumber(args[2])
-      : args.slice(3).join(" ");
+  const value = listName === "valuelist" || listName === "cdlist" ? unformatNumber(args[2]) : args.slice(3).join(" ");
   const key =
     listName === "colorlist"
       ? convertToPascalCase(args[2])
-      : (listName === "cdlist" || listName === "valuelist") &&
-        held !== undefined
+      : (listName === "cdlist" || listName === "valuelist") && held !== undefined
       ? held
       : args[2];
 
@@ -178,44 +128,20 @@ export function updateList(args, listName) {
     case "add": // ADD TO LIST
       if (isArray && !list.includes(item)) {
         list.push(item);
-        ChatLib.chat(
-          `${LOGO + GREEN}Successfully added "${
-            WHITE + item + GREEN
-          }" to the ${listName}!`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully added "${WHITE + item + GREEN}" to the ${listName}!`);
       } else if (!isArray && !(key in list)) {
         list[key] = value;
-        ChatLib.chat(
-          `${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${
-            WHITE + key + GREEN
-          }]!`
-        );
-      } else
-        ChatLib.chat(
-          `${LOGO + RED}[${
-            WHITE + (isArray ? item : key) + RED
-          }] is already in the ${listName}!`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully linked "${WHITE + value + GREEN}" to [${WHITE + key + GREEN}]!`);
+      } else ChatLib.chat(`${LOGO + RED}[${WHITE + (isArray ? item : key) + RED}] is already in the ${listName}!`);
       break;
     case "remove": // REMOVE FROM LIST
       if (isArray && list.indexOf(item) > -1) {
         list.splice(list.indexOf(item), 1);
-        ChatLib.chat(
-          `${LOGO + GREEN}Successfully removed "${
-            WHITE + item + GREEN
-          }" from the ${listName}!`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully removed "${WHITE + item + GREEN}" from the ${listName}!`);
       } else if (!isArray && key in list) {
         delete list[key];
-        ChatLib.chat(
-          `${LOGO + GREEN}Successfully removed "${
-            WHITE + key + GREEN
-          }" from the ${listName}!`
-        );
-      } else
-        ChatLib.chat(
-          `${LOGO + RED}[${WHITE + item + RED}] is not in the ${listName}!`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully removed "${WHITE + key + GREEN}" from the ${listName}!`);
+      } else ChatLib.chat(`${LOGO + RED}[${WHITE + item + RED}] is not in the ${listName}!`);
       break;
     case "clear": // CLEAR LIST
       if (isArray) list.length = 0;
@@ -227,8 +153,7 @@ export function updateList(args, listName) {
       printList(list, listName, parseInt(args[2] ?? 1));
       return;
     case "reset": // RESET LIST TO DEFAULT
-      if (listName === "dianalist")
-        data.dianalist = ["hub", "da", "castle", "museum", "wizard"];
+      if (listName === "dianalist") data.dianalist = ["hub", "da", "castle", "museum", "wizard"];
       else if (listName === "attributelist")
         data.attributelist = [
           "arachno",
@@ -270,8 +195,7 @@ export function updateList(args, listName) {
           "trophy_hunter",
         ];
       else if (listName === "moblist")
-        if (listName === "moblist")
-          data.moblist = ["vanquisher", "jawbus", "thunder", "inquisitor"];
+        if (listName === "moblist") data.moblist = ["vanquisher", "jawbus", "thunder", "inquisitor"];
         else if (isArray) list.length = 0;
         else Object.keys(list).forEach((key) => delete list[key]);
       ChatLib.chat(`${LOGO + GREEN}Successfully reset the ${listName}!`);
@@ -292,16 +216,12 @@ export function updateList(args, listName) {
           "blazing_fortune",
           "fishing_experience",
         ];
-        ChatLib.chat(
-          `${LOGO + GREEN}Successfully limited to valuable attributes!`
-        );
+        ChatLib.chat(`${LOGO + GREEN}Successfully limited to valuable attributes!`);
         break;
       }
     default:
       ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${command}"!`);
-      let base = `${
-        LOGO + RED
-      }Please input as: ${WHITE}/va ${listName} ${GRAY}<${WHITE}view, clear, add, remove`;
+      let base = `${LOGO + RED}Please input as: ${WHITE}/va ${listName} ${GRAY}<${WHITE}view, clear, add, remove`;
 
       if (listName === "cdlist")
         base += `[cd]
@@ -312,20 +232,15 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
 - ${AQUA}l ${GRAY}=> ${AQUA}left click
 - ${AQUA}a ${GRAY}=> ${AQUA}no cd (e.x Plasmaflux)
 - ${AQUA}s ${GRAY}=> ${AQUA}shift`;
-      else if (listName === "emotelist")
-        base += `${GRAY}> ${WHITE}[key] [value]`;
-      else if (listName === "dianalist")
-        base += `${GRAY}> <${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
-      else if (listName === "moblist")
-        base += `${GRAY}> <${WHITE}[MCEntityClass], [Stand Name]${GRAY}>>`;
-      else if (listName === "colorlist")
-        base += `${GRAY}> ${WHITE}[mob] [r] [g] [b]`;
+      else if (listName === "emotelist") base += `${GRAY}> ${WHITE}[key] [value]`;
+      else if (listName === "dianalist") base += `${GRAY}> <${WHITE}hub, castle, da, museum, crypt, wizard${GRAY}>>`;
+      else if (listName === "moblist") base += `${GRAY}> <${WHITE}[MCEntityClass], [Stand Name]${GRAY}>>`;
+      else if (listName === "colorlist") base += `${GRAY}> ${WHITE}[mob] [r] [g] [b]`;
       else if (listName === "valuelist")
         base += `${GRAY}> ${WHITE}*[item_id] [value]\n${DARK_GRAY}This will set the value of your currently held item.`;
       else if (listName === "spamlist")
         base += `${GRAY}> ${WHITE}[phrase]\n${DARK_GRAY}Remember to add variables with ${"${var}"}, for example:\n ${DARK_GRAY}va sl add Guild > ${"${player}"} left.`;
-      else if (listName === "attributelist")
-        base += `, value> ${WHITE}[attribute_name]`;
+      else if (listName === "attributelist") base += `, value> ${WHITE}[attribute_name]`;
       else base += "> [item]";
 
       ChatLib.chat(base);
@@ -339,14 +254,8 @@ ${DARK_AQUA}Special args (put in front, e.x 'a60'):
   else if (listName === "valuelist") updateAuction();
   else if (listName === "widgetlist") updateWidgetList();
   else if (listName === "prefixlist")
-    ChatLib.chat(
-      `${LOGO + GREEN}Please use ${AQUA}/ct load ${GREEN}to reload registers!`
-    );
-  setRegisters(
-    (off =
-      Settings.skyblockToggle &&
-      !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"))
-  );
+    ChatLib.chat(`${LOGO + GREEN}Please use ${AQUA}/ct load ${GREEN}to reload registers!`);
+  setRegisters((off = Settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")));
 }
 
 /**
@@ -375,20 +284,13 @@ export function soulEdit(args, type, soul, base, world) {
         return;
       }
 
-      const closest = getClosest(
-        [Player.getX(), Player.getY(), Player.getZ()],
-        souls
-      );
+      const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
       if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
       ChatLib.chat(`${LOGO + GREEN}Succesfully popped closest ${type} soul!`);
       break;
     default:
       ChatLib.chat(`\n${LOGO + RED}Error: Invalid argument "${args[1]}"!`);
-      ChatLib.chat(
-        `${
-          LOGO + RED
-        }Please input as: ${WHITE}/va ${type} ${GRAY}<${WHITE}reset, clear, pop${GRAY}>`
-      );
+      ChatLib.chat(`${LOGO + RED}Please input as: ${WHITE}/va ${type} ${GRAY}<${WHITE}reset, clear, pop${GRAY}>`);
       break;
   }
 }

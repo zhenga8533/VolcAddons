@@ -1,21 +1,10 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import {
-  AQUA,
-  BLUE,
-  BOLD,
-  DARK_GRAY,
-  GOLD,
-  GRAY,
-  GREEN,
-  LOGO,
-  RED,
-  YELLOW,
-} from "../../utils/Constants";
-import { getClosest } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/RegisterTils";
-import Waypoint from "../../utils/Waypoint";
+import { AQUA, BLUE, BOLD, DARK_GRAY, GOLD, GRAY, GREEN, LOGO, RED, YELLOW } from "../../utils/Constants";
 import { Json } from "../../utils/Json";
+import location from "../../utils/Location";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import Waypoint from "../../utils/Waypoint";
+import { getClosest } from "../../utils/functions/find";
 
 /**
  * Variables used to represent soul waypoints.
@@ -30,10 +19,7 @@ registerWhen(
   register("chat", () => {
     // Delete closest soul
     const souls = catSouls.getData();
-    const closest = getClosest(
-      [Player.getX(), Player.getY(), Player.getZ()],
-      souls
-    );
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
     if (closest !== undefined) souls.splice(souls.indexOf(closest[0]), 1);
   }).setCriteria("You found a piece of Montezuma's soul!"),
   () => location.getWorld() === "The Rift"
@@ -46,10 +32,7 @@ registerWhen(
   register("chat", () => {
     // Delete duplicate soul
     const souls = catSouls.getData();
-    const closest = getClosest(
-      [Player.getX(), Player.getY(), Player.getZ()],
-      souls
-    );
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], souls);
     if (closest[1] < 5) souls.splice(souls.indexOf(closest[0]), 1);
   }).setCriteria("You have already found this Montezuma soul piece!"),
   () => location.getWorld() === "The Rift"
@@ -65,12 +48,7 @@ registerWhen(
     const soul = catSouls.getData()[0];
     if (soul === undefined) return;
 
-    soulWaypoints.push([
-      soul[0],
-      parseFloat(soul[3]),
-      parseFloat(soul[4]),
-      parseFloat(soul[5]),
-    ]);
+    soulWaypoints.push([soul[0], parseFloat(soul[3]), parseFloat(soul[4]), parseFloat(soul[5])]);
   }).setFps(1),
   () => location.getWorld() === "The Rift" && Settings.catWaypoint
 );
@@ -88,15 +66,11 @@ export function updateCat(command, index) {
   switch (command) {
     case "clear": // Clear all waypoints
       souls.length = 0;
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully cleared out all Montezuma Soul waypoints.`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully cleared out all Montezuma Soul waypoints.`);
       break;
     case "delete": // Delete the specified soul
       if (souls[index] === undefined) {
-        ChatLib.chat(
-          `${LOGO + RED}Error: Invalid Montezuma Soul index "${index}"!`
-        );
+        ChatLib.chat(`${LOGO + RED}Error: Invalid Montezuma Soul index "${index}"!`);
         return;
       }
       souls.splice(index, 1);
@@ -104,9 +78,7 @@ export function updateCat(command, index) {
       ChatLib.chat(`${LOGO + GREEN}Successfully removed Montezuma Soul.`);
       break;
     case "list": // List all missing fairy souls
-      const message = new Message(
-        `\n${LOGO + GOLD + BOLD}Montezuma Souls:`
-      ).setChatLineId(5858);
+      const message = new Message(`\n${LOGO + GOLD + BOLD}Montezuma Souls:`).setChatLineId(5858);
       souls.forEach((soul, i) => {
         // Get the soul data
         const name = soul[0];
@@ -124,9 +96,7 @@ ${DARK_GRAY}Obtainment:
 
         // Add the text component
         message.addTextComponent(
-          new TextComponent(
-            `\n${DARK_GRAY}- ${AQUA}${zone}: ${YELLOW}(${x}, ${y}, ${z})`
-          )
+          new TextComponent(`\n${DARK_GRAY}- ${AQUA}${zone}: ${YELLOW}(${x}, ${y}, ${z})`)
             .setHoverValue(hover)
             .setClick("run_command", `/va cat delete ${i}`)
         );
@@ -135,20 +105,15 @@ ${DARK_GRAY}Obtainment:
       break;
     case "shift": // Delete closest soul
       souls.shift();
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully removed closest Montezuma Soul.`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully removed closest Montezuma Soul.`);
       break;
     case "reset": // Reset the array
       catSouls.reset();
-      ChatLib.chat(
-        `${LOGO + GREEN}Successfully reset Montezuma Soul waypoints.`
-      );
+      ChatLib.chat(`${LOGO + GREEN}Successfully reset Montezuma Soul waypoints.`);
       break;
     case "help": // Display help message
     default:
-      if (command !== "help")
-        ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+      if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
       ChatLib.chat(
         `${LOGO + GOLD + BOLD}Fairy Soul Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va fairy <command>

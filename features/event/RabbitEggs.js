@@ -1,6 +1,3 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import Waypoint from "../../utils/Waypoint";
 import {
   AMOGUS,
   BOLD,
@@ -15,19 +12,18 @@ import {
   WHITE,
   YELLOW,
 } from "../../utils/Constants";
-import {
-  convertToTitleCase,
-  formatTime,
-  unformatNumber,
-} from "../../utils/functions/format";
+import { data } from "../../utils/Data";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
-import { registerWhen } from "../../utils/RegisterTils";
+import location from "../../utils/Location";
 import { Overlay } from "../../utils/Overlay";
-import { data } from "../../utils/Data";
-import { announceMob, playSound } from "../../utils/functions/misc";
-import { getClosest } from "../../utils/functions/find";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { setTitle } from "../../utils/Title";
+import Waypoint from "../../utils/Waypoint";
+import { getClosest } from "../../utils/functions/find";
+import { convertToTitleCase, formatTime, unformatNumber } from "../../utils/functions/format";
+import { announceMob, playSound } from "../../utils/functions/misc";
 
 /**
  * Missing rabbits
@@ -35,8 +31,7 @@ import { setTitle } from "../../utils/Title";
 const missingRabbits = new Json("rabbits.json", true).getData();
 register("guiOpened", () => {
   Client.scheduleTask(1, () => {
-    if (!Player.getContainer().getName().endsWith("Hoppity's Collection"))
-      return;
+    if (!Player.getContainer().getName().endsWith("Hoppity's Collection")) return;
 
     const items = Player.getContainer().getItems();
     for (let i = 1; i < 5; i++) {
@@ -48,16 +43,9 @@ register("guiOpened", () => {
         if (index === -1) continue;
 
         // Track duplicates
-        let dupeI = lore?.findIndex((line) =>
-          line.endsWith("§7duplicate Rabbits.")
-        );
+        let dupeI = lore?.findIndex((line) => line.endsWith("§7duplicate Rabbits."));
         if (dupeI !== -1) {
-          let dupes = unformatNumber(
-            lore[dupeI - 1]
-              ?.removeFormatting()
-              ?.split(" ")?.[2]
-              ?.split("/")?.[0]
-          );
+          let dupes = unformatNumber(lore[dupeI - 1]?.removeFormatting()?.split(" ")?.[2]?.split("/")?.[0]);
           if (dupes !== 0) data.eggs.dupe = dupes;
         }
 
@@ -71,8 +59,7 @@ register("guiOpened", () => {
 
         // Update missing rabbits
         if (!complete) missingRabbits[name] = requirement;
-        else if (missingRabbits.hasOwnProperty(name))
-          delete missingRabbits[name];
+        else if (missingRabbits.hasOwnProperty(name)) delete missingRabbits[name];
       }
     }
   });
@@ -86,9 +73,7 @@ register("guiOpened", () => {
 export function printRabbits(page, backup) {
   printList(missingRabbits, "Rabbits", isNaN(page) ? backup : page, 6, false);
   if (Object.keys(missingRabbits).length === 30)
-    ChatLib.chat(
-      `${DARK_GRAY}Remember to go through rabbits menu to initialize tracking!`
-    );
+    ChatLib.chat(`${DARK_GRAY}Remember to go through rabbits menu to initialize tracking!`);
 }
 
 /**
@@ -105,9 +90,7 @@ registerWhen(
     cf.multiplier += parseFloat(mult);
     cf.production += parseInt(choco) * cf.multiplier;
     data.eggs.total++;
-  }).setCriteria(
-    "NEW RABBIT! +${choco} Chocolate and +${mult}x Chocolate per second!"
-  ),
+  }).setCriteria("NEW RABBIT! +${choco} Chocolate and +${mult}x Chocolate per second!"),
   () => Settings.chocoDisplay
 );
 
@@ -168,12 +151,8 @@ registerWhen(
           : 0;
       lastLooted[type] = Date.now() + offset * 50;
     }
-  }).setCriteria(
-    "You have already collected this Chocolate ${type} Egg! Try again when it respawns!"
-  ),
-  () =>
-    (Settings.chocoWaypoints || Settings.eggTimers) &&
-    location.getSeason() === "Spring"
+  }).setCriteria("You have already collected this Chocolate ${type} Egg! Try again when it respawns!"),
+  () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring"
 );
 
 registerWhen(
@@ -200,10 +179,7 @@ registerWhen(
     // Track egg location
     const found = data.eggs.found;
     const world = location.getWorld();
-    const closest = getClosest(
-      [Player.getX(), Player.getY(), Player.getZ()],
-      eggLocs
-    )[0];
+    const closest = getClosest([Player.getX(), Player.getY(), Player.getZ()], eggLocs)[0];
     const wpKey = closest[0] + "," + closest[2];
     if (!found.hasOwnProperty(world)) found[world] = {};
 
@@ -212,49 +188,34 @@ registerWhen(
       if (updateUniques) ChatLib.command("va eggs unique", true);
     } else found[world][wpKey]++;
   }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"),
-  () =>
-    (Settings.chocoWaypoints || Settings.eggTimers) &&
-    location.getSeason() === "Spring"
+  () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring"
 );
 
 registerWhen(
   register("chat", (type) => {
     looted[type] = false;
   }).setCriteria("HOPPITY'S HUNT A Chocolate ${type} Egg has appeared!"),
-  () =>
-    (Settings.chocoWaypoints || Settings.eggTimers) &&
-    location.getSeason() === "Spring"
+  () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring"
 );
 
 registerWhen(
   register("tick", () => {
     const time = World.getTime() % 24_000;
 
-    if (
-      Math.abs(time - 1_000) < 4 ||
-      Date.now() - lastLooted.Breakfast > 1_205_500
-    ) {
+    if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_205_500) {
       looted.Breakfast = false;
       lastLooted.Breakfast = 0;
     }
-    if (
-      Math.abs(time - 8_000) < 4 ||
-      Date.now() - lastLooted.Lunch > 1_205_500
-    ) {
+    if (Math.abs(time - 8_000) < 4 || Date.now() - lastLooted.Lunch > 1_205_500) {
       looted.Lunch = false;
       lastLooted.Lunch = 0;
     }
-    if (
-      Math.abs(time - 15_000) < 4 ||
-      Date.now() - lastLooted.Dinner > 1_205_500
-    ) {
+    if (Math.abs(time - 15_000) < 4 || Date.now() - lastLooted.Dinner > 1_205_500) {
       looted.Dinner = false;
       lastLooted.Dinner = 0;
     }
   }),
-  () =>
-    (Settings.chocoWaypoints || Settings.eggTimers) &&
-    location.getSeason() === "Spring"
+  () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring"
 );
 
 // ArmorStand ESP susge, UAYOR
@@ -272,18 +233,13 @@ registerWhen(
       if (helmet === null) return;
 
       // Check if valid egg ID
-      const id = helmet
-        .func_77978_p()
-        ?.func_74775_l("SkullOwner")
-        ?.func_74779_i("Id"); // getNBT() +> getNBTTagCompound() => getString()
+      const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id"); // getNBT() +> getNBTTagCompound() => getString()
       if (!(id in EGGS) || looted[EGGS[id]]) return;
 
       // Add waypoint
       const wp = [EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()];
       const coords = wp.slice(1);
-      const dupe = data.eggs.found[location.getWorld()]?.hasOwnProperty(
-        `${wp[1]},${wp[3]}`
-      );
+      const dupe = data.eggs.found[location.getWorld()]?.hasOwnProperty(`${wp[1]},${wp[3]}`);
 
       eggLocs.push(coords);
       if (dupe) eggWaypoints.push(wp);
@@ -293,9 +249,9 @@ registerWhen(
       const coordsStr = coords.toString();
       if (eggOld.find((egg) => coordsStr === egg.toString()) === undefined)
         ChatLib.chat(
-          `${LOGO + YELLOW}Found a ${EGGS[id]} Egg: ${coords
-            .map((c) => Math.round(c))
-            .join(", ")}! ${dupe ? GREEN + "✔" : RED + "✘"}`
+          `${LOGO + YELLOW}Found a ${EGGS[id]} Egg: ${coords.map((c) => Math.round(c)).join(", ")}! ${
+            dupe ? GREEN + "✔" : RED + "✘"
+          }`
         );
     });
   }).setFps(1),
@@ -310,14 +266,7 @@ let chocoLoc = "";
 
 const announceOnClose = register("guiClosed", () => {
   Client.scheduleTask(5, () =>
-    announceMob(
-      Settings.chocoAlert,
-      chocoType,
-      Player.getX(),
-      Player.getY(),
-      Player.getZ(),
-      chocoLoc
-    )
+    announceMob(Settings.chocoAlert, chocoType, Player.getX(), Player.getY(), Player.getZ(), chocoLoc)
   );
   announceOnClose.unregister();
 }).unregister();
@@ -353,15 +302,9 @@ registerWhen(
     const dinnerTime = time > 15_000 ? 39_000 - time : 15_000 - time;
     eggOverlay.setMessage(
       `${GOLD + BOLD}Egg Timers:
- ${YELLOW}Breakfast: ${WHITE + formatTime(breakfastTime / 20)} ${
-        looted.Breakfast ? GREEN + "✔" : RED + "✘"
-      }
- ${YELLOW}Lunch: ${WHITE + formatTime(lunchTime / 20)} ${
-        looted.Lunch ? GREEN + "✔" : RED + "✘"
-      }
- ${YELLOW}Dinner: ${WHITE + formatTime(dinnerTime / 20)} ${
-        looted.Dinner ? GREEN + "✔" : RED + "✘"
-      }`
+ ${YELLOW}Breakfast: ${WHITE + formatTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"}
+ ${YELLOW}Lunch: ${WHITE + formatTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"}
+ ${YELLOW}Dinner: ${WHITE + formatTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"}`
     );
   }).setFps(1),
   () => Settings.eggTimers && location.getSeason() === "Spring"
@@ -369,17 +312,8 @@ registerWhen(
 
 registerWhen(
   register("chat", (type) => {
-    setTitle(
-      `${LIGHT_PURPLE + BOLD}EGG SPAWNED!`,
-      `${GOLD}A ${type} Egg ${GOLD}has spawned.`,
-      10,
-      50,
-      10,
-      40
-    );
-  }).setCriteria(
-    "&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"
-  ),
+    setTitle(`${LIGHT_PURPLE + BOLD}EGG SPAWNED!`, `${GOLD}A ${type} Egg ${GOLD}has spawned.`, 10, 50, 10, 40);
+  }).setCriteria("&r&d&lHOPPITY'S HUNT &r&dA &r${type} Egg &r&dhas appeared!&r"),
   () => Settings.eggTimers && location.getSeason() === "Spring"
 );
 
@@ -394,19 +328,12 @@ const strayDetect = register("step", () => {
     if (i === 13) continue;
 
     let item = items[i];
-    if (
-      item !== null &&
-      item.getRegistryName() !== "minecraft:stained_glass_pane"
-    ) {
+    if (item !== null && item.getRegistryName() !== "minecraft:stained_glass_pane") {
       // Gold: 794465b5-3bd2-38fc-b02f-0b51d782e201
       // let skullId = item.getNBT().getCompoundTag("tag").getCompoundTag("SkullOwner").getString("Id");
       let name = item.getName();
 
-      if (
-        name.endsWith("§d§lCAUGHT!") ||
-        (!name.startsWith("§6§lGolden Rabbit") && Settings.strayAlert === 2)
-      )
-        return;
+      if (name.endsWith("§d§lCAUGHT!") || (!name.startsWith("§6§lGolden Rabbit") && Settings.strayAlert === 2)) return;
       playSound(AMOGUS, 10_000);
     }
   }
@@ -464,11 +391,7 @@ export function updateEggs(command, page) {
       base.forEach((wp) => {
         const x = parseInt(wp[2]);
         const z = parseInt(wp[4]);
-        if (
-          !data.eggs.found[world]?.hasOwnProperty(
-            `${x + (x < 0)}.5,${z + (z < 0)}.5`
-          )
-        )
+        if (!data.eggs.found[world]?.hasOwnProperty(`${x + (x < 0)}.5,${z + (z < 0)}.5`))
           eggPoints.push([wp[0], ...wp.slice(2)]);
       });
       updateUniques = true;
@@ -495,26 +418,15 @@ export function updateEggs(command, page) {
       });
 
       const formatted = unique
-        .map(
-          (wp) =>
-            `${GOLD + wp[0]} ${RED}✘\n    ${
-              YELLOW + wp.slice(2).join(", ")
-            } ${GRAY}(${wp[1]})`
-        )
+        .map((wp) => `${GOLD + wp[0]} ${RED}✘\n    ${YELLOW + wp.slice(2).join(", ")} ${GRAY}(${wp[1]})`)
         .concat(
-          dupe.map(
-            (wp) =>
-              `${GOLD + wp[0]} ${GREEN}✔\n    ${
-                YELLOW + wp.slice(2).join(", ")
-              } ${GRAY}(${wp[1]})`
-          )
+          dupe.map((wp) => `${GOLD + wp[0]} ${GREEN}✔\n    ${YELLOW + wp.slice(2).join(", ")} ${GRAY}(${wp[1]})`)
         );
       printList(formatted, "eggs", page, 6, false);
       break;
     case "help":
     default:
-      if (command !== "help")
-        ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
+      if (command !== "help") ChatLib.chat(`${LOGO + RED}Error: Invalid argument "${command}"!\n`);
       ChatLib.chat(
         `${LOGO + GOLD + BOLD}Waypoint Commands:
  ${DARK_GRAY}- ${GOLD}Base: ${YELLOW}/va [npc, zone] <command>

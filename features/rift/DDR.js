@@ -1,6 +1,6 @@
 import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 
 /**
  * Variables used to represent complete dance and current dance move.
@@ -80,8 +80,7 @@ let dancing = [...DANCES];
  */
 registerWhen(
   register("renderTitle", (title, subtitle, event) => {
-    if (title === "§aIt's happening!§r" || title === "§aKeep it up!§r")
-      cancel(event);
+    if (title === "§aIt's happening!§r" || title === "§aKeep it up!§r") cancel(event);
     if (!dancing.includes(subtitle) || subtitle === last) return;
 
     const move = dancing.shift();

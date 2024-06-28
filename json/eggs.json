@@ -1,13 +1,7 @@
 {
   "Hub": [
     ["Bazaar Alley", "in the Bazaar Alley", "-40", "70", "-74"],
-    [
-      "Blacksmith's House",
-      "behind the Blacksmith building",
-      "-38",
-      "70",
-      "-135"
-    ],
+    ["Blacksmith's House", "behind the Blacksmith building", "-38", "70", "-135"],
     ["Colosseum", "atop the Colosseum", "160", "97", "-71"],
     ["Farm", "near the Wheat Minion", "44", "71", "-137"],
     ["Farmhouse", "to the right of the Farmhouse building", "18", "70", "-77"],
@@ -66,13 +60,7 @@
     ["Gunpowder Mines", "beside Walter", "24", "156", "-38"],
     ["Gunpowder Mines", "atop a platform", "22", "159", "27"],
     ["Gunpowder Mines", "beside the Gunpowder Mines lift", "56", "151", "23"],
-    [
-      "Gunpowder Mines",
-      "beside a fire at the entrance to the mines",
-      "1",
-      "153",
-      "37"
-    ],
+    ["Gunpowder Mines", "beside a fire at the entrance to the mines", "1", "153", "37"],
     ["Deep Caverns", "on top of the entrance", "11", "176", "58"],
     ["Deep Caverns", "atop of the shortest mountain peak", "-34", "207", "38"],
     ["Diamond Reserve", "beside the Diamond Reserve lift", "46", "38", "22"],
@@ -87,13 +75,7 @@
   "Dwarven Mines": [
     ["Dwarven Village", "behind Banker Broadjaw", "13", "201", "-150"],
     ["Cliffside Veins", "overlooking The Mist", "36", "128", "50"],
-    [
-      "Divan's Gateway",
-      "atop the right massive dwarf statue",
-      "32",
-      "179",
-      "103"
-    ],
+    ["Divan's Gateway", "atop the right massive dwarf statue", "32", "179", "103"],
     ["Great Ice Wall", "under Divan's Gateway", "-17", "128", "177"],
     ["Dwarven Mines", "underneath a massive crystal", "-1", "183", "26"],
     ["Dwarven Mines", "underneath the gold gate", "87", "193", "-44"],
@@ -104,114 +86,36 @@
     ["Goblin Burrows", "in the Goblin Burrows gold room", "-146", "144", "148"],
     ["Hanging Court", "looking off the Hanging Court", "78", "188", "126"],
     ["The Lift", "behind the Lift", "-93", "200", "-122"],
-    [
-      "Aristocrat Passage",
-      "In the passage underneath the Royal Palace",
-      "104",
-      "151",
-      "142"
-    ],
+    ["Aristocrat Passage", "In the passage underneath the Royal Palace", "104", "151", "142"],
     ["The Forge", "near lava in The Forge", "-2", "147", "-52"]
   ],
   "Crystal Hollows": [
     ["Crystal Nucleus", "near the Diamond Essence Shop", "472", "106", "518"],
-    [
-      "Crystal Nucleus",
-      "at an entrance to the Magma Fields near Amethyst",
-      "485",
-      "65",
-      "479"
-    ],
+    ["Crystal Nucleus", "at an entrance to the Magma Fields near Amethyst", "485", "65", "479"],
     ["Crystal Nucleus", "on a ledge next to the stairwell", "510", "93", "470"],
     ["Crystal Nucleus", "behind Emissary Sisko", "494", "106", "556"],
-    [
-      "Crystal Nucleus",
-      "in between Jade and Sapphire crystals",
-      "553",
-      "106",
-      "513"
-    ],
+    ["Crystal Nucleus", "in between Jade and Sapphire crystals", "553", "106", "513"],
     ["Crystal Nucleus", "on top of the Crystal Nucleus", "508", "115", "564"],
-    [
-      "Crystal Nucleus",
-      "on the arms of the Amethyst statue",
-      "463",
-      "127",
-      "505"
-    ],
-    [
-      "Crystal Nucleus",
-      "at the base of the Sapphire pillar",
-      "532",
-      "69",
-      "528"
-    ],
+    ["Crystal Nucleus", "on the arms of the Amethyst statue", "463", "127", "505"],
+    ["Crystal Nucleus", "at the base of the Sapphire pillar", "532", "69", "528"],
     ["Crystal Nucleus", "next to a lava waterfall", "530", "71", "465"],
     ["Crystal Nucleus", "underneath the stairwell", "509", "71", "480"],
     ["Crystal Nucleus", "near Geonathan Greatforge", "533", "108", "556"],
     ["Crystal Nucleus", "on a lower platform!", "477", "82", "532"],
-    [
-      "Crystal Nucleus",
-      "near the Mithril Deposits entrance",
-      "557",
-      "117",
-      "463"
-    ],
+    ["Crystal Nucleus", "near the Mithril Deposits entrance", "557", "117", "463"],
     ["Crystal Nucleus", "on top of some Gold Ore", "553", "100", "489"],
-    [
-      "Crystal Nucleus",
-      "in the middle of the Crystal Nucleus !",
-      "513",
-      "70",
-      "513"
-    ]
+    ["Crystal Nucleus", "in the middle of the Crystal Nucleus !", "513", "70", "513"]
   ],
   "Spider's Den": [
-    [
-      "Arachne's Sanctuary",
-      "higher up in Arachne's Sanctuary",
-      "-303",
-      "65",
-      "-182"
-    ],
-    [
-      "Arachne's Sanctuary",
-      "behind an egg in Arachne's Sanctuary",
-      "-266",
-      "72",
-      "-191"
-    ],
-    [
-      "Archaeologist's Camp",
-      "within the Archaeologist's Camp",
-      "-355",
-      "111",
-      "-293"
-    ],
+    ["Arachne's Sanctuary", "higher up in Arachne's Sanctuary", "-303", "65", "-182"],
+    ["Arachne's Sanctuary", "behind an egg in Arachne's Sanctuary", "-266", "72", "-191"],
+    ["Archaeologist's Camp", "within the Archaeologist's Camp", "-355", "111", "-293"],
     ["Spider Mound", "behind the Spider's Den", "-155", "86", "-351"],
-    [
-      "Spider's Den",
-      "behind the Crimson Isle launch pad",
-      "-360",
-      "85",
-      "-356"
-    ],
-    [
-      "Spider's Den",
-      "on top of the dragon skeleton's horn",
-      "-353",
-      "124",
-      "-250"
-    ],
+    ["Spider's Den", "behind the Crimson Isle launch pad", "-360", "85", "-356"],
+    ["Spider's Den", "on top of the dragon skeleton's horn", "-353", "124", "-250"],
     ["Arachne's Burrows", "near a Fairy Soul and Relic", "-293", "36", "-271"],
     ["Gravel Mines", "within a Gravel Mines fossil", "-181", "61", "-312"],
-    [
-      "Gravel Mines",
-      "atop a mushroom in the Gravel Mines",
-      "-217",
-      "75",
-      "-345"
-    ],
+    ["Gravel Mines", "atop a mushroom in the Gravel Mines", "-217", "75", "-345"],
     ["Spider's Den", "beside Haymitch", "-202", "83", "-238"],
     ["Spider's Den", "on top of the pond boulder", "-299", "97", "-167"],
     ["Grandma's House", "near slain spiders", "-280", "115", "-181"],
@@ -220,21 +124,9 @@
     ["Spider Mound", "at the top of the Spider's Den", "-200", "174", "-313"]
   ],
   "The End": [
-    [
-      "The End",
-      "atop a obsidian spike near the entrance",
-      "-451",
-      "50",
-      "-274"
-    ],
+    ["The End", "atop a obsidian spike near the entrance", "-451", "50", "-274"],
     ["The End", "overlooking the drop down", "-539", "102", "-271"],
-    [
-      "Zealot Bruiser Hideout",
-      "in the Bruiser Hideout chokepoint",
-      "-551",
-      "56",
-      "-239"
-    ],
+    ["Zealot Bruiser Hideout", "in the Bruiser Hideout chokepoint", "-551", "56", "-239"],
     ["The End", "by the warp to Void Sepulture", "-566", "7", "-316"],
     ["The End", "at the highest point", "-584", "211", "-272"],
     ["Void Slate", "behind the Draconic Altar", "-591", "5", "-276"],
@@ -256,54 +148,18 @@
     ["Dojo", "behind Master Tao", "-237", "108", "-605"],
     ["Dragontail", "within the Dragontail colosseum", "-694", "98", "-794"],
     ["Minion Shop", "in the Dragontail Minion Shop", "-641", "101", "-822"],
-    [
-      "Forgotten Skull",
-      "on the Forgotten Skull's tooth",
-      "-375",
-      "121",
-      "-1009"
-    ],
-    [
-      "Mage Outpost",
-      "on the path through the Mage Outpost",
-      "-295",
-      "93",
-      "-689"
-    ],
+    ["Forgotten Skull", "on the Forgotten Skull's tooth", "-375", "121", "-1009"],
+    ["Mage Outpost", "on the path through the Mage Outpost", "-295", "93", "-689"],
     ["Magma Chamber", "the middle of the Magma Chamber", "-376", "63", "-802"],
     ["Ruins of Ashfang", "in the Ruins of Ashfang", "-469", "135", "-1020"],
     ["Plhlegblast Pool", "in the Plhlegblast Pool", "-375", "83", "-709"],
-    [
-      "Scarleton Plaza",
-      "in front of the Statue of the Hero",
-      "-62",
-      "107",
-      "-811"
-    ],
-    [
-      "The Bastion",
-      "on the snout of The Bastion skeleton",
-      "-631",
-      "141",
-      "-926"
-    ],
+    ["Scarleton Plaza", "in front of the Statue of the Hero", "-62", "107", "-811"],
+    ["The Bastion", "on the snout of The Bastion skeleton", "-631", "141", "-926"],
     ["Stronghold", "on the entrance bridge", "-358", "80", "-442"]
   ],
   "The Park": [
-    [
-      "Savanna Woodland",
-      "where the jungle meets the savannah",
-      "-440",
-      "110",
-      "-40"
-    ],
-    [
-      "Savanna Woodland",
-      "behind Master Tactician Funk's bunks",
-      "-461",
-      "110",
-      "-9"
-    ],
+    ["Savanna Woodland", "where the jungle meets the savannah", "-440", "110", "-40"],
+    ["Savanna Woodland", "behind Master Tactician Funk's bunks", "-461", "110", "-9"],
     ["Jungle Island", "near mossy cobblestone", "-406", "121", "-90"],
     ["None", "within the clay tunnel", "-455", "94", "-1"],
     ["Dark Thicket", "within the cultist's tent", "-327", "104", "-113"],
@@ -313,13 +169,7 @@
     ["Birch Park", "on the birch launch pad", "-276", "87", "-17"],
     ["Birch Park", "next to the pond bridge", "-285", "82", "-41"],
     ["Jungle Island", "at the race checkpoint", "-407", "129", "-123"],
-    [
-      "Jungle Island",
-      "between islands tethered by leaves",
-      "-441",
-      "124",
-      "-109"
-    ],
+    ["Jungle Island", "between islands tethered by leaves", "-441", "124", "-109"],
     ["Birch Park", "within the Rainmaker shrine", "-312", "83", "-72"],
     ["Howling Cave", "in front of Old Shaman Nyko", "-380", "61", "35"],
     ["Jungle Island", "on top of a stone sculpture", "-454", "138", "-121"]
@@ -336,13 +186,7 @@
     ["Dungeon Hub", "atop the Giant Mushroom", "-5", "23", "98"],
     ["Dungeon Hub", "in the Precursor Ruins", "-138", "21", "-7"],
     ["Dungeon Hub", "behind Ophelia's desk", "-62", "121", "-7"],
-    [
-      "Dungeon Hub",
-      "near something that will never arrive",
-      "-62",
-      "122",
-      "28"
-    ],
+    ["Dungeon Hub", "near something that will never arrive", "-62", "122", "28"],
     ["Dungeon Hub", "beside the Hub Island portal", "16", "125", "3"],
     ["Dungeon Hub", "behind leaderboards", "-18", "87", "-27"],
     ["Dungeon Hub", "near Malik", "-66", "121", "6"]

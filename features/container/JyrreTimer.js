@@ -1,6 +1,6 @@
-import Settings from "../../utils/Settings";
 import { NBTTagString } from "../../utils/Constants";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { formatTime } from "../../utils/functions/format";
 
 /**
@@ -8,8 +8,7 @@ import { formatTime } from "../../utils/functions/format";
  */
 registerWhen(
   register("preItemRender", (_, __, ___, gui) => {
-    const item =
-      Player.getContainer().getItems()[gui?.getSlotUnderMouse()?.field_75222_d];
+    const item = Player.getContainer().getItems()[gui?.getSlotUnderMouse()?.field_75222_d];
     if (!item || !item.getName().endsWith("Bottle of Jyrre")) return;
 
     const itemTag = item.getNBT().getCompoundTag("tag");
@@ -20,13 +19,8 @@ registerWhen(
     if (list.getStringTagAt(9).startsWith("§7☲")) list.removeTag(9);
 
     // Add time tag
-    const seconds = itemTag
-      .getCompoundTag("ExtraAttributes")
-      .getInteger("bottle_of_jyrre_seconds");
-    list.insertTag(
-      9,
-      new NBTTagString(`§7☲ Time: §b${formatTime(seconds, 0, 3)}`)
-    );
+    const seconds = itemTag.getCompoundTag("ExtraAttributes").getInteger("bottle_of_jyrre_seconds");
+    list.insertTag(9, new NBTTagString(`§7☲ Time: §b${formatTime(seconds, 0, 3)}`));
   }),
   () => Settings.jyrreTimer
 );

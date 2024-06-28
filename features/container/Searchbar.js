@@ -1,20 +1,13 @@
-import Settings from "../../utils/Settings";
 import { DARK_GRAY, GuiTextField, ITALIC } from "../../utils/Constants";
-import { getSlotCoords } from "../../utils/functions/find";
-import { registerWhen } from "../../utils/RegisterTils";
 import { data, itemNBTs } from "../../utils/Data";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { getSlotCoords } from "../../utils/functions/find";
 import { decompressNBT } from "../../utils/functions/misc";
 
 // Search bar parameters
 const loc = data.XL;
-const searchbar = new GuiTextField(
-  0,
-  Client.getMinecraft().field_71466_p,
-  loc[0],
-  loc[1],
-  192,
-  16
-);
+const searchbar = new GuiTextField(0, Client.getMinecraft().field_71466_p, loc[0], loc[1], 192, 16);
 let calc = undefined;
 
 // Finds items to highlight based on user search
@@ -127,21 +120,14 @@ function getContainers(search) {
 // Render item highlights and search bar
 registerWhen(
   register("guiRender", (x, y, gui) => {
-    if (!gui.class.getName().startsWith("net.minecraft.client.gui.inventory."))
-      return;
+    if (!gui.class.getName().startsWith("net.minecraft.client.gui.inventory.")) return;
     searchbar.func_146194_f();
 
     indexes.forEach((index) => {
       const [x, y] = getSlotCoords(index);
 
       Renderer.translate(0, 0, 100);
-      Renderer.drawRect(
-        Renderer.color(255, 255, 255, 255),
-        x - 1,
-        y - 1,
-        18,
-        18
-      );
+      Renderer.drawRect(Renderer.color(255, 255, 255, 255), x - 1, y - 1, 18, 18);
     });
     darken.forEach((index) => {
       const [x, y] = getSlotCoords(index);
@@ -151,11 +137,7 @@ registerWhen(
     });
 
     if (calc !== undefined)
-      Renderer.drawString(
-        DARK_GRAY + calc,
-        loc[0] - Renderer.getStringWidth(calc) + 190,
-        loc[1] + 4
-      );
+      Renderer.drawString(DARK_GRAY + calc, loc[0] - Renderer.getStringWidth(calc) + 190, loc[1] + 4);
   }),
   () => Settings.searchbar
 );
@@ -166,27 +148,9 @@ registerWhen(
 const gui = new Gui();
 const renderOverlay = register("renderOverlay", () => {
   if (!gui.isOpen()) return;
-  Renderer.drawString(
-    `${ITALIC}x: ${Math.round(loc[0])}, y: ${Math.round(loc[1])}`,
-    loc[0] + 2,
-    loc[1] - 10
-  );
-  Renderer.drawLine(
-    Renderer.WHITE,
-    loc[0],
-    1,
-    loc[0],
-    Renderer.screen.getHeight(),
-    0.5
-  );
-  Renderer.drawLine(
-    Renderer.WHITE,
-    Renderer.screen.getWidth(),
-    loc[1],
-    1,
-    loc[1],
-    0.5
-  );
+  Renderer.drawString(`${ITALIC}x: ${Math.round(loc[0])}, y: ${Math.round(loc[1])}`, loc[0] + 2, loc[1] - 10);
+  Renderer.drawLine(Renderer.WHITE, loc[0], 1, loc[0], Renderer.screen.getHeight(), 0.5);
+  Renderer.drawLine(Renderer.WHITE, Renderer.screen.getWidth(), loc[1], 1, loc[1], 0.5);
   searchbar.func_146194_f();
 }).unregister();
 

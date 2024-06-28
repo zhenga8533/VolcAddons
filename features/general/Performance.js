@@ -1,6 +1,3 @@
-import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import Toggles from "../../utils/Toggles";
 import {
   AQUA,
   BOLD,
@@ -15,27 +12,22 @@ import {
   RED,
   YELLOW,
 } from "../../utils/Constants";
-import { Overlay } from "../../utils/Overlay";
-import { isPlayer } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/RegisterTils";
 import { data } from "../../utils/Data";
+import location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import Toggles from "../../utils/Toggles";
+import { isPlayer } from "../../utils/functions/player";
 
 /**
  * Java packet types.
  */
 const SETTINGS = Client.settings.getSettings();
-let S03PacketTimeUpdate = Java.type(
-  "net.minecraft.network.play.server.S03PacketTimeUpdate"
-);
-let S37PacketStatistics = Java.type(
-  "net.minecraft.network.play.server.S37PacketStatistics"
-);
-let C16PacketClientStatus = Java.type(
-  "net.minecraft.network.play.client.C16PacketClientStatus"
-);
-let S01PacketJoinGame = Java.type(
-  "net.minecraft.network.play.server.S01PacketJoinGame"
-);
+let S03PacketTimeUpdate = Java.type("net.minecraft.network.play.server.S03PacketTimeUpdate");
+let S37PacketStatistics = Java.type("net.minecraft.network.play.server.S37PacketStatistics");
+let C16PacketClientStatus = Java.type("net.minecraft.network.play.client.C16PacketClientStatus");
+let S01PacketJoinGame = Java.type("net.minecraft.network.play.server.S01PacketJoinGame");
 
 /**
  * Variables used to represent TPS data.
@@ -87,9 +79,7 @@ let lastPing = 0;
  */
 function sendPingRequest() {
   if (lastPing === 0) {
-    Client.sendPacket(
-      new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS)
-    );
+    Client.sendPacket(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
     lastPing = Date.now();
   }
 }
@@ -133,12 +123,7 @@ ${DARK_AQUA + BOLD}FPS: ${GREEN}60 ${AQUA}fps
 ${DARK_AQUA + BOLD}TPS: ${GREEN}19.8 ${AQUA}tps
 ${DARK_AQUA + BOLD}CPS: ${GREEN}0 ${AQUA}: ${GREEN}0
 ${DARK_AQUA + BOLD}Day: ${AQUA}0.75`;
-const statusOverlay = new Overlay(
-  "serverStatus",
-  data.LL,
-  "moveStatus",
-  statusExample
-);
+const statusOverlay = new Overlay("serverStatus", data.LL, "moveStatus", statusExample);
 
 /**
  * Updates the status overlay message with the current ping, TPS, and FPS information.
@@ -154,18 +139,14 @@ registerWhen(
       const x = Math.round(Player.getX());
       const y = Math.round(Player.getY());
       const z = Math.round(Player.getZ());
-      statusMessage += `\n${GRAY}[${GOLD}XYZ${GRAY}] ${
-        DARK_GRAY + x
-      }, ${y}, ${z}`;
+      statusMessage += `\n${GRAY}[${GOLD}XYZ${GRAY}] ${DARK_GRAY + x}, ${y}, ${z}`;
     }
 
     // Yaw and Pitch
     if (Toggles.angleDisplay === 1 || Toggles.angleDisplay === 3) {
       const yaw = Player.getYaw();
       const pitch = Player.getPitch();
-      statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${
-        DARK_GRAY + yaw.toFixed(2)
-      } / ${pitch.toFixed(2)}`;
+      statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${DARK_GRAY + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
     }
 
     // Direction
@@ -196,9 +177,7 @@ registerWhen(
           : ping < 690
           ? RED
           : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}Ping${GRAY}] ${
-        pingColor + ping + DARK_GRAY
-      } ms`;
+      statusMessage += `\n${GRAY}[${GOLD}Ping${GRAY}] ${pingColor + ping + DARK_GRAY} ms`;
     }
 
     // FPS
@@ -218,28 +197,14 @@ registerWhen(
           : fpsRatio > 0.5
           ? RED
           : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}FPS${GRAY}] ${
-        fpsColor + fps + DARK_GRAY
-      } fps`;
+      statusMessage += `\n${GRAY}[${GOLD}FPS${GRAY}] ${fpsColor + fps + DARK_GRAY} fps`;
     }
 
     // TPS
     if (Toggles.tpsDisplay) {
       const tpsColor =
-        tps > 19
-          ? GREEN
-          : tps > 16
-          ? DARK_GREEN
-          : tps > 13
-          ? YELLOW
-          : tps > 10
-          ? GOLD
-          : tps > 7
-          ? RED
-          : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}TPS${GRAY}] ${
-        tpsColor + tps.toFixed(1) + DARK_GRAY
-      } tps`;
+        tps > 19 ? GREEN : tps > 16 ? DARK_GREEN : tps > 13 ? YELLOW : tps > 10 ? GOLD : tps > 7 ? RED : DARK_RED;
+      statusMessage += `\n${GRAY}[${GOLD}TPS${GRAY}] ${tpsColor + tps.toFixed(1) + DARK_GRAY} tps`;
     }
 
     // CPS
@@ -270,9 +235,7 @@ registerWhen(
           : rightCPS < 30
           ? RED
           : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}CPS${GRAY}] ${
-        leftColor + leftCPS + DARK_GRAY
-      } : ${rightColor + rightCPS}`;
+      statusMessage += `\n${GRAY}[${GOLD}CPS${GRAY}] ${leftColor + leftCPS + DARK_GRAY} : ${rightColor + rightCPS}`;
     }
 
     // Day
@@ -306,9 +269,7 @@ export function getStatus(status) {
           : ping < 690
           ? RED
           : DARK_RED;
-      ChatLib.chat(
-        `${LOGO + DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms`
-      );
+      ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Ping: ${pingColor + ping + AQUA} ms`);
       break;
     case "fps":
       const fps = Client.getFPS();
@@ -325,26 +286,12 @@ export function getStatus(status) {
           : fpsRatio > 0.5
           ? RED
           : DARK_RED;
-      ChatLib.chat(
-        `${LOGO + DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps`
-      );
+      ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}FPS: ${fpsColor + fps + AQUA} fps`);
       break;
     case "tps":
       const tpsColor =
-        tps > 19
-          ? GREEN
-          : tps > 16
-          ? DARK_GREEN
-          : tps > 13
-          ? YELLOW
-          : tps > 10
-          ? GOLD
-          : tps > 7
-          ? RED
-          : DARK_RED;
-      ChatLib.chat(
-        `${LOGO + DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps`
-      );
+        tps > 19 ? GREEN : tps > 16 ? DARK_GREEN : tps > 13 ? YELLOW : tps > 10 ? GOLD : tps > 7 ? RED : DARK_RED;
+      ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}TPS: ${tpsColor + tps.toFixed(1) + AQUA} tps`);
       break;
     case "cps":
       const leftCPS = CPS.getLeftClicks();
@@ -374,19 +321,13 @@ export function getStatus(status) {
           ? RED
           : DARK_RED;
 
-      ChatLib.chat(
-        `${LOGO + DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${
-          rightColor + rightCPS
-        }`
-      );
+      ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}CPS: ${leftColor + leftCPS + AQUA} : ${rightColor + rightCPS}`);
       break;
     case "yaw":
       ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Yaw: ${AQUA + Player.getYaw()}°`);
       break;
     case "pitch":
-      ChatLib.chat(
-        `${LOGO + DARK_AQUA + BOLD}Pitch: ${AQUA + Player.getPitch()}°`
-      );
+      ChatLib.chat(`${LOGO + DARK_AQUA + BOLD}Pitch: ${AQUA + Player.getPitch()}°`);
       break;
     case "dir":
     case "direction":
@@ -417,16 +358,10 @@ registerWhen(
     const pitch = Player.getPitch().toFixed(2);
     const height = Renderer.screen.getHeight();
     const width = Renderer.screen.getWidth();
-    const offset =
-      (9 * Renderer.screen.getScale()) / 2 + Renderer.screen.getScale();
+    const offset = (9 * Renderer.screen.getScale()) / 2 + Renderer.screen.getScale();
 
     Renderer.drawString(GRAY + yaw, width / 2 + offset, height / 2 - 4.5, true);
-    Renderer.drawString(
-      GRAY + pitch,
-      (width - Renderer.getStringWidth(pitch)) / 2,
-      height / 2 + offset,
-      true
-    );
+    Renderer.drawString(GRAY + pitch, (width - Renderer.getStringWidth(pitch)) / 2, height / 2 + offset, true);
   }),
   () => Toggles.angleDisplay > 1
 );
@@ -437,8 +372,7 @@ registerWhen(
 registerWhen(
   register("renderEntity", (entity, _, __, event) => {
     const distance = entity.distanceTo(Player.asPlayerMP());
-    if (Settings.hideFarEntity !== 0 && distance >= Settings.hideFarEntity)
-      cancel(event);
+    if (Settings.hideFarEntity !== 0 && distance >= Settings.hideFarEntity) cancel(event);
     if (
       Settings.hideCloseEntity !== 0 &&
       distance <= Settings.hideCloseEntity &&
@@ -448,8 +382,7 @@ registerWhen(
       cancel(event);
   }).setPriority(Priority.LOWEST),
   () => {
-    if (Settings.hideFarEntity === 0 && Settings.hideCloseEntity === 0)
-      return false;
+    if (Settings.hideFarEntity === 0 && Settings.hideCloseEntity === 0) return false;
     const world = location.getWorld()?.toLowerCase() ?? "";
     const worlds = Settings.hideWorlds.toLowerCase().split(", ");
     return worlds[0] === "" || worlds.includes(world);

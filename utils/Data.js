@@ -31,14 +31,7 @@ const DEFAULT_GUI = {
   UL: [930, 65, 1.2, false, false, false], // Armor Display Location
   VL: [10, 170, 1.2, false, false, true], // Visitors Location
   WL: [730, 130, 1.2, false, false, true], // Wolf Combo Location
-  XL: [
-    Renderer.screen.getWidth() / 2 - 96,
-    (Renderer.screen.getHeight() * 6) / 7,
-    1,
-    false,
-    false,
-    true,
-  ], // Searchbox location
+  XL: [Renderer.screen.getWidth() / 2 - 96, (Renderer.screen.getHeight() * 6) / 7, 1, false, false, true], // Searchbox location
   YL: [770, 165, 1.2, false, false, true], // SkyBlock Stats Location
   ZL: [780, 330, 1.2, false, false, true], // Kuudra Profit Tracker Location
   BCL: [180, 10, 1, false, false, true], // Bingo Card Location
@@ -209,12 +202,10 @@ export const itemNBTs = new PogObject(
 
 // Set up storage data
 if (itemNBTs.backpacks.length === 0) {
-  for (let i = 0; i < 18; i++)
-    itemNBTs.backpacks.push(new Array(54).fill(null));
+  for (let i = 0; i < 18; i++) itemNBTs.backpacks.push(new Array(54).fill(null));
 }
 if (itemNBTs.enderchests.length === 0) {
-  for (let i = 0; i < 18; i++)
-    itemNBTs.enderchests.push(new Array(54).fill(null));
+  for (let i = 0; i < 18; i++) itemNBTs.enderchests.push(new Array(54).fill(null));
 }
 data.autosave(30);
 

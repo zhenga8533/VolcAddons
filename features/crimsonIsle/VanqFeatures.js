@@ -1,23 +1,13 @@
-import location from "../../utils/Location";
-import party from "../../utils/Party";
-import Settings from "../../utils/Settings";
-import {
-  AMOGUS,
-  BOLD,
-  DARK_PURPLE,
-  GREEN,
-  LOGO,
-  RED,
-  RESET,
-  WHITE,
-  WITHER_CLASS,
-} from "../../utils/Constants";
-import { announceMob, playSound } from "../../utils/functions/misc";
-import { registerWhen } from "../../utils/RegisterTils";
-import { delay } from "../../utils/ThreadTils";
-import { Overlay } from "../../utils/Overlay";
+import { AMOGUS, BOLD, DARK_PURPLE, GREEN, LOGO, RED, RESET, WHITE, WITHER_CLASS } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import party from "../../utils/Party";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { delay } from "../../utils/ThreadTils";
 import Waypoint from "../../utils/Waypoint";
+import { announceMob, playSound } from "../../utils/functions/misc";
 
 /**
  * Variables used to track and display item and vanquisher kill counts.
@@ -33,13 +23,7 @@ const counterExample = `${RED + BOLD}Total Vanqs: ${RESET}Xue
 ${RED + BOLD}Total Kills: ${RESET}Hua
 ${RED + BOLD}Kills Since: ${RESET}Piao
 ${RED + BOLD}Average Kills: ${RESET}Piao`;
-const counterOverlay = new Overlay(
-  "vanqCounter",
-  data.CL,
-  "moveCounter",
-  counterExample,
-  ["Crimson Isle"]
-);
+const counterOverlay = new Overlay("vanqCounter", data.CL, "moveCounter", counterExample, ["Crimson Isle"]);
 counterOverlay.setMessage("");
 
 /**
@@ -49,18 +33,10 @@ registerWhen(
   register("entityDeath", (death) => {
     if (Player.getHeldItem() === null) return;
     const registry = Player.getHeldItem().getRegistryName();
-    if (
-      !registry.endsWith("hoe") &&
-      !registry.endsWith("bow") &&
-      Player.asPlayerMP().distanceTo(death) > 16
-    )
-      return;
+    if (!registry.endsWith("hoe") && !registry.endsWith("bow") && Player.asPlayerMP().distanceTo(death) > 16) return;
 
     Client.scheduleTask(1, () => {
-      const ExtraAttributes = Player.getHeldItem()
-        .getNBT()
-        .getCompoundTag("tag")
-        .getCompoundTag("ExtraAttributes");
+      const ExtraAttributes = Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes");
       const heldItem = ExtraAttributes.getString("id");
       const newKills = ExtraAttributes.getInteger("stats_book");
 
@@ -81,15 +57,12 @@ registerWhen(
       data.vanqSession.kills += killsDiff;
       data.vanqSession.last += killsDiff;
       if (data.vanqSession.vanqs)
-        data.vanqSession.average = Math.round(
-          data.vanqSession.kills / data.vanqSession.vanqs
-        );
+        data.vanqSession.average = Math.round(data.vanqSession.kills / data.vanqSession.vanqs);
 
       // Session
       session.kills += killsDiff;
       session.last += killsDiff;
-      if (session.vanqs)
-        session.average = Math.round(session.kills / session.vanqs);
+      if (session.vanqs) session.average = Math.round(session.kills / session.vanqs);
       items[heldItem] = newKills;
 
       // Update HUD
@@ -152,13 +125,7 @@ register("command", () => {
  */
 registerWhen(
   register("chat", () => {
-    announceMob(
-      Settings.vanqAlert,
-      "Vanquisher",
-      Player.getX(),
-      Player.getY(),
-      Player.getZ()
-    );
+    announceMob(Settings.vanqAlert, "Vanquisher", Player.getX(), Player.getY(), Player.getZ());
   }).setCriteria("A Vanquisher is spawning nearby!"),
   () => location.getWorld() === "Crimson Isle" && Settings.vanqAlert !== 0
 );
@@ -178,13 +145,7 @@ registerWhen(
  */
 const vanqWaypoints = new Waypoint([0.5, 0, 0.5], 2, true, true, false);
 const vanqExample = `${DARK_PURPLE + BOLD}Vanquisher ${WHITE}Detected`;
-const vanqOverlay = new Overlay(
-  "vanqDetect",
-  data.QL,
-  "moveVanq",
-  vanqExample,
-  ["Crimson Isle"]
-);
+const vanqOverlay = new Overlay("vanqDetect", data.QL, "moveVanq", vanqExample, ["Crimson Isle"]);
 vanqOverlay.setMessage("");
 
 registerWhen(
@@ -198,14 +159,12 @@ registerWhen(
       // Check if vanquisher is dead
       let foundDead = false;
       vanquishers.forEach((vanq) => {
-        if (data.moblist.includes("vanquisher"))
-          vanqWaypoints.push([DARK_PURPLE + "Vanquisher", vanq]);
+        if (data.moblist.includes("vanquisher")) vanqWaypoints.push([DARK_PURPLE + "Vanquisher", vanq]);
         if (vanq.getEntity().func_110143_aJ() === 0) foundDead = true;
       });
 
       // Update HUD
-      if (foundDead)
-        vanqOverlay.setMessage(`${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`);
+      if (foundDead) vanqOverlay.setMessage(`${DARK_PURPLE + BOLD}Vanquisher ${RED}Dead!`);
       else vanqOverlay.setMessage(vanqExample);
     } else vanqOverlay.setMessage("");
   }).setFps(2),

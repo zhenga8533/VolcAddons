@@ -1,8 +1,8 @@
 import { request } from "../../../axios";
+import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
 import Toggles from "../../utils/Toggles";
 import { getGuildName, getPlayerName } from "../../utils/functions/player";
-import { registerWhen } from "../../utils/RegisterTils";
 
 /**
  * Sends a webhook message to discord with message data and timestamp.
@@ -41,12 +41,7 @@ function sendWebhook(player, msg, color) {
  */
 registerWhen(
   register("chat", (player, color, msg) => {
-    if (
-      player.includes("Party") ||
-      player.includes("Guild") ||
-      !(color === "f" || color === "7")
-    )
-      return;
+    if (player.includes("Party") || player.includes("Guild") || !(color === "f" || color === "7")) return;
     sendWebhook(getPlayerName(player.removeFormatting()), msg, 0);
   }).setCriteria("&r${player}&${color}: ${msg}&r"),
   () => Settings.chatWebhook !== "" && Toggles.publicChat

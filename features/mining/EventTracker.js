@@ -1,30 +1,16 @@
+import { AQUA, DARK_GRAY, GRAY, LOGO, RED, WHITE, WITHER_CLASS, YELLOW } from "../../utils/Constants";
 import location from "../../utils/Location";
-import Socket from "../../utils/Socket";
-import {
-  AQUA,
-  DARK_GRAY,
-  GRAY,
-  LOGO,
-  RED,
-  WHITE,
-  WITHER_CLASS,
-  YELLOW,
-} from "../../utils/Constants";
-import { formatTime } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
+import Socket from "../../utils/Socket";
 import { delay } from "../../utils/ThreadTils";
+import { formatTime } from "../../utils/functions/format";
 
 /**
  * Track off of wither names.
  */
 const findEvent = register("step", () => {
   const loc = location.getWorld();
-  const world =
-    loc === "Dwarven Mines"
-      ? "dm"
-      : loc === "Crystal Hollows"
-      ? "ch"
-      : undefined;
+  const world = loc === "Dwarven Mines" ? "dm" : loc === "Crystal Hollows" ? "ch" : undefined;
   if (world === undefined) {
     findEvent.unregister();
     return;
@@ -32,24 +18,17 @@ const findEvent = register("step", () => {
 
   World.getAllEntitiesOfType(WITHER_CLASS).forEach((wither) => {
     const name = wither.getName().toLowerCase().removeFormatting();
-    let match = name.match(
-      /(passive event|event) (.+) (running for|active in (.+)) (\d+):(\d+)/
-    );
+    let match = name.match(/(passive event|event) (.+) (running for|active in (.+)) (\d+):(\d+)/);
 
     if (match) {
       const n = match.length;
       const event = match[2];
-      const time =
-        parseInt(match[n - 2]) * 60 +
-        parseInt(match[n - 1]) +
-        (name.startsWith("passive") ? 300 : 600);
+      const time = parseInt(match[n - 2]) * 60 + parseInt(match[n - 1]) + (name.startsWith("passive") ? 300 : 600);
 
       // Capitalize the first and last word.
       const words = event.split(" ");
       words[0] = words[0][0].toUpperCase() + words[0].slice(1);
-      words[words.length - 1] =
-        words[words.length - 1][0].toUpperCase() +
-        words[words.length - 1].slice(1);
+      words[words.length - 1] = words[words.length - 1][0].toUpperCase() + words[words.length - 1].slice(1);
 
       // Send the event data to the server.
       Socket.send({
@@ -75,8 +54,7 @@ function trackEvent(attempt = 0) {
 
   const world = location.getWorld();
   if (world === undefined) delay(() => trackEvent(attempt + 1), 1000);
-  else if (world === "Dwarven Mines" || world === "Crystal Hollows")
-    findEvent.register();
+  else if (world === "Dwarven Mines" || world === "Crystal Hollows") findEvent.register();
   else findEvent.unregister();
 }
 register("worldLoad", trackEvent);
@@ -86,12 +64,7 @@ register("worldLoad", trackEvent);
  */
 register("chat", (event) => {
   const loc = location.getWorld();
-  const world =
-    loc === "Dwarven Mines"
-      ? "dm"
-      : loc === "Crystal Hollows"
-      ? "ch"
-      : undefined;
+  const world = loc === "Dwarven Mines" ? "dm" : loc === "Crystal Hollows" ? "ch" : undefined;
   if (world === undefined) return;
 
   Socket.send({
@@ -109,23 +82,14 @@ register("chat", (event) => {
 export function processEvent(data) {
   const command = data.command;
   const events = data.events;
-  const loc =
-    command === "ch"
-      ? "Crystal Hollows"
-      : command === "dm"
-      ? "Dwarven Mines"
-      : RED + "???";
+  const loc = command === "ch" ? "Crystal Hollows" : command === "dm" ? "Dwarven Mines" : RED + "???";
 
   ChatLib.chat(`${LOGO + YELLOW + loc} Events:`);
   Object.keys(events).forEach((event) => {
     const time = events[event].time;
     const percentage = parseFloat(events[event].percentage).toFixed(2);
 
-    ChatLib.chat(
-      `${DARK_GRAY}- ${AQUA + event + WHITE} ${
-        formatTime(time) + GRAY
-      } (${percentage}%)`
-    );
+    ChatLib.chat(`${DARK_GRAY}- ${AQUA + event + WHITE} ${formatTime(time) + GRAY} (${percentage}%)`);
   });
 }
 
@@ -170,8 +134,6 @@ export function processAlloy(data) {
   const last_alloy = data.last_alloy;
   const date = new Date(Date.now() - last_alloy * 1_000);
   ChatLib.chat(
-    `${LOGO + YELLOW}Alloy: ${
-      WHITE + formatTime(last_alloy)
-    } ago ${DARK_GRAY}(${date.toLocaleDateString()})`
+    `${LOGO + YELLOW}Alloy: ${WHITE + formatTime(last_alloy)} ago ${DARK_GRAY}(${date.toLocaleDateString()})`
   );
 }

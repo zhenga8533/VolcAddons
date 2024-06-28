@@ -37,12 +37,7 @@ export function setRegisters(off = false) {
 
 // Set registers on settings close
 register("guiClosed", (event) => {
-  if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui"))
-    return;
+  if (!event.toString().startsWith("gg.essential.vigilance.gui.SettingsGui")) return;
 
-  setRegisters(
-    (off =
-      Settings.skyblockToggle &&
-      !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK"))
-  );
+  setRegisters((off = Settings.skyblockToggle && !Scoreboard.getTitle().removeFormatting().includes("SKYBLOCK")));
 });

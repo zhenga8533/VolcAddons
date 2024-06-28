@@ -1,21 +1,12 @@
-import location from "../../utils/Location";
-import party from "../../utils/Party";
-import Settings from "../../utils/Settings";
-import {
-  AQUA,
-  BOLD,
-  DARK_AQUA,
-  DARK_PURPLE,
-  EntityArmorStand,
-  GOLD,
-  PLAYER_CLASS,
-  SMA,
-} from "../../utils/Constants";
-import { Overlay } from "../../utils/Overlay";
-import { registerWhen } from "../../utils/RegisterTils";
+import { AQUA, BOLD, DARK_AQUA, DARK_PURPLE, EntityArmorStand, GOLD, PLAYER_CLASS, SMA } from "../../utils/Constants";
 import { data } from "../../utils/Data";
-import { getSlayerBoss } from "../combat/SlayerDetect";
+import location from "../../utils/Location";
+import { Overlay } from "../../utils/Overlay";
+import party from "../../utils/Party";
+import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import Waypoint from "../../utils/Waypoint";
+import { getSlayerBoss } from "../combat/SlayerDetect";
 
 /**
  * Variables used to track and display vampire boss attacks.
@@ -23,13 +14,7 @@ import Waypoint from "../../utils/Waypoint";
 const vampireExample = `${DARK_PURPLE + BOLD}MANIA: ${AQUA}Dracule
 ${GOLD + BOLD}TWINCLAWS: ${AQUA}Mihawk
 ${DARK_AQUA + BOLD}ICHOR: ${AQUA}3,590,000,000`;
-const vampireOverlay = new Overlay(
-  "vampireAttack",
-  data.BL,
-  "moveVamp",
-  vampireExample,
-  ["The Rift"]
-);
+const vampireOverlay = new Overlay("vampireAttack", data.BL, "moveVamp", vampireExample, ["The Rift"]);
 let bossUUID = 0;
 let ichorUUID = 0;
 let ichorSpawn = false;
@@ -56,9 +41,7 @@ registerWhen(
 
     // Boss Nametag Shit
     if (!bossUUID) {
-      const spawn = stands.find((stand) =>
-        stand.func_95999_t().includes("03:59")
-      );
+      const spawn = stands.find((stand) => stand.func_95999_t().includes("03:59"));
       if (spawn === undefined) return;
       bossUUID = spawn.persistentID;
     } else {
@@ -79,20 +62,15 @@ registerWhen(
           const PZ = Math.round(Player.getZ());
           if (Settings.announceMania === 1) {
             const id = (Math.random() + 1).toString(36).substring(6);
-            ChatLib.command(
-              `ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`
-            );
+            ChatLib.command(`ac x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}! @${id}`);
           } else if (party.getIn() && Settings.announceMania === 2)
-            ChatLib.command(
-              `pc x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}!`
-            );
+            ChatLib.command(`pc x: ${pX}, y: ${PY}, z: ${PZ} | MANIA: ${mania}!`);
         }
       } else inMania = false;
 
       // Twinclaw Detect
       const clawIndex = name.indexOf("§6§lTWINCLAWS");
-      if (clawIndex !== -1)
-        vampireMessage += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
+      if (clawIndex !== -1) vampireMessage += `${name[clawIndex]}: ${name[clawIndex + 1]}\n`;
 
       // Ichor Detect
       const ichorIndex = name.indexOf("§3§lICHOR");
@@ -110,21 +88,15 @@ registerWhen(
           ichorUUID = 0;
           return;
         }
-        vampireOverlay.setMessage(
-          vampireMessage + `${DARK_AQUA + BOLD}ICHOR: ${ichor.func_95999_t()}\n`
-        );
+        vampireOverlay.setMessage(vampireMessage + `${DARK_AQUA + BOLD}ICHOR: ${ichor.func_95999_t()}\n`);
       } else {
-        const ichor = stands.find((stand) =>
-          stand.func_95999_t().includes("24.")
-        );
+        const ichor = stands.find((stand) => stand.func_95999_t().includes("24."));
         if (ichor === undefined) return;
         ichorUUID = ichor.persistentID;
       }
     }
   }),
-  () =>
-    location.getWorld() === "The Rift" &&
-    (Settings.vampireAttack || Settings.announceMania !== 0)
+  () => location.getWorld() === "The Rift" && (Settings.vampireAttack || Settings.announceMania !== 0)
 );
 
 /**
@@ -143,8 +115,7 @@ registerWhen(
       const entity = mob.getEntity();
       const max = entity.func_110148_a(SMA.field_111267_a).func_111125_b();
 
-      if (max > 210 && entity.func_110143_aJ() / max <= 0.2)
-        vampWaypoints.push([RED + "Dracule", mob]);
+      if (max > 210 && entity.func_110143_aJ() / max <= 0.2) vampWaypoints.push([RED + "Dracule", mob]);
       else if (VAMP_HP.has(max)) draculaWaypoints.push([RED + "Mihawk", mob]);
     });
   }).setFps(2),
@@ -170,9 +141,7 @@ const missingEffigies = new Waypoint([0.75, 0.75, 0.75]); // Silver effigies
 registerWhen(
   register("step", () => {
     missingEffigies.clear();
-    let effigies = Scoreboard?.getLines()?.find((line) =>
-      line.getName().includes("Effigies")
-    );
+    let effigies = Scoreboard?.getLines()?.find((line) => line.getName().includes("Effigies"));
     if (effigies === undefined) return;
 
     effigies = effigies

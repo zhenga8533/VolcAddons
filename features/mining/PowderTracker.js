@@ -1,26 +1,11 @@
+import { AQUA, BLUE, BOLD, DARK_GREEN, GRAY, GREEN, LIGHT_PURPLE, LOGO, RED, WHITE } from "../../utils/Constants";
+import { data } from "../../utils/Data";
 import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import {
-  AQUA,
-  BLUE,
-  BOLD,
-  DARK_GREEN,
-  GRAY,
-  GREEN,
-  LIGHT_PURPLE,
-  LOGO,
-  RED,
-  WHITE,
-} from "../../utils/Constants";
-import {
-  commafy,
-  formatNumber,
-  formatTime,
-} from "../../utils/functions/format";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
 import { Stat, getPaused } from "../../utils/Stat";
-import { data } from "../../utils/Data";
+import { commafy, formatNumber, formatTime } from "../../utils/functions/format";
 
 /**
  * Variables used to track and display current event and powder.
@@ -34,13 +19,10 @@ const powderExample = `${DARK_GREEN + BOLD}Mithril: ${WHITE}I ${GRAY}(wake ᠅/h
 ${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE}up ${GRAY}(to ᠅/hr)
 ${AQUA + BOLD}Glacite: ${WHITE}the ${GRAY}(sounds ᠅/hr)
 ${BLUE + BOLD}Time: ${RED}Inactive`;
-const powderOverlay = new Overlay(
-  "powderTracker",
-  data.PL,
-  "movePowder",
-  powderExample,
-  ["Dwarven Mines", "Crystal Hollows"]
-);
+const powderOverlay = new Overlay("powderTracker", data.PL, "movePowder", powderExample, [
+  "Dwarven Mines",
+  "Crystal Hollows",
+]);
 
 /**
  * Command to reset powder overlay.
@@ -74,68 +56,47 @@ registerWhen(
   register("step", () => {
     if (getPaused() || !World.isLoaded()) return;
     const tablist = TabList.getNames();
-    const powderIndex = tablist.findIndex(
-      (line) => line === "§r§9§lPowders:§r"
-    );
+    const powderIndex = tablist.findIndex((line) => line === "§r§9§lPowders:§r");
     if (powderIndex === undefined || powderIndex === -1) return;
     const currentMithril = parseInt(
-      tablist[powderIndex + 1]
-        .removeFormatting()
-        .trim()
-        .split(" ")[1]
-        ?.replace(/\D/g, "")
+      tablist[powderIndex + 1].removeFormatting().trim().split(" ")[1]?.replace(/\D/g, "")
     );
     const currentGemstone = parseInt(
-      tablist[powderIndex + 2]
-        .removeFormatting()
-        .trim()
-        .split(" ")[1]
-        ?.replace(/\D/g, "")
+      tablist[powderIndex + 2].removeFormatting().trim().split(" ")[1]?.replace(/\D/g, "")
     );
-    if (currentMithril !== undefined)
-      updatePowder(powders.Mithril, currentMithril);
-    if (currentGemstone !== undefined)
-      updatePowder(powders.Gemstone, currentGemstone);
+    if (currentMithril !== undefined) updatePowder(powders.Mithril, currentMithril);
+    if (currentGemstone !== undefined) updatePowder(powders.Gemstone, currentGemstone);
     if (location.getWorld() === "Dwarven Mines") {
       const currentGlacite = parseInt(
-        tablist[powderIndex + 3]
-          .removeFormatting()
-          .trim()
-          .split(" ")[1]
-          ?.replace(/\D/g, "")
+        tablist[powderIndex + 3].removeFormatting().trim().split(" ")[1]?.replace(/\D/g, "")
       );
-      if (currentGlacite !== undefined)
-        updatePowder(powders.Glacite, currentGlacite);
+      if (currentGlacite !== undefined) updatePowder(powders.Glacite, currentGlacite);
     }
 
     // Get max valid time
     let displayTime = 0;
     Object.keys(powders).forEach((powder) => {
-      if (
-        powders[powder].time > displayTime &&
-        powders[powder].since < Settings.powderTracker * 60
-      )
+      if (powders[powder].time > displayTime && powders[powder].since < Settings.powderTracker * 60)
         displayTime = powders[powder].time;
     });
 
     // Set HUD
-    const timeDisplay =
-      displayTime !== 0 ? formatTime(displayTime) : `${RED}Inactive`;
+    const timeDisplay = displayTime !== 0 ? formatTime(displayTime) : `${RED}Inactive`;
     powderOverlay.setMessage(
-      `${DARK_GREEN + BOLD}Mithril: ${
-        WHITE + commafy(powders.Mithril.getGain()) + GRAY
-      } (${formatNumber(powders.Mithril.getRate(), 3)} ᠅/hr)
-${LIGHT_PURPLE + BOLD}Gemstone: ${
-        WHITE + commafy(powders.Gemstone.getGain()) + GRAY
-      } (${formatNumber(powders.Gemstone.getRate(), 3)} ᠅/hr)
-${AQUA + BOLD}Glacite: ${
-        WHITE + commafy(powders.Glacite.getGain()) + GRAY
-      } (${formatNumber(powders.Glacite.getRate(), 3)} ᠅/hr)
+      `${DARK_GREEN + BOLD}Mithril: ${WHITE + commafy(powders.Mithril.getGain()) + GRAY} (${formatNumber(
+        powders.Mithril.getRate(),
+        3
+      )} ᠅/hr)
+${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE + commafy(powders.Gemstone.getGain()) + GRAY} (${formatNumber(
+        powders.Gemstone.getRate(),
+        3
+      )} ᠅/hr)
+${AQUA + BOLD}Glacite: ${WHITE + commafy(powders.Glacite.getGain()) + GRAY} (${formatNumber(
+        powders.Glacite.getRate(),
+        3
+      )} ᠅/hr)
 ${BLUE + BOLD}Time: ${WHITE + timeDisplay}`
     );
   }).setFps(1),
-  () =>
-    (location.getWorld() === "Crystal Hollows" ||
-      location.getWorld() === "Dwarven Mines") &&
-    Settings.powderTracker !== 0
+  () => ["Crystal Hollows", "Dwarven Mines", "Mineshaft"].includes(location.getWorld()) && Settings.powderTracker !== 0
 );
