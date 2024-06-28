@@ -171,7 +171,7 @@ ${GOLD + BOLD}Rabbits:
 /**
  * Highlight best worker.
  */
-const workerLevels = [0, 0, 0, 0, 0, 0, 0];
+const workerLevels = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 let bestWorker = 0;
 let bestCost = 0;
 
@@ -228,8 +228,8 @@ function findWorker() {
       maxValue = towerValue;
       bestCost = towerCost;
     }
-    workerLevels[7] = LIGHT_PURPLE + (romanToNum(items[39].getName().split(" ")[2]) ?? "15");
   }
+  workerLevels[7] = LIGHT_PURPLE + (romanToNum(items[39].getName().split(" ")[2]) ?? 0);
 
   // Jackrabbit calc
   const jackrabbit = items[42].getLore();
@@ -247,8 +247,8 @@ function findWorker() {
       bestWorker = 42;
       bestCost = jackCost;
     }
-    workerLevels[8] = LIGHT_PURPLE + (romanToNum(items[42].getName().split(" ")[2]) ?? 0);
   }
+  workerLevels[8] = LIGHT_PURPLE + (romanToNum(items[42].getName().split(" ")[2]) ?? 0);
 }
 
 const workerFind = register("chat", () => {
