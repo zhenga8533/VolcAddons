@@ -47,6 +47,17 @@ export function getSlotCoords(i) {
 }
 
 /**
+ * Get the closest value from an array to a given value.
+ *
+ * @param {Type} value - Value to compare
+ * @param {Type[]} array - Array to compare against
+ * @returns {Type} - Closest value from array
+ */
+export function findClosest(value, array) {
+  return array.reduce((prev, curr) => (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev));
+}
+
+/**
  * Recurse over an object to find the path of a key.
  *
  * @param {Object} obj - JSON object to parse through.

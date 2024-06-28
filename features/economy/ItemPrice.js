@@ -20,6 +20,7 @@ import { data } from "../../utils/Data";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
+import { findClosest } from "../../utils/functions/find";
 import { convertToTitleCase, formatNumber } from "../../utils/functions/format";
 import { getAuction, getBazaar } from "./Economy";
 
@@ -365,10 +366,19 @@ export function getItemValue(item, save = true) {
       if (itemID === "PET") {
         // Pet Value
         const petInfo = JSON.parse(itemData?.petInfo);
-        value = auction?.[`${petInfo?.tier}_${petInfo?.type}`]?.lbin ?? 0;
+        const petName = `${petInfo?.tier}_${petInfo?.type}`;
+        const petAuction = auction?.[petName];
+        if (petAuction === undefined) return 0;
+
+        const petLevel = itemName.split("]")[0].split(" ")[1];
+        const petLevels = Object.keys(auction?.[`${petName}`]?.levels);
+        const closestLevel = findClosest(petLevel, petLevels);
+        value = petAuction?.levels?.[closestLevel]?.lbin ?? petAuction?.lbin ?? 0;
+
         valueMessage += `- ${AQUA}Base: ${GREEN}+${formatNumber(value)}\n`;
         const skinValue = auction["PET_SKIN_" + petInfo.skin]?.lbin ?? 0;
         value += skinValue;
+
         if (skinValue !== 0 && save) valueMessage += `- ${AQUA}Skin: ${GREEN}+${formatNumber(skinValue)}\n`;
         if (save) {
           valueMessage += `\n${GOLD}Total Value: ${YELLOW + formatNumber(value)}`;

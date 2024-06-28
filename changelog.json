@@ -1,4 +1,5 @@
 [
+  "- Added pet level value",
   "- Changed pick display to detect worlds",
   "- Changed code structure",
   "- Fixed undefined level display",
