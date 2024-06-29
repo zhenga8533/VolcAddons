@@ -4,36 +4,36 @@
  * @returns {Array} - An array containing all formations (including rotations and flips) of the input array.
  */
 export function getAllFormations(array) {
-    const formations = [];
+  const formations = [];
 
-    // Function to rotate a 2D array by 90 degrees
-    function rotate90Degrees(arr) {
-        const rows = arr.length;
-        const cols = arr[0].length;
-        const rotated = [];
-        for (let i = 0; i < cols; i++) {
-            rotated.push([]);
-            for (let j = rows - 1; j >= 0; j--) {
-                rotated[i].push(arr[j][i]);
-            }
-        }
-        return rotated;
+  // Function to rotate a 2D array by 90 degrees
+  function rotate90Degrees(arr) {
+    const rows = arr.length;
+    const cols = arr[0].length;
+    const rotated = [];
+    for (let i = 0; i < cols; i++) {
+      rotated.push([]);
+      for (let j = rows - 1; j >= 0; j--) {
+        rotated[i].push(arr[j][i]);
+      }
     }
+    return rotated;
+  }
 
-    // Function to flip a 2D array horizontally
-    function flipHorizontally(arr) {
-        return arr.map(row => row.slice().reverse());
-    }
+  // Function to flip a 2D array horizontally
+  function flipHorizontally(arr) {
+    return arr.map((row) => row.slice().reverse());
+  }
 
-    // Generate all formations
-    let current = array;
-    for (let i = 0; i < 4; i++) {
-        formations.push(current);
-        formations.push(flipHorizontally(current));
-        current = rotate90Degrees(current);
-    }
+  // Generate all formations
+  let current = array;
+  for (let i = 0; i < 4; i++) {
+    formations.push(current);
+    formations.push(flipHorizontally(current));
+    current = rotate90Degrees(current);
+  }
 
-    return formations;
+  return formations;
 }
 
 /**
@@ -43,11 +43,11 @@ export function getAllFormations(array) {
  * @returns {Array} - A 2D array representing the matrix.
  */
 export function createMatrix(rows, cols) {
-    const array = [];
-    for (let i = 0; i < rows; i++) {
-        array.push(Array(cols).fill(0));
-    }
-    return array;
+  const array = [];
+  for (let i = 0; i < rows; i++) {
+    array.push(Array(cols).fill(0));
+  }
+  return array;
 }
 
 /**
@@ -62,13 +62,13 @@ export function createMatrix(rows, cols) {
  * @returns {boolean} - True if the player is looking away from the target point, false otherwise.
  */
 export function isLookingAway(x_p, y_p, z_p, yaw_p, x_target, y_target, z_target) {
-    const dir_x = -Math.sin(yaw_p * Math.PI / 180);
-    const dir_z = Math.cos(yaw_p * Math.PI / 180);
+  const dir_x = -Math.sin((yaw_p * Math.PI) / 180);
+  const dir_z = Math.cos((yaw_p * Math.PI) / 180);
 
-    const target_vec_x = x_target - x_p;
-    const target_vec_y = y_target - y_p;
-    const target_vec_z = z_target - z_p;
-    const dot_product = target_vec_x * dir_x + target_vec_y * 0 + target_vec_z * dir_z;
+  const target_vec_x = x_target - x_p;
+  const target_vec_y = y_target - y_p;
+  const target_vec_z = z_target - z_p;
+  const dot_product = target_vec_x * dir_x + target_vec_y * 0 + target_vec_z * dir_z;
 
-    return dot_product < 0;
+  return dot_product < 0;
 }

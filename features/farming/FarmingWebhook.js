@@ -3,11 +3,10 @@
  */
 
 import request from "../../../requestV2";
-import Settings from "../../utils/Settings";
 import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
-import { formatNumber, formatTime, unformatNumber } from "../../utils/functions/format";
 import { registerWhen } from "../../utils/RegisterTils";
+import Settings from "../../utils/Settings";
+import { formatNumber, unformatNumber } from "../../utils/functions/format";
 import { getBazaar } from "../economy/Economy";
 import { getWaifu } from "../party/PartyCommands";
 

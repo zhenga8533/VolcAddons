@@ -1,9 +1,8 @@
+import { data } from "../../utils/Data";
 import location from "../../utils/Location";
-import Settings from "../../utils/Settings";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
-import { data } from "../../utils/Data";
-
+import Settings from "../../utils/Settings";
 
 /**
  * Crate overlay variables.
@@ -14,19 +13,22 @@ const crateOverlay = new Overlay("crateEdit", data.CEL, "moveCrate", crateExampl
 /**
  * Cancel crate title render and replay with overlay render.
  */
-registerWhen(register("renderTitle", (title, _, event) => {
+registerWhen(
+  register("renderTitle", (title, _, event) => {
     if (!title.startsWith("§8[") || !title.endsWith("%§r")) return;
 
     crateOverlay.setMessage(title);
     cancel(event);
-}), () => Settings.crateEdit && location.getWorld() === "Kuudra");
+  }),
+  () => Settings.crateEdit && location.getWorld() === "Kuudra"
+);
 
 /**
  * Reset on crate pickup/cancel
  */
 register("chat", () => {
-    Client.scheduleTask(20, () => crateOverlay.setMessage(""));
+  Client.scheduleTask(20, () => crateOverlay.setMessage(""));
 }).setCriteria("You retrieved some of Elle's supplies from the Lava!");
 register("chat", () => {
-    Client.scheduleTask(20, () => crateOverlay.setMessage(""));
+  Client.scheduleTask(20, () => crateOverlay.setMessage(""));
 }).setCriteria("You moved and the Chest slipped out of your hands!");
