@@ -3,5 +3,7 @@
   "- Changed pick display to detect worlds",
   "- Changed code structure",
   "- Fixed undefined level display",
-  "- Fixed attribute value calc"
+  "- Fixed attribute value calc",
+  "- Fixed bazaar values",
+  "- Fixed enchant value"
 ]
