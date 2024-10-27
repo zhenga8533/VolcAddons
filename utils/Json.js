@@ -1,7 +1,11 @@
 const files = [];
 register("gameUnload", () => {
   files.forEach((file) => {
-    FileLib.write("VolcAddons", file.getPath(), JSON.stringify(file.getData(), null, 4));
+    try {
+      FileLib.write("VolcAddons", file.getPath(), JSON.stringify(file.getData(), null, 4));
+    } catch (e) {
+      console.error(`Error saving JSON file: ${file.getPath()}`);
+    }
   });
 }).setPriority(Priority.HIGHEST);
 
@@ -23,7 +27,12 @@ export class Json {
 
     // Load the data from the file
     if (isData && FileLib.exists("VolcAddons", "data/" + file)) {
-      this.#data = JSON.parse(FileLib.read("VolcAddons", "data/" + file));
+      try {
+        this.#data = JSON.parse(FileLib.read("VolcAddons", "data/" + file));
+      } catch (e) {
+        this.#data = {};
+        console.error(`Error loading JSON file: ${file}`);
+      }
     } else this.reset();
 
     // Check if the file exists
@@ -53,6 +62,11 @@ export class Json {
    * Set the data of the JSON file.
    */
   reset() {
-    this.#data = JSON.parse(FileLib.read("VolcAddons", "json/" + this.#file));
+    try {
+      this.#data = JSON.parse(FileLib.read("VolcAddons", "json/" + this.#file));
+    } catch (e) {
+      this.#data = {};
+      console.error(`Error loading JSON file: ${this.#file}`);
+    }
   }
 }
