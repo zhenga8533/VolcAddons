@@ -1,9 +1,13 @@
 [
-  "- Added pet level value",
-  "- Changed pick display to detect worlds",
-  "- Changed code structure",
-  "- Fixed undefined level display",
-  "- Fixed attribute value calc",
-  "- Fixed bazaar values",
-  "- Fixed enchant value"
+  "- Added API cache X",
+  "- Added stat color selector X",
+  "- Added ?time",
+  "- Changed autofill to only show on 5+",
+  "- Reworked Hoppity features X",
+  "- Reworked Garden features X",
+  "- Reworked overlay rendering X",
+  "- Fixed container buttons highlight X",
+  "- Fixed API backend X",
+  "- Fixed skill tracker X",
+  "- Fixed container preview X"
 ]
