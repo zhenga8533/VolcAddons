@@ -311,6 +311,13 @@ class Settings {
     description: "Hey now, you're a rock star, get the show on, get paid",
   })
   statusCommand = true;
+  @CheckboxProperty({
+    name: `Time Command ${DARK_AQUA}?time`,
+    category: "Party Commands",
+    subcategory: "Party Commands",
+    description: "All that glitters is gold, only shooting stars break the mold",
+  })
+  timeCommand = true;
   @SelectorProperty({
     name: `Gyatt Command ${DARK_AQUA}?<w, waifu, women>`,
     category: "Party Commands",

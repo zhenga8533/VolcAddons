@@ -495,6 +495,7 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
         "poke",
         "dance",
         "cringe",
+        "time",
       ]);
       const INSTANCES = new Set(["f", "m", "t"]);
       const STATUS_ARGS = new Set(["ping", "tps", "fps", "cps", "yaw", "pitch", "dir", "direction", "day"]);

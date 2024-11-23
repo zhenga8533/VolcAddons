@@ -217,10 +217,18 @@ export function executeCommand(name, args, sendTo) {
 
         ChatLib.command("p leave");
         break;
+      case "time":
+        if (!Toggles.timeCommand) return;
+
+        if (sendTo !== false) ChatLib.command(`${sendTo} ${new Date().toLocaleTimeString()} ${randID}`);
+        else ChatLib.chat(`${LOGO + DARK_AQUA}The time is ${WHITE + new Date().toLocaleTimeString() + DARK_AQUA}.`);
+        break;
       case "help":
         if (!Toggles.helpCommand || !sendTo) return;
 
-        ChatLib.command(`${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, xyz, help> ${randID}`);
+        ChatLib.command(
+          `${sendTo} Party Commands: ?<dice, coin, 8ball, rps, w, lobby, leave, time, xyz, help> ${randID}`
+        );
         if (party.getLeader() && Settings.leaderCommands)
           delay(
             () =>
