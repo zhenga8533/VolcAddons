@@ -194,7 +194,7 @@ export class Button {
     // Draw box
     const boxColor = this.#hovered ? BOX_HIGHLIGHT : COLOR_SCHEMES[Settings.containerButtons - 1][0];
     const borderColor = this.#hovered ? BORDER_HIGHLIGHT : COLOR_SCHEMES[Settings.containerButtons - 1][1];
-    drawBox(x, y, 100, 16, 16, boxColor, borderColor);
+    drawBox(x, y, this.#hovered ? 100 : 99, 16, 16, boxColor, borderColor);
     this.#item.draw(x, y, 1, 100);
   }
 
