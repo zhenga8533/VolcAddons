@@ -79,7 +79,7 @@ export function drawContainer(bX, bY, title, bg, items, mX, mY) {
       }
 
       // Draw item and size
-      item.draw(x, y, 1);
+      item.draw(x, y, 1, 1);
       let size = item.getStackSize();
       if (size !== 1) {
         Renderer.translate(0, 0, 500);
