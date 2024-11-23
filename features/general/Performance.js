@@ -1,15 +1,21 @@
 import {
   AQUA,
+  BLACK,
+  BLUE,
   BOLD,
   DARK_AQUA,
+  DARK_BLUE,
   DARK_GRAY,
   DARK_GREEN,
+  DARK_PURPLE,
   DARK_RED,
   GOLD,
   GRAY,
   GREEN,
+  LIGHT_PURPLE,
   LOGO,
   RED,
+  WHITE,
   YELLOW,
 } from "../../utils/Constants";
 import { data } from "../../utils/Data";
@@ -133,20 +139,38 @@ const statusOverlay = new Overlay("serverStatus", data.LL, "moveStatus", statusE
 registerWhen(
   register("tick", () => {
     let statusMessage = "";
+    const statusColor = [
+      BLACK,
+      DARK_BLUE,
+      DARK_GREEN,
+      DARK_AQUA,
+      DARK_RED,
+      DARK_PURPLE,
+      GOLD,
+      GRAY,
+      DARK_GRAY,
+      BLUE,
+      GREEN,
+      AQUA,
+      RED,
+      LIGHT_PURPLE,
+      YELLOW,
+      WHITE,
+    ][Toggles.statusColor];
 
     // XYZ
     if (Toggles.xyzDisplay) {
       const x = Math.round(Player.getX());
       const y = Math.round(Player.getY());
       const z = Math.round(Player.getZ());
-      statusMessage += `\n${GRAY}[${GOLD}XYZ${GRAY}] ${DARK_GRAY + x}, ${y}, ${z}`;
+      statusMessage += `\n${GRAY}[${GOLD}XYZ${GRAY}] ${statusColor + x}, ${y}, ${z}`;
     }
 
     // Yaw and Pitch
     if (Toggles.angleDisplay === 1 || Toggles.angleDisplay === 3) {
       const yaw = Player.getYaw();
       const pitch = Player.getPitch();
-      statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${DARK_GRAY + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
+      statusMessage += `\n${GRAY}[${GOLD}Y/P${GRAY}] ${statusColor + yaw.toFixed(2)} / ${pitch.toFixed(2)}`;
     }
 
     // Direction
@@ -160,7 +184,7 @@ registerWhen(
           : yaw >= 225 && yaw < 315
           ? "East"
           : "South";
-      statusMessage += `\n${GRAY}[${GOLD}Dir${GRAY}] ${DARK_GRAY + direction}`;
+      statusMessage += `\n${GRAY}[${GOLD}Dir${GRAY}] ${statusColor + direction}`;
     }
 
     // Ping
@@ -177,7 +201,7 @@ registerWhen(
           : ping < 690
           ? RED
           : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}Ping${GRAY}] ${pingColor + ping + DARK_GRAY} ms`;
+      statusMessage += `\n${GRAY}[${GOLD}Ping${GRAY}] ${pingColor + ping + statusColor} ms`;
     }
 
     // FPS
@@ -197,14 +221,14 @@ registerWhen(
           : fpsRatio > 0.5
           ? RED
           : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}FPS${GRAY}] ${fpsColor + fps + DARK_GRAY} fps`;
+      statusMessage += `\n${GRAY}[${GOLD}FPS${GRAY}] ${fpsColor + fps + statusColor} fps`;
     }
 
     // TPS
     if (Toggles.tpsDisplay) {
       const tpsColor =
         tps > 19 ? GREEN : tps > 16 ? DARK_GREEN : tps > 13 ? YELLOW : tps > 10 ? GOLD : tps > 7 ? RED : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}TPS${GRAY}] ${tpsColor + tps.toFixed(1) + DARK_GRAY} tps`;
+      statusMessage += `\n${GRAY}[${GOLD}TPS${GRAY}] ${tpsColor + tps.toFixed(1) + statusColor} tps`;
     }
 
     // CPS
@@ -235,13 +259,13 @@ registerWhen(
           : rightCPS < 30
           ? RED
           : DARK_RED;
-      statusMessage += `\n${GRAY}[${GOLD}CPS${GRAY}] ${leftColor + leftCPS + DARK_GRAY} : ${rightColor + rightCPS}`;
+      statusMessage += `\n${GRAY}[${GOLD}CPS${GRAY}] ${leftColor + leftCPS + statusColor} : ${rightColor + rightCPS}`;
     }
 
     // Day
     if (Toggles.dayDisplay) {
       const daytime = (World.getTime() / 24000).toFixed(2);
-      statusMessage += `\n${GRAY}[${GOLD}Day${GRAY}] ${DARK_GRAY + daytime}`;
+      statusMessage += `\n${GRAY}[${GOLD}Day${GRAY}] ${statusColor + daytime}`;
     }
 
     statusOverlay.setMessage(statusMessage.substring(1));

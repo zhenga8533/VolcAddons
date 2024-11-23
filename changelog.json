@@ -1,6 +1,6 @@
 [
   "- Added API cache X",
-  "- Added stat color selector X",
+  "- Added stat color selector (/va toggles)",
   "- Added ?time",
   "- Changed autofill to only show on 5+",
   "- Reworked Hoppity features X",

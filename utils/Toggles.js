@@ -53,6 +53,31 @@ class Settings {
   }
 
   // --- SERVER STATUS ---
+  @SelectorProperty({
+    name: "Server Status Color",
+    category: "Server Status",
+    subcategory: "Server Status",
+    description: "Once upon a time in a faraway land...",
+    options: [
+      "Black",
+      "Dark Blue",
+      "Dark Green",
+      "Dark Aqua",
+      "Dark Red",
+      "Dark Purple",
+      "Gold",
+      "Gray",
+      "Dark Gray",
+      "Blue",
+      "Green",
+      "Aqua",
+      "Red",
+      "Light Purple",
+      "Yellow",
+      "White",
+    ],
+  })
+  statusColor = 8;
   @CheckboxProperty({
     name: "Ping Display",
     category: "Server Status",
