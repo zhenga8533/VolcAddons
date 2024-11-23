@@ -152,7 +152,9 @@ const suggest = register("renderChat", () => {
 const key = register("guiKey", (char, keyCode, __, event) => {
   let chat = Client.getCurrentChatMessage() + (keyCode <= 57 && keyCode !== 15 ? char : "");
   if (keyCode === 14) chat = chat.substring(0, chat.length - 2);
-  suggestions = Object.keys(data.commands).filter((command) => command.startsWith(chat.substring(1)));
+  suggestions = Object.keys(data.commands).filter(
+    (command) => data.commands[command] >= 5 && command.startsWith(chat.substring(1))
+  );
   suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
   selected = MathLib.clamp(selected, 0, Math.max(0, suggestions.length - 1));
 
@@ -173,7 +175,9 @@ const key = register("guiKey", (char, keyCode, __, event) => {
     // Tab Key
     const fill = suggestions[suggestions.length - selected - 1];
     Client.setCurrentChatMessage("/" + fill);
-    suggestions = Object.keys(data.commands).filter((command) => command.startsWith(fill));
+    suggestions = Object.keys(data.commands).filter(
+      (command) => data.commands[command] >= 5 && command.startsWith(fill)
+    );
     suggestions.sort((a, b) => data.commands[a] - data.commands[b]);
     selected = suggestions.length - suggestions.indexOf(fill) - 1;
     if (suggesting) cancel(event);
