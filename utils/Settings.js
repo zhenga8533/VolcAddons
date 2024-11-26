@@ -985,15 +985,6 @@ Move GUI with ${AQUA}/movePowder ${GRAY}or reset tracker with ${AQUA}/resetPowde
   })
   chocoDisplay = false;
 
-  @SelectorProperty({
-    name: "Egg Announce",
-    description: "Sends coordinates of opened chocolate eggs to chat.",
-    category: "Event",
-    subcategory: "Chocolate Factory",
-    options: ["OFF", "All Chat", "Party Chat", "Self"],
-  })
-  chocoAlert = 0;
-
   @SwitchProperty({
     name: "Egg Timers",
     description:

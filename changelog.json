@@ -5,9 +5,9 @@
   "- Changed autofill to only show on 5+",
   "- Reworked Hoppity features X",
   "- Reworked Garden features X",
-  "- Reworked overlay rendering X",
   "- Fixed container buttons highlight",
-  "- Fixed API backend X",
+  "- Fixed API backend",
   "- Fixed skill tracker X",
-  "- Fixed container preview"
+  "- Fixed container preview",
+  "- Removed egg announce"
 ]

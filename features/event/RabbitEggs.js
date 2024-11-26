@@ -22,8 +22,8 @@ import Settings from "../../utils/Settings";
 import { setTitle } from "../../utils/Title";
 import Waypoint from "../../utils/Waypoint";
 import { getClosest } from "../../utils/functions/find";
-import { convertToTitleCase, formatTime, unformatNumber } from "../../utils/functions/format";
-import { announceMob, playSound } from "../../utils/functions/misc";
+import { formatTime, unformatNumber } from "../../utils/functions/format";
+import { playSound } from "../../utils/functions/misc";
 
 /**
  * Missing rabbits
@@ -256,28 +256,6 @@ registerWhen(
     });
   }).setFps(1),
   () => Settings.chocoWaypoints
-);
-
-/**
- * Announce egg location on roulette completion.
- */
-let chocoType = "";
-let chocoLoc = "";
-
-const announceOnClose = register("guiClosed", () => {
-  Client.scheduleTask(5, () =>
-    announceMob(Settings.chocoAlert, chocoType, Player.getX(), Player.getY(), Player.getZ(), chocoLoc)
-  );
-  announceOnClose.unregister();
-}).unregister();
-
-registerWhen(
-  register("chat", (type, loc) => {
-    chocoType = type + " Egg";
-    chocoLoc = convertToTitleCase(loc);
-    announceOnClose.register();
-  }).setCriteria("HOPPITY'S HUNT You found a Chocolate ${type} Egg ${loc}!"),
-  () => Settings.chocoAlert !== 0
 );
 
 /**
