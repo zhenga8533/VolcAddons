@@ -20,10 +20,10 @@ export class Json {
    * @param {String} file - The name of the JSON file
    * @param {Boolean} save - Whether to save the file or not
    */
-  constructor(file, isData, save = true) {
+  constructor(file, isData, save = true, path = "") {
     if (save) files.push(this);
     this.#file = file;
-    this.#path = (isData ? "data/" : "json/") + file;
+    this.#path = (isData ? "data/" : "json/") + path + file;
 
     // Load the data from the file
     if (isData && FileLib.exists("VolcAddons", "data/" + file)) {

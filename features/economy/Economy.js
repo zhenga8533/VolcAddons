@@ -6,11 +6,11 @@ import { Json } from "../../utils/Json";
 /**
  * Variables used to generate and record Skyblock economy pricing.
  */
-const auction = new Json("auction.json", false);
+const auction = new Json("auction.json", true);
 export function getAuction() {
   return auction.getData();
 }
-const bazaar = new Json("bazaar.json", false);
+const bazaar = new Json("bazaar.json", true);
 export function getBazaar() {
   return bazaar.getData();
 }
