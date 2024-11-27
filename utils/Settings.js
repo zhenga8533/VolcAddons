@@ -481,12 +481,12 @@ Move GUI with ${AQUA}/moveSearch${GRAY}.`,
   equipDisplay = false;
 
   @SwitchProperty({
-    name: "Jyrre Time Display",
-    description: "Adds time label to Bottle of Jyrre item description.",
+    name: "Item Time Display",
+    description: "Adds time label to Bottle of Jyrre and Dark Truffle item description.",
     category: "Container",
     subcategory: "Items",
   })
-  jyrreTimer = true;
+  itemTimer = true;
 
   @SwitchProperty({
     name: "Max Supercraft",

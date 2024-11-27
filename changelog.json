@@ -1,8 +1,8 @@
 [
-  "- Added API cache X",
+  "- Added API cache",
   "- Added stat color selector (/va toggles)",
   "- Added ?time",
-  "- Added todo list X (/va todo)",
+  "- Added todo list X",
   "- Added truffle time tracking",
   "- Changed autofill to only show on 5+",
   "- Fixed Hoppity features",

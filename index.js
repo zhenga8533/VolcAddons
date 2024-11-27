@@ -56,7 +56,7 @@ import "./features/general/WidgetDisplay";
 // Container Features
 import "./features/container/AttributeAbbrev";
 import { previewCommands } from "./features/container/ContainerPreview";
-import "./features/container/JyrreTimer";
+import "./features/container/ItemTimer";
 import "./features/container/MaxCraft";
 import "./features/container/Searchbar";
 import { slotCommands } from "./features/container/SlotBinding";
