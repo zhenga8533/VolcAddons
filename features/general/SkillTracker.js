@@ -11,20 +11,20 @@ import { commafy, formatTime, romanToNum, unformatNumber } from "../../utils/fun
  * Variables to track and display skill tracker overlay.
  */
 const skills = {
-  None: new Stat(),
-  Fishing: new Stat(),
-  Alchemy: new Stat(),
-  Runecrafting: new Stat(),
-  Mining: new Stat(),
-  Farming: new Stat(),
-  Enchanting: new Stat(),
-  Taming: new Stat(),
-  Foraging: new Stat(),
-  Social: new Stat(),
-  Carpentry: new Stat(),
-  Combat: new Stat(),
+  None: new Stat("skill"),
+  Fishing: new Stat("fishing"),
+  Alchemy: new Stat("alchemy"),
+  Runecrafting: new Stat("runecrafting"),
+  Mining: new Stat("mining"),
+  Farming: new Stat("farming"),
+  Enchanting: new Stat("enchanting"),
+  Taming: new Stat("taming"),
+  Foraging: new Stat("foraging"),
+  Social: new Stat("social"),
+  Carpentry: new Stat("carpentry"),
+  Combat: new Stat("combat"),
 };
-let skillsTracked = false;
+let skillsTracked = skills.Combat.start !== 0;
 let current = "None";
 const skillExample = `${DARK_AQUA + BOLD}Skill: ${WHITE}None
 ${DARK_AQUA + BOLD}Gain: ${WHITE}0
@@ -75,6 +75,7 @@ const trackSkills = register("guiOpened", () => {
     if (Settings.skillTracker !== 0) setTitle(`${GREEN}Skills tracked!`, "Now begin the grind.", 10, 50, 10, 80);
   });
 });
+if (skillsTracked) trackSkills.unregister();
 
 registerWhen(
   register("chat", () => {

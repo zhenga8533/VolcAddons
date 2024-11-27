@@ -11,9 +11,9 @@ import { commafy, formatNumber, formatTime } from "../../utils/functions/format"
  * Variables used to track and display current event and powder.
  */
 const powders = {
-  Mithril: new Stat(),
-  Gemstone: new Stat(),
-  Glacite: new Stat(),
+  Mithril: new Stat("mithril"),
+  Gemstone: new Stat("gemstone"),
+  Glacite: new Stat("glacite"),
 };
 const powderExample = `${DARK_GREEN + BOLD}Mithril: ${WHITE}I ${GRAY}(wake ᠅/hr)
 ${LIGHT_PURPLE + BOLD}Gemstone: ${WHITE}up ${GRAY}(to ᠅/hr)

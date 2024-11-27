@@ -7,7 +7,7 @@ register("gameUnload", () => {
       console.error(`Error saving JSON file: ${file.getPath()}`);
     }
   });
-}).setPriority(Priority.HIGHEST);
+}).setPriority(Priority.HIGH);
 
 export class Json {
   #data;
@@ -26,9 +26,9 @@ export class Json {
     this.#path = (isData ? "data/" : "json/") + path + file;
 
     // Load the data from the file
-    if (isData && FileLib.exists("VolcAddons", "data/" + file)) {
+    if (isData && FileLib.exists("VolcAddons", this.#path)) {
       try {
-        this.#data = JSON.parse(FileLib.read("VolcAddons", "data/" + file));
+        this.#data = JSON.parse(FileLib.read("VolcAddons", this.#path));
       } catch (e) {
         this.#data = {};
         console.error(`Error loading JSON file: ${file}`);

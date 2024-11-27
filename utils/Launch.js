@@ -4,7 +4,10 @@ import Socket from "./Socket";
 import { delay } from "./ThreadTils";
 
 // Create the necessary directories and files for the module to work
-if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/Data").mkdir();
+if (!FileLib.exists("VolcAddons", "data")) new java.io.File("config/ChatTriggers/modules/VolcAddons/data").mkdir();
+if (!FileLib.exists("VolcAddons", "data/stats"))
+  new java.io.File("config/ChatTriggers/modules/VolcAddons/data/stats").mkdir();
+if (!FileLib.exists("VolcAddons", "json")) new java.io.File("config/ChatTriggers/modules/VolcAddons/json").mkdir();
 if (!FileLib.exists("VolcAddons", "data/contract.txt"))
   FileLib.write("VolcAddons", "data/contract.txt", FileLib.read("VolcAddons", "assets/contract.txt"));
 

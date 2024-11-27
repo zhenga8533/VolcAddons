@@ -1,8 +1,46 @@
 import { data } from "./Data";
+import { Json } from "./Json";
+
+/**
+ * Save stats on game unload.
+ */
+const stats = [];
+register("gameUnload", () => {
+  stats.forEach((stat) => {
+    stat.json.setData({
+      start: stat.now,
+      now: stat.now,
+      time: 1,
+      since: 600,
+      level: stat.level,
+    });
+  });
+}).setPriority(Priority.HIGHEST);
 
 export class Stat {
-  constructor() {
+  /**
+   * Base class for tracking stats.
+   *
+   * @param {String} name - The name of the stat.
+   */
+  constructor(name) {
+    stats.push(this);
+    this.json = new Json(name + ".json", true, true, "stats/");
     this.reset();
+    this.loadData();
+  }
+
+  /**
+   * Loads data from the JSON file.
+   */
+  loadData() {
+    const data = this.json.getData();
+    if (Object.keys(data).length === 0) return;
+    this.start = data.start;
+    this.now = data.now;
+    this.time = data.time;
+    this.since = data.since;
+    this.level = data.level;
   }
 
   /**

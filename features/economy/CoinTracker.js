@@ -9,7 +9,7 @@ import { commafy, formatTime } from "../../utils/functions/format";
 /**
  * Variables used to track and display coin tracker.
  */
-const piggy = new Stat();
+const piggy = new Stat("coin");
 register("command", () => {
   piggy.reset();
   ChatLib.chat(`${LOGO + GREEN}Successfully reset coin tracker!`);

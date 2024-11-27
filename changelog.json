@@ -5,7 +5,7 @@
   "- Added todo list X",
   "- Added truffle time tracking",
   "- Changed autofill to only show on 5+",
-  "- Changed skill tracker to cache data X",
+  "- Changed stat trackers to cache data",
   "- Fixed Hoppity features",
   "- Fixed container buttons highlight",
   "- Fixed API backend",
