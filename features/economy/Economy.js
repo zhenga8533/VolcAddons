@@ -1,17 +1,18 @@
 import request from "../../../requestV2";
 import { GREEN, LOGO } from "../../utils/Constants";
 import { data } from "../../utils/Data";
+import { Json } from "../../utils/Json";
 
 /**
  * Variables used to generate and record Skyblock economy pricing.
  */
-let items = {};
+const auction = new Json("auction.json", false);
 export function getAuction() {
-  return items;
+  return auction.getData();
 }
-let products = {};
+const bazaar = new Json("bazaar.json", false);
 export function getBazaar() {
-  return products;
+  return bazaar.getData();
 }
 
 /**
@@ -23,7 +24,9 @@ export function updateAuction() {
     json: true,
   })
     .then((response) => {
-      items = response.items;
+      if (!response.items) return;
+      auction.setData(response.items);
+      const items = auction.getData();
       Object.keys(data.valuelist).forEach((key) => (items[key] = { lbin: data.valuelist[key] }));
     })
     .catch((err) => console.error(`VolcAddons: ${err.cause ?? err}`));
@@ -34,7 +37,8 @@ function updateBazaar() {
     json: true,
   })
     .then((response) => {
-      products = response.items;
+      if (!response.items) return;
+      bazaar.setData(response.items);
     })
     .catch((err) => console.error(`$VolcAddons: ${err.cause ?? err}`));
 }

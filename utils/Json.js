@@ -52,7 +52,18 @@ export class Json {
   }
 
   /**
+   * Set the data of the JSON file.
+   *
+   * @param {Object} data - The data to set
+   */
+  setData(data) {
+    this.#data = data;
+  }
+
+  /**
    * Get the path of the JSON file.
+   *
+   * @returns {String} The path of the JSON file.
    */
   getPath() {
     return this.#path;

@@ -1,0 +1,5546 @@
+{
+    "ABSOLUTE_ENDER_PEARL": [
+        10491.142383525266,
+        12939.256184567663
+    ],
+    "ACACIA_BIRDHOUSE": [
+        438867.70339622645,
+        720447.0840361447
+    ],
+    "AGARIMOO_TONGUE": [
+        9501.98737650933,
+        16201.268421052633
+    ],
+    "AMALGAMATED_CRIMSONITE": [
+        0,
+        0
+    ],
+    "AMALGAMATED_CRIMSONITE_NEW": [
+        37058.2814645309,
+        135809.67830508476
+    ],
+    "AMBER_MATERIAL": [
+        2261148.794736842,
+        3893257.5600000005
+    ],
+    "ANCIENT_CLAW": [
+        161.70279689615558,
+        184.39999999999998
+    ],
+    "AOTE_STONE": [
+        4309159.151162791,
+        5838679.191666666
+    ],
+    "ARACHNE_FANG": [
+        279452.0879078695,
+        328761.4
+    ],
+    "ARACHNE_FRAGMENT": [
+        12508.17195864254,
+        15045.020833333334
+    ],
+    "ARACHNE_KEEPER_FRAGMENT": [
+        420.4422041815955,
+        1333.6647993311037
+    ],
+    "ARCHITECT_FIRST_DRAFT": [
+        38701.16121703854,
+        58914
+    ],
+    "ARROW_BUNDLE_MAGMA": [
+        148620.39440914866,
+        415002.20909090905
+    ],
+    "ASCENSION_ROPE": [
+        5.305308590492077,
+        71.3647081742383
+    ],
+    "AUTO_SMELTER": [
+        118.16573208722743,
+        9499.881012658228
+    ],
+    "AVARICIOUS_CHALICE": [
+        175000000.1,
+        216912899.1
+    ],
+    "BAT_FIREWORK": [
+        196789.8,
+        232789.5
+    ],
+    "BAZAAR_COOKIE": [
+        0,
+        0
+    ],
+    "BEADY_EYES": [
+        92.80000000000001,
+        1808.4000000000003
+    ],
+    "BEATING_HEART": [
+        12142.657446808511,
+        55317.12233009708
+    ],
+    "BEJEWELED_HANDLE": [
+        351760.4927272727,
+        379279.9
+    ],
+    "BERBERIS_FUEL_INJECTOR": [
+        2169633.8854545457,
+        2345840.6806451613
+    ],
+    "BLACK_WOOLEN_YARN": [
+        6783197.110769232,
+        8949996.248979593
+    ],
+    "BLAZEN_SPHERE": [
+        421.50329218107,
+        0
+    ],
+    "BLAZE_ROD": [
+        19.801125875715556,
+        32.40122153663044
+    ],
+    "BLAZE_ROD_DISTILLATE": [
+        4056.3000000000006,
+        5022.932790927021
+    ],
+    "BLAZE_WAX": [
+        100000.53020833332,
+        1151753.6146938775
+    ],
+    "BLESSED_BAIT": [
+        195.30201119872012,
+        424.75781741867775
+    ],
+    "BLESSED_FRUIT": [
+        957204.3200000001,
+        1099994.6889830509
+    ],
+    "BLOOD_SOAKED_COINS": [
+        2000002.4087912086,
+        5656564.5
+    ],
+    "BLOOD_STAINED_COINS": [
+        3500000.8,
+        4542999.7
+    ],
+    "BLUE_ICE_HUNK": [
+        170903.6628582202,
+        179197.02256944444
+    ],
+    "BLUE_SHARK_TOOTH": [
+        13947.84472777395,
+        31923.76758767269
+    ],
+    "BOBBIN_SCRIPTURES": [
+        29610.239399293285,
+        49499.8
+    ],
+    "BOB_OMB": [
+        500.5,
+        1497.3793436293438
+    ],
+    "BONE": [
+        9.433203634490393,
+        19.589786592835793
+    ],
+    "BONZO_FRAGMENT": [
+        264.3,
+        323
+    ],
+    "BOOKWORM_BOOK": [
+        3020.2468940316685,
+        14949.080582524271
+    ],
+    "BOOK_OF_STATS": [
+        1141642.4729927008,
+        2768997.5980198015
+    ],
+    "BOOSTER_COOKIE": [
+        10898304.40157068,
+        11539897.8266436
+    ],
+    "BOX_OF_SEEDS": [
+        75751.90196656833,
+        79572.8
+    ],
+    "BRAIDED_GRIFFIN_FEATHER": [
+        12873448,
+        15053776
+    ],
+    "BROWN_MUSHROOM": [
+        5.6000000000000005,
+        16.976503613988424
+    ],
+    "BUBBA_BLISTER": [
+        487607.0999999999,
+        727073.45
+    ],
+    "BUDGET_HOPPER": [
+        4161.996132596685,
+        12251.351923076923
+    ],
+    "BULKY_STONE": [
+        3735560.4000000004,
+        7471119.4
+    ],
+    "BURROWING_SPORES": [
+        3335736.5317460317,
+        3881262.806060606
+    ],
+    "CACTUS": [
+        0.4,
+        3.061704196033264
+    ],
+    "CANDY_CORN": [
+        2.7,
+        1886.0296296296294
+    ],
+    "CAPSAICIN_EYEDROPS_NO_CHARGES": [
+        1200000,
+        1499999
+    ],
+    "CARROT_BAIT": [
+        91.1,
+        431.6302223092743
+    ],
+    "CARROT_ITEM": [
+        1.152341627848626,
+        3.362069826058746
+    ],
+    "CATALYST": [
+        159812.38379888266,
+        182656.3
+    ],
+    "CHEESE_FUEL": [
+        7180.861534566953,
+        8494.915917362448
+    ],
+    "CHILI_PEPPER": [
+        12240.6,
+        16650.99153108052
+    ],
+    "CHOCOLATE_CHIP": [
+        356816.30233463034,
+        559998.95
+    ],
+    "CHUM": [
+        0.3,
+        3.4435560268152994
+    ],
+    "CHYME": [
+        850000.3,
+        1999998.7
+    ],
+    "CLAY_BALL": [
+        1,
+        4.791508618916362
+    ],
+    "CLIPPED_WINGS": [
+        25,
+        1144.8182481751826
+    ],
+    "COAL": [
+        6.218224802581955,
+        12
+    ],
+    "COBBLESTONE": [
+        0.3,
+        1.7
+    ],
+    "COLOSSAL_EXP_BOTTLE": [
+        2126187.938363893,
+        2373860.9892857145
+    ],
+    "COMPACTOR": [
+        2501.2008547008545,
+        9997.8
+    ],
+    "COMPOST": [
+        13802.380949363747,
+        14332.7
+    ],
+    "CONCENTRATED_STONE": [
+        478958.59984,
+        541189.7826086957
+    ],
+    "CONDENSED_FERMENTO": [
+        2223613.5603340296,
+        2398180.6072727274
+    ],
+    "CONTROL_SWITCH": [
+        86645.31147655704,
+        106250.9
+    ],
+    "CORLEONITE": [
+        712000.2338797814,
+        766666.5973568282
+    ],
+    "CORRUPTED_BAIT": [
+        0,
+        62.82802916978311
+    ],
+    "CORRUPT_SOIL": [
+        210150.13858823528,
+        278047.3
+    ],
+    "CROPIE": [
+        24259.515630936225,
+        49999.69543930248
+    ],
+    "CRUDE_GABAGOOL": [
+        420.34637802654674,
+        537.7002399520096
+    ],
+    "CRUDE_GABAGOOL_DISTILLATE": [
+        77148.7316302187,
+        83897.16789104417
+    ],
+    "CRYSTAL_FRAGMENT": [
+        156868.0731092437,
+        185161.2818181818
+    ],
+    "DAEDALUS_STICK": [
+        1660596.3279661017,
+        2403118.291428571
+    ],
+    "DARK_BAIT": [
+        929.8012713616777,
+        1599.9
+    ],
+    "DARK_CANDY": [
+        49803,
+        54638.48957219251
+    ],
+    "DARK_ORB": [
+        161131.20274390245,
+        253675.488
+    ],
+    "DARK_QUEENS_SOUL_DROP": [
+        965.0118126574773,
+        5710.77442371021
+    ],
+    "DEEP_SEA_ORB": [
+        4640101.942857143,
+        5524999.293749999
+    ],
+    "DERELICT_ASHE": [
+        445.8540998685329,
+        674.2083660381847
+    ],
+    "DIAMOND": [
+        7.602579151855832,
+        9.573556881662098
+    ],
+    "DIAMOND_ATOM": [
+        5.4,
+        16395.989999999998
+    ],
+    "DIAMOND_SPREADING": [
+        2523.20303030303,
+        7961.113698630137
+    ],
+    "DIAMONITE": [
+        1989308.1230769232,
+        2641260.6333333333
+    ],
+    "DIRT_BOTTLE": [
+        0,
+        0
+    ],
+    "DISPLACED_LEECH": [
+        173756.05616438357,
+        324972.44238227146
+    ],
+    "DIVAN_FRAGMENT": [
+        713726.0156111929,
+        729997.6
+    ],
+    "DIVAN_POWDER_COATING": [
+        284610002,
+        313892387.5833333
+    ],
+    "DIVER_FRAGMENT": [
+        485033.6828125,
+        627263.798245614
+    ],
+    "DRAGON_CLAW": [
+        16965.05985267035,
+        50190.86265822784
+    ],
+    "DRAGON_HORN": [
+        6690227.725000001,
+        8486218.370731708
+    ],
+    "DRAGON_SCALE": [
+        7.5584,
+        7943.658762886598
+    ],
+    "DRILL_ENGINE": [
+        4172019,
+        4333090.891304348
+    ],
+    "DUNG": [
+        54983.57370580807,
+        82969.69962406016
+    ],
+    "DUNGEON_CHEST_KEY": [
+        104002.07903478533,
+        145324.03695652174
+    ],
+    "DUNGEON_DECOY": [
+        7.134079678637863,
+        421.05714843241833
+    ],
+    "DUNGEON_TRAP": [
+        0.1,
+        1.2995211084247722
+    ],
+    "DWARVEN_COMPACTOR": [
+        240401.00821917807,
+        311998.5739336493
+    ],
+    "DWARVEN_OS_BLOCK_BRAN": [
+        979357.0746478875,
+        1285998.7249999999
+    ],
+    "DWARVEN_OS_GEMSTONE_GRAHAMS": [
+        687653.6862745098,
+        939999.9555555555
+    ],
+    "DWARVEN_OS_METALLIC_MINIS": [
+        4729119.701010101,
+        5619839.1
+    ],
+    "DWARVEN_OS_ORE_OATS": [
+        0.9210084033613445,
+        0
+    ],
+    "DWARVEN_TREASURE": [
+        0,
+        199.8967914438503
+    ],
+    "ECCENTRIC_PAINTING": [
+        36922083.55833334,
+        43640182.5
+    ],
+    "ECTOPLASM": [
+        271638.87969696976,
+        407502.2878787879
+    ],
+    "EGG": [
+        11.053613788429256,
+        35.133964829189146
+    ],
+    "ELECTRON_TRANSMITTER": [
+        110877.77875695731,
+        132267.3912280702
+    ],
+    "EMERALD": [
+        2.556961781228708,
+        5
+    ],
+    "EMPTY_CHUM_BUCKET": [
+        5906.220093392481,
+        8062.38570807993
+    ],
+    "ENCHANTED_ACACIA_LOG": [
+        1289.5506994442947,
+        1885.8260877356454
+    ],
+    "ENCHANTED_ANCIENT_CLAW": [
+        2845.0568739680793,
+        3984.240226428445
+    ],
+    "ENCHANTED_BAKED_POTATO": [
+        74916.90024183795,
+        77575.1
+    ],
+    "ENCHANTED_BIRCH_LOG": [
+        412.7847404477036,
+        698.9914681706366
+    ],
+    "ENCHANTED_BLAZE_POWDER": [
+        2204.1122224336145,
+        3854.687147980171
+    ],
+    "ENCHANTED_BLAZE_ROD": [
+        586003.7089306029,
+        647068.5970149253
+    ],
+    "ENCHANTED_BONE": [
+        1800.9,
+        2131.3936236731133
+    ],
+    "ENCHANTED_BONE_BLOCK": [
+        47332.0498997996,
+        58882.02149837134
+    ],
+    "ENCHANTED_BONE_MEAL": [
+        332.26605019286484,
+        554.1
+    ],
+    "ENCHANTED_BREAD": [
+        146,
+        222.80000000000004
+    ],
+    "ENCHANTED_BROWN_MUSHROOM": [
+        1522.8508543377702,
+        1603.9874366837807
+    ],
+    "ENCHANTED_CACTUS": [
+        100853.68625698323,
+        111110.8956060606
+    ],
+    "ENCHANTED_CACTUS_GREEN": [
+        601.3592237172674,
+        711.1823421963766
+    ],
+    "ENCHANTED_CAKE": [
+        2285.9305555555557,
+        48995.26818181818
+    ],
+    "ENCHANTED_CARROT": [
+        590.8782271796681,
+        613.6850176985524
+    ],
+    "ENCHANTED_CARROT_ON_A_STICK": [
+        0,
+        0
+    ],
+    "ENCHANTED_CARROT_STICK": [
+        1500.5060606060606,
+        149999.9
+    ],
+    "ENCHANTED_CHARCOAL": [
+        1624.8,
+        5144.899795918367
+    ],
+    "ENCHANTED_CLAY_BALL": [
+        438.7220191248842,
+        460.9916502909524
+    ],
+    "ENCHANTED_CLOWNFISH": [
+        3029.1423375449144,
+        3187.4763738071733
+    ],
+    "ENCHANTED_COAL": [
+        1340.4662003058295,
+        1430.6765969879677
+    ],
+    "ENCHANTED_COAL_BLOCK": [
+        142570.91419978128,
+        148998.29648173208
+    ],
+    "ENCHANTED_COBBLESTONE": [
+        268.7,
+        331.5989311675265
+    ],
+    "ENCHANTED_COCOA": [
+        510.5298088550679,
+        578.1390064176653
+    ],
+    "ENCHANTED_COMPOST": [
+        2300880.3397260276,
+        2456717.6969230766
+    ],
+    "ENCHANTED_COOKED_FISH": [
+        145355.21730305464,
+        152062.833632287
+    ],
+    "ENCHANTED_COOKED_MUTTON": [
+        276068.8255373593,
+        293985.45508072176
+    ],
+    "ENCHANTED_COOKED_SALMON": [
+        239643.38423928674,
+        255472.02569444446
+    ],
+    "ENCHANTED_COOKIE": [
+        71190.34268054653,
+        74581.2
+    ],
+    "ENCHANTED_DANDELION": [
+        24227.24363349131,
+        28701.095911004206
+    ],
+    "ENCHANTED_DARK_OAK_LOG": [
+        650.205024039989,
+        896.2309958917693
+    ],
+    "ENCHANTED_DIAMOND": [
+        1283.220607523215,
+        1348.2007144400914
+    ],
+    "ENCHANTED_DIAMOND_BLOCK": [
+        200207.82339217878,
+        203208.47391920624
+    ],
+    "ENCHANTED_EGG": [
+        4000.2,
+        5050.528722002636
+    ],
+    "ENCHANTED_EMERALD": [
+        703.2,
+        882.0982575551321
+    ],
+    "ENCHANTED_EMERALD_BLOCK": [
+        100040.53918918919,
+        115382.69999999998
+    ],
+    "ENCHANTED_ENDER_PEARL": [
+        160.20026902176002,
+        207.75354718889903
+    ],
+    "ENCHANTED_ENDSTONE": [
+        264.2912640981001,
+        339.9961748071979
+    ],
+    "ENCHANTED_EYE_OF_ENDER": [
+        5537.6,
+        5899.115938062658
+    ],
+    "ENCHANTED_FEATHER": [
+        418.3493214232097,
+        484.07833534936674
+    ],
+    "ENCHANTED_FERMENTED_SPIDER_EYE": [
+        103643.65885687293,
+        110000
+    ],
+    "ENCHANTED_FIREWORK_ROCKET": [
+        161518.81665097512,
+        248089.26438746438
+    ],
+    "ENCHANTED_FLINT": [
+        5567.478570752574,
+        6262.280091870248
+    ],
+    "ENCHANTED_GHAST_TEAR": [
+        401.1537962559035,
+        481.40456695073453
+    ],
+    "ENCHANTED_GLACITE": [
+        3603.1159080244015,
+        4082.287771749686
+    ],
+    "ENCHANTED_GLISTERING_MELON": [
+        3851.8901332899873,
+        7775.399999999999
+    ],
+    "ENCHANTED_GLOWSTONE": [
+        49139.5,
+        54570.786532575425
+    ],
+    "ENCHANTED_GLOWSTONE_DUST": [
+        1765.3198992349319,
+        2104.608434975877
+    ],
+    "ENCHANTED_GOLD": [
+        485.7439201645612,
+        536.220667420117
+    ],
+    "ENCHANTED_GOLDEN_CARROT": [
+        77434.70387509018,
+        82590.3201426025
+    ],
+    "ENCHANTED_GOLD_BLOCK": [
+        77500.54323162872,
+        80533.6199917898
+    ],
+    "ENCHANTED_GRILLED_PORK": [
+        149786.87490154896,
+        163401.12423664125
+    ],
+    "ENCHANTED_GUNPOWDER": [
+        2480.927024022726,
+        2995.736270086872
+    ],
+    "ENCHANTED_HARD_STONE": [
+        839.0834103419407,
+        915.3661189269237
+    ],
+    "ENCHANTED_HAY_BALE": [
+        149749.3,
+        152608.06398809524
+    ],
+    "ENCHANTED_HAY_BLOCK": [
+        0,
+        0
+    ],
+    "ENCHANTED_HOPPER": [
+        1218629.1666666667,
+        1378862.8533088237
+    ],
+    "ENCHANTED_HUGE_MUSHROOM_1": [
+        36260.796115627825,
+        50649.908674157305
+    ],
+    "ENCHANTED_HUGE_MUSHROOM_2": [
+        49155.18260983952,
+        50496.2
+    ],
+    "ENCHANTED_ICE": [
+        477.8,
+        713.7126384463662
+    ],
+    "ENCHANTED_INK_SACK": [
+        96148.27269938649,
+        126986.79897172235
+    ],
+    "ENCHANTED_IRON": [
+        1410.3319178804984,
+        1555.5088762578562
+    ],
+    "ENCHANTED_IRON_BLOCK": [
+        240861.65585957665,
+        257096.73876288658
+    ],
+    "ENCHANTED_JUNGLE_LOG": [
+        927.5994113443166,
+        1173.9569065110195
+    ],
+    "ENCHANTED_LAPIS_LAZULI": [
+        841.5111681544029,
+        915.6950488058151
+    ],
+    "ENCHANTED_LAPIS_LAZULI_BLOCK": [
+        85398.50488460677,
+        87203.07194672375
+    ],
+    "ENCHANTED_LAVA_BUCKET": [
+        306863.37108108104,
+        328786.5760824742
+    ],
+    "ENCHANTED_LEATHER": [
+        6200.016073029826,
+        6630.800000000001
+    ],
+    "ENCHANTED_LUSH_BERBERIS": [
+        16019.81051775549,
+        17584.646543209874
+    ],
+    "ENCHANTED_MAGMA_CREAM": [
+        2772.995773277271,
+        3154.400263304875
+    ],
+    "ENCHANTED_MELON": [
+        310.39009796651186,
+        324.3683494279895
+    ],
+    "ENCHANTED_MELON_BLOCK": [
+        49985.1,
+        50572.00492401215
+    ],
+    "ENCHANTED_MITHRIL": [
+        1361.2356999567319,
+        1432.8752215184704
+    ],
+    "ENCHANTED_MUTTON": [
+        3060.981229615134,
+        3551.7310943718026
+    ],
+    "ENCHANTED_MYCELIUM": [
+        1245.722559938034,
+        1395.625555647817
+    ],
+    "ENCHANTED_MYCELIUM_CUBE": [
+        121974.3,
+        127719.23633762516
+    ],
+    "ENCHANTED_NETHERRACK": [
+        121.6,
+        180.7921131315952
+    ],
+    "ENCHANTED_NETHER_STALK": [
+        606.9621828593563,
+        648.7196968942989
+    ],
+    "ENCHANTED_OAK_LOG": [
+        1000.5412972851539,
+        1092.9093531348608
+    ],
+    "ENCHANTED_OBSIDIAN": [
+        1440,
+        1795.0478181567732
+    ],
+    "ENCHANTED_PACKED_ICE": [
+        81000,
+        85345.34045503022
+    ],
+    "ENCHANTED_PAPER": [
+        846.7048584332379,
+        1275.906810930781
+    ],
+    "ENCHANTED_POISONOUS_POTATO": [
+        380.1,
+        2023.732483221476
+    ],
+    "ENCHANTED_POPPY": [
+        819.4014007891769,
+        2478.6808950733357
+    ],
+    "ENCHANTED_PORK": [
+        4253,
+        4757.197369982203
+    ],
+    "ENCHANTED_POTATO": [
+        462.6591098262073,
+        499.6999837111703
+    ],
+    "ENCHANTED_PRISMARINE_CRYSTALS": [
+        344.981059952449,
+        792.4
+    ],
+    "ENCHANTED_PRISMARINE_SHARD": [
+        346.1,
+        397.567967967968
+    ],
+    "ENCHANTED_PUFFERFISH": [
+        2242.7148466067974,
+        2412.9050763052205
+    ],
+    "ENCHANTED_PUMPKIN": [
+        1537.449387812544,
+        1609.0523607642042
+    ],
+    "ENCHANTED_QUARTZ": [
+        3400.844364405352,
+        3838.152411021814
+    ],
+    "ENCHANTED_QUARTZ_BLOCK": [
+        551279.2561439589,
+        589825.6961002785
+    ],
+    "ENCHANTED_RABBIT": [
+        574.2360811266656,
+        720
+    ],
+    "ENCHANTED_RABBIT_FOOT": [
+        853.8192710013363,
+        1129.5101883052528
+    ],
+    "ENCHANTED_RABBIT_HIDE": [
+        17158.76385041551,
+        20342.996146435453
+    ],
+    "ENCHANTED_RAW_BEEF": [
+        588.8600604864309,
+        735.2
+    ],
+    "ENCHANTED_RAW_CHICKEN": [
+        533.2216039195105,
+        699.0230695959821
+    ],
+    "ENCHANTED_RAW_FISH": [
+        915.390214557351,
+        1070.9
+    ],
+    "ENCHANTED_RAW_SALMON": [
+        1417.9791870208592,
+        1985.1929429429429
+    ],
+    "ENCHANTED_REDSTONE": [
+        485.584646577641,
+        848.3202563939535
+    ],
+    "ENCHANTED_REDSTONE_BLOCK": [
+        24425.000607943348,
+        25490.55792717087
+    ],
+    "ENCHANTED_REDSTONE_LAMP": [
+        110.36444690711264,
+        242855.28277777776
+    ],
+    "ENCHANTED_RED_MUSHROOM": [
+        1540.3,
+        1622.2102330094624
+    ],
+    "ENCHANTED_RED_SAND": [
+        823.625353283458,
+        1310.3044607881286
+    ],
+    "ENCHANTED_RED_SAND_CUBE": [
+        123108.475,
+        139999.59344262295
+    ],
+    "ENCHANTED_ROTTEN_FLESH": [
+        1130.7002973055385,
+        1375.2334924484283
+    ],
+    "ENCHANTED_SAND": [
+        314.5383587053441,
+        558.4924886912229
+    ],
+    "ENCHANTED_SEEDS": [
+        464.2691631037111,
+        512.960084922592
+    ],
+    "ENCHANTED_SHARK_FIN": [
+        13458.103976143142,
+        24998.09766710354
+    ],
+    "ENCHANTED_SLIME_BALL": [
+        2134.021717161203,
+        2272.1447738602374
+    ],
+    "ENCHANTED_SLIME_BLOCK": [
+        124777.27713477366,
+        126770.83101422388
+    ],
+    "ENCHANTED_SNOW_BLOCK": [
+        565.4155771940418,
+        582
+    ],
+    "ENCHANTED_SPIDER_EYE": [
+        1550.0003643372847,
+        1618.064144188578
+    ],
+    "ENCHANTED_SPONGE": [
+        1911.7797701877403,
+        1998
+    ],
+    "ENCHANTED_SPRUCE_LOG": [
+        1011.4955188679244,
+        1272.4375481661195
+    ],
+    "ENCHANTED_STRING": [
+        2351.783856712717,
+        2567.47423957913
+    ],
+    "ENCHANTED_SUGAR": [
+        614.3,
+        673.1598019524237
+    ],
+    "ENCHANTED_SUGAR_CANE": [
+        104799.30322213797,
+        105788.09580388693
+    ],
+    "ENCHANTED_SULPHUR": [
+        1514.8561240952295,
+        1565.8568998683813
+    ],
+    "ENCHANTED_SULPHUR_CUBE": [
+        250068.92308319744,
+        251606.01402061858
+    ],
+    "ENCHANTED_TITANIUM": [
+        13019.627793022344,
+        13377.165384615386
+    ],
+    "ENCHANTED_TUNGSTEN": [
+        12726.369950401917,
+        14543.9
+    ],
+    "ENCHANTED_UMBER": [
+        12571.080650967895,
+        13391.974798527508
+    ],
+    "ENCHANTED_WATER_LILY": [
+        1424.2130663843566,
+        1996.6517639512506
+    ],
+    "ENCHANTED_WET_SPONGE": [
+        77107.6525259576,
+        80296.41974169742
+    ],
+    "ENCHANTED_WHEAT": [
+        930.8728878465446,
+        1008.4276726543962
+    ],
+    "ENCHANTED_WOOL": [
+        266.90826619849173,
+        306.6519195167105
+    ],
+    "ENCHANTMENT_AIMING_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_AIMING_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_AIMING_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_AIMING_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_AIMING_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ANGLER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ANGLER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ANGLER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ANGLER_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ANGLER_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ANGLER_6": [
+        1.3,
+        1.8
+    ],
+    "ENCHANTMENT_AQUA_AFFINITY_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BANE_OF_ARTHROPODS_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BANE_OF_ARTHROPODS_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BANE_OF_ARTHROPODS_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BANE_OF_ARTHROPODS_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BANE_OF_ARTHROPODS_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BANE_OF_ARTHROPODS_6": [
+        0,
+        0.10000000000000002
+    ],
+    "ENCHANTMENT_BANE_OF_ARTHROPODS_7": [
+        633628.2205128205,
+        2029999.8
+    ],
+    "ENCHANTMENT_BIG_BRAIN_3": [
+        52322623.656521745,
+        68732785.27000001
+    ],
+    "ENCHANTMENT_BIG_BRAIN_4": [
+        14000002.622222222,
+        499999999.5
+    ],
+    "ENCHANTMENT_BIG_BRAIN_5": [
+        163490817.45000002,
+        303049248.3
+    ],
+    "ENCHANTMENT_BLAST_PROTECTION_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLAST_PROTECTION_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLAST_PROTECTION_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLAST_PROTECTION_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLAST_PROTECTION_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLAST_PROTECTION_6": [
+        1000.4333333333333,
+        0
+    ],
+    "ENCHANTMENT_BLAST_PROTECTION_7": [
+        928235.3857142858,
+        6395319.9
+    ],
+    "ENCHANTMENT_BLESSING_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLESSING_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLESSING_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLESSING_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLESSING_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_BLESSING_6": [
+        1200001.8206896554,
+        1789998.6800000002
+    ],
+    "ENCHANTMENT_CASTER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CASTER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CASTER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CASTER_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CASTER_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CASTER_6": [
+        10.611923076923077,
+        60613.78736842105
+    ],
+    "ENCHANTMENT_CAYENNE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CAYENNE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CAYENNE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CAYENNE_4": [
+        4525316.9,
+        9999996.1
+    ],
+    "ENCHANTMENT_CAYENNE_5": [
+        10000001.1,
+        15999987.079569893
+    ],
+    "ENCHANTMENT_CHAMPION_1": [
+        4535006.423958334,
+        5199986.617073171
+    ],
+    "ENCHANTMENT_CHAMPION_10": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_6": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_7": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_8": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHAMPION_9": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHANCE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHANCE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHANCE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CHANCE_4": [
+        3.3085714285714283,
+        14074.11525423729
+    ],
+    "ENCHANTMENT_CHANCE_5": [
+        12000000.5,
+        19999498.5
+    ],
+    "ENCHANTMENT_CHARM_1": [
+        15231.722916666668,
+        36723.968571428566
+    ],
+    "ENCHANTMENT_CHARM_2": [
+        2005,
+        194933.4
+    ],
+    "ENCHANTMENT_CHARM_3": [
+        3007.8,
+        0
+    ],
+    "ENCHANTMENT_CHARM_4": [
+        51665.520000000004,
+        9999999
+    ],
+    "ENCHANTMENT_CHARM_5": [
+        597404.0038461538,
+        1158686.1096774195
+    ],
+    "ENCHANTMENT_CLEAVE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CLEAVE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CLEAVE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CLEAVE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CLEAVE_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CLEAVE_6": [
+        13786828.028571429,
+        21499999.9
+    ],
+    "ENCHANTMENT_COMPACT_1": [
+        4669026.4753623195,
+        5045410.7
+    ],
+    "ENCHANTMENT_COMPACT_10": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_6": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_7": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_8": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_COMPACT_9": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CORRUPTION_1": [
+        0,
+        7.4447761194029844
+    ],
+    "ENCHANTMENT_CORRUPTION_2": [
+        2,
+        0
+    ],
+    "ENCHANTMENT_CORRUPTION_3": [
+        0,
+        6924.35
+    ],
+    "ENCHANTMENT_CORRUPTION_4": [
+        10,
+        49999.5
+    ],
+    "ENCHANTMENT_CORRUPTION_5": [
+        21143.653333333332,
+        116188.2
+    ],
+    "ENCHANTMENT_COUNTER_STRIKE_3": [
+        4.9,
+        0
+    ],
+    "ENCHANTMENT_COUNTER_STRIKE_4": [
+        682500.7999999999,
+        0
+    ],
+    "ENCHANTMENT_COUNTER_STRIKE_5": [
+        80238889.53,
+        119999999.1
+    ],
+    "ENCHANTMENT_CRITICAL_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CRITICAL_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CRITICAL_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CRITICAL_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CRITICAL_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CRITICAL_6": [
+        0.3,
+        848.5915766738661
+    ],
+    "ENCHANTMENT_CRITICAL_7": [
+        105707974.78333335,
+        119999998.4
+    ],
+    "ENCHANTMENT_CUBISM_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CUBISM_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CUBISM_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CUBISM_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CUBISM_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CUBISM_6": [
+        90000000.8,
+        114999999.4
+    ],
+    "ENCHANTMENT_CULTIVATING_1": [
+        4709236.887999999,
+        5149860.3782608695
+    ],
+    "ENCHANTMENT_CULTIVATING_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CULTIVATING_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CULTIVATING_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CULTIVATING_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CULTIVATING_6": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CULTIVATING_7": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CULTIVATING_8": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CULTIVATING_9": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_CURSE_OF_VANISHING_0": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_DEDICATION_1": [
+        1000000.2,
+        1139855.9266666665
+    ],
+    "ENCHANTMENT_DEDICATION_2": [
+        1374325.4,
+        3399994.8
+    ],
+    "ENCHANTMENT_DEDICATION_3": [
+        4075888.942857143,
+        4907584.1
+    ],
+    "ENCHANTMENT_DEDICATION_4": [
+        84324360.99444444,
+        89542549
+    ],
+    "ENCHANTMENT_DELICATE_5": [
+        777531.4612612613,
+        1295494.5458333334
+    ],
+    "ENCHANTMENT_DEPTH_STRIDER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_DEPTH_STRIDER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_DEPTH_STRIDER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_DIVINE_GIFT_1": [
+        25050001.100000005,
+        27212630.4
+    ],
+    "ENCHANTMENT_DIVINE_GIFT_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_DIVINE_GIFT_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_DRAGON_HUNTER_1": [
+        536958.1507692308,
+        1122578.8434782608
+    ],
+    "ENCHANTMENT_DRAGON_HUNTER_2": [
+        1090588.1,
+        2999999.9
+    ],
+    "ENCHANTMENT_DRAGON_HUNTER_3": [
+        1900901.2,
+        6199999.6
+    ],
+    "ENCHANTMENT_DRAGON_HUNTER_4": [
+        6000001.7,
+        10049997.1
+    ],
+    "ENCHANTMENT_DRAGON_HUNTER_5": [
+        16171354.2,
+        18537699.2
+    ],
+    "ENCHANTMENT_EFFICIENCY_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_10": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_6": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_7": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_8": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EFFICIENCY_9": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ENDER_SLAYER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ENDER_SLAYER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ENDER_SLAYER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ENDER_SLAYER_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ENDER_SLAYER_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ENDER_SLAYER_6": [
+        1340001.3034482757,
+        1577999.3
+    ],
+    "ENCHANTMENT_ENDER_SLAYER_7": [
+        120008890.45555554,
+        150999999.4
+    ],
+    "ENCHANTMENT_EXECUTE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXECUTE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXECUTE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXECUTE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXECUTE_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXECUTE_6": [
+        46000001.48888889,
+        56045431.5
+    ],
+    "ENCHANTMENT_EXPERIENCE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERIENCE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERIENCE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERIENCE_4": [
+        200001.3833333333,
+        530642.391101695
+    ],
+    "ENCHANTMENT_EXPERIENCE_5": [
+        25569834.1,
+        39997995.1
+    ],
+    "ENCHANTMENT_EXPERTISE_1": [
+        2127236.225,
+        4544711.832258064
+    ],
+    "ENCHANTMENT_EXPERTISE_10": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_6": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_7": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_8": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_EXPERTISE_9": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_10": [
+        45000,
+        101999.97967479675
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_20": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_6": [
+        0,
+        799.972
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_7": [
+        2,
+        8855.063333333334
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_8": [
+        56.1,
+        43880.2
+    ],
+    "ENCHANTMENT_FEATHER_FALLING_9": [
+        4986.308333333333,
+        81945.6
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_1": [
+        43149.273813420616,
+        199998.4
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_10": [
+        17602122.18888889,
+        45989996.4
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_2": [
+        22014.628697571745,
+        132536.72499999998
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_3": [
+        64062.86792114695,
+        293658.3
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_4": [
+        200004.9,
+        461326.8
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_5": [
+        633801.3540166205,
+        892272.8800000001
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_6": [
+        1215195.1,
+        2819715.591666667
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_7": [
+        1125000.1666666667,
+        6586997.194117647
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_8": [
+        1600450.8,
+        13009014.5
+    ],
+    "ENCHANTMENT_FEROCIOUS_MANA_9": [
+        2818200.809090909,
+        29999999.3
+    ],
+    "ENCHANTMENT_FIRE_ASPECT_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRE_ASPECT_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRE_ASPECT_3": [
+        15566.412403100774,
+        137011.88016528924
+    ],
+    "ENCHANTMENT_FIRE_PROTECTION_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRE_PROTECTION_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRE_PROTECTION_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRE_PROTECTION_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRE_PROTECTION_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRE_PROTECTION_6": [
+        2.4,
+        45750.1
+    ],
+    "ENCHANTMENT_FIRE_PROTECTION_7": [
+        1200001.3,
+        3269997.9
+    ],
+    "ENCHANTMENT_FIRST_STRIKE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRST_STRIKE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRST_STRIKE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRST_STRIKE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FIRST_STRIKE_5": [
+        248799954.4,
+        339998998.6
+    ],
+    "ENCHANTMENT_FLAME_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FLAME_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FORTUNE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FORTUNE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FORTUNE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FORTUNE_4": [
+        79259.93943661972,
+        174310.82432432432
+    ],
+    "ENCHANTMENT_FRAIL_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FRAIL_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FRAIL_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FRAIL_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FRAIL_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FRAIL_6": [
+        10.3,
+        39999.7
+    ],
+    "ENCHANTMENT_FROST_WALKER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_FROST_WALKER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GIANT_KILLER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GIANT_KILLER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GIANT_KILLER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GIANT_KILLER_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GIANT_KILLER_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GIANT_KILLER_6": [
+        567045.994047619,
+        2222221.4
+    ],
+    "ENCHANTMENT_GIANT_KILLER_7": [
+        190142657.64444444,
+        214872844.7
+    ],
+    "ENCHANTMENT_GREEN_THUMB_1": [
+        5438715,
+        6087818.659459459
+    ],
+    "ENCHANTMENT_GREEN_THUMB_2": [
+        10964467.2,
+        15424773.094999999
+    ],
+    "ENCHANTMENT_GREEN_THUMB_3": [
+        23000000.100000005,
+        32533164.9
+    ],
+    "ENCHANTMENT_GREEN_THUMB_4": [
+        44800000.29999999,
+        59999998.7
+    ],
+    "ENCHANTMENT_GREEN_THUMB_5": [
+        92700001.18333334,
+        115469999.9
+    ],
+    "ENCHANTMENT_GROWTH_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GROWTH_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GROWTH_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GROWTH_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GROWTH_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_GROWTH_6": [
+        6557742.377966101,
+        7229999.999378882
+    ],
+    "ENCHANTMENT_GROWTH_7": [
+        152566679.53888887,
+        170809283.6
+    ],
+    "ENCHANTMENT_HARDENED_MANA_1": [
+        24261.506086956524,
+        36392.6
+    ],
+    "ENCHANTMENT_HARDENED_MANA_10": [
+        3874446.4000000004,
+        0
+    ],
+    "ENCHANTMENT_HARDENED_MANA_2": [
+        27839.926,
+        118684.125
+    ],
+    "ENCHANTMENT_HARDENED_MANA_3": [
+        40009.186734693874,
+        205068.1
+    ],
+    "ENCHANTMENT_HARDENED_MANA_4": [
+        113118.73703703703,
+        264002.37500000006
+    ],
+    "ENCHANTMENT_HARDENED_MANA_5": [
+        278781.86095617525,
+        690206.5
+    ],
+    "ENCHANTMENT_HARDENED_MANA_6": [
+        200000.9,
+        1712889.012195122
+    ],
+    "ENCHANTMENT_HARDENED_MANA_7": [
+        300000.76666666666,
+        3999999.5
+    ],
+    "ENCHANTMENT_HARDENED_MANA_8": [
+        2000000.7,
+        10899990.2
+    ],
+    "ENCHANTMENT_HARDENED_MANA_9": [
+        2700001.02,
+        19999997.9
+    ],
+    "ENCHANTMENT_HARVESTING_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HARVESTING_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HARVESTING_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HARVESTING_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HARVESTING_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HARVESTING_6": [
+        2829823.8499999996,
+        2871082.104597701
+    ],
+    "ENCHANTMENT_HECATOMB_1": [
+        6467220.251807229,
+        7099997.793939394
+    ],
+    "ENCHANTMENT_HECATOMB_10": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_6": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_7": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_8": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_HECATOMB_9": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ICE_COLD_1": [
+        2435399.1684931507,
+        3669334.4
+    ],
+    "ENCHANTMENT_ICE_COLD_2": [
+        3138247.18,
+        18813165.3
+    ],
+    "ENCHANTMENT_ICE_COLD_3": [
+        2715008.9083333337,
+        99999999.6
+    ],
+    "ENCHANTMENT_ICE_COLD_4": [
+        9300001,
+        40000000
+    ],
+    "ENCHANTMENT_ICE_COLD_5": [
+        212415.16666666666,
+        69999996.6
+    ],
+    "ENCHANTMENT_IMPALING_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_IMPALING_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_IMPALING_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_10": [
+        6100.159756097561,
+        99999.98225806453
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_6": [
+        0,
+        0.20000000000000004
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_7": [
+        1,
+        5131.696
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_8": [
+        0,
+        31282.266666666666
+    ],
+    "ENCHANTMENT_INFINITE_QUIVER_9": [
+        21.910597826086956,
+        39999.2
+    ],
+    "ENCHANTMENT_KNOCKBACK_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_KNOCKBACK_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LAPIDARY_1": [
+        1612008.6933789956,
+        1842667.9318181819
+    ],
+    "ENCHANTMENT_LAPIDARY_2": [
+        1028971.8055555555,
+        5050720
+    ],
+    "ENCHANTMENT_LAPIDARY_3": [
+        3339508.475,
+        9144942.4
+    ],
+    "ENCHANTMENT_LAPIDARY_4": [
+        8500001.4,
+        15425496.2
+    ],
+    "ENCHANTMENT_LAPIDARY_5": [
+        26807332.7,
+        40499998.9
+    ],
+    "ENCHANTMENT_LETHALITY_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LETHALITY_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LETHALITY_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LETHALITY_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LETHALITY_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LETHALITY_6": [
+        33109.57543859649,
+        210020.13200000004
+    ],
+    "ENCHANTMENT_LIFE_STEAL_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LIFE_STEAL_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LIFE_STEAL_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LIFE_STEAL_4": [
+        30000.099999999995,
+        272999.6
+    ],
+    "ENCHANTMENT_LIFE_STEAL_5": [
+        8088638.527272727,
+        14499999
+    ],
+    "ENCHANTMENT_LOOTING_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LOOTING_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LOOTING_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LOOTING_4": [
+        3213.869300911854,
+        7875.5
+    ],
+    "ENCHANTMENT_LOOTING_5": [
+        320000000.4,
+        337433917.3
+    ],
+    "ENCHANTMENT_LUCK_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_6": [
+        0.9,
+        0
+    ],
+    "ENCHANTMENT_LUCK_7": [
+        33441140.35,
+        39597824.8
+    ],
+    "ENCHANTMENT_LUCK_OF_THE_SEA_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_OF_THE_SEA_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_OF_THE_SEA_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_OF_THE_SEA_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_OF_THE_SEA_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LUCK_OF_THE_SEA_6": [
+        2503.424255319149,
+        42946.55357142857
+    ],
+    "ENCHANTMENT_LURE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LURE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LURE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LURE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LURE_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_LURE_6": [
+        5.3,
+        32319.783333333336
+    ],
+    "ENCHANTMENT_MAGNET_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_MAGNET_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_MAGNET_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_MAGNET_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_MAGNET_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_MAGNET_6": [
+        0,
+        0.8
+    ],
+    "ENCHANTMENT_MANA_STEAL_1": [
+        1003.6846918489066,
+        15807.677777777779
+    ],
+    "ENCHANTMENT_MANA_STEAL_2": [
+        4965.7,
+        72887.59999999999
+    ],
+    "ENCHANTMENT_MANA_STEAL_3": [
+        10605.5,
+        110414.48627450982
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_1": [
+        70686.30517241379,
+        174089.45
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_10": [
+        45000001,
+        64999989.4
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_2": [
+        80008.29315403423,
+        259993.80000000002
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_3": [
+        182120.76782077394,
+        392058.60000000003
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_4": [
+        469158.3163636364,
+        999999.65
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_5": [
+        1132492.417763158,
+        2343358.58
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_6": [
+        1199701.8181818181,
+        3499992.154545455
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_7": [
+        2500001.1,
+        7447280.599999999
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_8": [
+        6000012.6,
+        16999991.3
+    ],
+    "ENCHANTMENT_MANA_VAMPIRE_9": [
+        11300004.55,
+        0
+    ],
+    "ENCHANTMENT_OVERLOAD_1": [
+        704599.3366515838,
+        802549.5114285714
+    ],
+    "ENCHANTMENT_OVERLOAD_2": [
+        515618.9111111111,
+        3399999
+    ],
+    "ENCHANTMENT_OVERLOAD_3": [
+        1950007.6,
+        5899994.9
+    ],
+    "ENCHANTMENT_OVERLOAD_4": [
+        2082127.9666666668,
+        11962573.699999997
+    ],
+    "ENCHANTMENT_OVERLOAD_5": [
+        11506391.4,
+        14949984.35
+    ],
+    "ENCHANTMENT_PALEONTOLOGIST_1": [
+        1270690.661924686,
+        1658261.022222222
+    ],
+    "ENCHANTMENT_PALEONTOLOGIST_2": [
+        725009.3090909091,
+        3999998.3
+    ],
+    "ENCHANTMENT_PALEONTOLOGIST_3": [
+        1707008.3444444444,
+        9299994.7
+    ],
+    "ENCHANTMENT_PALEONTOLOGIST_4": [
+        1000000.1,
+        21499996.2
+    ],
+    "ENCHANTMENT_PALEONTOLOGIST_5": [
+        20000000.5,
+        37499989.7
+    ],
+    "ENCHANTMENT_PESTERMINATOR_1": [
+        673769.6073500967,
+        790119.3154320987
+    ],
+    "ENCHANTMENT_PESTERMINATOR_2": [
+        1000002.4428571428,
+        2207605.4611111116
+    ],
+    "ENCHANTMENT_PESTERMINATOR_3": [
+        2417289.65,
+        4264237.3
+    ],
+    "ENCHANTMENT_PESTERMINATOR_4": [
+        3900001.0999999996,
+        8022887.4
+    ],
+    "ENCHANTMENT_PESTERMINATOR_5": [
+        4345353.452542373,
+        15018618.497727273
+    ],
+    "ENCHANTMENT_PIERCING_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PISCARY_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PISCARY_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PISCARY_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PISCARY_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PISCARY_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PISCARY_6": [
+        4229315.111111111,
+        7199999.9
+    ],
+    "ENCHANTMENT_POWER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_POWER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_POWER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_POWER_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_POWER_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_POWER_6": [
+        9988.45165562914,
+        369182.9000000001
+    ],
+    "ENCHANTMENT_POWER_7": [
+        231116940.7857143,
+        259999993.3
+    ],
+    "ENCHANTMENT_PRISTINE_1": [
+        1315502.5163636364,
+        1619990.1913461538
+    ],
+    "ENCHANTMENT_PRISTINE_2": [
+        2212177.2,
+        4861109.9
+    ],
+    "ENCHANTMENT_PRISTINE_3": [
+        4500000,
+        11649995.9
+    ],
+    "ENCHANTMENT_PRISTINE_4": [
+        8025728,
+        17819451.4
+    ],
+    "ENCHANTMENT_PRISTINE_5": [
+        22000000,
+        25460111.98
+    ],
+    "ENCHANTMENT_PROJECTILE_PROTECTION_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROJECTILE_PROTECTION_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROJECTILE_PROTECTION_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROJECTILE_PROTECTION_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROJECTILE_PROTECTION_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROJECTILE_PROTECTION_6": [
+        1.2,
+        507.7166666666667
+    ],
+    "ENCHANTMENT_PROJECTILE_PROTECTION_7": [
+        500001.23333333334,
+        1999998.6
+    ],
+    "ENCHANTMENT_PROSECUTE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROSECUTE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROSECUTE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROSECUTE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROSECUTE_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROSECUTE_6": [
+        115335923.51249999,
+        140721374.6
+    ],
+    "ENCHANTMENT_PROSPERITY_1": [
+        1219509.8586206897,
+        1918999.575
+    ],
+    "ENCHANTMENT_PROSPERITY_2": [
+        3201.191891891892,
+        8989999
+    ],
+    "ENCHANTMENT_PROSPERITY_3": [
+        10000.4,
+        17989999.8
+    ],
+    "ENCHANTMENT_PROSPERITY_4": [
+        600003.6199999999,
+        159999999.9
+    ],
+    "ENCHANTMENT_PROSPERITY_5": [
+        12950001.8,
+        37294998
+    ],
+    "ENCHANTMENT_PROTECTION_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROTECTION_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROTECTION_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROTECTION_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROTECTION_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PROTECTION_6": [
+        3877849.26,
+        3969784.9
+    ],
+    "ENCHANTMENT_PROTECTION_7": [
+        38836157.60526316,
+        42999999
+    ],
+    "ENCHANTMENT_PUNCH_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_PUNCH_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_QUANTUM_3": [
+        206955.80714285714,
+        285623.1
+    ],
+    "ENCHANTMENT_QUANTUM_4": [
+        10500.5,
+        0
+    ],
+    "ENCHANTMENT_QUANTUM_5": [
+        735712.1564102564,
+        1999998.3363636362
+    ],
+    "ENCHANTMENT_REFLECTION_1": [
+        255077.88506224065,
+        442330.2
+    ],
+    "ENCHANTMENT_REFLECTION_2": [
+        281663.3085714285,
+        3999999.7999999993
+    ],
+    "ENCHANTMENT_REFLECTION_3": [
+        456145.1111111111,
+        4946662.7
+    ],
+    "ENCHANTMENT_REFLECTION_4": [
+        1087741.3111111112,
+        7220276.8
+    ],
+    "ENCHANTMENT_REFLECTION_5": [
+        5215520.4399999995,
+        22860945.05
+    ],
+    "ENCHANTMENT_REJUVENATE_1": [
+        23879.649581111957,
+        28654.953571428574
+    ],
+    "ENCHANTMENT_REJUVENATE_2": [
+        44262.015607156456,
+        54999.6
+    ],
+    "ENCHANTMENT_REJUVENATE_3": [
+        96638.68153638815,
+        135321.8
+    ],
+    "ENCHANTMENT_REJUVENATE_4": [
+        247340.9073770492,
+        419998.6
+    ],
+    "ENCHANTMENT_REJUVENATE_5": [
+        554265.1192982455,
+        666625.7762711864
+    ],
+    "ENCHANTMENT_REPLENISH_1": [
+        1139489.6,
+        1326229.169117647
+    ],
+    "ENCHANTMENT_RESPIRATION_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_RESPIRATION_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_RESPIRATION_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_RESPITE_1": [
+        6000.937499999999,
+        161019.73333333337
+    ],
+    "ENCHANTMENT_RESPITE_2": [
+        2258.4988130563797,
+        25582.199999999997
+    ],
+    "ENCHANTMENT_RESPITE_3": [
+        12594.917894736842,
+        152901.34999999998
+    ],
+    "ENCHANTMENT_RESPITE_4": [
+        55000.11111111111,
+        0
+    ],
+    "ENCHANTMENT_RESPITE_5": [
+        176518.65000000002,
+        1049994.25
+    ],
+    "ENCHANTMENT_SCAVENGER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SCAVENGER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SCAVENGER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SCAVENGER_4": [
+        0.1,
+        10999.995833333334
+    ],
+    "ENCHANTMENT_SCAVENGER_5": [
+        10238836.906666666,
+        14101004.5
+    ],
+    "ENCHANTMENT_SHARPNESS_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SHARPNESS_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SHARPNESS_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SHARPNESS_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SHARPNESS_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SHARPNESS_6": [
+        942491.0313333335,
+        1617763.475
+    ],
+    "ENCHANTMENT_SHARPNESS_7": [
+        109000000.6,
+        113859995.7
+    ],
+    "ENCHANTMENT_SILK_TOUCH_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SMARTY_PANTS_1": [
+        471484.37734375,
+        689999.4333333335
+    ],
+    "ENCHANTMENT_SMARTY_PANTS_2": [
+        0.7,
+        2909596.7
+    ],
+    "ENCHANTMENT_SMARTY_PANTS_3": [
+        0.4,
+        5511993.3
+    ],
+    "ENCHANTMENT_SMARTY_PANTS_4": [
+        3510460.8,
+        11999999.4
+    ],
+    "ENCHANTMENT_SMARTY_PANTS_5": [
+        10000000.025,
+        12975655.664705882
+    ],
+    "ENCHANTMENT_SMELTING_TOUCH_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SMITE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SMITE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SMITE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SMITE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SMITE_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SMITE_6": [
+        0,
+        3.6
+    ],
+    "ENCHANTMENT_SMITE_7": [
+        6193024,
+        8474339.299999999
+    ],
+    "ENCHANTMENT_SMOLDERING_1": [
+        3160016.9103174605,
+        4740024.5
+    ],
+    "ENCHANTMENT_SMOLDERING_2": [
+        300004.0777777778,
+        15999999.3
+    ],
+    "ENCHANTMENT_SMOLDERING_3": [
+        1142506.775,
+        298781856.8
+    ],
+    "ENCHANTMENT_SMOLDERING_4": [
+        1000001.4,
+        80000000
+    ],
+    "ENCHANTMENT_SMOLDERING_5": [
+        39614330.2,
+        92868987.2
+    ],
+    "ENCHANTMENT_SNIPE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SNIPE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SNIPE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SNIPE_4": [
+        120891005.05,
+        462089098.7
+    ],
+    "ENCHANTMENT_SPIKED_HOOK_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SPIKED_HOOK_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SPIKED_HOOK_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SPIKED_HOOK_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SPIKED_HOOK_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SPIKED_HOOK_6": [
+        0,
+        8498.327272727272
+    ],
+    "ENCHANTMENT_STRONG_MANA_1": [
+        85160.33430656933,
+        204997.05
+    ],
+    "ENCHANTMENT_STRONG_MANA_10": [
+        26000001.3,
+        94999999
+    ],
+    "ENCHANTMENT_STRONG_MANA_2": [
+        100005.75035128805,
+        323542.9
+    ],
+    "ENCHANTMENT_STRONG_MANA_3": [
+        312525.8387692308,
+        0
+    ],
+    "ENCHANTMENT_STRONG_MANA_4": [
+        740221.406632653,
+        3380639.7
+    ],
+    "ENCHANTMENT_STRONG_MANA_5": [
+        1868918.3490039841,
+        2436889.8866666663
+    ],
+    "ENCHANTMENT_STRONG_MANA_6": [
+        1489003.92,
+        4799996.3
+    ],
+    "ENCHANTMENT_STRONG_MANA_7": [
+        38858.91472868217,
+        10566593.9
+    ],
+    "ENCHANTMENT_STRONG_MANA_8": [
+        2599962,
+        24793976.7
+    ],
+    "ENCHANTMENT_STRONG_MANA_9": [
+        2484556.2,
+        69999999.7
+    ],
+    "ENCHANTMENT_SUGAR_RUSH_1": [
+        334005.8315789474,
+        500899.3435714285
+    ],
+    "ENCHANTMENT_SUGAR_RUSH_2": [
+        470001.4,
+        2549998.7
+    ],
+    "ENCHANTMENT_SUGAR_RUSH_3": [
+        1140493.9594594594,
+        2753649.32979351
+    ],
+    "ENCHANTMENT_SUNDER_1": [
+        4202.777401129944,
+        19362.492207792206
+    ],
+    "ENCHANTMENT_SUNDER_2": [
+        2000.3,
+        90199.1
+    ],
+    "ENCHANTMENT_SUNDER_3": [
+        3000,
+        249998.1
+    ],
+    "ENCHANTMENT_SUNDER_4": [
+        4000,
+        349999.9
+    ],
+    "ENCHANTMENT_SUNDER_5": [
+        1000.3,
+        375295.32999999996
+    ],
+    "ENCHANTMENT_SUNDER_6": [
+        64327.6646090535,
+        122821.56507936507
+    ],
+    "ENCHANTMENT_SYPHON_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SYPHON_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SYPHON_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_SYPHON_4": [
+        108469.81478260871,
+        242275
+    ],
+    "ENCHANTMENT_SYPHON_5": [
+        20778304.71,
+        25332486.7
+    ],
+    "ENCHANTMENT_TABASCO_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TABASCO_2": [
+        10002.077777777777,
+        3000000
+    ],
+    "ENCHANTMENT_TABASCO_3": [
+        1800000.7090909092,
+        3265452.759868421
+    ],
+    "ENCHANTMENT_THORNS_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THORNS_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THORNS_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERBOLT_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERBOLT_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERBOLT_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERBOLT_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERBOLT_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERBOLT_6": [
+        1110001.8,
+        2360998.7933333335
+    ],
+    "ENCHANTMENT_THUNDERLORD_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERLORD_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERLORD_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERLORD_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERLORD_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_THUNDERLORD_6": [
+        2.5,
+        53995.61846153846
+    ],
+    "ENCHANTMENT_THUNDERLORD_7": [
+        5255567.188888889,
+        7026269.2
+    ],
+    "ENCHANTMENT_TITAN_KILLER_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TITAN_KILLER_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TITAN_KILLER_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TITAN_KILLER_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TITAN_KILLER_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TITAN_KILLER_6": [
+        2000.7,
+        53596.1
+    ],
+    "ENCHANTMENT_TITAN_KILLER_7": [
+        26542108.8,
+        30355423.7
+    ],
+    "ENCHANTMENT_TOXOPHILITE_1": [
+        4581160.511111111,
+        5067678.068421054
+    ],
+    "ENCHANTMENT_TRANSYLVANIAN_4": [
+        150004.5,
+        685653.9
+    ],
+    "ENCHANTMENT_TRANSYLVANIAN_5": [
+        800000.6,
+        985545.6961722488
+    ],
+    "ENCHANTMENT_TRIPLE_STRIKE_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TRIPLE_STRIKE_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TRIPLE_STRIKE_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TRIPLE_STRIKE_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_TRIPLE_STRIKE_5": [
+        47199304.28571429,
+        72632637.5
+    ],
+    "ENCHANTMENT_TRUE_PROTECTION_1": [
+        891635.1,
+        970629.1733333333
+    ],
+    "ENCHANTMENT_TURBO_CACTUS_1": [
+        234.3,
+        21999
+    ],
+    "ENCHANTMENT_TURBO_CACTUS_2": [
+        0,
+        178627.49411764706
+    ],
+    "ENCHANTMENT_TURBO_CACTUS_3": [
+        11,
+        288916.76666666666
+    ],
+    "ENCHANTMENT_TURBO_CACTUS_4": [
+        50436.72173913044,
+        299999.37142857147
+    ],
+    "ENCHANTMENT_TURBO_CACTUS_5": [
+        101000,
+        350000
+    ],
+    "ENCHANTMENT_TURBO_CANE_1": [
+        2016.1380090497737,
+        12850
+    ],
+    "ENCHANTMENT_TURBO_CANE_2": [
+        40.001999999999995,
+        39100.7
+    ],
+    "ENCHANTMENT_TURBO_CANE_3": [
+        5000.6,
+        149666.2
+    ],
+    "ENCHANTMENT_TURBO_CANE_4": [
+        45112.642056074765,
+        327949.85
+    ],
+    "ENCHANTMENT_TURBO_CANE_5": [
+        199999.8,
+        454213
+    ],
+    "ENCHANTMENT_TURBO_CARROT_1": [
+        2337.4013793103445,
+        15196.625
+    ],
+    "ENCHANTMENT_TURBO_CARROT_2": [
+        2002,
+        47990.03333333333
+    ],
+    "ENCHANTMENT_TURBO_CARROT_3": [
+        13626.2,
+        250000
+    ],
+    "ENCHANTMENT_TURBO_CARROT_4": [
+        100000,
+        0
+    ],
+    "ENCHANTMENT_TURBO_CARROT_5": [
+        200000.2,
+        623997.7333333334
+    ],
+    "ENCHANTMENT_TURBO_COCO_1": [
+        12370.363888888889,
+        28117.170000000002
+    ],
+    "ENCHANTMENT_TURBO_COCO_2": [
+        1000.5362416107382,
+        49387.18749999999
+    ],
+    "ENCHANTMENT_TURBO_COCO_3": [
+        16001.1,
+        408036.58749999997
+    ],
+    "ENCHANTMENT_TURBO_COCO_4": [
+        89790.3,
+        728978
+    ],
+    "ENCHANTMENT_TURBO_COCO_5": [
+        317993.31176470587,
+        814994.5
+    ],
+    "ENCHANTMENT_TURBO_MELON_1": [
+        3002.1626535626533,
+        25966.7
+    ],
+    "ENCHANTMENT_TURBO_MELON_2": [
+        104.68878787878789,
+        89999.09999999999
+    ],
+    "ENCHANTMENT_TURBO_MELON_3": [
+        18454.341176470585,
+        213999.7
+    ],
+    "ENCHANTMENT_TURBO_MELON_4": [
+        72501.6,
+        465797.55999999994
+    ],
+    "ENCHANTMENT_TURBO_MELON_5": [
+        234160.1,
+        682221.7000000001
+    ],
+    "ENCHANTMENT_TURBO_MUSHROOMS_1": [
+        0,
+        2248.7805555555556
+    ],
+    "ENCHANTMENT_TURBO_MUSHROOMS_2": [
+        1,
+        11999.5
+    ],
+    "ENCHANTMENT_TURBO_MUSHROOMS_3": [
+        10.3,
+        99473.14210526315
+    ],
+    "ENCHANTMENT_TURBO_MUSHROOMS_4": [
+        11.653846153846153,
+        378844.56153846154
+    ],
+    "ENCHANTMENT_TURBO_MUSHROOMS_5": [
+        55082.46785714285,
+        195892.23333333334
+    ],
+    "ENCHANTMENT_TURBO_POTATO_1": [
+        1674.9543999999999,
+        19170.261538461542
+    ],
+    "ENCHANTMENT_TURBO_POTATO_2": [
+        2.1,
+        40211.68749999999
+    ],
+    "ENCHANTMENT_TURBO_POTATO_3": [
+        2,
+        192762.18181818182
+    ],
+    "ENCHANTMENT_TURBO_POTATO_4": [
+        156557.4,
+        645652.9
+    ],
+    "ENCHANTMENT_TURBO_POTATO_5": [
+        108976.89411764707,
+        638175.6
+    ],
+    "ENCHANTMENT_TURBO_PUMPKIN_1": [
+        15602.375688073394,
+        43941.4
+    ],
+    "ENCHANTMENT_TURBO_PUMPKIN_2": [
+        20000,
+        337113.7
+    ],
+    "ENCHANTMENT_TURBO_PUMPKIN_3": [
+        35477.40645161291,
+        468174.29999999993
+    ],
+    "ENCHANTMENT_TURBO_PUMPKIN_4": [
+        266639.6928571429,
+        899997.9
+    ],
+    "ENCHANTMENT_TURBO_PUMPKIN_5": [
+        359157.9447368421,
+        1299999.9
+    ],
+    "ENCHANTMENT_TURBO_WARTS_1": [
+        0,
+        965.858904109589
+    ],
+    "ENCHANTMENT_TURBO_WARTS_2": [
+        0.09999999999999999,
+        5935.300000000001
+    ],
+    "ENCHANTMENT_TURBO_WARTS_3": [
+        0.5,
+        68845.72173913044
+    ],
+    "ENCHANTMENT_TURBO_WARTS_4": [
+        1.3,
+        259997.68888888892
+    ],
+    "ENCHANTMENT_TURBO_WARTS_5": [
+        50000,
+        108617.8
+    ],
+    "ENCHANTMENT_TURBO_WHEAT_1": [
+        1847.912215909091,
+        11999.311111111112
+    ],
+    "ENCHANTMENT_TURBO_WHEAT_2": [
+        101,
+        90009.4
+    ],
+    "ENCHANTMENT_TURBO_WHEAT_3": [
+        6259.090909090909,
+        0
+    ],
+    "ENCHANTMENT_TURBO_WHEAT_4": [
+        60745.622568093386,
+        299998.6
+    ],
+    "ENCHANTMENT_TURBO_WHEAT_5": [
+        89441.1,
+        388617.7
+    ],
+    "ENCHANTMENT_ULTIMATE_BANK_1": [
+        0,
+        1
+    ],
+    "ENCHANTMENT_ULTIMATE_BANK_2": [
+        0.1,
+        100
+    ],
+    "ENCHANTMENT_ULTIMATE_BANK_3": [
+        0.1,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_BANK_4": [
+        32.523,
+        208980.1
+    ],
+    "ENCHANTMENT_ULTIMATE_BANK_5": [
+        9121.9,
+        163731.19782608695
+    ],
+    "ENCHANTMENT_ULTIMATE_BOBBIN_TIME_3": [
+        14630298.91111111,
+        28899989.866666663
+    ],
+    "ENCHANTMENT_ULTIMATE_BOBBIN_TIME_4": [
+        149203.40499999997,
+        81012400.4
+    ],
+    "ENCHANTMENT_ULTIMATE_BOBBIN_TIME_5": [
+        19400003.4,
+        117899999.5
+    ],
+    "ENCHANTMENT_ULTIMATE_CHIMERA_1": [
+        118171276.527907,
+        121503456.4875
+    ],
+    "ENCHANTMENT_ULTIMATE_CHIMERA_2": [
+        174467000.4,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_CHIMERA_3": [
+        1053336.3501792115,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_CHIMERA_4": [
+        58516000.02,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_CHIMERA_5": [
+        334242424.24242425,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_COMBO_1": [
+        1,
+        8544.5625
+    ],
+    "ENCHANTMENT_ULTIMATE_COMBO_2": [
+        1,
+        1.5
+    ],
+    "ENCHANTMENT_ULTIMATE_COMBO_3": [
+        1.0004032258064517,
+        449999.5
+    ],
+    "ENCHANTMENT_ULTIMATE_COMBO_4": [
+        5.601968503937007,
+        100000
+    ],
+    "ENCHANTMENT_ULTIMATE_COMBO_5": [
+        39280.77301587301,
+        275355.44166666665
+    ],
+    "ENCHANTMENT_ULTIMATE_FATAL_TEMPO_1": [
+        28000004.568749998,
+        29799997.7
+    ],
+    "ENCHANTMENT_ULTIMATE_FATAL_TEMPO_2": [
+        15000001.8,
+        64000000
+    ],
+    "ENCHANTMENT_ULTIMATE_FATAL_TEMPO_3": [
+        1764004.1199999999,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_FATAL_TEMPO_4": [
+        48101.48587786259,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_FATAL_TEMPO_5": [
+        15890756.302521009,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_FLASH_1": [
+        4321399.611711712,
+        5276061.6
+    ],
+    "ENCHANTMENT_ULTIMATE_FLASH_2": [
+        5302126,
+        19999997.2
+    ],
+    "ENCHANTMENT_ULTIMATE_FLASH_3": [
+        5000009.914285714,
+        24999999.8
+    ],
+    "ENCHANTMENT_ULTIMATE_FLASH_4": [
+        1000003.6882352941,
+        99969416.9
+    ],
+    "ENCHANTMENT_ULTIMATE_FLASH_5": [
+        37142858.84285714,
+        99999986.1
+    ],
+    "ENCHANTMENT_ULTIMATE_FLOWSTATE_1": [
+        342.4955882352941,
+        900
+    ],
+    "ENCHANTMENT_ULTIMATE_FLOWSTATE_2": [
+        5.3,
+        48996.09166666667
+    ],
+    "ENCHANTMENT_ULTIMATE_FLOWSTATE_3": [
+        31000,
+        71507.31870503597
+    ],
+    "ENCHANTMENT_ULTIMATE_HABANERO_TACTICS_4": [
+        30000001.9,
+        85000000
+    ],
+    "ENCHANTMENT_ULTIMATE_HABANERO_TACTICS_5": [
+        38295456.7,
+        190000000
+    ],
+    "ENCHANTMENT_ULTIMATE_INFERNO_1": [
+        2707145.261904762,
+        7770874.05
+    ],
+    "ENCHANTMENT_ULTIMATE_INFERNO_2": [
+        200000.4,
+        20000000
+    ],
+    "ENCHANTMENT_ULTIMATE_INFERNO_3": [
+        3000003.22,
+        49999999.9
+    ],
+    "ENCHANTMENT_ULTIMATE_INFERNO_4": [
+        1200002.02,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_INFERNO_5": [
+        21845001.918181818,
+        99999999.6
+    ],
+    "ENCHANTMENT_ULTIMATE_JERRY_1": [
+        0,
+        1
+    ],
+    "ENCHANTMENT_ULTIMATE_JERRY_2": [
+        0,
+        4.3
+    ],
+    "ENCHANTMENT_ULTIMATE_JERRY_3": [
+        0,
+        999.9
+    ],
+    "ENCHANTMENT_ULTIMATE_JERRY_4": [
+        5,
+        199999.7
+    ],
+    "ENCHANTMENT_ULTIMATE_JERRY_5": [
+        307.5,
+        98999
+    ],
+    "ENCHANTMENT_ULTIMATE_LAST_STAND_1": [
+        214803.18638613864,
+        299547.9
+    ],
+    "ENCHANTMENT_ULTIMATE_LAST_STAND_2": [
+        417991.6462365591,
+        768776.9
+    ],
+    "ENCHANTMENT_ULTIMATE_LAST_STAND_3": [
+        619366.8557142857,
+        1789999
+    ],
+    "ENCHANTMENT_ULTIMATE_LAST_STAND_4": [
+        1477989,
+        2493454.05
+    ],
+    "ENCHANTMENT_ULTIMATE_LAST_STAND_5": [
+        3679516.9444444445,
+        4719329.245454546
+    ],
+    "ENCHANTMENT_ULTIMATE_LEGION_1": [
+        2387848.748246087,
+        2499197.629032258
+    ],
+    "ENCHANTMENT_ULTIMATE_LEGION_2": [
+        4152817.2,
+        5415458.8
+    ],
+    "ENCHANTMENT_ULTIMATE_LEGION_3": [
+        9009000.212499999,
+        10999999.1
+    ],
+    "ENCHANTMENT_ULTIMATE_LEGION_4": [
+        17238295.166666668,
+        22999991.4
+    ],
+    "ENCHANTMENT_ULTIMATE_LEGION_5": [
+        39768828.541666664,
+        41999999.29090909
+    ],
+    "ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_1": [
+        0,
+        0.1
+    ],
+    "ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_2": [
+        0,
+        0.5
+    ],
+    "ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_3": [
+        10,
+        34895.86
+    ],
+    "ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_4": [
+        20,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_NO_PAIN_NO_GAIN_5": [
+        25000.1,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_ONE_FOR_ALL_0": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_ULTIMATE_ONE_FOR_ALL_1": [
+        1829554.0913242009,
+        2200000
+    ],
+    "ENCHANTMENT_ULTIMATE_REFRIGERATE_1": [
+        2487503.3839999996,
+        3064619.3392156865
+    ],
+    "ENCHANTMENT_ULTIMATE_REFRIGERATE_2": [
+        4252036.5,
+        8907878.3
+    ],
+    "ENCHANTMENT_ULTIMATE_REFRIGERATE_3": [
+        12.219999999999999,
+        17949997.1
+    ],
+    "ENCHANTMENT_ULTIMATE_REFRIGERATE_4": [
+        17611693.2,
+        35961162.7
+    ],
+    "ENCHANTMENT_ULTIMATE_REFRIGERATE_5": [
+        36000000.5,
+        48078257.930434786
+    ],
+    "ENCHANTMENT_ULTIMATE_REITERATE_1": [
+        3635062.908724832,
+        4028075.842857143
+    ],
+    "ENCHANTMENT_ULTIMATE_REITERATE_2": [
+        2100001.68,
+        9999998.2
+    ],
+    "ENCHANTMENT_ULTIMATE_REITERATE_3": [
+        16.3,
+        29999998.8
+    ],
+    "ENCHANTMENT_ULTIMATE_REITERATE_4": [
+        2030003.2125000001,
+        40999998
+    ],
+    "ENCHANTMENT_ULTIMATE_REITERATE_5": [
+        58630757.1,
+        69999968.2
+    ],
+    "ENCHANTMENT_ULTIMATE_REND_1": [
+        368440.8779874214,
+        1002552.8699999999
+    ],
+    "ENCHANTMENT_ULTIMATE_REND_2": [
+        306889.86981132074,
+        1905663.8
+    ],
+    "ENCHANTMENT_ULTIMATE_REND_3": [
+        10000.4,
+        4500999.9
+    ],
+    "ENCHANTMENT_ULTIMATE_REND_4": [
+        82001.34000000001,
+        9000000
+    ],
+    "ENCHANTMENT_ULTIMATE_REND_5": [
+        100001.3,
+        13500000
+    ],
+    "ENCHANTMENT_ULTIMATE_SOUL_EATER_1": [
+        1000000.4788732395,
+        1117740.6668085107
+    ],
+    "ENCHANTMENT_ULTIMATE_SOUL_EATER_2": [
+        1737444.50625,
+        2643383.875
+    ],
+    "ENCHANTMENT_ULTIMATE_SOUL_EATER_3": [
+        3618163.203030303,
+        5139885.3
+    ],
+    "ENCHANTMENT_ULTIMATE_SOUL_EATER_4": [
+        7803785,
+        11670376.3
+    ],
+    "ENCHANTMENT_ULTIMATE_SOUL_EATER_5": [
+        16575000.2,
+        17999960
+    ],
+    "ENCHANTMENT_ULTIMATE_SWARM_1": [
+        606413.4788008566,
+        699999.8
+    ],
+    "ENCHANTMENT_ULTIMATE_SWARM_2": [
+        308718.8,
+        1470871.1
+    ],
+    "ENCHANTMENT_ULTIMATE_SWARM_3": [
+        967646.9,
+        3079439
+    ],
+    "ENCHANTMENT_ULTIMATE_SWARM_4": [
+        3230068.8,
+        7094355.6
+    ],
+    "ENCHANTMENT_ULTIMATE_SWARM_5": [
+        9607644.99,
+        13499993.7
+    ],
+    "ENCHANTMENT_ULTIMATE_THE_ONE_4": [
+        43500000.9,
+        53849999.9
+    ],
+    "ENCHANTMENT_ULTIMATE_THE_ONE_5": [
+        75000000.75,
+        109999999.6
+    ],
+    "ENCHANTMENT_ULTIMATE_WISDOM_1": [
+        185171.32188030047,
+        248535.9806451613
+    ],
+    "ENCHANTMENT_ULTIMATE_WISDOM_2": [
+        371305.84155681106,
+        549999.6
+    ],
+    "ENCHANTMENT_ULTIMATE_WISDOM_3": [
+        600001.8758620691,
+        1082061.5272727273
+    ],
+    "ENCHANTMENT_ULTIMATE_WISDOM_4": [
+        1285055.075,
+        3089999.5
+    ],
+    "ENCHANTMENT_ULTIMATE_WISDOM_5": [
+        3887614.1792682926,
+        4157418.3866666663
+    ],
+    "ENCHANTMENT_ULTIMATE_WISE_1": [
+        132574.0283629997,
+        158356.0636363637
+    ],
+    "ENCHANTMENT_ULTIMATE_WISE_2": [
+        246292.9066024759,
+        318825.5
+    ],
+    "ENCHANTMENT_ULTIMATE_WISE_3": [
+        596238.3,
+        1047740.6882352943
+    ],
+    "ENCHANTMENT_ULTIMATE_WISE_4": [
+        1050003.03,
+        2668998.1
+    ],
+    "ENCHANTMENT_ULTIMATE_WISE_5": [
+        2569390.643965517,
+        2807608.69
+    ],
+    "ENCHANTMENT_VAMPIRISM_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VAMPIRISM_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VAMPIRISM_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VAMPIRISM_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VAMPIRISM_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VAMPIRISM_6": [
+        550003.5609756098,
+        1614608.6000000003
+    ],
+    "ENCHANTMENT_VENOMOUS_1": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VENOMOUS_2": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VENOMOUS_3": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VENOMOUS_4": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VENOMOUS_5": [
+        0,
+        0
+    ],
+    "ENCHANTMENT_VENOMOUS_6": [
+        49190253.75,
+        60999998.9
+    ],
+    "ENCHANTMENT_VICIOUS_3": [
+        30182413.066666663,
+        43999998.6
+    ],
+    "ENCHANTMENT_VICIOUS_4": [
+        17565003.65,
+        109999998.5
+    ],
+    "ENCHANTMENT_VICIOUS_5": [
+        110000000.5,
+        132489997.2
+    ],
+    "ENCHANTMENT_WITHER_HUNTER_0": [
+        0,
+        0
+    ],
+    "ENDERMAN_CORTEX_REWRITER": [
+        60471.28068181818,
+        83027.64197530865
+    ],
+    "ENDER_MONOCLE": [
+        7916.4130472103,
+        24605.80470588235
+    ],
+    "ENDER_PEARL": [
+        3.8,
+        7.592393935227029
+    ],
+    "ENDER_STONE": [
+        1.8,
+        4.242262885025922
+    ],
+    "ENDSTONE_GEODE": [
+        0,
+        198.75279187817262
+    ],
+    "END_STONE_SHULKER": [
+        14050.185365853658,
+        83303.775
+    ],
+    "ENTROPY_SUPPRESSOR": [
+        8890402.8,
+        18359996.1
+    ],
+    "ESSENCE_CRIMSON": [
+        1970.1010739408257,
+        2081.5383101991342
+    ],
+    "ESSENCE_DIAMOND": [
+        354.20000000000005,
+        408.4959478015414
+    ],
+    "ESSENCE_DRAGON": [
+        4119.017507504921,
+        4484.638310101739
+    ],
+    "ESSENCE_GOLD": [
+        662.8000000000001,
+        732.0263503720166
+    ],
+    "ESSENCE_ICE": [
+        1737,
+        1857.2561973463246
+    ],
+    "ESSENCE_SPIDER": [
+        1573.3233510011778,
+        1854.7162587039174
+    ],
+    "ESSENCE_UNDEAD": [
+        692.4402375253802,
+        747.352058764339
+    ],
+    "ESSENCE_WITHER": [
+        2551.5,
+        2664.8826145114954
+    ],
+    "EXPIRED_PUMPKIN": [
+        2985.600624102852,
+        5495.160227387061
+    ],
+    "EXPORTABLE_CARROTS": [
+        6501.708693075176,
+        7481.790909090909
+    ],
+    "EXP_BOTTLE": [
+        12.615037461746807,
+        52.56137787056367
+    ],
+    "FARMING_FOR_DUMMIES": [
+        1200000.0482758621,
+        1500000
+    ],
+    "FEATHER": [
+        0.2,
+        3.3733625533457463
+    ],
+    "FEL_PEARL": [
+        71.7832614447787,
+        1318.9983963162908
+    ],
+    "FERMENTO": [
+        245922.07505376346,
+        267162.9977777778
+    ],
+    "FIFTH_MASTER_STAR": [
+        77505803.60714285,
+        84077292.18
+    ],
+    "FINE_AMBER_GEM": [
+        31236.937246743844,
+        33067.520671070924
+    ],
+    "FINE_AMETHYST_GEM": [
+        30716.340634406115,
+        34754.01850438764
+    ],
+    "FINE_AQUAMARINE_GEM": [
+        26906.651281117185,
+        32106.08075192802
+    ],
+    "FINE_CITRINE_GEM": [
+        18296.255799100756,
+        20273.492105263158
+    ],
+    "FINE_FLOUR": [
+        12680.199359079703,
+        16849.40334051724
+    ],
+    "FINE_JADE_GEM": [
+        28092.79193814433,
+        33404.22811131957
+    ],
+    "FINE_JASPER_GEM": [
+        72325.9365446833,
+        87674.89942528735
+    ],
+    "FINE_ONYX_GEM": [
+        18354.88318556247,
+        19274.19418844022
+    ],
+    "FINE_OPAL_GEM": [
+        28472.1,
+        31851.263087248324
+    ],
+    "FINE_PERIDOT_GEM": [
+        51146.38634519531,
+        55061.5968061674
+    ],
+    "FINE_RUBY_GEM": [
+        24453.325353233828,
+        25998.587466124663
+    ],
+    "FINE_SAPPHIRE_GEM": [
+        31611.110389980073,
+        32830.117134313165
+    ],
+    "FINE_TOPAZ_GEM": [
+        32004.164001495486,
+        33662.6022894093
+    ],
+    "FIRST_MASTER_STAR": [
+        13437894.219444444,
+        14073833.7
+    ],
+    "FISH_BAIT": [
+        280.4,
+        379.20404028200244
+    ],
+    "FLAWED_AMBER_GEM": [
+        371.74818403652114,
+        2499.303410294429
+    ],
+    "FLAWED_AMETHYST_GEM": [
+        379.7724978090568,
+        781.0025090193506
+    ],
+    "FLAWED_AQUAMARINE_GEM": [
+        277.3275464315,
+        510.628975193681
+    ],
+    "FLAWED_CITRINE_GEM": [
+        220.5413502402872,
+        278.0740879020109
+    ],
+    "FLAWED_JADE_GEM": [
+        385.1895735759038,
+        898.5
+    ],
+    "FLAWED_JASPER_GEM": [
+        940.9596283542002,
+        1263.7701650165018
+    ],
+    "FLAWED_ONYX_GEM": [
+        216.43669517058817,
+        315.14788216484516
+    ],
+    "FLAWED_OPAL_GEM": [
+        350.6811130179189,
+        653.9776469569734
+    ],
+    "FLAWED_PERIDOT_GEM": [
+        595.8099446108366,
+        708
+    ],
+    "FLAWED_RUBY_GEM": [
+        276.74189971284164,
+        498.7911260253542
+    ],
+    "FLAWED_SAPPHIRE_GEM": [
+        388.2817887737971,
+        809.1402703057341
+    ],
+    "FLAWED_TOPAZ_GEM": [
+        385.3593798443186,
+        442.9993953437851
+    ],
+    "FLAWLESS_AMBER_GEM": [
+        2355886.102835539,
+        2635070.0860215053
+    ],
+    "FLAWLESS_AMETHYST_GEM": [
+        2461062.6869402984,
+        2689797.6361867706
+    ],
+    "FLAWLESS_AQUAMARINE_GEM": [
+        2132696.682517483,
+        2367135.8560185186
+    ],
+    "FLAWLESS_CITRINE_GEM": [
+        1400065.499484536,
+        1521904.9318627452
+    ],
+    "FLAWLESS_JADE_GEM": [
+        2526656.890544412,
+        2800000
+    ],
+    "FLAWLESS_JASPER_GEM": [
+        6200821.965020577,
+        6732679.883606558
+    ],
+    "FLAWLESS_ONYX_GEM": [
+        1461315.5740259741,
+        1709996.9291262135
+    ],
+    "FLAWLESS_OPAL_GEM": [
+        2258667.712195122,
+        2709095.294782609
+    ],
+    "FLAWLESS_PERIDOT_GEM": [
+        3950163.3,
+        4581959.737588653
+    ],
+    "FLAWLESS_RUBY_GEM": [
+        2026375.5673469387,
+        2173240.173517787
+    ],
+    "FLAWLESS_SAPPHIRE_GEM": [
+        2613297.8792763157,
+        2704875.9852422904
+    ],
+    "FLAWLESS_TOPAZ_GEM": [
+        2524293.701928375,
+        2686141.694029851
+    ],
+    "FLINT": [
+        32.52850535805187,
+        95.7494651262302
+    ],
+    "FLOWERING_BOUQUET": [
+        9000.327050997783,
+        20692.66
+    ],
+    "FLYCATCHER_UPGRADE": [
+        18000000.516666666,
+        26084881.12424242
+    ],
+    "FLY_SWATTER": [
+        301002.2,
+        729702.5851851851
+    ],
+    "FOUL_FLESH": [
+        24706.08506897712,
+        26892.755361344538
+    ],
+    "FOURTH_MASTER_STAR": [
+        87000000.5875,
+        90000000
+    ],
+    "FRESHLY_MINTED_COINS": [
+        3771370.7083333335,
+        4323822.014302059
+    ],
+    "FRIGID_HUSK": [
+        3000000.2,
+        16499998.699999997
+    ],
+    "FROZEN_BAIT": [
+        3105.2107737314636,
+        3467.300369226638
+    ],
+    "FROZEN_BAUBLE": [
+        5000002.535714285,
+        8157843.367148014
+    ],
+    "FTX_3070": [
+        159863.72063492064,
+        170711.56097560975
+    ],
+    "FUEL_GABAGOOL": [
+        18104.5,
+        20997.2
+    ],
+    "FUEL_TANK": [
+        544925.5755681818,
+        653525.7
+    ],
+    "FULL_CHUM_BUCKET": [
+        6005.498287918977,
+        0
+    ],
+    "FULL_JAW_FANGING_KIT": [
+        1276094.9041958041,
+        6000000
+    ],
+    "FUMING_POTATO_BOOK": [
+        1249038.5294438386,
+        1340819.0709401711
+    ],
+    "FURBALL": [
+        200.04382022471913,
+        11852.439805825243
+    ],
+    "GEMSTONE_MIXTURE": [
+        1540340.2736842106,
+        1617372.9425287356
+    ],
+    "GHAST_TEAR": [
+        20,
+        134.99423396986685
+    ],
+    "GIANT_FRAGMENT_BIGFOOT": [
+        6201.1,
+        9438.400931034483
+    ],
+    "GIANT_FRAGMENT_BOULDER": [
+        810.6086646727657,
+        2126.5307875894987
+    ],
+    "GIANT_FRAGMENT_DIAMOND": [
+        903051.7935877864,
+        965467.7707070707
+    ],
+    "GIANT_FRAGMENT_LASER": [
+        704859.2519957984,
+        769806.9
+    ],
+    "GIANT_TOOTH": [
+        277395.9231454006,
+        405755.9107142856
+    ],
+    "GLACIAL_FRAGMENT": [
+        55671.768095599386,
+        67690.57902885292
+    ],
+    "GLACITE": [
+        13.112591996872826,
+        26.46447182235911
+    ],
+    "GLACITE_AMALGAMATION": [
+        1790003.6702702707,
+        1889471.309090909
+    ],
+    "GLACITE_JEWEL": [
+        153716.7055248619,
+        169317
+    ],
+    "GLACITE_SHARD": [
+        0,
+        4039.5496644295295
+    ],
+    "GLEAMING_CRYSTAL": [
+        69450002.98500001,
+        189000000
+    ],
+    "GLOSSY_GEMSTONE": [
+        8200003.9,
+        8581144.149999999
+    ],
+    "GLOWING_MUSHROOM": [
+        455.05853424483035,
+        744.2259200000001
+    ],
+    "GLOWSTONE_DUST": [
+        9.986935568096738,
+        91.16008929438028
+    ],
+    "GLOWSTONE_DUST_DISTILLATE": [
+        4632.999788820411,
+        5485.807753303965
+    ],
+    "GLOWY_CHUM_BAIT": [
+        3.503122902924857,
+        105.60104087524691
+    ],
+    "GOBLIN_EGG": [
+        5394.430027727942,
+        6135.3
+    ],
+    "GOBLIN_EGG_BLUE": [
+        870003.3,
+        894624.0952380953
+    ],
+    "GOBLIN_EGG_GREEN": [
+        5668.446611517658,
+        6554.458859223301
+    ],
+    "GOBLIN_EGG_RED": [
+        130939.62675426334,
+        143746.94125874128
+    ],
+    "GOBLIN_EGG_YELLOW": [
+        8702.61186887106,
+        12089.647985989492
+    ],
+    "GOLDEN_BALL": [
+        1000000.2,
+        1499999.2
+    ],
+    "GOLDEN_BOUNTY": [
+        51268010.75714285,
+        70564099.7
+    ],
+    "GOLDEN_FRAGMENT": [
+        10077862.38611111,
+        11229998.296907216
+    ],
+    "GOLDEN_PLATE": [
+        2107623.986956522,
+        2141744.3
+    ],
+    "GOLDEN_POWDER": [
+        17927.132021940608,
+        38623.30562913907
+    ],
+    "GOLDEN_TOOTH": [
+        143929.229122807,
+        175102.74619523445
+    ],
+    "GOLD_INGOT": [
+        1.4000000000000001,
+        4.140490846168071
+    ],
+    "GOLEM_POPPY": [
+        231742.5649381731,
+        261998.84444444443
+    ],
+    "GRAND_EXP_BOTTLE": [
+        5348.479780360424,
+        5524.220573047408
+    ],
+    "GRAVEL": [
+        0.1,
+        2.5
+    ],
+    "GREAT_CARROT_CANDY": [
+        187254.95513307987,
+        279797.6
+    ],
+    "GREAT_WHITE_SHARK_TOOTH": [
+        1534131.30929432,
+        1761463.305289673
+    ],
+    "GREAT_WHITE_TOOTH_MEAL": [
+        5686443.800000001,
+        8999984.28627451
+    ],
+    "GREEN_CANDY": [
+        2099.1747336820563,
+        2347.80025649145
+    ],
+    "GREEN_GIFT": [
+        9010.1,
+        9486.237288135593
+    ],
+    "GRIFFIN_FEATHER": [
+        73482.84024686362,
+        76423.5690616798
+    ],
+    "GUARDIAN_LUCKY_BLOCK": [
+        237677.19,
+        639996.7999999999
+    ],
+    "HAMSTER_WHEEL": [
+        46206.91114355979,
+        49422.75033368456
+    ],
+    "HARDENED_WOOD": [
+        13079.18263888889,
+        166508.905
+    ],
+    "HARD_STONE": [
+        0,
+        1.5282389171499642
+    ],
+    "HAY_BLOCK": [
+        0,
+        0
+    ],
+    "HAZMAT_ENDERMAN": [
+        732.81449704142,
+        10889.296511627907
+    ],
+    "HEALING_TISSUE": [
+        8476.30529865125,
+        38057.50508474576
+    ],
+    "HEAVY_GABAGOOL": [
+        9786.919478445981,
+        501707.6676680973
+    ],
+    "HEMOBOMB": [
+        542608.990960452,
+        669694.6
+    ],
+    "HEMOGLASS": [
+        35316.27583757235,
+        39693.000950369584
+    ],
+    "HEMOVIBE": [
+        164.7172316225765,
+        342.21844679463555
+    ],
+    "HOLY_FRAGMENT": [
+        12000.344175048986,
+        14950.485813953484
+    ],
+    "HONEY_JAR": [
+        9045.510477597243,
+        13667.192747559277
+    ],
+    "HORNS_OF_TORMENT": [
+        900786.6654761904,
+        1521094.9562499998
+    ],
+    "HORSEMAN_CANDLE": [
+        451500.0243478261,
+        765148.574074074
+    ],
+    "HOT_BAIT": [
+        412.9540799969467,
+        618.9755906976744
+    ],
+    "HOT_POTATO_BOOK": [
+        78651.61291028447,
+        84341.94994462903
+    ],
+    "HOT_STUFF": [
+        2000010.9,
+        3603796.8
+    ],
+    "HUGE_MUSHROOM_1": [
+        32.739491664543884,
+        999.8585812356978
+    ],
+    "HUGE_MUSHROOM_2": [
+        26.4940939560739,
+        338.4
+    ],
+    "HYPERGOLIC_GABAGOOL": [
+        5434448.982978724,
+        5777967.078200692
+    ],
+    "HYPERGOLIC_IONIZED_CERAMICS": [
+        1296.4,
+        3665.67875
+    ],
+    "HYPER_CATALYST": [
+        208736.06800675674,
+        229892.3629434954
+    ],
+    "ICE": [
+        2.3,
+        7.997461828276819
+    ],
+    "ICE_BAIT": [
+        0.1,
+        3.9244077380952382
+    ],
+    "ICE_HUNK": [
+        0.1,
+        0.2
+    ],
+    "IMPLOSION_SCROLL": [
+        204559341.27473685,
+        311058263
+    ],
+    "INFERNO_APEX": [
+        105000000.25,
+        112119303.5
+    ],
+    "INFERNO_FUEL_BLOCK": [
+        55007.504,
+        59999
+    ],
+    "INFERNO_VERTEX": [
+        5725052.795555556,
+        6438601.609756097
+    ],
+    "INFLATABLE_JERRY": [
+        1.5,
+        1.6
+    ],
+    "INK_SACK": [
+        1168.2282626753597,
+        1795.5
+    ],
+    "INK_SACK:3": [
+        0,
+        3.9694906167961945
+    ],
+    "INK_SACK:4": [
+        2.654881514022569,
+        4.01290111919292
+    ],
+    "IRON_INGOT": [
+        6.007155593782122,
+        17.423462123197904
+    ],
+    "JACOBS_TICKET": [
+        19870.065578028116,
+        20974.510821428572
+    ],
+    "JADERALD": [
+        3683796.3787878784,
+        4177724.3949999986
+    ],
+    "JALAPENO_BOOK": [
+        2292999.2,
+        3368305.6
+    ],
+    "JERRY_BOX_BLUE": [
+        189666.5,
+        229996.85520249224
+    ],
+    "JERRY_BOX_GOLDEN": [
+        845194.6366300366,
+        1207014.2628787877
+    ],
+    "JERRY_BOX_GREEN": [
+        157389.2,
+        203020.7
+    ],
+    "JERRY_BOX_PURPLE": [
+        542476.0235349716,
+        671387
+    ],
+    "JERRY_STONE": [
+        10.2,
+        29890.953333333335
+    ],
+    "JUNGLE_HEART": [
+        210.63492063492063,
+        4499.8
+    ],
+    "JUNGLE_KEY": [
+        163856.8,
+        170869
+    ],
+    "KELVIN_INVERTER": [
+        91772.65105311356,
+        171259.70769230768
+    ],
+    "KISMET_FEATHER": [
+        1461016.1720430108,
+        1494302.4285714286
+    ],
+    "KUUDRA_MANDIBLE": [
+        620005,
+        999997.448275862
+    ],
+    "LAPIS_CRYSTAL": [
+        0.2,
+        173.46097560975608
+    ],
+    "LARGE_ENCHANTED_CHEST": [
+        253815.3909725454,
+        310799.9571428572
+    ],
+    "LARGE_WALNUT": [
+        122333.10215053764,
+        449999.5
+    ],
+    "LAVA_WATER_ORB": [
+        1500004.3,
+        3199999.691666667
+    ],
+    "LEATHER": [
+        85.6,
+        119.60221278997307
+    ],
+    "LESSER_SOULFLOW_ENGINE": [
+        2176169.0321839084,
+        4515219.3
+    ],
+    "LIGHT_BAIT": [
+        80.97038154774735,
+        745.4
+    ],
+    "LIVID_FRAGMENT": [
+        109377.00134529149,
+        124213.5
+    ],
+    "LOG": [
+        2.1,
+        7.267302926599009
+    ],
+    "LOG:1": [
+        1.4111376002153309,
+        7
+    ],
+    "LOG:2": [
+        0.5,
+        10.4
+    ],
+    "LOG:3": [
+        5.7,
+        19.998787807461458
+    ],
+    "LOG_2": [
+        6.008233076698392,
+        39.32318925233644
+    ],
+    "LOG_2:1": [
+        0.4,
+        5.992270358386643
+    ],
+    "LUCKY_DICE": [
+        514453.9,
+        1456993.1999999997
+    ],
+    "LUSH_BERBERIS": [
+        132.55812000083318,
+        828.5829536527888
+    ],
+    "LUXURIOUS_SPOOL": [
+        3.1,
+        1993.345283018868
+    ],
+    "MAGIC_MUSHROOM_SOUP": [
+        204.42959467313574,
+        998.9
+    ],
+    "MAGIC_TOP_HAT": [
+        23391304.543478265,
+        33899999.5
+    ],
+    "MAGMA_BUCKET": [
+        4675002.600497513,
+        4982011.676829268
+    ],
+    "MAGMA_CORE": [
+        698010.8,
+        759998.2971830985
+    ],
+    "MAGMA_CREAM": [
+        12.70745258391665,
+        24.78649386629727
+    ],
+    "MAGMA_CREAM_DISTILLATE": [
+        4198.557960147905,
+        5146.28916
+    ],
+    "MAGMA_FISH": [
+        274.03236136458804,
+        435.18550610476564
+    ],
+    "MAGMA_FISH_DIAMOND": [
+        21810301.05,
+        32988886.3
+    ],
+    "MAGMA_FISH_GOLD": [
+        2020295.205681818,
+        2168305.2
+    ],
+    "MAGMA_FISH_SILVER": [
+        28095.824841741796,
+        29885.377232363095
+    ],
+    "MAGMA_URCHIN": [
+        6240903.9439024385,
+        7998828.841891891
+    ],
+    "MANA_DISINTEGRATOR": [
+        30002.404296875,
+        199956.2297805643
+    ],
+    "MANDRAA": [
+        2536731.875675676,
+        3499995.1181818177
+    ],
+    "MEDIUM_ENCHANTED_CHEST": [
+        7789.813013100437,
+        12652.875568181818
+    ],
+    "MELON": [
+        0.7559396900216954,
+        2.03022072521129
+    ],
+    "MELON_BLOCK": [
+        24.758677501948124,
+        100
+    ],
+    "METAPHYSICAL_SERUM": [
+        62005.93664429531,
+        93665.54347826086
+    ],
+    "METEOR_SHARD": [
+        1326443.7,
+        3049999.8
+    ],
+    "MIDAS_JEWEL": [
+        1.9,
+        7195.994594594595
+    ],
+    "MIMIC_FRAGMENT": [
+        999,
+        1999.9997601918467
+    ],
+    "MINION_EXPANDER": [
+        63558.950705754614,
+        146584.176
+    ],
+    "MINNOW_BAIT": [
+        2,
+        28.165235792019345
+    ],
+    "MITE_GEL": [
+        1903.1,
+        2499.1853932584268
+    ],
+    "MITHRIL_INFUSION": [
+        5583977.521739131,
+        5857431.107621248
+    ],
+    "MITHRIL_ORE": [
+        6.699999999999999,
+        9.892280096399448
+    ],
+    "MITHRIL_PLATE": [
+        6270216.56,
+        6714998.883333334
+    ],
+    "MIXED_MITE_GEL": [
+        60003.07244897959,
+        299999.78750000003
+    ],
+    "MOIL_LOG": [
+        0,
+        0
+    ],
+    "MOLTEN_CUBE": [
+        15.9,
+        144001
+    ],
+    "MOLTEN_POWDER": [
+        210018.15516372793,
+        216406.9
+    ],
+    "MUTANT_NETHER_STALK": [
+        98782.39893914013,
+        101295
+    ],
+    "MUTTON": [
+        69.99524987289213,
+        149
+    ],
+    "MYCEL": [
+        2.548377772820299,
+        23.852965552207955
+    ],
+    "NECROMANCER_BROOCH": [
+        52339.67359307359,
+        73258.5331210191
+    ],
+    "NETHERRACK": [
+        0.10000000000000002,
+        0.69467316986915
+    ],
+    "NETHER_STALK": [
+        1.538525957109246,
+        3.8864367516918272
+    ],
+    "NETHER_STALK_DISTILLATE": [
+        4046.8000000000006,
+        4955.788024622271
+    ],
+    "NULL_ATOM": [
+        31699.53001105583,
+        56820.3
+    ],
+    "NULL_BLADE": [
+        47237500.475,
+        49999993
+    ],
+    "NULL_EDGE": [
+        321141.30839694664,
+        570797.9
+    ],
+    "NULL_OVOID": [
+        96896.8424369748,
+        101981.8684029484
+    ],
+    "NULL_SPHERE": [
+        280,
+        371.30985927044986
+    ],
+    "NURSE_SHARK_TOOTH": [
+        13574.32747875354,
+        16464.4
+    ],
+    "OBSIDIAN": [
+        8.32241487650101,
+        16
+    ],
+    "OBSIDIAN_TABLET": [
+        1090082.9,
+        4200000
+    ],
+    "OIL_BARREL": [
+        3707.18020381154,
+        7855.93775956284
+    ],
+    "OLD_FRAGMENT": [
+        10251.157149108412,
+        13998.790379746833
+    ],
+    "OMEGA_EGG": [
+        319868.5,
+        546130.9
+    ],
+    "ONYX": [
+        0,
+        865.3463917525773
+    ],
+    "OPTICAL_LENS": [
+        13.510043668122272,
+        19767.79259259259
+    ],
+    "OVERGROWN_GRASS": [
+        45370250.11750001,
+        50388864.349999994
+    ],
+    "PACKED_ICE": [
+        36.805595938447624,
+        112.64683887983865
+    ],
+    "PARTY_GIFT": [
+        5176931.6,
+        7299013.7
+    ],
+    "PERFECT_AMBER_GEM": [
+        15482147.023809524,
+        16499995.47272727
+    ],
+    "PERFECT_AMETHYST_GEM": [
+        15093057.620588236,
+        16499998.191666665
+    ],
+    "PERFECT_AQUAMARINE_GEM": [
+        13244769.180701753,
+        15467998.383333333
+    ],
+    "PERFECT_CITRINE_GEM": [
+        13305857.820476191,
+        14249996.36818182
+    ],
+    "PERFECT_JADE_GEM": [
+        15910661.896511627,
+        16889703
+    ],
+    "PERFECT_JASPER_GEM": [
+        28759485.858914725,
+        36140941
+    ],
+    "PERFECT_ONYX_GEM": [
+        13613410.986734694,
+        17281545.575000003
+    ],
+    "PERFECT_OPAL_GEM": [
+        13821838.390909093,
+        18500000
+    ],
+    "PERFECT_PERIDOT_GEM": [
+        25751399.925000004,
+        31815211.017647058
+    ],
+    "PERFECT_PLATE": [
+        32424101.71666667,
+        33981906.12500001
+    ],
+    "PERFECT_RUBY_GEM": [
+        13016947.180666666,
+        15752352.3
+    ],
+    "PERFECT_SAPPHIRE_GEM": [
+        15589118.836231885,
+        18491677.096031744
+    ],
+    "PERFECT_TOPAZ_GEM": [
+        16318967.384615384,
+        17541813.990909092
+    ],
+    "PESTHUNTING_GUIDE": [
+        14781163.902941177,
+        18246185.746153846
+    ],
+    "PETRIFIED_STARFALL": [
+        900004.3428571428,
+        2699999.8
+    ],
+    "PET_CAKE": [
+        9156.204149377594,
+        63216.6
+    ],
+    "PET_ITEM_CHOCOLATE_SYRINGE": [
+        49203.592907801416,
+        140681.1
+    ],
+    "PET_ITEM_EXP_SHARE_DROP": [
+        3321028.419512195,
+        3668491.7999999993
+    ],
+    "PET_ITEM_LUCKY_CLOVER_DROP": [
+        3073697.2000000007,
+        3576927.94
+    ],
+    "PET_ITEM_PURE_MITHRIL_GEM": [
+        610298.4642857143,
+        1193442.8111111112
+    ],
+    "PET_ITEM_TIER_BOOST_DROP": [
+        84450952.4,
+        100695082.85
+    ],
+    "PET_ITEM_TOY_JERRY": [
+        1064.300909090909,
+        29420.96875
+    ],
+    "PET_ITEM_VAMPIRE_FANG": [
+        400.4004444444444,
+        7799.750909090909
+    ],
+    "PITCHIN_KOI": [
+        10003.21275362319,
+        44631.70416666666
+    ],
+    "PLANT_MATTER": [
+        26233.471565098673,
+        33163.79971671388
+    ],
+    "PLASMA": [
+        22000.44724409449,
+        29120.749421487602
+    ],
+    "PLASMA_BUCKET": [
+        13752432.233941609,
+        14999997.5
+    ],
+    "POCKET_ICEBERG": [
+        322492.4285714286,
+        1541056.1454545455
+    ],
+    "POISONOUS_POTATO": [
+        3.3,
+        11.9
+    ],
+    "POISON_SAMPLE": [
+        1018222.5175675676,
+        1143804.7
+    ],
+    "POLARVOID_BOOK": [
+        2147392.9317460316,
+        2644735.5833333335
+    ],
+    "POLISHED_PUMPKIN": [
+        250672.77586633665,
+        257266.89999999997
+    ],
+    "PORK": [
+        47.98427166870554,
+        112.14889491365591
+    ],
+    "POTATO_ITEM": [
+        1.3,
+        2.3
+    ],
+    "POTATO_SPREADING": [
+        1620.7,
+        5999.996969696969
+    ],
+    "POWER_CRYSTAL": [
+        630071.6014653866,
+        698397.4957142858
+    ],
+    "PRECIOUS_PEARL": [
+        337635.7908256881,
+        436098.1765957447
+    ],
+    "PRECURSOR_APPARATUS": [
+        860816.8835616439,
+        937642.6
+    ],
+    "PRECURSOR_GEAR": [
+        464729.35906249995,
+        530000
+    ],
+    "PREMIUM_FLESH": [
+        0,
+        26.849999999999998
+    ],
+    "PRESUMED_GALLON_OF_RED_PAINT": [
+        1000000.8157407409,
+        2241438.5802816898
+    ],
+    "PRISMARINE_CRYSTALS": [
+        49.08373724231222,
+        222.94950626923253
+    ],
+    "PRISMARINE_SHARD": [
+        0.9,
+        9.99998992443325
+    ],
+    "PROTECTOR_FRAGMENT": [
+        10101.878930418658,
+        13466.296103896104
+    ],
+    "PUMPKIN": [
+        7.178099599770467,
+        10.92617206978633
+    ],
+    "PUMPKIN_BOMB": [
+        5017.8,
+        5345.56272
+    ],
+    "PUMPKIN_GUTS": [
+        360907.305319149,
+        445603.06363636354
+    ],
+    "PURE_MITHRIL": [
+        770000.1,
+        1499999.4
+    ],
+    "PURPLE_CANDY": [
+        22227.671019280442,
+        23694.545439216316
+    ],
+    "QUARTZ": [
+        13.738603195656228,
+        29.602402967422858
+    ],
+    "RABBIT": [
+        21.041003782903378,
+        77.79795975293882
+    ],
+    "RABBIT_FOOT": [
+        1.9,
+        5.3752882483370295
+    ],
+    "RABBIT_HIDE": [
+        10.833572201258502,
+        34.58070818070818
+    ],
+    "RADIOACTIVE_VIAL": [
+        167205555.4,
+        174999998.5
+    ],
+    "RARE_DIAMOND": [
+        0,
+        1061.2
+    ],
+    "RAW_BEEF": [
+        3,
+        9.574011417881565
+    ],
+    "RAW_CHICKEN": [
+        54.92988650693569,
+        298.94314845024473
+    ],
+    "RAW_FISH": [
+        64.02583489036358,
+        92.67886974402609
+    ],
+    "RAW_FISH:1": [
+        6.332703067721397,
+        11.170552147239263
+    ],
+    "RAW_FISH:2": [
+        12.160106924387025,
+        25.999892403701313
+    ],
+    "RAW_FISH:3": [
+        9.31218251342835,
+        17.7749110165813
+    ],
+    "RAW_SOULFLOW": [
+        247.77544582686883,
+        497.15
+    ],
+    "REAPER_PEPPER": [
+        35000069,
+        41199999.5
+    ],
+    "RECOMBOBULATOR_3000": [
+        8547172.524435483,
+        9204161.676146789
+    ],
+    "REDSTONE": [
+        2.8,
+        5.853727138656093
+    ],
+    "RED_GIFT": [
+        47122.82384753217,
+        50296.337225088246
+    ],
+    "RED_MUSHROOM": [
+        5.50688001206502,
+        15.795315724638842
+    ],
+    "RED_NOSE": [
+        0,
+        1469.2611111111112
+    ],
+    "RED_ROSE": [
+        0.7,
+        6.393629533616572
+    ],
+    "RED_SCARF": [
+        654597.5935897436,
+        1064999.8142857144
+    ],
+    "REFINED_AMBER": [
+        50001.2,
+        1049496.735897436
+    ],
+    "REFINED_BOTTLE_OF_JYRRE": [
+        1000000.3,
+        3271386.76
+    ],
+    "REFINED_DARK_CACAO_TRUFFLE": [
+        3616799.3166666664,
+        4503637.930434782
+    ],
+    "REFINED_DIAMOND": [
+        670125.0840000001,
+        697888.5085714286
+    ],
+    "REFINED_MINERAL": [
+        100063.11997146932,
+        115221.86576122149
+    ],
+    "REFINED_MITHRIL": [
+        510398.09650055994,
+        574882.8
+    ],
+    "REFINED_TITANIUM": [
+        545258.6132789318,
+        596043.1
+    ],
+    "REFINED_TUNGSTEN": [
+        2301134.4347639484,
+        2418745.3179487186
+    ],
+    "REFINED_UMBER": [
+        2225864.4920792077,
+        2424984.25
+    ],
+    "REHEATED_GUMMY_POLAR_BEAR": [
+        68581.81753033781,
+        108294.5
+    ],
+    "REVENANT_CATALYST": [
+        5602.331289640591,
+        9999.407932960894
+    ],
+    "REVENANT_FLESH": [
+        20.679440835861254,
+        70.04023841914731
+    ],
+    "REVENANT_VISCERA": [
+        85078.37567843594,
+        89810.25426722395
+    ],
+    "RITUAL_RESIDUE": [
+        2949050.013333333,
+        3392883.4
+    ],
+    "ROBOTRON_REFLECTOR": [
+        118876.04291666667,
+        151037.9
+    ],
+    "ROCK_CANDY": [
+        46054.07103174604,
+        123748.5655737705
+    ],
+    "ROCK_GEMSTONE": [
+        2812483.5,
+        3945194.354878049
+    ],
+    "ROTTEN_FLESH": [
+        0.7,
+        7.564867090586886
+    ],
+    "ROUGH_AMBER_GEM": [
+        2.2,
+        7.1845327450767895
+    ],
+    "ROUGH_AMETHYST_GEM": [
+        1.839812971342383,
+        4.922554075522425
+    ],
+    "ROUGH_AQUAMARINE_GEM": [
+        1.7999999999999998,
+        3.5904231432067357
+    ],
+    "ROUGH_CITRINE_GEM": [
+        0.5,
+        4.26163826113752
+    ],
+    "ROUGH_JADE_GEM": [
+        3,
+        9.005442211386734
+    ],
+    "ROUGH_JASPER_GEM": [
+        10,
+        18.397281905554017
+    ],
+    "ROUGH_ONYX_GEM": [
+        0.6000000000000001,
+        4.145770328988206
+    ],
+    "ROUGH_OPAL_GEM": [
+        2.3000000000000003,
+        8.9
+    ],
+    "ROUGH_PERIDOT_GEM": [
+        3,
+        10.835044344014408
+    ],
+    "ROUGH_RUBY_GEM": [
+        2.3,
+        27
+    ],
+    "ROUGH_SAPPHIRE_GEM": [
+        2.3,
+        6.096086124158575
+    ],
+    "ROUGH_TOPAZ_GEM": [
+        2.3,
+        4.971966197003099
+    ],
+    "RUSTY_ANCHOR": [
+        10005.114181818182,
+        13719998.1
+    ],
+    "SADAN_BROOCH": [
+        41.3,
+        277197.618
+    ],
+    "SALMON_OPAL": [
+        1.1,
+        1694.477142857143
+    ],
+    "SALT_CUBE": [
+        2.2154929577464793,
+        27897.236942675154
+    ],
+    "SAND": [
+        2.1,
+        9.7
+    ],
+    "SAND:1": [
+        3.5,
+        11.943777775952288
+    ],
+    "SCARF_FRAGMENT": [
+        166.5,
+        577.6929266709928
+    ],
+    "SCORCHED_BOOKS": [
+        116317.14489311166,
+        489992.44736842107
+    ],
+    "SCORCHED_POWER_CRYSTAL": [
+        1744599.75261708,
+        1998855.8102189782
+    ],
+    "SEARING_STONE": [
+        310000.20909090905,
+        649999.9386666667
+    ],
+    "SECOND_MASTER_STAR": [
+        21014645.63684211,
+        23958026.65
+    ],
+    "SEEDS": [
+        0.9030363193814729,
+        3.651484371857275
+    ],
+    "SHADOW_WARP_SCROLL": [
+        260940103.23333335,
+        268999996.7
+    ],
+    "SHARK_BAIT": [
+        2.4,
+        25.87909632197769
+    ],
+    "SHARK_FIN": [
+        29.14881678522118,
+        150.6891207153502
+    ],
+    "SHARK_WATER_ORB": [
+        1149819.6,
+        3397651.9
+    ],
+    "SHINY_PRISM": [
+        136037.07391304348,
+        436238.0263959391
+    ],
+    "SIL_EX": [
+        4625165.908510638,
+        5499998.5
+    ],
+    "SIMPLE_CARROT_CANDY": [
+        2045.576700143472,
+        4371.4
+    ],
+    "SKELETON_KEY": [
+        32984926.55,
+        33927150.47142857
+    ],
+    "SKYMART_BROCHURE": [
+        267374.08371335507,
+        452772.5915254237
+    ],
+    "SLEEPY_HOLLOW": [
+        9000000.7,
+        9727777.7
+    ],
+    "SLIME_BALL": [
+        24.745659552845527,
+        32.92401352131256
+    ],
+    "SLUDGE_JUICE": [
+        1678.8673143309366,
+        1748.3906418528245
+    ],
+    "SMALL_ENCHANTED_CHEST": [
+        200.02217115342526,
+        1493.4964659685863
+    ],
+    "SNOW_BALL": [
+        0.1,
+        6.989033526077421
+    ],
+    "SNOW_BLOCK": [
+        2.3481468554350906,
+        6.999914998651421
+    ],
+    "SOLAR_PANEL": [
+        324899.27146092866,
+        532032.5
+    ],
+    "SORROW": [
+        118467.21312741312,
+        146396.46189258312
+    ],
+    "SOULFLOW": [
+        37302.08924080853,
+        39072.23487455198
+    ],
+    "SOULFLOW_ENGINE": [
+        16268043.985714287,
+        21706531.3
+    ],
+    "SOUL_FRAGMENT": [
+        1127362.7,
+        1399997.9
+    ],
+    "SOUL_STRING": [
+        4812.914692710814,
+        5413.0736983154675
+    ],
+    "SPIDER_CATALYST": [
+        621.513521507914,
+        1999.6985294117646
+    ],
+    "SPIDER_EYE": [
+        5.3,
+        13.377821448624369
+    ],
+    "SPIKED_BAIT": [
+        25.35175977597357,
+        883.8741606231533
+    ],
+    "SPIRIT_BONE": [
+        4645466.216216216,
+        6087903.9
+    ],
+    "SPIRIT_DECOY": [
+        993413.9055555556,
+        1499997.2
+    ],
+    "SPIRIT_LEAP": [
+        103.70704357625846,
+        597.2852631578947
+    ],
+    "SPIRIT_WING": [
+        5754049.399999999,
+        6329059.2
+    ],
+    "SPONGE": [
+        31.083455092956267,
+        232.63371959394755
+    ],
+    "SPOOKY_BAIT": [
+        107.89084819643284,
+        251.25299594972645
+    ],
+    "SPOOKY_SHARD": [
+        18858,
+        36690.639845094665
+    ],
+    "SPOOKY_WATER_ORB": [
+        1870910.6,
+        5999997.419047619
+    ],
+    "SQUASH": [
+        72504.31097019657,
+        74999.28431015654
+    ],
+    "SQUEAKY_TOY": [
+        856.3060402684564,
+        69450.79516129031
+    ],
+    "STARFALL": [
+        1701.4552640740512,
+        1886.8264872435
+    ],
+    "STOCK_OF_STONKS": [
+        3241626.680897702,
+        3383736.636868687
+    ],
+    "STRING": [
+        13.923725723590763,
+        20.78937380555897
+    ],
+    "STRONG_FRAGMENT": [
+        29311.281560283693,
+        36682.8
+    ],
+    "STUFFED_CHILI_PEPPER": [
+        1537018.6,
+        2599999.9
+    ],
+    "SUBZERO_INVERTER": [
+        300008.0327759197,
+        464931.09843749995
+    ],
+    "SUGAR_CANE": [
+        3.0210345040014785,
+        4.886195232003463
+    ],
+    "SULPHUR": [
+        15.19356719099381,
+        26.804651821432365
+    ],
+    "SULPHURIC_COAL": [
+        5503.8,
+        7405.297811848041
+    ],
+    "SULPHUR_ORE": [
+        5.769845462171657,
+        10.435864376602048
+    ],
+    "SUMMONING_EYE": [
+        1161655.5047581904,
+        1199999.9942771085
+    ],
+    "SUPERBOOM_TNT": [
+        9.086428736634227,
+        39.77244792129671
+    ],
+    "SUPERB_CARROT_CANDY": [
+        2016171.1,
+        2323286.898293515
+    ],
+    "SUPERIOR_FRAGMENT": [
+        179372.4421686747,
+        192708.14816513762
+    ],
+    "SUPERLITE_MOTOR": [
+        21580.279834641256,
+        49085.74650259067
+    ],
+    "SUPER_COMPACTOR_3000": [
+        115000.58799171842,
+        139149.79387331253
+    ],
+    "SUPER_EGG": [
+        595029.7,
+        665865.1991803277
+    ],
+    "SUPER_MAGIC_MUSHROOM_SOUP": [
+        6904.2911917098445,
+        10495.341613803603
+    ],
+    "SUPREME_CHOCOLATE_BAR": [
+        122.00171376951864,
+        251.0535565312843
+    ],
+    "SUSPICIOUS_SCRAP": [
+        206334.24533179012,
+        228685.475
+    ],
+    "SUSPICIOUS_VIAL": [
+        100.5125,
+        249999.6
+    ],
+    "SYNTHETIC_HEART": [
+        239257.67924720244,
+        278787.9
+    ],
+    "TARANTULA_SILK": [
+        224896.4,
+        236741.42318137732
+    ],
+    "TARANTULA_WEB": [
+        217.98030757450067,
+        346.96962021212454
+    ],
+    "TERRY_SNOWGLOBE": [
+        1062516.5,
+        2120601.0947075207
+    ],
+    "TESSELLATED_ENDER_PEARL": [
+        3891381.9,
+        4348136.5
+    ],
+    "THE_ART_OF_PEACE": [
+        48000001.7,
+        51136749.9
+    ],
+    "THE_ART_OF_WAR": [
+        13223885.182539683,
+        14291529.995238096
+    ],
+    "THIRD_MASTER_STAR": [
+        47701140.888461545,
+        50197303.11578947
+    ],
+    "THORN_FRAGMENT": [
+        345.20004047939165,
+        0
+    ],
+    "TIGER_SHARK_TOOTH": [
+        18067.06999276934,
+        44999.40590717299
+    ],
+    "TIGHTLY_TIED_HAY_BALE": [
+        0,
+        0
+    ],
+    "TITANIC_EXP_BOTTLE": [
+        524681.6055765594,
+        541961.1847826086
+    ],
+    "TITANIUM_ORE": [
+        75.11327535611281,
+        78.89811280802522
+    ],
+    "TITANIUM_TESSERACT": [
+        741350.2038461539,
+        1118713.8128205128
+    ],
+    "TOIL_LOG": [
+        0,
+        0
+    ],
+    "TOXIC_ARROW_POISON": [
+        1822.6004950154102,
+        1956.7803104298632
+    ],
+    "TRANSMISSION_TUNER": [
+        38112.565094339625,
+        52514.047826086964
+    ],
+    "TREASURITE": [
+        42529.90588235294,
+        45780.79553767374
+    ],
+    "TUNGSTEN": [
+        72.74404054065923,
+        86.44667711432214
+    ],
+    "TUNGSTEN_KEY": [
+        2888896.9,
+        3197449.3652173914
+    ],
+    "TUNGSTEN_PLATE": [
+        12817716.642857144,
+        12996555.744444447
+    ],
+    "TWILIGHT_ARROW_POISON": [
+        3137.2721013692244,
+        3709.6041208198485
+    ],
+    "ULTIMATE_CARROT_CANDY": [
+        2633778.8860911275,
+        2999992.6
+    ],
+    "UMBER": [
+        74.32403637898965,
+        91.91862043801169
+    ],
+    "UMBER_KEY": [
+        3090420.8375,
+        3305838.959090909
+    ],
+    "UMBER_PLATE": [
+        11577768.904347826,
+        13055318.85625
+    ],
+    "UNDEAD_CATALYST": [
+        1501.4,
+        2212.6868369351673
+    ],
+    "UNSTABLE_FRAGMENT": [
+        10388.636125501804,
+        13996.977996715927
+    ],
+    "VERY_CRUDE_GABAGOOL": [
+        91800.56580844491,
+        94317.1213098536
+    ],
+    "VITAMIN_DEATH": [
+        22613.466384180792,
+        74313.26181818183
+    ],
+    "VOLCANIC_ROCK": [
+        1830003.1208333333,
+        2320559.1
+    ],
+    "VOLTA": [
+        5070.800035071019,
+        8497.480078809107
+    ],
+    "WATER_LILY": [
+        5.339058501458073,
+        12.715230248538512
+    ],
+    "WATER_ORB": [
+        200019.03192506975,
+        909999.8
+    ],
+    "WEAK_WOLF_CATALYST": [
+        50000.200000000004,
+        64652.02400990099
+    ],
+    "WEREWOLF_SKIN": [
+        11320.7,
+        17475.475158250105
+    ],
+    "WHALE_BAIT": [
+        3099.6796310327786,
+        3592.0010037614065
+    ],
+    "WHEAT": [
+        4.300000000000001,
+        6.568953929611716
+    ],
+    "WHIPPED_MAGMA_CREAM": [
+        197998.6246357616,
+        204429.1
+    ],
+    "WHITE_GIFT": [
+        3308.9445270045467,
+        3365.4026409849084
+    ],
+    "WINTER_FRAGMENT": [
+        987932,
+        1338998.7909090908
+    ],
+    "WINTER_WATER_ORB": [
+        5000000.406060606,
+        13399995.694117647
+    ],
+    "WISE_FRAGMENT": [
+        37547.01671511628,
+        40159.9861994841
+    ],
+    "WISHING_COMPASS": [
+        0,
+        8
+    ],
+    "WITHER_BLOOD": [
+        1899730.9625,
+        2391029.7358208955
+    ],
+    "WITHER_CATALYST": [
+        1044402.8945945946,
+        1087421.3617021276
+    ],
+    "WITHER_SHIELD_SCROLL": [
+        211939021.46563467,
+        275320094
+    ],
+    "WOLF_TOOTH": [
+        940.0611498609201,
+        996.3493992094863
+    ],
+    "WOOD_SINGULARITY": [
+        3550086,
+        5149999.9
+    ],
+    "WOOL": [
+        0.5,
+        3.4996950201141495
+    ],
+    "WORM_BAIT": [
+        857.6818029975226,
+        2196.339783388521
+    ],
+    "WORM_MEMBRANE": [
+        41877.20756859035,
+        47109.01667940876
+    ],
+    "WRIGGLING_LARVA": [
+        913911.1,
+        1178182.9999999998
+    ],
+    "XLARGE_ENCHANTED_CHEST": [
+        2240017.3024691357,
+        2541275.607692308
+    ],
+    "XXLARGE_ENCHANTED_CHEST": [
+        4030316.331210191,
+        4599998.8
+    ],
+    "YELLOW_FLOWER": [
+        112.2,
+        186.20009570293809
+    ],
+    "YOGGIE": [
+        17.723483075011373,
+        100.65523757832932
+    ],
+    "YOUNG_FRAGMENT": [
+        10303.337670471174,
+        12023.217315175098
+    ]
+}
