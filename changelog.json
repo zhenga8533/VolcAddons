@@ -5,10 +5,11 @@
   "- Added todo list X",
   "- Added truffle time tracking",
   "- Changed autofill to only show on 5+",
+  "- Changed skill tracker to cache data X",
   "- Fixed Hoppity features",
   "- Fixed container buttons highlight",
   "- Fixed API backend",
-  "- Fixed skill tracker X",
+  "- Fixed skill tracker",
   "- Fixed container preview",
   "- Removed egg announce"
 ]

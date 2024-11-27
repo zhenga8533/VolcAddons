@@ -20,6 +20,16 @@ ${GOLD + BOLD}Rate: ${WHITE}MONEY`;
 const coinOverlay = new Overlay("coinTracker", data.ML, "moveCoins", coinExample);
 
 /**
+ * Reset coin tracker when switching profiles.
+ */
+registerWhen(
+  register("chat", () => {
+    piggy.reset();
+  }).setCriteria("Switching to profile ${profile}..."),
+  () => Settings.coinTracker !== 0
+);
+
+/**
  * Tracks Piggybank in Scoreboard for changes in coins and updates Coins Overlay every second.
  */
 registerWhen(

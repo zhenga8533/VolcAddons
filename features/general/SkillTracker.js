@@ -62,7 +62,7 @@ const trackSkills = register("guiOpened", () => {
           maxIndex !== -1
             ? lore[maxIndex + 1].split("§6")[1].replace(/,/g, "")
             : lore[progressIndex + 1].split("§e")[1].split("§6")[0].replace(/,/g, "")
-        ) + (maxIndex !== -1 ? xpTable[level - 1] : xpTable[level]);
+        ) + (maxIndex !== -1 ? 0 : xpTable[level]);
 
       skills[skill].level = level;
       skills[skill].start = xp;
