@@ -15,7 +15,7 @@ import {
 import { data } from "../../utils/Data";
 import { Json } from "../../utils/Json";
 import { printList } from "../../utils/ListTils";
-import location from "../../utils/Location";
+import { default as Location, default as location } from "../../utils/Location";
 import { Overlay } from "../../utils/Overlay";
 import { registerWhen } from "../../utils/RegisterTils";
 import Settings from "../../utils/Settings";
@@ -112,19 +112,28 @@ const newWaypoints = new Waypoint([0.88, 0.75, 0.72]); // Rose Gold Eggs
 let updateUniques = false;
 
 const EGGS = {
-  "015adc61-0aba-3d4d-b3d1-ca47a68a154b": "Breakfast",
-  "55ae5624-c86b-359f-be54-e0ec7c175403": "Lunch",
-  "e67f7c89-3a19-3f30-ada2-43a3856e5028": "Dinner",
+  ewogICJ0aW1lc3RhbXAiIDogMTcxMTQ2MjY3MzE0OSwKICAicHJvZmlsZUlkIiA6ICJiN2I4ZTlhZjEwZGE0NjFmOTY2YTQxM2RmOWJiM2U4OCIsCiAgInByb2ZpbGVOYW1lIiA6ICJBbmFiYW5hbmFZZzciLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTQ5MzMzZDg1YjhhMzE1ZDAzMzZlYjJkZjM3ZDhhNzE0Y2EyNGM1MWI4YzYwNzRmMWI1YjkyN2RlYjUxNmMyNCIKICAgIH0KICB9Cn0:
+    "Breakfast",
+  ewogICJ0aW1lc3RhbXAiIDogMTcxMTQ2MjU2ODExMiwKICAicHJvZmlsZUlkIiA6ICI3NzUwYzFhNTM5M2Q0ZWQ0Yjc2NmQ4ZGUwOWY4MjU0NiIsCiAgInByb2ZpbGVOYW1lIiA6ICJSZWVkcmVsIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzdhZTZkMmQzMWQ4MTY3YmNhZjk1MjkzYjY4YTRhY2Q4NzJkNjZlNzUxZGI1YTM0ZjJjYmM2NzY2YTAzNTZkMGEiCiAgICB9CiAgfQp9:
+    "Lunch",
+  ewogICJ0aW1lc3RhbXAiIDogMTcxMTQ2MjY0OTcwMSwKICAicHJvZmlsZUlkIiA6ICI3NGEwMzQxNWY1OTI0ZTA4YjMyMGM2MmU1NGE3ZjJhYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNZXp6aXIiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTVlMzYxNjU4MTlmZDI4NTBmOTg1NTJlZGNkNzYzZmY5ODYzMTMxMTkyODNjMTI2YWNlMGM0Y2M0OTVlNzZhOCIKICAgIH0KICB9Cn0:
+    "Dinner",
 };
 let looted = {
   Breakfast: false,
+  Brunch: false,
   Lunch: false,
+  Déjeuner: false,
   Dinner: false,
+  Supper: false,
 };
 let lastLooted = {
   Breakfast: 0,
+  Brunch: 0,
   Lunch: 0,
+  Déjeuner: 0,
   Dinner: 0,
+  Supper: 0,
 };
 
 // Track if egg was looted.
@@ -134,18 +143,18 @@ registerWhen(
 
     // Set last looted time
     if (lastLooted[type] === 0) {
-      const time = (World.getTime() % 24_000) + 100;
+      const time = Location.getTime();
       const offset =
         type === "Breakfast"
-          ? time > 1_000
+          ? time >= 1_000
             ? 1_000 - time
             : -23_000 - time
           : type === "Lunch"
-          ? time > 8_000
+          ? time >= 8_000
             ? 8_000 - time
             : -16_000 - time
           : type === "Dinner"
-          ? time > 15_000
+          ? time >= 15_000
             ? 15_000 - time
             : -9_000 - time
           : 0;
@@ -159,18 +168,18 @@ registerWhen(
   register("chat", (type) => {
     // Set looted status and last looted time
     looted[type] = true;
-    const time = (World.getTime() % 24_000) + 100;
+    const time = Location.getTime();
     const offset =
       type === "Breakfast"
-        ? time > 1_000
+        ? time >= 1_000
           ? 1_000 - time
           : -23_000 - time
         : type === "Lunch"
-        ? time > 8_000
+        ? time >= 8_000
           ? 8_000 - time
           : -16_000 - time
         : type === "Dinner"
-        ? time > 15_000
+        ? time >= 15_000
           ? 15_000 - time
           : -9_000 - time
         : 0;
@@ -200,7 +209,7 @@ registerWhen(
 
 registerWhen(
   register("tick", () => {
-    const time = World.getTime() % 24_000;
+    const time = Location.getTime();
 
     if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_205_500) {
       looted.Breakfast = false;
@@ -233,11 +242,22 @@ registerWhen(
       if (helmet === null) return;
 
       // Check if valid egg ID
-      const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id"); // getNBT() +> getNBTTagCompound() => getString()
-      if (!(id in EGGS) || looted[EGGS[id]]) return;
+      // const id = helmet.func_77978_p()?.func_74775_l("SkullOwner")?.func_74779_i("Id"); // getNBT() => getNBTTagCompound() => getString()
+      const texture = helmet
+        .func_77978_p()
+        ?.func_74775_l("SkullOwner")
+        ?.func_74775_l("Properties")
+        ?.func_150295_c("textures", 10)
+        ?.func_150305_b(0)
+        ?.func_74779_i("Value");
+      if (!(texture in EGGS)) return;
+      const eggType = EGGS[texture];
+      if (eggType === "Breakfast" && looted.Breakfast && looted.Brunch) return;
+      if (eggType === "Lunch" && looted.Lunch && looted.Déjeuner) return;
+      if (eggType === "Dinner" && looted.Dinner && looted.Supper) return;
 
       // Add waypoint
-      const wp = [EGGS[id], stand.getX(), stand.getY() + 1, stand.getZ()];
+      const wp = [eggType, stand.getX(), stand.getY() + 1, stand.getZ()];
       const coords = wp.slice(1);
       const dupe = data.eggs.found[location.getWorld()]?.hasOwnProperty(`${wp[1]},${wp[3]}`);
 
@@ -249,7 +269,7 @@ registerWhen(
       const coordsStr = coords.toString();
       if (eggOld.find((egg) => coordsStr === egg.toString()) === undefined)
         ChatLib.chat(
-          `${LOGO + YELLOW}Found a ${EGGS[id]} Egg: ${coords.map((c) => Math.round(c)).join(", ")}! ${
+          `${LOGO + YELLOW}Found a ${eggType} Egg: ${coords.map((c) => Math.round(c)).join(", ")}! ${
             dupe ? GREEN + "✔" : RED + "✘"
           }`
         );
@@ -274,15 +294,21 @@ const eggOverlay = new Overlay("eggTimers", data.CGL, "moveEgg", eggExample);
 
 registerWhen(
   register("step", () => {
-    const time = World.getTime() % 24_000;
+    const time = Location.getTime();
     const breakfastTime = time > 1_000 ? 25_000 - time : 1_000 - time;
     const lunchTime = time > 8_000 ? 32_000 - time : 8_000 - time;
     const dinnerTime = time > 15_000 ? 39_000 - time : 15_000 - time;
     eggOverlay.setMessage(
       `${GOLD + BOLD}Egg Timers:
- ${YELLOW}Breakfast: ${WHITE + formatTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"}
- ${YELLOW}Lunch: ${WHITE + formatTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"}
- ${YELLOW}Dinner: ${WHITE + formatTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"}`
+ ${YELLOW}Breakfast: ${WHITE + formatTime(breakfastTime / 20)} ${looted.Breakfast ? GREEN + "✔" : RED + "✘"} ${
+        looted.Brunch ? GREEN + "✔" : RED + "✘"
+      }
+ ${YELLOW}Lunch: ${WHITE + formatTime(lunchTime / 20)} ${looted.Lunch ? GREEN + "✔" : RED + "✘"} ${
+        looted.Déjeuner ? GREEN + "✔" : RED + "✘"
+      }
+ ${YELLOW}Dinner: ${WHITE + formatTime(dinnerTime / 20)} ${looted.Dinner ? GREEN + "✔" : RED + "✘"} ${
+        looted.Supper ? GREEN + "✔" : RED + "✘"
+      }`
     );
   }).setFps(1),
   () => Settings.eggTimers && location.getSeason() === "Spring"

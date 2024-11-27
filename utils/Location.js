@@ -10,6 +10,8 @@ class Location {
   #server = undefined;
   #season = undefined;
   #time = 0;
+  #sbTime = "";
+  #ticks = 0;
 
   constructor() {
     /**
@@ -28,6 +30,7 @@ class Location {
       this.#zone = zoneLine === undefined ? "None" : zoneLine.getName().removeFormatting().substring(3);
     });
 
+    register("step", () => this.setTime()).setDelay(1);
     register("step", this.setSeason).setDelay(10);
     this.setSeason();
 
@@ -106,6 +109,40 @@ class Location {
     const ratio = this.#time / 446_400;
 
     this.#season = ratio < 0.25 ? "Spring" : ratio < 0.5 ? "Summer" : ratio < 0.75 ? "Autumn" : "Winter";
+  }
+
+  /**
+   * Sets Location.#time using scoreboard time.
+   *
+   * @returns {Number} - Current time in ticks.
+   */
+  setTime() {
+    const lines = Scoreboard.getLines();
+    const timeLine = lines.find((line) => line.getName().includes("☽") || line.getName().includes("☀"));
+    if (timeLine === undefined) return 0;
+
+    const time = timeLine.getName().removeFormatting().trim().split(" ")[0];
+    if (time === this.#sbTime) this.#ticks = (this.#ticks + 20) % 24_000;
+    else {
+      this.#sbTime = time;
+      const colon = time.indexOf(":");
+      const hours = parseInt(time.substring(0, colon));
+      const minutes = parseInt(time.substring(colon + 1, colon + 3));
+      const ampm = time.substring(colon + 3);
+
+      // Convert to tick time
+      let ticks = Math.floor((hours + minutes / 60) * 1_000) - 6_000;
+      if (ampm === "pm") ticks += 12_000;
+      if (ticks < 0) ticks += 24_000;
+      this.#ticks = ticks;
+    }
+  }
+
+  /**
+   * Returns Location.#time
+   */
+  getTime() {
+    return this.#ticks;
   }
 
   /**
