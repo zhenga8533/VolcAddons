@@ -192,13 +192,14 @@ function findWorker() {
       return;
     }
 
-    let index = worker.findIndex((line) => line === "§5§o§7Cost");
-    if (index === -1) continue;
-
     // Get worker name
     let name = items[i].getName();
     let level = name.split(" ")[3]?.removeFormatting()?.replace(/\[|\]/g, "");
     workerLevels[i - 28] = name.substring(0, 2) + (isNaN(level) ? 0 : level);
+
+    // Find cost
+    let index = worker.findIndex((line) => line === "§5§o§7Cost");
+    if (index === -1) continue;
 
     // Calculate value
     let cost = parseInt(worker[index + 1].removeFormatting().replace(/\D/g, ""));

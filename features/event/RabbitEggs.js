@@ -207,26 +207,6 @@ registerWhen(
   () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring"
 );
 
-registerWhen(
-  register("tick", () => {
-    const time = Location.getTime();
-
-    if (Math.abs(time - 1_000) < 4 || Date.now() - lastLooted.Breakfast > 1_205_500) {
-      looted.Breakfast = false;
-      lastLooted.Breakfast = 0;
-    }
-    if (Math.abs(time - 8_000) < 4 || Date.now() - lastLooted.Lunch > 1_205_500) {
-      looted.Lunch = false;
-      lastLooted.Lunch = 0;
-    }
-    if (Math.abs(time - 15_000) < 4 || Date.now() - lastLooted.Dinner > 1_205_500) {
-      looted.Dinner = false;
-      lastLooted.Dinner = 0;
-    }
-  }),
-  () => (Settings.chocoWaypoints || Settings.eggTimers) && location.getSeason() === "Spring"
-);
-
 // ArmorStand ESP susge, UAYOR
 registerWhen(
   register("step", () => {
