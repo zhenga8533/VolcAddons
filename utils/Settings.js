@@ -200,6 +200,15 @@ Controls:
 
   // --- General ---
   @SwitchProperty({
+    name: "Offset GUI",
+    description:
+      "Shifts some GUI elements slightly upwards when in maximized windowed screen. Really only useful if you often toggle between fullscreen and use Apec.",
+    category: "General",
+    subcategory: "General",
+  })
+  offsetGui = false;
+
+  @SwitchProperty({
     name: "Remove Selfie Mode",
     description: "Removes selfie mode from perspective toggle.",
     category: "General",

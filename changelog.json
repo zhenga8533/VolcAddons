@@ -1,6 +1,6 @@
 [
   "- Added sun gecko helper",
-  "- Added gui minimize realign toggle",
+  "- Added gui minimize offset toggle",
   "- Fixed `/va zone` not working in rift",
   "- Fixed search bar bricking"
 ]

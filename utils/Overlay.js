@@ -31,6 +31,8 @@ const moving = register("renderOverlay", () => {
   let hovered = false;
   const mouseX = Client.getMouseX();
   const mouseY = Client.getMouseY();
+  const isFullScreen = Client.getMinecraft().func_71372_G();
+  const height = Renderer.screen.getHeight();
 
   overlays.forEach((o) => {
     if (!Settings[o.setting]) return;
@@ -40,6 +42,7 @@ const moving = register("renderOverlay", () => {
     const editing = o === currentOverlay;
     const x = o.loc[0] - (o.loc[3] ? o.ewidth : 0);
     const y = o.loc[1];
+    const dy = Settings.offsetGui && !isFullScreen && y > height * 0.75 ? 40 : 0;
     const highlight =
       !hovered &&
       mouseX > x - 3 * scale &&
@@ -50,14 +53,14 @@ const moving = register("renderOverlay", () => {
 
     drawBox(
       x - 3 * scale,
-      y - 3 * scale,
+      y - 3 * scale - dy,
       0,
       o.ewidth + 5 * scale,
       o.eheight + 5 * scale,
       editing ? EDIT_BOX : highlight ? HOVER_BOX : o.loc[5] ? RECT_COLOR : EDIT_COLOR,
       editing ? EDIT_BORDER : highlight ? HOVER_BORDER : BORDER_COLOR
     );
-    renderScale(o.loc[0], o.loc[1], o.example, o.loc[2], o.loc[3], o.loc[4], 0);
+    renderScale(o.loc[0], o.loc[1] - dy, o.example, o.loc[2], o.loc[3], o.loc[4], 0);
   });
 }).unregister();
 
@@ -151,15 +154,19 @@ const renders = {
 Object.keys(renders).forEach((key) => {
   register(key, () => {
     if (!Settings.vaToggle) return;
+    const isFullScreen = Client.getMinecraft().func_71372_G();
+    const height = Renderer.screen.getHeight();
 
     renders[key].forEach((render) => {
       if (Settings[render.setting] && !render.special() && !gui.isOpen() && !render.gui.isOpen() && render.message) {
         if (!(render.requires.has(location.getWorld()) || render.requires.has("all"))) return;
+        const dx = render.loc[3] ? render.ewidth : 0;
+        const dy = Settings.offsetGui && !isFullScreen && render.loc[1] > height * 0.75 ? 40 : 0;
 
         if (render.loc[5] && render.width !== 0) {
           drawBox(
-            render.loc[0] - (render.loc[3] ? render.ewidth : 0) - 3 * render.loc[2],
-            render.loc[1] - 3 * render.loc[2],
+            render.loc[0] - 3 * render.loc[2] - dx,
+            render.loc[1] - 3 * render.loc[2] - dy,
             0,
             render.width + 5 * render.loc[2],
             render.height + 5 * render.loc[2],
@@ -167,7 +174,7 @@ Object.keys(renders).forEach((key) => {
             BORDER_COLOR
           );
         }
-        renderScale(render.loc[0], render.loc[1], render.message, render.loc[2], render.loc[3], render.loc[4], 0);
+        renderScale(render.loc[0], render.loc[1] - dy, render.message, render.loc[2], render.loc[3], render.loc[4], 0);
       }
     });
   });
