@@ -1,6 +1,14 @@
 [
-  "- Added sun gecko helper",
-  "- Added gui minimize realign toggle",
-  "- Fixed `/va zone` not working in rift",
-  "- Fixed search bar bricking"
+  "- Added API cache",
+  "- Added stat color selector (/va toggles)",
+  "- Added ?time",
+  "- Added truffle time tracking",
+  "- Changed autofill to only show on 5+",
+  "- Changed stat trackers to cache data",
+  "- Fixed Hoppity features",
+  "- Fixed container buttons highlight",
+  "- Fixed API backend",
+  "- Fixed skill tracker",
+  "- Fixed container preview",
+  "- Removed egg announce"
 ]

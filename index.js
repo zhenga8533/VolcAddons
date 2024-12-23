@@ -520,4 +520,3 @@ ${DARK_GRAY}- ${GOLD + BOLD}rl: ${YELLOW}rabbit-list`
  */
 import "./features/container/ArmorDisplay";
 import { buttonCommands } from "./features/container/ContainerButtons";
-

@@ -40,7 +40,6 @@ export function getSlotCoords(i) {
   if (i >= Player.getContainer().getSize()) return [0, 0];
   const gui = Client.currentGui.get();
   const slot = gui.field_147002_h?.func_75139_a(i);
-  if (!slot) return [0, 0];
   const x = slot.field_75223_e + gui?.getGuiLeft() ?? 0;
   const y = slot.field_75221_f + gui?.getGuiTop() ?? 0;
 
